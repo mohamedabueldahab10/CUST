@@ -9342,83 +9342,81 @@ debugger;
 
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
-          if (listkey == "projects" &&
-              (item == "InitiativeType"
-              || item == "RelatedInitiative"
-              ||item == "RelatedInitiativeDeliverable" )
-            )
-          {
-            if(listkey == 'projects'){
-
-              $('#InitiativeType').parent().show();
-              $('#InitiativeType').parent().css("display","unset");
-              $('#RelatedInitiative').parent().show();
-              $('#RelatedInitiative').parent().css("display","unset");
-              $('#RelatedInitiativeDeliverable').parent().show();
-              $('#RelatedInitiativeDeliverable').parent().css("display","unset");
+          if (
+            listkey == "projects" &&
+            (item == "InitiativeType" ||
+              item == "RelatedInitiative" ||
+              item == "RelatedInitiativeDeliverable")
+          ) {
+            if (listkey == "projects") {
+              $("#InitiativeType").parent().show();
+              $("#InitiativeType").parent().css("display", "unset");
+              $("#RelatedInitiative").parent().show();
+              $("#RelatedInitiative").parent().css("display", "unset");
+              $("#RelatedInitiativeDeliverable").parent().show();
+              $("#RelatedInitiativeDeliverable").closest(".CFIELD").removeClass("hide-field");
+              $("#RelatedInitiativeDeliverable").parent().css("display", "unset");
             }
-            $('[data-togglename="' + item + '"]').prop('disabled', true);
-            $("#IsStrategicProject").on('change', function (){
-              if(listkey == 'projects'){
-                if($(this).val() == 'no'){
-                    $('#InitiativeType').val('');
-                    $('#InitiativeType option:selected').removeAttr('selected');
-                    $('#RelatedInitiative').val('')
-                    $('#RelatedInitiative option:selected').removeAttr('selected');
-                    $('#RelatedInitiativeDeliverable').val('')
-                    $('#RelatedInitiativeDeliverable option:selected').removeAttr('selected');
-
-
-                  }
+            $('[data-togglename="' + item + '"]').prop("disabled", true);
+            $("#IsStrategicProject").on("change", function () {
+              if (listkey == "projects") {
+                if ($(this).val() == "no") {
+                  $("#InitiativeType").val("");
+                  $("#InitiativeType option:selected").removeAttr("selected");
+                  $("#RelatedInitiative").val("");
+                  $("#RelatedInitiative option:selected").removeAttr("selected");
+                  $("#RelatedInitiativeDeliverable").val("");
+                  $("#RelatedInitiativeDeliverable option:selected").removeAttr(
+                    "selected"
+                  );
                 }
-              });
+              }
+            });
           } else {
-            $('[data-togglename="' + item + '"]')
-            .parent()
-            .addClass("hide-field");
+            var $el = $('[data-togglename="' + item + '"]');
+            var $parent = $el.parent();
+            var $cfield = $el.closest(".CFIELD");
 
-            $('[data-togglename="' + item + '"]')
-              .parent()
-              .hide();
-
+            $parent.addClass("hide-field").hide();
+            $cfield.addClass("hide-field").hide();
           }
-
-            // .parent().prop('disabled', true);
-            // .addClass("hide-field");
-
+      
+          // .parent().prop('disabled', true);
+          // .addClass("hide-field");
+      
           // $('[data-togglename="' + item + '"]')
           //   .parent().hide();
-
+      
           // $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
             .find(">*")
             .attr("required", false);
-
+      
           // remove required for section hide
           $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(
             function () {
               // var fieldId =$(this).find()
               var isRequired = false,
                 fieldId = "";
-
+      
               isRequired = $(this).find(">*").attr("required") ? true : false;
-
+      
               if (isRequired) {
                 fieldId = $(this).find("input,textarea,select").attr("id");
                 console.log(fieldId, "fieldId");
                 requiredFieldsSections.push(fieldId);
               }
-
+      
               // requiredFieldsSections.push()
-
+      
               $(this).find(">*").attr("required", false);
             }
           );
-
+      
           $('[data-togglename="' + item + '"]').each(function () {
             var isSection = $(this).hasClass("fieldset-container");
-
+      
             if (isSection) {
               $(this).closest(".section-container").addClass("removeborder");
               $(this).find(".CFIELD").addClass("hide-field");
@@ -9426,43 +9424,44 @@ debugger;
           });
         });
         toggleFields.forEach(function (item, i, arr) {
-          if (listkey == "projects" &&
-              (item == "InitiativeType"
-              || item == "RelatedInitiative"
-              ||item == "RelatedInitiativeDeliverable" )
-            )
-          {
-            var isHidden = $('[data-togglename="' + item + '"]')
-              .is(":disabled");
-          } else{
-            var isHidden = $('[data-togglename="' + item + '"]')
-            .is(":hidden");
+          if (
+            listkey == "projects" &&
+            (item == "InitiativeType" ||
+              item == "RelatedInitiative" ||
+              item == "RelatedInitiativeDeliverable")
+          ) {
+            var isHidden = $('[data-togglename="' + item + '"]').is(":disabled");
+          } else {
+            var isHidden = $('[data-togglename="' + item + '"]').is(":hidden");
           }
-           var myFieldParent = $('[data-togglename="' + item + '"]').parent();
-          myFieldParentofParent = $('[data-togglename="' + item + '"]');
+          var myFieldParent = $('[data-togglename="' + item + '"]').parent();
+          myFieldParentofParent = $('[data-togglename="' + item + '"]');         
           if (isHidden) {
-            if (listkey == "projects" &&
-              (item == "InitiativeType"
-              || item == "RelatedInitiative"
-              ||item == "RelatedInitiativeDeliverable" )
-            )
-          {
-              $('[data-togglename="' + item + '"]').prop('disabled', false);
-          }
-            myFieldParent.show();
+            if (listkey == "projects" && (item == "InitiativeType" || item == "RelatedInitiative" || item == "RelatedInitiativeDeliverable")) {
+                var $el = $('[data-togglename="' + item + '"]');
+                var $parent = $el.parent();
+                var $cfield = $el.closest(".CFIELD");
+                $el.prop("disabled", false);
+                $el.show().removeClass("hide-field");
+                $parent.show().removeClass("hide-field"); 
+                $cfield.show().removeClass("hide-field"); 
+            }
+            myFieldParent.show().removeClass("hide-field");
+            myFieldParentofParent.show().removeClass("hide-field");
+            myFieldParent.closest(".CFIELD").removeClass("hide-field");
             myFieldParent.removeClass("hide-field");
-            myFieldParent.parent().addClass('py-5').addClass('border-bottom');
-            myFieldParentofParent.show();
+            myFieldParent.parent().addClass("py-5").addClass("border-bottom");
+            myFieldParentofParent.show().removeClass("hide-field");
+            myFieldParent.closest(".CFIELD").removeClass("hide-field");
+      
             if (!isView) {
               myFieldParent.find(">*").attr("required", true);
-
+      
               $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(
                 function () {
                   requiredFieldsSections.forEach((el) => {
                     var $this = $(this);
-                    var fieldId = $(this)
-                      .find("input,textarea,select")
-                      .attr("id");
+                    var fieldId = $(this).find("input,textarea,select").attr("id");
                     if (el == fieldId) {
                       $this.find(">*").attr("required", true);
                     }
@@ -9470,17 +9469,17 @@ debugger;
                   // $(this).find(">*")
                   //   .attr("required", true);
                   $(this).removeClass("hide-field");
+                  $(this).closest(".CFIELD").removeClass("hide-field");
                 }
               );
-
+      
               $('[data-togglename="' + item + '"]').each(function () {
                 var isSection = $(this).hasClass("fieldset-container");
                 // to remove the border and hide field from section when toggle
                 if (isSection) {
-                  $(this)
-                    .closest(".section-container")
-                    .removeClass("removeborder");
+                  $(this).closest(".section-container").removeClass("removeborder");
                   $(this).find(".CFIELD").removeClass("hide-field");
+                  $(this).closest(".CFIELD").removeClass("hide-field");
                 }
               });
             } else if (isView) {
@@ -9488,10 +9487,9 @@ debugger;
               $('[data-togglename="' + item + '"]').each(function () {
                 var isSection = $(this).hasClass("fieldset-container");
                 if (isSection) {
-                  $(this)
-                    .closest(".section-container")
-                    .removeClass("removeborder");
+                  $(this).closest(".section-container").removeClass("removeborder");
                   $(this).find(".CFIELD").removeClass("hide-field");
+                  $(this).closest(".CFIELD").removeClass("hide-field");
                 }
               });
             }
@@ -9531,17 +9529,17 @@ debugger;
         });
       } else {
         allToggleFields.forEach((item, i, arr) => {
-
-          $('[data-togglename="' + item + '"]')
-            .parent().parent().removeClass('py-5').removeClass('border-bottom');
           $('[data-togglename="' + item + '"]')
             .parent()
-            .addClass("hide-field");
-
-          $('[data-togglename="' + item + '"]')
             .parent()
-            .hide();
-
+            .removeClass("py-5")
+            .removeClass("border-bottom");
+            var $el = $('[data-togglename="' + item + '"]');
+            var $parent = $el.parent();
+            var $cfield = $el.closest(".CFIELD");
+            $parent.addClass("hide-field").hide();
+            $cfield.addClass("hide-field").hide();            
+      
           $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
@@ -10658,6 +10656,76 @@ window.View_ListInfo = {
           break;
 
         case "multiselectstring":
+          htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          element.className +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          // " " +
+          // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
+          "</label>" +
+          '<p type="multiselect" class="viewmode-value" data-valfieldkey="' +
+          element.valfieldkey +
+          '" data-dispfieldkey="' +
+          element.Dispfieldkey +
+          '" data-listname="' +
+          element.source +
+          '" id="' +
+          element.InternalName +
+          '" ' +
+          ToggleName +
+          'data-parentrelatedkeylvl1="' +
+          element.fieldsinformlvl1 +
+          '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+          element.sourcefieldlvl1 +
+          '" data-parentrelatedkeylvl2="' +
+          element.fieldsinformlvl2 +
+          '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' +
+          element.sourcefieldlvl2 +
+          '" data-linkedto="' +
+          element.linkedto +
+          '"></p>' +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
         case "multiselectForFiles":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +

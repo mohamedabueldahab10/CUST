@@ -24,8 +24,10 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+            //{group:"Project Managers for Project Web App",form:["origin"]},
             {group:"ProjectExceptionUpdate",form:["origin"]},
+            {group:"SPMO",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -50,8 +52,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            
+            //{group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -63,15 +64,15 @@ var Information_Form = [
         DisplayNameEn: "Description",
         type: "multiline",
         validation: "required",
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+            //{group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -94,17 +95,17 @@ var Information_Form = [
         DisplayNameEn: "Scope Of Work",
         type: "multiline",
         validation: "required",
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         disableOnWfTaskStage : "S05,S09",                
-        enableOnWfTaskStage: "S09",
+        //enableOnWfTaskStage: "S09",
         requireOnWfTaskStage: "S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -126,17 +127,17 @@ var Information_Form = [
         DisplayName: "خارج نطاق العمل",
         DisplayNameEn: "Out Of Scope",
         type: "multiline",
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         disableOnWfTaskStage : "S05,S09",        
-        enableOnWfTaskStage: "S09",
+        //enableOnWfTaskStage: "S09",
         requireOnWfTaskStage: "S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+            //{group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -148,15 +149,15 @@ var Information_Form = [
         DisplayName: " إفتراضات المشروع",
         DisplayNameEn: "Project Assumptions",
         type: "multiline",
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -168,15 +169,15 @@ var Information_Form = [
         DisplayName: "ملاحظات مدير المشروع",
         DisplayNameEn: "PM Notes",
         type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
+        maxchar: 500,
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -280,7 +281,8 @@ var Information_Form = [
             "System Admin Group",
             "SPMO",
             "Development Unit",
-            "ProjectManager"
+            "ProjectManager",
+            "ProjectExceptionUpdate"
           ],
         },
       },
@@ -288,8 +290,10 @@ var Information_Form = [
         InternalName: "AgencyType",
         DisplayName: "نوع الجهة",
         DisplayNameEn: "Agency Type",
+        ToggleName: 'AgencyType',
         // validation: "required",
-        type: "dropdownValues",
+        type: "dropdownValues", 
+        validation: "required",
         // disableOnWfTaskStage : "S05,S09",
         // security: {
         //   groups: [ ],
@@ -306,6 +310,10 @@ var Information_Form = [
             { display: "owneragency", value: "owneragency" },
           ],
         },
+         toggleValues: [
+          { value: 'executingagency', fields: ['ExecutionChannelsSection'] },
+          { value: 'owneragency', fields: ['OwnerChannelsSection'] },
+        ],
       },
       {
         InternalName: "Committees",
@@ -320,7 +328,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -337,12 +345,12 @@ var Information_Form = [
         //     "Development Unit",
         //   ],
         // },
-        // "maxchar": 5000,
+        // "maxchar": 500,
         // hideonstage: "1"
       },
       {
         InternalName: "IsStrategicProject",
-        DisplayName: "هل هو مشروع استراتيجي؟",
+        DisplayName: "الرجاء اختيار نوع المشروع",
         DisplayNameEn: "Is Strategic Project?",
         type: "dropdownValues",
         disableOnWfTaskStage : "S05,S09",
@@ -357,17 +365,19 @@ var Information_Form = [
         },
         options: {
           choices: [
-            { display: "yes", value: "yes" },
-            { display: "no", value: "no" },
+            { display: "strategy", value: "strategy" },
+            { display: "operationally", value: "operationally" },
+           /* { display: "yes", value: "yes" },
+            { display: "no", value: "no" },*/
           ],
         },
-        toggleValues: [
-          { value: 'yes', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable'] }, //we can put more than 1  field
-          { value: 'no', fields: [''] }, //we can put more than 1  field
+      /*  toggleValues: [
+          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable' ,'LinkingSection'] }, //we can put more than 1  field
+          { value: 'operationally', fields: [''] }, //we can put more than 1  field
         ],
         requiredValues: [
-          { value: "no", fields: ["FundingSources","FundingStatus"] }, //we can put more than 1  field
-        ],
+          { value: "operationally", fields: ["FundingSources","FundingStatus"] }, //we can put more than 1  field
+        ],*/
         validation: "required",
       },
       
@@ -506,6 +516,15 @@ var Information_Form = [
         // "state": "disabled",
         // "className":"autofill"
         display: 'none',
+         security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Project Managers for Project Web App",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: "RelatedInitiativeDeliverable",
@@ -552,7 +571,7 @@ var Information_Form = [
             groups: [ ],
             // groups: [], // should be empty array if will use notAllowTo
             notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-              {group:"Project Managers for Project Web App",form:["origin"]},
+              //{group:"Project Managers for Project Web App",form:["origin"]},
               // {group:"EPMO",form:["origin" ]}
   
             ]
@@ -576,8 +595,10 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             {group:"ProjectExceptionUpdate",form:["origin"]},
+            {group:"SPMO",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -606,8 +627,10 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+            //{group:"Project Managers for Project Web App",form:["origin"]},
             {group:"ProjectExceptionUpdate",form:["origin"]},
+            {group:"SPMO",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -681,7 +704,7 @@ var Information_Form = [
       //             'EPMO', 'System Admin Group','SPMO','Development Unit', 'Project Managers for Project Web App'
       //         ]
       //     },
-      //     // "maxchar": 5000,
+      //     // "maxchar": 500,
       //     // hideonstage: "1"
       // },
       // {
@@ -689,9 +712,9 @@ var Information_Form = [
       //   DisplayName: "الخطة التصحيحية",
       //   DisplayNameEn: "Corrective Plan",
       //   type: "multiline",
-      //   descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-      //   descPhraseEn: "max length of letters equal 5000",
-      //   maxchar: 5000,
+      //   descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+      //   descPhraseEn: "max length of letters equal 500",
+      //   maxchar: 500,
       //   disableOnWfTaskStage : "S05,S09",
       //   security: {
       //     groups: [ ],
@@ -713,12 +736,12 @@ var Information_Form = [
         //     "Project Managers for Project Web App",
         //   ],
         // },
-        // "maxchar": 5000,
+        // "maxchar": 500,
         // hideonstage: "1"
       // },
       {
         InternalName: "ProjectType",
-        DisplayName: "نوع المشروع",
+        DisplayName: "نوع تطوير المشروع",
         DisplayNameEn: "Project Type",
         validation: "required",
         type: "dropdownValues",
@@ -727,7 +750,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -770,16 +793,17 @@ var Information_Form = [
           choices: [
             // شغيلي- تحولي - استراتيجي
             // { display: 'strategyproject', value: 'strategyproject' },
-            {
+           /* {
               display: "transformativeproject",
               value: "transformativeproject",
             },
-            { display: "operationalproject", value: "operationalproject" },
+            { display: "operationalproject", value: "operationalproject" },*/
             { display: "technical", value: "technical" },
             { display: "others", value: "others" },
             { display: "consulting", value: "consulting" },
           ],
         },
+        
       },
       {
         InternalName: "BaselineStartDate",
@@ -798,18 +822,28 @@ var Information_Form = [
           'AwardDate',
           'ContractualDate',
         ],
-        targetOn: "min" ,     
-         security: {
+        targetOn: "min" ,      security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             {group:"ProjectExceptionUpdate",form:["origin"]},
+            {group:"SPMO",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
       },
+       {
+        InternalName: "ContractWorkStartDate",
+        DisplayName: "تاريخ بدء الاعمال للعقود",
+        DisplayNameEn: "ContractWorkStartDate",
+        type: "datetime",
+        enableOnWfTaskStage: "S12",
+        requireOnWfTaskStage: "S12",  
+        disableOnWfTaskStage : "S01,S11",
+       },
       {
         InternalName: "BaselineFinishDate",
         DisplayName: "تاريخ إنهاء الأساس",
@@ -823,8 +857,10 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             {group:"ProjectExceptionUpdate",form:["origin"]},
+            {group:"SPMO",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -861,7 +897,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -884,16 +920,37 @@ var Information_Form = [
         InternalName: "ExecutionChannels",
         DisplayName: "الجهة المنفذة",
         DisplayNameEn: "Execution Channels",
+        ToggleName: 'ExecutionChannelsSection',
         type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
+        maxchar: 500,
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
+      },
+       {
+        InternalName: "OwnerChannels",
+        DisplayName: "الجهة المالكة",
+        DisplayNameEn: "Owner Channels",
+        ToggleName: 'OwnerChannelsSection',
+        type: "multiline",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
+        maxchar: 500,
+        disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -904,15 +961,15 @@ var Information_Form = [
         DisplayName: "ملخص المشروع",
         DisplayNameEn: "Project Overview",
         type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
+        maxchar: 500,
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -924,15 +981,15 @@ var Information_Form = [
         DisplayName: "ملاحظات",
         DisplayNameEn: "Comments",
         type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
+        maxchar: 500,
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+         //   {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -967,7 +1024,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -989,7 +1046,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1008,7 +1065,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1030,13 +1087,13 @@ var Information_Form = [
         },
         toggleValues: [
           { value: 'yes', fields: [] },
-          { value: 'no', fields: ['FundingSection','TenderSection','BudgetSection','Delivrables','Milestones'] },
-        ],   security: {
+          { value: 'no', fields: ['FundingSection','TenderSection','BudgetSection' , 'LinkingSection' /*,'Delivrables','Milestones'*/] },
+        ],  security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+           {group:"Project Managers for Project Web App",form:["origin"]},
+          // {group:"EPMO",form:["origin" ]}
 
           ]
         },
@@ -1151,7 +1208,7 @@ var Information_Form = [
       //     "DisplayName": "الملخص التنفيذي للمشروع",
       //     "DisplayNameEn": "Project Executive Summary",
       //     "type": "multiline",
-      //     "maxchar": 5000,
+      //     "maxchar": 500,
       //     //"state": "disabled"
       // },
       // {
@@ -1188,7 +1245,7 @@ var Information_Form = [
       //     "DisplayName": "منظمة المشروع",
       //     "DisplayNameEn": "Project Organization",
       //     "type": "multiline",
-      //     "maxchar": 5000,
+      //     "maxchar": 500,
       //     //"state": "disabled"
       // },
       // {
@@ -1228,6 +1285,32 @@ var Information_Form = [
       // },
     ],
   },
+   {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      }
+   ]},
   {
     label: "التمويل",
     labelEn: "Funding",
@@ -1241,6 +1324,7 @@ var Information_Form = [
         DisplayName: "مصادر التمويل",
         DisplayNameEn: "Funding Sources",
         type: "dropdownValues",
+        validation: "required",
         // disableOnWfTaskStage : "S05,S09",
         options: {
           choices: [
@@ -1267,6 +1351,7 @@ var Information_Form = [
         DisplayName: "حالة التمويل",
         DisplayNameEn: "Funding Status",
         type: "dropdownValues",
+        validation: "required",
         disableOnWfTaskStage : "S05,S09",
         options: {
           choices: [
@@ -1402,7 +1487,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1424,7 +1509,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1481,7 +1566,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1498,7 +1583,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1520,7 +1605,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1560,7 +1645,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+            //{group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1568,6 +1653,7 @@ var Information_Form = [
 
         // "state": "disabled"
       },
+
       // {
       //     "InternalName": "SpentBudget",
       //     "DisplayName": "المبالغ المصروفة",
@@ -1612,6 +1698,32 @@ var Information_Form = [
       // },
     ],
   },
+   {
+    label: "بند الارتباط",
+    labelEn: "Linking Item",
+    description: "",
+    descriptionEn: "",
+    toggleName: 'LinkingSection',
+    subFields: [
+      {
+        InternalName: "LinkingProgress",
+        DisplayName: "جاري الارتباط",
+        DisplayNameEn: "Linking Progress",
+        type: "float",
+        numberOfDigits: "15"
+      },
+       {
+        InternalName: "ExpenseProgress",
+        DisplayName: "جاري الصرف",
+        DisplayNameEn: "Expense Progress",
+        type: "float",
+        numberOfDigits: "15"
+      }, 
+    ],
+     security: {
+      groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+       },
+   },
   {
     label: "الطرح والتعاقد",
     labelEn: "Tendering and Contracting",
@@ -1639,7 +1751,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+            //{group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1687,7 +1799,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+            //{group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1724,7 +1836,15 @@ var Information_Form = [
         type: "datetime",
   
         "state": "disabled",
-  
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Project Managers for Project Web App",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
       {
         InternalName: 'ApprovedBrochure',
@@ -1738,7 +1858,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1767,7 +1887,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1818,7 +1938,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1842,16 +1962,19 @@ var Information_Form = [
         type: "picker",
         validation: "required",
         disableOnWfTaskStage : "S05,S09",
+          descPhraseAr: "يجب ان يكون لديه صلاحيه طلب احتياج فى نظام موارد",
+        descPhraseEn: "Should have permission to request PR in Mawared",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+            //{group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
       },
+     
       // {
 
       //     "InternalName": "DirectorUnit",
@@ -1872,7 +1995,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1888,6 +2011,14 @@ var Information_Form = [
         //     "Project Managers for Project Web App",
         //   ],
         // },
+      },
+       {
+        InternalName: "MawaredProjectManager",
+        DisplayName: "مستكمل الطلب فى موارد",
+        DisplayNameEn: "Mawared Project Manager",
+          descPhraseAr: "يجب ان يكون لديه صلاحيه طلب احتياج فى نظام موارد",
+        descPhraseEn: "Should have permission to request PR in Mawared",
+        type: "picker",
       },
       //   {
       //     InternalName: 'ObjectiveOwner',
@@ -1963,7 +2094,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+         //   {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1975,15 +2106,15 @@ var Information_Form = [
         DisplayName: "وصف الإعتمادية",
         DisplayNameEn: "Description",
         type: "multiline",
-        maxchar: 5000,
+        maxchar: 500,
         disableOnWfTaskStage : "S05,S09",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2011,13 +2142,14 @@ var Information_Form = [
             { display: "active", value: "active" },
             { display: "stat14", value: "stat14" },
             { display: "stat13", value: "stat13" },
+            { display: "stat11", value: "stat11" },
           ],
         },
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2050,10 +2182,10 @@ var Information_Form = [
         DisplayName: 'اسم المخرج',
         DisplayNameEn: 'Name',
         type: 'string',
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 235 حرف",
+        descPhraseEn: "max length of letters equal 235",
         validation: 'required',
-        maxchar: '255',
+        maxchar: 235,
         // withletters: true,
         Errmsgkey: "withletterpattern",
         disableOnWfTaskStage : "S05,S09",
@@ -2061,7 +2193,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2072,15 +2204,15 @@ var Information_Form = [
         DisplayName: 'الوصف',
         DisplayNameEn: 'Description',
         type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 235,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 235 حرف",
+        descPhraseEn: "max length of letters equal 235",
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2112,7 +2244,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2132,11 +2264,12 @@ var Information_Form = [
         disableOnWfTaskStage : "S05,S09",
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
+        display:'none',
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2148,6 +2281,14 @@ var Information_Form = [
         DisplayName: 'الكمية',
         type: "number",    
         validation: 'required',
+      },
+      {
+        InternalName: 'AmountPrice',
+        DisplayNameEn: 'AmountPrice',
+        DisplayName: 'سعر الوحدة',
+        type: "number",        
+        validation: 'required',
+        // type: 'float',
       },
       // {
       //   "InternalName": "Status",
@@ -2193,7 +2334,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2262,7 +2403,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2284,7 +2425,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+         //   {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2297,15 +2438,15 @@ var Information_Form = [
         DisplayNameEn: 'Acceptance Criteria',
         type: 'multiline',
         "validation": "required",
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+         //   {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2316,15 +2457,15 @@ var Information_Form = [
         DisplayName: 'الملاحظات',
         DisplayNameEn: 'Comments',
         type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2339,12 +2480,13 @@ var Information_Form = [
       //   "Dispfieldkey": "Name",
       //   "valfieldkey": "Title",
       // },
-      {
+     /* {
         //tried
         InternalName: 'RelatedInitiativeDeliverable',
         DisplayName: 'مخرج المبادرة المرتبط',
         DisplayNameEn: 'Related Initiative Deliverable',
         type: 'lookuptoparentchild',
+        validation: "required",
         parentlist: 'Projects', //parent list name
         parentinternalname: 'RelatedInitiative', // internal name in parent list
         source: 'InitiativeDeliverables', // target list
@@ -2361,7 +2503,7 @@ var Information_Form = [
 
           ]
         },
-      },
+      },*/
       {
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
@@ -2383,7 +2525,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2475,7 +2617,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2513,7 +2655,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2537,7 +2679,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2558,7 +2700,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2593,15 +2735,15 @@ var Information_Form = [
         DisplayName: 'المخرجات',
         DisplayNameEn: 'Deliverables',
         type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2612,15 +2754,15 @@ var Information_Form = [
         DisplayName: 'الوصف',
         DisplayNameEn: 'Description',
         type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2657,7 +2799,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+           // {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2676,7 +2818,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+         //   {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2705,7 +2847,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2732,7 +2874,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
+          //  {group:"Project Managers for Project Web App",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]

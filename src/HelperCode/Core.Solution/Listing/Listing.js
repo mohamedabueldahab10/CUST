@@ -691,7 +691,7 @@ window.ListingData = {
 				if (records[i].ProjectType == 'Internal') {
 				  indexoflistinginternalproject = indexoflistinginternalproject + 1;
 				  InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
-					'<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexoflistinginternalproject + '</span>';
+					'<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" target="_blank"s href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexoflistinginternalproject + '</span>';
 				  // InternalProjectsHtml += '<li class="list-group-item link-arrow">' +
 				  //   '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/ProjectHome.aspx?PCODE=" + records[i].Title + isWFs + '">' + '';
 				} else if (records[i].ProjectType == 'External') {
@@ -1169,11 +1169,11 @@ window.ListingData = {
 			  //   $(".btn-add").css("display", "none");
 			  // }
 			  
-			  if (ICODE && (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') && !initiativeActualBudget) {
-				var HtmlStartNoInitBudgetMsg = '<div data-trans-addinitiativebudget class="actualBudget d-flex w-100 mx-3 mb-3 ErrorMsg Resources"></div>';
-				$(HtmlStartNoInitBudgetMsg).insertBefore($('.content-list-head > .listing-new-at'));
-				$(".btn-add").css("display", "none");
-			  }              
+			//   if (ICODE && (listkey == 'initiativedeliverables' || listkey == 'initiativemilestones') && !initiativeActualBudget) {
+			// 	var HtmlStartNoInitBudgetMsg = '<div data-trans-addinitiativebudget class="actualBudget d-flex w-100 mx-3 mb-3 ErrorMsg Resources"></div>';
+			// 	$(HtmlStartNoInitBudgetMsg).insertBefore($('.content-list-head > .listing-new-at'));
+			// 	$(".btn-add").css("display", "none");
+			//   }              
 			}
 
 			changeResources();
@@ -2439,6 +2439,28 @@ window.ListingData = {
 		</div>
 		`);  
 	} 
+	if (listkey == "projects" && UserICode) {
+		var hide = [
+		  "Sector",
+		  "SubSector",
+		  "RelatedInitiative",
+		  "WorkingStatus",
+		  "InitiativeType",
+		];
+	  
+		// $("#StatusFilterationHTMLid .dropdown").each(function () {
+		//   var $dropdown = $(this);
+		//   var internal = $dropdown
+		// 	.find("input[data-internal]")
+		// 	.first()
+		// 	.attr("data-internal");
+		//   if ($.inArray(internal, hide) !== -1) {
+		// 	$dropdown.hide();
+		//   }
+		// });
+		$('.filtersSection').hide();
+	  }
+	  
 	  if (originalstate) {
 		// $('div#StatusFilterationHTMLid').html(htmlFilter);
 		if (!isRoleDataLevelAccess) {

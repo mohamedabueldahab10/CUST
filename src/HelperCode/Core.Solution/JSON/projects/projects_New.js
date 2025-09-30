@@ -186,8 +186,10 @@ var Information_Form = [
         InternalName: "AgencyType",
         DisplayName: "نوع الجهة",
         DisplayNameEn: "Agency Type",
+        ToggleName: 'AgencyType',
         // validation: "required",
         type: "dropdownValues",
+        validation: "required",
         // disableOnWfTaskStage : "S05,S09",
         // security: {
         //   groups: [ ],
@@ -204,6 +206,10 @@ var Information_Form = [
             { display: "owneragency", value: "owneragency" },
           ],
         },
+        toggleValues: [
+          { value: 'executingagency', fields: ['ExecutionChannelsSection'] },
+          { value: 'owneragency', fields: ['OwnerChannelsSection'] },
+        ],
       },
       {
         InternalName: "Committees",
@@ -233,9 +239,9 @@ var Information_Form = [
         DisplayName: "الرجاء اختيار نوع المشروع",
         DisplayNameEn: "Is Strategic Project?",
         type: "dropdownValues",
-        options: {
+        options: { 
           choices: [
-            { display: "strategy", value: "strategy" },
+            { display: "strategy", value: "strategy" },// roles : ['VROE','LMSUExecution','EPMO','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl']  },
             {
               display: "operationally", value: "operationally",
               roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],
@@ -247,7 +253,7 @@ var Information_Form = [
             },
             {//allroles
               // display: "no", value: "no", roles: ['allRoles'],
-              display: "operationally", value: "operationally", roles: ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
+              display: "operationally", value: "operationally", roles: ['EPMO','FSSBCommiette','DeptOrgCommiette', 'VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
 
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
@@ -263,10 +269,10 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable'] }, //we can put more than 1  field
+          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable' ,'LinkingSection' ,'RelatedInitiativeDate'] }, //we can put more than 1  field
         ],
         toggleDisabledValues: [
-          { value: 'strategy', fields: ['Sector', 'SubSector'] },
+          { value: 'strategy', fields: ['RelatedInitiativeDate'] },
         ],
         validation: "required",
       },
@@ -439,14 +445,14 @@ var Information_Form = [
         DisplayName: " مخرج المبادرة المرتبط",
         DisplayNameEn: "Related Initiative Deliverable",
         ToggleName: "RelatedInitiativeDeliverable",
-        display: 'none',
         type: "lookupmultiselect",
         //from other list:ma
         source: "InitiativeDeliverables",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         grpfieldkey: "Title",
-        state: "disabled",
+        // state: "disabled",
+        display: 'none',
       },
       {
         InternalName: "Program",
@@ -504,6 +510,35 @@ var Information_Form = [
         // security: {
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
         // },
+      },
+       {
+        InternalName: "ExternalChannels",
+        DisplayName: "هل المشروع يتبع جهة خارجية",
+        DisplayNameEn: "ExternalChannels",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "no", value: "no" , selected: "selected"},
+            { display: "management", value: "management" , roles :"DeptOrgCommiette",
+             otherFields: [
+                { fieldName: 'WFModuleCode', value: 'DOC_CreateProject' },
+                { fieldName: 'WFStage', value: 'DOC_CreateProject01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
+                { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'Stage', value: 'S00' },
+              ]
+            },
+            { display: "supportcomm", value: "supportcomm" , roles :"FSSBCommiette",
+             otherFields: [
+                { fieldName: 'WFModuleCode', value: 'FSSBCreateProject' },
+                { fieldName: 'WFStage', value: 'FSSBCreateProject01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
+                { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'Stage', value: 'S00' },
+              ],
+            },
+          ],
+        },
       },
       // {
       //     "InternalName": "RelatedInitiativeDeliverable",
@@ -636,9 +671,9 @@ var Information_Form = [
         type: "dropdownValues",
         options: {
           choices: [
-            // شغيلي- تحولي - استراتيجي
+            /*// شغيلي- تحولي - استراتيجي
             // { display: 'strategyproject', value: 'strategyproject' },
-           /* {
+            {
               display: "transformativeproject",
               value: "transformativeproject",
             },
@@ -720,8 +755,20 @@ var Information_Form = [
       },
       {
         InternalName: "ExecutionChannels",
-        DisplayName: "الجهة المنفذة",
+        DisplayName: "الشركة المنفذة / المقاول",
         DisplayNameEn: "Execution Channels",
+        ToggleName: 'ExecutionChannelsSection',
+        type: "multiline",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 5000,
+
+      },
+      {
+        InternalName: "OwnerChannels",
+        DisplayName: "الجهة المالكة",
+        DisplayNameEn: "Owner Channels",
+        ToggleName: 'OwnerChannelsSection',
         type: "multiline",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
@@ -811,14 +858,14 @@ var Information_Form = [
         validation: "required",
         options: {
           choices: [
-            { display: "yes", value: "yes" },
-            { display: "no", value: "no" },
+            { display: "yes", value: "yes" , roles : ['EPMO','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl','Administrator']  },
+            { display: "no", value: "no" , roles : ['EPMO','FSSBCommiette','DeptOrgCommiette','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl','Administrator'] },
           ],
         },
-        toggleValues: [
+       toggleValues: [
           { value: 'yes', fields: [] },
-          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection', 'Delivrables', 'Milestones'] },
-        ],
+          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection' ,'LinkingSection' ,'Weight', 'Amount','Quantity','AmountPrice'] },
+       ],
         requiredValues: [
           { value: "no", fields: ["FundingSources","FundingStatus"] }, //we can put more than 1  field
         ],
@@ -953,7 +1000,7 @@ var Information_Form = [
         DisplayName: "التكلفة الفعلية",
         DisplayNameEn: "Actual Budget",
         type: "float",
-        className: "disable_enable_section",
+      //  className: "disable_enable_section",
         descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
         descPhraseEn: "Filed is required to add milestones and Deliverables",
         // "state": "disabled",
@@ -1010,6 +1057,7 @@ var Information_Form = [
         numberOfDigits: "15",
         // "state": "disabled"
       },
+
       // {
       //     "InternalName": "SpentBudget",
       //     "DisplayName": "المبالغ المصروفة",
@@ -1044,6 +1092,32 @@ var Information_Form = [
       // },
     ],
   },
+   {
+    label: "بند الارتباط",
+    labelEn: "Linking Item",
+    description: "",
+    descriptionEn: "",
+    toggleName: 'LinkingSection',
+    subFields: [
+      {
+        InternalName: "LinkingProgress",
+        DisplayName: "جاري الارتباط",
+        DisplayNameEn: "Linking Progress",
+        type: "float",
+        numberOfDigits: "15"
+      },
+       {
+        InternalName: "ExpenseProgress",
+        DisplayName: "جاري الصرف",
+        DisplayNameEn: "Expense Progress",
+        type: "float",
+        numberOfDigits: "15"
+      }, 
+    ],
+     security: {
+      groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+       },
+   },
   {
     label: "الطرح والتعاقد",
     labelEn: "Tendering and Contracting",
@@ -1192,9 +1266,12 @@ var Information_Form = [
         InternalName: "ProjectManager",
         DisplayName: "مدير المشروع",
         DisplayNameEn: "Project Manager",
+        descPhraseAr: "يجب ان يكون لديه صلاحيه طلب احتياج فى نظام موارد",
+        descPhraseEn: "Should have permission to request PR in Mawared",
         type: "picker",
         validation: "required",
       },
+     
       // {
 
       //     "InternalName": "DirectorUnit",
@@ -1221,6 +1298,14 @@ var Information_Form = [
         //     "Project Managers for Project Web App",
         //   ],
         // },
+      },
+      {
+        InternalName: "MawaredProjectManager",
+        DisplayName: "مستكمل الطلب فى موارد",
+        DisplayNameEn: "Mawared Project Manager",
+         descPhraseAr: "يجب ان يكون لديه صلاحيه طلب احتياج فى نظام موارد",
+        descPhraseEn: "Should have permission to request PR in Mawared",
+        type: "picker",
       },
       //   {
       //     InternalName: 'ObjectiveOwner',
@@ -1249,6 +1334,7 @@ var Information_Form = [
       // }
     ],
   },
+  
   // {
   //     label: 'الجهات المشاركة الأساسية',
   //     labelEn: 'The Main Participants',
@@ -1337,7 +1423,7 @@ var Information_Form = [
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال التكلفة)',
     descriptionEn: 'Details (you can enter the values when enter the Amount)',
     sectiontype: 'master',
-    className: "disable_section", // to make the section disabled on form render
+  //  className: "disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
     subFields: [
       // {
@@ -1377,6 +1463,7 @@ var Information_Form = [
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
+        ToggleName: "Weight",
         listname: 'Deliverables',
         targetcode: 'ProjectCode',
         targetelement: 'Weight',
@@ -1392,19 +1479,31 @@ var Information_Form = [
         DisplayNameEn: 'Amount',
         dontSubmit: true,
         type: 'percentbyrelatedparent',
+        ToggleName: "Amount",
         listname: 'Projects',
         parentinternalname: 'ActualBudget',
         targetelement: 'Weight',
         validation: 'required',
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget",
+        display:'none'
       },
       {
         InternalName: 'Quantity',
         DisplayNameEn: 'Quantity',
         DisplayName: 'الكمية',
         type: "number",    
+        ToggleName:"Quantity",
         validation: 'required',
+      },
+  	{
+        InternalName: 'AmountPrice',
+        DisplayNameEn: 'Amount Price',
+        DisplayName: 'سعر الوحدة',
+        type: "number",      
+        ToggleName:"AmountPrice",  
+        validation: 'required',
+        // type: 'float',
       },
       // {
       //   InternalName: 'Status',
@@ -1592,7 +1691,7 @@ var Information_Form = [
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال التكلفة)',
     descriptionEn: 'Details (you can enter the values when enter the Amount)',
     sectiontype: 'master',
-    className: "disable_section", // to make the section disabled on form render
+   // className: "disable_section", // to make the section disabled on form render
     targetlist: 'Milestones',
     toggleName: 'Milestones',
     subFields: [
@@ -1635,6 +1734,7 @@ var Information_Form = [
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
+        ToggleName: "Weight",
         listname: 'Milestones',
         targetcode: 'ProjectCode',
         targetelement: 'Weight',
@@ -1650,12 +1750,14 @@ var Information_Form = [
         DisplayNameEn: 'Amount',
         dontSubmit: true,
         type: 'percentbyrelatedparent',
+        ToggleName: "Amount",
         listname: 'Projects',
         parentinternalname: 'ActualBudget',
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget",
         targetelement: 'Weight',
         validation: 'required',
+        display:'none'
       },
       {
         InternalName: 'PlannedDate',
@@ -1669,7 +1771,7 @@ var Information_Form = [
         validation: 'required',
         Errmsgkey: 'btwndatepattern',
       },
-      {
+    /*  {
         InternalName: 'ActualDate',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         DisplayNameEn: 'Actual Date',
@@ -1680,7 +1782,8 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         max: 'today',
         Errmsgkey: 'cancelationdatepattern',
-      },
+        display:'none'
+      },*/
       // {
       //   InternalName: 'CommittedDate',
       //   DisplayName: 'تاريخ الالتزام',
