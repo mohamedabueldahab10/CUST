@@ -136,14 +136,15 @@ span.no-data-td img{
     width: 10px;
 }
 
-.hrsd-table-responsive::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 3px rgb(0 0 0 / 30%);
-    border-radius: 10px;
-}
-
 .hrsd-table-responsive::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: linear-gradient(94.47deg, #14415a 9.97%, #000000 166.42%);
+    background: linear-gradient(94.47deg, #14415a 0.97%, #000 166.42%);
+
+}
+.hrsd-table-responsive::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px rgb(0 0 0 / 30%);
+    background: linear-gradient(94.47deg, #148282 0.97%, #fff 166.42%);
+    border-radius: 10px;
 }
 
 /* LTR (English) */

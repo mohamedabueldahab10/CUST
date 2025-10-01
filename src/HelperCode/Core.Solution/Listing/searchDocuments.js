@@ -142,7 +142,7 @@ window.checkdocumenthtml = setInterval(function () {
   `);
     changeResources();
     let currentPage = 1;
-    const pageSize = 10;
+    const pageSize = 20;
     let filteredRecords = [];
     let currentSortField = "";
     let currentSortOrder = "asc";
@@ -223,11 +223,13 @@ window.checkdocumenthtml = setInterval(function () {
       html += `<button type="button" class="pagebtn prev-page" ${
         currentPage === 1 ? "disabled" : ""
       } data-dir="prev"><i class="fas fa-chevron-left"></i></button>`;
-      for (let i = 1; i <= totalPages; i++) {
-        html += `<button type="button" class="pagebtn ${
-          currentPage === i ? "active" : ""
-        }" data-page="${i}">${i}</button>`;
-      }
+
+      // for (let i = 1; i <= totalPages; i++) {
+      //   html += `<button type="button" class="pagebtn ${
+      //     currentPage === i ? "active" : ""
+      //   }" data-page="${i}">${i}</button>`;
+      // }
+
       html += `<button type="button" class="pagebtn next-page" ${
         currentPage === totalPages ? "disabled" : ""
       } data-dir="next"><i class="fas fa-chevron-right"></i></button>`;
@@ -439,7 +441,20 @@ window.checkdocumenthtml = setInterval(function () {
         pageSize: 0,
         pageIndex: 0,
       };
-
+      $("#resultsBody").html(`
+        <tr>
+          <td colspan="10" class="">
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <div style="z-index: 100000" id="owlreporter-preloader">
+                <div id="loader" class="center">
+                </div>
+                <div class="loader-section section-left">
+                </div>
+              </div>
+            </div>        
+          </td>
+        </tr>
+      `);
       fetchResults(payload)
         .done(function (data) {
           filteredRecords =

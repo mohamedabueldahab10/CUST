@@ -2475,6 +2475,14 @@ debugger;
               Get_ActualAnnualTotal.init(yearValue);
             });
             $("#A, #B, #CC, #D, #E, #F, #G").on("input change", function () {
+              // set date to be today 
+              var today = new Date();
+              var yyyy = today.getFullYear();
+              var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+              var dd = String(today.getDate()).padStart(2, '0'); 
+              var formattedDate = yyyy + '-' + mm + '-' + dd;
+          
+              $("#ActualkpiDate").val(formattedDate);
 
                 var kpiTitle = $("#Title").val(); // Current KPI title
 
