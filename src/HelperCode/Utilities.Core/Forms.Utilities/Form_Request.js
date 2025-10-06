@@ -2544,6 +2544,72 @@ window.View_Data_Request = {
         $("#PillarsExist").parent().hide();
       }
     }
+    if (listkey == "deliverables" || listkey == "milestones") {
+      if (typeof USERPCODE !== "undefined" && USERPCODE) {
+        $.ajax({
+          url: "/_api/web/lists/getbytitle('Projects')/items",
+          type: "GET",
+          data: {
+            $select: "Title,IsZeroBudgetProject",
+            $filter: "Title eq '" + USERPCODE + "'",
+          },
+          headers: {
+            Accept: "application/json;odata=verbose",
+          },
+          success: function (data) {
+            if (data.d.results.length > 0) {
+              var project = data.d.results[0];
+              if (
+                project.IsZeroBudgetProject &&
+                project.IsZeroBudgetProject.toLowerCase() === "yes"
+              ) {
+                hideBudgetFields();
+              }
+            }
+          },
+          error: function (error) {
+            console.log("Error fetching project data: ", error);
+          },
+        });
+      }
+    }
+    if (listkey == "initiativedeliverables" || listkey == "initiativemilestones") {
+      if (typeof UserICode !== "undefined" && UserICode) {
+        $.ajax({
+          url: "/_api/web/lists/getbytitle('Initiatives')/items",
+          type: "GET",
+          data: {
+            $select: "Title,IsZeroBudgetInitiative",
+            $filter: "Title eq '" + UserICode + "'",
+          },
+          headers: {
+            Accept: "application/json;odata=verbose",
+          },
+          success: function (data) {
+            if (data.d.results.length > 0) {
+              var initiative = data.d.results[0];
+              if (
+                initiative.IsZeroBudgetInitiative &&
+                initiative.IsZeroBudgetInitiative.toLowerCase() === "yes"
+              ) {
+                hideBudgetFields();
+              }
+            }
+          },
+          error: function (error) {
+            console.log("Error fetching initiative data: ", error);
+          },
+        });
+      }
+    }
+    function hideBudgetFields() {
+      var fields = ["#Weight", "#Amount", "#Quantity", "#AmountPrice","#InvoiceNumber" , "#InvoiceDate"];
+      $.each(fields, function (i, f) {
+        $(f).hide(); // hide the input
+        $(f).closest(".CFIELD").addClass("hide-field").css("display", "none"); // add hide-field to container
+      });
+    }
+    
     ////////////////////////////////////////////////
     // if(isView && listkey == 'goalstrategy'){
     // 	if($('#Ministry').html() == No_Data){
