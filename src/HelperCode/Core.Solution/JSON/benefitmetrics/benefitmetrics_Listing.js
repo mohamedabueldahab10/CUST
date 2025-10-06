@@ -19,7 +19,7 @@ var Listing_Info = [
         "InternalName": "PeriodType",
 	 	"DisplayName": "دورية القياس",
         "DisplayNameEn": "Period Type",
-        "type": "dropdownValues",
+        "type": "text",
         inlisting: true,
         infilter: true,
         needTrans:true

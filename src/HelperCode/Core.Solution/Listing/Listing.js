@@ -17,6 +17,8 @@ var PQuery = '',
   isOnload = true,
   isEmptyFilter = true, SPHTTPitemsEnumerable,
   AllRecordsWithID = [];
+  window.IsZeroBudgetInitiative = false;
+  window.IsZeroBudgetProject = false;
 //
 
 //
@@ -91,9 +93,13 @@ if (listkey == 'projects' && PCODE != null && PCODE != '') {
   PQueryFilteration = '<Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq>';
 }
 else if (UserICode != null && UserICode != '') {
+  if(listkey=="projects"){
   // PCODE_STRING = '&PCODE='+PCODE;
-  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where></Query></View>';
-  PQueryFilteration = '<Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + UserICode + '</Value></Eq>';
+  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="RelatedInitiative" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where></Query></View>';
+  PQueryFilteration = '<Eq><FieldRef Name="RelatedInitiative" /><Value Type="Text">' + UserICode + '</Value></Eq>';
+} else {   
+	PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where></Query></View>';
+  PQueryFilteration = '<Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + UserICode + '</Value></Eq>';}
 }
 else if (UserSTCode != null && UserSTCode != '') {
   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="StrategicPartnershipCode" /><Values><Value Type="Text">' + UserSTCode + '</Value></Values></In></And></Where></Query></View>';
@@ -757,10 +763,28 @@ window.ListingData = {
 			  } else {
 				html += '<li class="list-group-item link-arrow">' +
 				  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" target="_blank" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&PCODE=" + PCODE + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
-			  }
+			  }	               
+			  var zeroBudgetFields = [
+				"Weight",
+				"Amount",
+				"Quantity",
+				"AmountPrice",
+				"InvoiceNumber",
+				"InvoiceDate"
+			  ];
+			   var obj = records[i]; 
+			   for (var key in obj) {
 
-			  var obj = records[i];
-			  for (var key in obj) { // looping columns
+				// Skip rendering zero budget fields
+				if (
+					(window.IsZeroBudgetInitiative && (listkey == "initiativedeliverables" || listkey == "initiativemilestones")) ||
+					(window.IsZeroBudgetProject && (listkey == "deliverables" || listkey == "milestones"))
+				) { 
+					if (zeroBudgetFields.indexOf(key) !== -1) {
+					continue; // skip this field
+					}
+				} 
+				// looping columns
 				var Field_In_Use = Listing_Info.filter(function (el) {
 				  return el.InternalName === key;
 				});
@@ -1244,6 +1268,56 @@ window.ListingData = {
 		  }
 		});
 	}
+	 // Pre-fetch zero-budget flags from lists
+	 if (typeof UserICode !== "undefined" && UserICode) {
+		$.ajax({
+			url: "/_api/web/lists/getbytitle('Initiatives')/items",
+			type: "GET",
+			data: {
+			$select: "Title,IsZeroBudgetInitiative",
+			$filter: "Title eq '" + UserICode + "'",
+			},
+			headers: {
+			Accept: "application/json;odata=verbose",
+			},
+			success: function (data) {
+			if (data.d.results.length > 0) {
+				var initiative = data.d.results[0];
+				if (initiative.IsZeroBudgetInitiative && initiative.IsZeroBudgetInitiative.toLowerCase() === "yes") {
+				window.IsZeroBudgetInitiative = true;
+				}
+			}
+			},
+			error: function (error) {
+			console.log("Error fetching initiative data: ", error);
+			},
+		});
+		}
+
+		if (typeof USERPCODE !== "undefined" && USERPCODE) {
+		$.ajax({
+			url: "/_api/web/lists/getbytitle('Projects')/items",
+			type: "GET",
+			data: {
+			$select: "Title,IsZeroBudgetProject",
+			$filter: "Title eq '" + USERPCODE + "'",
+			},
+			headers: {
+			Accept: "application/json;odata=verbose",
+			},
+			success: function (data) {
+			if (data.d.results.length > 0) {
+				var project = data.d.results[0];
+				if (project.IsZeroBudgetProject && project.IsZeroBudgetProject.toLowerCase() === "yes") {
+				window.IsZeroBudgetProject = true;
+				}
+			}
+			},
+			error: function (error) {
+			console.log("Error fetching project data: ", error);
+			},
+		});
+	}
 	// ListingData.Get_DDL.init();
   },
   //Filteration functions
@@ -1334,7 +1408,12 @@ window.ListingData = {
 		PQueryFilteration = '<In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' + PCODE + '</Value></Values></In>';
 	  }
 	  else if (ICODE != null && ICODE != '') {
+		if (listkey == 'projects') {
+		  PQueryFilteration = '<In><FieldRef Name="RelatedInitiative" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
+		}
+		else {
 		PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
+		}
 	  }
 	  else if (STCODE != null && STCODE != '') {
 		PQueryFilteration = '<In><FieldRef Name="StrategicPartnershipCode" /><Values><Value Type="Text">' + UserSTCode + '</Value></Values></In>';
@@ -1402,7 +1481,11 @@ window.ListingData = {
 		if (PCODE != null && PCODE != '') {
 		  PQuery = '<View><Query><Where><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' + PCODE + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
 		} else if (ICODE != null && ICODE != '') {
+			if (listkey == 'projects') {
+		  PQuery = '<View><Query><Where><In><FieldRef Name="RelatedInitiative" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+		  } else {
 		  PQuery = '<View><Query><Where><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+		  }
 		}
 		else if (STCODE != null && STCODE != '') {
 		  PQuery = '<View><Query><Where><In><FieldRef Name="StrategicPartnershipCode" /><Values><Value Type="Text">' + UserSTCode + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
@@ -2448,19 +2531,44 @@ window.ListingData = {
 		  "InitiativeType",
 		];
 	  
-		// $("#StatusFilterationHTMLid .dropdown").each(function () {
-		//   var $dropdown = $(this);
-		//   var internal = $dropdown
-		// 	.find("input[data-internal]")
-		// 	.first()
-		// 	.attr("data-internal");
-		//   if ($.inArray(internal, hide) !== -1) {
-		// 	$dropdown.hide();
-		//   }
-		// });
-		$('.filtersSection').hide();
+		$("#StatusFilterationHTMLid .dropdown").each(function () {
+		  var $dropdown = $(this);
+		  var internal = $dropdown
+			.find("input[data-internal]")
+			.first()
+			.attr("data-internal");
+		  if ($.inArray(internal, hide) !== -1) {
+			$dropdown.hide();
+		  }
+		});
+		// $('.filtersSection').hide();
 	  }
 	  
+	  if (
+		listkey == "initiativedeliverables" ||
+		listkey == "initiativemilestones" ||
+		listkey == "deliverables" ||
+		listkey == "milestones") {
+		var hide = [
+			"Weight",
+			"Amount",
+			"Quantity",
+			"AmountPrice",
+			"InvoiceNumber",
+			"InvoiceDate",
+		];
+
+		// hide filters based on existing flags
+		if (window.IsZeroBudgetInitiative || window.IsZeroBudgetProject) {
+			$("#StatusFilterationHTMLid .dropdown").each(function () {
+			var $dropdown = $(this);
+			var internal = $dropdown.find("input[data-internal]").first().attr("data-internal");
+			if ($.inArray(internal, hide) !== -1) {
+				$dropdown.hide();
+			}
+			});
+		}
+	  }  
 	  if (originalstate) {
 		// $('div#StatusFilterationHTMLid').html(htmlFilter);
 		if (!isRoleDataLevelAccess) {

@@ -65,6 +65,28 @@ var Information_Form = [
         // "state": "disabled",
         // dynamic: "Initiative"
       },
+          {
+        InternalName: 'BenefitTarget',
+        DisplayNameEn: 'Benefit Traget',
+        DisplayName: 'مستهدفات المنفعة',
+        maxchar: '500',
+        type: 'multiline',
+      },
+           {
+        InternalName: 'PlannedAchievementDate',
+         DisplayName: 'تاريخ المخطط لتحقيق المنفعة',
+         DisplayNameEn: 'Planned Achievement Date',
+         format: 'DateOnly',
+         type: 'datetime',
+         
+       },
+        {
+        InternalName: 'Notes',
+        DisplayNameEn: 'Notes',
+        DisplayName: 'الملاحظات',
+        maxchar: '200',
+        type: 'multiline',
+      },
       {
         InternalName: 'RelatedSubKpis',
         DisplayNameEn: 'Related Sub Kpis',
@@ -258,6 +280,7 @@ var Information_Form = [
       },
     ],
   },
+  
   {
     label: 'وثائق داعمة',
     labelEn: 'Supporting Documents',
@@ -271,6 +294,7 @@ var Information_Form = [
         type: 'file',
         withAddBtn: 'true',
         fileExtensions: 'png,jpeg,svg,msg,rar,pptx,xlsx,docx,pdf',
+        validation: 'required',
         // fileExtensions: 'png,jpeg,svg,xlsx,docx,jpg,txt,pdf',
         // validation: 'required',
       },

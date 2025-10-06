@@ -191,6 +191,45 @@ var Information_Form = [
     ],
   },
   {
+        InternalName: 'BenefitStatus',
+        DisplayNameEn: 'Benefit Status',
+        DisplayName: 'حالة المنفعة',
+        ToggleName: 'Benefit Status',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'stat15', value: 'لم يتم تحقيقه' },
+            { display: 'stat16', value: 'تم تحقيقه جزئياً' },
+            { display: 'stat17', value: 'تم تحقيق المستهدف' },
+            { display: 'stat18', value: 'لا يقاس' },
+            { display: 'stat19', value: 'لا توجد قيمة' },
+           
+          ],
+        }
+        },
+        {
+        InternalName: 'BenefitTarget',
+        DisplayNameEn: 'Benefit Traget',
+        DisplayName: 'مستهدفات المنفعة',
+        maxchar: '500',
+        type: 'multiline',
+      },
+      {
+        InternalName: 'PlannedAchievementDate',
+         DisplayName: 'تاريخ المخطط لتحقيق المنفعة',
+         DisplayNameEn: 'Planned Achievement Date',
+         format: 'DateOnly',
+         type: 'datetime',
+         
+       },
+         {
+        InternalName: 'Notes',
+        DisplayNameEn: 'Notes',
+        DisplayName: 'الملاحظات',
+        maxchar: '200',
+        type: 'multiline',
+      },
+  {
     label: 'بيانات المخرجات',
     labelEn: 'Benefit Deliverables',
     description: 'التفاصيل',
@@ -241,4 +280,5 @@ var Information_Form = [
       },
     ],
   },
+ 
 ]
