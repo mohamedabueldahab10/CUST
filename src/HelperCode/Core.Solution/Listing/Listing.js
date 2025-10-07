@@ -666,7 +666,7 @@ window.ListingData = {
 		  //     }
 		  //   }
 		  // });
-z
+
 		  records.forEach((element, i) => {
 			if ((element.ProjectCode && element.ProjectCode != No_Data) && element.WorkflowName == "Project") { // add element.projectCode !=No_Data to show the initiative in task list
 			  if (!userProjects.includes(element.ProjectCode)) {
