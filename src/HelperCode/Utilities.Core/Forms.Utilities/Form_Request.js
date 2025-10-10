@@ -1,4 +1,5 @@
 window.kpiCodeResult = "";
+window.benefitCodeResult = "";
 ////////////
 var allFileIndex = 0;
 var relatedObjInit = "";
@@ -684,6 +685,9 @@ window.Edit_Data_Request = {
       var yearValue = $("#Actual").parent().parent().find("#Year").val();
       console.log('yearValue',yearValue);
       Get_ActualAnnualTotal.init(yearValue);
+    }
+    if (listkey == "benefits") {
+      benefitCodeResult = oListItem.get_item("Title");
     }
 
     if (listkey == "benefitmetrics") {
@@ -2128,6 +2132,8 @@ window.View_Data_Request = {
     }
     if (USERisWF) {
       $(".container-body .d-flex.btnactionrow").hide();
+    } else {
+      Get_AllTaskHistoryRelatedToForm.init();
     }
 
     //handle top menu navigation
@@ -2373,6 +2379,21 @@ window.View_Data_Request = {
       }
 
       equationBenefit.init();
+    }
+    if (listkey == "benefits") {
+      benefitCode = oListItem.get_item("Title");
+
+      if (!USERisWF) {
+        $("#printableArea").prepend(
+          '<a class="linkmsg alert" href="' +
+            _spPageContextInfo.siteAbsoluteUrl +
+            "/sitepages/Targets.aspx?BenefitCode=" +
+            benefitCode +
+            '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-benefitmetricstext class="Resources">' +
+            "</span></a>"
+        );
+      }
+      // equationBenefit.init();
     }
 
     // if (listkey == "goalstrategy") {
@@ -8056,8 +8077,25 @@ window.Get_AllTaskHistoryRelatedToForm = {
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Tasks");
-
-    var camlQueryXml = `<View>
+    var titleToCheck =$('#Title').text();
+    var camlQueryXml =``;
+    if (titleToCheck){
+      debugger
+      camlQueryXml = `<View>
+      <Query>
+        <Where>
+          <And>
+            <Eq><FieldRef Name='RelatedItemTitle'/><Value Type='Text'>${titleToCheck}</Value></Eq>
+            <Eq><FieldRef Name='Status'/><Value Type='Choice'>Closed</Value></Eq>
+          </And>
+        </Where>
+        <OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy>
+      </Query>
+      <RowLimit>5</RowLimit>
+    </View>`;
+    }
+    else {
+      camlQueryXml = `<View>
       <Query>
         <Where>
           <And>
@@ -8069,6 +8107,7 @@ window.Get_AllTaskHistoryRelatedToForm = {
       </Query>
       <RowLimit>5</RowLimit>
     </View>`;
+    }
 
     if (isLoadMore) {
       camlQueryXml = camlQueryXml.replace(

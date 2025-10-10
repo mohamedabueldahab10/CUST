@@ -10303,7 +10303,7 @@ window.View_ListInfo = {
             //getTaskHistory.init();
             Get_TaskHistory.init();
           } else {
-            Get_AllTaskHistoryRelatedToForm.init();
+            // Get_AllTaskHistoryRelatedToForm.init();
           }
           //
 

@@ -1071,6 +1071,72 @@ window.New_Data_Submit = {
             );
           }
           newKPIEquation.init();
+        } else if (listkey == "benefits") {
+          var dateFrom = $("#FromDate").val();
+          var dateFromTime = new Date(dateFrom); // when use normal date time
+          // var yearFrom = dateFromTime.getFullYear();
+          yearFrom = Number(dateFrom);
+          // var yearFrom = Number(dateFrom)
+          var dateTo = $("#ToDate").val();
+          var dateToTime = new Date(dateTo); // when use normal date time
+          // var yearTo = dateToTime.getFullYear();
+          var yearTo = Number(dateTo);
+          var numberOfResults = yearTo - yearFrom;
+
+          if (numberOfResults > 0) {
+            for (var i = 0; i <= numberOfResults; i++) {
+              var Name = $("#Name").val();
+              var PeriodType = $("#PeriodType").val();
+              var Types = $("#Types").val();
+              var KpiYear = yearFrom + i;
+              var MainGoalRelated = $("#RelatedStrategyObjective").val()
+                ? $("#RelatedStrategyObjective").val()
+                : "";
+              var subGoalRelated = $("#SubRelatedObjective").val()
+                ? $("#SubRelatedObjective").val()
+                : "";
+              var Sector = $("#Sector").val() ? $("#Sector").val() : "";
+              var SubSector = $("#SubSector").val() ? $("#SubSector").val() : "";
+              var Portfolio = $("#Portfolio").val() ? $("#Portfolio").val() : "";
+              kpiResults.init(
+                Name,
+                PeriodType,
+                Types,
+                KpiYear,
+                Sector,
+                SubSector,
+                Portfolio,
+                MainGoalRelated,
+                subGoalRelated
+              );
+            }
+          } else {
+            var Name = $("#Name").val();
+            var PeriodType = $("#PeriodType").val();
+            var Types = $("#Types").val();
+            var KpiYear = yearFrom + i;
+            var MainGoalRelated = $("#RelatedStrategyObjective").val()
+              ? $("#RelatedStrategyObjective").val()
+              : "";
+            var subGoalRelated = $("#SubRelatedObjective").val()
+              ? $("#SubRelatedObjective").val()
+              : "";
+            var Sector = $("#Sector").val() ? $("#Sector").val() : "";
+            var SubSector = $("#SubSector").val() ? $("#SubSector").val() : "";
+            var Portfolio = $("#Portfolio").val() ? $("#Portfolio").val() : "";
+            kpiResults.init(
+              Name,
+              PeriodType,
+              Types,
+              KpiYear,
+              Sector,
+              SubSector,
+              Portfolio,
+              MainGoalRelated,
+              subGoalRelated
+            );
+          }
+          // newKPIEquation.init();
         } else if (listkey == "benefitmetrics") {
           var dateFrom = $("#FromDate").val();
           benefitYearFrom = Number(dateFrom);
@@ -2622,6 +2688,47 @@ window.Edit_Data_Submit = {
 
     handleKPIResults();
     Edit_Data_Submit.g.oListItem.update();
+    if (listkey == "benefits") {
+      // get the data to update the kpi result list
+      kpiName = $("#Name").val() ? $("#Name").val() : "";
+      kpicurrentYear = $("#Year").val() ? $("#Year").val() : "";
+      kpiType = $("#Types").val() ?  $("#Types").val() : "";
+      kpiSector = $("#Sector").val() ? $("#Sector").val() : "";
+      kpiTotalActual = $("#Actual").val() ? $("#Actual").val()  : "";
+      kpiSubSector = $("#SubSector").val() ? $("#SubSector").val()  : "";
+      kpiMainGoalRelated = $("#RelatedStrategyObjective").val()
+        ? $("#RelatedStrategyObjective").val()
+        : "";
+      kpiSubGoalRelated = $("#SubRelatedObjective").val()
+        ? $("#SubRelatedObjective").val()
+        : "";
+      kpiPortfolio = $("#Portfolio").val() ? $("#Portfolio").val() : "";
+      kpiPerformanceAnalysis = $("#PerformanceAnalysis").val()
+        ? $("#PerformanceAnalysis").val()
+        : "";
+      kpiPeriodTypeUpdate = $("#PeriodType").val()
+        ? $("#PeriodType").val()
+        : "";
+      kpiYearPicked = $("#Year").val() ? $("#Year").val() : "";
+      kpiMidPicked = $("#Midterms").val() ? $("#Midterms").val() : "";
+      kpiQuarterPicked = $("#Quarter").val() ? $("#Quarter").val() : "";
+      kpiMonthPicked = $("#Months").val() ? $("#Months").val() : "";
+      kpiRecurrenceChanged = kpiPeriodTypeUpdate ;
+      Edit_KPI_Results.init(
+        kpiName,
+        kpiType,
+        kpiSector,
+        kpiSubSector,
+        kpiPortfolio,
+        kpiMainGoalRelated,
+        kpiSubGoalRelated,
+        kpiPerformanceAnalysis,
+        kpiRecurrenceChanged,
+        kpicurrentYear,
+        kpiTotalActual
+      );
+     
+    }
     clientContext.load(Edit_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
@@ -3045,6 +3152,21 @@ window.Edit_Data_Submit = {
                 kpiTotalActual
               );
              
+            }  else if (listkey == "benefits") {
+              Edit_KPI_Results.init(
+                kpiName,
+                kpiType,
+                kpiSector,
+                kpiSubSector,
+                kpiPortfolio,
+                kpiMainGoalRelated,
+                kpiSubGoalRelated,
+                kpiPerformanceAnalysis,
+                kpiRecurrenceChanged,
+                kpicurrentYear,
+                kpiTotalActual
+              );
+             
             } else if (listkey == "projects" && PCODE) {
               getProjectInfoToUpdateEPM();
             } else {
@@ -3243,12 +3365,31 @@ var kpiResults = {
     var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
     var itemCreateInfo = new SP.ListItemCreationInformation();
     kpiResults.g.oListItem = oList.addItem(itemCreateInfo);
-
+    if(listkey == "benefits"){
+      var prt1 = listkey.substring(0, 2).toUpperCase(),
+      prt2 = String(new Date().getFullYear()).slice(4 - 2),
+      prt3 = IID.toString().padStart(4, "0");
+      var Code = prt1 + "-" + prt2 + "-" + prt3;
+      kpiResults.g.oListItem.set_item("BenefitCode", Code);
+      var eqkey = "kpiresults";
+      (prt1 = eqkey.substring(0, 2).toUpperCase()),
+        (Code = prt1 + "-" + prt2 + "-" + prt3);
+      kpiResults.g.oListItem.set_item("Title", Code);
+  
+      kpiResults.g.oListItem.set_item("Name", Name);
+      kpiResults.g.oListItem.set_item("PeriodType", PeriodType);
+      kpiResults.g.oListItem.set_item("Types", Types);
+      kpiResults.g.oListItem.set_item("Year", KpiYear);
+      kpiResults.g.oListItem.set_item("Sector", Sector);
+      kpiResults.g.oListItem.set_item("SubSector", SubSector);
+      kpiResults.g.oListItem.set_item("Portfolio", Portfolio);
+    } else {
     var prt1 = listkey.substring(0, 2).toUpperCase(),
       prt2 = String(new Date().getFullYear()).slice(4 - 2),
       prt3 = IID.toString().padStart(4, "0");
-    var Code = prt1 + "-" + prt2 + "-" + prt3;
-    kpiResults.g.oListItem.set_item("KPI", Code);
+      var Code = prt1 + "-" + prt2 + "-" + prt3;
+      kpiResults.g.oListItem.set_item("KPI", Code);
+    
 
     var eqkey = "kpiresults";
     (prt1 = eqkey.substring(0, 2).toUpperCase()),
@@ -3304,6 +3445,7 @@ var kpiResults = {
 
       kpiResults.g.oListItem.set_item(id, ppp);
     }
+  }
     /////////////////////////////////////////////////////////
 
     kpiResults.g.oListItem.update();
@@ -3430,11 +3572,19 @@ var Edit_KPI_Results = {
     var dfd = $.Deferred();
     var programList = context.get_web().get_lists().getByTitle("KPIResults");
     var camlQuery = new SP.CamlQuery();
+    if(listkey == "benefits"){
     camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='BenefitCode'/><Value Type='Text'>" +
+        benefitCodeResult +
+        "</Value></Eq></And></Where></Query></View>"
+    );
+    } else {
+     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
         kpiCodeResult +
         "</Value></Eq></And></Where></Query></View>"
-    );
+    ); 
+    }
 
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
@@ -3452,6 +3602,13 @@ var Edit_KPI_Results = {
 
           //Get Item by current ID
           var items = programList.getItemById(currentId);
+          if (listkey == "benefits") {
+          items.set_item("Name", Name);
+          items.set_item("Types", Types);
+          items.set_item("Year", yearItem);
+          items.set_item("PeriodType", kpiPeriodTypeUpdate)
+          }
+          else {
           items.set_item("Name", Name);
           items.set_item("Types", Types);
           items.set_item("Sector", Sector);
@@ -3532,6 +3689,7 @@ var Edit_KPI_Results = {
             items.set_item("RelatedGoal", kpiSubGoalRelated);
             items.set_item("Portfolio", kpiPortfolio);
           }
+        }
           //Update the item
           items.update();
           currentItemArray.push(items);
@@ -4233,6 +4391,21 @@ var Edit_Master_Details_Submit = {
               kpicurrentYear,
               kpiTotalActual
             );
+          } else if (listkey == "benefits") {
+            // to update the kpi result list
+            Edit_KPI_Results.init(
+              kpiName,
+              kpiType,
+              kpiSector,
+              kpiSubSector,
+              kpiPortfolio,
+              kpiMainGoalRelated,
+              kpiSubGoalRelated,
+              kpiPerformanceAnalysis,
+              kpiRecurrenceChanged,
+              kpicurrentYear,
+              kpiTotalActual
+            );
           } else {
             var fieldTargetListLength = $(
               ".Details-Item.EditItem ul[data-fieldtargetlist]"
@@ -4892,6 +5065,55 @@ function _uploadFile() {
                 docPurpose: purpose,
               };
             }
+          } else if (isEdit && listkey == "benefits") {
+            var kpiPeriodType = $("#PeriodType").val();
+            mainKpiIsUpload = true;
+            Edit_KPI_Results.init(
+              kpiName,
+              kpiType,
+              kpiSector,
+              kpiSubSector,
+              kpiPortfolio,
+              kpiMainGoalRelated,
+              kpiSubGoalRelated,
+              kpiPerformanceAnalysis,
+              kpiRecurrenceChanged,
+              kpicurrentYear,
+              kpiTotalActual
+            );
+            if (kpiPeriodType == "monthly") {
+              fieldsObj = {
+                Title: Doc_Title,
+                ItemID: IID,
+                RelatedMonth: $("#Months").val(),
+                RelatedYear: $("#Year").val(),
+                docPurpose: purpose,
+              };
+            } else if (kpiPeriodType == "quarter") {
+              fieldsObj = {
+                Title: Doc_Title,
+                ItemID: IID,
+                RelatedQuarter: $("#Quarter").val(),
+                RelatedYear: $("#Year").val(),
+                docPurpose: purpose,
+              };
+            } else if (kpiPeriodType == "midterm") {
+              fieldsObj = {
+                Title: Doc_Title,
+                ItemID: IID,
+                RelatedMid: $("#Midterms").val(),
+                RelatedYear: $("#Year").val(),
+                docPurpose: purpose,
+              };
+            } else if (kpiPeriodType == "year") {
+              fieldsObj = {
+                Title: Doc_Title,
+                ItemID: IID,
+                RelatedActualY: ActualY,
+                RelatedYear: $("#Year").val(),
+                docPurpose: purpose,
+              };
+            }
           } else {
             fieldsObj = {
               Title: Doc_Title,
@@ -4964,6 +5186,21 @@ function _uploadFile() {
                         //   PCODE_STRING;
                       } else {
                         if (listkey == "mainkpi") {
+                          // to update the kpi result list
+                          mainKpiIsUpload = false
+                          Edit_KPI_Results.init(
+                            kpiName,
+                            kpiType,
+                            kpiSector,
+                            kpiSubSector,
+                            kpiPortfolio,
+                            kpiMainGoalRelated,
+                            kpiSubGoalRelated,
+                            kpiPerformanceAnalysis.kpiRecurrenceChanged,
+                            kpicurrentYear,
+                            kpiTotalActual
+                          );
+                        } else if (listkey == "benefits") {
                           // to update the kpi result list
                           mainKpiIsUpload = false
                           Edit_KPI_Results.init(
