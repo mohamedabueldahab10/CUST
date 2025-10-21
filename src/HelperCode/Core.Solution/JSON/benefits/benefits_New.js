@@ -62,14 +62,23 @@ var Information_Form = [
         DisplayNameEn: "Weight",
         DisplayName: "وزن",
         type: "floatpercentage",
+        validation: "required",
+        descPhraseAr: "%يجب ان يكون مجموع أوزان المنافع 100",
         // "state": "disabled",
         // dynamic: "Initiative"
       },
-      {
-        InternalName: "BenefitTarget",
-        DisplayNameEn: "Benefit Traget",
-        DisplayName: "مستهدفات المنفعة",
-        maxchar: "500",
+     // {
+       // InternalName: "BenefitTarget",
+        //DisplayNameEn: "Benefit Traget",
+        //DisplayName: "مستهدفات المنفعة",
+        //maxchar: "500",
+        //type: "multiline",
+      //},
+           {
+        InternalName: "measurementEntity",
+        DisplayNameEn: "measurementEntity",
+        DisplayName: "جهة القياس",
+        maxchar: "200",
         type: "multiline",
       },
       {
@@ -78,45 +87,53 @@ var Information_Form = [
         DisplayNameEn: "Planned Achievement Date",
         format: "DateOnly",
         type: "datetime",
+        validation: "required",
       },
-      {
-        InternalName: "Notes",
-        DisplayNameEn: "Notes",
-        DisplayName: "الملاحظات",
+           {
+        InternalName: "assumptions",
+        DisplayNameEn: "Assumptions",
+        DisplayName: " الافتراضات",
         maxchar: "200",
         type: "multiline",
       },
       {
+        InternalName: "Notes",
+        DisplayNameEn: "Notes",
+        DisplayName: "ملاحظات أداء المنفعة",
+        maxchar: "200",
+        type: "multiline",
+      },
+      // {
+      //   InternalName: "RelatedSubKpis",
+      //   DisplayNameEn: "Related Sub Kpis",
+      //   DisplayName: "المؤشرات الفرعية المرتبطة",
+      //   type: "lookupmultiselect",
+      //   validation: "required",
+      //   source: "MainKPI",
+      //   Dispfieldkey: "Name",
+      //   valfieldkey: "Title",
+      //   grpfieldkey: "Title",
+      //   initiativeCodeInList: true, //value in look up drop down should be related to current project
+      //   Errmsgkey: "multiselecterr",
+      //   //////
+      //   queryField: "KPIType", //
+      //   queryFieldType: "Choice",
+      //   queryFieldValue: ["sublevel2", "sublevel3"], // to get the data fot these two values
+      // },
+      {
         InternalName: "RelatedSubKpis",
-        DisplayNameEn: "Related Sub Kpis",
-        DisplayName: "المؤشرات الفرعية المرتبطة",
-        type: "lookupmultiselect",
-        validation: "required",
+        DisplayNameEn: "Related Kpis",
+        DisplayName: "المؤشرات المرتبطة",
+        type: "lookupmultiselectfromrelatedparent",
         source: "MainKPI",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         grpfieldkey: "Title",
-        initiativeCodeInList: true, //value in look up drop down should be related to current project
         Errmsgkey: "multiselecterr",
-        //////
-        queryField: "KPIType", //
-        queryFieldType: "Choice",
-        queryFieldValue: ["sublevel2", "sublevel3"], // to get the data fot these two values
+        currentlistQueryField:"RelatedStrategyObjective",
+        parentlistQueryField:"RelatedObjective",
+        parentsource:"Initiatives",
       },
-      // {
-      //   InternalName: 'RelatedSubKpis',
-      //   DisplayNameEn: 'Related Sub Kpis',
-      //   DisplayName: 'المؤشرات الفرعية المرتبطة',
-      //   type: 'lookupwithoutrepeat',
-      //   listname: 'Benefits',
-      //   targetelement: 'RelatedSubKpis',
-      //   source: 'MainKPI',
-      //   Dispfieldkey: 'Name',
-      //   valfieldkey: 'Title',
-      //   queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
-      //   queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
-      //   queryFieldValue: 'sub', // if i need to make the field with filter should add this
-      // }, //inview should be a lookup type
       // {
       //   InternalName: 'FromDate',
       //   DisplayName: 'من سنة',
@@ -240,18 +257,26 @@ var Information_Form = [
       //   valfieldkey: 'Title', // value in dropdown
 
       // },
-      {
-        InternalName: "RelatedBenefit",
-        DisplayNameEn: "Related Benefit",
-        DisplayName: "المنفعة المرتبطة",
-        type: "lookupwithoutrepeat",
-        source: "Benefits",
-        initiativeCodeInList: true,
-        Dispfieldkey: "Name",
-        valfieldkey: "Title",
-        listname: "BenefitMetrics",
-        targetelement: "RelatedBenefit",
+      //{
+       // InternalName: "RelatedBenefit",
+        //DisplayNameEn: "Related Benefit",
+        //DisplayName: "المنفعة المرتبطة",
+        //type: "lookupwithoutrepeat",
+        //source: "Benefits",
+        //initiativeCodeInList: true,
+        //Dispfieldkey: "Name",
+        //valfieldkey: "Title",
+        //listname: "BenefitMetrics",
+        //targetelement: "RelatedBenefit",
+      //},
+             {
+        InternalName: "cumulativeBenefit",
+        DisplayNameEn: "CumulativeBenefit",
+        DisplayName: " تراكمية المنفعة",
+        maxchar: "200",
+        type: "multiline",
       },
+      
       {
         InternalName: "PeriodType",
         DisplayNameEn: "Period Type",
@@ -276,14 +301,15 @@ var Information_Form = [
           choices: [
             { display: "mersurable", value: "mersurable" },
             { display: "unmersurable", value: "unmersurable" },
-            { display: "unspecific", value: "unspecific" },
+           // { display: "unspecific", value: "unspecific" },
           ],
         },
+          validation: "required",
       },
       {
         InternalName: "Polarity",
         DisplayNameEn: "Polarity",
-        DisplayName: "قطبية المؤشر",
+        DisplayName: "قطبية المنفعة",
         type: "dropdown",
         options: {
           choices: ["+", "-"],
@@ -301,6 +327,14 @@ var Information_Form = [
             { display: "percentage", value: "percentage" },
           ],
         },
+         validation: "required",
+      },
+            {
+        InternalName: "Note",
+        DisplayNameEn: "Note",
+        DisplayName: "ملاحظات جهة القياس",
+        maxchar: "200",
+        type: "multiline",
       },
       {
         InternalName: "FromDate",
@@ -337,8 +371,8 @@ var Information_Form = [
       },
       {
         InternalName: "PerformanceLeader",
-        DisplayNameEn: "Performance Leader",
-        DisplayName: "رائد الأداء",
+        DisplayNameEn: "Initiative Manager",
+        DisplayName: "مدير المبادرة",
         type: "picker",
         validation: "required",
       },

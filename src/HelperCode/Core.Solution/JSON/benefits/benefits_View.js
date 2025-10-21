@@ -53,6 +53,14 @@ var Information_Form = [
         // "state": "disabled",
         // dynamic: "Initiative"
       },
+       {
+        InternalName: "measurementEntity",
+        DisplayNameEn: "measurementEntity",
+        DisplayName: "جهة القياس",
+        type: "string",
+        // "maxchar": "250",
+        // "validation": "required"
+      },
       // {
       //   InternalName: 'BenefitScale',
       //   DisplayNameEn: 'Benefit Scale',
@@ -74,6 +82,8 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         source: "MainKPI",
+        showlink: true,
+        linkedto: "mainkpi",
         // queryField: 'Types',
         // queryFieldType: 'dropdownValues', //ex: "Choice"
         // queryFieldValue: 'sub',
@@ -171,15 +181,23 @@ var Information_Form = [
       //     ],
       //   },
       // },
-      {
-        InternalName: "RelatedBenefit",
-        DisplayNameEn: "RelatedBenefit",
-        DisplayName: "المنفعة المرتبطة",
-        type: "lookup",
-        source: "Benefits",
-        Dispfieldkey: "Name",
-        valfieldkey: "Title",
+     // {
+       // InternalName: "RelatedBenefit",
+       // DisplayNameEn: "RelatedBenefit",
+       // DisplayName: "المنفعة المرتبطة",
+       // type: "lookup",
+       // source: "Benefits",
+       // Dispfieldkey: "Name",
+       // valfieldkey: "Title",
         // dynamic:"mainfield",//controls others data
+      //},
+       {
+        InternalName: "assumptions",
+        DisplayNameEn: "assumptions",
+        DisplayName: "الافتراضات ",
+        type: "string",
+        // "maxchar": "250",
+        // "validation": "required"
       },
       {
         InternalName: "PeriodType",
@@ -211,14 +229,14 @@ var Information_Form = [
           choices: [
             { display: "mersurable", value: "mersurable" },
             { display: "unmersurable", value: "unmersurable" },
-            { display: "unspecific", value: "unspecific" },
+          //  { display: "unspecific", value: "unspecific" },
           ],
         },
       },
       {
         InternalName: "Polarity",
         DisplayNameEn: "Polarity",
-        DisplayName: "قطبية المقياس",
+        DisplayName: "قطبية المنفعة",
         type: "string",
       },
       {
@@ -232,6 +250,13 @@ var Information_Form = [
             { display: "percentage", value: "percentage" },
           ],
         },
+      },
+               {
+        InternalName: "Note",
+        DisplayNameEn: "Note",
+        DisplayName: "ملاحظات جهة القياس",
+        maxchar: "200",
+        type: "multiline",
       },
       {
         InternalName: "FromDate",
@@ -255,8 +280,16 @@ var Information_Form = [
       {
         InternalName: "PerformanceLeader",
         DisplayNameEn: "Performance Leader",
-        DisplayName: "رائد الأداء",
+        DisplayName: "مدير المبادرة",
         type: "picker",
+      },
+         {
+        InternalName: "cumulativeBenefit",
+        DisplayNameEn: "cumulativeBenefit",
+        DisplayName: " تراكمية المنفعة",
+        type: "string",
+        // "maxchar": "250",
+        // "validation": "required"
       },
       {
         InternalName: "BenefitStatus",
@@ -274,13 +307,13 @@ var Information_Form = [
           ],
         },
       },
-      {
-        InternalName: "BenefitTarget",
-        DisplayNameEn: "Benefit Traget",
-        DisplayName: "مستهدفات المنفعة",
-        maxchar: "500",
-        type: "multiline",
-      },
+     // {
+       // InternalName: "BenefitTarget",
+       // DisplayNameEn: "Benefit Traget",
+       // DisplayName: "مستهدفات المنفعة",
+       // maxchar: "500",
+       // type: "multiline",
+     // },
       {
         InternalName: "PlannedAchievementDate",
         DisplayName: "تاريخ المخطط لتحقيق المنفعة",
@@ -291,7 +324,7 @@ var Information_Form = [
       {
         InternalName: "Notes",
         DisplayNameEn: "Notes",
-        DisplayName: "الملاحظات",
+        DisplayName: "ملاحظات أداء المنفعة",
         maxchar: "200",
         type: "multiline",
       },

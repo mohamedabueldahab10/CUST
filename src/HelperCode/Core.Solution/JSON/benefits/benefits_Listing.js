@@ -53,7 +53,7 @@ var Listing_Info = [
 	{
 	  InternalName: "Polarity",
 	  DisplayNameEn: "Polarity",
-	  DisplayName: "قطبية المؤشر",
+    DisplayName: "قطبية المنفعة",
 	  type: "text",
 	  inlisting: true,
 	  infilter: true,
@@ -61,7 +61,7 @@ var Listing_Info = [
 	{
 	  InternalName: "PerformanceLeader",
 	  DisplayNameEn: "Performance Leader",
-	  DisplayName: "رائد الأداء",
+    DisplayName: "مدير المبادرة",
 	  type: "picker",
 	  inlisting: true,
 	  infilter: true,

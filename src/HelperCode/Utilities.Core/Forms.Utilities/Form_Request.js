@@ -1035,7 +1035,40 @@ window.Edit_Data_Request = {
     
     if(listkey == "deliverables" && isEdit){
     getNestedDeliverablesSum();
-    }  
+    }
+    if (listkey === "projects" && isEdit) {
+
+      var initCode = $("#RelatedInitiative").val(); // get current selected initiative code on load
+  
+      if (initCode) {
+          $.ajax({
+              url: `${APIURL}/job/checkunfundedinitiative/${initCode}`,
+              type: "GET",
+              headers: {
+                  Accept: "application/json;odata=verbose",
+              },
+              success: function (data) {
+                  // Check if API returned successfully
+                  if (data && data.isSuccess) {
+                      if (data.result === true) {
+                          $("#FundingStatus").val("unfunded").prop("disabled", true);
+                      } else {
+                          $("#FundingStatus").val("").prop("disabled", false);
+                      }
+                  } else {
+                      console.warn("API returned unsuccessful:", data);
+                      $("#FundingStatus").val("").prop("disabled", false);
+                  }
+              },
+              error: function (err) {
+                  console.error("Error checking unfunded initiative:", err);
+                  $("#FundingStatus").val("").prop("disabled", false);
+              },
+          });
+      } else {
+          $("#FundingStatus").val("").prop("disabled", false);
+      }
+  }  
     setTimeout(() => {
       if (isWF && listkey == "mainkpi" && workflowname == 'MSActualKPI' ) {
         var mainKpiCode = $("#Title").val();
@@ -1788,6 +1821,29 @@ window.View_Data_Request = {
         //         .join("; <br>");
 
         //   $(this).html(value);
+      } else if ($(this).attr("type") == "multiselecttranslatedstring") {
+        var rawValue = oListItem.get_item($(this).attr("id"));
+        var $this = $(this);
+      
+        if (!rawValue || rawValue == "undefined" || rawValue.trim() == "") {
+          $this.html(No_Data);
+        } else {
+          // Split by ::: to get each translated string
+          var items = rawValue.split(":::");
+      
+          var htmlTranslated = "";
+          items.forEach(function (item, index) {
+            var trimmed = item.trim();
+            if (trimmed != "") {
+              var dataTrans = "data-trans-" + trimmed;
+              htmlTranslated +=
+                '<span ' + dataTrans + ' class="Resources">' + trimmed + "</span>";
+              if (index < items.length - 1) htmlTranslated += "<br>";
+            }
+          });
+      
+          $this.html(htmlTranslated);
+        }
       } else if ($(this).attr("type") == "lookup") {
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),

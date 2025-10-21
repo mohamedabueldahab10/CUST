@@ -6340,6 +6340,264 @@ debugger;
         );
         break;
 
+      case "lookupmultiselectfromrelatedparent":
+          var customQuery = "";
+          var parentFieldValue = "";
+      
+          if ((PCODE || ICODE) && element.parentsource && element.parentlistQueryField) {
+              // determine parent code
+              var parentCode = "";
+              if (PCODE) {
+                  parentCode = PCODE;
+              } else if (ICODE) {
+                  parentCode = ICODE;
+              }
+      
+              // get parent item to retrieve the related field value
+              sphttp.get(
+                  _spPageContextInfo.siteServerRelativeUrl,
+                  element.parentsource,
+                  `<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>${parentCode}</Value></Eq></Where></Query></View>`,
+                  [element.parentlistQueryField],
+                  function (parentRecords, parentRecord, parentItem, isDoneParent) {
+                      if (isDoneParent && parentRecords.length > 0) {
+                          parentFieldValue = parentRecords[0][element.parentlistQueryField];
+      
+                          // now build child list query using the parentFieldValue
+                          customQuery = `<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name="${element.currentlistQueryField}"/><Value Type="Text">${parentFieldValue}</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False'/></OrderBy></Query></View>`;
+      
+                          // to handle dont submit in edit
+                          var listFields = [element.valfieldkey, element.Dispfieldkey, element.grpfieldkey];
+      
+                          if (element.sourcefieldlvl1) {
+                              parentFieldKey = element.fieldsinformlvl1;
+                              listFields.push(element.sourcefieldlvl1);
+      
+                              if (element.sourcefieldlvl2) {
+                                  listFields.push(element.sourcefieldlvl2);
+                              }
+                          } else {
+                              parentFieldKey = "";
+                          }
+      
+                          var grandFieldId = element.grandFieldId ? `data-grandFieldId=${element.grandFieldId}` : "";
+                          var notInvokeListinerData = element.notInvokeListiner ? `data-notInvokeListiner=${element.notInvokeListiner}` : "";
+                          var seconedValueListiner = element.notInvokeListiner ? `data-seconedvaluelistiner=""` : "";
+                          var parentCustomFilterValue = element.notInvokeListiner ? `data-parentcustomfiltervalue=""` : "";
+      
+                          htmlBody =
+                              '<div class="col-md-6 CFIELD ' +
+                              dontSubmit +
+                              " " +
+                              dontRequest +
+                              " " +
+                              dontSubmitRequired +
+                              " " +
+                              element.className +
+                              " " +
+                              hideField +
+                              ' " ' +
+                              thistip +
+                              " " +
+                              hidestagesIDs +
+                              " " +
+                              editableBy +
+                              " " +
+                              showstagesIDs +
+                              "  " +
+                              disablestagesIDs +
+                              "  " +
+                              enablestagesIDs +
+                              "   " +
+                              isWfhidestagesIDs +
+                              " " +
+                              requireOnWfTaskstagesIDs +
+                              " " +
+                              isWfshowstagesIDs +
+                              "  " +
+                              isWfdisablestagesIDs +
+                              "  " +
+                              isWfenablestagesIDs +
+                              '        data-groups="' +
+                              groups +
+                              '" ' +
+                              notAllowForGroups +
+                              ' style="display:' +
+                              element.display +
+                              '">' +
+                              '<label for="' +
+                              element.InternalName +
+                              '" ' +
+                              element.validation +
+                              ">" +
+                              displayName +
+                              "</label>" +
+                              '<div style="display:inline-' +
+                              element.toggledisplay +
+                              '" class="showhide-trigger" title="Show/Hide ' +
+                              displayName +
+                              '"></div>' +
+                              "<ul " +
+                              ToggleName +
+                              " " +
+                              grandFieldId +
+                              " " +
+                              notInvokeListinerData +
+                              " " +
+                              parentCustomFilterValue +
+                              " " +
+                              seconedValueListiner +
+                              " " +
+                              dynamic +
+                              " " +
+                              seconeddynamic +
+                              " " +
+                              'data-listname="' +
+                              element.source +
+                              '" data-valfieldkey="' +
+                              element.valfieldkey +
+                              '" data-Dispfieldkey="' +
+                              element.Dispfieldkey +
+                              '" data-filterfield="' +
+                              element.filterField +
+                              '" data-queryfieldvalue="' +
+                              parentFieldValue +
+                              '" data-queryfield="' +
+                              element.currentlistQueryField +
+                              '" data-queryfieldtype="Text" myfield="' +
+                              element.InternalName +
+                              '" id="' +
+                              element.InternalName +
+                              '" type="multiselect" class="multiselect-container form-control">' +
+                              '<li class="dropdown ul-bullet-remove">' +
+                              '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
+                              displayName +
+                              '<b class="caret"></b></a>' +
+                              '<ul class="dropdown-menu multiselect_scroll ' +
+                              element.validation +
+                              '">';
+      
+                          sphttp.get(
+                              _spPageContextInfo.siteServerRelativeUrl,
+                              element.source,
+                              customQuery,
+                              listFields,
+                              function (records, record, listItem, isDone) {
+                                  if (isDone) {
+                                      var grpfield = element.grpfieldkey;
+                                      window.result = records.reduce(function (r, a) {
+                                          r[a[grpfield]] = r[a[grpfield]] || [];
+                                          r[a[grpfield]].push(a);
+                                          return r;
+                                      }, Object.create(null));
+      
+                                      Object.entries(result).forEach((el) => {
+                                          htmlBody += '<label class="grp-select">' + el[0] + "</label>";
+                                          el[1].forEach((dl) => {
+                                              htmlBody +=
+                                                  "<li data-parentrelatedvaluelvl1=" +
+                                                  dl[element.sourcefieldlvl1] +
+                                                  " data-parentrelatedkeylvl1= " +
+                                                  element.fieldsinformlvl1 +
+                                                  " data-parentrelatedvaluelvl2=" +
+                                                  dl[element.sourcefieldlvl2] +
+                                                  " data-parentrelatedkeylvl2=" +
+                                                  element.fieldsinformlvl2 +
+                                                  " class='limulti'>" +
+                                                  '<div class="checkbox">' +
+                                                  "<label>" +
+                                                  '<input value="' +
+                                                  dl[element.valfieldkey] +
+                                                  '" id="' +
+                                                  element.InternalName +
+                                                  '" type="checkbox">' +
+                                                  dl[element.Dispfieldkey] +
+                                                  "</label>" +
+                                                  "</div>" +
+                                                  "</li>";
+                                          });
+                                      });
+                                      htmlBody +=
+                                          "</ul>" +
+                                          "</li>" +
+                                          "</ul>" +
+                                          "<span data-trans-" +
+                                          element.Errmsgkey +
+                                          ' class="errMsgField Resources"></span>' +
+                                          '<div class="inputInfo ' +
+                                          isexist +
+                                          '">' +
+                                          descPhrase +
+                                          "</div>" +
+                                          "</div>";
+      
+                                      OnSuccess(flag, htmlBody);
+                                  }
+                              }
+                          );
+                      }
+                  }
+              );
+          }
+          break;      
+
+      case "dropdownValuesMultiselect":
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
+            element.className +
+            ' " style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '">' +
+            displayName +
+            "</label>" +
+            '<div style="display:inline-' +
+            element.toggledisplay +
+            '" class="showhide-trigger" title="Show/Hide ' +
+            displayName +
+            '"></div>' +
+            '<ul myfield="' +
+            element.InternalName +
+            '" id="' +
+            element.InternalName +
+            '" type="multiselect" class="multiselect-container form-control" type="multiselect">' +
+            '<li class="dropdown ul-bullet-remove">' +
+            '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
+            displayName +
+            '<b class="caret"></b></a>' +
+            '<ul class="dropdown-menu multiselect_scroll">';
+            element.options.choices.forEach(function (choice) {
+              var dataTrans = 'data-trans-' + choice.display;
+            
+              htmlBody +=
+                '<li class="limulti">' +
+                  '<div class="checkbox">' +
+                    '<label>' +
+                      '<input type="checkbox" value="' + choice.value + '">' +
+                      '<span ' + dataTrans + ' class="Resources">' + choice.display + '</span>' +
+                    '</label>' +
+                  '</div>' +
+                '</li>';
+            });            
+      
+          htmlBody +=
+            "</ul>" + // close dropdown-menu
+            "</li>" + // close dropdown li
+            "</ul>" + // close multiselect-container
+            '<div class="inputInfo false"></div>' +
+            "</div>";
+      
+          OnSuccess(flag, htmlBody);
+          break;
+
       case "lookupchildtoparent":
         var code = activeCode;
         var customQuery =
@@ -8283,6 +8541,40 @@ debugger;
         OnSuccess(flag, htmlBody);
         break;
     }
+    if (listkey === "projects" && (isNew || isEdit)) {
+      $("#RelatedInitiative").on("change", function () {
+          var initCode = $(this).val(); // get selected initiative code
+  
+          if (initCode) {
+              $.ajax({
+                  url: `${APIURL}/job/checkunfundedinitiative/${initCode}`,
+                  type: "GET",
+                  headers: {
+                      Accept: "application/json;odata=verbose",
+                  },
+                  success: function (data) {
+                      // Check if API returned successfully
+                      if (data && data.isSuccess) {
+                          if (data.result === true) {
+                              $("#FundingStatus").val("unfunded").prop("disabled", true);
+                          } else {
+                              $("#FundingStatus").val("").prop("disabled", false);
+                          }
+                      } else {
+                          console.warn("API returned unsuccessful:", data);
+                          $("#FundingStatus").val("").prop("disabled", false);
+                      }
+                  },
+                  error: function (err) {
+                      console.error("Error checking unfunded initiative:", err);
+                      $("#FundingStatus").val("").prop("disabled", false);
+                  },
+              });
+          } else {
+              $("#FundingStatus").val("").prop("disabled", false);
+          }
+      });
+  }  
     if (listkey == "deliverables" && (isEdit || isNew)) {
       if (typeof USERPCODE !== "undefined" && USERPCODE) {
         $.ajax({
@@ -10805,6 +11097,75 @@ window.View_ListInfo = {
           "</div>";
         OnSuccess(flag, htmlBody);
         break;
+        
+        
+        case "multiselecttranslatedstring":
+          htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          element.className +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          // " " +
+          // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
+          "</label>" +
+          '<p type="multiselecttranslatedstring" class="viewmode-value"  id="' +
+          element.InternalName +
+          '" ' +
+          ToggleName +
+          'data-parentrelatedkeylvl1="' +
+          element.fieldsinformlvl1 +
+          '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+          element.sourcefieldlvl1 +
+          '" data-parentrelatedkeylvl2="' +
+          element.fieldsinformlvl2 +
+          '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' +
+          element.sourcefieldlvl2 +
+          '" data-linkedto="' +
+          element.linkedto +
+          '"></p>' +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+        
+        
         case "multiselectForFiles":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +

@@ -312,6 +312,7 @@
     stat6: "لم يبدأ",
     stat7: "ملغية",
     stat29: "قيد الموافقة",
+    stat34: "غير ممول",
     ////////////////// for Project Status
     stat8: "متأخر جدا",
     stat9: "متأخر",
@@ -1296,7 +1297,34 @@
     records: "عناصر",
     last:"القيمة الاخيرة في الربع" , 
     average: "معدل قيم الأشهر الثلاثة في الربع" , 
-    sum:"مجموع قيم الأشهر الثلاثة في الربع"
+    sum:"مجموع قيم الأشهر الثلاثة في الربع",
+    
+    // Send To Roles (Arabic)
+    SubSectorHead: "رئيس القطاع الفرعي",
+    ViceMinister: "نائب الوزير",
+    MinisterAssistant: "مساعد الوزير",
+
+    // Reminder Types (Arabic)
+    Projects: "المشاريع",
+    Initiatives: "المبادرات",
+
+    // Reminder Items (Arabic)
+    Deliverables: "المخرجات",
+    Milestones: "المعالم",
+    Risks: "المخاطر",
+    Issues: "التحديات",
+    MainKPIs: "المؤشرات",
+
+    "urgent":"عاجل",
+    "veryImportant":"مهم جدا",
+    "important":"مهم",
+    
+    
+    
+    "q1":"الربع الأول",
+    "q2":"الربع الثاني",
+    "q3":"الربع الثالث",
+    "q4":"الربع الرابع",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1609,6 +1637,8 @@ restoration:"restoration",
     stat6: "On Hold",
     stat7: "Canceled",
     stat29: "Under Approval",
+    stat34: "Unfunded",
+
     //////////////////// for project status
     stat8: "Too Late",
     stat9: "Late",
@@ -2595,7 +2625,34 @@ restoration:"restoration",
     records: "Records",
     last: "Last value in the quarter",
     average: "Average of the three months' values in the quarter",
-    sum: "Sum of the three months' values in the quarter"
+    sum: "Sum of the three months' values in the quarter",
+
+    // Send To Roles
+    SubSectorHead: "Sub-Sector Head",
+    ViceMinister: "Vice Minister",
+    MinisterAssistant: "Minister’s Assistant",
+
+    // Reminder Types
+    Projects: "Projects",
+    Initiatives: "Initiatives",
+
+    // Reminder Items
+    Deliverables: "Deliverables",
+    Milestones: "Milestones",
+    Risks: "Risks",
+    Issues: "Issues",
+    MainKPIs: "Kpis",
+
+
+    "urgent":"Urgent",
+    "veryImportant":"Very Important",
+    "important":"Important",
+    
+    
+    "q1":"First Quarter",
+    "q2":"Second Quarter",
+    "q3":"Third Quarter",
+    "q4":"Fourth Quarter",
   },
 };
 
