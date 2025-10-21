@@ -51,5 +51,15 @@ var Listing_Info = [
         infilter:true,
         needTrans: true
      },
+     {
+        InternalName: "IsActive",
+        DisplayName: "مفعلة",
+        DisplayNameEn: "Active",
+        "type":"text",
+        inlisting:true,
+        infilter:true,
+        needTrans: true
+     },
+
 
 ];

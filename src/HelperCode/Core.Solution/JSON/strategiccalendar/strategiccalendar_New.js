@@ -72,6 +72,7 @@ var Information_Form = [
             choices: [
               { display: "Projects", value: "Projects" },
               { display: "Initiatives", value: "Initiatives" },
+              { display: "MainKPIs", value: "MainKPIs"}
             ],
           },
         },
@@ -86,6 +87,24 @@ var Information_Form = [
               { display: "Milestones", value: "Milestones" },
               { display: "Risks", value: "Risks" },
               { display: "Issues", value: "Issues" },
+            ],
+          },
+        },
+        {
+          InternalName: "IsActive",
+          DisplayName: "مفعلة",
+          DisplayNameEn: "Active",
+          type: 'yesnoradio',
+          options: {
+            choices: [
+              {
+                display: 'yes',
+                value: 'yes',
+              },
+              {
+                display: 'no',
+                value: 'no',
+              },
             ],
           },
         },
