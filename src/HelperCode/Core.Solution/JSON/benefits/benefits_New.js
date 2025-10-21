@@ -1,14 +1,14 @@
 var Information_Form = [
   {
-    label: 'بيانات المنفعة',
-    labelEn: ' Benefit Data',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
+    label: "بيانات المنفعة",
+    labelEn: " Benefit Data",
+    description: "التفاصيل",
+    descriptionEn: "Details",
     // formDefaultValues: [
     //   //VRO
     //   { fieldName: 'WFModuleCode', value: 'VROBenefitActual',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
     //   { fieldName: 'WFStage', value: 'VROBenefitActual01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
-      
+
     //   //EPMOCRInitiative
     //   { fieldName: 'WFModuleCode', value: 'EPMOBenefitActual',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
     //   { fieldName: 'WFStage', value: 'EPMOBenefitActual01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee'], },
@@ -28,96 +28,112 @@ var Information_Form = [
       //     "maxchar": "250"
       // },
       {
-        InternalName: 'Name',
-        DisplayNameEn: 'Name',
-        DisplayName: 'المنفعة',
-        type: 'string',
-        validation: 'required',
-        maxchar: '255',
-        withletters:true,
-        Errmsgkey:"withletterpattern",
+        InternalName: "Name",
+        DisplayNameEn: "Name",
+        DisplayName: "المنفعة",
+        type: "string",
+        validation: "required",
+        maxchar: "255",
+        withletters: true,
+        Errmsgkey: "withletterpattern",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",  
+        descPhraseEn: "max length of letters equal 255",
       },
 
       {
-        InternalName: 'Owner',
-        DisplayNameEn: 'Benefit Owner',
-        DisplayName: ' مالك المنفعة ',
-        type: 'picker',
-        validation: 'required',
+        InternalName: "Owner",
+        DisplayNameEn: "Benefit Owner",
+        DisplayName: " مالك المنفعة ",
+        type: "picker",
+        validation: "required",
       },
       {
-        InternalName: 'Description',
-        DisplayNameEn: 'Description',
-        DisplayName: 'وصف المنفعة',
-        maxchar: 5000,        
-        type: 'multiline',
-        validation: 'required',
+        InternalName: "Description",
+        DisplayNameEn: "Description",
+        DisplayName: "وصف المنفعة",
+        maxchar: 5000,
+        type: "multiline",
+        validation: "required",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
       },
       {
-        InternalName: 'Weight',
-        DisplayNameEn: 'Weight',
-        DisplayName: 'وزن',
-        type: 'floatpercentage',
+        InternalName: "Weight",
+        DisplayNameEn: "Weight",
+        DisplayName: "وزن",
+        type: "floatpercentage",
+        validation: "required",
+        descPhraseAr: "%يجب ان يكون مجموع أوزان المنافع 100",
         // "state": "disabled",
         // dynamic: "Initiative"
       },
-          {
-        InternalName: 'BenefitTarget',
-        DisplayNameEn: 'Benefit Traget',
-        DisplayName: 'مستهدفات المنفعة',
-        maxchar: '500',
-        type: 'multiline',
-      },
+     // {
+       // InternalName: "BenefitTarget",
+        //DisplayNameEn: "Benefit Traget",
+        //DisplayName: "مستهدفات المنفعة",
+        //maxchar: "500",
+        //type: "multiline",
+      //},
            {
-        InternalName: 'PlannedAchievementDate',
-         DisplayName: 'تاريخ المخطط لتحقيق المنفعة',
-         DisplayNameEn: 'Planned Achievement Date',
-         format: 'DateOnly',
-         type: 'datetime',
-         
-       },
-        {
-        InternalName: 'Notes',
-        DisplayNameEn: 'Notes',
-        DisplayName: 'الملاحظات',
-        maxchar: '200',
-        type: 'multiline',
+        InternalName: "measurementEntity",
+        DisplayNameEn: "measurementEntity",
+        DisplayName: "جهة القياس",
+        maxchar: "200",
+        type: "multiline",
       },
       {
-        InternalName: 'RelatedSubKpis',
-        DisplayNameEn: 'Related Sub Kpis',
-        DisplayName: 'المؤشرات الفرعية المرتبطة',
-        type: 'lookupmultiselect',
-        validation: 'required',
-        source: 'MainKPI',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        grpfieldkey: 'Title',
-        initiativeCodeInList: true, //value in look up drop down should be related to current project
-        Errmsgkey:"multiselecterr",
-        //////
-        queryField: 'KPIType', // 
-        queryFieldType: 'Choice', 
-        queryFieldValue: ['sublevel2','sublevel3'], // to get the data fot these two values
+        InternalName: "PlannedAchievementDate",
+        DisplayName: "تاريخ المخطط لتحقيق المنفعة",
+        DisplayNameEn: "Planned Achievement Date",
+        format: "DateOnly",
+        type: "datetime",
+        validation: "required",
+      },
+           {
+        InternalName: "assumptions",
+        DisplayNameEn: "Assumptions",
+        DisplayName: " الافتراضات",
+        maxchar: "200",
+        type: "multiline",
+      },
+      {
+        InternalName: "Notes",
+        DisplayNameEn: "Notes",
+        DisplayName: "ملاحظات أداء المنفعة",
+        maxchar: "200",
+        type: "multiline",
       },
       // {
-      //   InternalName: 'RelatedSubKpis',
-      //   DisplayNameEn: 'Related Sub Kpis',
-      //   DisplayName: 'المؤشرات الفرعية المرتبطة',
-      //   type: 'lookupwithoutrepeat',
-      //   listname: 'Benefits',
-      //   targetelement: 'RelatedSubKpis',
-      //   source: 'MainKPI',
-      //   Dispfieldkey: 'Name',
-      //   valfieldkey: 'Title',
-      //   queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
-      //   queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
-      //   queryFieldValue: 'sub', // if i need to make the field with filter should add this
-      // }, //inview should be a lookup type
+      //   InternalName: "RelatedSubKpis",
+      //   DisplayNameEn: "Related Sub Kpis",
+      //   DisplayName: "المؤشرات الفرعية المرتبطة",
+      //   type: "lookupmultiselect",
+      //   validation: "required",
+      //   source: "MainKPI",
+      //   Dispfieldkey: "Name",
+      //   valfieldkey: "Title",
+      //   grpfieldkey: "Title",
+      //   initiativeCodeInList: true, //value in look up drop down should be related to current project
+      //   Errmsgkey: "multiselecterr",
+      //   //////
+      //   queryField: "KPIType", //
+      //   queryFieldType: "Choice",
+      //   queryFieldValue: ["sublevel2", "sublevel3"], // to get the data fot these two values
+      // },
+      {
+        InternalName: "RelatedSubKpis",
+        DisplayNameEn: "Related Kpis",
+        DisplayName: "المؤشرات المرتبطة",
+        type: "lookupmultiselectfromrelatedparent",
+        source: "MainKPI",
+        Dispfieldkey: "Name",
+        valfieldkey: "Title",
+        grpfieldkey: "Title",
+        Errmsgkey: "multiselecterr",
+        currentlistQueryField:"RelatedStrategyObjective",
+        parentlistQueryField:"RelatedObjective",
+        parentsource:"Initiatives",
+      },
       // {
       //   InternalName: 'FromDate',
       //   DisplayName: 'من سنة',
@@ -229,7 +245,7 @@ var Information_Form = [
       //   InternalName: 'DeliverableID',
       //   DisplayNameEn: 'Name',
       //   DisplayName: 'المخرج',
-  
+
       //   type: 'lookupchildtoparent',
       //   childlist: 'Projects', //child list name
       //   childinternalparentname: 'RelatedInitiative', // child internal name related to parent
@@ -239,62 +255,181 @@ var Information_Form = [
       //   sourceinternalname: 'ProjectCode', // column in target list
       //   Dispfieldkey: 'Name', //display in dropdown
       //   valfieldkey: 'Title', // value in dropdown
-      
+
       // },
+      //{
+       // InternalName: "RelatedBenefit",
+        //DisplayNameEn: "Related Benefit",
+        //DisplayName: "المنفعة المرتبطة",
+        //type: "lookupwithoutrepeat",
+        //source: "Benefits",
+        //initiativeCodeInList: true,
+        //Dispfieldkey: "Name",
+        //valfieldkey: "Title",
+        //listname: "BenefitMetrics",
+        //targetelement: "RelatedBenefit",
+      //},
+             {
+        InternalName: "cumulativeBenefit",
+        DisplayNameEn: "CumulativeBenefit",
+        DisplayName: " تراكمية المنفعة",
+        maxchar: "200",
+        type: "multiline",
+      },
+      
+      {
+        InternalName: "PeriodType",
+        DisplayNameEn: "Period Type",
+        DisplayName: "دورية القياس",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "monthly", value: "monthly" },
+            { display: "quarter", value: "quarter" },
+            { display: "midterm", value: "midterm" },
+            { display: "year", value: "year" },
+          ],
+        },
+        validation: "required",
+      },
+      {
+        InternalName: "MesureStatus",
+        DisplayNameEn: "MesureStatus",
+        DisplayName: "حالة القياس",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "mersurable", value: "mersurable" },
+            { display: "unmersurable", value: "unmersurable" },
+           // { display: "unspecific", value: "unspecific" },
+          ],
+        },
+          validation: "required",
+      },
+      {
+        InternalName: "Polarity",
+        DisplayNameEn: "Polarity",
+        DisplayName: "قطبية المنفعة",
+        type: "dropdown",
+        options: {
+          choices: ["+", "-"],
+        },
+        validation: "required",
+      },
+      {
+        InternalName: "ResultType",
+        DisplayNameEn: "Result Type",
+        DisplayName: "وحدة القياس",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "number", value: "number" },
+            { display: "percentage", value: "percentage" },
+          ],
+        },
+         validation: "required",
+      },
+            {
+        InternalName: "Note",
+        DisplayNameEn: "Note",
+        DisplayName: "ملاحظات جهة القياس",
+        maxchar: "200",
+        type: "multiline",
+      },
+      {
+        InternalName: "FromDate",
+        DisplayName: "من سنة",
+        DisplayNameEn: "From Date",
+        type: "yearInput",
+        listname: "Initiatives",
+        startinternalname: "StartDate",
+        endinternalname: "FinishDate",
+        max: "ToDate",
+        validation: "required",
+        Errmsgkey: "fromyearpattern",
+      },
+      {
+        InternalName: "ToDate",
+        DisplayName: "إلى سنة",
+        DisplayNameEn: "To Date",
+        type: "yearInput",
+        listname: "Initiatives",
+        startinternalname: "StartDate",
+        endinternalname: "FinishDate",
+        min: "FromDate",
+        validation: "required",
+        Errmsgkey: "toyearpattern",
+      },
+      {
+        InternalName: "DataSource",
+        DisplayNameEn: "Data Source",
+        DisplayName: "مصدر البيانات",
+        type: "string",
+        maxchar: "255",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      },
+      {
+        InternalName: "PerformanceLeader",
+        DisplayNameEn: "Initiative Manager",
+        DisplayName: "مدير المبادرة",
+        type: "picker",
+        validation: "required",
+      },
     ],
   },
   {
-    label: 'بيانات المخرجات',
-    labelEn: 'Project Deliverable',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
-    sectiontype: 'master',
-    targetlist: 'BenefitDeliverables',
+    label: "بيانات المخرجات",
+    labelEn: "Project Deliverable",
+    description: "التفاصيل",
+    descriptionEn: "Details",
+    sectiontype: "master",
+    targetlist: "BenefitDeliverables",
     subFields: [
-          {
-        InternalName: 'DeliverableID',
-        DisplayNameEn: 'Name',
-        DisplayName: 'المخرج',
-  
-        type: 'lookupchildtoparent',
-        childlist: 'Projects', //child list name
-        childinternalparentname: 'RelatedInitiative', // child internal name related to parent
-        childinternalparenttype:'Text',
-        childinternalname:"Title", // child internal name need to use to parent
-        source: 'Deliverables', // target list
-        sourceinternalname: 'ProjectCode', // column in target list
-        Dispfieldkey: 'Name', //display in dropdown
-        valfieldkey: 'Title', // value in dropdown
-        valsiblingkey:'AcceptanceCriteria', // internal name on sorce list
-        targetsiblingkey:'AcceptanceCriteria' // internal name on current list
+      {
+        InternalName: "DeliverableID",
+        DisplayNameEn: "Name",
+        DisplayName: "المخرج",
+
+        type: "lookupchildtoparent",
+        childlist: "Projects", //child list name
+        childinternalparentname: "RelatedInitiative", // child internal name related to parent
+        childinternalparenttype: "Text",
+        childinternalname: "Title", // child internal name need to use to parent
+        source: "Deliverables", // target list
+        sourceinternalname: "ProjectCode", // column in target list
+        Dispfieldkey: "Name", //display in dropdown
+        valfieldkey: "Title", // value in dropdown
+        valsiblingkey: "AcceptanceCriteria", // internal name on sorce list
+        targetsiblingkey: "AcceptanceCriteria", // internal name on current list
       },
       {
-        InternalName: 'AcceptanceCriteria',
-        DisplayNameEn: 'Acceptance Criteria',
-        DisplayName: 'المقياس - معايير قبول المخرج',
-        type: 'multiline',
-        state: 'disabled',
-        maxchar: 5000,   
+        InternalName: "AcceptanceCriteria",
+        DisplayNameEn: "Acceptance Criteria",
+        DisplayName: "المقياس - معايير قبول المخرج",
+        type: "multiline",
+        state: "disabled",
+        maxchar: 5000,
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",     
+        descPhraseEn: "max length of letters equal 5000",
       },
     ],
   },
-  
+
   {
-    label: 'وثائق داعمة',
-    labelEn: 'Supporting Documents',
-    description: 'التفاصيل',
-    descriptionEn: 'Details',
+    label: "وثائق داعمة",
+    labelEn: "Supporting Documents",
+    description: "التفاصيل",
+    descriptionEn: "Details",
     subFields: [
       {
-        InternalName: 'getfile',
-        DisplayName: 'المرفقات',
-        DisplayNameEn: 'Attachments',
-        type: 'file',
-        withAddBtn: 'true',
-        fileExtensions: 'png,jpeg,svg,msg,rar,pptx,xlsx,docx,pdf',
-        validation: 'required',
+        InternalName: "getfile",
+        DisplayName: "المرفقات",
+        DisplayNameEn: "Attachments",
+        type: "file",
+        withAddBtn: "true",
+        fileExtensions: "png,jpeg,svg,msg,rar,pptx,xlsx,docx,pdf",
+        validation: "required",
         // fileExtensions: 'png,jpeg,svg,xlsx,docx,jpg,txt,pdf',
         // validation: 'required',
       },
@@ -311,4 +446,4 @@ var Information_Form = [
   //         }
   //     ]
   // }
-]
+];

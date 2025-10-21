@@ -18,8 +18,17 @@ function sanitizeSharePointHTML(input) {
         .replace(/\n{2,}/g, '\n')
         .trim();
 }
-
+debugger;
 var icode = new URLSearchParams(window.location.search).get('ICODE');
+if(!icode)
+{
+    var listicode = new URLSearchParams(window.location.search).getAll('ICODE');
+    for(var i=0;i<listicode.length;i++)
+    {
+        if(listicode[i] != '' && listicode[i] != "")
+        { icode = listicode[i]; }
+    }
+}
 var phaseItemMap = {};
 window.phaseItemMap = phaseItemMap;
 $(document).ready(async function () {

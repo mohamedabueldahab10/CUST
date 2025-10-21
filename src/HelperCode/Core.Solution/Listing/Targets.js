@@ -19,9 +19,14 @@ var Where_Body = "",
 var RolePQuery = '', Role_Where_Body = "", Role_Query_Body = "";
 
 var isKpiCode = window.location.href.toLowerCase().indexOf("targets.aspx") > -1 && window.location.href.indexOf("KpiCode=") > -1;
+var isBenefitCode = window.location.href.toLowerCase().indexOf("targets.aspx") > -1 && window.location.href.indexOf("BenefitCode=") > -1;
 var wfKpiCode = "";
+var BenefitCode ="";
 if (isKpiCode) {
   wfKpiCode = window.location.href.split("KpiCode=")[1].split("&")[0]
+}
+if (isBenefitCode) {
+  BenefitCode = window.location.href.split("BenefitCode=")[1].split("&")[0]
 }
 var firstRender = true;
 
@@ -53,23 +58,44 @@ var MainKPIs_Info_Request = {
     // var oList = clientContext.get_web().get_lists().getByTitle("MainKpi"); //list name
     var oList = clientContext.get_web().get_lists().getByTitle("KPIResults"); //list name
     var camlQuery = new SP.CamlQuery(); //set query to return data
-    console.log('in kpi result func')
-
-
-
     if (isKpiCode) {
 
-      var query = `<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'KPI\' /><Value Type=\'Text\'>` + wfKpiCode + `</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>` + kpiYear + `</Value ></Eq><Eq><FieldRef Name=\'PeriodType\' /><Value Type=\'Choice\'>` + filteredValue + `</Value></Eq></And></And></And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
-      // var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="KPI" /><Value Type="Text">' + wfKpiCode + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /></Eq></And></And></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      var query = `<View><Query><Where>
+        <And>
+          <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+          <And>
+            <Eq><FieldRef Name='KPI' /><Value Type='Text'>` + wfKpiCode + `</Value></Eq>
+            <And>
+              <Eq><FieldRef Name='Year' /><Value Type='Text'>` + kpiYear + `</Value></Eq>
+              <And>
+                <Eq><FieldRef Name='PeriodType' /><Value Type='Choice'>` + filteredValue + `</Value></Eq>
+                <IsNull><FieldRef Name='BenefitCode' /></IsNull>
+              </And>
+            </And>
+          </And>
+        </And>
+      </Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
 
+      // var query = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name="KPI" /><Value Type="Text">' + wfKpiCode + "</Value></Eq><And><Eq><FieldRef Name='Year' /></Eq></And></And></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+
+      camlQuery.set_viewXml(query)
+
+    } else if (isBenefitCode) {
+      var query = `<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='BenefitCode' /><Value Type='Text'>` + BenefitCode + `</Value></Eq><And><Eq><FieldRef Name='Year' /> <Value Type='Text'>` + kpiYear + `</Value ></Eq><Eq><FieldRef Name='PeriodType' /><Value Type='Choice'>` + filteredValue + `</Value></Eq></And></And></And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
       camlQuery.set_viewXml(query)
     }
     else if (Where_Body) {
 
       camlQuery.set_viewXml(
-        `<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>` +
-        Where_Body +
-        `</And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
+        `<View><Query><Where>
+          <And>
+            <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
+            <And>
+              <IsNull><FieldRef Name='BenefitCode' /></IsNull>
+              ` + Where_Body + `
+            </And>
+          </And>
+        </Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>`
       );
 
       var x = `<View><Query><Where>` +
@@ -94,19 +120,34 @@ var MainKPIs_Info_Request = {
         //   // isSectorHead
         //   //|| isSubSectorHead
         //   ) {
-        //   camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name=\'" + SecondLevel_FirstLevel_Field + "\' /> <Value Type=\'Text\'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
+        //   camlQuery.set_viewXml('<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><And><Eq><FieldRef Name=\'Year\' /> <Value Type='Text'>" + kpiYear + "</Value ></Eq><Eq><FieldRef Name='" + SecondLevel_FirstLevel_Field + "' /> <Value Type='Text'>" + UserAccessSectorCode + "</Value ></Eq></And></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >")
         // }
         // else {
         camlQuery.set_viewXml(
-          '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq><Eq><FieldRef Name=\'Year\' /> <Value Type=\'Text\'>" + kpiYear + "</Value ></Eq></And></And></Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >");
+          '<View><Query><Where>\
+            <And>\
+              <Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq>\
+              <And>\
+                <IsNull><FieldRef Name=\'BenefitCode\' /></IsNull>\
+                <And>\
+                  <Eq><FieldRef Name=\'PeriodType\' /> <Value Type="Choice">' + filteredValue + "</Value></Eq>\
+                  <Eq><FieldRef Name=\'Year\' /> <Value Type='Text\'>" + kpiYear + "</Value ></Eq>\
+                </And>\
+              </And>\
+            </And>\
+          </Where ><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query ></View >");
         // }
       } else {
         camlQuery.set_viewXml(
           "<View><Query>\
-          			<OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
+            <Where><IsNull><FieldRef Name='BenefitCode' /></IsNull></Where>\
+            <OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>"
         );
       }
     }
+
+    console.log('in kpi result func', camlQuery.get_viewXml())
+
     MainKPIs_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(MainKPIs_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
@@ -793,7 +834,7 @@ var MainKPIs_Info_Request = {
     //   );
     // }
 
-    if (isKpiCode && firstRender) {
+    if ((isKpiCode|| isBenefitCode) && firstRender) {
       $('.filterTarget').hide()
       firstRender = false
     }
@@ -980,12 +1021,13 @@ var Get_All_Dynamic_Filter = {
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : ''
-      var department = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : ''
-      var portfolio = oListItem.get_item("Portfolio") ? oListItem.get_item("Portfolio") : ''
-      var relatedGoal = oListItem.get_item("RelatedGoal") ? oListItem.get_item("RelatedGoal") : ''
-      var mainKpiCode = oListItem.get_item("KPI") ? oListItem.get_item("KPI") : ''
-      var period = oListItem.get_item("PeriodType") ? oListItem.get_item("PeriodType") : ''
+      var sector = oListItem.get_item("Sector") ? oListItem.get_item("Sector") : '';
+      var department = oListItem.get_item("SubSector") ? oListItem.get_item("SubSector") : '';
+      var portfolio = oListItem.get_item("Portfolio") ? oListItem.get_item("Portfolio") : '';
+      var relatedGoal = oListItem.get_item("RelatedGoal") ? oListItem.get_item("RelatedGoal") : '';
+      var period = oListItem.get_item("PeriodType") ? oListItem.get_item("PeriodType") : '';
+      var mainKpiCode = oListItem.get_item("KPI") ? oListItem.get_item("KPI") : '';
+      var benefitcodeTitle = oListItem.get_item("BenefitCode") ? oListItem.get_item("BenefitCode") : '';
       if (sector && !SectorFilterArr.includes(sector)) {
         SectorFilterArr.push(sector)
       }
@@ -1003,8 +1045,7 @@ var Get_All_Dynamic_Filter = {
       }
 
       //add specially to handle filtered value in fist render when isKpiCode
-
-      if (isKpiCode && (mainKpiCode == wfKpiCode)) {
+      if ((isKpiCode && (mainKpiCode == wfKpiCode)) ||  (isBenefitCode && (benefitcodeTitle == BenefitCode))) {
 
         filteredValue = period
       }

@@ -1,4 +1,5 @@
 window.kpiCodeResult = "";
+window.benefitCodeResult = "";
 ////////////
 var allFileIndex = 0;
 var relatedObjInit = "";
@@ -685,6 +686,9 @@ window.Edit_Data_Request = {
       console.log('yearValue',yearValue);
       Get_ActualAnnualTotal.init(yearValue);
     }
+    if (listkey == "benefits") {
+      benefitCodeResult = oListItem.get_item("Title");
+    }
 
     if (listkey == "benefitmetrics") {
       benefitCode = oListItem.get_item("Title");
@@ -1031,7 +1035,40 @@ window.Edit_Data_Request = {
     
     if(listkey == "deliverables" && isEdit){
     getNestedDeliverablesSum();
-    }  
+    }
+    if (listkey === "projects" && isEdit) {
+
+      var initCode = $("#RelatedInitiative").val(); // get current selected initiative code on load
+  
+      if (initCode) {
+          $.ajax({
+              url: `${APIURL}/job/checkunfundedinitiative/${initCode}`,
+              type: "GET",
+              headers: {
+                  Accept: "application/json;odata=verbose",
+              },
+              success: function (data) {
+                  // Check if API returned successfully
+                  if (data && data.isSuccess) {
+                      if (data.result === true) {
+                          $("#FundingStatus").val("unfunded").prop("disabled", true);
+                      } else {
+                          $("#FundingStatus").val("").prop("disabled", false);
+                      }
+                  } else {
+                      console.warn("API returned unsuccessful:", data);
+                      $("#FundingStatus").val("").prop("disabled", false);
+                  }
+              },
+              error: function (err) {
+                  console.error("Error checking unfunded initiative:", err);
+                  $("#FundingStatus").val("").prop("disabled", false);
+              },
+          });
+      } else {
+          $("#FundingStatus").val("").prop("disabled", false);
+      }
+  }  
     setTimeout(() => {
       if (isWF && listkey == "mainkpi" && workflowname == 'MSActualKPI' ) {
         var mainKpiCode = $("#Title").val();
@@ -1784,6 +1821,29 @@ window.View_Data_Request = {
         //         .join("; <br>");
 
         //   $(this).html(value);
+      } else if ($(this).attr("type") == "multiselecttranslatedstring") {
+        var rawValue = oListItem.get_item($(this).attr("id"));
+        var $this = $(this);
+      
+        if (!rawValue || rawValue == "undefined" || rawValue.trim() == "") {
+          $this.html(No_Data);
+        } else {
+          // Split by ::: to get each translated string
+          var items = rawValue.split(":::");
+      
+          var htmlTranslated = "";
+          items.forEach(function (item, index) {
+            var trimmed = item.trim();
+            if (trimmed != "") {
+              var dataTrans = "data-trans-" + trimmed;
+              htmlTranslated +=
+                '<span ' + dataTrans + ' class="Resources">' + trimmed + "</span>";
+              if (index < items.length - 1) htmlTranslated += "<br>";
+            }
+          });
+      
+          $this.html(htmlTranslated);
+        }
       } else if ($(this).attr("type") == "lookup") {
         var valfieldkey = $(this).data("valfieldkey"),
           Dispfieldkey = $(this).data("dispfieldkey"),
@@ -2128,6 +2188,8 @@ window.View_Data_Request = {
     }
     if (USERisWF) {
       $(".container-body .d-flex.btnactionrow").hide();
+    } else {
+      Get_AllTaskHistoryRelatedToForm.init();
     }
 
     //handle top menu navigation
@@ -2374,6 +2436,21 @@ window.View_Data_Request = {
 
       equationBenefit.init();
     }
+    if (listkey == "benefits") {
+      benefitCode = oListItem.get_item("Title");
+
+      if (!USERisWF) {
+        $("#printableArea").prepend(
+          '<a class="linkmsg alert" href="' +
+            _spPageContextInfo.siteAbsoluteUrl +
+            "/sitepages/Targets.aspx?BenefitCode=" +
+            benefitCode +
+            '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-benefitmetricstext class="Resources">' +
+            "</span></a>"
+        );
+      }
+      // equationBenefit.init();
+    }
 
     // if (listkey == "goalstrategy") {
     //   if (isVROP) {
@@ -2544,6 +2621,72 @@ window.View_Data_Request = {
         $("#PillarsExist").parent().hide();
       }
     }
+    if (listkey == "deliverables" || listkey == "milestones") {
+      if (typeof USERPCODE !== "undefined" && USERPCODE) {
+        $.ajax({
+          url: "/_api/web/lists/getbytitle('Projects')/items",
+          type: "GET",
+          data: {
+            $select: "Title,IsZeroBudgetProject",
+            $filter: "Title eq '" + USERPCODE + "'",
+          },
+          headers: {
+            Accept: "application/json;odata=verbose",
+          },
+          success: function (data) {
+            if (data.d.results.length > 0) {
+              var project = data.d.results[0];
+              if (
+                project.IsZeroBudgetProject &&
+                project.IsZeroBudgetProject.toLowerCase() === "yes"
+              ) {
+                hideBudgetFields();
+              }
+            }
+          },
+          error: function (error) {
+            console.log("Error fetching project data: ", error);
+          },
+        });
+      }
+    }
+    if (listkey == "initiativedeliverables" || listkey == "initiativemilestones") {
+      if (typeof UserICode !== "undefined" && UserICode) {
+        $.ajax({
+          url: "/_api/web/lists/getbytitle('Initiatives')/items",
+          type: "GET",
+          data: {
+            $select: "Title,IsZeroBudgetInitiative",
+            $filter: "Title eq '" + UserICode + "'",
+          },
+          headers: {
+            Accept: "application/json;odata=verbose",
+          },
+          success: function (data) {
+            if (data.d.results.length > 0) {
+              var initiative = data.d.results[0];
+              if (
+                initiative.IsZeroBudgetInitiative &&
+                initiative.IsZeroBudgetInitiative.toLowerCase() === "yes"
+              ) {
+                hideBudgetFields();
+              }
+            }
+          },
+          error: function (error) {
+            console.log("Error fetching initiative data: ", error);
+          },
+        });
+      }
+    }
+    function hideBudgetFields() {
+      var fields = ["#Weight", "#Amount", "#Quantity", "#AmountPrice","#InvoiceNumber" , "#InvoiceDate"];
+      $.each(fields, function (i, f) {
+        $(f).hide(); // hide the input
+        $(f).closest(".CFIELD").addClass("hide-field").css("display", "none"); // add hide-field to container
+      });
+    }
+    
     ////////////////////////////////////////////////
     // if(isView && listkey == 'goalstrategy'){
     // 	if($('#Ministry').html() == No_Data){
@@ -7990,8 +8133,25 @@ window.Get_AllTaskHistoryRelatedToForm = {
 
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Tasks");
-
-    var camlQueryXml = `<View>
+    var titleToCheck =$('#Title').text();
+    var camlQueryXml =``;
+    if (titleToCheck){
+      debugger
+      camlQueryXml = `<View>
+      <Query>
+        <Where>
+          <And>
+            <Eq><FieldRef Name='RelatedItemTitle'/><Value Type='Text'>${titleToCheck}</Value></Eq>
+            <Eq><FieldRef Name='Status'/><Value Type='Choice'>Closed</Value></Eq>
+          </And>
+        </Where>
+        <OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy>
+      </Query>
+      <RowLimit>5</RowLimit>
+    </View>`;
+    }
+    else {
+      camlQueryXml = `<View>
       <Query>
         <Where>
           <And>
@@ -8003,6 +8163,7 @@ window.Get_AllTaskHistoryRelatedToForm = {
       </Query>
       <RowLimit>5</RowLimit>
     </View>`;
+    }
 
     if (isLoadMore) {
       camlQueryXml = camlQueryXml.replace(

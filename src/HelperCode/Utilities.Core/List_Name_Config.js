@@ -284,6 +284,22 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
+		strategiccalendar :"StrategicCalendar",
+		ListingTitle: "التقويم الاستراتيجي",
+		FormTitle: "التقويم الاستراتيجي",
+		TitleEn: "Strategic Calendar",
+		projnav: "Project Navigation",
+		subfolder: true,
+    },
+	{
+		developmentrequirements :"DevelopmentRequirements",
+		ListingTitle: "مستهدفات التطوير",
+		FormTitle: "مستهدفات التطوير",
+		TitleEn: "Development Requirements",
+		projnav: "Project Navigation",
+		subfolder: true,
+    },
+	{
 		projectarchivingdocs: "Project Archiving Docs",
 		ListingTitle: "Project Archiving Docs Listing",
 		FormTitle: "Project Archiving Docs Details",

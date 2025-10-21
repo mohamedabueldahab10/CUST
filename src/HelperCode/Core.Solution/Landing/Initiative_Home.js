@@ -685,7 +685,9 @@ var initiativeHomeInfo_Request = {
         initiativetype +
         ' class="Resources initiativeProjHomeInfoValueStyle"></p>'
     );
-
+    if (initiativestatus === "stat34") {
+      $(".control-ctx.project-details-ctx .icon-user").css("background", "#d3d3d3"); // light grey
+    }
     $(
       ".card-body.project-status-info.border-bottom.pb-4 span.badge.bg-success.white.font-13.bold"
     ).html(
@@ -2530,6 +2532,9 @@ var Get_InitiativeStatus_Info = {
       itemID = oListItem.get_id();
       InitiativeProgressStatus =
         oListItem.get_item("InitiativeProgressStatus") || No_Data;
+        if (InitiativeProgressStatus === "stat34") {
+          $(".control-ctx.project-details-ctx .icon-user").css("background", "#d3d3d3"); // light grey
+        }
         initActualPercentage =  oListItem.get_item("ActualPercentageCompleted") || 0;
         initPlannedPercentage =  oListItem.get_item("PlannedPercentageCompleted") || 0;
     }
@@ -2554,6 +2559,9 @@ var Get_InitiativeStatus_Info = {
 
     $("button.updateprogress").removeClass("loader-action");
     $("button.updateprogress").addClass("loader-action-success");
+    if (InitiativeProgressStatus === "stat34") {
+      $(".control-ctx.project-details-ctx .icon-user").css("background", "#d3d3d3"); // light grey
+    }
 
     changeResources();
   },
