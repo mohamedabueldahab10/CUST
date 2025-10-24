@@ -233,6 +233,49 @@ var Information_Form = [
         ],
       },
       {
+        InternalName: 'RelatedStrategyReadonly',
+        DisplayNameEn: 'Related Strategy Read Only',
+        DisplayName: 'الاستراتيجية المطلعه',
+        type: 'lookup',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',        
+        "validation": "required",
+        // dynamic: 'parent',
+        // dynamic: 'Types',
+        // dynamic:'parent',
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+        //in case not parent add below attrs
+        //role access
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['lms'],
+              },
+            ],
+          },
+        ],
+      },
+      {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',        
@@ -575,20 +618,28 @@ var Information_Form = [
         },
       },
       {
-        InternalName: 'ExpenseStartDate',
-        DisplayName: 'تاريخ بداية الصرف',
-        DisplayNameEn: 'Expense Start Date',
-        // type: 'datetime',
-        type: 'datetimetoparent',
-        listname: 'Initiatives',
-        startinternalname: 'StartDate',
-        endinternalname: 'FinishDate',
-        // min: 'StartDate',
-        // max: 'FinishDate',
-        Errmsgkey: 'btwndatepattern',
-        // startinternalname: 'StartDate',
-        // endinternalname: 'FinishDate',
+        InternalName: "IsZeroBudgetInitiative",
+        DisplayName: "هل هي مبادرة صفرية؟",
+        DisplayNameEn: "Is Zero Budget Intiative ?",
+        // type: "yesnoradio",
+        type: 'dropdownValues',
+        validation: "required",
+        options: {
+          choices: [
+            { display: "yes", value: "yes" },
+            { display: "no", value: "no" },
+          ],
+        },
+         toggleValues: [
+          { value: 'yes', fields: [] },
+          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection','Weight','Amount' ] },
+        ],
+          requiredValues: [
+          { value: 'yes', fields: [] },
+          { value: 'no', fields: ['ProgramTotalCost']},
+        ],
       },
+     
       // {
       //     "InternalName": "RelatedKPI",
       //     "DisplayNameEn": "Related KPI",
@@ -612,18 +663,7 @@ var Information_Form = [
       //   maxchar: '255',
       //   // "validation": "required"
       // },
-      {
-        InternalName: 'DependencyCost',
-        DisplayName: 'حجم الارتباط (منصة اعتماد) ',
-        DisplayNameEn: 'Dependency Cost',
-        type: 'floatpercentage',
-      },
-      {
-        InternalName: 'ComplianceRate',
-        DisplayName: 'نسبة الإمتثال',
-        DisplayNameEn: 'Compliance Rate',
-        type: 'floatpercentage',
-      },
+      
       // {
       //     "InternalName": "Status",
       //     "DisplayName": "مرحلة المبادرة",
@@ -836,6 +876,7 @@ var Information_Form = [
     labelEn: 'Financial Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    ToggleName: 'BudgetSection',
     subFields: [
       // {
       //   InternalName: 'RelatedBudgetItem',
@@ -874,6 +915,7 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
         DisplayNameEn: 'Program Total Cost',
         type: 'float',
+        RequiredName: "ProgramTotalCost",
         // listname: 'Initiatives',
         // parentinternalname: 'InitiativeCode',
         // targetelement: 'ActualCost',
@@ -901,6 +943,31 @@ var Information_Form = [
         sum2Element: "ActualCost",// get the value for this elem
         totalElement: "InitiativeBudget"// set sum value in this elem
       },
+     /*  {
+        InternalName: 'NoActualCost',
+        DisplayName: 'التكاليف الكلية غير المعتمدة ',
+        DisplayNameEn: 'No Actual Cost',
+        type: 'float',
+        numberOfDigits:"15",
+         security: {
+      groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+       },
+       },*/
+      {
+        InternalName: "FundingStatus",
+        DisplayName: "حالة التمويل",
+        DisplayNameEn: "Funding Status",        
+        "RequiredName": "FundingStatus",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "funded", value: "funded" },
+            { display: "unfunded", value: "unfunded" },
+            { display: "partiallyfunded", value: "partiallyfunded" },
+            { display: "zero", value: "zero" },
+          ],
+        },
+      },
       {
         InternalName: 'InitiativeBudget',
         DisplayName: 'ميزانية المبادرة ',
@@ -926,6 +993,21 @@ var Information_Form = [
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
         descPhraseEn: "should be less than or equal the initiative budget",
       },
+       {
+        InternalName: 'ExpenseStartDate',
+        DisplayName: 'تاريخ بداية الصرف',
+        DisplayNameEn: 'Expense Start Date',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Initiatives',
+        startinternalname: 'StartDate',
+        endinternalname: 'FinishDate',
+        // min: 'StartDate',
+        // max: 'FinishDate',
+        Errmsgkey: 'btwndatepattern',
+        // startinternalname: 'StartDate',
+        // endinternalname: 'FinishDate',
+      },
       {
         InternalName: 'Expenditures',
         DisplayName: 'المنصرف الأجمالي ',
@@ -949,6 +1031,20 @@ var Information_Form = [
         max:"InitiativeBudget",
         descPhraseAr: "يجب ان تكون اقل من او يساوي ميزانية المبادرة",
         descPhraseEn: "should be less than or equal the initiative budget",
+      },
+      {
+        InternalName: 'DependencyCost',
+        DisplayName: 'حجم الارتباط (منصة اعتماد) ',
+        DisplayNameEn: 'Dependency Cost',
+        type: 'floatpercentage',
+        ToggleName: 'FundingSection',
+      },
+      {
+        InternalName: 'ComplianceRate',
+        DisplayName: 'نسبة الإمتثال',
+        DisplayNameEn: 'Compliance Rate',
+        type: 'floatpercentage',
+        ToggleName: 'FundingSection',
       },
     ],
   },
@@ -974,8 +1070,9 @@ var Information_Form = [
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال ميزانية المبادرة)',
     descriptionEn: 'Details (you can enter the values when enter the Initiative Budget)',
     sectiontype: 'master',
-    className: "disable_section", // to make the section disabled on form render
+   // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
+    ToggleName: "Delivrables",
     subFields: [
       
       {
@@ -1090,6 +1187,7 @@ var Information_Form = [
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
+        ToggleName: 'Weight',
         listname: 'InitiativeDeliverables',
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
@@ -1099,12 +1197,13 @@ var Information_Form = [
         descPhraseAr: "من ميزانية المبادرة",
         descPhraseEn: " From Initiative Budget", 
       },
-      {
+     {
         InternalName: 'Amount',
         DisplayName: 'القيمة',
         DisplayNameEn: 'Amount',
         dontSubmit: true,
         type: 'percentbyrelatedparent',
+        ToggleName: 'Amount',
         listname: 'Initiatives',
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
@@ -1140,8 +1239,9 @@ var Information_Form = [
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال ميزانية المبادرة)',
     descriptionEn: 'Details (you can enter the values when enter the Initiative Budget)',
     sectiontype: 'master',
-    className: "disable_section", // to make the section disabled on form render
+  //  className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
+    ToggleName: 'Milestones',
     subFields: [
       {
         InternalName: 'Name',
@@ -1179,6 +1279,7 @@ var Information_Form = [
         DisplayName: 'الوزن المكافئ للإنجاز %',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
+        ToggleName: 'Weight',
         listname: 'InitiativeMilestones',
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
@@ -1194,6 +1295,7 @@ var Information_Form = [
         DisplayNameEn: 'Amount',
         dontSubmit: true,
         type: 'percentbyrelatedparent',
+        ToggleName: 'Amount',
         listname: 'Initiatives',
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',

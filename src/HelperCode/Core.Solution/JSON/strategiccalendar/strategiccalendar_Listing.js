@@ -28,28 +28,28 @@ var Listing_Info = [
         InternalName: "SendToRoles",
         DisplayName: "الأدوار المرسلة إليها",
         DisplayNameEn: "Send To Roles",
-        "type":"dropdownValues",
+        "type":"multiselecttranslated",
         inlisting:true,
         infilter:true,
-        needTrans: true
+        // needTrans: true
      },
      {
         InternalName: "ReminderTypes",
         DisplayName: "أنواع التذكير",
         DisplayNameEn: "Reminder Types",
-        "type":"dropdownValues",
+        "type":"multiselecttranslated",
         inlisting:true,
         infilter:true,
-        needTrans: true
+        // needTrans: true
      },
      {
         InternalName: "ReminderItems",
         DisplayName: "عناصر التذكير",
         DisplayNameEn: "Reminder Items",
-        "type":"dropdownValues",
+        "type":"multiselecttranslated",
         inlisting:true,
         infilter:true,
-        needTrans: true
+        // needTrans: true
      },
      {
         InternalName: "IsActive",

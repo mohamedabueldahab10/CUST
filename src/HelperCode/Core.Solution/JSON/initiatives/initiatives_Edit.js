@@ -294,6 +294,49 @@ var Information_Form = [
           },
         ],
         },
+        {
+        InternalName: 'RelatedStrategyReadonly',
+        DisplayNameEn: 'Related Strategy Read Only',
+        DisplayName: 'الاستراتيجية المطلعه',
+        type: 'lookup',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',        
+        "validation": "required",
+        // dynamic: 'parent',
+        // dynamic: 'Types',
+        // dynamic:'parent',
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+        //in case not parent add below attrs
+        //role access
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['lms'],
+              },
+            ],
+          },
+        ],
+      },
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
@@ -896,43 +939,28 @@ var Information_Form = [
         },
       },
       {
-        InternalName: 'ExpenseStartDate',
-        DisplayName: 'تاريخ بداية الصرف',
-        DisplayNameEn: 'Expense Start Date',
-        // type: 'datetime',
-        type: 'datetimetoparent',
-        listname: 'Initiatives',
-        startinternalname: 'StartDate',
-        endinternalname: 'FinishDate',
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        Errmsgkey:'btwndatepattern',
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
+        InternalName: "IsZeroBudgetInitiative",
+        DisplayName: "هل هي مبادرة صفرية؟",
+        DisplayNameEn: "Is Zero Budget Intiative ?",
+        // type: "yesnoradio",
+        type: 'dropdownValues',
+        validation: "required",
+        options: {
+          choices: [
+            { display: "yes", value: "yes" },
+            { display: "no", value: "no" },
+          ],
         },
+        toggleValues: [
+          { value: 'yes', fields: [] },
+          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection', /*'Delivrables', 'Milestones',*/ 'LinkingSection','Weight','Amount' ] },
+        ],
+          requiredValues: [
+          { value: 'yes', fields: [] },
+          { value: 'no', fields: ['ProgramTotalCost']},
+        ],
       },
-      {
-        InternalName: 'DependencyCost',
-        DisplayName: 'حجم الارتباط (منصة اعتماد) ',
-        DisplayNameEn: 'Dependency Cost',
-        // type: 'float',
-        type: 'floatpercentage',
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-      },
+    
       // {
       //     "InternalName": "InitiativeStatus",
       //     "DisplayName": "حالة توثيق المبادرة",
@@ -991,6 +1019,7 @@ var Information_Form = [
     labelEn: 'Financial Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    ToggleName: 'BudgetSection',
     enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
     requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
     subFields: [
@@ -1054,6 +1083,7 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
         DisplayNameEn: 'Program Total Cost',
         type: 'float',
+        RequiredName: "ProgramTotalCost",
         numberOfDigits: '15',
         targetelement: 'ActualCost',
         enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
@@ -1098,6 +1128,31 @@ var Information_Form = [
             // {group:"EPMO",form:["origin" ]}
 
           ]
+        },
+      },
+        {
+        InternalName: 'NoActualCost',
+        DisplayName: 'التكاليف الكلية غير المعتمدة ',
+        DisplayNameEn: 'No Actual Cost',
+        type: 'float',
+        numberOfDigits:"15",
+         security: {
+      groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+       },
+       },
+      {
+        InternalName: "FundingStatus",
+        DisplayName: "حالة التمويل",
+        DisplayNameEn: "Funding Status",        
+        "RequiredName": "FundingStatus",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "funded", value: "funded" },
+            { display: "unfunded", value: "unfunded" },
+            { display: "partiallyfunded", value: "partiallyfunded" },
+            { display: "zero", value: "zero" },
+          ],
         },
       },
       {
@@ -1196,8 +1251,73 @@ var Information_Form = [
           ]
         },
       },
+        {
+        InternalName: 'ExpenseStartDate',
+        DisplayName: 'تاريخ بداية الصرف',
+        DisplayNameEn: 'Expense Start Date',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Initiatives',
+        startinternalname: 'StartDate',
+        endinternalname: 'FinishDate',
+        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        Errmsgkey:'btwndatepattern',
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
+      },
+      {
+        InternalName: 'DependencyCost',
+        DisplayName: 'حجم الارتباط (منصة اعتماد) ',
+        DisplayNameEn: 'Dependency Cost',
+        // type: 'float',
+        type: 'floatpercentage',
+         ToggleName: 'FundingSection',
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
+      },
     ],
   },
+   {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      }
+   ]},
   {
     label: 'بيانات المخرج الرئيسي',
     labelEn: 'Delivrable Data',
@@ -1206,6 +1326,7 @@ var Information_Form = [
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
+    ToggleName: "Delivrables",
     subFields: [
       {
         InternalName: 'Name',
@@ -1390,6 +1511,7 @@ var Information_Form = [
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
+        ToggleName: 'Weight',
         listname: 'InitiativeDeliverables',
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
@@ -1407,6 +1529,7 @@ var Information_Form = [
 
           ]
         },
+        display:'none'
       },
       {
         InternalName: 'Amount',
@@ -1415,6 +1538,7 @@ var Information_Form = [
         dontSubmit: true,
         	"state":"disabled",
         type: 'percentbyrelatedparent',
+        ToggleName: 'Amount',
         listname: 'Initiatives',
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
@@ -1430,6 +1554,7 @@ var Information_Form = [
 
           ]
         }, 
+        display:'none'
       },
       // {
       //   InternalName: 'Weight',
@@ -1529,6 +1654,7 @@ var Information_Form = [
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
+    ToggleName: 'Milestones',
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -1595,6 +1721,7 @@ var Information_Form = [
         DisplayName: 'الوزن المكافئ للإنجاز %',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
+        ToggleName: 'Weight',
         listname: 'InitiativeMilestones',
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
@@ -1611,6 +1738,8 @@ var Information_Form = [
 
           ]
         },
+        display:'none'
+       
       },
       {
         InternalName: 'Amount',
@@ -1619,6 +1748,7 @@ var Information_Form = [
         dontSubmit: true,
         	"state":"disabled",
         type: 'percentbyrelatedparent',
+        ToggleName: 'Amount',
         listname: 'Initiatives',
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
@@ -1634,6 +1764,7 @@ var Information_Form = [
 
           ]
         },
+         display:'none'
       },
       //   {
       //     InternalName: 'Weight',
