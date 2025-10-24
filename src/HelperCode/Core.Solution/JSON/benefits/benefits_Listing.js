@@ -41,6 +41,14 @@ var Listing_Info = [
 	  inlisting: true,
 	  infilter: false,
 	},
+	 {  InternalName: 'CompletionStatus',
+        DisplayNameEn: 'Completion Status',
+        DisplayName: 'مكتمل',
+        type: 'yesnoradio',
+         inlisting: true,
+        infilter: true,
+        needTrans:true
+      },
 	{
 	  InternalName: "PeriodType",
 	  DisplayName: "دورية القياس",

@@ -103,6 +103,29 @@ var Information_Form = [
         maxchar: "200",
         type: "multiline",
       },
+{
+        InternalName: "referenceEntity",
+        DisplayNameEn: "referenceEntity",
+        DisplayName: "جهة المقارنة المعيارية",
+        type: "string",
+        maxchar: "255",
+      },
+      {
+        InternalName: "bencmarkValue",
+        DisplayNameEn: "bencmarkValue",
+        DisplayName: "قيمة المقارنة الفعلية",
+        type: "string",
+        maxchar: "255",
+      },
+          {
+        InternalName: "benefitEquation",
+        DisplayNameEn: "benefitEquation",
+        DisplayName: "معادلة المنفعة",
+        type: "string",
+        maxchar: "255",
+      },
+
+    
       // {
       //   InternalName: "RelatedSubKpis",
       //   DisplayNameEn: "Related Sub Kpis",
@@ -376,6 +399,22 @@ var Information_Form = [
         type: "picker",
         validation: "required",
       },
+        //{
+        //InternalName: 'CompletionStatus',
+        //DisplayNameEn: 'Completion Status',
+        //DisplayName: 'مكتمل',
+        //type: 'yesnoradio',
+        //options: {
+         // choices: [
+          //  { display: 'yes', value: 'yes' },
+           // { display: 'no', value: 'no' },
+         // ],
+        //}, security: {
+         // groups: [
+           // 'SPM Admin',
+         // ],
+        //},
+      //},
     ],
   },
   {
