@@ -56,42 +56,42 @@ var Information_Form = [
       {
         InternalName: "Weight",
         DisplayNameEn: "Weight",
-        DisplayName: "وزن ",
-        type: "floatpercentage",
-         validation: "required",
-        descPhraseAr: "يجب ان يكون مجموع أوزان المنافع %100",
-
-        // "state": "disabled",
-        // dynamic: "Initiative"
+        DisplayName: "وزن",
+        type: "floatpercentagemaxfromparent",
+        validation: "required",
+        descPhraseAr: "%يجب ان يكون مجموع أوزان المنافع 100",
+        descPhraseAn: "The total weight of benefits must be 100%",
+        siblingslistname: "Benefits",
+        siblingstargetcode: "InitiativeCode",
       },
 
-           {
+      {
         InternalName: "measurementEntity",
         DisplayNameEn: "measurementEntity",
         DisplayName: "جهة القياس",
-        maxchar: "200",
+        maxchar: 200,
         type: "multiline",
       },
       {
         InternalName: "referenceEntity",
         DisplayNameEn: "referenceEntity",
         DisplayName: "جهة المقارنة المعيارية",
-        type: "string",
-        maxchar: "255",
+        type: "multiline",
+        maxchar: 255,
       },
       {
         InternalName: "bencmarkValue",
         DisplayNameEn: "bencmarkValue",
         DisplayName: "قيمة المقارنة الفعلية",
-        type: "string",
-        maxchar: "255",
+        type: "multiline",
+        maxchar: 255,
       },
           {
         InternalName: "benefitEquation",
         DisplayNameEn: "benefitEquation",
         DisplayName: "معادلة المنفعة",
-        type: "string",
-        maxchar: "255",
+        type: "multiline",
+        maxchar: 255,
       },
       // {
       //   InternalName: 'BenefitScale',
@@ -148,7 +148,7 @@ var Information_Form = [
         //valfieldkey: "Title",
         //listname: "BenefitMetrics",
         //targetelement: "RelatedBenefit",
-        //state: "disabled",
+        //
       //},
       {
         InternalName: "MesureStatus",
@@ -184,7 +184,7 @@ var Information_Form = [
           { value: "midterm", fields: ["Midterms"] },
           { value: "year", fields: ["Years"] },
         ],
-        state: "disabled",
+        
         options: {
           choices: [
             { display: "monthly", value: "monthly" },
@@ -224,8 +224,15 @@ var Information_Form = [
         endinternalname: "FinishDate",
         max: "ToDate",
         validation: "required",
-        state: "disabled",
+        
         Errmsgkey: "fromyearpattern",
+        security: {
+          groups: [
+            "EPMO",
+            "System Admin Group",
+            "Development Unit",
+          ],
+        },
       },
       {
         InternalName: "ToDate",
@@ -237,8 +244,15 @@ var Information_Form = [
         endinternalname: "FinishDate",
         min: "FromDate",
         validation: "required",
-        state: "disabled",
+        
         Errmsgkey: "toyearpattern",
+           security: {
+          groups: [
+            "EPMO",
+            "System Admin Group",
+            "Development Unit",
+          ],
+        },
       },
       {
         InternalName: "DataSource",
@@ -250,25 +264,26 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 255",
       },
       {
-        InternalName: "PerformanceLeader",
-        DisplayNameEn: "Performance Leader",
-        DisplayName: "مدير المبادرة",
-        type: "picker",
-        validation: "required",
-      },
-      {
         InternalName: "BenefitStatus",
         DisplayNameEn: "Benefit Status",
         DisplayName: "حالة المنفعة",
         ToggleName: "Benefit Status",
+        validation: "required",
         type: "dropdownValues",
         options: {
           choices: [
-            { display: "stat15", value: "لم يتم تحقيقه" },
-            { display: "stat16", value: "تم تحقيقه جزئياً" },
-            { display: "stat17", value: "تم تحقيق المستهدف" },
-            { display: "stat18", value: "لا يقاس" },
-            { display: "stat19", value: "لا توجد قيمة" },
+            { display: "stat15", value: "stat15" },
+            { display: "stat16", value: "stat16" },
+            { display: "stat17", value: "stat17" },
+            { display: "stat18", value: "stat18" },
+            { display: "stat19", value: "stat19" },
+          ],
+        },
+        security: {
+          groups: [
+            "EPMO",
+            "System Admin Group",
+            "Development Unit",
           ],
         },
       },
@@ -305,22 +320,23 @@ var Information_Form = [
         InternalName: "cumulativeBenefit",
         DisplayNameEn: "CumulativeBenefit",
         DisplayName: " تراكمية المنفعة",
-        maxchar: "200",
-        type: "multiline",
+         type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value:  'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
       },
         {
-        InternalName: 'CompletionStatus',
-        DisplayNameEn: 'Completion Status',
-        DisplayName: 'مكتمل',
+        InternalName: "CompletionStatus",
+        DisplayNameEn: "Completion Status",
+        DisplayName: "مكتمل",
         type: 'yesnoradio',
         options: {
           choices: [
-            { display: 'yes', value: 'yes' },
+            { display: 'yes', value:  'yes' },
             { display: 'no', value: 'no' },
-          ],
-        }, security: {
-          groups: [
-            'SPM Admin',
           ],
         },
       },
@@ -418,27 +434,39 @@ var Information_Form = [
     sectiontype: "master",
     targetlist: "BenefitDeliverables",
     subFields: [
+      // {
+      //   InternalName: "DeliverableID",
+      //   DisplayNameEn: "Name",
+      //   DisplayName: "المخرج",
+
+      //   type: "lookupchildtoparent",
+      //   childlist: "Projects", //child list name
+      //   childinternalparentname: "RelatedInitiative", // child internal name related to parent
+      //   childinternalparenttype: "Text",
+      //   childinternalname: "Title", // child internal name need to use to parent
+      //   source: "Deliverables", // target list
+      //   sourceinternalname: "ProjectCode", // column in target list
+      //   Dispfieldkey: "Name", //display in dropdown
+      //   valfieldkey: "Title", // value in dropdown
+      //   valsiblingkey: "AcceptanceCriteria", // internal name on sorce list
+      //   targetsiblingkey: "AcceptanceCriteria", // internal name on current list
+      // },
       {
         InternalName: "DeliverableID",
         DisplayNameEn: "Name",
         DisplayName: "المخرج",
-
-        type: "lookupchildtoparent",
-        childlist: "Projects", //child list name
-        childinternalparentname: "RelatedInitiative", // child internal name related to parent
-        childinternalparenttype: "Text",
-        childinternalname: "Title", // child internal name need to use to parent
-        source: "Deliverables", // target list
-        sourceinternalname: "ProjectCode", // column in target list
+        type: "lookup",
+        source: "InitiativeDeliverables", // target list
         Dispfieldkey: "Name", //display in dropdown
         valfieldkey: "Title", // value in dropdown
-        valsiblingkey: "AcceptanceCriteria",
-        targetsiblingkey: "AcceptanceCriteria",
+        valsiblingkey: "Description", // internal name on sorce list
+        targetsiblingkey: "AcceptanceCriteria", // internal name on current list
+        initiativeCodeInList: true,        
       },
       {
         InternalName: "AcceptanceCriteria",
-        DisplayNameEn: "Acceptance Criteria",
-        DisplayName: "المقياس - معايير قبول المخرج",
+        DisplayNameEn: "Description",
+        DisplayName: "الوصف",
         type: "multiline",
         state: "disabled",
         maxchar: 5000,

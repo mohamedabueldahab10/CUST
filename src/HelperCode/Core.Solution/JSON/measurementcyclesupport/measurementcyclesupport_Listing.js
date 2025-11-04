@@ -1,0 +1,51 @@
+var Listing_Info = [
+    {
+      InternalName: "Title",
+      DisplayName: "الرمز",
+      DisplayNameEn: "Code",
+      type: "text",
+      inlisting: true,
+      infilter: true,
+    },
+    {
+      InternalName: "SectorName",
+      DisplayName: "القطاع",
+      DisplayNameEn: "Sector",
+      type: "text",
+      inlisting: true,
+      infilter: true,
+    },
+    {
+      InternalName: "Specialization",
+      DisplayName: "التخصص",
+      DisplayNameEn: "Specialization",
+      type: "text",
+      inlisting: true,
+      infilter: true,
+    },
+    {
+      InternalName: "Responsible",
+      DisplayName: "المسؤول",
+      DisplayNameEn: "Responsible",
+      type: "text",
+      inlisting: true,
+      infilter: true,
+    },
+    {
+      InternalName: "Email",
+      DisplayName: "البريد الإلكتروني",
+      DisplayNameEn: "Email",
+      type: "text",
+      inlisting: true,
+      infilter: false,
+    },
+    {
+      InternalName: "Extension",
+      DisplayName: "التحويلة",
+      DisplayNameEn: "Extension",
+      type: "number",
+      inlisting: true,
+      infilter: false,
+    },
+  ];
+  

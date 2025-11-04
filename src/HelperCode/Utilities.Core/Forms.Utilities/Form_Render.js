@@ -1,5 +1,5 @@
 // var logo = require("../../../HelperRessources/img/print-logo.png");
- var logo = "";
+var logo = "";
 //= isArabic ? require('../../../HelperRessources/img/main-logo.svg') : require('../../../HelperRessources/img/main-logo-en.svg');
 (window.isNew = window.location.href.toLowerCase().indexOf("new.aspx") > -1),
   (window.isEdit =
@@ -2526,6 +2526,7 @@ debugger;
                 });
             });
           }
+          
           ListInfo.g.attachmentsExtensions();
 
         }
@@ -2784,6 +2785,7 @@ debugger;
     // to use it in cr new links
     jsonListKey = element.listkey;
     switch (element.type) {
+
       case "string":
         var letterPattern = "";
         if (element.withletters) {
@@ -4117,6 +4119,126 @@ debugger;
         );
         break;
 
+      case "floatpercentagemaxfromparent":
+          var code = activeCode;
+        
+          // Build the CAML query to get sibling records from the same list and same parent
+          var customQuery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='" +
+            element.siblingstargetcode +
+            '\' /><Value Type="Text">' +
+            code +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            element.siblingslistname,
+            customQuery,
+            [element.InternalName],
+            function (records, record, listItem, isDone) {
+              if (isDone) {
+                var totalWeight = 0;
+        
+                // Sum all sibling weights
+                records.forEach(function (el) {
+                  totalWeight += el[element.InternalName] ? el[element.InternalName] : 0;
+                });
+        
+                // Calculate remaining percentage
+                var Remaining = 100 - totalWeight;
+                Remaining = Number(Remaining.toFixed(1));
+        
+                // Prevent negative or invalid remaining values
+                if (Remaining < 0) Remaining = 0;
+        
+                // Build the HTML field, similar to floatpercentage
+                htmlBody =
+                  '<div class="col-md-6 CFIELD ' +
+                  dontSubmit +
+                  " " +
+                  dontRequest +
+                  " " +
+                  dontSubmitRequired +
+                  " " +
+                  element.className +
+                  " " +
+                  hideField +
+                  ' " ' +
+                  thistip +
+                  " " +
+                  hidestagesIDs +
+                  " " +
+                  editableBy +
+                  " " +
+                  showstagesIDs +
+                  "  " +
+                  disablestagesIDs +
+                  "  " +
+                  enablestagesIDs +
+                  "   " +
+                  isWfhidestagesIDs +
+                  " " +
+                  requireOnWfTaskstagesIDs +
+                  " " +
+                  isWfshowstagesIDs +
+                  "  " +
+                  isWfdisablestagesIDs +
+                  "  " +
+                  isWfenablestagesIDs +
+                  ' data-groups="' +
+                  groups +
+                  '" ' +
+                  notAllowForGroups +
+                  ' style="display:' +
+                  element.display +
+                  '">' +
+                  '<label for="' +
+                  element.InternalName +
+                  '" ' +
+                  element.validation +
+                  ">" +
+                  displayName +
+                  '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle remainPercentageVal">' +
+                  Remaining +
+                  "]</span>" +
+                  "</label>" +
+                  "<input " +
+                  ToggleName +
+                  " " +
+                  toggleDisabledName +
+                  " " +
+                  RequiredName +
+                  ' type="number" max="' +
+                  Remaining +
+                  '" title="Please enter value between 0 and ' +
+                  Remaining +
+                  '" step="any" placeholder="' +
+                  displayName +
+                  '" ' +
+                  dynamic +
+                  ' class="form-control SPIField floatpercentagemaxfromparent" id="' +
+                  element.InternalName +
+                  '" ' +
+                  element.state +
+                  " " +
+                  element.validation +
+                  ` oninput="this.value = (this.value && Math.abs(this.value) >= 0) && (this.value && Math.abs(this.value) <= ${Remaining}) ? Math.abs(this.value) : null">` +
+                  '<span data-trans-' +
+                  Errmsgkey +
+                  ' class="errMsgField Resources"></span>' +
+                  '<div class="inputInfo ' +
+                  isexist +
+                  '">' +
+                  descPhrase +
+                  "</div>" +
+                  "</div>";
+        
+                OnSuccess(flag, htmlBody);
+              }
+            }
+          );
+          break;
+        
       case "floatpercentage":
       
         htmlBody =
@@ -12556,6 +12678,97 @@ window.View_ListInfo = {
           OnSuccess(flag, htmlBody);
           ///////////////////////////////////////////////
           break;
+        
+        case "LookupPicker":
+            if (element.BIlanguage == true) {
+                if (
+                    localStorage.getItem("lng") == null ||
+                    localStorage.getItem("lng") == "ar"
+                ) {
+                    dispfieldkey = element.Dispfieldkey;
+                } else {
+                    dispfieldkey = element.DispfieldkeyEn;
+                }
+            }
+
+            htmlBody =
+                '<div class="col-md-6 CFIELD ' +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
+                " " +
+                element.className +
+                ' " ' +
+                thistip +
+                " " +
+                hidestagesIDs +
+                " " +
+                showstagesIDs +
+                "  " +
+                disablestagesIDs +
+                "  " +
+                enablestagesIDs +
+                "   " +
+                isWfhidestagesIDs +
+                " " +
+                requireOnWfTaskstagesIDs +
+                " " +
+                isWfshowstagesIDs +
+                "  " +
+                isWfdisablestagesIDs +
+                "  " +
+                isWfenablestagesIDs +
+                '        data-groups="' +
+                groups +
+                '" ' +
+                notAllowForGroups +
+                '  style="display:' +
+                element.display +
+                '">' +
+                '<label for="' +
+                element.InternalName +
+                '" ' +
+                element.validation +
+                ">" +
+                displayName +
+                " " +
+                `${
+                    element.showlink
+                        ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
+                        : ""
+                }` +
+                "</label>" +
+                '<p type="LookupPicker" data-listname="' +
+                element.source +
+                '" data-valfieldkey="' +
+                element.valfieldkey +
+                '" data-Dispfieldkey="' +
+                dispfieldkey +
+                '" data-parentrelatedkeylvl1=' +
+                element.fieldsinformlvl1 +
+                ' data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1=' +
+                element.sourcefieldlvl1 +
+                " data-parentrelatedkeylvl2=" +
+                element.fieldsinformlvl2 +
+                ' data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2=' +
+                element.sourcefieldlvl2 +
+                " data-parentrelatedkey=" +
+                element.dynamic +
+                ' data-parentrelatedvalue="" data-parentrelatedfilterkey=' +
+                element.filterField +
+                ' class="viewmode-value" id="' +
+                element.InternalName +
+                '" ' +
+                ToggleName +
+                ' data-linkedto="' +
+                element.linkedto +
+                '" ></p>' +
+                "</div>";
+            OnSuccess(flag, htmlBody);
+            break;
+        
         case "lookupWithQuery":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +
@@ -16289,3 +16502,161 @@ window.Get_ActualAnnualTotal = {
   },
   g: {},
 };
+$(document).ready(function () {
+  setTimeout(function () {
+    (function () {
+      if (!(isEdit || isNew)) return;
+
+      var fieldsToCheck = [];
+      if (listkey === "projects") {
+        fieldsToCheck = [
+          "ProjectOwner",
+          "ProjectManager",
+          "ProjectSponsor",
+          "MawaredProjectManager",
+        ];
+      } else if (listkey === "initiatives") {
+        fieldsToCheck = ["InitiativeOwner", "InitiativePM"];
+      } else {
+        console.log("Unknown list type, no fields set for duplicate checking.");
+        return;
+      }
+
+      function clearField(fieldId) {
+        var delBtn = $(
+          "#" + fieldId + "_TopSpan_ResolvedList .sp-peoplepicker-delImage"
+        ).first();
+        if (delBtn.length) {
+          delBtn.click();
+        } else {
+          $("#" + fieldId + "_TopSpan_HiddenInput").val("");
+          $("#" + fieldId + "_TopSpan_EditorInput").val("");
+          $("#" + fieldId).attr("data-email", "");
+        }
+      }
+
+      function getResolvedName(fieldId) {
+        var el = $(
+          "#" + fieldId + "_TopSpan_ResolvedList .ms-entity-resolved"
+        ).first();
+        if (el.length) return $.trim(el.text());
+        var parentDiv = $("#" + fieldId);
+        var dataEmail = parentDiv.attr("data-email");
+        if (
+          dataEmail &&
+          dataEmail.trim() !== "" &&
+          dataEmail.trim() !== "أدخل اسم أو بريد الكتروني..."
+        )
+          return $.trim(dataEmail);
+        var hid = $("#" + fieldId + "_TopSpan_HiddenInput").val();
+        if (hid && hid.indexOf("DisplayText") !== -1) {
+          try {
+            var parsed = JSON.parse(hid.replace(/&quot;/g, '"'));
+            if (Array.isArray(parsed) && parsed[0] && parsed[0].DisplayText)
+              return parsed[0].DisplayText;
+          } catch (e) {}
+        }
+        return "";
+      }
+
+      function getNamesFromHidden(fieldId) {
+        var hidVal = $("#" + fieldId + "_TopSpan_HiddenInput").val();
+        if (!hidVal) return [];
+        try {
+          var parsed = JSON.parse(hidVal.replace(/&quot;/g, '"'));
+          return parsed
+            .map((u) => (u.DisplayText ? u.DisplayText.trim() : ""))
+            .filter(Boolean);
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function checkDuplicates(changedField) {
+        var map = {},
+          duplicateFound = null;
+        fieldsToCheck.forEach((fid) => {
+          var names = isNew ? [getResolvedName(fid)] : getNamesFromHidden(fid);
+          names.forEach((name) => {
+            if (name) {
+              if (map[name])
+                duplicateFound = { name, first: map[name], second: fid };
+              else map[name] = fid;
+            }
+          });
+        });
+        if (duplicateFound) {
+          var toClear = changedField || duplicateFound.second;
+          clearField(toClear);
+          alert(
+            "تم تفريغ هذا الحقل لأن المستخدم '" +
+              duplicateFound.name +
+              "' مكرر في أكثر من حقل."
+          );
+          return true;
+        }
+        return false;
+      }
+
+      function attachHandlers(fid, picker) {
+        if (picker._duplicateCheckerAttached) return;
+        picker.OnUserResolvedClientScript = () =>
+          setTimeout(() => checkDuplicates(fid), 200);
+        $(document).on(
+          "click",
+          "#" + fid + "_TopSpan_ResolvedList .sp-peoplepicker-delImage",
+          () => setTimeout(() => checkDuplicates(fid), 200)
+        );
+        if (isEdit) {
+          $("#" + fid + "_TopSpan_EditorInput").on("input blur", () =>
+            setTimeout(() => checkDuplicates(fid), 200)
+          );
+        }
+        picker._duplicateCheckerAttached = true;
+      }
+
+      if (isNew) {
+        var retryCount = 0;
+        var retryInterval = setInterval(function () {
+          var allReady = true;
+          fieldsToCheck.forEach((fid) => {
+            var picker =
+              SPClientPeoplePicker.SPClientPeoplePickerDict[fid + "_TopSpan"];
+            if (picker) attachHandlers(fid, picker);
+            else allReady = false;
+          });
+          retryCount++;
+          if (allReady || retryCount > 50) {
+            clearInterval(retryInterval);
+            console.log(
+              "Duplicate checker ready for:",
+              fieldsToCheck.join(", ")
+            );
+          }
+        }, 300);
+      } else if (isEdit) {
+        fieldsToCheck.forEach((fid) => {
+          var waitCount = 0;
+          var timer = setInterval(() => {
+            var picker =
+              SPClientPeoplePicker.SPClientPeoplePickerDict[fid + "_TopSpan"];
+            var hiddenInput = $("#" + fid + "_TopSpan_HiddenInput");
+            if (picker && hiddenInput.length) {
+              clearInterval(timer);
+              attachHandlers(fid, picker);
+              $(hiddenInput).on("input change", () => checkDuplicates(fid));
+            } else if (waitCount++ > 100) clearInterval(timer);
+          }, 300);
+        });
+        console.log(
+          "Duplicate checker initialized for edit mode:",
+          fieldsToCheck.join(", ")
+        );
+      }
+    })();
+  }, 3000);
+});
+
+
+
+     

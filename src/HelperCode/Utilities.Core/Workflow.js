@@ -213,7 +213,10 @@ var workflowname,
     window.location.href.indexOf("sos&MSCreateObjective") > -1,
   isLMSCreateObjective =
     window.location.href.indexOf("sos&LMSCreateObjective") > -1,
-  // ghufran
+  isInitiativeClosure =
+    window.location.href.indexOf("closureform&InitiativeClosure") > -1,
+  isProjectClosure =
+    window.location.href.indexOf("closureform&ProjectClosure") > -1,
   isVROCRProject =
     window.location.href.indexOf("changerequest&VROCRProject") > -1,
   isEPMOCRProject =
@@ -1062,6 +1065,34 @@ else if (isSOsWf) {
 } else if (isVROCRKPI) {
   workflowname = "VROCRKPI";
   bulkeditlist = "Change Request";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isProjectClosure) {
+  workflowname = "ProjectClosure";
+  bulkeditlist = "Closure Form";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isInitiativeClosure) {
+  workflowname = "InitiativeClosure";
+  bulkeditlist = "Closure Form";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
   bulkeditquery =
     '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -3072,6 +3103,28 @@ var SubmitField_BulkEdit = {
               else if (state) items.set_item("WFStage", nxtstageid);
               else  items.set_item("WFStage", prvstageid);
             }
+
+            // FOR Initiative Compliance changing phases
+            if(nxtstageid == "SInStage10" || nxtstageid == "VInStage12" || nxtstageid == "LInStage09")
+            {
+              items.set_item("Phase", "P1");
+            }
+
+            if(nxtstageid == "SInStage12" || nxtstageid == "VInStage14" || nxtstageid == "LInStage11")
+            {
+              items.set_item("Phase", "P2");
+            }
+
+            if(nxtstageid == "SInStage14" || nxtstageid == "VInStage16" || nxtstageid == "LInStage13")
+            {
+              items.set_item("Phase", "P3");
+            }
+
+            if(nxtstageid == "SInStage16" || nxtstageid == "VInStage18" || nxtstageid == "LInStage15")
+            {
+              items.set_item("Phase", "P4");
+            }
+
             // to handle workflowSetValues from json will use it for cr wf purpose
             if (state) {
               $(`[data-workflowSetValue]`).each(function (index) {

@@ -67,8 +67,8 @@ var Information_Form = [
               roles: ['Administrator', 'EPMO','VROE',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'VisionInitiative' },
-                { fieldName: 'WFStage', value: 'VInStage01' },
-                { fieldName: 'Phase', value: 'P3' },
+                { fieldName: 'WFStage', value: 'VInStage00.1' },
+                { fieldName: 'Phase', value: 'P5' },
                 { fieldName: 'DraftStatus', value: '' },
                 // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
               ],
@@ -79,8 +79,8 @@ var Information_Form = [
               roles: ['Administrator', 'EPMO',],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative' },
-                { fieldName: 'WFStage', value: 'SInStage01' },
-                { fieldName: 'Phase', value: 'P3' },
+                { fieldName: 'WFStage', value: 'SInStage00.1' },
+                { fieldName: 'Phase', value: 'P5' },
                 { fieldName: 'DraftStatus', value: '' },
                 // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
                 
@@ -92,8 +92,8 @@ var Information_Form = [
               roles: ['Administrator', 'EPMO','LMSUExecution',],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'LMSInitiative' },
-                { fieldName: 'WFStage', value: 'LInStage01' },
-                { fieldName: 'Phase', value: 'P3' },
+                { fieldName: 'WFStage', value: 'LInStage00.1' },
+                { fieldName: 'Phase', value: 'P5' },
                 { fieldName: 'DraftStatus', value: '' },
                 // { fieldName: 'InitiativeProgressStatus', value: 'stat5' },
               ],
@@ -876,7 +876,7 @@ var Information_Form = [
     labelEn: 'Financial Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    ToggleName: 'BudgetSection',
+    toggleName: 'BudgetSection',
     subFields: [
       // {
       //   InternalName: 'RelatedBudgetItem',
@@ -957,14 +957,14 @@ var Information_Form = [
         InternalName: "FundingStatus",
         DisplayName: "حالة التمويل",
         DisplayNameEn: "Funding Status",        
-        "RequiredName": "FundingStatus",
+        RequiredName: "ProgramTotalCost",
         type: "dropdownValues",
         options: {
           choices: [
             { display: "funded", value: "funded" },
             { display: "unfunded", value: "unfunded" },
-            { display: "partiallyfunded", value: "partiallyfunded" },
-            { display: "zero", value: "zero" },
+          /*  { display: "partiallyfunded", value: "partiallyfunded" },
+            { display: "zero", value: "zero" },*/
           ],
         },
       },
@@ -1039,13 +1039,13 @@ var Information_Form = [
         type: 'floatpercentage',
         ToggleName: 'FundingSection',
       },
-      {
+     /* {
         InternalName: 'ComplianceRate',
         DisplayName: 'نسبة الإمتثال',
         DisplayNameEn: 'Compliance Rate',
         type: 'floatpercentage',
         ToggleName: 'FundingSection',
-      },
+      },*/
     ],
   },
   // {
@@ -1387,12 +1387,15 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",  
       },
       {
-        InternalName: 'Weight',
-        DisplayNameEn: 'Weight',
-        DisplayName: 'وزن',
-        type: 'floatpercentage',
-        // "state": "disabled",
-        // dynamic: "Initiative"
+        InternalName: "Weight",
+        DisplayNameEn: "Weight",
+        DisplayName: "وزن",
+        type: "floatpercentagemaxfromparent",
+        validation: "required",
+        descPhraseAr: "%يجب ان يكون مجموع أوزان المنافع 100",
+        descPhraseAn: "The total weight of benefits must be 100%",
+        siblingslistname: "Benefits",
+        siblingstargetcode: "InitiativeCode",
       },
       {
         InternalName: 'RelatedSubKpis',

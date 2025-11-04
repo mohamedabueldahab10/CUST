@@ -30,7 +30,7 @@ var Listing_Info = [
         DisplayNameEn: "Send To Roles",
         "type":"multiselecttranslated",
         inlisting:true,
-        infilter:true,
+        infilter:false,
         // needTrans: true
      },
      {
@@ -39,7 +39,7 @@ var Listing_Info = [
         DisplayNameEn: "Reminder Types",
         "type":"multiselecttranslated",
         inlisting:true,
-        infilter:true,
+        infilter:false,
         // needTrans: true
      },
      {
@@ -48,7 +48,7 @@ var Listing_Info = [
         DisplayNameEn: "Reminder Items",
         "type":"multiselecttranslated",
         inlisting:true,
-        infilter:true,
+        infilter:false,
         // needTrans: true
      },
      {

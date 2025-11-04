@@ -276,12 +276,27 @@ var Information_Form = [
         DisplayName: "مصدر البيانات",
         type: "string",
         maxchar: "500",
+      },   
+      {
+        InternalName: 'CompletionStatus',
+        DisplayNameEn: 'Completion Status',
+        DisplayName: 'مكتمل',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        }
       },
       {
-        InternalName: "PerformanceLeader",
-        DisplayNameEn: "Performance Leader",
+        InternalName: "InitiativeCode",
+        DisplayNameEn: "Initiative Manager",
         DisplayName: "مدير المبادرة",
-        type: "picker",
+        type: "LookupPicker",
+        source: "Initiatives", // target list
+        Dispfieldkey: "InitiativePM",
+        valfieldkey: "Title",
       },
          {
         InternalName: "cumulativeBenefit",
@@ -299,11 +314,11 @@ var Information_Form = [
         type: "dropdownValues",
         options: {
           choices: [
-            { display: "stat15", value: "لم يتم تحقيقه" },
-            { display: "stat16", value: "تم تحقيقه جزئياً" },
-            { display: "stat17", value: "تم تحقيق المستهدف" },
-            { display: "stat18", value: "لا يقاس" },
-            { display: "stat19", value: "لا توجد قيمة" },
+            { display: "stat15", value: "stat15" },
+            { display: "stat16", value: "stat16" },
+            { display: "stat17", value: "stat17" },
+            { display: "stat18", value: "stat18" },
+            { display: "stat19", value: "stat19" },
           ],
         },
       },
@@ -345,14 +360,13 @@ var Information_Form = [
         type: "lookup",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
-        source: "Deliverables",
+        source: "InitiativeDeliverables",
       },
       {
         InternalName: "AcceptanceCriteria",
-        DisplayNameEn: "Acceptance Criteria",
-        DisplayName: "المقياس - معايير قبول المخرج",
+        DisplayNameEn: "Description",
+        DisplayName: "الوصف",
         type: "multiline",
-        state: "disabled",
       },
     ],
   },

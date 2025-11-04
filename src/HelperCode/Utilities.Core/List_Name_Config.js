@@ -284,6 +284,14 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
+		measurementcyclesupport :"MeasurementCycleSupport",
+		ListingTitle: "بريد قياس دورة الأداء",
+		FormTitle: "بريد قياس دورة الأداء",
+		TitleEn: "Measurement Cycle Support",
+		projnav: "Project Navigation",
+		subfolder: true,
+    },
+	{
 		strategiccalendar :"StrategicCalendar",
 		ListingTitle: "التقويم الاستراتيجي",
 		FormTitle: "التقويم الاستراتيجي",

@@ -952,12 +952,13 @@ var Information_Form = [
           ],
         },
         toggleValues: [
+          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection', 'LinkingSection','Weight','Amount' ] },
           { value: 'yes', fields: [] },
-          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection', /*'Delivrables', 'Milestones',*/ 'LinkingSection','Weight','Amount' ] },
         ],
           requiredValues: [
-          { value: 'yes', fields: [] },
           { value: 'no', fields: ['ProgramTotalCost']},
+          { value: 'yes', fields: [] },
+          
         ],
       },
     
@@ -1019,7 +1020,9 @@ var Information_Form = [
     labelEn: 'Financial Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
-    ToggleName: 'BudgetSection',
+    toggleName: 'BudgetSection',
+    // display:'none',
+
     enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
     requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
     subFields: [
@@ -1144,14 +1147,14 @@ var Information_Form = [
         InternalName: "FundingStatus",
         DisplayName: "حالة التمويل",
         DisplayNameEn: "Funding Status",        
-        "RequiredName": "FundingStatus",
+        RequiredName: "ProgramTotalCost",
         type: "dropdownValues",
         options: {
           choices: [
             { display: "funded", value: "funded" },
             { display: "unfunded", value: "unfunded" },
-            { display: "partiallyfunded", value: "partiallyfunded" },
-            { display: "zero", value: "zero" },
+           /* { display: "partiallyfunded", value: "partiallyfunded" },
+            { display: "zero", value: "zero" },*/
           ],
         },
       },
@@ -1946,10 +1949,15 @@ var Information_Form = [
         },
       },
       {
-        InternalName: 'Weight',
-        DisplayNameEn: 'Weight',
-        DisplayName: 'وزن',
-        type: 'floatpercentage',
+        InternalName: "Weight",
+        DisplayNameEn: "Weight",
+        DisplayName: "وزن",
+        type: "floatpercentagemaxfromparent",
+        validation: "required",
+        descPhraseAr: "%يجب ان يكون مجموع أوزان المنافع 100",
+        descPhraseAn: "The total weight of benefits must be 100%",
+        siblingslistname: "Benefits",
+        siblingstargetcode: "InitiativeCode",
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
@@ -1959,8 +1967,6 @@ var Information_Form = [
 
           ]
         },
-        // "state": "disabled",
-        // dynamic: "Initiative"
       },
       {
         InternalName: 'RelatedSubKpis',

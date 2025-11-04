@@ -61,11 +61,12 @@ var Information_Form = [
         InternalName: "Weight",
         DisplayNameEn: "Weight",
         DisplayName: "وزن",
-        type: "floatpercentage",
+        type: "floatpercentagemaxfromparent",
         validation: "required",
         descPhraseAr: "%يجب ان يكون مجموع أوزان المنافع 100",
-        // "state": "disabled",
-        // dynamic: "Initiative"
+        descPhraseAn: "The total weight of benefits must be 100%",
+        siblingslistname: "Benefits",
+        siblingstargetcode: "InitiativeCode",
       },
      // {
        // InternalName: "BenefitTarget",
@@ -107,21 +108,21 @@ var Information_Form = [
         InternalName: "referenceEntity",
         DisplayNameEn: "referenceEntity",
         DisplayName: "جهة المقارنة المعيارية",
-        type: "string",
+        type: "multiline",
         maxchar: "255",
       },
       {
         InternalName: "bencmarkValue",
         DisplayNameEn: "bencmarkValue",
         DisplayName: "قيمة المقارنة الفعلية",
-        type: "string",
+        type: "multiline",
         maxchar: "255",
       },
           {
         InternalName: "benefitEquation",
         DisplayNameEn: "benefitEquation",
         DisplayName: "معادلة المنفعة",
-        type: "string",
+        type: "multiline",
         maxchar: "255",
       },
 
@@ -296,8 +297,13 @@ var Information_Form = [
         InternalName: "cumulativeBenefit",
         DisplayNameEn: "CumulativeBenefit",
         DisplayName: " تراكمية المنفعة",
-        maxchar: "200",
-        type: "multiline",
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value:  "تراكمي" },
+            { display: 'no', value: "غير تراكمي" },
+          ],
+        },
       },
       
       {
@@ -392,13 +398,13 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
       },
-      {
-        InternalName: "PerformanceLeader",
-        DisplayNameEn: "Initiative Manager",
-        DisplayName: "مدير المبادرة",
-        type: "picker",
-        validation: "required",
-      },
+      // {
+      //   InternalName: "PerformanceLeader",
+      //   DisplayNameEn: "Initiative Manager",
+      //   DisplayName: "مدير المبادرة",
+      //   type: "picker",
+      //   validation: "required",
+      // },
         //{
         //InternalName: 'CompletionStatus',
         //DisplayNameEn: 'Completion Status',
@@ -425,27 +431,39 @@ var Information_Form = [
     sectiontype: "master",
     targetlist: "BenefitDeliverables",
     subFields: [
+      // {
+      //   InternalName: "DeliverableID",
+      //   DisplayNameEn: "Name",
+      //   DisplayName: "المخرج",
+
+      //   type: "lookupchildtoparent",
+      //   childlist: "Projects", //child list name
+      //   childinternalparentname: "RelatedInitiative", // child internal name related to parent
+      //   childinternalparenttype: "Text",
+      //   childinternalname: "Title", // child internal name need to use to parent
+      //   source: "Deliverables", // target list
+      //   sourceinternalname: "ProjectCode", // column in target list
+      //   Dispfieldkey: "Name", //display in dropdown
+      //   valfieldkey: "Title", // value in dropdown
+      //   valsiblingkey: "AcceptanceCriteria", // internal name on sorce list
+      //   targetsiblingkey: "AcceptanceCriteria", // internal name on current list
+      // },
       {
         InternalName: "DeliverableID",
         DisplayNameEn: "Name",
         DisplayName: "المخرج",
-
-        type: "lookupchildtoparent",
-        childlist: "Projects", //child list name
-        childinternalparentname: "RelatedInitiative", // child internal name related to parent
-        childinternalparenttype: "Text",
-        childinternalname: "Title", // child internal name need to use to parent
-        source: "Deliverables", // target list
-        sourceinternalname: "ProjectCode", // column in target list
+        type: "lookup",
+        source: "InitiativeDeliverables", // target list
         Dispfieldkey: "Name", //display in dropdown
         valfieldkey: "Title", // value in dropdown
-        valsiblingkey: "AcceptanceCriteria", // internal name on sorce list
+        valsiblingkey: "Description", // internal name on sorce list
         targetsiblingkey: "AcceptanceCriteria", // internal name on current list
+        initiativeCodeInList: true,        
       },
       {
         InternalName: "AcceptanceCriteria",
-        DisplayNameEn: "Acceptance Criteria",
-        DisplayName: "المقياس - معايير قبول المخرج",
+        DisplayNameEn: "Description",
+        DisplayName: "الوصف",
         type: "multiline",
         state: "disabled",
         maxchar: 5000,

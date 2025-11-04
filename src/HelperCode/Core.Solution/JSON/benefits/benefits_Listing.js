@@ -67,9 +67,9 @@ var Listing_Info = [
 	  infilter: true,
 	},
 	{
-	  InternalName: "PerformanceLeader",
-	  DisplayNameEn: "Performance Leader",
-    DisplayName: "مدير المبادرة",
+	  InternalName: "Owner",
+      DisplayNameEn: "Benefit Owner",
+      DisplayName: " مالك المنفعة ",
 	  type: "picker",
 	  inlisting: true,
 	  infilter: true,

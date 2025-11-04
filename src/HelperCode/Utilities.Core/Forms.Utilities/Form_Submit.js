@@ -1296,8 +1296,19 @@ var Set_Code_Submit = {
         ICODE = Code;
       } else if (listkey == "strategicpartnerships") {
         STCODE = Code;
+      } else if (listkey == "strategiccalendar") {
+        var prt1 = 'STC',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
+      } else if (listkey == "measurementcyclesupport") {
+        var prt1 = 'MC',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
       }
-
       if (isPrjRelated) {
         Set_Code_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       }
