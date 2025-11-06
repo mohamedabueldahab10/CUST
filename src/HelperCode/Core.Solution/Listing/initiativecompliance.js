@@ -1034,7 +1034,7 @@ function isCurrentInitiativePhase(phaseCode) {
 async function progressInitiativeStage(initiativeCode, initiativeData) {
     try {
         // Step 1: Use existing initiative data (from getInitiativePhase function)
-        if (!initiativeData || !initiativeData.Stage) {
+        if (!initiativeData || !initiativeData.WFStage) {
             throw new Error(`No valid initiative data or stage found for initiative: ${initiativeCode}`);
         }
 
@@ -1142,10 +1142,34 @@ async function updateInitiativeStage (initiativeId, nextStage, currentInitiaitve
         etag = initiativeData.d.__metadata ? initiativeData.d.__metadata.etag : "*";
     }
 
+    debugger;
+    var phase = currentInitiativePhase;
+
+    if(nextStage == "SInStage10" || nextStage == "VInStage12" || nextStage == "LInStage09")
+    {
+        phase ="P1";
+    }
+
+    if(nextStage == "SInStage12" || nextStage == "VInStage14" || nextStage == "LInStage11")
+    {
+        phase ="P2";
+    }
+
+    if(nextStage == "SInStage14" || nextStage == "VInStage16" || nextStage == "LInStage13")
+    {
+        phase ="P3";
+    }
+
+    if(nextStage == "SInStage16" || nextStage == "VInStage18" || nextStage == "LInStage15")
+    {
+        phase ="P4";
+    }
+
     // Prepare update data - remove DraftStatus and WFStage, update WFStage
     const updateData = {
         "__metadata": { "type": "SP.Data.InitiativesListItem" },
-        "WFStage": nextStage
+        "WFStage": nextStage,
+        "Phase" : phase
    
     };
 
@@ -1174,7 +1198,8 @@ async function updateInitiativeStage (initiativeId, nextStage, currentInitiaitve
             },
             body: JSON.stringify({
                 "__metadata": { "type": "SP.Data.InitiativesListItem" },
-                "WFStage": nextStage
+                "WFStage": nextStage,
+                "Phase" : phase
            
             }),
         }

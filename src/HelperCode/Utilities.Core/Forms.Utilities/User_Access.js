@@ -1492,7 +1492,9 @@ window.userCalls = {
           "monthlyreport",
           "compliancemajors",
           "intiativecompliancemajors",
-          "developmentrequirements"
+          "developmentrequirements",
+          "strategiccalendar",
+          "measurementcyclesupport"
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -1534,7 +1536,9 @@ window.userCalls = {
           "monthlyreport",
           "compliancemajors",
           "intiativecompliancemajors",
-          "developmentrequirements"
+          "developmentrequirements",
+          "strategiccalendar",
+          "measurementcyclesupport"
         ];
         Delete_Access = [
           "benefitmatrix",
@@ -2110,7 +2114,9 @@ window.userCalls = {
           "changerequest",
           "Targets.aspx",
           "kpiequations",
-          "developmentrequirements"
+          "developmentrequirements",
+          "strategiccalendar",
+          "measurementcyclesupport"
         ];
         CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = [
@@ -2136,7 +2142,9 @@ window.userCalls = {
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "changerequest",
-          "developmentrequirements"
+          "developmentrequirements",
+          "strategiccalendar",
+          "measurementcyclesupport"
         ];
 
         Edit_Access = [
@@ -2150,8 +2158,10 @@ window.userCalls = {
           "Targets.aspx",
           "kpiequations",
           "benefitsequations",
-          "developmentrequirements"
+          "developmentrequirements",
           //"changerequest",
+          "strategiccalendar",
+          "measurementcyclesupport"
         ];
         Delete_Access = [
           "mainkpi",
@@ -4968,7 +4978,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                 },
               },
@@ -5044,7 +5054,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                 },
               },
@@ -5512,7 +5522,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                   subRelation: {
                     level: 4,
@@ -6543,7 +6553,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                 },
               },
@@ -7245,7 +7255,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                   subRelation: {
                     level: 4,

@@ -50,6 +50,24 @@ var Listing_Info = [
     infilter: true,
   },
   {
+     InternalName: 'RelatedStrategy',
+     DisplayNameEn: 'Related Strategy',
+     DisplayName: 'الاستراتيجية المرتبطة',
+     type: 'lookup',
+     inlisting: true,
+    needTrans: false,
+    infilter: false,
+  },
+  {
+     InternalName: 'RelatedStrategyReadonly',
+     DisplayNameEn: 'Related Strategy Read Only',
+     DisplayName: 'الاستراتيجية المطلعه',
+     type: 'lookup',
+     inlisting: true,
+    needTrans: false,
+    infilter: false,
+  },
+  {
     InternalName: 'Sector',
     DisplayName: 'القطاع',
     DisplayNameEn: 'Sector',
@@ -92,4 +110,13 @@ var Listing_Info = [
     inlisting: true,
     infilter: true,
   },
+  {
+    InternalName: "FundingStatus",
+    DisplayName: "حالة التمويل",
+    DisplayNameEn: "Funding Status",        
+    type: 'dropdownValues', //formula
+    needTrans: true,
+    inlisting: true,
+    infilter: true,
+  }
 ]

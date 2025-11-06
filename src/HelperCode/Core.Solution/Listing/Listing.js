@@ -327,6 +327,24 @@ window.sphttp = {
 
 
 					}
+					else if (Listing_Info[i].type == "multiselecttranslated") {
+						var value = oListItem.get_item(internalFieldNames[i]) || '';
+						
+						if (value != '') {
+							var valueArr = value.split(":::").map(v => v.trim()).filter(v => v);
+							if (valueArr.length) {
+								var translatedItems = '';
+								valueArr.forEach(function(val) {
+									translatedItems += '<span data-trans-' + val + ' class="Resources"></span><br>';
+								});
+								record[internalFieldNames[i]] = translatedItems;
+							} else {
+								record[internalFieldNames[i]] = No_Data;
+							}
+						} else {
+							record[internalFieldNames[i]] = No_Data;
+						}
+					}
 					else if (Listing_Info[i].type == "lookup") {
 
 					  var lookupItemarr = [], Itemdisplayname = "";
@@ -352,7 +370,7 @@ window.sphttp = {
 					  else {
 						record[internalFieldNames[i]] = No_Data;
 					  }
-					}
+					} 
 					else {
 					  record[internalFieldNames[i]] = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : oListItem.get_item(internalFieldNames[i]);
 					}
@@ -3280,8 +3298,20 @@ var Get_ExcelValues = {
 			  }
 
 
-			}
-			else if (Listing_Info[i].type == "lookup") {
+			} else if (Listing_Info[i].type == "multiselecttranslated") {
+				var value = oListItem.get_item(excelInternalFieldsNames[i]) || '';
+				
+				if (value != '') {
+					var valueArr = value.split(":::").map(v => v.trim()).filter(v => v);
+					if (valueArr.length) {
+						record[excelInternalFieldsNames[i]] = valueArr.join(", "); 
+					} else {
+						record[excelInternalFieldsNames[i]] = No_Data;
+					}
+				} else {
+					record[excelInternalFieldsNames[i]] = No_Data;
+				}
+			} else if (Listing_Info[i].type == "lookup") {
 
 			  var lookupItemarr = [], Itemdisplayname = "";
 			  if ((localStorage.getItem('' + Listing_Info[i].localStorageVariable) != null) && (oListItem.get_item(excelInternalFieldsNames[i]) !== null)) {

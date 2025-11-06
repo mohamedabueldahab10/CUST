@@ -232,28 +232,28 @@ window.Edit_Data_Request = {
           }
           $(this).val(datetouse2);
           break;
-
+          
         case "picker":
-          var pemail =
-            oListItem.get_item("" + $(this).attr("id") + "") == null
-              ? enternameemail
-              : oListItem
-                  .get_item("" + $(this).attr("id") + "")
-                  .get_lookupValue();
-
-          $(this).attr("data-email", pemail);
-
-          if (pemail != enternameemail)
-            $(this).attr(
-              "user-email",
-              oListItem.get_item($(this).attr("id")).get_email()
-            );
-
-          var idinternal = $(this).attr("id");
-          var mp = new MyPeoplePicker();
-          mp.init($(this).attr("id"), { AllowMultipleValues: false });
-
-          break;
+            var pemail =
+              oListItem.get_item("" + $(this).attr("id") + "") == null
+                ? enternameemail
+                : oListItem
+                    .get_item("" + $(this).attr("id") + "")
+                    .get_lookupValue();
+  
+            $(this).attr("data-email", pemail);
+  
+            if (pemail != enternameemail)
+              $(this).attr(
+                "user-email",
+                oListItem.get_item($(this).attr("id")).get_email()
+              );
+  
+            var idinternal = $(this).attr("id");
+            var mp = new MyPeoplePicker();
+            mp.init($(this).attr("id"), { AllowMultipleValues: false });
+  
+            break;
         case "multipicker":
           var pemail =
             oListItem.get_item("" + $(this).attr("id") + "") == null
@@ -1069,6 +1069,161 @@ window.Edit_Data_Request = {
           $("#FundingStatus").val("").prop("disabled", false);
       }
   }  
+  $(document).ready(function () {
+    setTimeout(function () {
+      (function () {
+        if (!(isEdit || isNew)) return;
+  
+        var fieldsToCheck = [];
+        if (listkey === "projects") {
+          fieldsToCheck = [
+            "ProjectOwner",
+            "ProjectManager",
+            "ProjectSponsor",
+            "MawaredProjectManager",
+          ];
+        } else if (listkey === "initiatives") {
+          fieldsToCheck = ["InitiativeOwner", "InitiativePM"];
+        } else {
+          console.log("Unknown list type, no fields set for duplicate checking.");
+          return;
+        }
+  
+        function clearField(fieldId) {
+          var delBtn = $(
+            "#" + fieldId + "_TopSpan_ResolvedList .sp-peoplepicker-delImage"
+          ).first();
+          if (delBtn.length) {
+            delBtn.click();
+          } else {
+            $("#" + fieldId + "_TopSpan_HiddenInput").val("");
+            $("#" + fieldId + "_TopSpan_EditorInput").val("");
+            $("#" + fieldId).attr("data-email", "");
+          }
+        }
+  
+        function getResolvedName(fieldId) {
+          var el = $(
+            "#" + fieldId + "_TopSpan_ResolvedList .ms-entity-resolved"
+          ).first();
+          if (el.length) return $.trim(el.text());
+          var parentDiv = $("#" + fieldId);
+          var dataEmail = parentDiv.attr("data-email");
+          if (
+            dataEmail &&
+            dataEmail.trim() !== "" &&
+            dataEmail.trim() !== "أدخل اسم أو بريد الكتروني..."
+          )
+            return $.trim(dataEmail);
+          var hid = $("#" + fieldId + "_TopSpan_HiddenInput").val();
+          if (hid && hid.indexOf("DisplayText") !== -1) {
+            try {
+              var parsed = JSON.parse(hid.replace(/&quot;/g, '"'));
+              if (Array.isArray(parsed) && parsed[0] && parsed[0].DisplayText)
+                return parsed[0].DisplayText;
+            } catch (e) {}
+          }
+          return "";
+        }
+  
+        function getNamesFromHidden(fieldId) {
+          var hidVal = $("#" + fieldId + "_TopSpan_HiddenInput").val();
+          if (!hidVal) return [];
+          try {
+            var parsed = JSON.parse(hidVal.replace(/&quot;/g, '"'));
+            return parsed
+              .map((u) => (u.DisplayText ? u.DisplayText.trim() : ""))
+              .filter(Boolean);
+          } catch (e) {
+            return [];
+          }
+        }
+  
+        function checkDuplicates(changedField) {
+          var map = {},
+            duplicateFound = null;
+          fieldsToCheck.forEach((fid) => {
+            var names = isNew ? [getResolvedName(fid)] : getNamesFromHidden(fid);
+            names.forEach((name) => {
+              if (name) {
+                if (map[name])
+                  duplicateFound = { name, first: map[name], second: fid };
+                else map[name] = fid;
+              }
+            });
+          });
+          if (duplicateFound) {
+            var toClear = changedField || duplicateFound.second;
+            clearField(toClear);
+            alert(
+              "تم تفريغ هذا الحقل لأن المستخدم '" +
+                duplicateFound.name +
+                "' مكرر في أكثر من حقل."
+            );
+            return true;
+          }
+          return false;
+        }
+  
+        function attachHandlers(fid, picker) {
+          if (picker._duplicateCheckerAttached) return;
+          picker.OnUserResolvedClientScript = () =>
+            setTimeout(() => checkDuplicates(fid), 200);
+          $(document).on(
+            "click",
+            "#" + fid + "_TopSpan_ResolvedList .sp-peoplepicker-delImage",
+            () => setTimeout(() => checkDuplicates(fid), 200)
+          );
+          if (isEdit) {
+            $("#" + fid + "_TopSpan_EditorInput").on("input blur", () =>
+              setTimeout(() => checkDuplicates(fid), 200)
+            );
+          }
+          picker._duplicateCheckerAttached = true;
+        }
+  
+        if (isNew) {
+          var retryCount = 0;
+          var retryInterval = setInterval(function () {
+            var allReady = true;
+            fieldsToCheck.forEach((fid) => {
+              var picker =
+                SPClientPeoplePicker.SPClientPeoplePickerDict[fid + "_TopSpan"];
+              if (picker) attachHandlers(fid, picker);
+              else allReady = false;
+            });
+            retryCount++;
+            if (allReady || retryCount > 50) {
+              clearInterval(retryInterval);
+              console.log(
+                "Duplicate checker ready for:",
+                fieldsToCheck.join(", ")
+              );
+            }
+          }, 300);
+        } else if (isEdit) {
+          fieldsToCheck.forEach((fid) => {
+            var waitCount = 0;
+            var timer = setInterval(() => {
+              var picker =
+                SPClientPeoplePicker.SPClientPeoplePickerDict[fid + "_TopSpan"];
+              var hiddenInput = $("#" + fid + "_TopSpan_HiddenInput");
+              if (picker && hiddenInput.length) {
+                clearInterval(timer);
+                attachHandlers(fid, picker);
+                $(hiddenInput).on("input change", () => checkDuplicates(fid));
+              } else if (waitCount++ > 100) clearInterval(timer);
+            }, 300);
+          });
+          console.log(
+            "Duplicate checker initialized for edit mode:",
+            fieldsToCheck.join(", ")
+          );
+        }
+      })();
+    }, 3000);
+  });
+  
     setTimeout(() => {
       if (isWF && listkey == "mainkpi" && workflowname == 'MSActualKPI' ) {
         var mainKpiCode = $("#Title").val();
@@ -1125,7 +1280,10 @@ window.Edit_Data_Request = {
             $(fields).prop("disabled", true);
         }
       }
-    
+      if(listkey == "mainkpi" && isEdit) {
+        var relatedMainGoal = $('#RelatedStrategyObjective').val();
+        Get_Related_Sos_Sector.init(relatedMainGoal);
+      }
     },2000);
     $(".loader-box").fadeOut();
   },
@@ -2131,6 +2289,64 @@ window.View_Data_Request = {
                     });
                   }
                 });
+              }
+            }
+          );
+        }
+      } else if ($(this).attr("type") === "LookupPicker") {
+        let fieldId = $(this).attr("id").includes("dummyfield")
+          ? $(this).attr("id").split("dummyfield")[0]
+          : $(this).attr("id");
+
+        let valFieldKey = $(this).data("valfieldkey"),
+          dispFieldKey = $(this).data("dispfieldkey"),
+          listName = $(this).data("listname"),
+          $this = $(this);
+
+        // Get the related item value (lookup field)
+        let parentValue = oListItem.get_item(fieldId);
+        if (!parentValue) {
+          $this.html(No_Data);
+        } else {
+          let query = `
+            <View>
+              <Query>
+                <Where>
+                  <Eq>
+                    <FieldRef Name='Title' />
+                    <Value Type='Text'>${parentValue}</Value>
+                  </Eq>
+                </Where>
+              </Query>
+              <RowLimit>1</RowLimit>
+            </View>`;
+
+          let fieldsToFetch = [dispFieldKey];
+
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listName,
+            query,
+            fieldsToFetch,
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0) {
+                let record = records[0];
+                // Display the nested `$5d_1` value
+                // if (record[dispFieldKey] && record[dispFieldKey]["$5d_1"]) {
+                //   $this.html(record[dispFieldKey]["$5d_1"]);
+                // } else {
+                //   $this.html(No_Data);
+                // }
+                if (record[dispFieldKey]) {
+                  let keys = Object.keys(record[dispFieldKey]);
+                  if (keys.length >= 2) {
+                    $this.html(record[dispFieldKey][keys[1]]); // Get the second key dynamically
+                  } else {
+                    $this.html(No_Data);
+                  }
+                }
+              } else {
+                $this.html(No_Data);
               }
             }
           );

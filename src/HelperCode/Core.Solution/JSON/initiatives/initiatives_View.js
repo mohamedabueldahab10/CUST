@@ -8,23 +8,23 @@ var Information_Form = [
       //VRO
       { fieldName: 'DraftStatus', value: '', stages: ["VROCreateInitiative04"] },
       { fieldName: 'WFModuleCode', value: 'VisionInitiative', stages: ["VROCreateInitiative04"] },
-      { fieldName: 'WFStage', value: 'VInStage01', stages: ["VROCreateInitiative04"] },
-      { fieldName: 'Phase', value: 'P3', stages: ["VROCreateInitiative04"] },
+      { fieldName: 'WFStage', value: 'VInStage00.1', stages: ["VROCreateInitiative04"] },
+      { fieldName: 'Phase', value: 'P5', stages: ["VROCreateInitiative04"] },
       //EPMO
       { fieldName: 'DraftStatus', value: '', stages: ["EPMOCreateInitiative03"] },
       { fieldName: 'WFModuleCode', value: 'StrategicallyInitiative', stages: ["EPMOCreateInitiative03"] },
-      { fieldName: 'WFStage', value: 'SInStage01', stages: ["EPMOCreateInitiative03"] },
-      { fieldName: 'Phase', value: 'P3', stages: ["EPMOCreateInitiative03"] },
+      { fieldName: 'WFStage', value: 'SInStage00.1', stages: ["EPMOCreateInitiative03"] },
+      { fieldName: 'Phase', value: 'P5', stages: ["EPMOCreateInitiative03"] },
       //LMS
       { fieldName: 'DraftStatus', value: '', stages: ["LMSCreateInitiative03"] },
       { fieldName: 'WFModuleCode', value: 'LMSInitiative', stages: ["LMSCreateInitiative03"] },
-      { fieldName: 'Phase', value: 'P3', stages: ["LMSCreateInitiative03"] },
-      { fieldName: 'WFStage', value: 'LInStage01', stages: ["LMSCreateInitiative03"] },
+      { fieldName: 'Phase', value: 'P5', stages: ["LMSCreateInitiative03"] },
+      { fieldName: 'WFStage', value: 'LInStage00.1', stages: ["LMSCreateInitiative03"] },
 
       //for Closure Phase
-      { fieldName: 'Phase', value: 'P4', stages: ["VInStage07"] },
-      { fieldName: 'Phase', value: 'P4', stages: ["SInStage05"] },
-      { fieldName: 'Phase', value: 'P4', stages: ["LInStage05"] }
+      { fieldName: 'Phase', value: 'P4', stages: ["VInStage14"] },
+      { fieldName: 'Phase', value: 'P4', stages: ["SInStage12"] },
+      { fieldName: 'Phase', value: 'P4', stages: ["LInStage11"] }
     ],
     subFields: [
       {
@@ -182,7 +182,18 @@ var Information_Form = [
         // showlink:true,
         linkedto: "goalstrategy"
       },
-
+       {
+        InternalName: 'RelatedStrategyReadonly',
+        DisplayNameEn: 'Related Strategy Read Only',
+        DisplayName: 'الاستراتيجية المطلعه',
+        type: 'lookup',
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        // dontSubmit: true,
+        // showlink:true,
+        linkedto: "goalstrategy"
+      },
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
@@ -394,6 +405,23 @@ var Information_Form = [
         type: 'string',
         translate:'resources'
       },
+       {
+        InternalName: "IsZeroBudgetInitiative",
+        DisplayName: "هل هي مبادرة صفرىة؟",
+        DisplayNameEn: "Is Zero Budget Intiative ?",
+        // type: "yesnoradio",
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: "yes", value: "yes" },
+            { display: "no", value: "no" },
+          ],
+        },
+         toggleValues: [
+          { value: 'yes', fields: [] },
+          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection', /*'Delivrables', 'Milestones' , */'LinkingSection' ] },
+        ],
+      },
       {
         InternalName: 'ExpenseStartDate',
         DisplayName: 'تاريخ بداية الصرف',
@@ -427,6 +455,14 @@ var Information_Form = [
         DisplayName: 'حجم الارتباط (منصة اعتماد) ',
         DisplayNameEn: 'Dependency Cost',
         type: 'floatpercentage',
+        toggleName: 'FundingSection',
+      },
+       {
+        InternalName: 'ComplianceRate',
+        DisplayName: 'نسبة الإمتثال',
+        DisplayNameEn: 'Compliance Rate',
+        type: 'floatpercentage',
+        toggleName: 'FundingSection',
       },
       {
         InternalName: 'PlannedPercentageCompleted',
@@ -488,6 +524,7 @@ var Information_Form = [
     labelEn: 'Financial Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    toggleName: 'BudgetSection',
     subFields: [
       // {
       //   InternalName: 'RelatedBudgetItem',
@@ -518,6 +555,21 @@ var Information_Form = [
         DisplayName: 'التكلفة التقديرية ',
         DisplayNameEn: 'Estimated Cost',
         type: 'float',
+      },
+      {
+        InternalName: "FundingStatus",
+        DisplayName: "حالة التمويل",
+        DisplayNameEn: "Funding Status",        
+        "RequiredName": "FundingStatus",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "funded", value: "funded" },
+            { display: "unfunded", value: "unfunded" },
+            { display: "partiallyfunded", value: "partiallyfunded" },
+            { display: "zero", value: "zero" },
+          ],
+        },
       },
       {
         InternalName: 'InitiativeBudget',
@@ -556,8 +608,101 @@ var Information_Form = [
         DisplayNameEn: 'Current Expenditures',
         type: 'float',
       },
-    ],
+     
+    ]
   },
+   {
+    label: "بند الارتباط",
+    labelEn: "Linking Item",
+    description: "",
+    descriptionEn: "",
+    toggleName: 'LinkingSection', 
+    subFields: [
+        {
+        InternalName: 'ExpensesDate',
+        DisplayName: 'بيانات الصرف',
+        DisplayNameEn: 'Expenses Date ',
+        type: 'float',
+        },
+       /*{
+        InternalName: 'ActualBudget',
+        DisplayName: 'بيانات التكاليف',
+        DisplayNameEn: 'Actual Budget',
+        type: 'float',
+       },*/
+       {
+        InternalName: 'ExpenseProgress',
+        DisplayName: 'جاري الصرف',
+        DisplayNameEn: 'Expense Progress',
+        type: 'float',
+      },
+       {
+        InternalName: 'ExpenseLately',
+        DisplayName: 'المطالبة المالية المتأخرة',
+        DisplayNameEn: 'Expense Lately',
+        type: 'float',
+      },
+        {
+        InternalName: 'LinkingProgress',
+        DisplayName: 'جاري المرتبط',
+        DisplayNameEn: 'Linking Progress',
+        type: 'float',
+      },
+       {
+        InternalName: 'NoActualCost',
+        DisplayName: 'التكاليف غير المعتمدة',
+        DisplayNameEn: 'No Actual Cost',
+        type: 'float', 
+      },
+       {
+        InternalName: 'LinkingCost',
+        DisplayName: 'الارتباط',
+        DisplayNameEn: 'Linking Cost',
+        type: 'float',
+      },
+      {
+        InternalName: 'RemainingCost',
+        DisplayName: 'المتبقي من التكاليف الكلية',
+        DisplayNameEn: 'Remaining Cost',
+        type: 'float',
+      },
+      {
+        InternalName: 'ExpensePlan',
+        DisplayName: 'مخطط الصرف الشهري للمشروع',
+        DisplayNameEn: 'Expense Plan',
+        type: 'float',
+      },
+       /*  {
+        InternalName: 'ExpensePlanRequest',
+        DisplayName: 'مخطط صرف المطالبات المالية',
+        DisplayNameEn: 'Expense Plan Request',
+        type: 'float',
+      },*/
+    ],
+    security: {
+      groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
+       },
+  },
+   {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline'
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline'
+      }
+   ]},
   {
     label: 'بيانات المخرج الرئيسي',
     labelEn: 'Delivrable Data',
@@ -566,6 +711,7 @@ var Information_Form = [
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
+    toggleName: "Delivrables",
     subFields: [
 
       {
@@ -752,6 +898,7 @@ var Information_Form = [
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
+    toggleName: 'Milestones',
     subFields: [
 
       {

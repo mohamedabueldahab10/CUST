@@ -1316,7 +1316,7 @@
     MainKPIs: "المؤشرات",
 
     "urgent":"عاجل",
-    "veryImportant":"مهم جدا",
+    "veryimportant":"مهم جدا",
     "important":"مهم",
     
     
@@ -2645,7 +2645,7 @@ restoration:"restoration",
 
 
     "urgent":"Urgent",
-    "veryImportant":"Very Important",
+    "veryimportant":"Very Important",
     "important":"Important",
     
     

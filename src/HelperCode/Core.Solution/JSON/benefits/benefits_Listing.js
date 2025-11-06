@@ -41,6 +41,14 @@ var Listing_Info = [
 	  inlisting: true,
 	  infilter: false,
 	},
+	 {  InternalName: 'CompletionStatus',
+        DisplayNameEn: 'Completion Status',
+        DisplayName: 'مكتمل',
+        type: 'yesnoradio',
+         inlisting: true,
+        infilter: true,
+        needTrans:true
+      },
 	{
 	  InternalName: "PeriodType",
 	  DisplayName: "دورية القياس",
@@ -59,9 +67,9 @@ var Listing_Info = [
 	  infilter: true,
 	},
 	{
-	  InternalName: "PerformanceLeader",
-	  DisplayNameEn: "Performance Leader",
-    DisplayName: "مدير المبادرة",
+	  InternalName: "Owner",
+      DisplayNameEn: "Benefit Owner",
+      DisplayName: " مالك المنفعة ",
 	  type: "picker",
 	  inlisting: true,
 	  infilter: true,

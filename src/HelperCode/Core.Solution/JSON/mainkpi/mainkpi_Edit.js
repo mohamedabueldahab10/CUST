@@ -662,7 +662,7 @@ var Information_Form = [
         type: 'dropdownValues',
         validation: 'required',
         toggleValues: [
-          { value: 'monthly', fields: ['Months','Actual'] }, //we can put more than 1  field
+          { value: 'monthly', fields: ['Months','Actual','CalculationMethod'] }, //we can put more than 1  field
           { value: 'quarter', fields: ['Quarter','Actual'] }, //we can put more than 1  field
           { value: 'midterm', fields: ['Midterms','Actual'] },
           { value: 'year', fields: ['Years'] },
@@ -694,8 +694,10 @@ var Information_Form = [
         InternalName: 'CalculationMethod',
         DisplayNameEn: 'Calculation Method',
         DisplayName: 'طريقة الاحتساب',
-        //ToggleDisabledName: 'CategoryKPI',
+        ToggleName: "CalculationMethod",
         type: 'dropdownValues',
+        ToggleName: "CalculationMethod",
+        display:'none',
         options: {
           choices: [
             { display: 'last', value: 'last' },
@@ -729,6 +731,18 @@ var Information_Form = [
             { display: 'six', value: 'six' },
             { display: 'nine', value: 'nine' },
             { display: 'twelve', value: 'twelve' },
+          ],
+        },
+        security: {
+          groups: [
+            'LMS_P',
+            'SPM Admin',
+            'SPM Team',
+            'VRO_P',
+            'System Admin Group',
+            'VRO_E',
+            'LMSU-Execution',
+            'EPMO',
           ],
         },
       },
@@ -1481,7 +1495,6 @@ var Information_Form = [
         InternalName: 'CompletionStatus',
         DisplayNameEn: 'Completion Status',
         DisplayName: 'مكتمل',
-        // type: "dropdownValues",
         type: 'yesnoradio',
         options: {
           choices: [

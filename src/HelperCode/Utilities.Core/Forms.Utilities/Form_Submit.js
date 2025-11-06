@@ -1136,7 +1136,7 @@ window.New_Data_Submit = {
               subGoalRelated
             );
           }
-          // newKPIEquation.init();
+          newKPIEquation.init();
         } else if (listkey == "benefitmetrics") {
           var dateFrom = $("#FromDate").val();
           benefitYearFrom = Number(dateFrom);
@@ -1296,8 +1296,19 @@ var Set_Code_Submit = {
         ICODE = Code;
       } else if (listkey == "strategicpartnerships") {
         STCODE = Code;
+      } else if (listkey == "strategiccalendar") {
+        var prt1 = 'STC',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
+      } else if (listkey == "measurementcyclesupport") {
+        var prt1 = 'MC',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
       }
-
       if (isPrjRelated) {
         Set_Code_Submit.g.oListItem.set_item("ProjectCode", PCODE);
       }
@@ -3378,11 +3389,11 @@ var kpiResults = {
   
       kpiResults.g.oListItem.set_item("Name", Name);
       kpiResults.g.oListItem.set_item("PeriodType", PeriodType);
-      kpiResults.g.oListItem.set_item("Types", Types);
+      // kpiResults.g.oListItem.set_item("Types", Types);
       kpiResults.g.oListItem.set_item("Year", KpiYear);
-      kpiResults.g.oListItem.set_item("Sector", Sector);
-      kpiResults.g.oListItem.set_item("SubSector", SubSector);
-      kpiResults.g.oListItem.set_item("Portfolio", Portfolio);
+      // kpiResults.g.oListItem.set_item("Sector", Sector);
+      // kpiResults.g.oListItem.set_item("SubSector", SubSector);
+      // kpiResults.g.oListItem.set_item("Portfolio", Portfolio);
     } else {
     var prt1 = listkey.substring(0, 2).toUpperCase(),
       prt2 = String(new Date().getFullYear()).slice(4 - 2),
