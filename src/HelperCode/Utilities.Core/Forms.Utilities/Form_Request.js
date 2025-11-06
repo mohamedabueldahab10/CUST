@@ -1280,7 +1280,10 @@ window.Edit_Data_Request = {
             $(fields).prop("disabled", true);
         }
       }
-    
+      if(listkey == "mainkpi" && isEdit) {
+        var relatedMainGoal = $('#RelatedStrategyObjective').val();
+        Get_Related_Sos_Sector.init(relatedMainGoal);
+      }
     },2000);
     $(".loader-box").fadeOut();
   },

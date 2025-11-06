@@ -4978,7 +4978,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                 },
               },
@@ -5054,7 +5054,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                 },
               },
@@ -5522,7 +5522,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                   subRelation: {
                     level: 4,
@@ -6553,7 +6553,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                 },
               },
@@ -7255,7 +7255,7 @@ window.userCalls = {
                   listName: "Initiatives",
                   parentRelationField: "Title",
                   RelationField: "RelatedObjective",
-                  isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
+                  // isMultiSelectField: true, // add this attr if the field in list name is a multiselectlookup to get the values contain
                   RelationFieldType: "Text",
                   subRelation: {
                     level: 4,

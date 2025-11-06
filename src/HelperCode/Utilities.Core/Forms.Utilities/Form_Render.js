@@ -2526,7 +2526,99 @@ debugger;
                 });
             });
           }
+          if (listkey == "initiatives") {
+            function recalcBenefits(benefitsSection) {
+              if (!benefitsSection || !benefitsSection.length) return;
           
+              var benefitItems = benefitsSection.find(".Details-Item");
+              var totalWeight = 0;
+          
+              benefitItems.each(function () {
+                var weightValue = parseFloat($(this).find("input#Weight").val());
+                if (!isNaN(weightValue)) totalWeight += weightValue;
+              });
+          
+              var remainingPercentage = 100 - totalWeight;
+              if (remainingPercentage < 0) remainingPercentage = 0;
+              benefitsSection.find(".remainPercentageVal").text(remainingPercentage + "%");
+          
+              benefitItems.each(function (index) {
+                var $weightInput = $(this).find("input#Weight");
+                if (!$weightInput.length) return;
+          
+                if (index === 0) {
+                  $weightInput.removeAttr("max").prop("disabled", false);
+                } else {
+                  var previousTotal = 0;
+                  benefitItems.slice(0, index).each(function () {
+                    var prevValue = parseFloat($(this).find("input#Weight").val());
+                    if (!isNaN(prevValue)) previousTotal += prevValue;
+                  });
+          
+                  var maxAllowed = 100 - previousTotal;
+                  if (maxAllowed < 0) maxAllowed = 0;
+          
+                  $weightInput.attr("max", maxAllowed).prop("disabled", false);
+          
+                  var currentValue = parseFloat($weightInput.val());
+                  if (!isNaN(currentValue) && currentValue > maxAllowed) {
+                    $weightInput.val(maxAllowed);
+                  }
+                }
+              });
+            }
+          
+            var $benefitsSections = $('div[data-target_list="Benefits"]');
+            var initialized = false;
+          
+            function initializeRecalc($section) {
+              if (initialized) return;
+              initialized = true;
+          
+              $benefitsSections.on("input change", "input#Weight", function () {
+                var $currentSection = $(this).closest('div[data-target_list="Benefits"]');
+                var maxAllowed = parseFloat($(this).attr("max"));
+                var currentValue = parseFloat($(this).val());
+                if (!isNaN(maxAllowed) && !isNaN(currentValue) && currentValue > maxAllowed) {
+                  $(this).val(maxAllowed);
+                }
+                recalcBenefits($currentSection);
+              });
+          
+              $benefitsSections.on("click", ".add-New-Detail, .remove-New-Detail", function () {
+                var $currentSection = $(this).closest('div[data-target_list="Benefits"]');
+                setTimeout(function () {
+                  recalcBenefits($currentSection);
+                }, 50);
+              });
+            }
+          
+            if (isNew) {
+              // على صفحة جديدة: نفعّل الكود فوراً
+              $benefitsSections.each(function () {
+                recalcBenefits($(this));
+              });
+              initializeRecalc($benefitsSections);
+            }
+          
+            if (isEdit) {
+              // على صفحة تعديل: ننتظر أول تعديل أو إضافة
+              $benefitsSections.on("input", "input#Weight", function () {
+                initializeRecalc($(this).closest('div[data-target_list="Benefits"]'));
+              });
+          
+              $benefitsSections.on("click", ".add-New-Detail", function () {
+                initializeRecalc($(this).closest('div[data-target_list="Benefits"]'));
+              });
+            }
+          
+            window.recalcBenefitsForBenefitsSection = function () {
+              $benefitsSections.each(function () {
+                recalcBenefits($(this));
+              });
+            };
+          }
+                  
           ListInfo.g.attachmentsExtensions();
 
         }
