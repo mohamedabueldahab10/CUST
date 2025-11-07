@@ -1611,7 +1611,9 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
                 // Progress stage only if saving current phase and project data is available
     if (currentProjectData) {
         try {
-            const stageResult = await progressProjectStage(projectCode, currentProjectData);
+            if (currentUserRole !== "IPME") {
+               const stageResult = await progressProjectStage(projectCode, currentProjectData);
+            }
             console.log("Stage progressed to:", stageResult.nextStage);
         } catch (stageError) {
             console.error("Failed to progress stage:", stageError);

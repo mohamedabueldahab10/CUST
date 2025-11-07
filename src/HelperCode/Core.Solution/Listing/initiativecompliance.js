@@ -1502,7 +1502,9 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
                 // Progress stage only if saving current phase and initiataive data is available
     if (currentInitiativeData) {
         try {
-            const stageResult = await progressInitiativeStage(initiativeCode, currentInitiativeData);
+            if (currentUserRole !== "IPME") {
+               const stageResult = await progressInitiativeStage(initiativeCode, currentInitiativeData);
+            }
             console.log("Stage progressed to:", stageResult.nextStage);
         } catch (stageError) {
             console.error("Failed to progress stage:", stageError);
