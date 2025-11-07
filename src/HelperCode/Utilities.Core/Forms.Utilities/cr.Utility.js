@@ -5,21 +5,36 @@ var crMasterDetailsArrayNew = [];
 var crMasterDetailsArrayEdit = [];
 var crRelatedItemCode = "";
 var isGeneral;
-var projectGUIDCr = "", projectOwnerCr = "", projectManagerCr = "", projectSponsorCr = "", projectBuildTeamArrCr = [], allEnterpriseResourcesCR = [];
-var editProjectContextCR = '', epmProjectsCR, deleteProjectContextCR = '';
-var ResourcesEnterpriseCR = '', resourcesArrDeleteCR = [], globresArrCR = [];
+var projectGUIDCr = "",
+  projectOwnerCr = "",
+  projectManagerCr = "",
+  projectSponsorCr = "",
+  projectBuildTeamArrCr = [],
+  allEnterpriseResourcesCR = [];
+var editProjectContextCR = "",
+  epmProjectsCR,
+  deleteProjectContextCR = "";
+var ResourcesEnterpriseCR = "",
+  resourcesArrDeleteCR = [],
+  globresArrCR = [];
 
-if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
+if (
+  localStorage.getItem("lng") == null ||
+  localStorage.getItem("lng") == "ar"
+) {
   var search = "بحث ...";
-  var No_Data = 'لا يوجد'
+  var No_Data = "لا يوجد";
 } else {
-  var No_Data = 'No Data';
+  var No_Data = "No Data";
   var search = "Search ...";
 }
-if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
-  var enternameemail = Resources.ar["enternameemail"]
+if (
+  localStorage.getItem("lng") == null ||
+  localStorage.getItem("lng") == "ar"
+) {
+  var enternameemail = Resources.ar["enternameemail"];
 } else {
-  var enternameemail = Resources.en["enternameemail"]
+  var enternameemail = Resources.en["enternameemail"];
 }
 window.CrModeFunctionality = {
   preinit: function () {
@@ -29,21 +44,18 @@ window.CrModeFunctionality = {
     } else if (USERisView) {
       // prefix = "_View.js";
       prefix = "_Edit.js";
-
     }
-
 
     let CR_JSON_File_Name = RListKey + prefix;
 
     //get form's json
     $.getScript(
       _spPageContextInfo.webAbsoluteUrl +
-      "/Style%20Library/spm/JSON/" +
-      RListKey +
-      "/" +
-      CR_JSON_File_Name
+        "/Style%20Library/spm/JSON/" +
+        RListKey +
+        "/" +
+        CR_JSON_File_Name
     ).done(function (script, textStatus) {
-
       crlabel = Information_Form[0].label;
       crlabelEn = Information_Form[0].labelEn;
       crdescription = Information_Form[0].description;
@@ -52,14 +64,15 @@ window.CrModeFunctionality = {
     });
   },
   init: function (newJSON) {
-
-    $('[data-togglename*="UpdateType"]').parent().find(">label").addClass("loader-action");
+    $('[data-togglename*="UpdateType"]')
+      .parent()
+      .find(">label")
+      .addClass("loader-action");
 
     // var htmlBuilder =
     //   '<div class="py-5 cr-related-item-start d-flex justify-content-center align-items-end"><i class="fas fa-arrow-down"></i><span class="cr-related-item-title Resources mx-3" data-trans-crrelateditem></span><i class="fas fa-arrow-down"></i></div>';
 
-    var htmlBuilder =
-      `<div class="pt-5 cr-related-item-start d-flex justify-content-center">
+    var htmlBuilder = `<div class="pt-5 cr-related-item-start d-flex justify-content-center">
       <div class="cr-fields-section d-flex justify-content-center align-items-center p-3">
         <i class="fas fa-arrow-down"></i>
         <span class="cr-related-item-title Resources mx-3" data-trans-crrelateditem></span>
@@ -70,14 +83,11 @@ window.CrModeFunctionality = {
       </div>
     </div>`;
 
-
     var renderFunction = USERisNew || USERisEdit ? "ListInfo" : "View_ListInfo";
     var Label, Description;
     var printHtml = "";
 
-
     newJSON.forEach(function (o, i, a) {
-
       if (o.labelEn == "Attachments") {
         a.splice(i, 1);
       }
@@ -85,23 +95,20 @@ window.CrModeFunctionality = {
 
     // to remove the attachments from cr request
     newJSON.forEach(function (o, i, a) {
-
       o.subFields.forEach((el, index) => {
-
         if (el.type == "file") {
           a.splice(i, 1);
         }
         if (USERisView) {
           if (el.dontSubmit) {
-            o.subFields.splice(index, 1)
-          } else if (el.type == "email") { // change type email to string to can get the data in view
-            el.type = "string"
+            o.subFields.splice(index, 1);
+          } else if (el.type == "email") {
+            // change type email to string to can get the data in view
+            el.type = "string";
           }
         }
-      })
+      });
     });
-
-
 
     var toggleSectionName;
 
@@ -149,9 +156,7 @@ window.CrModeFunctionality = {
           masterLayout = 'data-layout="' + item.layout + '"';
         }
 
-        toggleSectionName = item.toggleName
-
-
+        toggleSectionName = item.toggleName;
 
         htmlBuilder +=
           '<div class="py-5 border-bottom section-container cr-related-item-section ' +
@@ -174,12 +179,13 @@ window.CrModeFunctionality = {
           Description +
           "</span>" +
           "</div>" +
-          '<div data-togglename=' + toggleSectionName + '  class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
+          "<div data-togglename=" +
+          toggleSectionName +
+          '  class="col-lg-9 col-md-8 white-box p-4 fieldset-container">';
 
         asyncFor.seqProcess(
           item.subFields,
           function (subitemField, indexField, resolveField) {
-
             // if(subitemField.type != "picker" && subitemField.InternalName){
             window[`${renderFunction}`].RenderForm(
               subitemField,
@@ -193,7 +199,6 @@ window.CrModeFunctionality = {
             //}
           },
           function (subitemField, indexField, dataField, isDoneField) {
-
             htmlBuilder += dataField.htmlResult;
             if (isDoneField) {
               resolve(item, index, dataField, true);
@@ -202,7 +207,6 @@ window.CrModeFunctionality = {
         );
       },
       function (item, index, data, isDone) {
-
         if (
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
@@ -214,7 +218,6 @@ window.CrModeFunctionality = {
         // console.log('Finishing label ' + Label + ' - IsDone: ' + isDone);
         htmlBuilder += "</div></div></div>";
         if (isDone) {
-
           actionTaskHeader = "";
 
           $('div[class*="cr-related-item-"]').remove();
@@ -261,13 +264,13 @@ window.CrModeFunctionality = {
             crMasterDetailsArrayNew = crMasterDetailsArrayRequest;
             crMasterDetailsArrayEdit = crMasterDetailsArrayRequest;
 
-
-
             if (crMasterDetailsArrayRequest.length) {
               // add [data-target_list] to remove the field dont submit from master details only
-              $(".cr-related-item-section[data-target_list] .CFIELD.dont-submit").remove() // to remove the master details field don't submit like amount
+              $(
+                ".cr-related-item-section[data-target_list] .CFIELD.dont-submit"
+              ).remove(); // to remove the master details field don't submit like amount
 
-              CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0])
+              CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0]);
             } else {
               $(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
             }
@@ -301,24 +304,22 @@ window.CrModeFunctionality = {
           $(".cr-related-item-section select[dynamic=parent]").on(
             "change",
             function () {
-
               let parentFieldName = $(this).attr("id");
               let parentFieldValue = $(this).val();
               let customFilterValue = $(this)
                 .find("option[value=" + parentFieldValue + "]")
                 .data("customfiltervalue");
 
-
               let isCustomFilterValue = $(this).attr("iscustomfiltervalue");
 
               let affectedSelectsInfo = [];
 
-              let parentCustomFilterValueFromSibling = $(this).attr("data-parentcustomfiltervalue")
-              let notInvokeListiner = $(this).data("notinvokelistiner")
+              let parentCustomFilterValueFromSibling = $(this).attr(
+                "data-parentcustomfiltervalue"
+              );
+              let notInvokeListiner = $(this).data("notinvokelistiner");
 
               $("[dynamic=" + parentFieldName + "]").each(function () {
-
-
                 let affectedFieldName = $(this).attr("id");
                 let listName = $(this).data("listname");
                 let filterField = $(this).data("filterfield");
@@ -329,10 +330,7 @@ window.CrModeFunctionality = {
                 let queryFieldValue = $(this).data("queryfieldvalue");
                 let queryFieldName = $(this).data("queryfield");
                 let queryFieldType = $(this).data("queryfieldtype");
-                var fromCr = true
-
-
-
+                var fromCr = true;
 
                 affectedSelectsInfo.push({
                   affectedFieldName: affectedFieldName,
@@ -348,8 +346,9 @@ window.CrModeFunctionality = {
                   queryFieldValue: queryFieldValue,
                   queryFieldName: queryFieldName,
                   queryFieldType: queryFieldType,
-                  parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling,
-                  fromCr: fromCr
+                  parentCustomFilterValueFromSibling:
+                    parentCustomFilterValueFromSibling,
+                  fromCr: fromCr,
                   // dataSiblingvalue:dataSiblingvalue
                 });
               });
@@ -366,10 +365,9 @@ window.CrModeFunctionality = {
                 let queryFieldValue = $(this).data("queryfieldvalue");
                 let queryFieldName = $(this).data("queryfield");
                 let queryFieldType = $(this).data("queryfieldtype");
-                var fromCr = true
+                var fromCr = true;
 
                 // let dataSiblingvalue = $(this).data("siblingvalue")
-
 
                 affectedSelectsInfo.push({
                   affectedFieldName: affectedFieldName,
@@ -385,8 +383,9 @@ window.CrModeFunctionality = {
                   queryFieldValue: queryFieldValue,
                   queryFieldName: queryFieldName,
                   queryFieldType: queryFieldType,
-                  parentCustomFilterValueFromSibling: parentCustomFilterValueFromSibling,
-                  fromCr: fromCr
+                  parentCustomFilterValueFromSibling:
+                    parentCustomFilterValueFromSibling,
+                  fromCr: fromCr,
 
                   // dataSiblingvalue:dataSiblingvalue
                 });
@@ -394,11 +393,10 @@ window.CrModeFunctionality = {
               //
               //
 
-              if (notInvokeListiner) { // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
-                console.log("Inside not invoke listiner")
-
+              if (notInvokeListiner) {
+                // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
+                console.log("Inside not invoke listiner");
               } else {
-
                 // if(affectedSelectsInfo && affectedSelectsInfo !="undefined"){
                 dynamicAffectSelect.init(affectedSelectsInfo);
                 // }
@@ -443,33 +441,39 @@ window.CrModeFunctionality = {
             }
           );
 
-          $(".cr-related-item-section .grandFieldInvoke").on("change", function (event) {
+          $(".cr-related-item-section .grandFieldInvoke").on(
+            "change",
+            function (event) {
+              var grandId = $(this).data("grandfieldid");
+              var childId = $(this).data("childfieldid");
+              var childFieldIdSource = $(this).data("childfieldidsource");
 
+              var elementValue = event.target.value;
 
+              if (grandId && elementValue && childId && childFieldIdSource) {
+                var customFilterValue = $(this)
+                  .find("option[value=" + elementValue + "]")
+                  .data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
 
+                $(`#${grandId}`).data("notinvokelistiner", false);
+                $(`#${grandId}`).attr(
+                  "data-seconedvaluelistiner",
+                  elementValue
+                );
+                $(`#${grandId}`).attr(
+                  "data-parentcustomfiltervalue",
+                  customFilterValue
+                );
+                $(`#${childId}`).data("queryfield", childFieldIdSource);
+                $(`#${childId}`).data("queryfieldvalue", elementValue);
+                $(`#${childId}`).data("queryfieldtype", "Text");
 
-            var grandId = $(this).data("grandfieldid")
-            var childId = $(this).data("childfieldid")
-            var childFieldIdSource = $(this).data("childfieldidsource")
-
-            var elementValue = event.target.value
-
-            if (grandId && elementValue && childId && childFieldIdSource) {
-              var customFilterValue = $(this).find("option[value=" + elementValue + "]").data("customfiltervalue"); // will add the value on parent to can handle the query in dynamic func
-
-              $(`#${grandId}`).data("notinvokelistiner", false)
-              $(`#${grandId}`).attr("data-seconedvaluelistiner", elementValue)
-              $(`#${grandId}`).attr("data-parentcustomfiltervalue", customFilterValue)
-              $(`#${childId}`).data("queryfield", childFieldIdSource)
-              $(`#${childId}`).data("queryfieldvalue", elementValue)
-              $(`#${childId}`).data("queryfieldtype", "Text")
-
-              // window.setTimeout(function(){
-              $(`select[dynamic=parent][id=${grandId}]`).trigger('change') // to trigger only one field (correct field)
-              // },1500)
+                // window.setTimeout(function(){
+                $(`select[dynamic=parent][id=${grandId}]`).trigger("change"); // to trigger only one field (correct field)
+                // },1500)
+              }
             }
-
-          })
+          );
 
           //max min dates
           $(
@@ -520,35 +524,33 @@ window.CrModeFunctionality = {
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             });
 
-            var totalElement = $(this).data("totalelement")
-            var sum1 = $(this).data("sum1element")
-            var sum2 = $(this).data("sum2element")
+            var totalElement = $(this).data("totalelement");
+            var sum1 = $(this).data("sum1element");
+            var sum2 = $(this).data("sum2element");
 
-            var max = $(this).data("maxfield")
-            var resetElement = $(this).data('resetelement')
-            var elementVal = event.target.value
+            var max = $(this).data("maxfield");
+            var resetElement = $(this).data("resetelement");
+            var elementVal = event.target.value;
             // set max value
-            if (max && max != 'undefined') {
-
-              var maxValue = 0
+            if (max && max != "undefined") {
+              var maxValue = 0;
               if (listkey == "projects" || RListKey == "projects") {
                 if ($(`#${max}`).val()) {
-                  maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+                  maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0;
                 } else if ($(`#Amount`).val()) {
-                  maxValue = $(`#Amount`).val() ? $(`#Amount`).val() : 0
+                  maxValue = $(`#Amount`).val() ? $(`#Amount`).val() : 0;
                 }
               } else {
-                maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0
+                maxValue = $(`#${max}`).val() ? $(`#${max}`).val() : 0;
               }
               if (maxValue.includes(",")) {
-                maxValue = maxValue.replaceAll(",", "")
+                maxValue = maxValue.replaceAll(",", "");
               }
               if (elementVal.includes(",")) {
-                elementVal = elementVal.replaceAll(",", "")
-
+                elementVal = elementVal.replaceAll(",", "");
               }
-              elementVal = Number(elementVal)
-              maxValue = Number(maxValue)
+              elementVal = Number(elementVal);
+              maxValue = Number(maxValue);
 
               if (elementVal <= maxValue) {
                 $(this).val(function (index, value) {
@@ -557,16 +559,14 @@ window.CrModeFunctionality = {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 });
               } else {
-                $(this).val(null)
+                $(this).val(null);
               }
-            }
-            else if (resetElement && resetElement != 'undefined') {
-              resetElement = eval(resetElement)
-              resetElement.forEach(el => {
-                $(`#${el}`).val(null)
-              })
-            }
-            else {
+            } else if (resetElement && resetElement != "undefined") {
+              resetElement = eval(resetElement);
+              resetElement.forEach((el) => {
+                $(`#${el}`).val(null);
+              });
+            } else {
               // format number
               $(this).val(function (index, value) {
                 return value
@@ -574,33 +574,40 @@ window.CrModeFunctionality = {
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
               });
             }
-            /// 
+            ///
 
-            if (totalElement && totalElement != 'undefined' && sum1 && sum1 != 'undefined' && sum2 && sum2 != 'undefined') {
-              var value1 = $(`#${sum1}`).val()
-              value1 = value1.replaceAll(",", "")
-              value1 = Number(value1)
-              var value2 = $(`#${sum2}`).val()
-              value2 = value2.replaceAll(",", "")
-              value2 = Number(value2)
-              var total = value1 + value2
-              $(`#${totalElement}`).val(total)
+            if (
+              totalElement &&
+              totalElement != "undefined" &&
+              sum1 &&
+              sum1 != "undefined" &&
+              sum2 &&
+              sum2 != "undefined"
+            ) {
+              var value1 = $(`#${sum1}`).val();
+              value1 = value1.replaceAll(",", "");
+              value1 = Number(value1);
+              var value2 = $(`#${sum2}`).val();
+              value2 = value2.replaceAll(",", "");
+              value2 = Number(value2);
+              var total = value1 + value2;
+              $(`#${totalElement}`).val(total);
 
-              fieldsDependsOnTotal = $(`#${totalElement}`).data('resetelement')
+              fieldsDependsOnTotal = $(`#${totalElement}`).data("resetelement");
 
               if (fieldsDependsOnTotal) {
-                fieldsDependsOnTotal = eval(fieldsDependsOnTotal)
+                fieldsDependsOnTotal = eval(fieldsDependsOnTotal);
 
-                fieldsDependsOnTotal.forEach(el => {
-                  var resVal = $(`#${el}`).val()
-                  if (resVal.includes(',')) {
-                    resVal = resVal.replaceAll(",", "")
-                    resVal = Number(resVal)
+                fieldsDependsOnTotal.forEach((el) => {
+                  var resVal = $(`#${el}`).val();
+                  if (resVal.includes(",")) {
+                    resVal = resVal.replaceAll(",", "");
+                    resVal = Number(resVal);
                   }
                   if (resVal > total) {
-                    $(`#${el}`).val(null)
+                    $(`#${el}`).val(null);
                   }
-                })
+                });
               }
             }
           });
@@ -625,11 +632,8 @@ window.CrModeFunctionality = {
             handleCustomeCr.init();
             isCRChangeTrigered = true;
           }
-          
-    
-    
-          $(".CFIELD>label").removeClass("loader-action");
 
+          $(".CFIELD>label").removeClass("loader-action");
 
           //initiate master detail
           // if (crMasterDetailsArrayRequest.length > 0) {
@@ -645,24 +649,26 @@ window.CrModeFunctionality = {
 window.handleCustomeCr = {
   init: function () {
     $('[data-togglename*="UpdateType"]').on("change", function () {
-
-      var currentValue = $(this).val()
-      if (currentValue != 'delete') {
-
+      var currentValue = $(this).val();
+      if (currentValue != "delete") {
         isGeneral =
-          $(this).find(">option:selected").attr("data-trans-generalchange") == ""
+          $(this).find(">option:selected").attr("data-trans-generalchange") ==
+          ""
             ? true
             : false;
         let toggleName = $(this).data("togglename");
         let toggleParent = $(`[data-togglevalues*="${toggleName}"]`);
-        let relevantDropdown = $(`select[data-listname="${toggleParent.val().split("crms")[1]}"]`);
+        let relevantDropdown = $(
+          `select[data-listname="${toggleParent.val().split("crms")[1]}"]`
+        );
         RListKey = relevantDropdown.data("listkey");
         isRListKey = RListKey ? true : false;
         CrRelatedList = relevantDropdown.data("listname");
         RID = relevantDropdown.find(">option:selected").attr("option-id");
-        changeRequestRCode = relevantDropdown.find(">option:selected").attr("value");
+        changeRequestRCode = relevantDropdown
+          .find(">option:selected")
+          .attr("value");
         // $(this).parent().find(">label").addClass("loader-action");
-
 
         if (!isGeneral) {
           // $(this).parent().find(">label").addClass("loader-action");
@@ -723,18 +729,11 @@ window.CrItemDataRequest = {
     $(
       ".cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> input:not([type=file]), .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> input[type=checkbox], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=picker], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> select[type=dropdown], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)>  textarea,.cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=date], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> .datetimeinputs input[type=datetime-local], .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit) > .multiselect-container, .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit) > div.richTextEdits , .cr-related-item-section:not([data-target_list]) .CFIELD:not(.dont-submit)> div[type=multipicker]"
     ).each(function () {
-
-
-
-
       fieldType = $(this).attr("type");
       let newJsonValues = jsonValues ? jsonValues : Information_Form;
       var currentJsonValues = newJsonValues.map(function (el) {
         return el.InternalName == $(this).attr("id");
       });
-
-
-
 
       changeRequestBody.push({
         label: crlabel,
@@ -754,11 +753,18 @@ window.CrItemDataRequest = {
         DisplayNameEn: currentJsonValues[0].DisplayName,
         changeRequestRCode: changeRequestRCode,
         dataListName: $(this).data("listname") ? $(this).data("listname") : "",
-        dataValfieldkey: $(this).data("valfieldkey") ? $(this).data("valfieldkey") : "",
-        dataDispfieldkey: $(this).data("dispfieldkey") ? $(this).data("dispfieldkey") : "",
-        dataParentrelatedfilterkeylvl1: $(this).data("parentrelatedfilterkeylvl1"),
-        dataParentrelatedfilterkeylvl2: $(this).data("parentrelatedfilterkeylvl2")
-
+        dataValfieldkey: $(this).data("valfieldkey")
+          ? $(this).data("valfieldkey")
+          : "",
+        dataDispfieldkey: $(this).data("dispfieldkey")
+          ? $(this).data("dispfieldkey")
+          : "",
+        dataParentrelatedfilterkeylvl1: $(this).data(
+          "parentrelatedfilterkeylvl1"
+        ),
+        dataParentrelatedfilterkeylvl2: $(this).data(
+          "parentrelatedfilterkeylvl2"
+        ),
       });
 
       switch ($(this).attr("type")) {
@@ -841,15 +847,12 @@ window.CrItemDataRequest = {
         case "picker":
           //
 
-
-
-
           var pemail =
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? enternameemail
               : oListItem
-                .get_item("" + $(this).attr("id") + "")
-                .get_lookupValue();
+                  .get_item("" + $(this).attr("id") + "")
+                  .get_lookupValue();
 
           $(this).attr("data-email", pemail);
 
@@ -864,20 +867,17 @@ window.CrItemDataRequest = {
           mp.init($(this).attr("id"), { AllowMultipleValues: false });
           break;
 
-
         case "multipicker":
-
           var pemail =
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? enternameemail
-              : oListItem
-                .get_item("" + $(this).attr("id") + "");
+              : oListItem.get_item("" + $(this).attr("id") + "");
 
           var userItems = [];
 
           pemail.forEach(function (element) {
             userItems.push(element.get_lookupValue());
-          })
+          });
 
           // $(this).attr(
           // 	"user-email",
@@ -965,8 +965,8 @@ window.CrItemDataRequest = {
     });
 
     // to get dont submit value like initiative in cr
-    if (RListKey == 'initiatives') {
-      DontSubmit_DataRequestCR.init()
+    if (RListKey == "initiatives") {
+      DontSubmit_DataRequestCR.init();
     }
     //checking field ownership
     $(
@@ -998,7 +998,6 @@ window.CrItemDataRequest = {
     });
 
     $(".cr-related-item-section input.number").each(function (event) {
-
       // skip for arrow keys
       if (event.which >= 37 && event.which <= 40) return;
       // format number
@@ -1050,87 +1049,85 @@ window.CrItemDataRequest = {
 
     if (RListKey == "mainkpi") {
       //get from to year for kpi
-      var kpiFromYear = oListItem.get_item("FromDate") ? oListItem.get_item("FromDate") : '';
-      var kpiToYear = oListItem.get_item("ToDate") ? oListItem.get_item("ToDate") : ''
+      var kpiFromYear = oListItem.get_item("FromDate")
+        ? oListItem.get_item("FromDate")
+        : "";
+      var kpiToYear = oListItem.get_item("ToDate")
+        ? oListItem.get_item("ToDate")
+        : "";
       $("#Year").html(
         '<option data-trans-yeartype class="Resources" value="" selected="" disabled=""></option>'
       );
       for (var i = kpiFromYear; i <= kpiToYear; i++) {
-        $("#Year").append(
-          '<option value="' + i + '">' +
-          i +
-          "</option>"
-        );
+        $("#Year").append('<option value="' + i + '">' + i + "</option>");
       }
-      $('#Year').val(oListItem.get_item("Year") ? oListItem.get_item("Year") : '')
+      $("#Year").val(
+        oListItem.get_item("Year") ? oListItem.get_item("Year") : ""
+      );
       //
 
       //to get the sector and subsector based on sos
-      $(".cr-related-item-section select#RelatedStrategyObjective").change(function () {
-        var sosStrategy = $(this).val();
-        Get_Related_Sos_Sector.init(sosStrategy);
-      });
+      $(".cr-related-item-section select#RelatedStrategyObjective").change(
+        function () {
+          var sosStrategy = $(this).val();
+          Get_Related_Sos_Sector.init(sosStrategy);
+        }
+      );
 
-      $(".cr-related-item-section select#RelatedStrategyObjective").trigger('change')
+      $(".cr-related-item-section select#RelatedStrategyObjective").trigger(
+        "change"
+      );
 
       // to get the equation values
-      equationKPI.init()
+      equationKPI.init();
     }
-    // to handle trigger 
+    // to handle trigger
 
-
-    if ($(".grandFieldInvoke").length > 0) { // to use it in sos change request
-      $(".grandFieldInvoke").trigger("change")
+    if ($(".grandFieldInvoke").length > 0) {
+      // to use it in sos change request
+      $(".grandFieldInvoke").trigger("change");
     }
     // handle getsibling data (sos RelatedStrategyPillars)
     if ($(".getsiblingdata").length > 0) {
-      $(".getsiblingdata").trigger("change")//to invoke the sibling data
+      $(".getsiblingdata").trigger("change"); //to invoke the sibling data
     }
     //
     // handle show hide section (sos pillerName and piller desc)
-    var pillerNameLength = $('#PillarName').length
+    var pillerNameLength = $("#PillarName").length;
 
     if (pillerNameLength) {
-
       $("#RelatedStrategy").on("change", function () {
         var relatedStrategy = $(this).val();
         Goal_Strategy_Info.init(relatedStrategy);
       });
-
     }
     //
     // handle dynamic dropdown trigger
 
-    var dynamicArrId = []
+    var dynamicArrId = [];
     $("select[dynamic=parent]").each(function () {
-
-      var checkStopInvoke = $(this).data("stopinvokeparent") // use it on type in initiative to not remove the related strategy in edit
+      var checkStopInvoke = $(this).data("stopinvokeparent"); // use it on type in initiative to not remove the related strategy in edit
 
       if (checkStopInvoke == "yes") {
-        console.log("continue without call dynamic parent")
+        console.log("continue without call dynamic parent");
       } else {
-
-        dynamicArrId.push($(this).attr("id"))
+        dynamicArrId.push($(this).attr("id"));
       }
-
-    })
+    });
     if (dynamicArrId.length) {
-      get_DynamicValues.init(dynamicArrId)
+      get_DynamicValues.init(dynamicArrId);
     }
     //
-
 
     $(".CFIELD>label").removeClass("loader-action");
 
     if (RListKey == "sos" || RListKey == "mainkpi") {
       $(".cr-related-item-section .CFIELD").addClass("dont-submit");
-
     }
 
     if (RListKey == "projects") {
       // to get the related delivrable for the initiative that related to project
       $("#RelatedInitiative").on("change", function () {
-
         var initiativeCode = $(this).val();
         ProjectInitiativeDelevrable.init(
           "InitiativeDeliverables",
@@ -1138,18 +1135,13 @@ window.CrItemDataRequest = {
         );
       });
       //to get the subsector that related to sector for project
-      var sector = $("#Sector").val()
+      var sector = $("#Sector").val();
       if (sector) {
-        Department_Sector_Info.init(sector);// 
+        Department_Sector_Info.init(sector); //
       }
-      Sectors_Info.init()
-      $('#RelatedInitiative').trigger("change")
+      Sectors_Info.init();
+      $("#RelatedInitiative").trigger("change");
     }
-
-
-
-
-
   },
   onError: function (sender, args) {
     console.log(
@@ -1158,7 +1150,6 @@ window.CrItemDataRequest = {
   },
   // The main Initialization function
   init: function () {
-
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(CrRelatedList);
     CrItemDataRequest.g.oListItem = oList.getItemById(RID);
@@ -1174,8 +1165,8 @@ window.CrItemDataRequest = {
     append: function () {
       $(".o365cs-nav-header16 .o365cs-nav-o365Branding").html(
         '<div class="Logo"><a href=""><img class="img-Logo" src="' +
-        mainLogo +
-        '"></a></div>'
+          mainLogo +
+          '"></a></div>'
       );
       $(".o365cs-nav-centerAlign").append(
         '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="10"></i><a href="#">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="10"></i><a href="#">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="30"></i><a href="#">Issues</a></span></div><div class="UProfile"></div></div>'
@@ -1215,18 +1206,18 @@ window.CrItemDataRequest = {
                     .text()
                     .indexOf("لعام") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("لعام")[0] +
-                    " لعام " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("لعام")[0] +
+                      " لعام " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " لعام " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " لعام " +
+                      yeartodisp;
               } else {
                 var label =
                   $("#Cost" + i)
@@ -1235,18 +1226,18 @@ window.CrItemDataRequest = {
                     .text()
                     .indexOf("For Year") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("For Year")[0] +
-                    " For Year " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("For Year")[0] +
+                      " For Year " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " For Year " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " For Year " +
+                      yeartodisp;
               }
               $("#Cost" + i)
                 .parent()
@@ -1294,18 +1285,18 @@ window.CrItemDataRequest = {
                   .text()
                   .indexOf("لعام") > -1
                   ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("لعام")[0] +
-                  " لعام " +
-                  yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("لعام")[0] +
+                    " لعام " +
+                    yeartodisp
                   : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " لعام " +
-                  yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " لعام " +
+                    yeartodisp;
             } else {
               var label =
                 $("#Cost" + i)
@@ -1314,18 +1305,18 @@ window.CrItemDataRequest = {
                   .text()
                   .indexOf("For Year") > -1
                   ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("For Year")[0] +
-                  " For Year " +
-                  yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("For Year")[0] +
+                    " For Year " +
+                    yeartodisp
                   : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " For Year " +
-                  yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " For Year " +
+                    yeartodisp;
             }
             $("#Cost" + i)
               .parent()
@@ -1374,7 +1365,6 @@ window.CrItemDataRenderFromJSON_Edit = {
     var originalValue = "";
     var newValue = "";
     var value = "";
-
 
     changeRequestBody.forEach(function (o, i, a) {
       $this = $(".cr-related-item-section #" + o.InternalName);
@@ -1555,8 +1545,6 @@ window.CrItemDataRenderFromJSON_Edit = {
     });
 
     $(".cr-related-item-section input.number").each(function (event) {
-
-
       // skip for arrow keys
       if (event.which >= 37 && event.which <= 40) return;
       // format number
@@ -1608,10 +1596,7 @@ window.CrItemDataRenderFromJSON_Edit = {
 
     // $('[data-togglename*="UpdateType"]').trigger("change")
 
-
-    CrTitleDataRequest.init()
-
-
+    CrTitleDataRequest.init();
 
     $(
       "div#particles-foreground, div#particles-background, .vertical-centered-box"
@@ -1636,8 +1621,8 @@ window.CrItemDataRenderFromJSON_Edit = {
     append: function () {
       $(".o365cs-nav-header16 .o365cs-nav-o365Branding").html(
         '<div class="Logo"><a href=""><img class="img-Logo" src="' +
-        mainLogo +
-        '"></a></div>'
+          mainLogo +
+          '"></a></div>'
       );
       $(".o365cs-nav-centerAlign").append(
         '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="10"></i><a href="#">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="10"></i><a href="#">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="30"></i><a href="#">Issues</a></span></div><div class="UProfile"></div></div>'
@@ -1677,18 +1662,18 @@ window.CrItemDataRenderFromJSON_Edit = {
                     .text()
                     .indexOf("لعام") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("لعام")[0] +
-                    " لعام " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("لعام")[0] +
+                      " لعام " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " لعام " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " لعام " +
+                      yeartodisp;
               } else {
                 var label =
                   $("#Cost" + i)
@@ -1697,18 +1682,18 @@ window.CrItemDataRenderFromJSON_Edit = {
                     .text()
                     .indexOf("For Year") > -1
                     ? $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text()
-                      .split("For Year")[0] +
-                    " For Year " +
-                    yeartodisp
+                        .parent()
+                        .find("label")
+                        .text()
+                        .split("For Year")[0] +
+                      " For Year " +
+                      yeartodisp
                     : $("#Cost" + i)
-                      .parent()
-                      .find("label")
-                      .text() +
-                    " For Year " +
-                    yeartodisp;
+                        .parent()
+                        .find("label")
+                        .text() +
+                      " For Year " +
+                      yeartodisp;
               }
               $("#Cost" + i)
                 .parent()
@@ -1756,18 +1741,18 @@ window.CrItemDataRenderFromJSON_Edit = {
                   .text()
                   .indexOf("لعام") > -1
                   ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("لعام")[0] +
-                  " لعام " +
-                  yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("لعام")[0] +
+                    " لعام " +
+                    yeartodisp
                   : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " لعام " +
-                  yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " لعام " +
+                    yeartodisp;
             } else {
               var label =
                 $("#Cost" + i)
@@ -1776,18 +1761,18 @@ window.CrItemDataRenderFromJSON_Edit = {
                   .text()
                   .indexOf("For Year") > -1
                   ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("For Year")[0] +
-                  " For Year " +
-                  yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("For Year")[0] +
+                    " For Year " +
+                    yeartodisp
                   : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " For Year " +
-                  yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " For Year " +
+                    yeartodisp;
             }
             $("#Cost" + i)
               .parent()
@@ -1831,7 +1816,6 @@ window.CrItemDataRenderFromJSON_Edit = {
 //! on View
 window.CrItemDataRenderFromJSON_View = {
   init: function () {
-
     var fieldType = "";
     var $this;
     var originalValue = "";
@@ -1841,27 +1825,26 @@ window.CrItemDataRenderFromJSON_View = {
     var elementType = "";
 
     changeRequestBody.forEach(function (o, i, a) {
-
       if (o.InternalName) {
-
-
         $this = $(".cr-related-item-section #" + o.InternalName);
 
-        $element = $(".cr-related-item-section:not([data-target_list]) #" + o.InternalName); // to fix the tooltip to be only for form not master
-        elementType = $element.attr("type")
+        $element = $(
+          ".cr-related-item-section:not([data-target_list]) #" + o.InternalName
+        ); // to fix the tooltip to be only for form not master
+        elementType = $element.attr("type");
 
         fieldType = $this.attr("type");
         value = o.value ? o.value : o.originalValue;
         isOriginalValue = value == originalValue ? true : false;
-        var localStorageNameVal = ""
+        var localStorageNameVal = "";
         if (o.isChanged) {
           // $this.parent().addClass("crHighlight");
           // $this.parent().attr("data-toggle", "tooltip");
           // $this.parent().attr("data-placement", isArabic ? "right" : "left");
           // $this.parent().attr("title", o.originalValue);
 
-          if (elementType == 'lookup') {
-            var dataList = $element.data('listname')
+          if (elementType == "lookup") {
+            var dataList = $element.data("listname");
             var localstoragearr = [];
 
             if (localStorage.getItem(`Dynamo_${dataList}`) != null) {
@@ -1875,20 +1858,25 @@ window.CrItemDataRenderFromJSON_View = {
                 localStorage.getItem("lng") == null ||
                 localStorage.getItem("lng") == "ar"
               ) {
-                localStorageNameVal = localstoragearr.length ? localstoragearr[0].name : o.originalValue;
-              } else localStorageNameVal = localstoragearr.length ? localstoragearr[0].nameEn : o.originalValue;
+                localStorageNameVal = localstoragearr.length
+                  ? localstoragearr[0].name
+                  : o.originalValue;
+              } else
+                localStorageNameVal = localstoragearr.length
+                  ? localstoragearr[0].nameEn
+                  : o.originalValue;
             }
 
             if (!localStorageNameVal) {
-              localStorageNameVal = o.originalValue ? o.originalValue : No_Data
+              localStorageNameVal = o.originalValue ? o.originalValue : No_Data;
             }
 
             $element.parent().addClass("crHighlight");
             $element.parent().attr("data-toggle", "tooltip");
-            $element.parent().attr("data-placement", isArabic ? "right" : "left");
+            $element
+              .parent()
+              .attr("data-placement", isArabic ? "right" : "left");
             $element.parent().attr("title", localStorageNameVal);
-
-
           } else if (elementType == "dropdown" || elementType == "radio") {
             var dropDownNameVal = "";
             if (
@@ -1901,34 +1889,35 @@ window.CrItemDataRenderFromJSON_View = {
             }
 
             if (!dropDownNameVal) {
-              dropDownNameVal = No_Data
+              dropDownNameVal = No_Data;
             }
 
             $element.parent().addClass("crHighlight");
             $element.parent().attr("data-toggle", "tooltip");
-            $element.parent().attr("data-placement", isArabic ? "right" : "left");
+            $element
+              .parent()
+              .attr("data-placement", isArabic ? "right" : "left");
             $element.parent().attr("title", dropDownNameVal);
-
           } else {
-
-            var titleName = o.originalValue
+            var titleName = o.originalValue;
             if (!o.originalValue) {
-              titleName = No_Data
+              titleName = No_Data;
             }
 
             $element.parent().addClass("crHighlight");
             $element.parent().attr("data-toggle", "tooltip");
-            $element.parent().attr("data-placement", isArabic ? "right" : "left");
+            $element
+              .parent()
+              .attr("data-placement", isArabic ? "right" : "left");
             $element.parent().attr("title", titleName);
           }
         }
 
         switch (o.type) {
           case "datetime":
-            if (value == '' || value == null) {
+            if (value == "" || value == null) {
               $this.text(No_Data);
-            }
-            else {
+            } else {
               var d = value == "null" ? "empty" : new Date(value);
               if (d != "empty") {
                 var local = d.getTime();
@@ -2016,16 +2005,15 @@ window.CrItemDataRenderFromJSON_View = {
             // var mp = new MyPeoplePicker();
             // mp.init($this.attr("id"), { AllowMultipleValues: false });
 
-            if (o.value == '' || o.value == null) {
-              if (o.originalValue == '' || o.originalValue == null) {
+            if (o.value == "" || o.value == null) {
+              if (o.originalValue == "" || o.originalValue == null) {
                 $this.text(No_Data);
               } else {
-                $this.text(o.originalValue)
+                $this.text(o.originalValue);
               }
-            }
-            else {
+            } else {
               $this.text(value.$5c_1);
-            } // cause we change on changeRequestBody in form request 
+            } // cause we change on changeRequestBody in form request
             break;
 
           case "dropdown":
@@ -2047,7 +2035,7 @@ window.CrItemDataRenderFromJSON_View = {
             if ($this.attr("id") == "BudgetItem") {
               budgetitemValue = value;
             }
-            if (value == '' || value == null) {
+            if (value == "" || value == null) {
               $this.text(No_Data);
             } else if (value == true) {
               if (
@@ -2073,12 +2061,11 @@ window.CrItemDataRenderFromJSON_View = {
             }
             $this.attr("data-viewtogglevalue", value);
 
-
             break;
 
           case "yesnoradio":
             // $this.text(value);
-            if (value == '' || value == null) {
+            if (value == "" || value == null) {
               $this.text(No_Data);
             } else if (value == true || value == "yes" || value == "Yes") {
               if (
@@ -2096,7 +2083,6 @@ window.CrItemDataRenderFromJSON_View = {
               } else $this.text(Resources.en["no"]);
             }
             $this.attr("data-viewtogglevalue", value);
-
 
             break;
 
@@ -2126,48 +2112,45 @@ window.CrItemDataRenderFromJSON_View = {
             break;
 
           case "multiselect":
-            if (value == '' || value == null) {
+            if (value == "" || value == null) {
               $this.text(No_Data);
-            }
-            else
-              if (value) {
-                var myselections = value.split(":::");
-                for (var i = 0; i < myselections.length; i++) {
-                  $this
-                    .find("input:checkbox[value='" + myselections[i] + "']")
-                    .prop("checked", true);
-                }
+            } else if (value) {
+              var myselections = value.split(":::");
+              for (var i = 0; i < myselections.length; i++) {
+                $this
+                  .find("input:checkbox[value='" + myselections[i] + "']")
+                  .prop("checked", true);
               }
+            }
             break;
 
           case "number":
-            if (value == '' || value == null) {
+            if (value == "" || value == null) {
               $this.text(No_Data);
-            } else
-              if ($this.hasClass("percentagefield")) {
-                var num = eval(value) * 100;
-                if (num % 1 != 0) {
-                  $this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
-                }
-                else { $this.text(num); }
+            } else if ($this.hasClass("percentagefield")) {
+              var num = eval(value) * 100;
+              if (num % 1 != 0) {
+                $this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
               } else {
-                $this.text(value);
+                $this.text(num);
               }
+            } else {
+              $this.text(value);
+            }
             break;
           case "float":
-            if (value == '' || value == null) {
+            if (value == "" || value == null) {
               $this.text(No_Data);
-            }
-            else
-              if ($this.hasClass("percentagefield")) {
-                var num = eval(value) * 100;
-                if (num % 1 != 0) {
-                  $this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
-                }
-                else { $this.text(num); }
+            } else if ($this.hasClass("percentagefield")) {
+              var num = eval(value) * 100;
+              if (num % 1 != 0) {
+                $this.text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
               } else {
-                $this.text(value);
+                $this.text(num);
               }
+            } else {
+              $this.text(value);
+            }
             break;
           case "richtext":
             var HTMLContent = value;
@@ -2177,9 +2160,6 @@ window.CrItemDataRenderFromJSON_View = {
             break;
 
           case "lookup":
-
-
-
             var valfieldkey = o.dataValfieldkey,
               Dispfieldkey = o.dataDispfieldkey,
               listname = o.dataListName,
@@ -2189,11 +2169,16 @@ window.CrItemDataRenderFromJSON_View = {
 
             if (valfieldkey && Dispfieldkey && listname) {
               var listFields = ["ID", valfieldkey, Dispfieldkey];
-              if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
-
-                listFields.push(parentrelatedfilterkeylvl1)
-                if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
-                  listFields.push(parentrelatedfilterkeylvl2)
+              if (
+                parentrelatedfilterkeylvl1 &&
+                parentrelatedfilterkeylvl1 != "undefined"
+              ) {
+                listFields.push(parentrelatedfilterkeylvl1);
+                if (
+                  parentrelatedfilterkeylvl2 &&
+                  parentrelatedfilterkeylvl2 != "undefined"
+                ) {
+                  listFields.push(parentrelatedfilterkeylvl2);
                 }
               }
 
@@ -2201,11 +2186,10 @@ window.CrItemDataRenderFromJSON_View = {
                 $that.html(No_Data);
               } else {
                 customquery =
-                  '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
+                  "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
                   valfieldkey +
                   '" /><Value Type="Text">' +
-                  o.value
-                  +
+                  o.value +
                   "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
 
                 sphttp.get(
@@ -2227,8 +2211,6 @@ window.CrItemDataRenderFromJSON_View = {
             break;
 
           case "lookupWithQuery":
-
-
             var valfieldkey = o.dataValfieldkey,
               Dispfieldkey = o.dataDispfieldkey,
               listname = o.dataListName,
@@ -2238,11 +2220,16 @@ window.CrItemDataRenderFromJSON_View = {
 
             if (valfieldkey && Dispfieldkey && listname) {
               var listFields = ["ID", valfieldkey, Dispfieldkey];
-              if (parentrelatedfilterkeylvl1 && parentrelatedfilterkeylvl1 != "undefined") {
-
-                listFields.push(parentrelatedfilterkeylvl1)
-                if (parentrelatedfilterkeylvl2 && parentrelatedfilterkeylvl2 != "undefined") {
-                  listFields.push(parentrelatedfilterkeylvl2)
+              if (
+                parentrelatedfilterkeylvl1 &&
+                parentrelatedfilterkeylvl1 != "undefined"
+              ) {
+                listFields.push(parentrelatedfilterkeylvl1);
+                if (
+                  parentrelatedfilterkeylvl2 &&
+                  parentrelatedfilterkeylvl2 != "undefined"
+                ) {
+                  listFields.push(parentrelatedfilterkeylvl2);
                 }
               }
 
@@ -2250,11 +2237,10 @@ window.CrItemDataRenderFromJSON_View = {
                 $that.html(No_Data);
               } else {
                 customquery =
-                  '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="' +
+                  "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
                   valfieldkey +
                   '" /><Value Type="Text">' +
-                  o.value
-                  +
+                  o.value +
                   "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
 
                 sphttp.get(
@@ -2275,10 +2261,9 @@ window.CrItemDataRenderFromJSON_View = {
             break;
 
           default:
-            if (value == '' || value == null) {
+            if (value == "" || value == null) {
               $this.text(No_Data);
-            }
-            else {
+            } else {
               $this.text(value);
             }
             break;
@@ -2287,7 +2272,6 @@ window.CrItemDataRenderFromJSON_View = {
     });
 
     $('[data-toggle="tooltip"]').tooltip();
-
 
     $(
       "div#particles-foreground, div#particles-background, .vertical-centered-box"
@@ -2307,14 +2291,12 @@ window.CrItemDataRenderFromJSON_View = {
       }
     );
 
-
     // MasterDetails_Request_View.init()
 
     if (RListKey == "initiatives" || RListKey == "projects") {
       window.setTimeout(function () {
-        MasterDetails_Request_View.init()
-
-      }, 2000)
+        MasterDetails_Request_View.init();
+      }, 2000);
     }
   },
   // Global variables
@@ -2326,7 +2308,6 @@ window.CrSetChangeBody = {
     var jsonValues;
 
     if (USERisNew) {
-
       Data_Submit.set_item("RelatedItemCode", crRelatedItemCode);
       if (!isGeneral) {
         jsonValues = eval(
@@ -2338,46 +2319,42 @@ window.CrSetChangeBody = {
     }
 
     changeRequestBody.forEach(function (o, i, a) {
-
-
       var $this = $(".cr-related-item-section #" + o.InternalName);
       let newJsonValues = jsonValues ? jsonValues : Information_Form;
 
-
-
-
       // change on it to be validation on multi json values not only for one value
-      newJsonValues.forEach(element => {
-
-        if (element.hasOwnProperty("subFields") && !element.hasOwnProperty("sectiontype")) { // if there is subfields
-          element.subFields.forEach(item => {
+      newJsonValues.forEach((element) => {
+        if (
+          element.hasOwnProperty("subFields") &&
+          !element.hasOwnProperty("sectiontype")
+        ) {
+          // if there is subfields
+          element.subFields.forEach((item) => {
             if (item.InternalName == o.InternalName) {
-              o.DisplayName = item.DisplayName || ""
-              o.DisplayNameEn = item.DisplayNameEn || ""
-              o.label = item.label || ""
-              o.labelEn = item.labelEn || ""
-              o.type = item.type || ""
+              o.DisplayName = item.DisplayName || "";
+              o.DisplayNameEn = item.DisplayNameEn || "";
+              o.label = item.label || "";
+              o.labelEn = item.labelEn || "";
+              o.type = item.type || "";
               o.InternalName = item.InternalName || "";
 
               if (o.type == "picker") {
                 if ($this.find("span.sp-peoplepicker-userSpan").length) {
                   var id = $this.attr("INppicker");
                   var ppp =
-                    $this.find("span.sp-peoplepicker-userSpan").attr("sid") == undefined
+                    $this.find("span.sp-peoplepicker-userSpan").attr("sid") ==
+                    undefined
                       ? ""
                       : SP.FieldUserValue.fromUser(
-                        $this
-                          .find("span.sp-peoplepicker-userSpan")
-                          .attr("sid")
-                          .split("|")
-                          .slice(-1)[0]
-                      );
-
-
+                          $this
+                            .find("span.sp-peoplepicker-userSpan")
+                            .attr("sid")
+                            .split("|")
+                            .slice(-1)[0]
+                        );
 
                   o.value = ppp;
                   // o.value = "";
-
                 }
               } else if (o.type == "datetime") {
                 if ($this.hasClass("withTime")) {
@@ -2403,17 +2380,30 @@ window.CrSetChangeBody = {
                   }
 
                   var ydate =
-                    month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+                    month +
+                    "/" +
+                    day +
+                    "/" +
+                    year +
+                    " " +
+                    hour +
+                    ":" +
+                    min +
+                    ":" +
+                    sec;
 
                   if (dateval && timeval)
-                    New_Data_Submit.g.oListItem.set_item($this.attr("id"), ydate);
+                    New_Data_Submit.g.oListItem.set_item(
+                      $this.attr("id"),
+                      ydate
+                    );
                 } else {
                   var dateval = $this.val().replace("-", "/");
                   var ydate = !dateval
                     ? ""
                     : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                      .join("/")
-                      .replace("-", "/");
+                        .join("/")
+                        .replace("-", "/");
                   if (dateval) o.value = ydate;
                 }
               } else if (o.type == "datetime-local") {
@@ -2439,12 +2429,21 @@ window.CrSetChangeBody = {
                   }
 
                   var ydate =
-                    month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+                    month +
+                    "/" +
+                    day +
+                    "/" +
+                    year +
+                    " " +
+                    hour +
+                    ":" +
+                    min +
+                    ":" +
+                    sec;
 
                   if (dateval) o.value = ydate;
                 }
               } else if (o.type == "radio" || o.type == "yesnoradio") {
-
                 var checkedvalue = $(
                   'input[id="' + $this.attr("id") + '"]:checked'
                 ).val();
@@ -2467,17 +2466,21 @@ window.CrSetChangeBody = {
                 o.value = $this.val();
               } else if ($this.hasClass("percentagefield")) {
                 o.value = $this.val() / 100;
-              } else if (o.type == "multiselect" || o.type == "lookupmultiselect") {
-
+              } else if (
+                o.type == "multiselect" ||
+                o.type == "lookupmultiselect"
+              ) {
                 var myselections = [];
                 $this.find("input#Revenue:checked").each(function () {
                   myselections.push($this.val());
                 });
 
                 if (RListKey == "initiatives") {
-                  $this.find("input#RelatedBudgetItem:checked").each(function () {
-                    myselections.push($(this).val());
-                  });
+                  $this
+                    .find("input#RelatedBudgetItem:checked")
+                    .each(function () {
+                      myselections.push($(this).val());
+                    });
                 }
 
                 myselections = myselections.join(":::");
@@ -2488,14 +2491,16 @@ window.CrSetChangeBody = {
               } else o.value = $this.val();
 
               if (o.value) {
-
-
                 if (o.type == "datetime" || o.type == "date") {
-                  var dateval = $this.val()
-                  var datetouse2 = ""
+                  var dateval = $this.val();
+                  var datetouse2 = "";
                   if (o.originalValue) {
-                    var local = o.originalValue ? o.originalValue.getTime() : "";
-                    var offset = o.originalValue ? o.originalValue.getTimezoneOffset() * (60 * 1000) : "";
+                    var local = o.originalValue
+                      ? o.originalValue.getTime()
+                      : "";
+                    var offset = o.originalValue
+                      ? o.originalValue.getTimezoneOffset() * (60 * 1000)
+                      : "";
                     var utc = new Date(local + offset);
                     var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
                     var datetouse = riyadh
@@ -2503,22 +2508,30 @@ window.CrSetChangeBody = {
                       .split(",")[0]
                       .split("/");
                     datetouse[0] =
-                      datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+                      datetouse[0].length == 1
+                        ? "0" + datetouse[0]
+                        : datetouse[0];
                     datetouse[1] =
-                      datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+                      datetouse[1].length == 1
+                        ? "0" + datetouse[1]
+                        : datetouse[1];
 
-                    var datetouse2 = datetouse[0] + '/' + datetouse[1] + '/' + datetouse[2]
+                    var datetouse2 =
+                      datetouse[0] + "/" + datetouse[1] + "/" + datetouse[2];
                   }
 
                   o.isChanged = o.value != datetouse2;
-
                 } else if (o.type == "datetimetoparent") {
-                  var dateval = $this.val()
+                  var dateval = $this.val();
 
-                  var datetouse2 = ""
+                  var datetouse2 = "";
                   if (o.originalValue) {
-                    var local = o.originalValue ? o.originalValue.getTime() : "";
-                    var offset = o.originalValue ? o.originalValue.getTimezoneOffset() * (60 * 1000) : "";
+                    var local = o.originalValue
+                      ? o.originalValue.getTime()
+                      : "";
+                    var offset = o.originalValue
+                      ? o.originalValue.getTimezoneOffset() * (60 * 1000)
+                      : "";
                     var utc = new Date(local + offset);
                     var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
                     var datetouse = riyadh
@@ -2526,58 +2539,58 @@ window.CrSetChangeBody = {
                       .split(",")[0]
                       .split("/");
                     datetouse[0] =
-                      datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+                      datetouse[0].length == 1
+                        ? "0" + datetouse[0]
+                        : datetouse[0];
                     datetouse[1] =
-                      datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+                      datetouse[1].length == 1
+                        ? "0" + datetouse[1]
+                        : datetouse[1];
 
-                    datetouse2 = datetouse[2] + '-' + datetouse[0] + '-' + datetouse[1]
+                    datetouse2 =
+                      datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
                   }
                   o.isChanged = o.value != datetouse2;
-
                 } else if (o.type == "float") {
-                  var floatval = $this.val()
+                  var floatval = $this.val();
                   if (floatval) {
-                    floatval = floatval.replaceAll(',', '');
+                    floatval = floatval.replaceAll(",", "");
                   }
                   o.isChanged = floatval != o.originalValue;
                 } else {
                   o.isChanged = o.value != o.originalValue;
                 }
-
               }
             }
-          })
+          });
         } else {
           if (!element.hasOwnProperty("sectiontype")) {
-
-            element.forEach(item => {
+            element.forEach((item) => {
               if (item.InternalName == o.InternalName) {
-                o.DisplayName = item.DisplayName || ""
-                o.DisplayNameEn = item.DisplayNameEn || ""
-                o.label = item.label || ""
-                o.labelEn = item.labelEn || ""
-                o.type = item.type || ""
+                o.DisplayName = item.DisplayName || "";
+                o.DisplayNameEn = item.DisplayNameEn || "";
+                o.label = item.label || "";
+                o.labelEn = item.labelEn || "";
+                o.type = item.type || "";
                 o.InternalName = item.InternalName || "";
 
                 if (o.type == "picker") {
                   if ($this.find("span.sp-peoplepicker-userSpan").length) {
                     var id = $this.attr("INppicker");
                     var ppp =
-                      $this.find("span.sp-peoplepicker-userSpan").attr("sid") == undefined
+                      $this.find("span.sp-peoplepicker-userSpan").attr("sid") ==
+                      undefined
                         ? ""
                         : SP.FieldUserValue.fromUser(
-                          $this
-                            .find("span.sp-peoplepicker-userSpan")
-                            .attr("sid")
-                            .split("|")
-                            .slice(-1)[0]
-                        );
-
-
+                            $this
+                              .find("span.sp-peoplepicker-userSpan")
+                              .attr("sid")
+                              .split("|")
+                              .slice(-1)[0]
+                          );
 
                     o.value = ppp;
                     // o.value = "";
-
                   }
                 } else if (o.type == "datetime") {
                   if ($this.hasClass("withTime")) {
@@ -2603,17 +2616,30 @@ window.CrSetChangeBody = {
                     }
 
                     var ydate =
-                      month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+                      month +
+                      "/" +
+                      day +
+                      "/" +
+                      year +
+                      " " +
+                      hour +
+                      ":" +
+                      min +
+                      ":" +
+                      sec;
 
                     if (dateval && timeval)
-                      New_Data_Submit.g.oListItem.set_item($this.attr("id"), ydate);
+                      New_Data_Submit.g.oListItem.set_item(
+                        $this.attr("id"),
+                        ydate
+                      );
                   } else {
                     var dateval = $this.val().replace("-", "/");
                     var ydate = !dateval
                       ? ""
                       : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                        .join("/")
-                        .replace("-", "/");
+                          .join("/")
+                          .replace("-", "/");
                     if (dateval) o.value = ydate;
                   }
                 } else if (o.type == "datetime-local") {
@@ -2639,7 +2665,17 @@ window.CrSetChangeBody = {
                     }
 
                     var ydate =
-                      month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
+                      month +
+                      "/" +
+                      day +
+                      "/" +
+                      year +
+                      " " +
+                      hour +
+                      ":" +
+                      min +
+                      ":" +
+                      sec;
 
                     if (dateval) o.value = ydate;
                   }
@@ -2666,17 +2702,21 @@ window.CrSetChangeBody = {
                   o.value = $this.val();
                 } else if ($this.hasClass("percentagefield")) {
                   o.value = $this.val() / 100;
-                } else if (o.type == "multiselect" || o.type == "lookupmultiselect") {
-
+                } else if (
+                  o.type == "multiselect" ||
+                  o.type == "lookupmultiselect"
+                ) {
                   var myselections = [];
                   $this.find("input#Revenue:checked").each(function () {
                     myselections.push($this.val());
                   });
 
                   if (RListKey == "initiatives") {
-                    $this.find("input#RelatedBudgetItem:checked").each(function () {
-                      myselections.push($(this).val());
-                    });
+                    $this
+                      .find("input#RelatedBudgetItem:checked")
+                      .each(function () {
+                        myselections.push($(this).val());
+                      });
                   }
 
                   myselections = myselections.join(":::");
@@ -2686,48 +2726,39 @@ window.CrSetChangeBody = {
                   HTMLContent ? (o.value = HTMLContent) : "";
                 } else o.value = $this.val();
 
-
                 o.isChanged = o.value != o.originalValue;
               }
-            })
+            });
           }
         }
-      })
+      });
       if (i == a.length - 1) {
-
-
-        changeRequestBody.forEach(el => {
+        changeRequestBody.forEach((el) => {
           if (el.type == "picker" && el.originalValue) {
             if (el.originalValue.$6_2) {
-              el.originalValue.$6_2 = ''
+              el.originalValue.$6_2 = "";
             }
           }
-        })
-
+        });
 
         Data_Submit.set_item("ChangeBody", JSON.stringify(changeRequestBody));
 
         // Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
-
-
       }
     });
 
     // handle new value in master details
     changeRequestBodyMaster.forEach(function (o, i, a) {
-
-
-
       //> input#${o.InternalName}
       if (o.masterType == "edit") {
-        $(`.cr-related-item-section[data-target_list="${o.listName}"] .Details-Item.EditItem #${o.InternalName}`).each(function () {
-
-          var masterId = $(this).parent().parent().data("id")
-          var arrayMasterId = Number(o.masterSectionId)
+        $(
+          `.cr-related-item-section[data-target_list="${o.listName}"] .Details-Item.EditItem #${o.InternalName}`
+        ).each(function () {
+          var masterId = $(this).parent().parent().data("id");
+          var arrayMasterId = Number(o.masterSectionId);
           // masterId = Number(masterId)
 
           if (masterId == arrayMasterId) {
-
             if ($(this).attr("type") == "picker") {
               if ($(this).find("span.sp-peoplepicker-userSpan").length) {
                 var id =
@@ -2736,12 +2767,14 @@ window.CrSetChangeBody = {
                     : $(this).attr("INppicker").split("+++")[0];
                 var ppp =
                   $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-                    undefined
+                  undefined
                     ? ""
                     : SP.FieldUserValue.fromUser(
-                      $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-                    ); //.split('|').slice(-1)[0]
-                o.value = ppp
+                        $(this)
+                          .find("span.sp-peoplepicker-userSpan")
+                          .attr("sid")
+                      ); //.split('|').slice(-1)[0]
+                o.value = ppp;
               }
             } else if ($(this).attr("type") == "multipicker") {
               if ($(this).find("span.sp-peoplepicker-userSpan").length) {
@@ -2749,16 +2782,15 @@ window.CrSetChangeBody = {
                 var users = [];
                 $("span.sp-peoplepicker-userSpan").each(function () {
                   var ppp =
-                    $(this).attr("sid") ==
-                      undefined
+                    $(this).attr("sid") == undefined
                       ? ""
                       : SP.FieldUserValue.fromUser(
-                        $(this).attr("sid").split("|").slice(-1)[0]
-                      );
+                          $(this).attr("sid").split("|").slice(-1)[0]
+                        );
 
-                  users.push(ppp)
-                })
-                o.value = users
+                  users.push(ppp);
+                });
+                o.value = users;
               }
             } else if ($(this).attr("type") == "date") {
               if ($(this).val()) {
@@ -2766,55 +2798,50 @@ window.CrSetChangeBody = {
                 var ydate = !dateval
                   ? ""
                   : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                    .join("/")
-                    .replace("-", "/");
-                if (dateval)
-                  o.value = ydate
+                      .join("/")
+                      .replace("-", "/");
+                if (dateval) o.value = ydate;
               } else {
-                o.value = null
+                o.value = null;
               }
             } else if ($(this).attr("type") == "radio") {
               var checkedvalue = $(
                 'input[id="' + $(this).attr("id") + '"]:checked'
               ).val();
-              o.value = checkedvalue
+              o.value = checkedvalue;
             } else if ($(this).attr("type") == "checkbox") {
               var checkedvalue = $(
                 'input[id="' + $(this).attr("id") + '"]:checked'
               ).val();
-              o.value = true
+              o.value = true;
             } else if ($(this).attr("type") == "dropdown") {
-              o.value = $(this).val()
-
+              o.value = $(this).val();
             } else if ($(this).hasClass("percentagefield")) {
-
-              o.value = $(this).val() / 100
+              o.value = $(this).val() / 100;
             } else if ($(this).attr("type") == "multiselect") {
-
               // handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
-              var masterFieldTargetList = $(this).data("fieldtargetlist")
+              var masterFieldTargetList = $(this).data("fieldtargetlist");
 
               // if (masterFieldTargetList && masterFieldTargetList != "undefined") {
               // 	// will loop on value on when update the values
               // } else {
               var myselections = [];
               $(this)
-                .find("input:checkbox:checked").not(":disabled")
+                .find("input:checkbox:checked")
+                .not(":disabled")
                 .each(function () {
                   myselections.push($(this).val());
                 });
               myselections = myselections.join(":::");
 
-              o.value = myselections
+              o.value = myselections;
 
               // }
             } else {
-              o.value = $(this).val()
+              o.value = $(this).val();
             }
 
             if (o.value) {
-
-
               // if (o.type == "datetime" || o.type == "date") {
               //   var dateval = $(this).val()
               //   var datetouse2 = ""
@@ -2861,145 +2888,132 @@ window.CrSetChangeBody = {
 
               // } else
               if (o.type == "float") {
-                var floatval = $(this).val()
+                var floatval = $(this).val();
                 if (floatval) {
-                  floatval = floatval.replaceAll(',', '');
+                  floatval = floatval.replaceAll(",", "");
                 }
                 o.isChanged = floatval != o.originalValue;
               } else {
                 o.isChanged = o.value != o.originalValue;
               }
-
             }
-
           }
-        })
+        });
       } else if (o.masterType == "new") {
         // iterate on type picker to get the value of picker when click on + cause the id will be with ++++ except edit
         $(`.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem #${o.InternalName}
-				,.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem div[type=picker]`).each(function () {
+				,.cr-related-item-section[data-target_list=${o.listName}] .Details-Item.NewItem div[type=picker]`).each(
+          function () {
+            // var masterId = ""
+            if (o.type == "multiselect") {
+              // masterId = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().data('index')
+              masterId = $(this).closest(".Details-Item.NewItem").data("index");
+            } else {
+              masterId = $(this).parent().parent().data("index");
+            }
+            // var masterId = $(this).parent().parent().data("index")
+            var arrayMasterId = Number(o.masterSectionId);
 
-          // var masterId = ""
-          if (o.type == "multiselect") {
-            // masterId = $(this).closest("[data-target_list]").find(".Details-Item.NewItem").last().data('index')
-            masterId = $(this).closest('.Details-Item.NewItem').data("index")
-          } else {
-            masterId = $(this).parent().parent().data("index")
-          }
-          // var masterId = $(this).parent().parent().data("index")
-          var arrayMasterId = Number(o.masterSectionId)
-
-          if (masterId == arrayMasterId) {
-            if ($(this).attr("type") == "picker") {
-              if (o.InternalName == "Owner" && o.listName == "Benefits") { // just to make sure to avoid err we set it inside condition
-                if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-                  var id =
-                    $(this).attr("INppicker").indexOf("+++") == -1
-                      ? $(this).attr("INppicker")
-                      : $(this).attr("INppicker").split("+++")[0];
-                  var ppp =
-                    $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-                      undefined
-                      ? ""
-                      : SP.FieldUserValue.fromUser(
-                        $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-                      ); //.split('|').slice(-1)[0]
-                  o.value = ppp
+            if (masterId == arrayMasterId) {
+              if ($(this).attr("type") == "picker") {
+                if (o.InternalName == "Owner" && o.listName == "Benefits") {
+                  // just to make sure to avoid err we set it inside condition
+                  if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+                    var id =
+                      $(this).attr("INppicker").indexOf("+++") == -1
+                        ? $(this).attr("INppicker")
+                        : $(this).attr("INppicker").split("+++")[0];
+                    var ppp =
+                      $(this)
+                        .find("span.sp-peoplepicker-userSpan")
+                        .attr("sid") == undefined
+                        ? ""
+                        : SP.FieldUserValue.fromUser(
+                            $(this)
+                              .find("span.sp-peoplepicker-userSpan")
+                              .attr("sid")
+                          ); //.split('|').slice(-1)[0]
+                    o.value = ppp;
+                  }
                 }
-              }
-            } else if ($(this).attr("type") == "multipicker") {
-              if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-                var id = $(this).attr("INppicker");
-                var users = [];
-                $("span.sp-peoplepicker-userSpan").each(function () {
-                  var ppp =
-                    $(this).attr("sid") ==
-                      undefined
-                      ? ""
-                      : SP.FieldUserValue.fromUser(
-                        $(this).attr("sid").split("|").slice(-1)[0]
-                      );
+              } else if ($(this).attr("type") == "multipicker") {
+                if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+                  var id = $(this).attr("INppicker");
+                  var users = [];
+                  $("span.sp-peoplepicker-userSpan").each(function () {
+                    var ppp =
+                      $(this).attr("sid") == undefined
+                        ? ""
+                        : SP.FieldUserValue.fromUser(
+                            $(this).attr("sid").split("|").slice(-1)[0]
+                          );
 
-                  users.push(ppp)
-                })
-                o.value = users
-              }
-            } else if ($(this).attr("type") == "date") {
-              if ($(this).val()) {
-                var dateval = $(this).val().replace("-", "/");
-                var ydate = !dateval
-                  ? ""
-                  : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                    .join("/")
-                    .replace("-", "/");
-                if (dateval)
-                  o.value = ydate
-              } else {
-                o.value = null
-              }
-            } else if ($(this).attr("type") == "radio") {
-              var checkedvalue = $(
-                'input[id="' + $(this).attr("id") + '"]:checked'
-              ).val();
-              o.value = checkedvalue
-            } else if ($(this).attr("type") == "checkbox") {
-
-              // to avoid overwrite for multiselect type
-              if (RListKey != 'initiatives' && o.listName != "Benefits") {
+                    users.push(ppp);
+                  });
+                  o.value = users;
+                }
+              } else if ($(this).attr("type") == "date") {
+                if ($(this).val()) {
+                  var dateval = $(this).val().replace("-", "/");
+                  var ydate = !dateval
+                    ? ""
+                    : [dateval.slice(5, 10), dateval.slice(0, 4)]
+                        .join("/")
+                        .replace("-", "/");
+                  if (dateval) o.value = ydate;
+                } else {
+                  o.value = null;
+                }
+              } else if ($(this).attr("type") == "radio") {
                 var checkedvalue = $(
                   'input[id="' + $(this).attr("id") + '"]:checked'
                 ).val();
-                o.value = true
+                o.value = checkedvalue;
+              } else if ($(this).attr("type") == "checkbox") {
+                // to avoid overwrite for multiselect type
+                if (RListKey != "initiatives" && o.listName != "Benefits") {
+                  var checkedvalue = $(
+                    'input[id="' + $(this).attr("id") + '"]:checked'
+                  ).val();
+                  o.value = true;
+                }
+              } else if ($(this).attr("type") == "dropdown") {
+                o.value = $(this).val();
+              } else if ($(this).hasClass("percentagefield")) {
+                o.value = $(this).val() / 100;
+              } else if ($(this).attr("type") == "multiselect") {
+                var myselections = [];
+                $(this)
+                  .find("input:checkbox:checked")
+                  .not(":disabled")
+                  .each(function () {
+                    myselections.push($(this).val());
+                  });
+                myselections = myselections.join(":::");
+
+                o.value = myselections;
+              } else {
+                o.value = $(this).val();
               }
-
-            } else if ($(this).attr("type") == "dropdown") {
-              o.value = $(this).val()
-
-            } else if ($(this).hasClass("percentagefield")) {
-
-              o.value = $(this).val() / 100
-            } else if ($(this).attr("type") == "multiselect") {
-
-              var myselections = [];
-              $(this)
-                .find("input:checkbox:checked").not(":disabled")
-                .each(function () {
-                  myselections.push($(this).val());
-                });
-              myselections = myselections.join(":::");
-
-              o.value = myselections
-
-
-            } else {
-              o.value = $(this).val()
             }
           }
-
-
-        })
-
-
+        );
       }
-
 
       if (i == a.length - 1) {
-
-        Data_Submit.set_item("ChangeBodyMaster", JSON.stringify(changeRequestBodyMaster));
+        Data_Submit.set_item(
+          "ChangeBodyMaster",
+          JSON.stringify(changeRequestBodyMaster)
+        );
       }
-
-    })
+    });
     //
-
-
-
   },
 };
 // cr execution
 window.executeCR = {
   init: function (crBody, crBodyMaster) {
     if (crBody.length) {
-
       var clientContext = new SP.ClientContext.get_current();
       var oList = clientContext
         .get_web()
@@ -3007,7 +3021,7 @@ window.executeCR = {
         .getByTitle(crBody[0].listName);
       executeCR.g.oListItem = oList.getItemById(crBody[0].itemId);
 
-      executeCR.g.crBodyMaster = crBodyMaster
+      executeCR.g.crBodyMaster = crBodyMaster;
 
       var value = "";
       var isOriginalValue = false;
@@ -3048,71 +3062,75 @@ window.executeCR = {
         // }
         else executeCR.g.oListItem.set_item(o.InternalName, value);
 
-
-
-
-
-
         // if (globalStateSubmitField) items.set_item("WFStage", nxtstageid);
         // else items.set_item("WFStage", prvstageid);
       });
 
-
       crBody.forEach((o, i, a) => {
         if (RListKey == "projects" && o.InternalName == "IsZeroBudgetProject") {
-          var isZeroBudget = o.value
+          var isZeroBudget = o.value;
           if (isZeroBudget == "yes") {
-            executeCR.g.oListItem.set_item('ActualBudget', "");
-            executeCR.g.oListItem.set_item('Amount', "");
+            executeCR.g.oListItem.set_item("ActualBudget", "");
+            executeCR.g.oListItem.set_item("Amount", "");
           }
         }
-      })
-
-
+      });
 
       executeCR.g.oListItem.update();
       clientContext.load(executeCR.g.oListItem);
       clientContext.executeQueryAsync(
         Function.createDelegate(this, function () {
-
           if (crBody[0].listName == "Projects") {
             projectGUIDCr = executeCR.g.oListItem.get_item("ProjectGUID");
-            projectManagerCr = executeCR.g.oListItem.get_item("ProjectManager") ? executeCR.g.oListItem.get_item("ProjectManager") : ""
-            projectOwnerCr = executeCR.g.oListItem.get_item("ProjectOwner") ? executeCR.g.oListItem.get_item("ProjectOwner") : ""
-            projectSponsorCr = executeCR.g.oListItem.get_item("ProjectSponsor") ? executeCR.g.oListItem.get_item("ProjectSponsor") : ""
+            projectManagerCr = executeCR.g.oListItem.get_item("ProjectManager")
+              ? executeCR.g.oListItem.get_item("ProjectManager")
+              : "";
+            projectOwnerCr = executeCR.g.oListItem.get_item("ProjectOwner")
+              ? executeCR.g.oListItem.get_item("ProjectOwner")
+              : "";
+            projectSponsorCr = executeCR.g.oListItem.get_item("ProjectSponsor")
+              ? executeCR.g.oListItem.get_item("ProjectSponsor")
+              : "";
 
-            if (projectOwnerCr && !projectBuildTeamArrCr.includes(projectOwnerCr.get_lookupValue())) {
-              projectBuildTeamArrCr.push(projectOwnerCr.get_lookupValue())
+            if (
+              projectOwnerCr &&
+              !projectBuildTeamArrCr.includes(projectOwnerCr.get_lookupValue())
+            ) {
+              projectBuildTeamArrCr.push(projectOwnerCr.get_lookupValue());
             }
-            if (projectSponsorCr && !projectBuildTeamArrCr.includes(projectSponsorCr.get_lookupValue())) {
-              projectBuildTeamArrCr.push(projectSponsorCr.get_lookupValue())
+            if (
+              projectSponsorCr &&
+              !projectBuildTeamArrCr.includes(
+                projectSponsorCr.get_lookupValue()
+              )
+            ) {
+              projectBuildTeamArrCr.push(projectSponsorCr.get_lookupValue());
             }
           }
 
           // var masterLength = executeCR.g.crBodyMaster.length
-          var masterLength = 0
-          var masterData = executeCR.g.crBodyMaster
+          var masterLength = 0;
+          var masterData = executeCR.g.crBodyMaster;
 
           if (masterData) {
-            masterLength = executeCR.g.crBodyMaster.length
+            masterLength = executeCR.g.crBodyMaster.length;
           }
 
           if (masterLength > 0) {
-            arrangeCRMasterDetails.init(masterData)
+            arrangeCRMasterDetails.init(masterData);
           } else if (RListKey == "mainkpi") {
             equationKPI.init();
           } else {
             Task_Edit_Data.init();
           }
           // alert("cr execution done");
-
         }),
         Function.createDelegate(this, function (sender, args) {
           console.log(
             "Request failed. " +
-            args.get_message() +
-            "\n" +
-            args.get_stackTrace()
+              args.get_message() +
+              "\n" +
+              args.get_stackTrace()
           );
         })
       );
@@ -3126,20 +3144,16 @@ window.executeCR = {
 var CR_Master_Details_Request = {
   // The main Initialization function
   init: function (DetailsList) {
-
-
-
-
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(DetailsList);
     CR_Master_Details_Request.g.DetailsList = DetailsList;
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><And><Eq><FieldRef Name="MasterID" /><Value Type="Text">' +
-      RID +
-      '</Value></Eq><And><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
-      RListKey +
-      "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
+        RID +
+        '</Value></Eq><And><Eq><FieldRef Name="MasterKey" /><Value Type="Text">' +
+        RListKey +
+        "</Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></And></And></Where><OrderBy><FieldRef Name='Created' Ascending='True' /></OrderBy></Query></View>"
     );
     CR_Master_Details_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(CR_Master_Details_Request.g.collListItem);
@@ -3149,8 +3163,7 @@ var CR_Master_Details_Request = {
     );
   },
   onSuccess: function (sender, args) {
-
-    var onLoadDataInMaster = false
+    var onLoadDataInMaster = false;
 
     var collListItem = CR_Master_Details_Request.g.collListItem;
 
@@ -3158,8 +3171,8 @@ var CR_Master_Details_Request = {
     var CurrList = CR_Master_Details_Request.g.DetailsList,
       FieldsToRender = $(
         '[data-target_list="' +
-        CurrList +
-        '"] .fieldset-container .Details-Item'
+          CurrList +
+          '"] .fieldset-container .Details-Item'
       ).html(),
       HTMLtoAppend,
       MyValues = [];
@@ -3169,8 +3182,7 @@ var CR_Master_Details_Request = {
       $('[data-target_list="' + CurrList + '"] .fieldset-container').html(""); //remove html
     }
     while (listItemEnum.moveNext()) {
-
-      onLoadDataInMaster = true
+      onLoadDataInMaster = true;
 
       var oListItem = listItemEnum.get_current();
       HTMLtoAppend = "";
@@ -3183,7 +3195,6 @@ var CR_Master_Details_Request = {
       HTMLtoAppend += FieldsToRender;
       HTMLtoAppend += "</div>";
 
-
       if (HTMLtoAppend)
         $('[data-target_list="' + CurrList + '"] .fieldset-container').append(
           HTMLtoAppend
@@ -3192,37 +3203,35 @@ var CR_Master_Details_Request = {
       //isView
 
       if (true) {
-
         $(
           '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> input,' +
-          '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker],' +
-          '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown],' +
-          '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,' +
-          ///////////////////////
-          //////////////////////
-          '[data-target_list="' +
-          CurrList +
-          '"] [data-ID="' +
-          oListItem.get_id() +
-          '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request)> input,' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker],' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown],' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,' +
+            ///////////////////////
+            //////////////////////
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] > .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container'
         ).each(function () {
-
           switch ($(this).attr("type")) {
             case "date":
               var d =
@@ -3306,8 +3315,8 @@ var CR_Master_Details_Request = {
                 oListItem.get_item("" + $(this).attr("id") + "") == null
                   ? enternameemail
                   : oListItem
-                    .get_item("" + $(this).attr("id") + "")
-                    .get_lookupValue();
+                      .get_item("" + $(this).attr("id") + "")
+                      .get_lookupValue();
               $(this).attr("data-email", pemail);
 
               if (pemail != enternameemail)
@@ -3338,29 +3347,34 @@ var CR_Master_Details_Request = {
               break;
 
             case "multiselect":
+              var masterFieldTargetList = $(this).data("fieldtargetlist");
 
-              var masterFieldTargetList = $(this).data("fieldtargetlist")
-
-              if (masterFieldTargetList && masterFieldTargetList != 'undefined') { // to handle master detials field inside master details in form request
+              if (
+                masterFieldTargetList &&
+                masterFieldTargetList != "undefined"
+              ) {
+                // to handle master detials field inside master details in form request
 
                 var valfieldkey = "MasterID",
                   Dispfieldkey = $(this).data("dispfieldkey"),
                   listname = masterFieldTargetList,
                   fieldId = $(this).attr("id"),
-                  dataId = $(this).parent().parent().data('id'),
+                  dataId = $(this).parent().parent().data("id"),
                   $this = $(this);
-
 
                 var listFields = ["ID", fieldId];
 
-                var value = [dataId]
+                var value = [dataId];
                 var customquerymulti =
-                  '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="' + valfieldkey + '" /><Values>';
+                  "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
+                  valfieldkey +
+                  '" /><Values>';
                 for (var i = 0; i <= value.length; i++) {
-                  customquerymulti += '<Value Type="Text">' + value[i] + '</Value>';
+                  customquerymulti +=
+                    '<Value Type="Text">' + value[i] + "</Value>";
                 }
-                customquerymulti += "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
-
+                customquerymulti +=
+                  "</Values></In></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>100</RowLimit></View>";
 
                 sphttp.get(
                   _spPageContextInfo.siteServerRelativeUrl,
@@ -3369,23 +3383,19 @@ var CR_Master_Details_Request = {
                   listFields,
                   function (records, record, listItem, isDone) {
                     if (isDone) {
-                      var items = ''
+                      var items = "";
 
                       records.forEach(function (el, index) {
-
                         $this.find(`input[type=checkbox]`).each(function () {
-                          if ($(this).val() == el['DeliverableID']) {
-                            $(this).prop("checked", true)
-                            $(this).prop("disabled", true)
+                          if ($(this).val() == el["DeliverableID"]) {
+                            $(this).prop("checked", true);
+                            $(this).prop("disabled", true);
                           }
-
-                        })
+                        });
                       });
                     }
                   }
                 );
-
-
               } else {
                 ////////////////////////////////////////////////////////////////
                 if (oListItem.get_item($(this).attr("myfield"))) {
@@ -3402,7 +3412,6 @@ var CR_Master_Details_Request = {
               break;
 
             case "number":
-
               if ($(this).hasClass("percentagefield")) {
                 var num = oListItem.get_item($(this).attr("id")) * 100;
                 if (num % 1 != 0)
@@ -3421,19 +3430,19 @@ var CR_Master_Details_Request = {
               break;
           }
         });
-
-
       }
     }
 
     if (!onLoadDataInMaster) {
       if (CurrList) {
-        $('[data-target_list="' + CurrList + '"] .fieldset-container .NewItem').addClass('firstMasterEmpty')
-        $('[data-target_list="' + CurrList + '"] .fieldset-container .NewItem').hide()
+        $(
+          '[data-target_list="' + CurrList + '"] .fieldset-container .NewItem'
+        ).addClass("firstMasterEmpty");
+        $(
+          '[data-target_list="' + CurrList + '"] .fieldset-container .NewItem'
+        ).hide();
       }
-
     }
-
 
     if (crMasterDetailsArrayRequest.length > 0) {
       CR_Master_Details_Request.init(crMasterDetailsArrayRequest[0]);
@@ -3441,57 +3450,50 @@ var CR_Master_Details_Request = {
     } else {
       if (isNew || isEdit) ListInfo.g.newDetail();
 
-
-      var isMaxOnChild = $('.container-body').find('.maxOnChild').length
+      var isMaxOnChild = $(".container-body").find(".maxOnChild").length;
       // set max attr of date for child depends on parent in same form like deliv and miles in initiative form
       if (isMaxOnChild > 0) {
-
-        $('.maxOnChild').trigger('change')
+        $(".maxOnChild").trigger("change");
       }
 
-
-      if ((RListKey == 'initiatives' || RListKey == 'projects')) { // to handle amount in master details based on weight in project and initiative
+      if (RListKey == "initiatives" || RListKey == "projects") {
+        // to handle amount in master details based on weight in project and initiative
         // need to test more
         if (crMasterDetailsArrayRequest.length == 0) {
-
           // var maxAttr = $(this).attr('max')
 
           $("[data-target_list]").each(function () {
+            var targetList = $(this).data("target_list");
 
-            var targetList = $(this).data('target_list')
-
-            var maxAttr = 100
-            var weight = 0
+            var maxAttr = 100;
+            var weight = 0;
 
             if ($("[data-targetelem]").length > 0) {
-              $(`[data-target_list="${targetList}"] .Details-Item.EditItem  input[type=number]`).each(function () {
-
-
-
-                var checkTargetElem = $(this).data('targetelem')
+              $(
+                `[data-target_list="${targetList}"] .Details-Item.EditItem  input[type=number]`
+              ).each(function () {
+                var checkTargetElem = $(this).data("targetelem");
 
                 if (checkTargetElem) {
-
-                  weight = Number(weight)
-                  var newMax = Number(maxAttr) - weight
-                  $(this).attr('max', newMax)
-                  $(this).parent().find('.remainPercentageVal').html(`${newMax}]`) // change the title value
-                  maxAttr = Number(maxAttr) - weight
-                  weight = $(this).val()
-
-
+                  weight = Number(weight);
+                  var newMax = Number(maxAttr) - weight;
+                  $(this).attr("max", newMax);
+                  $(this)
+                    .parent()
+                    .find(".remainPercentageVal")
+                    .html(`${newMax}]`); // change the title value
+                  maxAttr = Number(maxAttr) - weight;
+                  weight = $(this).val();
                 }
-              })
+              });
             }
-          })
+          });
         }
       }
 
       $(".cr-related-item-section .CFIELD").addClass("dont-submit"); // remove it to not apply dont-submit on all fields
-      Fill_BodyMaster.init()
+      Fill_BodyMaster.init();
     }
-
-
   },
   onError: function (sender, args) {
     console.log(
@@ -3503,218 +3505,194 @@ var CR_Master_Details_Request = {
   g: {},
 };
 
-
 var Fill_BodyMaster = {
   init: function () {
+    $(".cr-related-item-section[data-target_list] .Details-Item.EditItem").each(
+      function () {
+        var CurrList = $(this)
+          .closest("[data-target_list]")
+          .attr("data-target_list");
+        itemID = $(this).attr("data-id");
 
+        $(
+          '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            itemID +
+            '"] > .CFIELD:not(.dont-request)> input,' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            itemID +
+            '"] > .CFIELD:not(.dont-request)> div[type=picker],' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            itemID +
+            '"] > .CFIELD:not(.dont-request)> select[type=dropdown],' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            itemID +
+            '"] > .CFIELD:not(.dont-request)>  textarea,' +
+            '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            itemID +
+            '"] > .CFIELD:not(.dont-request) > .multiselect-container'
+        ).each(function () {
+          var fieldValue;
 
-
-    $(".cr-related-item-section[data-target_list] .Details-Item.EditItem").each(function () {
-
-      var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
-      itemID = $(this).attr("data-id");
-
-
-      $(
-        '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-request)> input,' +
-        '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-request)> div[type=picker],' +
-        '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-request)> select[type=dropdown],' +
-        '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-request)>  textarea,' +
-        '[data-target_list="' +
-        CurrList +
-        '"] [data-ID="' +
-        itemID +
-        '"] > .CFIELD:not(.dont-request) > .multiselect-container'
-      ).each(function () {
-
-        var fieldValue
-
-
-
-        if ($(this).attr("type") == "picker") {
-          if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-            var id =
-              $(this).attr("INppicker").indexOf("+++") == -1
-                ? $(this).attr("INppicker")
-                : $(this).attr("INppicker").split("+++")[0];
-            var ppp =
-              $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-                undefined
-                ? ""
-                : SP.FieldUserValue.fromUser(
-                  $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-                ); //.split('|').slice(-1)[0]
-            fieldValue = ppp
-          } else {
-
-            fieldValue = $(this).data("email")
-          }
-        } else if ($(this).attr("type") == "multipicker") {
-          if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-            var id = $(this).attr("INppicker");
-            var users = [];
-            $("span.sp-peoplepicker-userSpan").each(function () {
+          if ($(this).attr("type") == "picker") {
+            if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+              var id =
+                $(this).attr("INppicker").indexOf("+++") == -1
+                  ? $(this).attr("INppicker")
+                  : $(this).attr("INppicker").split("+++")[0];
               var ppp =
-                $(this).attr("sid") ==
-                  undefined
+                $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
+                undefined
                   ? ""
                   : SP.FieldUserValue.fromUser(
-                    $(this).attr("sid").split("|").slice(-1)[0]
-                  );
+                      $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+                    ); //.split('|').slice(-1)[0]
+              fieldValue = ppp;
+            } else {
+              fieldValue = $(this).data("email");
+            }
+          } else if ($(this).attr("type") == "multipicker") {
+            if ($(this).find("span.sp-peoplepicker-userSpan").length) {
+              var id = $(this).attr("INppicker");
+              var users = [];
+              $("span.sp-peoplepicker-userSpan").each(function () {
+                var ppp =
+                  $(this).attr("sid") == undefined
+                    ? ""
+                    : SP.FieldUserValue.fromUser(
+                        $(this).attr("sid").split("|").slice(-1)[0]
+                      );
 
-              users.push(ppp)
-            })
-            fieldValue = users
-          }
-        } else if ($(this).attr("type") == "date") {
-          if ($(this).val()) {
-            var dateval = $(this).val().replace("-", "/");
-            var ydate = !dateval
-              ? ""
-              : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                .join("/")
-                .replace("-", "/");
-            if (dateval)
-              fieldValue = ydate
-          } else {
-            fieldValue = null
-          }
-        } else if ($(this).attr("type") == "radio") {
-          var checkedvalue = $(
-            'input[id="' + $(this).attr("id") + '"]:checked'
-          ).val();
-          fieldValue = checkedvalue
-        } else if ($(this).attr("type") == "checkbox") {
-          var checkedvalue = $(
-            'input[id="' + $(this).attr("id") + '"]:checked'
-          ).val();
-          fieldValue = true
-        } else if ($(this).attr("type") == "dropdown") {
-          fieldValue = $(this).val()
-
-        } else if ($(this).hasClass("percentagefield")) {
-
-          fieldValue = $(this).val() / 100
-        } else if ($(this).attr("type") == "multiselect") {
-
-          // handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
-          var masterFieldTargetList = $(this).data("fieldtargetlist")
-
-          if (masterFieldTargetList && masterFieldTargetList != "undefined") {
-            // will loop on value on when update the values
-          } else {
-            var myselections = [];
-            $(this)
-              .find("input:checkbox:checked")
-              .each(function () {
-                myselections.push($(this).val());
+                users.push(ppp);
               });
-            myselections = myselections.join(":::");
+              fieldValue = users;
+            }
+          } else if ($(this).attr("type") == "date") {
+            if ($(this).val()) {
+              var dateval = $(this).val().replace("-", "/");
+              var ydate = !dateval
+                ? ""
+                : [dateval.slice(5, 10), dateval.slice(0, 4)]
+                    .join("/")
+                    .replace("-", "/");
+              if (dateval) fieldValue = ydate;
+            } else {
+              fieldValue = null;
+            }
+          } else if ($(this).attr("type") == "radio") {
+            var checkedvalue = $(
+              'input[id="' + $(this).attr("id") + '"]:checked'
+            ).val();
+            fieldValue = checkedvalue;
+          } else if ($(this).attr("type") == "checkbox") {
+            var checkedvalue = $(
+              'input[id="' + $(this).attr("id") + '"]:checked'
+            ).val();
+            fieldValue = true;
+          } else if ($(this).attr("type") == "dropdown") {
+            fieldValue = $(this).val();
+          } else if ($(this).hasClass("percentagefield")) {
+            fieldValue = $(this).val() / 100;
+          } else if ($(this).attr("type") == "multiselect") {
+            // handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
+            var masterFieldTargetList = $(this).data("fieldtargetlist");
 
-            fieldValue = myselections
+            if (masterFieldTargetList && masterFieldTargetList != "undefined") {
+              // will loop on value on when update the values
+            } else {
+              var myselections = [];
+              $(this)
+                .find("input:checkbox:checked")
+                .each(function () {
+                  myselections.push($(this).val());
+                });
+              myselections = myselections.join(":::");
 
+              fieldValue = myselections;
+            }
+          } else {
+            fieldValue = $(this).val();
           }
-        } else {
-          fieldValue = $(this).val()
-        }
 
+          changeRequestBodyMaster.push({
+            // label: crlabel,
+            // labelEn: crlabelEn,
+            // description: crdescription,
+            // descriptionEn: crdescriptionEn,
+            // //
+            listName: CurrList,
+            listKey: RListKey,
+            // //
+            itemId: RID,
+            masterSectionId: itemID,
+            InternalName: $(this).attr("id"),
+            type: $(this).attr("type"),
+            originalValue: fieldValue,
+            value: "",
+            masterType: "edit",
+            relatedItemCode: crRelatedItemCode,
+            masterFieldTargetList: $(this).data("fieldtargetlist"), // to handle master field in master
+            fieldmasterkey: $(this).data("fieldmasterkey"), // to handle master field in master
 
-
-        changeRequestBodyMaster.push({
-
-          // label: crlabel,
-          // labelEn: crlabelEn,
-          // description: crdescription,
-          // descriptionEn: crdescriptionEn,
-          // //
-          listName: CurrList,
-          listKey: RListKey,
-          // //
-          itemId: RID,
-          masterSectionId: itemID,
-          InternalName: $(this).attr("id"),
-          type: $(this).attr("type"),
-          originalValue: fieldValue,
-          value: '',
-          masterType: "edit",
-          relatedItemCode: crRelatedItemCode,
-          masterFieldTargetList: $(this).data("fieldtargetlist"), // to handle master field in master
-          fieldmasterkey: $(this).data("fieldmasterkey")// to handle master field in master
-
-          // DisplayName: currentJsonValues[0].DisplayName,
-          // DisplayNameEn: currentJsonValues[0].DisplayName,
-
-
-        })
-
-      })
-
-
-    })
-
+            // DisplayName: currentJsonValues[0].DisplayName,
+            // DisplayNameEn: currentJsonValues[0].DisplayName,
+          });
+        });
+      }
+    );
 
     if (isEdit) {
-
-      changeRequestBodyMasterEdit.forEach(el => {
-        changeRequestBodyMaster.forEach(item => {
-          if ((el.InternalName == item.InternalName) && (el.masterSectionId == item.masterSectionId)) {
-            item.value = el.value
+      changeRequestBodyMasterEdit.forEach((el) => {
+        changeRequestBodyMaster.forEach((item) => {
+          if (
+            el.InternalName == item.InternalName &&
+            el.masterSectionId == item.masterSectionId
+          ) {
+            item.value = el.value;
           }
-        })
-      })
+        });
+      });
 
-      Master_Edit_DataRequest.init(changeRequestBodyMaster)
+      Master_Edit_DataRequest.init(changeRequestBodyMaster);
     }
-
-
-
-  }
-}
+  },
+};
 
 window.Add_New_CRMaster = {
   init: function (getMasterIndex) {
-
-
     // var x =  $(".cr-related-item-section[data-target_list]").find(".Details-Item.NewItem").last()
-    $(`.cr-related-item-section[data-target_list] .Details-Item.NewItem[data-index=${getMasterIndex}]`).each(function () {
-      var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
+    $(
+      `.cr-related-item-section[data-target_list] .Details-Item.NewItem[data-index=${getMasterIndex}]`
+    ).each(function () {
+      var CurrList = $(this)
+        .closest("[data-target_list]")
+        .attr("data-target_list");
       itemIndex = $(this).attr("data-index");
 
-      if (RListKey == 'Benefits') {
-
+      if (RListKey == "Benefits") {
       }
 
       $(this)
         .find(
           ".CFIELD>input," +
-          ".CFIELD>div[type=picker]," +
-          ".CFIELD>div[type=multipicker]," +
-          ".CFIELD>select[type=dropdown]," +
-          ".CFIELD>textarea," +
-          ".CFIELD>.multiselect-container"
+            ".CFIELD>div[type=picker]," +
+            ".CFIELD>div[type=multipicker]," +
+            ".CFIELD>select[type=dropdown]," +
+            ".CFIELD>textarea," +
+            ".CFIELD>.multiselect-container"
         )
         .each(function () {
-
-
-          var itemInternalName = ""
+          var itemInternalName = "";
           if ($(this).attr("type") == "picker") {
-
             // if ($(this).find("span.sp-peoplepicker-userSpan").length) {
             itemInternalName =
               $(this).attr("INppicker").indexOf("+++") == -1
@@ -3730,12 +3708,11 @@ window.Add_New_CRMaster = {
             // 	fieldValue = ppp
             // }
           } else {
-            itemInternalName = $(this).attr("id")
+            itemInternalName = $(this).attr("id");
           }
-          var fieldValue = ""
+          var fieldValue = "";
 
           changeRequestBodyMaster.push({
-
             // label: crlabel,
             // labelEn: crlabelEn,
             // description: crdescription,
@@ -3749,137 +3726,168 @@ window.Add_New_CRMaster = {
             InternalName: itemInternalName,
             type: $(this).attr("type"),
             originalValue: fieldValue,
-            value: '',
+            value: "",
             masterType: "new",
             relatedItemCode: crRelatedItemCode,
             masterFieldTargetList: $(this).data("fieldtargetlist"), // to handle master field in master
-            fieldmasterkey: $(this).data("fieldmasterkey")// to handle master field in master
+            fieldmasterkey: $(this).data("fieldmasterkey"), // to handle master field in master
             // DisplayName: currentJsonValues[0].DisplayName,
             // DisplayNameEn: currentJsonValues[0].DisplayName,
-
-
-          })
-        })
-
-    })
-  }
-}
+          });
+        });
+    });
+  },
+};
 
 window.Remove_New_CRMaster = {
   // changeRequestBodyMaster
   init: function (lastIndex) {
-    var reAssigneBodyMaster = []
+    var reAssigneBodyMaster = [];
     changeRequestBodyMaster.forEach((el, index) => {
       if (lastIndex == el.masterSectionId) {
-        console.log(index, "index")
+        console.log(index, "index");
         // var indexOfMaster = changeRequestBodyMaster.indexOf(el)
 
         // changeRequestBodyMaster.splice(index,1)
-
       } else {
-        reAssigneBodyMaster.push(el)
+        reAssigneBodyMaster.push(el);
       }
-    })
+    });
 
-    changeRequestBodyMaster = reAssigneBodyMaster
+    changeRequestBodyMaster = reAssigneBodyMaster;
 
     // $(".cr-related-item-section[data-target_list] .Details-Item.NewItem").each(function () {
 
     // 	var CurrList = $(this).closest("[data-target_list]").attr("data-target_list");
     // 	itemIndex = $(this).attr("data-index");
     // })
-  }
-}
+  },
+};
 
-
-var masterDataFormatedForMasterField = []
+var masterDataFormatedForMasterField = [];
 
 var arrangeCRMasterDetails = {
   init: function (masterData) {
+    var masterDataFormated = [];
 
-    var masterDataFormated = []
-
-    masterData.forEach(el => {
+    masterData.forEach((el) => {
       if (masterDataFormated.length) {
-
-        var checkIfExist = false
-        masterDataFormated.forEach(item => {
-          if ((item.listName == el.listName) && (item.masterSectionId == el.masterSectionId)) {
-            checkIfExist = true
+        var checkIfExist = false;
+        masterDataFormated.forEach((item) => {
+          if (
+            item.listName == el.listName &&
+            item.masterSectionId == el.masterSectionId
+          ) {
+            checkIfExist = true;
           }
-        })
+        });
 
-        masterDataFormated.forEach(e => {
+        masterDataFormated.forEach((e) => {
           if (checkIfExist) {
-            if ((e.listName == el.listName) && (e.masterSectionId == el.masterSectionId)) {
-              e.values.push({ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId, masterType: el.masterType, fieldmasterkey: el.fieldmasterkey, masterFieldTargetList: el.masterFieldTargetList })
+            if (
+              e.listName == el.listName &&
+              e.masterSectionId == el.masterSectionId
+            ) {
+              e.values.push({
+                InternalName: el.InternalName,
+                type: el.type,
+                originalValue: el.originalValue,
+                value: el.value,
+                masterSectionId: el.masterSectionId,
+                masterType: el.masterType,
+                fieldmasterkey: el.fieldmasterkey,
+                masterFieldTargetList: el.masterFieldTargetList,
+              });
             }
           } else {
-            checkIfExist = true
-            masterDataFormated.push({ listName: el.listName, listKey: el.listKey, relatedItemCode: el.relatedItemCode, itemId: el.itemId, masterSectionId: el.masterSectionId, masterType: el.masterType, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId, masterType: el.masterType, fieldmasterkey: el.fieldmasterkey, masterFieldTargetList: el.masterFieldTargetList }] })
+            checkIfExist = true;
+            masterDataFormated.push({
+              listName: el.listName,
+              listKey: el.listKey,
+              relatedItemCode: el.relatedItemCode,
+              itemId: el.itemId,
+              masterSectionId: el.masterSectionId,
+              masterType: el.masterType,
+              values: [
+                {
+                  InternalName: el.InternalName,
+                  type: el.type,
+                  originalValue: el.originalValue,
+                  value: el.value,
+                  masterSectionId: el.masterSectionId,
+                  masterType: el.masterType,
+                  fieldmasterkey: el.fieldmasterkey,
+                  masterFieldTargetList: el.masterFieldTargetList,
+                },
+              ],
+            });
           }
-        })
+        });
       } else {
-        masterDataFormated.push({ listName: el.listName, listKey: el.listKey, relatedItemCode: el.relatedItemCode, itemId: el.itemId, masterType: el.masterType, masterSectionId: el.masterSectionId, values: [{ InternalName: el.InternalName, type: el.type, originalValue: el.originalValue, value: el.value, masterSectionId: el.masterSectionId, masterType: el.masterType, fieldmasterkey: el.fieldmasterkey, masterFieldTargetList: el.masterFieldTargetList }] })
+        masterDataFormated.push({
+          listName: el.listName,
+          listKey: el.listKey,
+          relatedItemCode: el.relatedItemCode,
+          itemId: el.itemId,
+          masterType: el.masterType,
+          masterSectionId: el.masterSectionId,
+          values: [
+            {
+              InternalName: el.InternalName,
+              type: el.type,
+              originalValue: el.originalValue,
+              value: el.value,
+              masterSectionId: el.masterSectionId,
+              masterType: el.masterType,
+              fieldmasterkey: el.fieldmasterkey,
+              masterFieldTargetList: el.masterFieldTargetList,
+            },
+          ],
+        });
       }
-    })
-
-
+    });
 
     if (masterDataFormated.length) {
-      masterDataFormatedForMasterField = Array.from(masterDataFormated)
+      masterDataFormatedForMasterField = Array.from(masterDataFormated);
 
-      set_Cr_MastreDetais.init(masterDataFormated)
-
+      set_Cr_MastreDetais.init(masterDataFormated);
     }
-
-
-  }
-}
-
-
+  },
+};
 
 window.set_Cr_MastreDetais = {
   init: function (masterDataFormated) {
-
-    var typeOfSubmit = masterDataFormated[0].masterType
+    var typeOfSubmit = masterDataFormated[0].masterType;
 
     if (typeOfSubmit == "new") {
-      new_Cr_MasterDetails.init(masterDataFormated)
+      new_Cr_MasterDetails.init(masterDataFormated);
     } else if (typeOfSubmit == "edit") {
-      edit_Cr_MastreDetails.init(masterDataFormated)
+      edit_Cr_MastreDetails.init(masterDataFormated);
     }
-  }
-
-}
-
-
-
+  },
+};
 
 window.edit_Cr_MastreDetails = {
   init: function (masterDataFormated) {
-
-
-
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext
       .get_web()
       .get_lists()
       .getByTitle(masterDataFormated[0].listName);
 
-    edit_Cr_MastreDetails.g.oListItem = oList.getItemById(masterDataFormated[0].masterSectionId);
-    edit_Cr_MastreDetails.g.masterDataFormated = masterDataFormated
+    edit_Cr_MastreDetails.g.oListItem = oList.getItemById(
+      masterDataFormated[0].masterSectionId
+    );
+    edit_Cr_MastreDetails.g.masterDataFormated = masterDataFormated;
     var value = "";
     var isOriginalValue = false;
     masterDataFormated[0].values.forEach((o, i, a) => {
       // if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
       value = o.value ? o.value : o.originalValue;
 
-
-
       if (o.type == "picker") {
         if (o.value) {
-          value = o.value
+          value = o.value;
           edit_Cr_MastreDetails.g.oListItem.set_item(
             o.InternalName,
             SP.FieldUserValue.fromUser(value.$5c_1)
@@ -3891,18 +3899,21 @@ window.edit_Cr_MastreDetails = {
           // 	SP.FieldUserValue.fromUser(value.$5c_1)
           // );
         }
-
-
-
       } else if (o.type == "multipicker") {
         edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
       } else if (o.type == "datetime") {
         if (value) {
-          edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+          edit_Cr_MastreDetails.g.oListItem.set_item(
+            o.InternalName,
+            new Date(value)
+          );
         }
       } else if (o.type == "datetime-local") {
         if (value) {
-          edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+          edit_Cr_MastreDetails.g.oListItem.set_item(
+            o.InternalName,
+            new Date(value)
+          );
         }
       } else if (o.type == "radio") {
         edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
@@ -3910,19 +3921,20 @@ window.edit_Cr_MastreDetails = {
         edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, eval(value));
       } else if (o.type == "dropdown") {
         edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
-      }
-      else if (o.type == "multiselect") {
+      } else if (o.type == "multiselect") {
         // handle fieldTargetList to save the field in other list not master details list like delivrable in benifit in edit initiative
 
         // var masterFieldTargetList = $(this).data("fieldtargetlist")
 
-        if (masterDataFormated[0].listName == "Benefits" && o.InternalName == "DeliverableID") {
+        if (
+          masterDataFormated[0].listName == "Benefits" &&
+          o.InternalName == "DeliverableID"
+        ) {
           // will loop on value on when update the values
         } else {
           edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
         }
-      }
-      else {
+      } else {
         edit_Cr_MastreDetails.g.oListItem.set_item(o.InternalName, value);
       }
 
@@ -3934,87 +3946,88 @@ window.edit_Cr_MastreDetails = {
 
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-        var masterDataFormatedArr = edit_Cr_MastreDetails.g.masterDataFormated
+        var masterDataFormatedArr = edit_Cr_MastreDetails.g.masterDataFormated;
 
         masterDataFormatedArr.shift();
 
         if (masterDataFormatedArr.length) {
-          set_Cr_MastreDetais.init(masterDataFormatedArr)
+          set_Cr_MastreDetais.init(masterDataFormatedArr);
         } else {
           if (RListKey == "projects") {
             checkinProjectInEpm.checkin(projectGUIDCr);
-          }
-          else if (RListKey == "initiatives") {
-            var fieldTargetListLength = $('.Details-Item.EditItem ul[data-fieldtargetlist]').length
-            Field_MasterDetails_Data_CR.init(masterDataFormatedForMasterField)
-          }
-          else {
+          } else if (RListKey == "initiatives") {
+            var fieldTargetListLength = $(
+              ".Details-Item.EditItem ul[data-fieldtargetlist]"
+            ).length;
+            Field_MasterDetails_Data_CR.init(masterDataFormatedForMasterField);
+          } else {
             Task_Edit_Data.init();
           }
         }
-
       }),
       Function.createDelegate(this, function (sender, args) {
         console.log(
-          "Request failed. " +
-          args.get_message() +
-          "\n" +
-          args.get_stackTrace()
+          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
       })
     );
-
   },
   g: {},
-}
-
+};
 
 window.new_Cr_MasterDetails = {
   init: function (masterDataFormated) {
-
     var clientContext = new SP.ClientContext.get_current();
 
-    var oList = clientContext.get_web().get_lists().getByTitle(masterDataFormated[0].listName);
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle(masterDataFormated[0].listName);
 
     var itemCreateInfo = new SP.ListItemCreationInformation();
     new_Cr_MasterDetails.g.oListItem = oList.addItem(itemCreateInfo);
-    new_Cr_MasterDetails.g.masterDataFormated = masterDataFormated
-
+    new_Cr_MasterDetails.g.masterDataFormated = masterDataFormated;
 
     masterDataFormated[0].values.forEach((o, i, a) => {
       // if (o.InternalName != "Amount") { // will remove it jsut added to test if submit successfully
       value = o.value ? o.value : o.originalValue;
       if (o.type == "picker") {
-
         if (o.value) {
-          value = o.value
+          value = o.value;
 
           new_Cr_MasterDetails.g.oListItem.set_item(
             o.InternalName,
             SP.FieldUserValue.fromUser(value.$5c_1)
           );
         } else if (o.originalValue) {
-          value = o.originalValue
+          value = o.originalValue;
           new_Cr_MasterDetails.g.oListItem.set_item(
             o.InternalName,
             SP.FieldUserValue.fromUser(value.$5c_1)
           );
         }
-
       } else if (o.type == "multipicker") {
         new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
       } else if (o.type == "datetime") {
         if (value) {
-          new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+          new_Cr_MasterDetails.g.oListItem.set_item(
+            o.InternalName,
+            new Date(value)
+          );
         }
       } else if (o.type == "date") {
         if (value) {
-          new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+          new_Cr_MasterDetails.g.oListItem.set_item(
+            o.InternalName,
+            new Date(value)
+          );
         }
       } else if (o.type == "datetime-local") {
-
         if (value) {
-          new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, new Date(value));
+          new_Cr_MasterDetails.g.oListItem.set_item(
+            o.InternalName,
+            new Date(value)
+          );
         }
       } else if (o.type == "radio") {
         new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
@@ -4022,103 +4035,103 @@ window.new_Cr_MasterDetails = {
         new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, eval(value));
       } else if (o.type == "dropdown") {
         new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
-      }
-      else if (o.type == "multiselect") {
+      } else if (o.type == "multiselect") {
         new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
-      }
-      else {
+      } else {
         new_Cr_MasterDetails.g.oListItem.set_item(o.InternalName, value);
       }
 
-      new_Cr_MasterDetails.g.oListItem.set_item("MasterID", masterDataFormated[0].itemId);
-      new_Cr_MasterDetails.g.oListItem.set_item("MasterKey", masterDataFormated[0].listKey);
+      new_Cr_MasterDetails.g.oListItem.set_item(
+        "MasterID",
+        masterDataFormated[0].itemId
+      );
+      new_Cr_MasterDetails.g.oListItem.set_item(
+        "MasterKey",
+        masterDataFormated[0].listKey
+      );
 
       var prt1 = masterDataFormated[0].listName.substring(0, 2).toUpperCase(),
         prt2 = String(new Date().getFullYear()).slice(4 - 2),
         prt3 = masterDataFormated[0].itemId.toString().padStart(4, "0"),
-        prt4 = masterDataFormated[0].masterSectionId.toString().padStart(4, "0");
-      ;
-
+        prt4 = masterDataFormated[0].masterSectionId
+          .toString()
+          .padStart(4, "0");
       var Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + prt4;
 
       new_Cr_MasterDetails.g.oListItem.set_item("Title", Code);
 
-
       // check the master list to save dependes on it in initiave code or project code
 
       if (masterDataFormated[0].listKey == "initiatives") {
-        new_Cr_MasterDetails.g.oListItem.set_item("InitiativeCode", masterDataFormated[0].relatedItemCode);
+        new_Cr_MasterDetails.g.oListItem.set_item(
+          "InitiativeCode",
+          masterDataFormated[0].relatedItemCode
+        );
       } else if (masterDataFormated[0].listKey == "projects") {
-        new_Cr_MasterDetails.g.oListItem.set_item("ProjectCode", masterDataFormated[0].relatedItemCode);
+        new_Cr_MasterDetails.g.oListItem.set_item(
+          "ProjectCode",
+          masterDataFormated[0].relatedItemCode
+        );
       }
-
 
       new_Cr_MasterDetails.g.oListItem.update();
       clientContext.load(new_Cr_MasterDetails.g.oListItem);
-
-    })
-
+    });
 
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-
-
-        var masterDataFormatedArr = new_Cr_MasterDetails.g.masterDataFormated
+        var masterDataFormatedArr = new_Cr_MasterDetails.g.masterDataFormated;
         // to get the master id when add new benifit in master details to use it when create benefitdelivrables
-        if (RListKey == "initiatives" && masterDataFormatedArr[0].listName == "Benefits") {
-          var fieldMasterId = new_Cr_MasterDetails.g.oListItem.get_id()
+        if (
+          RListKey == "initiatives" &&
+          masterDataFormatedArr[0].listName == "Benefits"
+        ) {
+          var fieldMasterId = new_Cr_MasterDetails.g.oListItem.get_id();
 
-          masterDataFormatedForMasterField.forEach(el => {
+          masterDataFormatedForMasterField.forEach((el) => {
             if (el.masterType == "new" && el.listName == "Benefits") {
-              el.values.forEach(item => {
+              el.values.forEach((item) => {
                 if (item.InternalName == "DeliverableID") {
-                  masterDataFormatedArr[0].values.forEach(element => {
+                  masterDataFormatedArr[0].values.forEach((element) => {
                     if (item.value == element.value) {
-                      item.masterSectionId = fieldMasterId
-                      el.masterSectionId = fieldMasterId
+                      item.masterSectionId = fieldMasterId;
+                      el.masterSectionId = fieldMasterId;
                     }
-                  })
+                  });
                 }
-              })
+              });
             }
-          })
-
-
+          });
         }
         masterDataFormatedArr.shift();
 
         if (masterDataFormatedArr.length) {
-          set_Cr_MastreDetais.init(masterDataFormatedArr)
+          set_Cr_MastreDetais.init(masterDataFormatedArr);
         } else {
           if (RListKey == "projects") {
             checkinProjectInEpm.checkin(projectGUIDCr);
           } else if (RListKey == "initiatives") {
-            Field_MasterDetails_Data_CR.init(masterDataFormatedForMasterField)
-          }
-          else {
+            Field_MasterDetails_Data_CR.init(masterDataFormatedForMasterField);
+          } else {
             Task_Edit_Data.init();
           }
         }
-
-
       }),
       Function.createDelegate(this, function (sender, args) {
         console.log(
           "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
         );
       })
-    )
-
+    );
   },
   g: {},
-}
+};
 
 //
 
 window.CrTitleDataRequest = {
   onSuccess: function (sender, args) {
     crRelatedItemCode = oListItem.get_item("Title");
-
   },
   onError: function (sender, args) {
     console.log(
@@ -4138,41 +4151,31 @@ window.CrTitleDataRequest = {
     );
   },
   // Global variables
-  g: {
-
-
-  },
+  g: {},
 };
-
 
 // get data in edit form for master details
 var Master_Edit_DataRequest = {
   init: function (changeRequestBodyMaster) {
-
     if (changeRequestBodyMaster.length) {
-
-      changeRequestBodyMaster.forEach(o => {
-
-
-        $(`.cr-related-item-section[data-target_list="${o.listName}"] .Details-Item.EditItem #${o.InternalName}`).each(function () {
-
-          var masterId = $(this).parent().parent().data("id")
-          var arrayMasterId = Number(o.masterSectionId)
+      changeRequestBodyMaster.forEach((o) => {
+        $(
+          `.cr-related-item-section[data-target_list="${o.listName}"] .Details-Item.EditItem #${o.InternalName}`
+        ).each(function () {
+          var masterId = $(this).parent().parent().data("id");
+          var arrayMasterId = Number(o.masterSectionId);
           // masterId = Number(masterId)
 
           if (masterId == arrayMasterId) {
-
             switch ($(this).attr("type")) {
               case "date":
                 // var d = (o.value == null || o.value == "") ? "empty" : o.value;
 
-                var d = ""
-                var datetouse = ""
+                var d = "";
+                var datetouse = "";
                 if (o.value) {
-                  datetouse = o.value.split("/")
-                  datetouse[0].length == 1
-                    ? "0" + datetouse[0]
-                    : datetouse[0];
+                  datetouse = o.value.split("/");
+                  datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
                   datetouse[1] =
                     datetouse[1].length == 1
                       ? "0" + datetouse[1]
@@ -4182,9 +4185,8 @@ var Master_Edit_DataRequest = {
                     datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
 
                   $(this).val(datetouse2);
-
                 } else {
-                  $(this).val(d)
+                  $(this).val(d);
                 }
 
                 // if ($(this).hasClass("withTime")) {
@@ -4234,10 +4236,7 @@ var Master_Edit_DataRequest = {
                 // $(this).val(d);
                 break;
               case "datetime-local":
-                var d =
-                  o.value == null
-                    ? "empty"
-                    : o.value;
+                var d = o.value == null ? "empty" : o.value;
 
                 if (d != "empty") {
                   var local = d.getTime();
@@ -4249,9 +4248,13 @@ var Master_Edit_DataRequest = {
                     .split(",")[0]
                     .split("/");
                   datetouse[0] =
-                    datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+                    datetouse[0].length == 1
+                      ? "0" + datetouse[0]
+                      : datetouse[0];
                   datetouse[1] =
-                    datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+                    datetouse[1].length == 1
+                      ? "0" + datetouse[1]
+                      : datetouse[1];
                   var datetouse2 =
                     datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
                 }
@@ -4264,15 +4267,12 @@ var Master_Edit_DataRequest = {
                   o.value == null
                     ? enternameemail
                     : oListItem
-                      .get_item("" + $(this).attr("id") + "")
-                      .get_lookupValue();
+                        .get_item("" + $(this).attr("id") + "")
+                        .get_lookupValue();
                 $(this).attr("data-email", pemail);
 
                 if (pemail != enternameemail)
-                  $(this).attr(
-                    "user-email",
-                    o.value.get_email()
-                  );
+                  $(this).attr("user-email", o.value.get_email());
                 // $(this).attr(
                 // 	"user-email",
                 // 	oListItem.get_item($(this).attr("id")).get_email()
@@ -4288,21 +4288,17 @@ var Master_Edit_DataRequest = {
 
               case "radio":
                 $('input[id="' + $(this).attr("id") + '"]')
-                  .filter(
-                    '[value="' + o.value + '"]'
-                  )
+                  .filter('[value="' + o.value + '"]')
                   .attr("checked", true);
                 break;
 
               case "checkbox":
-                if (o.value)
-                  $(this).prop("checked", true);
+                if (o.value) $(this).prop("checked", true);
                 break;
 
               case "multiselect":
                 if (o.value) {
-                  var myselections = o.value
-                    .split(":::");
+                  var myselections = o.value.split(":::");
                   for (var i = 0; i < myselections.length; i++) {
                     $(this)
                       .find("input:checkbox[value='" + myselections[i] + "']")
@@ -4312,7 +4308,6 @@ var Master_Edit_DataRequest = {
                 break;
 
               case "number":
-
                 if ($(this).hasClass("percentagefield")) {
                   var num = o.value * 100;
                   if (num % 1 != 0)
@@ -4336,8 +4331,6 @@ var Master_Edit_DataRequest = {
                 // 					var weight = $(this).parent().parent().find(`#${targetElem}`).val()
                 // 					var maxAttr = $(this).parent().parent().find(`#${targetElem}`).attr('max')
 
-
-
                 // 					weight = Number(weight)
                 // 					var newMax = Number(maxAttr) + weight
                 // 					$(this).parent().parent().find(`#${targetElem}`).attr('max', newMax)
@@ -4357,16 +4350,16 @@ var Master_Edit_DataRequest = {
                 break;
             }
           }
-        })
-      })
+        });
+      });
     }
-
-  }
-}
+  },
+};
 
 // working on project schedula
 
-var checkinProjectInEpm = { // create this function to check in the project on project center before edit on project
+var checkinProjectInEpm = {
+  // create this function to check in the project on project center before edit on project
   checkin: function (ProjGuid) {
     $.ajax({
       url:
@@ -4383,9 +4376,9 @@ var checkinProjectInEpm = { // create this function to check in the project on p
         "if-Match": "*",
       },
       success: function (data) {
-        console.log("Project checked in successfully from cr")
+        console.log("Project checked in successfully from cr");
 
-        Update_Project_Center_CR.getAllResources()
+        Update_Project_Center_CR.getAllResources();
         // window.location =
         //   _spPageContextInfo.siteAbsoluteUrl +
         //   "/SitePages/ProjectHome.aspx?PCODE=" +
@@ -4399,52 +4392,57 @@ var checkinProjectInEpm = { // create this function to check in the project on p
   g: {},
 };
 
-
 var Update_Project_Center_CR = {
   getAllResources: function () {
     $.ajax({
-      url: _spPageContextInfo.webAbsoluteUrl + "/_api/ProjectServer/EnterpriseResources",
+      url:
+        _spPageContextInfo.webAbsoluteUrl +
+        "/_api/ProjectServer/EnterpriseResources",
       method: "GET",
-      headers: { "Accept": "application/json; odata=verbose" },
+      headers: { Accept: "application/json; odata=verbose" },
       success: function (data) {
-        allEnterpriseResourcesCR = data.d.results
-        SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
-        SP.SOD.loadMultiple(['PS.ProjectContext'], EPMProjectToUpdateCR);
-      }
+        allEnterpriseResourcesCR = data.d.results;
+        SP.SOD.registerSod(
+          "PS.ProjectContext",
+          SP.Utilities.Utility.getLayoutsPageUrl("ps.js")
+        );
+        SP.SOD.loadMultiple(["PS.ProjectContext"], EPMProjectToUpdateCR);
+      },
     });
-  }
-}
+  },
+};
 
 function EPMProjectToUpdateCR() {
-
   editProjectContextCR = PS.ProjectContext.get_current();
   epmProjectsCR = editProjectContextCR.get_projects();
-  editProjectContextCR.load(epmProjectsCR, 'Include(Name, Id)');
-  editProjectContextCR.executeQueryAsync(delete_resources_cr.preinit, QueryFailedCenterCR);
-
+  editProjectContextCR.load(epmProjectsCR, "Include(Name, Id)");
+  editProjectContextCR.executeQueryAsync(
+    delete_resources_cr.preinit,
+    QueryFailedCenterCR
+  );
 }
-
 
 function QueryFailedCenterCR(sender, args) {
-  console.log('Request failed: ' + args.get_message());
+  console.log("Request failed: " + args.get_message());
 }
-
 
 var delete_resources_cr = {
   preinit: function () {
-    SP.SOD.registerSod('PS.ProjectContext', SP.Utilities.Utility.getLayoutsPageUrl('ps.js'));
-    SP.SOD.loadMultiple(['PS.ProjectContext'], delete_resources_cr.init);
+    SP.SOD.registerSod(
+      "PS.ProjectContext",
+      SP.Utilities.Utility.getLayoutsPageUrl("ps.js")
+    );
+    SP.SOD.loadMultiple(["PS.ProjectContext"], delete_resources_cr.init);
   },
   init: function () {
-
     deleteProjectContextCR = PS.ProjectContext.get_current();
     var oProjects = deleteProjectContextCR.get_projects();
     delete_resources_cr.g.oProjectsItem = oProjects.getById(projectGUIDCr); //declared inside object scope only
 
-
     ResourcesEnterpriseCR = delete_resources_cr.g.oProjectsItem.checkOut();
 
-    delete_resources_cr.g.testDuration = ResourcesEnterpriseCR.get_projectResources()
+    delete_resources_cr.g.testDuration =
+      ResourcesEnterpriseCR.get_projectResources();
 
     deleteProjectContextCR.load(delete_resources_cr.g.testDuration);
 
@@ -4454,60 +4452,49 @@ var delete_resources_cr = {
     );
   },
   onError: function (sender, args) {
-    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
   },
   onSuccess: function (sender, args) {
-
-
-    resourcesArrDeleteCR = delete_resources_cr.g.testDuration.get_data()
-
-
+    resourcesArrDeleteCR = delete_resources_cr.g.testDuration.get_data();
 
     Promise.all(
       resourcesArrDeleteCR.map(function (item) {
-        globresArrCR.push(item)
+        globresArrCR.push(item);
       })
-    ).then(function (files) {
-
-      delete_resourcesForupdate_cr.init()
-    }).catch(function (err) {
-
-    })
-
-
+    )
+      .then(function (files) {
+        delete_resourcesForupdate_cr.init();
+      })
+      .catch(function (err) {});
   },
   // Global variables
-  g: {}
-}
-
+  g: {},
+};
 
 var delete_resourcesForupdate_cr = {
-
   init: function () {
-
     deleteProjectContextCR.executeQueryAsync(
       Function.createDelegate(this, delete_resourcesForupdate_cr.onSuccess),
       Function.createDelegate(this, delete_resourcesForupdate_cr.onError)
     );
-
   },
   onError: function (sender, args) {
-    console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
   },
   onSuccess: async function (sender, args) {
-
-
     for (var i = 0; i < globresArrCR.length; i++) {
-      globresArrCR[i].deleteObject()
+      globresArrCR[i].deleteObject();
     }
-
 
     var checkinJob = ResourcesEnterpriseCR.update();
 
-
     deleteProjectContextCR.waitForQueueAsync(checkinJob, 100, EPMProjectEditCR);
-  }
-}
+  },
+};
 
 function EPMProjectEditCR() {
   //
@@ -4515,11 +4502,9 @@ function EPMProjectEditCR() {
   var project = epmProjectsCR.getById(projectGUIDCr); //User_ProjUID it's the GUID for Project
   draftProject = project.checkOut();
 
-
   for (var i = 0; i < projectBuildTeamArrCr.length; i++) {
     allEnterpriseResourcesCR.forEach((el) => {
       if (projectBuildTeamArrCr[i] == el.Name) {
-
         var new_resource_id = el.Id;
         var new_resource = new PS.ProjectResourceCreationInformation();
         new_resource.set_name(projectBuildTeamArrCr[i]);
@@ -4529,31 +4514,35 @@ function EPMProjectEditCR() {
         var project_resource = project_resources_list.add(new_resource);
         draftProject.get_projectResources().add(new_resource);
       }
-
     });
-
   }
   var publishJob = draftProject.update();
-  editProjectContextCR.waitForQueueAsync(publishJob, 100, ChangeProjectOwnerEpmCR);
+  editProjectContextCR.waitForQueueAsync(
+    publishJob,
+    100,
+    ChangeProjectOwnerEpmCR
+  );
 }
 
 function ChangeProjectOwnerEpmCR() {
   var project = epmProjectsCR.getById(projectGUIDCr);
   var draftProject = project.checkOut();
-  var web = editProjectContextCR.get_web()
-  var projectManagerId = projectManagerCr.get_lookupId()
-  var userPicked = web.getUserById(projectManagerId) //76
+  var web = editProjectContextCR.get_web();
+  var projectManagerId = projectManagerCr.get_lookupId();
+  var userPicked = web.getUserById(projectManagerId); //76
 
-
-  draftProject.set_owner(userPicked)
+  draftProject.set_owner(userPicked);
   var publishJob = draftProject.publish(true);
   // $('.wfLoader').hide();
 
-  editProjectContextCR.waitForQueueAsync(publishJob, 100, QueueJobSentOwnerEpmCR);
+  editProjectContextCR.waitForQueueAsync(
+    publishJob,
+    100,
+    QueueJobSentOwnerEpmCR
+  );
 }
 
 function QueueJobSentOwnerEpmCR(response) {
-
   Task_Edit_Data.init();
   // window.location =
   //   _spPageContextInfo.webAbsoluteUrl +
@@ -4562,7 +4551,6 @@ function QueueJobSentOwnerEpmCR(response) {
   //   "&IID=" +
   //   IID +
   //   PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-
 }
 
 ////
@@ -4574,32 +4562,27 @@ var DontSubmit_DataRequestCR = {
     $(
       "[data-parentrelatedvaluelvl1]:not([data-parentrelatedvaluelvl1=undefined])"
     ).each(function (e) {
-
-
-      var isMasterSection = $(this).parent().parent().hasClass("Details-Item")
+      var isMasterSection = $(this).parent().parent().hasClass("Details-Item");
 
       if (!isMasterSection) {
-
-        var elementId = ""
-        var elementValue = ""
-        var isMultiSelect = false
-
-
+        var elementId = "";
+        var elementValue = "";
+        var isMultiSelect = false;
 
         if ($(this).hasClass("limulti")) {
-          isMultiSelect = true
+          isMultiSelect = true;
           elementId = $(this).parent().parent().parent().attr("id"); // get element Id
-          elementValue = $(this).find("input:checked").val()
+          elementValue = $(this).find("input:checked").val();
         } else {
           elementId = $(this).parent().attr("id"); // get element Id
           elementValue = $(this).val(); // get element value
         }
 
-
-
         if (isMultiSelect) {
-
-          if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
+          if (
+            oListItem.get_item(elementId) &&
+            oListItem.get_item(elementId).includes(elementValue)
+          ) {
             var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
             var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
 
@@ -4608,12 +4591,10 @@ var DontSubmit_DataRequestCR = {
             }
           }
         } else {
-
           if (
             oListItem.get_item(elementId) &&
             oListItem.get_item(elementId) == elementValue
           ) {
-
             // matching between value on list
             var parentElement = $(this).data("parentrelatedkeylvl1"); // parent internal name
             var parenetValue = $(this).data("parentrelatedvaluelvl1"); // parent value
@@ -4625,31 +4606,28 @@ var DontSubmit_DataRequestCR = {
       }
     });
 
-
     // to handle dont submit in edit lvl2
     $(
       "[data-parentrelatedvaluelvl2]:not([data-parentrelatedvaluelvl2=undefined])"
     ).each(function () {
-
       var elementId = ""; // get element Id
       var elementValue = ""; // get element value
-      var isMultiSelect = false
-
+      var isMultiSelect = false;
 
       if ($(this).hasClass("limulti")) {
-        isMultiSelect = true
+        isMultiSelect = true;
         elementId = $(this).parent().parent().parent().attr("id"); // get element Id
-        elementValue = $(this).find("input:checked").val()
+        elementValue = $(this).find("input:checked").val();
       } else {
         elementId = $(this).parent().attr("id"); // get element Id
         elementValue = $(this).val(); // get element value
       }
 
-
-
       if (isMultiSelect) {
-
-        if (oListItem.get_item(elementId) && oListItem.get_item(elementId).includes(elementValue)) {
+        if (
+          oListItem.get_item(elementId) &&
+          oListItem.get_item(elementId).includes(elementValue)
+        ) {
           var parentElement = $(this).data("parentrelatedkeylvl2"); // parent internal name
           var parenetValue = $(this).data("parentrelatedvaluelvl2"); // parent value
 
@@ -4670,61 +4648,58 @@ var DontSubmit_DataRequestCR = {
           }
         }
       }
-
-
-
-
     });
 
-    if ($(".grandFieldInvoke").length > 0) { // to use it in initiative
-      $(".grandFieldInvoke").trigger("change")
+    if ($(".grandFieldInvoke").length > 0) {
+      // to use it in initiative
+      $(".grandFieldInvoke").trigger("change");
     }
     if ($(".getsiblingdata").length > 0) {
-      $(".getsiblingdata").trigger("change")//to invoke the sibling data
+      $(".getsiblingdata").trigger("change"); //to invoke the sibling data
     }
-
-  }
-}
+  },
+};
 //set master field from master section
 
-var fieldTargetListInMasterCR = []
+var fieldTargetListInMasterCR = [];
 var Field_MasterDetails_Data_CR = {
   init: function (masterDataFormated) {
-
-
-    var masterFieldTargetList = ""
+    var masterFieldTargetList = "";
 
     if (masterDataFormated.length) {
-      masterDataFormated.forEach(el => {
+      masterDataFormated.forEach((el) => {
         if (el.listName == "Benefits") {
-          el.values.forEach(item => {
+          el.values.forEach((item) => {
             if (item.InternalName == "DeliverableID") {
+              var masterFieldTargetList = item.masterFieldTargetList;
+              var fieldmasterkey = item.fieldmasterkey;
+              var fieldId = item.InternalName;
+              var parentCode = el.relatedItemCode;
+              var fieldMasterId = item.masterSectionId;
 
-              var masterFieldTargetList = item.masterFieldTargetList
-              var fieldmasterkey = item.fieldmasterkey
-              var fieldId = item.InternalName
-              var parentCode = el.relatedItemCode
-              var fieldMasterId = item.masterSectionId
+              var checkMultiValue = item.value;
 
-              var checkMultiValue = item.value
+              checkMultiValue = checkMultiValue.split(":::");
 
-              checkMultiValue = checkMultiValue.split(":::")
-
-              checkMultiValue.forEach(element => {
+              checkMultiValue.forEach((element) => {
                 if (element) {
-                  fieldTargetListInMasterCR.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: element, masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
+                  fieldTargetListInMasterCR.push({
+                    targetList: masterFieldTargetList,
+                    fieldId: fieldId,
+                    fieldValue: element,
+                    masterId: fieldMasterId,
+                    parentCode: parentCode,
+                    fieldmasterkey: fieldmasterkey,
+                  });
                 }
-              })
-
+              });
             }
-          })
+          });
         }
-      })
-
+      });
 
       if (fieldTargetListInMasterCR.length) {
-        Field_Master_Details_CR.init(fieldTargetListInMasterCR)
-
+        Field_Master_Details_CR.init(fieldTargetListInMasterCR);
       } else {
         Task_Edit_Data.init();
       }
@@ -4746,8 +4721,6 @@ var Field_MasterDetails_Data_CR = {
     // 	}
 
     // 	$(this).find("input:checkbox:checked").not(":disabled").each(function (index) {
-
-
 
     // 	  var fieldMasterId = $(this).closest(".Details-Item.EditItem").data('id')
 
@@ -4786,7 +4759,6 @@ var Field_MasterDetails_Data_CR = {
     // 	  var fieldMasterId = Number(masterIdWhenCreate) - newItemMasterLength
     // 	  if (countSuccessMaster == 1) {
 
-
     // 		if (fieldTargetListInMaster.filter(e => ((e.masterId == fieldMasterId) && (e.fieldValue == $(this).val())))) {
 
     // 		  fieldTargetListInMaster.push({ targetList: masterFieldTargetList, fieldId: fieldId, fieldValue: $(this).val(), masterId: fieldMasterId, parentCode: parentCode, fieldmasterkey: fieldmasterkey })
@@ -4795,56 +4767,63 @@ var Field_MasterDetails_Data_CR = {
     // 	})
     //   })
 
-
     //   if (masterFieldTargetList && masterFieldTargetList != "undefined" && countSuccessMaster == 1) { // countSuccessMaster put it one to invoke the Field_Master_Details only one time if we have multi sections of master details in form
     // 	Field_Master_Details.init(fieldTargetListInMaster)
     //   }
-
-
-  }
-}
+  },
+};
 
 // submit master details field in master details section like deliv in benifit in initiative edit for (multi select)
 var Field_Master_Details_CR = {
   init: function (fieldTargetData) {
-
     if (fieldTargetData.length) {
-
       var clientContext = new SP.ClientContext.get_current();
       var CurrList, oList, valueSelection, code;
 
-      CurrList = fieldTargetData[0].targetList
-      valueSelection = fieldTargetData[0].fieldValue
+      CurrList = fieldTargetData[0].targetList;
+      valueSelection = fieldTargetData[0].fieldValue;
 
       if (valueSelection) {
-
         var oList = clientContext.get_web().get_lists().getByTitle(CurrList);
 
         var itemCreateInfo = new SP.ListItemCreationInformation();
         Field_Master_Details_CR.g.oListItem = oList.addItem(itemCreateInfo);
 
-        valueSelection = valueSelection.split("-")
-        valueSelection = valueSelection[valueSelection.length - 1]
+        valueSelection = valueSelection.split("-");
+        valueSelection = valueSelection[valueSelection.length - 1];
 
-        var prt1 = fieldTargetData[0].fieldmasterkey.substring(0, 2).toUpperCase(),
+        var prt1 = fieldTargetData[0].fieldmasterkey
+            .substring(0, 2)
+            .toUpperCase(),
           prt2 = String(new Date().getFullYear()).slice(4 - 2),
           prt3 = fieldTargetData[0].masterId.toString().padStart(4, "0");
 
-        code = prt1 + "-" + prt2 + "-" + prt3 + "-" + valueSelection
+        code = prt1 + "-" + prt2 + "-" + prt3 + "-" + valueSelection;
 
         Field_Master_Details_CR.g.oListItem.set_item("Title", code);
 
-
         // valueSelection.forEach(el => {
-        Field_Master_Details_CR.g.oListItem.set_item(fieldTargetData[0].fieldId, fieldTargetData[0].fieldValue);
+        Field_Master_Details_CR.g.oListItem.set_item(
+          fieldTargetData[0].fieldId,
+          fieldTargetData[0].fieldValue
+        );
 
-        Field_Master_Details_CR.g.oListItem.set_item("MasterKey", fieldTargetData[0].fieldmasterkey);
-        Field_Master_Details_CR.g.oListItem.set_item('MasterID', fieldTargetData[0].masterId);
+        Field_Master_Details_CR.g.oListItem.set_item(
+          "MasterKey",
+          fieldTargetData[0].fieldmasterkey
+        );
+        Field_Master_Details_CR.g.oListItem.set_item(
+          "MasterID",
+          fieldTargetData[0].masterId
+        );
 
         // if (PCODE) {
         //   Field_Master_Details_CR.g.oListItem.set_item('ProjectCode', fieldTargetData[0].parentCode);
         // } else if (ICODE) {
-        Field_Master_Details_CR.g.oListItem.set_item('InitiativeCode', fieldTargetData[0].parentCode);
+        Field_Master_Details_CR.g.oListItem.set_item(
+          "InitiativeCode",
+          fieldTargetData[0].parentCode
+        );
         // } else if (STCODE) {
         //   Field_Master_Details_CR.g.oListItem.set_item('StrategicPartnershipCode', fieldTargetData[0].parentCode);
         // }
@@ -4855,19 +4834,15 @@ var Field_Master_Details_CR = {
         // })
       }
 
-
       Field_Master_Details_CR.g.oListItem.update();
       clientContext.load(Field_Master_Details_CR.g.oListItem);
 
-
       clientContext.executeQueryAsync(
         Function.createDelegate(this, function () {
-
-          fieldTargetData.shift()
-          Field_Master_Details_CR.init(fieldTargetData)
+          fieldTargetData.shift();
+          Field_Master_Details_CR.init(fieldTargetData);
         })
-      )
-
+      );
     } else {
       Task_Edit_Data.init();
       // window.location =
@@ -4878,69 +4853,62 @@ var Field_Master_Details_CR = {
       //   IID +
       //   PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
     }
-
-
-
   },
   g: {},
-}
-
+};
 
 window.MasterDetails_Request_View = {
   onSuccess: function (sender, args) {
+    var changeMasterData = oListItem.get_item("ChangeBodyMaster");
 
+    changeMasterData = eval(changeMasterData);
 
-    var changeMasterData = oListItem.get_item("ChangeBodyMaster")
-
-    changeMasterData = eval(changeMasterData)
-
-    changeMasterData.forEach(el => {
-
-      var value = el.value ? el.value : el.originalValue
-      var items = ""
+    changeMasterData.forEach((el) => {
+      var value = el.value ? el.value : el.originalValue;
+      var items = "";
 
       if (value == "no") {
         if (
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
         ) {
-          value = "لا"
+          value = "لا";
         }
       } else if (value == "yes") {
         if (
           localStorage.getItem("lng") == null ||
           localStorage.getItem("lng") == "ar"
         ) {
-          value = "نعم"
+          value = "نعم";
         }
       } else if (!value) {
-        value = No_Data
+        value = No_Data;
       } else if (el.type == "picker") {
-
         if (el.value) {
-          value = el.value.$5c_1
+          value = el.value.$5c_1;
         } else {
-          value = el.originalValue
+          value = el.originalValue;
         }
       } else if (el.type == "multiselect") {
-
-        $(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`).addClass("cr_whitespace")
+        $(
+          `.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`
+        )
+          .find(`#${el.InternalName}`)
+          .addClass("cr_whitespace");
 
         if (el.InternalName == "RelatedSubKpis") {
           var mainkpiarr = [];
-          var splitKpiValues = value.split(":::")
+          var splitKpiValues = value.split(":::");
           if (localStorage.getItem("Dynamo_MainKPI") != null) {
-            mainkpiarr = JSON.parse(
-              localStorage.getItem("Dynamo_MainKPI")
-            );
+            mainkpiarr = JSON.parse(localStorage.getItem("Dynamo_MainKPI"));
 
-            mainkpiarr.forEach(element => {
+            mainkpiarr.forEach((element) => {
               if (splitKpiValues.includes(element.code)) {
-                items += element.name + "\n"
+                items += element.name + "\n";
               }
-            })
+            });
 
-            value = items
+            value = items;
             //   projectsectorarr = projectsectorarr.filter(function (a) {
             // 	return a.code === projectsector;
             //   });
@@ -4952,20 +4920,20 @@ window.MasterDetails_Request_View = {
             //   } else projectsector = projectsectorarr[0].nameEn;
           }
         }
-
       }
 
-
-
-      $(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`).text(value)
+      $(
+        `.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`
+      )
+        .find(`#${el.InternalName}`)
+        .text(value);
 
       if (el.isChanged) {
-
-        var $element = $(`.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`).find(`#${el.InternalName}`)
-
+        var $element = $(
+          `.cr-related-item-section[data-target_list="${el.listName}"] .Details-Item.EditItem[data-id=${el.masterSectionId}]`
+        ).find(`#${el.InternalName}`);
 
         if (el.type == "dropdown") {
-
           var dropDownNameVal = "";
           if (
             localStorage.getItem("lng") == null ||
@@ -4977,17 +4945,15 @@ window.MasterDetails_Request_View = {
           }
 
           if (!dropDownNameVal) {
-            dropDownNameVal = No_Data
+            dropDownNameVal = No_Data;
           }
 
           $element.parent().addClass("crHighlight");
           $element.parent().attr("data-toggle", "tooltip");
           $element.parent().attr("data-placement", isArabic ? "right" : "left");
           $element.parent().attr("title", dropDownNameVal);
-
-
         } else {
-          var titleName = el.originalValue ? el.originalValue : No_Data
+          var titleName = el.originalValue ? el.originalValue : No_Data;
 
           $element.parent().addClass("crHighlight");
           $element.parent().attr("data-toggle", "tooltip");
@@ -4995,11 +4961,9 @@ window.MasterDetails_Request_View = {
           $element.parent().attr("title", titleName);
         }
       }
-    })
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
-
-
   },
   onError: function (sender, args) {
     console.log(
@@ -5018,4 +4982,4 @@ window.MasterDetails_Request_View = {
     );
   },
   g: {},
-}
+};
