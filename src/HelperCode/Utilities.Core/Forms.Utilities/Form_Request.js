@@ -593,6 +593,67 @@ window.Edit_Data_Request = {
       }
 
     });
+    $(`[data-notbasedonparentsetvalues]`).each(function (index) {
+  var parsingData = eval($(this).data("notbasedonparentsetvalues"));
+  parsingData.forEach((el) => {
+    var basedOnFieldName = el.basedOnFieldName;
+    var basedOnFieldValue = el.basedOnFieldValue;
+    var basedOnFieldCurrentValue = "";
+    var basedOnFieldType = $(`#${basedOnFieldName}`).attr("type");
+
+    if (basedOnFieldType == "radio") {
+      basedOnFieldCurrentValue = $(`#${basedOnFieldName}:checked`).val();
+    } else {
+      basedOnFieldCurrentValue = $(`#${basedOnFieldName}`).val();
+    }
+
+    // تحقق من Delivered = yes
+    if (basedOnFieldCurrentValue == basedOnFieldValue) {
+      el.valueToSet.forEach((item) => {
+        item.values.forEach((field) => {
+          if (field.fieldValueInList.toLowerCase() == "loggedinuser") {
+            var currentDeliveredVal = "";
+            if ($("#Delivered").length) {
+              if ($("#Delivered").attr("type") == "radio") {
+                currentDeliveredVal = $("#Delivered:checked").val();
+              } else {
+                currentDeliveredVal = $("#Delivered").val();
+              }
+            }
+
+            // فقط لو Delivered = yes
+            if (currentDeliveredVal == "yes") {
+              if (isEdit) {
+                Edit_Data_Submit.g.oListItem.set_item(
+                  field.fieldNameInList,
+                  SP.FieldUserValue.fromUser(UserN.LoginName)
+                );
+              } else {
+                New_Data_Submit.g.oListItem.set_item(
+                  field.fieldNameInList,
+                  SP.FieldUserValue.fromUser(UserN.LoginName)
+                );
+              }
+            }
+          } else {
+            if (isEdit) {
+              Edit_Data_Submit.g.oListItem.set_item(
+                field.fieldNameInList,
+                field.fieldValueInList
+              );
+            } else {
+              New_Data_Submit.g.oListItem.set_item(
+                field.fieldNameInList,
+                field.fieldValueInList
+              );
+            }
+          }
+        });
+      });
+    }
+  });
+});
+
   }
   // date controllin
   if($("[date-controling-field]").length){

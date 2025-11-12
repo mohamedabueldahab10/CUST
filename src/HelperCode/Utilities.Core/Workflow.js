@@ -2786,7 +2786,7 @@ var SubmitField_BulkEdit = {
       }
     }
 
-    if(WFisEdit && (workflowname == "EPMOCreateProject" || workflowname == "VROCreateProject" || workflowname == "VROCRProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject") && tasktype == "Submit")
+    if(WFisEdit && (workflowname == "EPMOCreateProject" || workflowname == "VROCreateProject" || workflowname == "VROCRProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "DevelopmentRequirement") && tasktype == "Submit")
     {
       Edit_Data_Submit.init(state);
     }

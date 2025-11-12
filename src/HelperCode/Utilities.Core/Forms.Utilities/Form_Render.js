@@ -172,6 +172,8 @@ window.ListInfo = {
       dataBasedOnParentSetValues = "";
 
     var basedOnParentSetValuesListiner = "";
+    var notBasedOnParentSetValues = [],
+    dataNotBasedOnParentSetValues = "";
 
     asyncFor.seqProcess(
       Information_Form,
@@ -262,6 +264,15 @@ window.ListInfo = {
         } else {
           dataBasedOnParentSetValues = "";
         }
+        notBasedOnParentSetValues = item.formValuesNotBasedOnParent;
+        if (notBasedOnParentSetValues && notBasedOnParentSetValues.length) {
+          dataNotBasedOnParentSetValues =
+            'data-notbasedonparentsetvalues="' +
+            JSON.stringify(notBasedOnParentSetValues).replaceAll(`"`, `'`) +
+            '"';
+        } else {
+          dataNotBasedOnParentSetValues = "";
+        }
         //
 
         toggleSectionName = item.toggleName;
@@ -342,11 +353,10 @@ window.ListInfo = {
           dataWorkflowSetValues +
           " " +
           dataBasedOnParentSetValues +
+          " " + dataNotBasedOnParentSetValues +
           ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' +
           item.className +
           '">';
-
-         
           
         asyncFor.seqProcess(
           item.subFields,
