@@ -257,6 +257,14 @@
           "manifest": "./src/webparts/searchDocuments/SearchDocumentsWebPart.manifest.json"
         }
       ]
+    },
+    "change-requests-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/changeRequests/ChangeRequestsWebPart.js",
+          "manifest": "./src/webparts/changeRequests/ChangeRequestsWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -482,6 +490,7 @@
     "HomePageRedirectWebPartStrings": "lib/webparts/homePageRedirect/loc/{locale}.js",
     "ProjectcomplianceWebPartStrings": "lib/webparts/projectcompliance/loc/{locale}.js",
     "InitiativecomplianceWebPartStrings": "lib/webparts/initiativecompliance/loc/{locale}.js",
-    "SearchDocumentsWebPartStrings": "lib/webparts/searchDocuments/loc/{locale}.js"
+    "SearchDocumentsWebPartStrings": "lib/webparts/searchDocuments/loc/{locale}.js",
+    "ChangeRequestsWebPartStrings": "lib/webparts/changeRequests/loc/{locale}.js"
   }
 }

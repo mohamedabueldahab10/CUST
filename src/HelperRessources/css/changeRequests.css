@@ -1,0 +1,159 @@
+.ItemPseudoFields,
+.changeItemsRow {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 12px 0 #B9C4DBA8;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.changeRequests-container .row {
+    margin-bottom: 1rem;
+}
+
+.changeRequests-container label {
+    font-weight: 600;
+    color: #14415a;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.changeRequests-container select.form-control,
+.changeRequests-container input.form-control,
+.changeRequests-container textarea.form-control {
+    border-radius: 6px;
+    border: 1px solid #D4D4D8;
+    padding: 0.5rem 0.75rem;
+    font-size: 14px;
+    color: #14415a;
+    transition: border-color 0.3s;
+}
+
+.changeRequests-container select.form-control:focus,
+.changeRequests-container input.form-control:focus,
+.changeRequests-container textarea.form-control:focus {
+    border-color: #148282;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(20, 130, 130, 0.2);
+}
+
+.changeRequests-container .is-invalid {
+    border: 2px solid red !important;
+}
+
+.dynamicField label {
+    color: #14415a;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.dynamicField input,
+.dynamicField select,
+.dynamicField textarea {
+    width: 100%;
+    font-size: 14px;
+}
+
+.dynamicField .previousContainer {
+    font-size: 13px;
+    font-weight: 400;
+    color: #148282;
+    margin-top: 0.25rem;
+}
+
+.PPField {
+    width: 100%;
+}
+
+.sp-peoplepicker-topLevel {
+    border: 1px solid #D4D4D8;
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+}
+
+.sp-peoplepicker-editorInput {
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.changeCaption h3 {
+    background: #f7941d;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+#CRSubmitButton {
+    background: #f7941d;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 12px 0 #B9C4DBA8;
+    font-size: 14px;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+#CRSubmitButton:hover {
+    background: #e57f1a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px 0 #B9C4DBA8;
+}
+
+#CRSubmitButton:active {
+    background: #c66b17;
+    transform: translateY(0);
+    box-shadow: 0 2px 12px 0 #B9C4DBA8;
+}
+
+#CRSubmitButton:disabled {
+    background: #d4d4d8;
+    color: #888;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+#CREditButton {
+    background: #148282;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 12px 0 #B9C4DBA8;
+    font-size: 14px;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+#CREditButton:hover {
+    background: #117373;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px 0 #B9C4DBA8;
+}
+
+#CREditButton:active {
+    background: #0e5c5c;
+    transform: translateY(0);
+    box-shadow: 0 2px 12px 0 #B9C4DBA8;
+}
+
+#CREditButton:disabled {
+    background: #a3d1d1;
+    color: #888;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .changeRequests-container .row {
+        margin-bottom: 0.75rem;
+    }
+
+    .changeRequests-container label {
+        font-size: 13px;
+    }
+}

@@ -22,6 +22,8 @@ window.CurrentUserTasksCount = 0;
 window.APIURL = "";
 window.relatedProjectId = "";
 window.relatedInitiativeId = "";
+window.isOnLoad2 = true; //turned false in form request
+
 //window.finishRenderAccessRole = false
 
 window.USERisProjectHome =
@@ -33,6 +35,7 @@ window.USERisStrategicPartnershipHome =
   -1;
 window.USERisTargets =
   window.location.href.toLowerCase().indexOf("/targets.aspx") > -1;
+window.USERisChangeRequests = window.location.href.toLowerCase().indexOf("/changeRequests.aspx")
 
 var BreakException = {};
 var workingstatus = "";
@@ -123,6 +126,7 @@ var UserRole,
     "stratigicinformation.aspx",
     "InitiativesMain.aspx",
     "Targets.aspx",
+    "ChangeRequests.aspx",
     "BenefitMetrics.aspx",
     "StrategicIndicators.aspx",
     "MainIndicators.aspx",
@@ -798,6 +802,13 @@ window.userCalls = {
             document.title = "البحث في المرفقات";
           } else {
             document.title = "Documents Search";
+          }
+          break;
+      case "changeRequests.aspx":
+          if (isArabic) {
+            document.title = "طلبات التغيير";
+          } else {
+            document.title = "Change Requests";
           }
           break;
         
@@ -1697,7 +1708,9 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "documents",
-          "changerequest"
+          "changerequest",
+          "changerequests" 
+
         ];
         CreateChangeRequest_Access = [
           /////////
@@ -1725,7 +1738,9 @@ window.userCalls = {
           "TaskHistory.aspx",
           "home.aspx",
           "projecthome.aspx",
-          "nesteddeliverables"
+          "nesteddeliverables",
+          "changeRequests.aspx",
+          "changerequests"
         ];
         Edit_Access = [
           "projects",
@@ -1853,6 +1868,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
+          "changerequests" 
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = [
@@ -1944,7 +1960,8 @@ window.userCalls = {
           // "projects",
           // "deliverables",
           // "milestones",
-        ];
+          "changeRequests.aspx",
+          "changerequests"        ];
         break;
 
       case "InitiativeOwner":
@@ -3477,6 +3494,7 @@ window.userCalls = {
           // "initiatives",
           // "initiativedeliverables",
           // "initiativemilestones",
+          "initiativelessonslearned",
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
@@ -3503,6 +3521,8 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "achievements",
+          "changerequests" 
+
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
@@ -3516,6 +3536,7 @@ window.userCalls = {
           "initiativerisks",
           "initiativeissues",
           "initiativemom",
+          "initiativelessonslearned",
           // "benefits",
           "initiativeupdates",
           "projectupdates",
@@ -3752,7 +3773,9 @@ window.userCalls = {
         ar_UserRole = "مالك الهدف";
         en_UserRole = "Objective Owner";
 
-        Create_Access = ["mainkpi", "changerequest"];
+        Create_Access = ["mainkpi", "changerequest",  
+                "changerequests" 
+      ];
         Read_Access = [
           "mainkpi",
           "sos",
@@ -3762,7 +3785,8 @@ window.userCalls = {
           "MainIndicators.aspx",
           "tasks",
           "changerequest",
-        ];
+          "changeRequests.aspx",
+          "changerequests"        ];
         Edit_Access = [
           "mainkpi",
           //"changerequest"
@@ -3794,6 +3818,8 @@ window.userCalls = {
           "Targets.aspx",
           "BenefitMetrics.aspx",
           "changerequest",
+          "changerequests" 
+          
         ];
         Read_Access = [
           "mainkpi",
@@ -3812,7 +3838,8 @@ window.userCalls = {
           "InitiativeHome.aspx",
           "initiativesmain.aspx",
           "changerequest",
-        ];
+          "changeRequests.aspx",
+          "changerequests"        ];
         Edit_Access = [
           "Targets.aspx",
           "mainkpi",
@@ -4732,6 +4759,18 @@ window.userCalls = {
                 },
               },
             },
+            {
+              level: 1,
+              listName: "NewChangeRequests",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+            },
           ],
         },
       },
@@ -4795,6 +4834,18 @@ window.userCalls = {
                   listName: "",
                 },
               },
+            },
+            {
+              level: 1,
+              listName: "NewChangeRequests",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
             },
           ],
         },
@@ -5808,6 +5859,18 @@ window.userCalls = {
                 },
               },
             },
+            {
+              level: 1,
+              listName: "NewChangeRequests",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+            },
           ],
         },
       },
@@ -6557,6 +6620,18 @@ window.userCalls = {
                   RelationFieldType: "Text",
                 },
               },
+            },
+            {
+              level: 1,
+              listName: "NewChangeRequests",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
             },
           ],
         },
@@ -7399,6 +7474,18 @@ window.userCalls = {
                   RelationFieldType: "Text",
                 },
               },
+            },
+            {
+              level: 1,
+              listName: "NewChangeRequests",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
             },
           ],
         },

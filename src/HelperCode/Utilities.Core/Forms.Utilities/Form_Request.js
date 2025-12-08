@@ -1347,6 +1347,9 @@ window.Edit_Data_Request = {
       }
     },2000);
     $(".loader-box").fadeOut();
+    setTimeout(function () {
+      isOnLoad2 = false;
+    }, 2000);
   },
   onError: function (sender, args) {
     console.log(
@@ -1560,6 +1563,45 @@ window.Edit_Data_Request = {
     //     });
     //   }
     // }
+      diffInDays: function () {
+      $("[data-difffield2]").each(function () {
+        var diffField1 = $(this).data("difffield1");
+        let fieldsContainer = $(this).closest(".fieldset-container");
+        var diffField1Date = fieldsContainer.find(`#${diffField1}`).val();
+        var diffField2 = $(this).data("difffield2");
+        var diffField2Date = fieldsContainer.find(`#${diffField2}`).val();
+        if (diffField1Date && diffField2Date) {
+          diffField1Date = new Date(diffField1Date);
+          diffField2Date = new Date(diffField2Date);
+          // Calculating the time difference
+          // of two dates
+          let Difference_In_Time =
+            diffField1Date.getTime() - diffField2Date.getTime();
+          // Calculating the no. of days between
+          // two dates
+          let Difference_In_Days = Math.round(
+            Difference_In_Time / (1000 * 3600 * 24)
+          );
+          isEdit
+            ? $(this).val(Difference_In_Days)
+            : $(this).text(Difference_In_Days);
+        }
+      });
+    },
+    diffInDaysonChange: () => {
+      //diffindays handle when date is changed
+      $("[data-difffield2]").each(function () {
+        let fieldsContainer = $(this).closest(".fieldset-container");
+        var diffField1 = $(this).data("difffield1");
+        fieldsContainer.find(`#${diffField1}`).on("change", function () {
+          Edit_Data_Request.g.diffInDays();
+        });
+        var diffField2 = $(this).data("difffield2");
+        fieldsContainer.find(`#${diffField2}`).on("change", function () {
+          Edit_Data_Request.g.diffInDays();
+        });
+      });
+    },
   },
 };
 //RelatedIdeaProject
@@ -3045,6 +3087,9 @@ window.View_Data_Request = {
     $(".loader-box").fadeOut();
     currentItemCode = oListItem.get_item("Title");
     changeResources();
+    setTimeout(function () {
+      isOnLoad2 = false;
+    }, 2000);
     //alert(PCODE_STRING);
   },
   onError: function (sender, args) {
@@ -9311,7 +9356,42 @@ window.Get_InitiativeProjectName = {
   },
   g: {},
 };
+// after masterdetails on edit and view
+window.AfterMasterDetailsRequest = {
+  init: function () {
+    const isProjectMilestones = $(`[data-target_list="ProjectMilestones"]`).length > 0;
+    const isInitiativeMilestones = $(`[data-target_list="InitiativeMilestones"]`).length > 0;
+    if (isEdit) {
+      if (isProjectMilestones || isInitiativeMilestones) {
+        $(`[table-target_list="ProjectMilestones"], [table-target_list="InitiativeMilestones"]`).each(function () {
+          const totalWeight = $(this)
+          .find("td#Weight")
+          .map(function () {
+            return parseFloat($(this).text()) || 0; // Extract and convert text to number
+          })
+          .get() // Convert jQuery object to an array
+          .reduce((sum, weight) => sum + weight, 0); // Sum up the array
+          const remainingWeight = 100 - totalWeight;
+          $(this).closest(".fieldset-container ").find("input#Weight").attr("max", remainingWeight);
 
+          const $container = $(this).closest(".fieldset-container").find(`label[for="Weight"]`);
+          const $existingSpan = $container.find('span[data-trans-remainperc]');
+          if ($existingSpan.length > 0) {
+            // If the element exists, update its value
+            $existingSpan.next('.remainPercentageVal').text(remainingWeight);
+          } else {
+            // If the element does not exist, append it
+            $container.append(`
+              <span data-trans-remainperc class="Resources remainpercstyle"></span>
+              <span class="remainpercstyle remainPercentageVal">
+                ${remainingWeight}
+              </span>
+            `);
+          }
+        })
+      }
+    } else if (isView) {
 
-
-
+    }
+  }
+}

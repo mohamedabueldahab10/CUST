@@ -732,8 +732,17 @@ window.ListingData = {
 			  else if (listkey == 'strategicpartnerships') {
 				html += '<li class="list-group-item link-arrow">' +
 				  '<a  style="cursor: pointer;" id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between" target="_blank" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/StrategicPartnershipHome.aspx?STCODE=" + records[i].Title + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>';
-			  }
-			  else if (isTasks) {
+			  } else if (listkey == 'changerequests') {
+				html += '<li class="list-group-item link-arrow">' +
+				  '<a style="cursor: pointer;" id="ID' + i +
+				  '" class="mb-0 py-3 px-2 d-flex justify-content-between" target="_blank" href="' +
+				  _spPageContextInfo.webAbsoluteUrl +
+				  "/SitePages/ChangeRequests.aspx?isview=true&critemcode=" + records[i].Title +
+				  '">' +
+				  '<span class="acc-title d-inline-flex black paddingEnd16px">' +
+				  indexofListing +
+				  '</span>';
+			} else if (isTasks) {
 				html += '<li class="list-group-item tasksPage ">' + //link-arrow
 				  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" target="_blank" href="javascript:" onclick="ListingData.g.handleids(\'' + RecordsWithID[i].pcode + '\',\'' + RecordsWithID[i].icode + '\',\'' + RecordsWithID[i].ID + '\',\'' + RecordsWithID[i].tasktype + '\',\'' + RecordsWithID[i].stageid + '\',\'' + RecordsWithID[i].ritemid + '\',\'' + RecordsWithID[i].sourceitemid + '\',\'' + RecordsWithID[i].wfname + '\',\'' + RecordsWithID[i].puid + '\',\'' + RecordsWithID[i].relatedurl + '\')">';
 
@@ -1188,16 +1197,18 @@ window.ListingData = {
 
 
 
-			//create button and div for filtertation DDLs
-			var HtmlStart = (USERProjRelated.indexOf(listkey) > -1 && PCODE) || (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && !STCODE && listkey != 'tasks') || (listkey == 'changerequest') ?
-			  '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>' : ICODE ?
-				'<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
-				: STCODE ?
-				  '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&STCODE=" + STCODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
-				  : '';
-
-
-
+			var HtmlStart = 
+				(listkey == "changerequests")
+					? '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/ChangeRequests.aspx?isnew=true"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
+				: (USERProjRelated.indexOf(listkey) > -1 && PCODE) 
+					|| (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && !STCODE && listkey != 'tasks') 
+					|| (listkey == 'changerequest') 
+					? '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
+					: ICODE 
+					? '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
+					: STCODE 
+						? '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&STCODE=" + STCODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
+						: '';
 
 
 			//hide btn and appear msg if there is no Actual budget
