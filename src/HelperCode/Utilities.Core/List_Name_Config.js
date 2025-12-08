@@ -822,6 +822,43 @@ var ListArray = [
 		projnav: "Project Navigation",
 		subfolder: true,
 	},
+	{
+		changerequests: "NewChangeRequests",
+		ListingTitle: "طلبات التغيير",
+		FormTitle: "طلبات التغيير",
+		TitleEn: "Change Request",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
+	{
+		changeitems: "ChangeItems",
+		ListingTitle: "بنود طلبات التغيير",
+		FormTitle: "بنود طلبات التغيير",
+		TitleEn: "Change Items",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
+	{
+		changeitemapprovalcontrol: "ChangeItemApprovalControl",
+		ListingTitle: "تحكم اعتماد بنود طلبات التغيير",
+		FormTitle: "تحكم اعتماد بنود طلبات التغيير",
+		TitleEn: "Change Item Approval Control",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
+	{
+		finalapprovallevels: "FinalApprovalLevels",
+		ListingTitle: "اعداد مستوى الاعتماد النهائي",
+		FormTitle: "اعداد مستوى الاعتماد النهائي",
+		TitleEn: "Final Approval Levels",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
+	
 ];
 var PageArray = [
     {
@@ -880,6 +917,11 @@ var PageArray = [
 		pagename: "SearchDocuments.aspx",
 		Title: "البحث في المرفقات",
 		TitleEn: "Documents Search",
+	},
+	{
+		pagename: "ChangeRequests.aspx",
+		Title: "طلبات التغيير",
+		TitleEn: "Change Requests",
 	},
 	{
 		pagename: "BenefitMetrics.aspx",

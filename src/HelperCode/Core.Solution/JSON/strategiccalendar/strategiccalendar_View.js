@@ -82,6 +82,42 @@ var Information_Form = [
           },
         },
         {
+          InternalName: "MeasurementLaunchDate",
+          DisplayName: "تاريخ اطلاق دورة القياس",
+          DisplayNameEn: "Measurement Launch Date",
+          type: "datetime",
+        },
+        {
+          InternalName: "DataReceptionEndDate",
+          DisplayName: "تاريخ الانتهاء من استقبال البيانات",
+          DisplayNameEn: "Data Reception End Date",
+          type: "datetime",
+        },
+        {
+          InternalName: "AgenciesMeetingsDate",
+          DisplayName: "تاريخ عقد اجتماعات الوكالات",
+          DisplayNameEn: "Agencies Meetings Date",
+          type: "datetime",
+        },
+        {
+          InternalName: "ExecutiveCommitteesMeetingsDate",
+          DisplayName: "تاريخ عقد اجتماعات اللجان التنفيذية",
+          DisplayNameEn: "Executive Committees Meetings Date",
+          type: "datetime",
+        },
+        {
+          InternalName: "SteeringCommitteesMeetingsDate",
+          DisplayName: "تاريخ عقد اجتماعات اللجان التوجيهية",
+          DisplayNameEn: "Steering Committees Meetings Date",
+          type: "datetime",
+        },
+        {
+          InternalName: "TeamMembers",
+          DisplayName: "أسماء فريق العمل",
+          DisplayNameEn: "Team Members",
+          type: "multipicker",
+        },
+        {
           InternalName: "IsActive",
           DisplayName: "مفعلة",
           DisplayNameEn: "Active",

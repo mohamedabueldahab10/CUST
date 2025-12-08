@@ -10303,6 +10303,27 @@ debugger;
     //   //   });
     //   // }
     // },
+    dateMinAndMaxValidation: () => {
+      // max and min date for the master details
+      $("input[type=date]:not([minimumdate=undefined])").on(
+        "change",
+        function () {
+          var start = $(this)
+            .closest(".fieldset-container")
+            .find("input#" + $(this).attr("minimumdate"));
+          if ($(this).val()) start.attr("max", $(this).val());
+        }
+      );
+      $("input[type=date]:not([maximumdate=undefined])").on(
+        "change",
+        function () {
+          var end = $(this)
+            .closest(".fieldset-container")
+            .find("input#" + $(this).attr("maximumdate"));
+          if ($(this).val()) end.attr("min", $(this).val());
+        }
+      );
+    },
   },
   roleQuery: async function (fieldsConditionConfig) {
     let whereBody = ``,
@@ -13578,19 +13599,20 @@ var Dynamic_Data_Request = {
 };
 var generalOriginalValue = [];
 
-dynamicAffectSelect = {
+window.dynamicAffectSelect = {
   // The main Initialization function
   init: function (affectedSelectsInfo) {
-
-
+    console.log(affectedSelectsInfo, "affectedSelectsInfo");
     if (affectedSelectsInfo.length) {
       var queryFieldValue = affectedSelectsInfo[0].queryFieldValue
         ? affectedSelectsInfo[0].queryFieldValue
         : "";
-
       var queryFieldName = affectedSelectsInfo[0].queryFieldName
         ? affectedSelectsInfo[0].queryFieldName
         : "";
+      queryFieldName = queryFieldName.includes("--")
+        ? queryFieldName.split("--")[0]
+        : queryFieldName;
       var queryFieldType = affectedSelectsInfo[0].queryFieldType
         ? affectedSelectsInfo[0].queryFieldType
         : "";
@@ -13624,71 +13646,6 @@ dynamicAffectSelect = {
         // specially for trategically value
         valueToFilter = "ministry"; // becuse there is a value we use it in GoalStrategy list
       }
-
-      // depends on role
-
-      // var Where_Body = ""
-      // var FilterChoices = [];
-      // var PQueryFilteration = ""
-      // var Where_Body_Final = ""
-      // var checkQuery =""
-      // if (isRoleDataLevelAccess) {
-      //   FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
-      //   checkQuery = dataLevelAccessQuery
-      // }
-      // console.log(checkQuery,"checkQuery")
-
-      // for (var i = 0; i < FilterChoices.length; i++) {
-      //   if (FilterChoices.length == 1) {
-
-      //     console.log(FilterChoices, "FilterChoices FilterChoices")
-
-      //     if (FilterChoices[i].targetIsMultiFilter) {
-      //       for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-      //         // debugger
-      //         if (j == FilterChoices[i].Values.length - 1) {
-      //           Where_Body += `<Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-      //         } else {
-      //           Where_Body += `<Or><Contains><FieldRef Name="${FilterChoices[i].internalName}"  /><Value Type="Text">${FilterChoices[i].Values[j]}</Value></Contains>`
-      //         }
-      //       }
-      //       var countOr = (Where_Body.match(/<Or>/g) || []).length;
-      //       var ORC = "</Or>".repeat(countOr);
-      //       Where_Body += ORC;
-
-      //     } else if (FilterChoices[i].Type == "LoggedInUser") {
-      //       Where_Body += `<Eq><FieldRef Name="${FilterChoices[i].internalName}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
-      //     } else {
-      //       Where_Body += '<In><FieldRef Name="' + FilterChoices[i].internalName + '" /><Values>';
-      //       for (var j = 0; j < FilterChoices[i].Values.length; j++) {
-      //         Where_Body += '<Value Type="' + FilterChoices[i].Type + '">' + FilterChoices[i].Values[j] + '</Value>';
-      //       }
-      //       Where_Body += '</Values></In>';
-      //     }
-      //   }
-
-      //   if (i == FilterChoices.length - 1) {
-
-      //     Where_Body = Where_Body.replaceAll('Type="date"', 'IncludeTimeValue="TRUE" Type="DateTime"'); //IncludeTimeValue="false"
-
-      //     PQueryFilteration = `<Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>`
-
-      //     console.log(Where_Body,"bbbbbbbbbbb")
-      //     console.log(PQueryFilteration,"PQueryFilteration")
-      //     debugger
-      //     Where_Body_Final =
-      //       "<Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And>" +
-      //       Where_Body +
-      //       PQueryFilteration +
-      //       "</And></And></Where>";
-
-      //     // console.log(Where_Body_Final, "Where_Body_Final")
-      //     // debugger
-
-      //   }
-
-      // }
-      //
 
       if (
         affectedSelectsInfo[0].isCustomFilterValue === "true" &&
@@ -13955,7 +13912,9 @@ dynamicAffectSelect = {
     dynamicAffectSelect.g.affectedSelectsInfo.shift();
 
     if (dynamicAffectSelect.g.affectedSelectsInfo.length) {
-      dynamicAffectSelect.init(dynamicAffectSelect.g.affectedSelectsInfo);
+      // setTimeout(() => {
+        dynamicAffectSelect.init(dynamicAffectSelect.g.affectedSelectsInfo);
+      // }, 500);
     }
     // dynamicAffectSelect.g.affectedSelectsInfo.length &&
     //   dynamicAffectSelect.init(dynamicAffectSelect.g.affectedSelectsInfo);

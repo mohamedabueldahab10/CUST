@@ -1314,6 +1314,20 @@
     Risks: "المخاطر",
     Issues: "التحديات",
     MainKPIs: "المؤشرات",
+    parentitemtype: "نوع العنصر",
+    kpi: "المؤشر",
+    parentselecteditem: "العنصر المختار",
+    childitemtype: "نوع العنصر الفرعي",
+    childselecteditem: "العنصر الفرعي المختار",
+    changeitem: "عنصر التغيير",
+    approvallevel: "مستوى الاعتماد الاستراتيجي",
+    approvallevel1: "مستوى أول",
+    approvallevel2: "مستوى ثاني",
+    changedescription: "وصف التغيير",
+    justification: "المبررات",
+    positiveimpact: "الأثر الإيجابي",
+    impactlevel: "مستوى الأثر",
+    previousvalue: "القيمة السابقة:",
 
     "urgent":"عاجل",
     "veryimportant":"مهم جدا",
@@ -2642,6 +2656,21 @@ restoration:"restoration",
     Risks: "Risks",
     Issues: "Issues",
     MainKPIs: "Kpis",
+    parentitemtype: "Item Type",
+    kpi: "KPI",
+    parentselecteditem: "Selected Item",
+    childitemtype: "Child Item Type",
+    childselecteditem: "Selected Child Item",
+    changeitem: "Change Item",
+    approvallevel: "Strategic Approval Level",
+    approvallevel1: "Level One",
+    approvallevel2: "Level Two",
+    changedescription: "Change Description",
+    justification: "Justification",
+    positiveimpact: "Positive Impact",
+    impactlevel: "Impact Level",
+    previousvalue: "Previous Value:",
+
 
 
     "urgent":"Urgent",
@@ -2819,7 +2848,13 @@ window.Dynamo_Data = [
     Name: "Name",
     NameEn: "Name",
     Code: "Title",
-  }
+  },
+  {
+    ListName: "ChangeItems",
+    Name: "ItemName",
+    NameEn: "ItemName",
+    Code: "Title",
+  },
 ];
 
 function setLocalStorage(name, value) {
