@@ -1341,6 +1341,9 @@
     previousvalue: "القيمة السابقة:",
     crlevel1: "مستوى اول",
     crlevel2: "مستوى ثاني",
+    crstrategic: "مسار استراتيجي",
+    crexecution : "مسار تنفيذي",
+    croperationally: "مسار تشغيلي",
 
 
     "urgent":"عاجل",
@@ -2697,6 +2700,10 @@ restoration:"restoration",
     previousvalue: "Previous Value:",
     crlevel1: "Level 1",
     crlevel2: "Level 2",
+    crstrategic: "Strategy",
+    crexecution : "Execution",
+    croperationally: "Operational",
+
 
 
 
