@@ -1339,6 +1339,9 @@
     positiveimpact: "الأثر الإيجابي",
     impactlevel: "مستوى الأثر",
     previousvalue: "القيمة السابقة:",
+    crlevel1: "مستوى اول",
+    crlevel2: "مستوى ثاني",
+
 
     "urgent":"عاجل",
     "veryimportant":"مهم جدا",
@@ -2692,6 +2695,8 @@ restoration:"restoration",
     positiveimpact: "Positive Impact",
     impactlevel: "Impact Level",
     previousvalue: "Previous Value:",
+    crlevel1: "Level 1",
+    crlevel2: "Level 2",
 
 
 
