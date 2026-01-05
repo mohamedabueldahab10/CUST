@@ -1,15 +1,488 @@
-var href = window.location.href.toLowerCase();
+var hrefOriginal = window.location.href;
+var href = hrefOriginal.toLowerCase();
 window.isNew = href.indexOf("isnew=true") > -1;
 window.isView = href.indexOf("isview=true") > -1;
 window.isEdit = href.indexOf("isedit=true") > -1;
+window.isWF =
+  window.location.href.indexOf("&WFs") > -1 ||
+  window.location.href.indexOf("&wfs") > -1;
 window.crItemCode = "";
-if (href.indexOf("critemcode=") > -1) {
-  crItemCode = href.split("critemcode=")[1].split("&")[0];
-}
+window.crItemId = 0;
+// IMPORTANT: don't lowercase CR code; it is case-sensitive for folders and display (e.g., NCR-25-0001)
+try {
+  var m = hrefOriginal.match(/critemcode=([^&]+)/i);
+  if (m && m[1] !== undefined) {
+    crItemCode = decodeURIComponent(m[1]);
+  }
+} catch (e) { }
+
+var taskID = window.location.href.includes("TID=")
+  ? window.location.href.split("TID=")[1].split("&")[0]
+  : "";
+var taskId = taskID; // Keep both for compatibility
+var stageId = "";
 
 var LoggedInUser = null;
 var LoggedInUserTitle = null;
 var LoggedInUserId = null;
+var currentApprovalPath = "";
+var currentSecurityGroupName = "";
+
+// Attachments (Change Requests)
+var CR_ATTACHMENTS_LIBRARY = "SPM General Services";
+var CR_ATTACHMENTS_ROOT_FOLDER = "changerequests";
+var CR_ALLOWED_EXTENSIONS = [
+  "pdf",
+  "doc",
+  "docx",
+  "xls",
+  "xlsx",
+  "ppt",
+  "pptx",
+  "png",
+  "jpg",
+  "jpeg",
+];
+var CR_MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB per file
+
+function normalizeFileName(name) {
+  if (!name) return "file";
+  // SharePoint sometimes shows weird replacement chars; also avoid slashes
+  return String(name)
+    .replaceAll("�", "")
+    .replace(/[\/\\]/g, "-");
+}
+
+function getCRAttachmentsFolderServerRelativeUrl() {
+  // Do NOT create folders. Just return the existing folder:
+  // <SPM General Services>/changerequests
+  return new Promise(function (resolve) {
+    try {
+      function escapeODataString(s) {
+        return String(s || "").replace(/'/g, "''");
+      }
+
+      $.ajax({
+        url:
+          _spPageContextInfo.webAbsoluteUrl +
+          "/_api/web/lists/getbytitle('" +
+          escapeODataString(CR_ATTACHMENTS_LIBRARY) +
+          "')/RootFolder/ServerRelativeUrl",
+        method: "GET",
+        headers: { Accept: "application/json; odata=verbose" },
+        success: function (data) {
+          var rootUrl =
+            data && data.d && data.d.ServerRelativeUrl
+              ? data.d.ServerRelativeUrl
+              : "";
+          if (!rootUrl) return resolve("");
+          resolve(rootUrl + "/" + CR_ATTACHMENTS_ROOT_FOLDER);
+        },
+        error: function () {
+          resolve("");
+        },
+      });
+    } catch (e) {
+      resolve("");
+    }
+  });
+}
+
+function getSelectedChangeItemMeta() {
+  var $opt = $("#ChangeItem option:selected");
+  return {
+    actionType: ($opt.data("actiontype") || $opt.attr("data-actiontype") || "")
+      .toString()
+      .toLowerCase(),
+    listName: ($opt.data("listname") || $opt.attr("data-listname") || "")
+      .toString()
+      .toLowerCase(),
+  };
+}
+
+function getCRAttachmentFiles() {
+  var el = document.getElementById("CRAttachments");
+  if (!el || !el.files) return [];
+  return Array.prototype.slice.call(el.files);
+}
+
+function initCRAttachmentsUI() {
+  try {
+    // Enforce allowed extensions + accept attribute (unlimited count, 5MB per file)
+    $("#CRAttachments")
+      .attr(
+        "accept",
+        CR_ALLOWED_EXTENSIONS.map(function (e) {
+          return "." + e;
+        }).join(",")
+      )
+      .parent()
+      .find(".acceptedfile")
+      .text(CR_ALLOWED_EXTENSIONS.join(", "));
+
+    // Set max size text to 5MB (do NOT use data-trans-fileSize because changeResources() would overwrite it)
+    var isArabic =
+      localStorage.getItem("lng") == null ||
+      localStorage.getItem("lng") == "ar";
+    $("#CRAttachments")
+      .parent()
+      .find(".crFileSizeText")
+      .text(
+        isArabic ? "حجم الملف المسموح به هو : 5MB" : "Maximum file size: 5MB"
+      );
+
+    // Update chosen files UI (fallback if global handler isn't present)
+    $("body").off("change.CRAttachments", "#CRAttachments");
+    $("body").on("change.CRAttachments", "#CRAttachments", function () {
+      var files = this.files ? Array.prototype.slice.call(this.files) : [];
+      var $parent = $(this).parent();
+      var $chosen = $parent.find("#file-chosen");
+      var $noFile = $chosen.find("#nofile");
+      var names = files
+        .map(function (f) {
+          return f && f.name ? f.name : "";
+        })
+        .filter(Boolean);
+
+      // Hide errors initially
+      $parent.find(".AttErrorMsg").hide();
+      $parent.find(".notacceptedext").empty();
+
+      // Show chosen names
+      if (names.length) {
+        if ($noFile.length) $noFile.remove();
+        $chosen.text(names.join(", "));
+      } else {
+        // restore placeholder
+        $chosen.html(
+          '<span data-trans-nofile id="nofile" class="Resources"></span>'
+        );
+        changeResources();
+      }
+
+      // Basic extension + size checks (same behavior as global attachment validation)
+      var hasInvalid = false;
+      var invalidExts = [];
+      var oversized = false;
+
+      var exts = CR_ALLOWED_EXTENSIONS;
+
+      files.forEach(function (file) {
+        if (!file) return;
+        if (file.size && file.size > CR_MAX_FILE_SIZE_BYTES) oversized = true;
+        if (Array.isArray(exts) && exts.length) {
+          var ext = (file.name || "").split(".").pop().toLowerCase();
+          if (exts.indexOf(ext) === -1) {
+            hasInvalid = true;
+            invalidExts.push(ext);
+          }
+        }
+      });
+
+      if (hasInvalid) {
+        $parent.find(".notacceptedext").text(invalidExts.join(", "));
+        $parent.find(".AttErrorMsg").show();
+      }
+      if (oversized) {
+        // Keep it simple: rely on existing text "Maximum file size: 5MB"
+        $parent.find(".attErrorMsg").addClass("redColor");
+      } else {
+        $parent.find(".attErrorMsg").removeClass("redColor");
+      }
+    });
+  } catch (e) { }
+}
+
+function loadCRExistingAttachments() {
+  try {
+    var id = parseInt(window.crItemId || 0, 10) || 0;
+    var $list = $("#CRExistingAttachments");
+    var $wrapper = $("#CRExistingAttachmentsWrapper");
+    if (!$list.length || !$wrapper.length) return;
+
+    $list.empty();
+
+    if (!id) {
+      $wrapper.hide();
+      return;
+    }
+
+    var url =
+      _spPageContextInfo.webAbsoluteUrl +
+      "/_api/web/lists/getbytitle('" +
+      CR_ATTACHMENTS_LIBRARY.replace(/'/g, "''") +
+      "')/items?$top=5000&$select=Id,Title,ItemID,FileRef,FileLeafRef,FSObjType&$filter=ItemID eq " +
+      id +
+      " and FSObjType eq 0";
+
+    $.ajax({
+      url: url,
+      method: "GET",
+      headers: { Accept: "application/json; odata=verbose" },
+      success: function (data) {
+        var results = data && data.d && data.d.results ? data.d.results : [];
+        if (!results.length) {
+          $wrapper.hide();
+          return;
+        }
+
+        $wrapper.show();
+        results.forEach(function (it) {
+          var name = it.FileLeafRef || it.Title || "File " + it.Id;
+          var href = it.FileRef || "#";
+          var canDelete = !!window.isEdit;
+          var fileTitle = it.Title || "";
+          var safeName = escapeHtml(name);
+          var safeHref = escapeHtml(href);
+          var safeTitle = escapeHtml(fileTitle);
+
+          var deleteBtn = canDelete
+            ? '<a class="delete-file" href="javascript:" title="Delete ' +
+            safeName +
+            '" data-fileref="' +
+            safeHref +
+            '" data-filename="' +
+            safeName +
+            '"><i class="fas fa-times"><span class="filePurpose"></span></i></a>'
+            : "";
+
+          // Match other forms markup: file-container + File-Link (+ delete-file in edit)
+          $list.append(
+            '<div class="file-container">' +
+            '<a class="File-Link" file-id="' +
+            it.Id +
+            '" file-title="' +
+            safeTitle +
+            '" href="' +
+            safeHref +
+            '" download="' +
+            safeName +
+            '" title="Download ' +
+            safeName +
+            '">' +
+            '<i class="fas fa-file-download"></i>' +
+            safeName +
+            "</a>" +
+            deleteBtn +
+            "</div>"
+          );
+        });
+      },
+      error: function () {
+        $wrapper.hide();
+      },
+    });
+  } catch (e) { }
+}
+
+function deleteCRAttachmentByFileRef(fileRef) {
+  return new Promise(function (resolve) {
+    try {
+      if (!fileRef) return resolve(false);
+      var digest = $("#__REQUESTDIGEST").val();
+      $.ajax({
+        url:
+          _spPageContextInfo.webAbsoluteUrl +
+          "/_api/web/getfilebyserverrelativeurl('" +
+          String(fileRef).replace(/'/g, "''") +
+          "')",
+        type: "POST",
+        headers: {
+          Accept: "application/json; odata=verbose",
+          "X-RequestDigest": digest,
+          "IF-MATCH": "*",
+          "X-HTTP-Method": "DELETE",
+        },
+        success: function () {
+          resolve(true);
+        },
+        error: function () {
+          resolve(false);
+        },
+      });
+    } catch (e) {
+      resolve(false);
+    }
+  });
+}
+
+$(document).off("click.CRDeleteAttach", ".delete-file");
+$(document).on("click.CRDeleteAttach", ".delete-file", function () {
+  try {
+    if (!window.isEdit) return;
+    var fileRef = $(this).attr("data-fileref");
+    if (!fileRef) return;
+
+    var confirmMsg =
+      localStorage.getItem("lng") == "en"
+        ? "Are you sure you want to delete this attachment?"
+        : "هل أنت متأكد أنك تريد حذف هذا المرفق؟";
+
+    if (!confirm(confirmMsg)) return;
+
+    $(this).addClass("disabled");
+    deleteCRAttachmentByFileRef(fileRef).then(function () {
+      setTimeout(loadCRExistingAttachments, 300);
+    });
+  } catch (e) { }
+});
+
+function uploadCRAttachments(crCode, itemId) {
+  // IMPORTANT: attachments upload must never block submit (New/Edit). We always resolve.
+  return new Promise(function (resolve) {
+    try {
+      var files = getCRAttachmentFiles();
+      if (!files.length) return resolve();
+      if (!crCode) return resolve(); // no code => skip upload
+      var docTitle = "changerequests-" + crCode;
+      var normalizedItemId = parseInt(itemId || window.crItemId || 0, 10) || 0;
+
+      // Filter files by allowed extensions and max size (5MB per file)
+      files = files.filter(function (file) {
+        if (!file || !file.name) return false;
+        if (file.size && file.size > CR_MAX_FILE_SIZE_BYTES) return false;
+        var ext = file.name.split(".").pop().toLowerCase();
+        return CR_ALLOWED_EXTENSIONS.indexOf(ext) > -1;
+      });
+      if (!files.length) return resolve();
+
+      var hadUploadError = false;
+
+      // Upload using SharePoint REST (works without $SP)
+      getCRAttachmentsFolderServerRelativeUrl().then(function (
+        folderServerRelativeUrl
+      ) {
+        if (!folderServerRelativeUrl) {
+          alert(
+            localStorage.getItem("lng") == "en"
+              ? "Saved, but attachments could not be uploaded."
+              : "تم الحفظ، لكن تعذر رفع المرفقات."
+          );
+          return resolve();
+        }
+
+        function uploadOne(file) {
+          return new Promise(function (r) {
+            try {
+              var reader = new FileReader();
+              reader.onloadend = function (e) {
+                try {
+                  var safeName = normalizeFileName(file.name);
+                  var uploadName =
+                    new Date().toISOString().replaceAll(":", "-") +
+                    "_-_" +
+                    safeName;
+                  var fileServerRelativeUrl =
+                    folderServerRelativeUrl + "/" + uploadName;
+                  var url =
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/_api/web/GetFolderByServerRelativeUrl('" +
+                    encodeURIComponent(folderServerRelativeUrl).replace(
+                      /'/g,
+                      "''"
+                    ) +
+                    "')/Files/add(overwrite=true,url='" +
+                    encodeURIComponent(uploadName).replace(/'/g, "''") +
+                    "')";
+
+                  $.ajax({
+                    url: url,
+                    method: "POST",
+                    data: e.target.result,
+                    processData: false,
+                    headers: {
+                      Accept: "application/json;odata=verbose",
+                      "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                    },
+                    success: function () {
+                      // Update metadata on uploaded file item (ItemID + Title), non-blocking
+                      if (normalizedItemId) {
+                        var updateUrl =
+                          _spPageContextInfo.webAbsoluteUrl +
+                          "/_api/web/GetFileByServerRelativeUrl('" +
+                          String(fileServerRelativeUrl).replace(/'/g, "''") +
+                          "')/ListItemAllFields";
+
+                        // Use ValidateUpdateListItem (most reliable way to update library item fields)
+                        $.ajax({
+                          url: updateUrl + "/ValidateUpdateListItem",
+                          method: "POST",
+                          contentType: "application/json;odata=verbose",
+                          data: JSON.stringify({
+                            formValues: [
+                              { FieldName: "Title", FieldValue: docTitle },
+                              {
+                                FieldName: "ItemID",
+                                FieldValue: String(normalizedItemId),
+                              },
+                            ],
+                            bNewDocumentUpdate: false,
+                          }),
+                          headers: {
+                            Accept: "application/json;odata=verbose",
+                            "Content-Type": "application/json;odata=verbose",
+                            "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+                          },
+                          success: function () {
+                            // Even if field doesn't exist, don't block submit
+                            r();
+                          },
+                          error: function () {
+                            // Don't block submit; also don't show "upload failed" since the file uploaded
+                            r();
+                          },
+                        });
+                      } else {
+                        r();
+                      }
+                    },
+                    error: function () {
+                      hadUploadError = true;
+                      r();
+                    },
+                  });
+                } catch (ex) {
+                  hadUploadError = true;
+                  r();
+                }
+              };
+              reader.onerror = function () {
+                hadUploadError = true;
+                r();
+              };
+              reader.readAsArrayBuffer(file);
+            } catch (ex) {
+              hadUploadError = true;
+              r();
+            }
+          });
+        }
+
+        Promise.all(files.map(uploadOne))
+          .then(function () {
+            if (hadUploadError) {
+              alert(
+                localStorage.getItem("lng") == "en"
+                  ? "Saved, but some attachments could not be uploaded."
+                  : "تم الحفظ، لكن تعذر رفع بعض المرفقات."
+              );
+            }
+            resolve();
+          })
+          .catch(function () {
+            alert(
+              localStorage.getItem("lng") == "en"
+                ? "Saved, but attachments could not be uploaded."
+                : "تم الحفظ، لكن تعذر رفع المرفقات."
+            );
+            resolve();
+          });
+      });
+    } catch (e) {
+      resolve();
+    }
+  });
+}
 
 function getLoggedInUser() {
   return new Promise(function (resolve, reject) {
@@ -24,7 +497,7 @@ function getLoggedInUser() {
       success: function (data) {
         LoggedInUser = data.d.Title || data.d.LoginName || data.d.Email;
         LoggedInUserTitle = data.d.Title;
-        LoggedInUserId = data.d.Id; 
+        LoggedInUserId = data.d.Id;
         resolve({ user: LoggedInUser, userId: LoggedInUserId });
       },
       error: function (err) {
@@ -35,10 +508,78 @@ function getLoggedInUser() {
   });
 }
 
+// Helper function to get user display name from user ID
+function getUserDisplayNameFromId(userId) {
+  return new Promise(function (resolve) {
+    if (!userId || !String(userId).trim()) {
+      resolve("");
+      return;
+    }
+    var userIdNum = parseInt(userId, 10);
+    if (isNaN(userIdNum)) {
+      resolve(String(userId)); // Return as-is if not a number
+      return;
+    }
+    $.ajax({
+      url:
+        _spPageContextInfo.webAbsoluteUrl +
+        "/_api/web/GetUserById(" +
+        userIdNum +
+        ")",
+      method: "GET",
+      headers: { Accept: "application/json; odata=verbose" },
+      success: function (data) {
+        resolve(data.d.Title || data.d.LoginName || String(userId));
+      },
+      error: function () {
+        resolve(String(userId)); // Fallback to ID if error
+      },
+    });
+  });
+}
+
+function getLocalizedMessage(key) {
+  const lang = localStorage.getItem("lng");
+  const isArabic = lang == null || lang == "ar";
+
+  const messages = {
+    saveSuccess: {
+      ar: "تم الحفظ بنجاح. الرجاء استكمال الطلب من خلال التعديل !",
+      en: "Saved successfully. Please complete the request through editing!",
+    },
+    editSuccess: {
+      ar: "تم التعديل بنجاح. طلبك قيد الموافقة !",
+      en: "Updated successfully. Your request is pending approval!",
+    },
+    apiError: {
+      ar: "حدث خطأ أثناء حفظ التفاصيل الإضافية",
+      en: "An error occurred while saving additional details",
+    },
+    noItemCode: {
+      ar: "لا يمكن التعديل: لم يتم تحديد كود التغيير.",
+      en: "Cannot edit: Change request code is not specified.",
+    },
+    itemNotFound: {
+      ar: "لم يتم العثور على العنصر.",
+      en: "Item not found.",
+    },
+    itemNotFoundByTitle: {
+      ar: "لم يتم العثور على العنصر.",
+      en: "Item not found.",
+    },
+  };
+
+  return messages[key] ? (isArabic ? messages[key].ar : messages[key].en) : "";
+}
+
 function getAllowedParentItemTypes() {
   var currentRole = window.currentUserRole || "";
 
-  if (currentRole === "Administrator" || currentRole === "DU") {
+  if (
+    currentRole === "Administrator" ||
+    currentRole === "DU" ||
+    currentRole === "EPMO"
+  ) {
     return ["SOs", "MainKpi", "Initiatives", "Projects"];
   } else if (currentRole === "ObjectiveOwner") {
     return ["SOs"];
@@ -143,6 +684,16 @@ var checkchangerequestshtml = setInterval(function () {
           </select>
         </div>
 
+        <div class="col-md-6 mb-3" id="ClassificationDiv" style="display: none;">
+          <label data-trans-kpiclassification class="Resources">نوع المؤشر</label>
+          <select id="Classification" class="form-control">
+            <option value="" disabled selected></option>
+            <option data-trans-kpistrategic class="Resources" value="kpistrategic"></option>
+             <option data-trans-kpioperational class="Resources" value="kpioperational"></option>
+            
+          </select>
+        </div>
+
         <div class="col-md-6 mb-3">
           <label data-trans-parentselecteditem class="Resources">
             Parent Selected Item</label
@@ -216,7 +767,7 @@ var checkchangerequestshtml = setInterval(function () {
 
         <div class="col-md-12 mb-3">
           <label data-trans-changedescription class="Resources"></label>
-          <textarea id="ChangeDescription" class="form-control" rows="3"></textarea>
+          <textarea id="ChangeDescription" class="form-control" rows="3" required></textarea>
         </div>
 
         <div class="col-md-12 mb-3">
@@ -225,6 +776,7 @@ var checkchangerequestshtml = setInterval(function () {
             id="ChangeJustification"
             class="form-control"
             rows="3"
+            required
           ></textarea>
         </div>
 
@@ -234,12 +786,13 @@ var checkchangerequestshtml = setInterval(function () {
             id="ExpectedPositiveImpact"
             class="form-control"
             rows="3"
+            required
           ></textarea>
         </div>
 
         <div class="col-md-6 mb-3">
           <label data-trans-impactlevel class="Resources"></label>
-          <select id="ImpactType" class="form-control">
+          <select id="ImpactType" class="form-control" required>
             <option
               data-trans-impactlevel
               class="Resources"
@@ -251,6 +804,20 @@ var checkchangerequestshtml = setInterval(function () {
             <option data-trans-medium class="Resources" value="medium"></option>
             <option data-trans-low class="Resources" value="low"></option>
           </select>
+        </div>
+      </div>
+      <div class="row mt-5 mb-3 CRAttachmentsBlock">
+        <div class="col-md-12 mb-3 CFIELD">
+          <label data-trans-document class="Resources">مرفقات :</label>
+          <input id="CRAttachments" type="file" class="form-control SPIField" hidden multiple="multiple" />
+          <label data-trans-choosefile id="chooseFile" for="CRAttachments" class="Resources"></label>
+          <span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>
+          <div class="AttErrorMsg attErrorMsg" style="display:none"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>
+          <div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>
+          <div class="attErrorMsg"><span class="crFileSizeText">Maximum file size: 5MB</span></div>
+        </div>
+        <div class="col-md-12 mb-3" id="CRExistingAttachmentsWrapper" style="display:none;">
+          <div class="file-container-parent" id="CRExistingAttachments"></div>
         </div>
       </div>
       <div class="downseperator" style="display: none;">
@@ -270,19 +837,45 @@ var checkchangerequestshtml = setInterval(function () {
         <div class="col-12 d-flex justify-content-end w-100 buttonsRow p-0">
           <button id="CRSubmitButton" class="btn btn-primary mx-3" type="button"><span data-trans-savebutton class="Resources d-flex justify-content-center align-items-center"></span></button>
           <button id="CREditButton" class="btn btn-primary" type="button" style="display: none"><span data-trans-edit class="Resources d-flex justify-content-center align-items-center"></span></button>
+          <button id="CRWorkflowButton" class="btn pop-green mx-3" type="button" style="display: none"><span data-trans-sendcrtext class="Resources d-flex justify-content-center align-items-center"></span></button>
         </div>
       </div>
     </div>
     `);
 
+    // Update save button text based on isEdit
+    if (window.isEdit) {
+      $("#CRSubmitButton span").attr("data-trans-savebutton", null);
+      $("#CRSubmitButton span").attr("data-trans-savecredit", "");
+    }
+
     changeResources();
+    initCRAttachmentsUI();
+    loadCRExistingAttachments();
+
+    // Add required-field class to labels for required inputs
+    setTimeout(function () {
+      $("#Sector").closest(".col-md-6").find("label").addClass("required-field");
+      $("#SubSector").closest(".col-md-6").find("label").addClass("required-field");
+      $("#RelatedStrategy").closest(".col-md-6").find("label").addClass("required-field");
+      $("#ParentItemType").closest(".col-md-6").find("label").addClass("required-field");
+      $("#ParentItemCode").closest(".col-md-6").find("label").addClass("required-field");
+      $("#ChangeItem").closest(".col-md-6").find("label").addClass("required-field");
+      $("#ApprovalLevel").closest(".col-md-6").find("label").addClass("required-field");
+      $("#ChangeDescription").closest(".col-md-12").find("label").addClass("required-field");
+      $("#ChangeJustification").closest(".col-md-12").find("label").addClass("required-field");
+      $("#ExpectedPositiveImpact").closest(".col-md-12").find("label").addClass("required-field");
+      $("#ImpactType").closest(".col-md-6").find("label").addClass("required-field");
+    }, 100);
+
+    // Update page title link based on current mode (new/edit/view)
+    updatePageTitleLink();
 
     getLoggedInUser()
       .then(function () {
         filterParentItemTypeOptions();
         loadSectors();
         loadStrategyOptions();
-        initPeoplePicker();
 
         if ((isView || isEdit) && crItemCode) {
           initViewMode(crItemCode);
@@ -293,7 +886,6 @@ var checkchangerequestshtml = setInterval(function () {
         filterParentItemTypeOptions();
         loadSectors();
         loadStrategyOptions();
-        initPeoplePicker();
 
         if ((isView || isEdit) && crItemCode) {
           initViewMode(crItemCode);
@@ -302,11 +894,41 @@ var checkchangerequestshtml = setInterval(function () {
   }
 }, 500);
 
+function updatePageTitleLink() {
+  var listingUrl =
+    _spPageContextInfo.webAbsoluteUrl +
+    "/SitePages/Listing.aspx?ListKey=changerequests";
+  if ($(".page-title a").length) {
+    $(".page-title a").attr("href", listingUrl);
+  } else {
+    setTimeout(function () {
+      if ($(".page-title a").length) {
+        $(".page-title a").attr("href", listingUrl);
+      }
+    }, 500);
+  }
+}
+
 let selectedParentTitle = "";
 let selectedParentType = "";
 
 $(document).on("change", "#ParentItemType", function () {
   var parent = $(this).val();
+  
+  // Show/hide Types field based on ParentItemType
+  if (parent === "MainKpi") {
+    $("#ClassificationDiv").show();
+  } else {
+    $("#ClassificationDiv").hide();
+    $("#Classification").val("");
+    $("#ApprovalLevel").prop("disabled", false);
+  }
+  
+  // Clear ParentItemCode when ParentItemType changes (only in New mode)
+  if (window.isNew) {
+    $("#ParentItemCode").empty().append('<option value="" disabled selected></option>');
+  }
+  
   handleParentChange(parent);
 });
 $(document).on("change", "#ChildItemType", function () {
@@ -339,12 +961,94 @@ $(document).on("change", "#ChildItemType", function () {
 $(document).on("change", "#Sector", function () {
   const sectorTitle = $(this).val();
   loadSubSectors(sectorTitle);
+  // Clear and reload ParentItemCode when Sector changes (only in New mode, not View/Edit)
+  if (window.isNew) {
+    const parentType = $("#ParentItemType").val();
+    if (parentType) {
+      $("#ParentItemCode").empty().append('<option value="" disabled selected></option>');
+      // Clear Classification if MainKpi to force re-selection
+      if (parentType === "MainKpi") {
+        $("#Classification").val("");
+        $("#ApprovalLevel").prop("disabled", false);
+      }
+      loadParentItems(parentType, "#ParentItemCode");
+    }
+  }
+  changeResources();
+});
+
+$(document).on("change", "#SubSector", function () {
+  // Clear and reload ParentItemCode when SubSector changes (only in New mode, not View/Edit)
+  if (window.isNew) {
+    const parentType = $("#ParentItemType").val();
+    if (parentType) {
+      $("#ParentItemCode").empty().append('<option value="" disabled selected></option>');
+      // Clear Classification if MainKpi to force re-selection
+      if (parentType === "MainKpi") {
+        $("#Classification").val("");
+        $("#ApprovalLevel").prop("disabled", false);
+      }
+      loadParentItems(parentType, "#ParentItemCode");
+    }
+  }
+  changeResources();
+});
+
+$(document).on("change", "#RelatedStrategy", function () {
+  // Clear and reload ParentItemCode when RelatedStrategy changes (only in New mode, not View/Edit)
+  // For all types except Projects
+  if (window.isNew) {
+    const parentType = $("#ParentItemType").val();
+    if (parentType && parentType !== "Projects") {
+      $("#ParentItemCode").empty().append('<option value="" disabled selected></option>');
+      // Clear Classification if MainKpi to force re-selection
+      if (parentType === "MainKpi") {
+        $("#Classification").val("");
+        $("#ApprovalLevel").prop("disabled", false);
+      }
+      loadParentItems(parentType, "#ParentItemCode");
+    }
+  }
+  changeResources();
+});
+
+$(document).on("change", "#Classification", function () {
+  const typesValue = $(this).val();
+  const parentType = $("#ParentItemType").val();
+  
+  // Only process if ParentItemType is MainKpi
+  if (parentType === "MainKpi") {
+    // Clear ApprovalLevel when Types changes
+    $("#ApprovalLevel").val("").prop("disabled", false);
+    
+    // Clear and reload ParentItemCode with Classification filter (only in New mode)
+    if (window.isNew) {
+      $("#ParentItemCode").empty().append('<option value="" disabled selected></option>');
+      loadParentItems(parentType, "#ParentItemCode");
+    }
+  }
+  
   changeResources();
 });
 
 $(document).on("change", "#ParentItemCode", function () {
   selectedParentTitle = $(this).val();
   selectedParentType = $("#ParentItemType").val();
+  
+  // For MainKpi, set ApprovalLevel based on data-kpitype attribute
+  if (selectedParentType === "MainKpi" && selectedParentTitle) {
+    const $selectedOption = $(this).find("option:selected");
+    const kpiType = $selectedOption.attr("data-kpitype") || "";
+    
+    if (kpiType === "main") {
+      $("#ApprovalLevel").val("level1").prop("disabled", true);
+    } else if (kpiType === "sub" || kpiType === "sublevel2") {
+      $("#ApprovalLevel").val("level2").prop("disabled", true);
+    } else {
+      $("#ApprovalLevel").prop("disabled", false);
+    }
+  }
+  
   $("#ChildItemCode")
     .empty()
     .append(
@@ -356,7 +1060,14 @@ $(document).on(
   "change",
   "#ChangeItem, #ApprovalLevel, #ParentItemCode, #ChildItemCode",
   function () {
-    tryFetchChangeDetails();
+    // Check actionType - if add, merge, split, or delete, hide dynamic section
+    var meta = getSelectedChangeItemMeta();
+    if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+      setChangeItemsVisibility(false);
+      $(".changeItemsRow").find(".dynamicField").remove();
+    } else {
+      tryFetchChangeDetails();
+    }
     changeResources();
   }
 );
@@ -390,18 +1101,230 @@ function toggleFormEditable(isEditable) {
   });
 
   if ($("#CRSubmitButton").length && $("#CREditButton").length) {
-    if (isEditable) {
+    if (window.isWF) {
+      // Hide edit button and save button, show workflow button
+      $("#CREditButton").hide();
+      $("#CRSubmitButton").hide();
+      if ($("#CRWorkflowButton").length) {
+        $("#CRWorkflowButton").css("display", "inline-block");
+      }
+    } else if (isEditable) {
       $("#CRSubmitButton").css("display", "inline-block");
       $("#CREditButton").hide();
+      if ($("#CRWorkflowButton").length) {
+        $("#CRWorkflowButton").hide();
+      }
     } else {
       $("#CRSubmitButton").hide();
       $("#CREditButton").show();
+      if ($("#CRWorkflowButton").length) {
+        $("#CRWorkflowButton").hide();
+      }
     }
   }
 }
 
-$(document).on("click", "#CRSubmitButton", function () {
+function toggleEditModeFields() {
+  // Disable all form fields first
+  $(
+    ".changeRequests-container input, .changeRequests-container select, .changeRequests-container textarea"
+  ).prop("disabled", true);
+
+  // Enable only the fields that are allowed to be edited in edit mode
+  $("#ChangeDescription").prop("disabled", false);
+  $("#ChangeJustification").prop("disabled", false);
+  $("#ExpectedPositiveImpact").prop("disabled", false);
+  $("#ImpactType").prop("disabled", false);
+
+  // Enable dynamic fields (fields that are generated based on change item selection)
+  $(
+    ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
+  ).prop("disabled", false);
+
+  // Enable attachments in edit mode
+  if ($("#CRAttachments").length) {
+    $("#CRAttachments").prop("disabled", false);
+  }
+  // Refresh existing attachments to show delete buttons in edit mode
+  setTimeout(loadCRExistingAttachments, 200);
+
+  // Enable People Picker controls in dynamic fields (Edit mode)
+  $(".changeItemsRow .dynamicField .sp-peoplepicker-topLevel").css({
+    "pointer-events": "auto",
+    opacity: "1",
+  });
+  $(".changeItemsRow .dynamicField .sp-peoplepicker-editorInput").prop("disabled", false);
+
+  // Disable People Picker controls in non-dynamic fields (main form fields)
+  $(".changeRequests-container .sp-peoplepicker-topLevel").not(".changeItemsRow .dynamicField .sp-peoplepicker-topLevel").css({
+    "pointer-events": "none",
+    opacity: "0.6",
+  });
+
+  // Show save button and hide edit button
+  if ($("#CRSubmitButton").length && $("#CREditButton").length) {
+    $("#CRSubmitButton").css("display", "inline-block");
+    $("#CREditButton").hide();
+  }
+}
+
+$(document).on("click", "#CRSubmitButton", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  // Validate required fields (same as searchDocuments.js)
+  let isValid = true;
+  let firstInvalid = null;
+
+  // Validate Sector
+  var sectorVal = $("#Sector").val();
+  if (!sectorVal || sectorVal.trim() === "") {
+    $("#Sector").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#Sector");
+    isValid = false;
+  } else {
+    $("#Sector").removeClass("is-invalid");
+  }
+
+  // Validate SubSector
+  var subSectorVal = $("#SubSector").val();
+  if (!subSectorVal || subSectorVal.trim() === "") {
+    $("#SubSector").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#SubSector");
+    isValid = false;
+  } else {
+    $("#SubSector").removeClass("is-invalid");
+  }
+
+  // Validate RelatedStrategy
+  var relatedStrategyVal = $("#RelatedStrategy").val();
+  if (!relatedStrategyVal || relatedStrategyVal.trim() === "") {
+    $("#RelatedStrategy").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#RelatedStrategy");
+    isValid = false;
+  } else {
+    $("#RelatedStrategy").removeClass("is-invalid");
+  }
+
+  // Validate ParentItemType
+  var parentItemTypeVal = $("#ParentItemType").val();
+  if (!parentItemTypeVal || parentItemTypeVal.trim() === "") {
+    $("#ParentItemType").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#ParentItemType");
+    isValid = false;
+  } else {
+    $("#ParentItemType").removeClass("is-invalid");
+  }
+
+  // Validate ParentItemCode
+  var parentItemCodeVal = $("#ParentItemCode").val();
+  if (!parentItemCodeVal || parentItemCodeVal.trim() === "") {
+    $("#ParentItemCode").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#ParentItemCode");
+    isValid = false;
+  } else {
+    $("#ParentItemCode").removeClass("is-invalid");
+  }
+
+  // Validate ChangeItem
+  var changeItemVal = $("#ChangeItem").val();
+  if (!changeItemVal || changeItemVal.trim() === "") {
+    $("#ChangeItem").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#ChangeItem");
+    isValid = false;
+  } else {
+    $("#ChangeItem").removeClass("is-invalid");
+  }
+
+  // Validate ApprovalLevel
+  var approvalLevelVal = $("#ApprovalLevel").val();
+  if (!approvalLevelVal || approvalLevelVal.trim() === "") {
+    $("#ApprovalLevel").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#ApprovalLevel");
+    isValid = false;
+  } else {
+    $("#ApprovalLevel").removeClass("is-invalid");
+  }
+
+  // Validate ChangeDescription
+  var changeDescVal = $("#ChangeDescription").val();
+  if (!changeDescVal || changeDescVal.trim() === "") {
+    $("#ChangeDescription").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#ChangeDescription");
+    isValid = false;
+  } else {
+    $("#ChangeDescription").removeClass("is-invalid");
+  }
+
+  // Validate ChangeJustification
+  var changeJustVal = $("#ChangeJustification").val();
+  if (!changeJustVal || changeJustVal.trim() === "") {
+    $("#ChangeJustification").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#ChangeJustification");
+    isValid = false;
+  } else {
+    $("#ChangeJustification").removeClass("is-invalid");
+  }
+
+  // Validate ExpectedPositiveImpact
+  var expectedImpactVal = $("#ExpectedPositiveImpact").val();
+  if (!expectedImpactVal || expectedImpactVal.trim() === "") {
+    $("#ExpectedPositiveImpact").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#ExpectedPositiveImpact");
+    isValid = false;
+  } else {
+    $("#ExpectedPositiveImpact").removeClass("is-invalid");
+  }
+
+  // Validate ImpactType
+  var impactTypeVal = $("#ImpactType").val();
+  if (!impactTypeVal || impactTypeVal.trim() === "") {
+    $("#ImpactType").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $("#ImpactType");
+    isValid = false;
+  } else {
+    $("#ImpactType").removeClass("is-invalid");
+  }
+
+  // If validation fails, stop here and don't call saveAllChangeRequestFields
+  if (!isValid) {
+    if (firstInvalid && firstInvalid.length) {
+      // Scroll to the first invalid field with smooth animation
+      $("html, body").animate(
+        { scrollTop: firstInvalid.offset().top - 150 },
+        500
+      );
+      // Focus on the first invalid field
+      setTimeout(function () {
+        firstInvalid.focus();
+      }, 500);
+    }
+    return false; // Explicitly return false to prevent any further execution
+  }
+
+  // All fields are valid, proceed with save
   saveAllChangeRequestFields();
+  return false;
+});
+
+// Remove is-invalid class when user starts typing/selecting (same as searchDocuments.js pattern)
+$(document).on(
+  "input change",
+  "#Sector, #SubSector, #RelatedStrategy, #ParentItemType, #ParentItemCode, #ChangeItem, #ApprovalLevel, #ChangeDescription, #ChangeJustification, #ExpectedPositiveImpact, #ImpactType",
+  function () {
+    if ($(this).val() && $(this).val().trim() !== "") {
+      $(this).removeClass("is-invalid");
+    }
+  }
+);
+
+$(document).on("click", "#CRWorkflowButton", function () {
+  if (window.isWF && (taskID || taskId)) {
+    // Show workflow approval popup
+    showWorkflowApprovalPopup();
+  } else {
+    alert("Workflow mode or Task ID not found");
+  }
 });
 $(document).on("click", "#CREditButton", function () {
   let href = window.location.href;
@@ -412,8 +1335,10 @@ $(document).on("click", "#CREditButton", function () {
   }
   window.history.replaceState(null, "", href);
   window.isEdit = true;
-  toggleFormEditable(true);
+  window.isView = false;
+  toggleEditModeFields();
   initializeEditMode();
+  updatePageTitleLink();
 });
 function loadListOptions(
   listName,
@@ -430,12 +1355,15 @@ function loadListOptions(
     `/_api/web/lists/getbytitle('${listName}')/items?$top=5000&$filter=DeletionStatus ne 'Deleted'`;
   if (filter) query += ` and ${filter}`;
   if (orderBy) query += `&$orderby=${orderBy}`;
+  // For MainKpi, ensure Types field is included in the response
+  if (listName === "MainKpi") {
+    query += `&$select=Title,Name,Types,${dispFieldKey}`;
+  }
 
   if (
     window.currentUserRole === "PerformanceLeader" &&
     listName === "MainKpi"
   ) {
-    console.log("PerformanceLeader Query:", query);
   }
 
   $.ajax({
@@ -446,12 +1374,26 @@ function loadListOptions(
       const $select = $(selectId);
       $select.empty().append(`<option value="" disabled selected></option>`);
       data.d.results.forEach((item) => {
-        const text =
-          lang == null || lang == "ar"
+        // For MainKpi, Projects, Initiatives, SOs: use Name for both Arabic and English
+        // For other lists: use dispFieldKey/dispFieldKeyEn based on language
+        let text = "";
+        if (listName === "MainKpi" || listName === "Projects" || listName === "Initiatives" || listName === "SOs") {
+          text = item[dispFieldKey] || ""; // Use Name for both languages
+        } else {
+          text = lang == null || lang == "ar"
             ? item[dispFieldKey]
             : item[dispFieldKeyEn];
+        }
         const val = item[valFieldKey] ? item[valFieldKey] : "";
-        $select.append(`<option value="${val}">${text}</option>`);
+        
+        // For MainKpi, add data-kpitype attribute from Types field
+        let optionHtml = `<option value="${val}">${text}</option>`;
+        if (listName === "MainKpi" && item.Types) {
+          const kpiType = item.Types || "";
+          optionHtml = `<option value="${val}" data-kpitype="${kpiType}">${text}</option>`;
+        }
+        
+        $select.append(optionHtml);
       });
     },
     error: function (err) {
@@ -486,13 +1428,15 @@ function loadSubSectors(sectorTitle) {
 }
 
 function loadStrategyOptions() {
+  // Filter: DeletionStatus ne 'Deleted' and Types eq 'ministry'
+  const filter = "Types eq 'ministry'";
   loadListOptions(
     "GoalStrategy",
     "#RelatedStrategy",
     "Name",
     "Name",
     "Title",
-    "",
+    filter,
     "Created"
   );
 }
@@ -513,7 +1457,6 @@ function loadParentItems(listName, selectId) {
         loadParentItems(listName, selectId);
       })
       .catch(function (err) {
-        console.error("Error loading user for security filter:", err);
         loadListOptions(
           listName,
           selectId,
@@ -527,32 +1470,68 @@ function loadParentItems(listName, selectId) {
     return;
   }
 
+  // Security filters based on user role
+  var securityFilterParts = [];
   if (currentRole === "ObjectiveOwner" && listName === "SOs") {
     if (LoggedInUserId) {
-      filter = `ObjectiveOwner/Id eq ${LoggedInUserId}`;
+      securityFilterParts.push(`ObjectiveOwner/Id eq ${LoggedInUserId}`);
     }
   } else if (currentRole === "PerformanceLeader" && listName === "MainKpi") {
     if (LoggedInUserId) {
-      filter = `(PerformanceLeader/Id eq ${LoggedInUserId} or PerformanceLeader2/Id eq ${LoggedInUserId})`;
-      console.log(
-        "PerformanceLeader filter:",
-        filter,
-        "UserId:",
-        LoggedInUserId
-      );
+      securityFilterParts.push(`(PerformanceLeader/Id eq ${LoggedInUserId} or PerformanceLeader2/Id eq ${LoggedInUserId})`);
     }
   } else if (
     currentRole === "InitiativeManager" &&
     listName === "Initiatives"
   ) {
     if (LoggedInUserId) {
-      filter = `InitiativePM/Id eq ${LoggedInUserId}`;
+      securityFilterParts.push(`InitiativePM/Id eq ${LoggedInUserId}`);
     }
   } else if (currentRole === "ProjectManager" && listName === "Projects") {
     if (LoggedInUserId) {
-      filter = `ProjectManager/Id eq ${LoggedInUserId}`;
+      securityFilterParts.push(`ProjectManager/Id eq ${LoggedInUserId}`);
     }
   }
+
+  // Additional filters based on Sector, SubSector, RelatedStrategy, and Classification
+  var sectorFilterParts = [];
+  var sector = $("#Sector").val();
+  var subSector = $("#SubSector").val();
+  var relatedStrategy = $("#RelatedStrategy").val();
+  var types = $("#Classification").val();
+
+  if (sector) {
+    sectorFilterParts.push(`Sector eq '${sector.replace(/'/g, "''")}'`);
+  }
+  if (subSector) {
+    sectorFilterParts.push(`SubSector eq '${subSector.replace(/'/g, "''")}'`);
+  }
+
+  // RelatedStrategy filter applies to MainKpi, SOs, and Initiatives (not Projects)
+  if (relatedStrategy && listName !== "Projects") {
+    if (listName === "MainKpi" || listName === "SOs" || listName === "Initiatives") {
+      sectorFilterParts.push(`RelatedStrategy eq '${relatedStrategy.replace(/'/g, "''")}'`);
+    }
+  }
+
+  // Classification filter applies only to MainKpi (replaces Types filter)
+  if (types && listName === "MainKpi") {
+    sectorFilterParts.push(`Classification eq '${types.replace(/'/g, "''")}'`);
+  }
+
+  // Combine security filters and sector filters
+  var allFilterParts = [];
+  if (securityFilterParts.length > 0) {
+    allFilterParts.push("(" + securityFilterParts.join(" and ") + ")");
+  }
+  if (sectorFilterParts.length > 0) {
+    allFilterParts.push("(" + sectorFilterParts.join(" and ") + ")");
+  }
+
+  if (allFilterParts.length > 0) {
+    filter = allFilterParts.join(" and ");
+  }
+
   loadListOptions(
     listName,
     selectId,
@@ -608,12 +1587,12 @@ function loadChangeItems(listName, parentType = "", childType = "") {
     success: function (data) {
       data.d.results.forEach((item) => {
         $changeItem.append(
-          `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-action="${item.ActionType}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
+          `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
         );
       });
     },
     error: function (err) {
-      console.error("Error loading ChangeItems:", err);
+      console.error(`Error loading list ${listName}:`, err);
     },
   });
 }
@@ -647,8 +1626,57 @@ function buildInputHtml(fieldName, fieldType, value, readOnly) {
     return `<textarea id="${safeName}" class="form-control" rows="3"${disabledAttr}>${safeValue}</textarea>`;
   }
 
+  // Support for People Picker (type = "picker") - only handle if type is picker
+  if (fieldType === "picker") {
+    // Return a simple input that will be replaced by initPeoplePicker() with full PPField structure
+    return `<input type="text" class="form-control peoplePicker" id="${safeName}" value="${safeValue}" data-user-id="${safeValue}"${disabledAttr}>`;
+  }
+
+  // Support for Lookup (type = "lookup") - return select dropdown
+  if (fieldType === "lookup") {
+    return `<select id="${safeName}" class="form-control"${disabledAttr}><option value="" disabled selected></option></select>`;
+  }
+
+  // Support for DropdownValues (type = "dropdownValues") - return select dropdown
+  if (fieldType === "dropdownvalues") {
+    return `<select id="${safeName}" class="form-control"${disabledAttr}><option value="" disabled selected></option></select>`;
+  }
+
+  // Support for date, datetime, datetimetoparent - use type="date" 
+  // Input type="date" requires yyyy-mm-dd format, but we'll convert to mm/dd/yyyy on submit
+  if (fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") {
+    // Convert value to yyyy-mm-dd format for input type="date"
+    // Remove time part if exists (e.g., "12/14/2023 21:00:00" -> "12/14/2023")
+    let dateValue = "";
+    if (value && value !== "" && value !== "null" && value !== "undefined") {
+      try {
+        // Remove time part if exists - handle both space and T separator
+        let dateStr = String(value).split(" ")[0].split("T")[0]; // Get date part only (before space or T)
+        
+        // Try to parse mm/dd/yyyy format first (most common)
+        const mmddyyyy = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+        let d;
+        if (mmddyyyy) {
+          // Parse mm/dd/yyyy format
+          d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
+        } else {
+          // Try to parse as Date (handles ISO format and other formats)
+          d = new Date(dateStr);
+        }
+        
+        if (!isNaN(d)) {
+          const year = d.getFullYear();
+          const month = ("0" + (d.getMonth() + 1)).slice(-2);
+          const day = ("0" + d.getDate()).slice(-2);
+          dateValue = `${year}-${month}-${day}`;
+        }
+      } catch (e) { }
+    }
+    return `<input type="date" id="${safeName}" class="form-control date-input" value="${dateValue}"${disabledAttr}>`;
+  }
+
   const inputType =
-    fieldType === "number" || fieldType === "date" ? fieldType : "text";
+    fieldType === "number" ? fieldType : "text";
   return `<input type="${inputType}" id="${safeName}" class="form-control" value="${safeValue}"${disabledAttr}>`;
 }
 
@@ -657,6 +1685,13 @@ function renderDynamicChangeFields(columns) {
   const container = $(".changeItemsRow");
   container.find(".dynamicField").remove();
 
+  // Check actionType - if add, merge, split, or delete, hide dynamic section and don't render fields
+  var meta = getSelectedChangeItemMeta();
+  if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+    setChangeItemsVisibility(false);
+    return;
+  }
+
   if (!columns || columns.length === 0) {
     setChangeItemsVisibility(false);
     return;
@@ -664,60 +1699,495 @@ function renderDynamicChangeFields(columns) {
 
   setChangeItemsVisibility(true);
 
+  // Check if we need to fetch DisplayNames from API
+  const changeItemCode = $("#ChangeItem").val();
+  const approvalLevel = $("#ApprovalLevel").val();
+  let itemCode = $("#ParentItemCode").val();
+  if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val()) {
+    itemCode = $("#ChildItemCode").val();
+  }
+
+  // Always call API if we have required values to get DisplayNames
+  // But skip API call if actionType is add, merge, split, or delete
+  if (changeItemCode && approvalLevel && itemCode) {
+    // Check actionType - if add, merge, split, or delete, don't call API
+    var meta = getSelectedChangeItemMeta();
+    if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+      // Don't call API, just render fields directly without API
+      renderFieldsWithDisplayNames(columns, {}, lang, container, []);
+      return;
+    }
+    
+    const url = `${APIURL}/general/getchangeitemsdetails/${encodeURIComponent(
+      changeItemCode
+    )}/${encodeURIComponent(approvalLevel)}/${encodeURIComponent(itemCode)}`;
+
+    $.ajax({
+      url: url,
+      method: "GET",
+      headers: { Accept: "application/json" },
+      success: function (res) {
+        const apiColumns =
+          res && res.result && res.result.columnsDetails
+            ? res.result.columnsDetails
+            : [];
+
+        const displayNameMap = {};
+        apiColumns.forEach((apiCol) => {
+          let jsonField = {};
+          try {
+            jsonField = JSON.parse(apiCol.jsonField || "{}");
+          } catch (e) { }
+          if (jsonField.InternalName) {
+            displayNameMap[jsonField.InternalName] = {
+              DisplayName: jsonField.DisplayName || "",
+              DisplayNameEn: jsonField.DisplayNameEn || "",
+            };
+          }
+        });
+
+        renderFieldsWithDisplayNames(apiColumns, displayNameMap, lang, container, apiColumns);
+      },
+      error: function (xhr) {
+        console.error("Error fetching DisplayNames from API:", xhr);
+        renderFieldsWithDisplayNames(columns, {}, lang, container, []);
+      },
+    });
+  } else {
+    // Render fields directly (DisplayNames already available or API not available)
+    renderFieldsWithDisplayNames(columns, {}, lang, container, []);
+  }
+}
+
+function renderFieldsWithDisplayNames(
+  columns,
+  displayNameMap,
+  lang,
+  container,
+  apiColumns = []
+) {
   columns.forEach((col) => {
     let meta = {};
     try {
-      meta =
-        typeof col.jsonField === "string"
-          ? JSON.parse(col.jsonField)
-          : col.jsonField || {};
-    } catch (e) {
-      console.error("Bad jsonField:", col.jsonField, e);
-      return;
+      if (col.jsonField) {
+        meta =
+          typeof col.jsonField === "string"
+            ? JSON.parse(col.jsonField)
+            : col.jsonField || {};
+      }
+    } catch (e) { }
+    
+    if (!meta.type && apiColumns && apiColumns.length > 0) {
+      const fieldName = col.ColumnInternalName || meta.InternalName;
+      if (fieldName) {
+        const matchingApiCol = apiColumns.find((apiCol) => {
+          let jsonField = {};
+          try {
+            jsonField = JSON.parse(apiCol.jsonField || "{}");
+          } catch (e) { }
+          return jsonField.InternalName === fieldName;
+        });
+        if (matchingApiCol && matchingApiCol.jsonField) {
+          try {
+            const apiJsonField = JSON.parse(matchingApiCol.jsonField || "{}");
+            meta = Object.assign({}, meta, apiJsonField);
+          } catch (e) { }
+        }
+      }
     }
 
     const fieldName =
-      meta.InternalName || "field_" + Math.random().toString(36).substr(2, 5);
+      col.ColumnInternalName ||
+      meta.InternalName ||
+      "field_" + Math.random().toString(36).substr(2, 5);
+
+    // Search in displayNameMap using fieldName (InternalName)
+    let displayNameInfo = displayNameMap[fieldName] || {};
+
+    // If not found, try to find it in the map by searching through all entries
+    if (!displayNameInfo.DisplayName && !displayNameInfo.DisplayNameEn) {
+      // Try to find matching entry in displayNameMap
+      for (let key in displayNameMap) {
+        if (key === fieldName) {
+          displayNameInfo = displayNameMap[key];
+          break;
+        }
+      }
+    }
+
+    // Use DisplayName from API map if available, otherwise use meta
     const labelText =
       lang == null || lang == "ar"
-        ? meta.DisplayName || meta.DisplayNameEn || fieldName
-        : meta.DisplayNameEn || meta.DisplayName || fieldName;
+        ? displayNameInfo.DisplayName ||
+        meta.DisplayName ||
+        displayNameInfo.DisplayNameEn ||
+        meta.DisplayNameEn ||
+        fieldName
+        : displayNameInfo.DisplayNameEn ||
+        meta.DisplayNameEn ||
+        displayNameInfo.DisplayName ||
+        meta.DisplayName ||
+        fieldName;
+
     const fieldType = (meta.type || "string").toLowerCase();
     const rawValue =
       col.value === null || col.value === undefined ? "" : col.value;
-    const oldValueEscaped = escapeHtml(rawValue);
     const colClass = fieldType === "textarea" ? "col-md-12" : "col-md-6";
     let displayValue = rawValue;
 
-    if (fieldType === "date") {
+    // Handle date, datetime, datetimetoparent - convert to yyyy-mm-dd for input type="date"
+    // Remove time part if exists (e.g., "12/14/2023 21:00:00" -> "12/14/2023")
+    if (fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") {
       let dateValue = "";
       try {
         if (rawValue) {
-          const d = new Date(rawValue);
-          if (!isNaN(d))
-            dateValue = `${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(
-              -2
-            )}-${("0" + d.getDate()).slice(-2)}`;
+          // Remove time part if exists
+          let dateStr = String(rawValue).split(" ")[0]; // Get date part only (before space)
+          
+          let d = new Date(dateStr);
+          if (isNaN(d)) {
+            // Try to parse mm/dd/yyyy format
+            const mmddyyyy = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+            if (mmddyyyy) {
+              d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
+            }
+          }
+          if (!isNaN(d)) {
+            const year = d.getFullYear();
+            const month = ("0" + (d.getMonth() + 1)).slice(-2);
+            const day = ("0" + d.getDate()).slice(-2);
+            dateValue = `${year}-${month}-${day}`;
+          }
         }
-      } catch (e) {}
+      } catch (e) { }
       displayValue = dateValue;
     }
 
-    const inputHtml = buildInputHtml(fieldName, fieldType, displayValue, false);
+    // For picker fields: convert oldValue (ID) to display name
+    let oldValueDisplay = rawValue;
+    let oldValueId = ""; // Store original ID for picker fields
+    if (fieldType === "picker" && rawValue && rawValue !== "0" && rawValue !== 0) {
+      const userId = parseInt(rawValue, 10);
+      if (!isNaN(userId)) {
+        // oldValue is an ID, save it for API submission
+        oldValueId = rawValue;
+        // Convert to display name for display
+        getUserDisplayNameFromId(rawValue).then(function (displayName) {
+          const $oldValueSpan = container
+            .find(`#${fieldName}`)
+            .closest(".dynamicField")
+            .find(".oldValue");
+          if ($oldValueSpan.length) {
+            $oldValueSpan.text(displayName || rawValue);
+          }
+        }).catch(function (err) { });
+        oldValueDisplay = "Loading..."; // Temporary text while loading
+      }
+    } else if (fieldType === "picker" && (rawValue === "0" || rawValue === 0)) {
+      oldValueDisplay = "0";
+      oldValueId = "0";
+    } else if (fieldType === "picker") {
+      oldValueDisplay = "";
+    }
 
-    const fieldBlock = `
-      <div class="${colClass} mb-3 dynamicField">
-        <label>${escapeHtml(
-          labelText
-        )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueEscaped}</span>)</label>
-        ${inputHtml}
-      </div>
-    `;
+    // For lookup fields: convert oldValue (valfieldkey) to display text (Dispfieldkey)
+    // IMPORTANT: Save the original value (valfieldkey) in data attribute for API submission
+    let lookupOriginalValue = ""; // Store original value for lookup fields
+    if (fieldType === "lookup" && rawValue && rawValue !== "" && rawValue !== "null" && rawValue !== "undefined") {
+      const source = meta.source || "";
+      const dispFieldKey = meta.Dispfieldkey || "Name";
+      const dispFieldKeyEn = meta.DispfieldkeyEn || dispFieldKey;
+      const valFieldKey = meta.valfieldkey || "Title";
+      
+      lookupOriginalValue = rawValue;
+      
+      if (source) {
+        const query = _spPageContextInfo.webAbsoluteUrl +
+          `/_api/web/lists/getbytitle('${source}')/items?$top=5000&$filter=DeletionStatus ne 'Deleted' and ${valFieldKey} eq '${rawValue.replace(/'/g, "''")}'`;
+        
+        $.ajax({
+          url: query,
+          method: "GET",
+          headers: { Accept: "application/json; odata=verbose" },
+          success: function (data) {
+            if (data.d && data.d.results && data.d.results.length > 0) {
+              const item = data.d.results[0];
+              const displayText = lang == null || lang == "ar"
+                ? (item[dispFieldKey] || rawValue)
+                : (item[dispFieldKeyEn] || item[dispFieldKey] || rawValue);
+              
+              const $fieldDiv = container
+                .find(`#${fieldName}`)
+                .closest(".dynamicField");
+              const $oldValueSpan = $fieldDiv.find(".oldValue");
+              if ($oldValueSpan.length) {
+                $oldValueSpan.text(displayText);
+                $fieldDiv.attr("data-lookup-old-value", lookupOriginalValue);
+              }
+            }
+          },
+            error: function (err) {
+              const $fieldDiv = container
+                .find(`#${fieldName}`)
+                .closest(".dynamicField");
+              if ($fieldDiv.length) {
+                $fieldDiv.attr("data-lookup-old-value", lookupOriginalValue);
+              }
+            }
+        });
+        oldValueDisplay = "Loading..."; // Temporary text while loading
+      }
+    }
 
-    container.append(fieldBlock);
+    // Format oldValue for display: empty/null/undefined -> "No data", 0 -> "0", otherwise -> value
+    // For date fields, convert oldValue to mm/dd/yyyy format
+    if ((fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") && oldValueDisplay && oldValueDisplay !== "" && oldValueDisplay !== "null" && oldValueDisplay !== "undefined" && oldValueDisplay !== "0" && oldValueDisplay !== 0 && oldValueDisplay !== "Loading...") {
+      try {
+        let d = new Date(oldValueDisplay);
+        if (isNaN(d)) {
+          // Try to parse mm/dd/yyyy format
+          const mmddyyyy = String(oldValueDisplay).match(/(\d{2})\/(\d{2})\/(\d{4})/);
+          if (mmddyyyy) {
+            d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
+          }
+        }
+        if (!isNaN(d)) {
+          const month = ("0" + (d.getMonth() + 1)).slice(-2);
+          const day = ("0" + d.getDate()).slice(-2);
+          const year = d.getFullYear();
+          oldValueDisplay = `${month}/${day}/${year}`;
+        }
+      } catch (e) { }
+    }
+    
+    let oldValueHtml = "";
+    if (!oldValueDisplay || oldValueDisplay === "" || oldValueDisplay === "null" || oldValueDisplay === "undefined") {
+      oldValueHtml = '<span data-trans-nodata class="Resources"></span>';
+    } else if (oldValueDisplay === "0" || oldValueDisplay === 0) {
+      oldValueHtml = "0";
+    } else if (oldValueDisplay === "Loading...") {
+      oldValueHtml = "Loading...";
+    } else {
+      oldValueHtml = escapeHtml(oldValueDisplay);
+    }
+
+    if (fieldType === "dropdownvalues") {
+      const selectId = fieldName;
+      // Use rawValue for comparison (not displayValue) to match choice.value exactly
+      const currentValue = rawValue || "";
+      
+      // Get oldValue from col.ColumnOldValue (for view/edit mode) or use oldValueDisplay (for new mode)
+      const oldValueRaw = col.ColumnOldValue || oldValueDisplay || "";
+      
+      // Format oldValue - if it's a value from choices, use data-trans attribute for translation
+      let oldValueDisplayHtml = oldValueHtml;
+      if (oldValueRaw && oldValueRaw !== "" && oldValueRaw !== "null" && oldValueRaw !== "undefined" && oldValueRaw !== "0" && oldValueRaw !== 0) {
+        // Check if oldValue matches one of the choice values
+        if (meta.options && meta.options.choices && Array.isArray(meta.options.choices)) {
+          const matchingChoice = meta.options.choices.find(function(choice) {
+            return choice.value === oldValueRaw;
+          });
+          if (matchingChoice) {
+            // Use data-trans attribute for translation
+            const oldValueTransAttr = `data-trans-${oldValueRaw}`;
+            oldValueDisplayHtml = `<span ${oldValueTransAttr} class="Resources"></span>`;
+          }
+        }
+      }
+      
+      // Build options HTML directly from meta.options.choices
+      // Only select empty option if no value is set
+      const emptyOptionSelected = !currentValue ? " selected" : "";
+      let optionsHtml = `<option value="" disabled${emptyOptionSelected}></option>`;
+      if (meta.options && meta.options.choices && Array.isArray(meta.options.choices)) {
+        meta.options.choices.forEach(function(choice) {
+          const choiceValue = escapeHtml(choice.value || "");
+          const choiceDisplay = escapeHtml(choice.display || choice.value || "");
+          const selectedAttr = (currentValue && choice.value === currentValue) ? " selected" : "";
+          const transAttr = `data-trans-${choice.value}`;
+          optionsHtml += `<option value="${choiceValue}" ${transAttr} class="Resources"${selectedAttr}>${choiceDisplay}</option>`;
+        });
+      }
+      
+      const selectHtml = `<select id="${selectId}" class="form-control">${optionsHtml}</select>`;
+      
+      // Save original oldValue (before translation) in data attribute for API submission
+      const oldValueOriginal = oldValueRaw || "";
+      const oldValueAttr = oldValueOriginal ? ` data-dropdown-old-value="${escapeHtml(oldValueOriginal)}"` : "";
+      
+      // Add data-trans attribute to label - use DisplayNameEn as translation key (standard format)
+      const labelTransKey = meta.DisplayNameEn || meta.DisplayName || "";
+      const labelTransAttr = labelTransKey ? ` data-trans="${labelTransKey}"` : "";
+      const labelClass = labelTransKey ? " class=\"Resources\"" : "";
+      
+      const fieldBlock = `
+        <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${fieldType}"${oldValueAttr}>
+          <label${labelTransAttr}${labelClass}>${escapeHtml(
+        labelText
+      )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueDisplayHtml}</span>)</label>
+          ${selectHtml}
+        </div>
+      `;
+
+      container.append(fieldBlock);
+      changeResources();
+      return;
+    }
+
+    if (fieldType === "yesnoradio") {
+      const currentValue = rawValue || "";
+      
+      // Get oldValue from col.ColumnOldValue (for view/edit mode) or use oldValueDisplay (for new mode)
+      const oldValueRaw = col.ColumnOldValue || oldValueDisplay || "";
+      
+      // Format oldValue - if it's a value from choices, use data-trans attribute for translation
+      let oldValueDisplayHtml = oldValueHtml;
+      if (oldValueRaw && oldValueRaw !== "" && oldValueRaw !== "null" && oldValueRaw !== "undefined" && oldValueRaw !== "0" && oldValueRaw !== 0) {
+        // Check if oldValue matches one of the choice values
+        if (meta.options && meta.options.choices && Array.isArray(meta.options.choices)) {
+          const matchingChoice = meta.options.choices.find(function(choice) {
+            return choice.value === oldValueRaw;
+          });
+          if (matchingChoice) {
+            // Use data-trans attribute for translation
+            const oldValueTransAttr = `data-trans-${oldValueRaw}`;
+            oldValueDisplayHtml = `<span ${oldValueTransAttr} class="Resources"></span>`;
+          }
+        }
+      }
+      
+      let radioButtonsHtml = "";
+      if (meta.options && meta.options.choices && Array.isArray(meta.options.choices)) {
+        meta.options.choices.forEach(function(choice) {
+          const choiceValue = escapeHtml(choice.value || "");
+          const choiceDisplay = escapeHtml(choice.display || choice.value || "");
+          const checkedAttr = (currentValue && choice.value === currentValue) ? " checked" : "";
+          const transAttr = `data-trans-${choice.value}`;
+          const radioId = fieldName + "_" + choice.value;
+          radioButtonsHtml += `<input class="form-control yesnolistener" type="radio" name="${escapeHtml(labelText)}" id="${radioId}" value="${choiceValue}" placeholder="${escapeHtml(labelText)}" data-targetfieldrequired="undefined" data-targetfield="undefined" data-targetfieldvalue="undefined"${checkedAttr} /><label ${transAttr} for="${radioId}" class="Resources radiolabel">${choiceDisplay}</label>`;
+        });
+      }
+      
+      // Save original oldValue (before translation) in data attribute for API submission
+      const oldValueOriginal = oldValueRaw || "";
+      const oldValueAttr = oldValueOriginal ? ` data-dropdown-old-value="${escapeHtml(oldValueOriginal)}"` : "";
+      
+      // Add data-trans attribute to label - use DisplayNameEn as translation key (standard format)
+      const labelTransKey = meta.DisplayNameEn || meta.DisplayName || "";
+      const labelTransAttr = labelTransKey ? ` data-trans="${labelTransKey}"` : "";
+      const labelClass = labelTransKey ? " class=\"Resources\"" : "";
+      
+      const fieldBlock = `
+        <div class="${colClass} mb-3 dynamicField radioLabelField" data-field-id="${fieldName}" data-field-type="${fieldType}"${oldValueAttr}>
+          <label${labelTransAttr}${labelClass}>${escapeHtml(
+        labelText
+      )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueDisplayHtml}</span>)</label>
+          <div>${radioButtonsHtml}</div>
+        </div>
+      `;
+
+      container.append(fieldBlock);
+      changeResources();
+      return;
+    }
+
+    if (fieldType === "lookup") {
+      const source = meta.source || "";
+      const dispFieldKey = meta.Dispfieldkey || "Name";
+      const dispFieldKeyEn = meta.DispfieldkeyEn || dispFieldKey;
+      const valFieldKey = meta.valfieldkey || "Title";
+      
+      // Create dropdown HTML
+      const selectId = fieldName;
+      const safeValue = escapeHtml(displayValue || "");
+      const selectHtml = `<select id="${selectId}" class="form-control"><option value="" disabled selected></option></select>`;
+      
+      // Save original value (valfieldkey) in data attribute if available
+      // Use lookupOriginalValue if it was set, otherwise use rawValue
+      const originalValue = lookupOriginalValue || (rawValue && rawValue !== "" && rawValue !== "null" && rawValue !== "undefined" ? rawValue : "");
+      const oldValueIdAttr = "";
+      const lookupOldValueAttr = originalValue ? ` data-lookup-old-value="${escapeHtml(originalValue)}"` : "";
+      const fieldBlock = `
+        <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${fieldType}" data-lookup-source="${escapeHtml(source)}" data-lookup-disp="${escapeHtml(dispFieldKey)}" data-lookup-disp-en="${escapeHtml(dispFieldKeyEn)}" data-lookup-val="${escapeHtml(valFieldKey)}"${oldValueIdAttr}${lookupOldValueAttr}>
+          <label>${escapeHtml(
+        labelText
+      )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueHtml}</span>)</label>
+          ${selectHtml}
+        </div>
+      `;
+
+      container.append(fieldBlock);
+      
+      // Load options from list
+      if (source) {
+        // Use alphabetical order by dispFieldKey
+        const orderBy = dispFieldKey + " asc";
+        loadListOptions(source, `#${selectId}`, dispFieldKey, dispFieldKeyEn, valFieldKey, "", orderBy);
+        
+        // Set selected value after options are loaded
+        setTimeout(function() {
+          const $select = $(`#${selectId}`);
+          if ($select.length && safeValue) {
+            $select.val(safeValue);
+          }
+        }, 1000);
+      }
+      
+      return; // Exit early for lookup fields
+    }
+
+    // Only create input if not lookup and not dropdownValues and not yesnoradio (all were handled above)
+    if (fieldType !== "lookup" && fieldType !== "dropdownvalues" && fieldType !== "yesnoradio") {
+      const inputHtml = buildInputHtml(fieldName, fieldType, displayValue, false);
+
+      // IMPORTANT: Add data-field-id attribute so handleChangeItemsAPI can find the field
+      // For picker fields, also add data-old-value-id to store the original ID
+      const oldValueIdAttr = (fieldType === "picker" && oldValueId) ? ` data-old-value-id="${escapeHtml(oldValueId)}"` : "";
+      const fieldBlock = `
+        <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${fieldType}"${oldValueIdAttr}>
+          <label>${escapeHtml(
+        labelText
+      )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueHtml}</span>)</label>
+          ${inputHtml}
+        </div>
+      `;
+
+      container.append(fieldBlock);
+    }
   });
 
   changeResources();
+
+  // After all fields are appended, initialize People Pickers using interval (for New mode)
+  let pickerInitAttempts = 0;
+  const pickerInitInterval = setInterval(function () {
+    pickerInitAttempts++;
+
+    // Check if MyPeoplePicker is available
+    if (typeof window.MyPeoplePicker === "undefined") {
+      if (pickerInitAttempts >= 20) {
+        clearInterval(pickerInitInterval);
+      }
+      return;
+    }
+
+    const $pickers = $("input.peoplePicker");
+    const $container = $(".changeItemsRow");
+
+    if ($pickers.length > 0) {
+      clearInterval(pickerInitInterval);
+      initPeoplePicker();
+    } else if (pickerInitAttempts >= 20) {
+      clearInterval(pickerInitInterval);
+    }
+  }, 500);
+
+  // If in edit mode, ensure dynamic fields remain enabled
+  if (window.isEdit) {
+    $(
+      ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
+    ).prop("disabled", false);
+  }
 }
 
 function tryFetchChangeDetails() {
@@ -730,6 +2200,15 @@ function tryFetchChangeDetails() {
     $(".changeItemsRow").find(".dynamicField").remove();
     return;
   }
+  
+  // Check actionType - if add, merge, split, or delete, hide dynamic section and don't call API
+  var meta = getSelectedChangeItemMeta();
+  if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+    setChangeItemsVisibility(false);
+    $(".changeItemsRow").find(".dynamicField").remove();
+    return;
+  }
+  
   setTimeout(function () {
     fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode);
   }, 2000);
@@ -737,6 +2216,18 @@ function tryFetchChangeDetails() {
 function fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode) {
   if (!changeItemCode || !approvalLevel || !itemCode) {
     $(".changeItemsRow").find(".dynamicField").remove();
+    currentApprovalPath = "";
+    currentSecurityGroupName = "";
+    return;
+  }
+
+  // Check actionType - if add, merge, split, or delete, hide dynamic section and don't call API
+  var meta = getSelectedChangeItemMeta();
+  if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+    setChangeItemsVisibility(false);
+    $(".changeItemsRow").find(".dynamicField").remove();
+    currentApprovalPath = "";
+    currentSecurityGroupName = "";
     return;
   }
 
@@ -749,25 +2240,65 @@ function fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode) {
     method: "GET",
     headers: { Accept: "application/json" },
     success: function (res) {
+      const result = res && res.result ? res.result : {};
+      currentApprovalPath = result.approvalPath || "";
+      currentSecurityGroupName = result.securityGroupName || "";
+
       if (
         res &&
         res.isSuccess &&
-        res.result &&
-        res.result.columnsDetails &&
-        res.result.columnsDetails.length
+        result &&
+        result.columnsDetails &&
+        result.columnsDetails.length
       ) {
-        renderDynamicChangeFields(res.result.columnsDetails);
+        renderDynamicChangeFields(result.columnsDetails);
       } else {
         $(".changeItemsRow").find(".dynamicField").remove();
+        currentApprovalPath = "";
+        currentSecurityGroupName = "";
       }
     },
     error: function (xhr) {
-      console.error("Error fetching change items:", xhr);
       $(".changeItemsRow").find(".dynamicField").remove();
+      currentApprovalPath = "";
+      currentSecurityGroupName = "";
     },
   });
 }
 function saveAllChangeRequestFields() {
+  // Double-check required fields before proceeding (safety check)
+  if (
+    !$("#Sector").val() ||
+    $("#Sector").val().trim() === "" ||
+    !$("#SubSector").val() ||
+    $("#SubSector").val().trim() === "" ||
+    !$("#RelatedStrategy").val() ||
+    $("#RelatedStrategy").val().trim() === "" ||
+    !$("#ParentItemType").val() ||
+    $("#ParentItemType").val().trim() === "" ||
+    !$("#ParentItemCode").val() ||
+    $("#ParentItemCode").val().trim() === "" ||
+    !$("#ChangeItem").val() ||
+    $("#ChangeItem").val().trim() === "" ||
+    !$("#ApprovalLevel").val() ||
+    $("#ApprovalLevel").val().trim() === "" ||
+    !$("#ChangeDescription").val() ||
+    $("#ChangeDescription").val().trim() === "" ||
+    !$("#ChangeJustification").val() ||
+    $("#ChangeJustification").val().trim() === "" ||
+    !$("#ExpectedPositiveImpact").val() ||
+    $("#ExpectedPositiveImpact").val().trim() === "" ||
+    !$("#ImpactType").val() ||
+    $("#ImpactType").val().trim() === ""
+  ) {
+    alert(
+      localStorage.getItem("lng") == "en"
+        ? "Please fill all required fields"
+        : "يرجى ملء جميع الحقول المطلوبة"
+    );
+    return;
+  }
+
   var clientContext = new SP.ClientContext.get_current();
   var oList = clientContext
     .get_web()
@@ -794,10 +2325,12 @@ function saveAllChangeRequestFields() {
       oListItem.set_item(f, $("#" + f).val() || "");
     });
 
-    $(".peoplePicker").each(function () {
-      var picker = $(this).data("MyPeoplePicker");
-      oListItem.set_item(this.id, picker ? picker.getAllUserInfo() : []);
-    });
+    oListItem.set_item("ApprovalPath", currentApprovalPath || "");
+    oListItem.set_item("SecurityGroupName", currentSecurityGroupName || "");
+
+    // NOTE: People Picker fields (like InitiativeOwner) are dynamic fields
+    // They should NOT be saved directly to NewChangeRequests list
+    // They will be saved via handleChangeItemsAPI() which sends them to the API
 
     oListItem.update();
     clientContext.load(oListItem);
@@ -806,27 +2339,120 @@ function saveAllChangeRequestFields() {
     clientContext.executeQueryAsync(
       function () {
         var newId = oListItem.get_id();
+        window.crItemId = newId;
         var newCRCode = "NCR-" + year + "-" + newId.toString().padStart(4, "0");
         oListItem.set_item("Title", newCRCode);
         oListItem.update();
 
         clientContext.executeQueryAsync(
           function () {
-            handleChangeItemsAPI(newCRCode);
-            alert("تم الحفظ بنجاح!");
+            // Check actionType - if add, merge, split, or delete, skip API call
+            var meta = getSelectedChangeItemMeta();
+            var shouldCallAPI = !(meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete");
+            
+            if (shouldCallAPI) {
+              handleChangeItemsAPI(newCRCode)
+                .then(function () {
+                  return startChangeRequestWorkflow(newCRCode);
+                })
+                .then(function () {
+                  // Upload attachments (if any) to SPM General Services/changerequests/<CRCODE>/
+                  return uploadCRAttachments(newCRCode, window.crItemId);
+                })
+                .then(function () {
+                  // Refresh attachments list (in case user stays on page)
+                  setTimeout(loadCRExistingAttachments, 500);
+                  alert(getLocalizedMessage("saveSuccess"));
+
+                  // Check if ChangeItem has actiontype == "add" and redirect to New.aspx
+                  if (window.isNew) {
+                    if (meta.actionType === "add" && meta.listName) {
+                      window.location.replace(
+                        _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/New.aspx?ListKey=" +
+                        meta.listName
+                      );
+                      return;
+                    }
+                  }
+
+                  // Default redirect
+                  window.location.replace(
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/Listing.aspx?ListKey=changerequests"
+                  );
+                })
+                .catch(function (err) {
+                  alert(getLocalizedMessage("apiError"));
+                });
+            } else {
+              // Skip handleChangeItemsAPI call, but still call workflow
+              startChangeRequestWorkflow(newCRCode)
+                .then(function () {
+                  // Upload attachments (if any) to SPM General Services/changerequests/<CRCODE>/
+                  return uploadCRAttachments(newCRCode, window.crItemId);
+                })
+                .then(function () {
+                  // Refresh attachments list (in case user stays on page)
+                  setTimeout(loadCRExistingAttachments, 500);
+                  alert(getLocalizedMessage("saveSuccess"));
+
+                  // Check if ChangeItem has actiontype == "add" and redirect to New.aspx
+                  if (window.isNew) {
+                    if (meta.actionType === "add" && meta.listName) {
+                      window.location.replace(
+                        _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/New.aspx?ListKey=" +
+                        meta.listName
+                      );
+                      return;
+                    }
+                  }
+
+                  // Default redirect
+                  window.location.replace(
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/Listing.aspx?ListKey=changerequests"
+                  );
+                })
+                .catch(function (err) {
+                  // Even if workflow fails, still upload attachments and redirect
+                  uploadCRAttachments(newCRCode, window.crItemId)
+                    .then(function () {
+                      setTimeout(loadCRExistingAttachments, 500);
+                      alert(getLocalizedMessage("saveSuccess"));
+
+                      if (window.isNew) {
+                        if (meta.actionType === "add" && meta.listName) {
+                          window.location.replace(
+                            _spPageContextInfo.webAbsoluteUrl +
+                            "/SitePages/New.aspx?ListKey=" +
+                            meta.listName
+                          );
+                          return;
+                        }
+                      }
+
+                      window.location.replace(
+                        _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/Listing.aspx?ListKey=changerequests"
+                      );
+                    });
+                });
+            }
           },
           function (sender, args) {
-            console.error("Error updating Title: " + args.get_message());
+            alert("Error updating Title: " + args.get_message());
           }
         );
       },
       function (sender, args) {
-        console.error("Error creating item: " + args.get_message());
+        alert("Error creating item: " + args.get_message());
       }
     );
   } else {
     if (!crItemCode) {
-      alert("لا يمكن التعديل: لم يتم تحديد كود التغيير (crItemCode).");
+      alert(getLocalizedMessage("noItemCode"));
       return;
     }
 
@@ -841,11 +2467,16 @@ function saveAllChangeRequestFields() {
     clientContext.executeQueryAsync(
       function () {
         if (items.get_count() === 0) {
-          alert(`Item with Title=${crItemCode} not found!`);
+          alert(getLocalizedMessage("itemNotFoundByTitle"));
           return;
         }
 
         var oListItem = items.getItemAtIndex(0);
+        try {
+          window.crItemId = oListItem.get_id();
+        } catch (e) {
+          window.crItemId = 0;
+        }
 
         [
           "ParentItemType",
@@ -865,85 +2496,661 @@ function saveAllChangeRequestFields() {
           oListItem.set_item(f, $("#" + f).val() || "");
         });
 
-        $(".peoplePicker").each(function () {
-          var picker = $(this).data("MyPeoplePicker");
-          oListItem.set_item(this.id, picker ? picker.getAllUserInfo() : []);
-        });
+        oListItem.set_item("ApprovalPath", currentApprovalPath || "");
+        oListItem.set_item("SecurityGroupName", currentSecurityGroupName || "");
+
+        // NOTE: People Picker fields (like InitiativeOwner) are dynamic fields
+        // They should NOT be saved directly to NewChangeRequests list
+        // They will be saved via handleChangeItemsAPI() which sends them to the API
 
         oListItem.update();
         clientContext.load(oListItem);
 
         clientContext.executeQueryAsync(
           function () {
-            handleChangeItemsAPI(crItemCode);
-            alert("تم التعديل بنجاح!");
+            // Check actionType - if add, merge, split, or delete, skip handleChangeItemsAPI call
+            var meta = getSelectedChangeItemMeta();
+            var shouldCallAPI = !(meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete");
+            
+            if (shouldCallAPI) {
+              handleChangeItemsAPI(crItemCode)
+                .then(function () {
+                  // Upload attachments (if any) to SPM General Services/changerequests/<CRCODE>/
+                  return uploadCRAttachments(crItemCode, window.crItemId);
+                })
+                .then(function () {
+                  setTimeout(loadCRExistingAttachments, 500);
+                  alert(getLocalizedMessage("editSuccess"));
+                  window.location.replace(
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/Listing.aspx?ListKey=changerequests"
+                  );
+                })
+                .catch(function (err) {
+                  alert(getLocalizedMessage("apiError"));
+                });
+            } else {
+              // Skip handleChangeItemsAPI call, just upload attachments and redirect
+              uploadCRAttachments(crItemCode, window.crItemId)
+                .then(function () {
+                  setTimeout(loadCRExistingAttachments, 500);
+                  alert(getLocalizedMessage("editSuccess"));
+                  window.location.replace(
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/Listing.aspx?ListKey=changerequests"
+                  );
+                });
+            }
           },
           function (sender, args) {
-            console.error("Error updating item: " + args.get_message());
+            alert("Error updating item: " + args.get_message());
           }
         );
       },
       function (sender, args) {
-        console.error("Error retrieving item: " + args.get_message());
+        alert("Error retrieving item: " + args.get_message());
       }
     );
   }
 }
 function handleChangeItemsAPI(crCode) {
-  const changeItemCode = $("#ChangeItem").val() || "";
-  const apiBody = [];
-  $(".changeItemsRow .dynamicField").each(function () {
-    const input = $(this).find("input, textarea, select");
-    apiBody.push({
-      columnInternalName: input.attr("id"),
-      dataType: input.prop("type") || "string",
-      columnOldValue: $(this).find(".oldValue").text() || "",
-      columnNewValue: input.val() || "",
+  return new Promise(function (resolve, reject) {
+    const changeItemCode = $("#ChangeItem").val() || "";
+    const fields = [];
+    const pickerPromises = [];
+
+    const $dynamicFields = $(".changeItemsRow .dynamicField");
+
+    // First, collect all fields and create promises for People Picker fields
+    $dynamicFields.each(function (index) {
+      const $field = $(this);
+
+      // Get the correct InternalName from data-field-id attribute (not from input ID)
+      const fieldInternalName = $field.attr("data-field-id") || "";
+
+      if (!fieldInternalName) {
+        return; // Skip if no InternalName found
+      }
+
+      // Check if this is a People Picker field
+      const $ppField = $field.find(".PPField[type='picker']");
+
+      if ($ppField.length) {
+        // This is a People Picker field - need to get ID asynchronously
+        const picker = $ppField.data("MyPeoplePicker");
+        // For picker fields, Old Value should be ID, not Display Name
+        // Try to get ID from data attribute first, otherwise try to convert Display Name to ID
+        let oldValueId = $field.attr("data-old-value-id") || "";
+        const oldValueDisplayName = $field.find(".oldValue").text() || "";
+
+        // If we have Display Name but no ID, we need to lookup the ID
+        // But for now, we'll store the Display Name and let the backend handle it
+        // OR we can store it in a data attribute when we convert it
+        if (!oldValueId && oldValueDisplayName) {
+          // Try to get from stored data or use the display name as fallback
+          // The backend should handle converting Display Name to ID if needed
+          oldValueId = oldValueDisplayName; // Temporary - will be fixed
+        }
+
+        const fieldData = {
+          fieldId: fieldInternalName, // Use InternalName, not input ID
+          dataType: "picker",
+          columnOldValue: oldValueId, // Use ID if available, otherwise Display Name
+          $field: $field
+        };
+
+        if (picker && picker.getUsersID) {
+          // Create a promise for this picker to get User ID
+          const pickerPromise = new Promise(function (pickerResolve) {
+            picker.getUsersID(function () {
+              // getUsersID callback receives IDs as separate arguments, not as array
+              // Convert arguments to array
+              const userIds = Array.prototype.slice.call(arguments);
+
+              let userId = "";
+
+              // getUsersID returns user IDs as numbers (from user.get_id())
+              if (userIds && userIds.length > 0) {
+                // First argument is the user ID (number)
+                const firstId = userIds[0];
+                if (typeof firstId === "number") {
+                  userId = firstId.toString();
+                } else if (typeof firstId === "string") {
+                  // If string, try to parse as number
+                  const userIdNum = parseInt(firstId, 10);
+                  if (!isNaN(userIdNum)) {
+                    userId = userIdNum.toString();
+                  }
+                }
+              }
+
+              // If we still don't have userId, try fallback: get from hidden input and extract ID
+              if (!userId) {
+                // Try to get from hidden input value (contains JSON with user info)
+                const hiddenInputId = $ppField.attr("id") + "_TopSpan_HiddenInput";
+                const $hiddenInput = $("#" + hiddenInputId);
+                if ($hiddenInput.length) {
+                  const hiddenValue = $hiddenInput.val();
+                  try {
+                    const parsed = JSON.parse(hiddenValue);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                      // Extract Key from People Picker JSON and get user ID from it
+                      const key = parsed[0].Key || "";
+                      const displayText = parsed[0].DisplayText || "";
+
+                      // Use Key to get user ID via SharePoint API
+                      if (key) {
+                        // Key format: "i:0#.w|domain\\user" or similar
+                        // We need to use ensureUser to get the ID
+                        var context = new SP.ClientContext.get_current();
+                        var user = context.get_web().ensureUser(key);
+                        context.load(user);
+                        context.executeQueryAsync(
+                          function () {
+                            userId = user.get_id().toString();
+                            fieldData.columnNewValue = userId;
+                            pickerResolve(fieldData);
+                          },
+                          function (sender, args) {
+                            // Final fallback: try stored userId
+                            const storedUserId = $ppField.data("userId");
+                            if (storedUserId) {
+                              fieldData.columnNewValue = storedUserId.toString();
+                            } else {
+                              fieldData.columnNewValue = "";
+                            }
+                            pickerResolve(fieldData);
+                          }
+                        );
+                        return; // Exit early, will resolve in executeQueryAsync callback
+                      }
+                    }
+                  } catch (e) {
+                    // Error parsing hidden input
+                  }
+                }
+
+                // Final fallback: try stored userId from data attribute
+                const storedUserId = $ppField.data("userId");
+                if (storedUserId) {
+                  userId = storedUserId.toString();
+                }
+              }
+
+              fieldData.columnNewValue = userId;
+              pickerResolve(fieldData);
+            });
+          });
+          pickerPromises.push(pickerPromise);
+        } else {
+          // Fallback: try to get stored userId from data attribute
+          const storedUserId = $ppField.data("userId");
+          if (storedUserId) {
+            fieldData.columnNewValue = storedUserId.toString();
+          } else {
+            fieldData.columnNewValue = "";
+          }
+          fields.push(fieldData);
+        }
+      } else {
+        // Check if this is a lookup field
+        const fieldType = $field.attr("data-field-type") || "";
+        
+        if (fieldType === "dropdownvalues") {
+          // This is a dropdownValues field - get value from select
+          const $select = $field.find("select");
+          if ($select.length === 0) {
+            return;
+          }
+          const selectValue = $select.val() || "";
+          // IMPORTANT: Get original value (before translation) from data attribute, not from .oldValue text
+          const oldValue = $field.attr("data-dropdown-old-value") || "";
+          
+          const fieldData = {
+            fieldId: fieldInternalName,
+            dataType: "dropdownValues",
+            columnOldValue: oldValue, // This is the original value (choice.value), not translated text
+            columnNewValue: selectValue
+          };
+          
+          fields.push(fieldData);
+        } else if (fieldType === "yesnoradio") {
+          const $checkedRadio = $field.find('input[type="radio"]:checked');
+          if ($checkedRadio.length === 0) {
+            return;
+          }
+          const radioValue = $checkedRadio.val() || "";
+          const oldValue = $field.attr("data-dropdown-old-value") || "";
+          
+          const fieldData = {
+            fieldId: fieldInternalName,
+            dataType: "yesnoradio",
+            columnOldValue: oldValue,
+            columnNewValue: radioValue
+          };
+          
+          fields.push(fieldData);
+        } else if (fieldType === "lookup") {
+          const $select = $field.find("select");
+          if ($select.length === 0) {
+            return;
+          }
+          const selectValue = $select.val() || "";
+          // IMPORTANT: Get original value (valfieldkey) from data attribute, not display text
+          const oldValue = $field.attr("data-lookup-old-value") || "";
+          
+          const fieldData = {
+            fieldId: fieldInternalName,
+            dataType: "lookup",
+            columnOldValue: oldValue, // This is the valfieldkey value, not display text
+            columnNewValue: selectValue
+          };
+          
+          fields.push(fieldData);
+        } else {
+          // Regular input/textarea/select
+          const input = $field.find("input, textarea, select").not("[id$='_TopSpan_HiddenInput'], [id$='_HiddenInput']");
+
+          if (input.length === 0) {
+            return;
+          }
+
+          // Get the first input (in case there are multiple)
+          const $firstInput = input.first();
+          let inputValue = $firstInput.val() || "";
+          const inputType = $firstInput.prop("type") || "text";
+          const oldValue = $field.find(".oldValue").text() || "";
+
+          // Convert date input (yyyy-mm-dd) to mm/dd/yyyy format for date, datetime, datetimetoparent
+          if ((fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") && inputType === "date" && inputValue) {
+            try {
+              // Input type="date" gives yyyy-mm-dd format
+              const parts = inputValue.split("-");
+              if (parts.length === 3) {
+                const year = parts[0];
+                const month = parts[1];
+                const day = parts[2];
+                inputValue = `${month}/${day}/${year}`;
+              }
+            } catch (e) {
+              // If conversion fails, use original value
+            }
+          }
+
+          const fieldData = {
+            fieldId: fieldInternalName, // Use InternalName from data-field-id
+            dataType: (fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") ? fieldType : (inputType === "date" ? "date" : (inputType === "number" ? "number" : "string")),
+            columnOldValue: oldValue,
+            columnNewValue: inputValue
+          };
+
+          fields.push(fieldData);
+        }
+      }
+    });
+
+    // If no picker promises, resolve immediately with regular fields
+    if (pickerPromises.length === 0) {
+      const apiBody = fields.map(function (field) {
+        return {
+          columnInternalName: field.fieldId,
+          dataType: field.dataType,
+          columnOldValue: field.columnOldValue,
+          columnNewValue: field.columnNewValue || ""
+        };
+      });
+
+      if (apiBody.length === 0) {
+        resolve({ success: true, message: "No dynamic fields to save" });
+        return;
+      }
+
+      $.ajax({
+        url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(apiBody),
+        success: function (res) {
+          console.log("API success (no pickers):", res);
+          resolve(res);
+        },
+        error: function (xhr) {
+          console.error("API error (no pickers):", xhr);
+          reject(xhr);
+        },
+      });
+      return;
+    }
+
+    // Wait for all People Picker promises to resolve
+    Promise.all(pickerPromises).then(function (pickerFields) {
+      // Add picker fields to fields array
+      fields.push.apply(fields, pickerFields);
+
+      // Build API body
+      const apiBody = fields.map(function (field) {
+        // IMPORTANT: For picker fields, ensure we send ID, not JSON object
+        if (field.dataType === "picker") {
+          return {
+            columnInternalName: field.fieldId,
+            dataType: field.dataType,
+            columnOldValue: field.columnOldValue || "",
+            columnNewValue: field.columnNewValue || ""
+          };
+        } else {
+          return {
+            columnInternalName: field.fieldId,
+            dataType: field.dataType,
+            columnOldValue: field.columnOldValue,
+            columnNewValue: field.columnNewValue || ""
+          };
+        }
+      });
+
+      // If no dynamic fields, skip API call and resolve immediately
+      if (apiBody.length === 0) {
+        resolve({ success: true, message: "No dynamic fields to save" });
+        return;
+      }
+
+      $.ajax({
+        url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(apiBody),
+        success: function (res) {
+          console.log("API success (with pickers):", res);
+          resolve(res);
+        },
+        error: function (xhr) {
+          console.error("API error (with pickers):", xhr);
+          reject(xhr);
+        },
+      });
+    }).catch(function (error) {
+      console.error("Error in picker promises:", error);
+      reject(error);
     });
   });
+}
 
-  $.ajax({
-    url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
-    method: "POST",
-    contentType: "application/json",
-    data: JSON.stringify(apiBody),
-    success: function (res) {
-      console.log("API Response:", res);
-    },
-    error: function (xhr) {
-      console.error("API Error:", xhr);
-    },
+function startChangeRequestWorkflow(crCode) {
+  return new Promise(function (resolve, reject) {
+    if (!crCode) {
+      reject(new Error("Missing CR code for workflow"));
+      return;
+    }
+
+    $.ajax({
+      url: `${APIURL}/general/startchangerequestworkflow/${crCode}`,
+      method: "GET",
+      headers: { Accept: "application/json" },
+      success: function (res) {
+        if (res && res.isSuccess) {
+          console.log("Workflow started successfully:", res);
+          resolve(res);
+        } else {
+          console.error("Workflow start failed:", res);
+          reject(res || { message: "Workflow start failed" });
+        }
+      },
+      error: function (xhr) {
+        console.error("Workflow API Error:", xhr);
+        reject(xhr);
+      },
+    });
   });
 }
 
 function initPeoplePicker() {
-  // html of any picker should be like this:
-  // <div class="col-md-6 mb-3">
-  // <label data-trans-requestor class="Resources">Requestor</label>
-  // <input type="text" class="form-control peoplePicker" id="Requestor" />
-  // </div>
-  $(".peoplePicker").each(function () {
-    if (!$(this).data("MyPeoplePicker")) {
-      const divId = this.id;
-      const $ppDiv = $(`
-        <div class="PPField SPIField form-control" type="multipicker" id="${divId}" INppicker="${divId}">
-          <div dir="">
-            <div class="sp-peoplepicker-topLevel" id="${divId}_TopSpan" title="Enter a name or email..." spclientpeoplepicker="true" style="width:100%;">
-              <input id="${divId}_TopSpan_HiddenInput" type="hidden">
-              <div id="${divId}_TopSpan_AutoFillDiv" class="sp-peoplepicker-autoFillContainer" aria-live="assertive"></div>
-              <span id="${divId}_TopSpan_InitialHelpText" class="sp-peoplepicker-initialHelpText ms-helperText">Enter a name or email...</span>
-              <span id="${divId}_TopSpan_ResolvedList" class="sp-peoplepicker-resolveList"></span>
-              <span id="${divId}_TopSpan_NotificationSpan" aria-live="polite" style="visibility:hidden;position:absolute;width:0;"></span>
-              <input type="text" class="sp-peoplepicker-editorInput" size="1" autocomplete="off" value="" id="${divId}_TopSpan_EditorInput">
-            </div>
-          </div>
-        </div>
-      `);
-      $(this).replaceWith($ppDiv);
-      var picker = new window.MyPeoplePicker();
-      picker.init(divId, { valueFormat: "Title" }, function () {});
-      $ppDiv.data("MyPeoplePicker", picker);
+  // Check if MyPeoplePicker is available
+  if (typeof window.MyPeoplePicker === "undefined") {
+    return;
+  }
+
+  // Look for input.peoplePicker elements (these are placeholders that need to be replaced with PPField divs)
+  const $allPickerInputs = $("input.peoplePicker");
+
+  $allPickerInputs.each(function () {
+    const $input = $(this);
+    const inputId = this.id;
+    const userId = $input.attr("data-user-id") || $input.val() || "";
+    // In New mode, People Picker should be enabled (not disabled)
+    // Only disable in View mode (not Edit and not New)
+    const isDisabled = window.isView === true && window.isEdit !== true;
+
+    if (!inputId) {
+      return;
     }
+
+    // Check if already replaced with PPField div
+    const $existingPPDiv = $input.closest(".dynamicField").find("div[type='picker']");
+    if ($existingPPDiv.length > 0 && $existingPPDiv.data("MyPeoplePicker")) {
+      return;
+    }
+
+    // Replace input with PPField div (like Form_Render.js does)
+    const $ppDiv = $('<div class="PPField SPIField form-control" type="picker" id="' + inputId + '" INppicker="' + inputId + '" value="" placeholder=""></div>');
+    $input.replaceWith($ppDiv);
+
+    // Initialize People Picker (like Form_Request.js does)
+    try {
+      var picker = new window.MyPeoplePicker();
+      picker.init(inputId, {
+        PrincipalAccountType: "User",
+        AllowMultipleValues: false
+      });
+
+      // Store picker instance
+      $ppDiv.data("MyPeoplePicker", picker);
+      $ppDiv.data("userId", userId);
+
+      // Wait for People Picker to render, then set the value if we have a user ID
+      if (userId) {
+        setTimeout(function () {
+          setPeoplePickerValue(inputId, userId, picker, $ppDiv);
+        }, 1000); // Wait 1000ms for People Picker to fully initialize
+      }
+
+      // Add event handler to save User ID when user is selected/changed (for New mode)
+      // This ensures that when user selects a new user, the ID is saved
+      setTimeout(function () {
+        try {
+          // Listen for user resolution events
+          var topSpan = $("#" + inputId + "_TopSpan");
+          if (topSpan.length && topSpan[0].SPClientPeoplePicker) {
+            // Use SPClientPeoplePicker events to detect when user is selected
+            var originalProcessUser = topSpan[0].SPClientPeoplePicker.ProcessUser;
+            if (originalProcessUser) {
+              topSpan[0].SPClientPeoplePicker.ProcessUser = function (user) {
+                // Call original function
+                var result = originalProcessUser.call(this, user);
+
+                // After user is processed, get the ID and save it
+                if (picker && picker.getUsersID) {
+                  picker.getUsersID(function () {
+                    // getUsersID returns IDs as separate arguments
+                    const userIds = Array.prototype.slice.call(arguments);
+
+                    var selectedUserId = "";
+                    if (userIds && userIds.length > 0) {
+                      const firstId = userIds[0];
+                      if (typeof firstId === "number") {
+                        selectedUserId = firstId.toString();
+                      } else if (typeof firstId === "string") {
+                        const userIdNum = parseInt(firstId, 10);
+                        if (!isNaN(userIdNum)) {
+                          selectedUserId = userIdNum.toString();
+                        }
+                      }
+                    }
+
+                    // Save the ID
+                    if (selectedUserId) {
+                      $ppDiv.data("userId", selectedUserId);
+                    }
+                  });
+                }
+
+                return result;
+              };
+            }
+          }
+
+          // Also listen for changes in the resolved list
+          var resolvedList = $("#" + inputId + "_TopSpan_ResolvedList");
+          if (resolvedList.length) {
+            // Use MutationObserver to detect when user is added/removed
+            var observer = new MutationObserver(function (mutations) {
+              // When user is added or removed, get the ID
+              if (picker && picker.getUsersID) {
+                picker.getUsersID(function () {
+                  // getUsersID returns IDs as separate arguments
+                  const userIds = Array.prototype.slice.call(arguments);
+
+                  var selectedUserId = "";
+                  if (userIds && userIds.length > 0) {
+                    const firstId = userIds[0];
+                    if (typeof firstId === "number") {
+                      selectedUserId = firstId.toString();
+                    } else if (typeof firstId === "string") {
+                      const userIdNum = parseInt(firstId, 10);
+                      if (!isNaN(userIdNum)) {
+                        selectedUserId = userIdNum.toString();
+                      }
+                    }
+                  } else {
+                    // User was removed
+                    $ppDiv.data("userId", "");
+                    return;
+                  }
+
+                  // Save the ID
+                  if (selectedUserId) {
+                    $ppDiv.data("userId", selectedUserId);
+                  }
+                });
+              }
+            });
+
+            observer.observe(resolvedList[0], {
+              childList: true,
+              subtree: true
+            });
+          }
+        } catch (e) {
+        }
+      }, 1500); // Wait a bit longer for People Picker to fully initialize
+
+      // If disabled (View mode only), disable People Picker after it renders
+      if (isDisabled) {
+        setTimeout(function () {
+          $ppDiv.find(".sp-peoplepicker-topLevel").css({
+            "pointer-events": "none",
+            opacity: "0.6",
+          });
+          $ppDiv.find(".sp-peoplepicker-editorInput").prop("disabled", true);
+        }, 1000);
+      } else {
+        // In New/Edit mode, ensure People Picker is enabled
+        setTimeout(function () {
+          $ppDiv.find(".sp-peoplepicker-topLevel").css({
+            "pointer-events": "auto",
+            opacity: "1",
+          });
+          $ppDiv.find(".sp-peoplepicker-editorInput").prop("disabled", false);
+        }, 1000);
+      }
+    } catch (e) {
+    }
+  });
+}
+
+// Function to get user by ID and set it in People Picker
+function setPeoplePickerValue(pickerId, userId, picker, $ppDiv) {
+  var userIdNum = parseInt(userId, 10);
+  if (isNaN(userIdNum)) {
+    return;
+  }
+
+  // Get user info from SharePoint by ID
+  $.ajax({
+    url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/GetUserById(" + userIdNum + ")",
+    method: "GET",
+    headers: { Accept: "application/json; odata=verbose" },
+    success: function (userData) {
+      var userTitle = userData.d.Title || userData.d.LoginName || "";
+      var userEmail = userData.d.Email || "";
+      var userLoginName = userData.d.LoginName || "";
+
+      if (userTitle && picker) {
+        // Try multiple methods to add user to People Picker
+        var userAdded = false;
+
+        // Method 1: Try addUser with Title
+        if (typeof picker.addUser === "function") {
+          try {
+            picker.addUser(userTitle);
+            userAdded = true;
+          } catch (e) {
+          }
+        }
+
+        // Method 2: Try addUser with LoginName
+        if (!userAdded && typeof picker.addUser === "function" && userLoginName) {
+          try {
+            picker.addUser(userLoginName);
+            userAdded = true;
+          } catch (e) {
+          }
+        }
+
+        // Method 3: Try setting value directly in the input
+        if (!userAdded) {
+          try {
+            var $editorInput = $("#" + pickerId + "_TopSpan_EditorInput");
+            var $initialHelpText = $("#" + pickerId + "_TopSpan_InitialHelpText");
+            if ($editorInput.length && $initialHelpText.length) {
+              $editorInput.val(userTitle);
+              $initialHelpText.text(userTitle).hide();
+              $editorInput.show();
+              userAdded = true;
+            }
+          } catch (e) {
+          }
+        }
+
+        // Method 4: Try using SPClientPeoplePicker API directly
+        if (!userAdded) {
+          try {
+            var schema = {};
+            schema['PrincipalType'] = 'User';
+            schema['DisplayName'] = userTitle;
+            schema['Email'] = userEmail || userLoginName;
+            schema['Title'] = userTitle;
+            schema['IsResolved'] = true;
+            schema['EntityType'] = 'User';
+            schema['Description'] = userTitle;
+            schema['Key'] = userLoginName || userEmail || userTitle;
+
+            var topSpan = $("#" + pickerId + "_TopSpan");
+            if (topSpan.length && topSpan[0].SPClientPeoplePicker) {
+              topSpan[0].SPClientPeoplePicker.AddUserKeys(userLoginName || userEmail || userTitle);
+              userAdded = true;
+            }
+          } catch (e) {
+          }
+        }
+
+        // Always save the userId in data attribute, even if user wasn't added visually
+        // This ensures we can retrieve the ID when submitting
+        $ppDiv.data("userId", userIdNum.toString());
+        if (userAdded) {
+          $ppDiv.attr("data-email", userTitle);
+        }
+      }
+    },
+    error: function (err) { }
   });
 }
 function loadExistingChangeDetails(crCode) {
@@ -987,7 +3194,7 @@ function loadExistingChangeDetails(crCode) {
       });
     },
     error: function (err) {
-      console.log("Error loading existing change details", err);
+      console.error(`Error loading list ${listName}:`, err);
     },
   });
 }
@@ -998,13 +3205,13 @@ function initViewMode(code) {
   var camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where>" +
-      "<And>" +
-      "<Eq><FieldRef Name='Title'/><Value Type='Text'>" +
-      code +
-      "</Value></Eq>" +
-      "<Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq>" +
-      "</And>" +
-      "</Where></Query></View>"
+    "<And>" +
+    "<Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+    code +
+    "</Value></Eq>" +
+    "<Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq>" +
+    "</And>" +
+    "</Where></Query></View>"
   );
 
   var items = list.getItems(camlQuery);
@@ -1014,18 +3221,24 @@ function initViewMode(code) {
       var enumerator = items.getEnumerator();
       if (enumerator.moveNext()) {
         var mainItem = enumerator.get_current();
+        try {
+          window.crItemId = mainItem.get_id();
+        } catch (e) { }
         fillViewFields(mainItem, code);
+        setTimeout(loadCRExistingAttachments, 300);
       } else {
-        alert("لم يتم العثور على العنصر: " + code);
+        alert(getLocalizedMessage("itemNotFound"));
       }
     },
     function (sender, args) {
-      console.error(args.get_message());
     }
   );
 }
 
 function fillViewFields(item, code) {
+  try {
+    window.crItemId = item.get_id();
+  } catch (e) { }
   const sector = item.get_item("Sector");
   const subSector = item.get_item("SubSector");
   const relatedStrategy = item.get_item("RelatedStrategy");
@@ -1034,59 +3247,174 @@ function fillViewFields(item, code) {
   const childType = item.get_item("ChildItemType");
   const childCode = item.get_item("ChildItemCode");
   const changeItem = item.get_item("ChangeItem");
+  currentApprovalPath = item.get_item("ApprovalPath") || "";
+  currentSecurityGroupName = item.get_item("SecurityGroupName") || "";
 
+  // Load sectors first, then set value and load subsectors
   loadSectors();
   setTimeout(() => {
-    setSelectValue("#Sector", sector);
-    loadSubSectors(sector);
-    setTimeout(() => setSelectValue("#SubSector", subSector), 500);
-  }, 500);
-
-  loadStrategyOptions();
-  setTimeout(() => setSelectValue("#RelatedStrategy", relatedStrategy), 500);
-
-  setSelectValue("#ParentItemType", parentType);
-  loadParentItems(parentType, "#ParentItemCode");
-  setTimeout(() => {
-    setSelectValue("#ParentItemCode", parentCode);
-
-    if (parentType == "Initiatives" || parentType == "Projects") {
-      $("#ChildItemTypeDiv, #ChildItemCodeDiv").show();
-      if (childType) setSelectValue("#ChildItemType", childType);
-      if (childType) {
-        loadChildItems(childType, parentCode, parentType);
-      }
+    if (sector) {
+      setSelectValue("#Sector", sector);
+      loadSubSectors(sector);
       setTimeout(() => {
-        if (childCode) setSelectValue("#ChildItemCode", childCode);
-        loadChangeItems(childType, parentType, childType);
-        if (!window.isEdit) {
-          setTimeout(() => loadChangeItemsForView(changeItem, code), 500);
+        if (subSector) {
+          setSelectValue("#SubSector", subSector);
         }
-      }, 500);
-    } else {
-      loadChangeItems(parentCode, parentType);
-      if (!window.isEdit) {
-        setTimeout(() => loadChangeItemsForView(changeItem, code), 500);
-      }
-    }
-  }, 500);
 
+        // Load strategy options, then set value
+        loadStrategyOptions();
+        setTimeout(() => {
+          if (relatedStrategy) {
+            setSelectValue("#RelatedStrategy", relatedStrategy);
+          }
+
+          // Set parent type and load parent items AFTER Sector, SubSector, and RelatedStrategy are loaded
+          if (parentType) {
+            setSelectValue("#ParentItemType", parentType);
+            
+            // Show Types field if ParentItemType is MainKpi
+            if (parentType === "MainKpi") {
+              $("#ClassificationDiv").show();
+            }
+            
+            loadParentItems(parentType, "#ParentItemCode");
+            setTimeout(() => {
+              if (parentCode) {
+                setSelectValue("#ParentItemCode", parentCode);
+              }
+
+              if (parentType == "Initiatives" || parentType == "Projects") {
+                $("#ChildItemTypeDiv, #ChildItemCodeDiv").show();
+                if (childType) {
+                  setSelectValue("#ChildItemType", childType);
+                  loadChildItems(childType, parentCode, parentType);
+                  setTimeout(() => {
+                    if (childCode) {
+                      setSelectValue("#ChildItemCode", childCode);
+                    }
+                    loadChangeItems(childType, parentType, childType);
+                    // IMPORTANT: Always load ChangeItem for view/edit (not just view)
+                    setTimeout(() => {
+                      if (changeItem) {
+                        loadChangeItemsForView(changeItem, code);
+                      }
+                    }, 1000);
+                  }, 1000);
+                } else {
+                  // No child type, load change items directly
+                  loadChangeItems(parentCode, parentType);
+                  setTimeout(() => {
+                    if (changeItem) {
+                      loadChangeItemsForView(changeItem, code);
+                    }
+                  }, 1000);
+                }
+              } else {
+                // Not Initiatives/Projects, load change items directly
+                loadChangeItems(parentCode, parentType);
+                setTimeout(() => {
+                  if (changeItem) {
+                    loadChangeItemsForView(changeItem, code);
+                  }
+                }, 1000);
+              }
+            }, 1000);
+          }
+        }, 1000);
+      }, 800);
+    } else {
+      // No sector, load strategy and parent items without sector/subSector filters
+      loadStrategyOptions();
+      setTimeout(() => {
+        if (relatedStrategy) {
+          setSelectValue("#RelatedStrategy", relatedStrategy);
+        }
+
+        if (parentType) {
+          setSelectValue("#ParentItemType", parentType);
+          loadParentItems(parentType, "#ParentItemCode");
+          setTimeout(() => {
+            if (parentCode) {
+              setSelectValue("#ParentItemCode", parentCode);
+            }
+
+            if (parentType == "Initiatives" || parentType == "Projects") {
+              $("#ChildItemTypeDiv, #ChildItemCodeDiv").show();
+              if (childType) {
+                setSelectValue("#ChildItemType", childType);
+                loadChildItems(childType, parentCode, parentType);
+                setTimeout(() => {
+                  if (childCode) {
+                    setSelectValue("#ChildItemCode", childCode);
+                  }
+                  loadChangeItems(childType, parentType, childType);
+                  setTimeout(() => {
+                    if (changeItem) {
+                      loadChangeItemsForView(changeItem, code);
+                    }
+                  }, 1000);
+                }, 1000);
+              } else {
+                loadChangeItems(parentCode, parentType);
+                setTimeout(() => {
+                  if (changeItem) {
+                    loadChangeItemsForView(changeItem, code);
+                  }
+                }, 1000);
+              }
+            } else {
+              loadChangeItems(parentCode, parentType);
+              setTimeout(() => {
+                if (changeItem) {
+                  loadChangeItemsForView(changeItem, code);
+                }
+              }, 1000);
+            }
+          }, 1000);
+        }
+      }, 1000);
+    }
+  }, 1000);
+
+  // Set simple field values (textareas and simple selects)
   [
-    "ApprovalLevel",
     "ChangeDescription",
     "ChangeJustification",
     "ExpectedPositiveImpact",
     "ImpactType",
-    "ChangeItem",
-  ].forEach((f) => $("#" + f).val(item.get_item(f)));
+  ].forEach((f) => {
+    var val = item.get_item(f);
+    if (val) $("#" + f).val(val);
+  });
+
+  // Set ApprovalLevel after a delay to ensure select is populated
+  setTimeout(() => {
+    var approvalLevelVal = item.get_item("ApprovalLevel");
+    if (approvalLevelVal) {
+      setSelectValue("#ApprovalLevel", approvalLevelVal);
+    }
+  }, 500);
+
+  // Set ChangeItem value AFTER options are loaded (handled in loadChangeItemsForView)
+  // Don't set it here because options might not be loaded yet
+
+  // After all fields are loaded, toggle edit mode if needed
   setTimeout(() => {
     if (window.isEdit) {
-      toggleFormEditable(true);
-      initializeEditMode(changeItem);
+      toggleEditModeFields();
+      // initializeEditMode will be called after loadChangeItemsForView completes
+      // (it's called in loadNewChangeRequestDetails)
+    } else if (window.isWF) {
+      // In workflow mode, show workflow button
+      toggleFormEditable(false);
+      var currentTaskID = taskID || taskId || window.taskID || window.taskid;
+      if ($("#CRWorkflowButton").length) {
+        $("#CRWorkflowButton").css("display", "inline-block");
+      }
     } else {
       toggleFormEditable(false);
     }
-  }, 1000);
+  }, 2000);
 }
 
 function loadChangeItemsForView(changeItemCode, newCRCode) {
@@ -1105,23 +3433,91 @@ function loadChangeItemsForView(changeItemCode, newCRCode) {
     method: "GET",
     headers: { Accept: "application/json; odata=verbose" },
     success: function (data) {
+      let changeItemColumnInternalName = null;
       data.d.results.forEach((item) => {
         $changeItem.append(
-          `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-action="${item.ActionType}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
+          `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
         );
+        // Save ColumnInternalName from ChangeItems (contains DisplayName and DisplayNameEn)
+        if (item.ColumnInternalName) {
+          changeItemColumnInternalName = item.ColumnInternalName;
+        }
       });
       setSelectValue("#ChangeItem", changeItemCode);
 
-      loadNewChangeRequestDetails(newCRCode);
+      // Wait a bit to ensure form values are set before loading details
+      setTimeout(function () {
+        loadNewChangeRequestDetails(newCRCode, changeItemColumnInternalName);
+      }, 300);
     },
     error: function (err) {
-      console.error("Error loading ChangeItem for view:", err);
+      console.error(`Error loading list ${listName}:`, err);
     },
   });
 }
 
-function loadNewChangeRequestDetails(code) {
-  if (!code) return;
+function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
+  if (!code) {
+    return;
+  }
+
+  // Get required values from form
+  const changeItemCode = $("#ChangeItem").val();
+  const approvalLevel = $("#ApprovalLevel").val();
+  let itemCode = $("#ParentItemCode").val();
+  if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val()) {
+    itemCode = $("#ChildItemCode").val();
+  }
+
+  // Parse ColumnInternalName from ChangeItems to get DisplayName map
+  let displayNameMapFromChangeItems = {};
+  if (changeItemColumnInternalName) {
+    try {
+      // ColumnInternalName is a JSON string array, but may have invalid JSON (type without quotes, trailing comma)
+      // Fix JSON by adding quotes around the "type" property and removing trailing comma
+      let fixedJson = changeItemColumnInternalName
+        .replace(/type:\s*"([^"]+)"/g, '"type": "$1"')
+        .replace(/,(\s*})/g, "$1"); // Remove trailing comma before closing brace
+
+      // ColumnInternalName is a JSON string array
+      const columnArray = JSON.parse(fixedJson);
+      if (Array.isArray(columnArray)) {
+        columnArray.forEach((col) => {
+          if (col.InternalName) {
+            displayNameMapFromChangeItems[col.InternalName] = {
+              DisplayName: col.DisplayName || "",
+              DisplayNameEn: col.DisplayNameEn || "",
+            };
+          }
+        });
+      }
+    } catch (e) {
+      // Try alternative parsing: extract DisplayName and DisplayNameEn using regex
+      try {
+        const internalNameMatch = changeItemColumnInternalName.match(
+          /"InternalName"\s*:\s*"([^"]+)"/
+        );
+        const displayNameMatch = changeItemColumnInternalName.match(
+          /"DisplayName"\s*:\s*"([^"]+)"/
+        );
+        const displayNameEnMatch = changeItemColumnInternalName.match(
+          /"DisplayNameEn"\s*:\s*"([^"]+)"/
+        );
+
+        if (internalNameMatch && (displayNameMatch || displayNameEnMatch)) {
+          const internalName = internalNameMatch[1];
+          displayNameMapFromChangeItems[internalName] = {
+            DisplayName: displayNameMatch ? displayNameMatch[1] : "",
+            DisplayNameEn: displayNameEnMatch ? displayNameEnMatch[1] : "",
+          };
+        }
+      } catch (regexError) {
+        // Silent fail - will use fallback
+      }
+    }
+  }
+
+  // First, load data from SharePoint list
   const url =
     _spPageContextInfo.webAbsoluteUrl +
     "/_api/web/lists/getbytitle('NewChangeRequestDetails')/items?$filter=NewChangeRequestCode eq '" +
@@ -1132,14 +3528,93 @@ function loadNewChangeRequestDetails(code) {
     method: "GET",
     headers: { Accept: "application/json; odata=verbose" },
     success: function (data) {
+      // Check actionType - if add, merge, split, or delete, hide dynamic section and don't render fields
+      var meta = getSelectedChangeItemMeta();
+      if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+        setChangeItemsVisibility(false);
+        return;
+      }
+      
       if (data.d && data.d.results && data.d.results.length > 0) {
-        renderViewDynamicFields(data.d.results);
+        // If we have changeItemCode, approvalLevel, and itemCode, call API to get DisplayNames
+        // But skip API call if actionType is add, merge, split, or delete
+        if (changeItemCode && approvalLevel && itemCode) {
+          // Check actionType - if add, merge, split, or delete, don't call API
+          var meta = getSelectedChangeItemMeta();
+          if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+            // Don't call API, just render fields directly without API
+            renderViewDynamicFields(
+              data.d.results,
+              null,
+              displayNameMapFromChangeItems
+            );
+            if (window.isEdit) {
+              setTimeout(function () {
+                initializeEditMode(changeItemCode);
+              }, 500);
+            }
+            return;
+          }
+          
+          const apiUrl = `${APIURL}/general/getchangeitemsdetails/${encodeURIComponent(
+            changeItemCode
+          )}/${encodeURIComponent(approvalLevel)}/${encodeURIComponent(
+            itemCode
+          )}`;
+
+          $.ajax({
+            url: apiUrl,
+            method: "GET",
+            headers: { Accept: "application/json" },
+            success: function (apiRes) {
+              renderViewDynamicFields(
+                data.d.results,
+                apiRes,
+                displayNameMapFromChangeItems
+              );
+              // If in edit mode, initialize edit mode after fields are rendered
+              if (window.isEdit) {
+                setTimeout(function () {
+                  initializeEditMode(changeItemCode);
+                }, 500);
+              }
+            },
+            error: function (xhr) {
+              console.error("Error fetching change items:", xhr);
+              // Render with ChangeItems DisplayName map (fallback)
+              renderViewDynamicFields(
+                data.d.results,
+                null,
+                displayNameMapFromChangeItems
+              );
+              // If in edit mode, initialize edit mode after fields are rendered
+              if (window.isEdit) {
+                setTimeout(function () {
+                  initializeEditMode(changeItemCode);
+                }, 500);
+              }
+            },
+          });
+        } else {
+          // Render with ChangeItems DisplayName map if API values are missing
+          renderViewDynamicFields(
+            data.d.results,
+            null,
+            displayNameMapFromChangeItems
+          );
+          // If in edit mode, initialize edit mode after fields are rendered
+          if (window.isEdit) {
+            setTimeout(function () {
+              initializeEditMode(changeItemCode);
+            }, 500);
+          }
+        }
       } else {
         setChangeItemsVisibility(false);
       }
     },
     error: function (err) {
-      console.error("Error loading NewChangeRequestDetails:", err);
+      // Silent fail
     },
   });
 }
@@ -1150,13 +3625,27 @@ function setSelectValue(selectId, value) {
   }
   $sel.val(value);
 }
-function renderViewDynamicFields(columns) {
+function renderViewDynamicFields(
+  columns,
+  apiResponse,
+  displayNameMapFromChangeItems
+) {
   const container = $(".changeItemsRow");
   container.find(".dynamicField").remove();
 
+  // Check actionType - if add, merge, split, or delete, hide dynamic section and don't render fields
+  var meta = getSelectedChangeItemMeta();
+  if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+    setChangeItemsVisibility(false);
+    return;
+  }
+
   const changeItemCode = $("#ChangeItem").val();
   const approvalLevel = $("#ApprovalLevel").val();
-  const itemCode = $("#ParentItemCode").val();
+  let itemCode = $("#ParentItemCode").val();
+  if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val()) {
+    itemCode = $("#ChildItemCode").val();
+  }
 
   const lang = localStorage.getItem("lng");
 
@@ -1174,27 +3663,404 @@ function renderViewDynamicFields(columns) {
     const fieldName =
       col.ColumnInternalName ||
       "field_" + Math.random().toString(36).substr(2, 5);
-    const oldValueEscaped = escapeHtml(col.ColumnOldValue || "");
+    const oldValueRaw = col.ColumnOldValue || "";
     const newValue = col.ColumnNewValue || "";
     const dataType = (col.DataType || "string").toLowerCase();
     const colClass = dataType === "textarea" ? "col-md-12" : "col-md-6";
     let displayValue = newValue;
 
-    if (dataType === "date") {
+    // Handle date, datetime, datetimetoparent - convert to yyyy-mm-dd for input type="date"
+    // Remove time part if exists (e.g., "12/14/2023 21:00:00" -> "12/14/2023")
+    if (dataType === "date" || dataType === "datetime" || dataType === "datetimetoparent") {
       let dateValue = "";
       try {
         if (newValue) {
-          const d = new Date(newValue);
-          if (!isNaN(d))
-            dateValue = `${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(
-              -2
-            )}-${("0" + d.getDate()).slice(-2)}`;
+          // Remove time part if exists
+          let dateStr = String(newValue).split(" ")[0]; // Get date part only (before space)
+          
+          let d = new Date(dateStr);
+          if (isNaN(d)) {
+            // Try to parse mm/dd/yyyy format
+            const mmddyyyy = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+            if (mmddyyyy) {
+              d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
+            }
+          }
+          if (!isNaN(d)) {
+            const year = d.getFullYear();
+            const month = ("0" + (d.getMonth() + 1)).slice(-2);
+            const day = ("0" + d.getDate()).slice(-2);
+            dateValue = `${year}-${month}-${day}`;
+          }
         }
-      } catch (e) {}
+      } catch (e) { }
       displayValue = dateValue;
     }
     const readOnly = !window.isEdit;
 
+    // Handle Picker type - only add special handling if type is picker
+    if (dataType === "picker") {
+      // For picker fields:
+      // - ColumnOldValue contains the User ID (not display name) - IMPORTANT: save original ID
+      // - ColumnNewValue contains the User ID (not display name)
+      // - We need to convert ID to display name for display only
+      // - The actual value stored should remain the ID
+
+      const oldValueId = col.ColumnOldValue || "";
+
+      let oldValueDisplay = oldValueId;
+      if (oldValueDisplay && oldValueDisplay !== "0" && oldValueDisplay !== 0) {
+        const userId = parseInt(oldValueDisplay, 10);
+        if (!isNaN(userId)) {
+          getUserDisplayNameFromId(oldValueDisplay).then(function (displayName) {
+            const $oldValueSpan = container
+              .find(`#${fieldName}`)
+              .closest(".dynamicField")
+              .find(".oldValue");
+            if ($oldValueSpan.length) {
+              $oldValueSpan.text(displayName || oldValueDisplay);
+              // IMPORTANT: Save the original ID in data attribute for submit
+              $oldValueSpan.attr("data-original-id", oldValueId);
+            }
+          }).catch(function (err) {
+          });
+          oldValueDisplay = "Loading..."; // Temporary text while loading
+        }
+      } else if (oldValueDisplay === "0" || oldValueDisplay === 0) {
+        oldValueDisplay = "0";
+      } else {
+        oldValueDisplay = "";
+      }
+
+      // Format oldValue for display: empty/null/undefined -> "No data", 0 -> "0", otherwise -> value
+      let oldValueHtmlPicker = "";
+      if (!oldValueDisplay || oldValueDisplay === "" || oldValueDisplay === "null" || oldValueDisplay === "undefined") {
+        oldValueHtmlPicker = '<span data-trans-nodata class="Resources"></span>';
+      } else if (oldValueDisplay === "0" || oldValueDisplay === 0) {
+        oldValueHtmlPicker = "0";
+      } else if (oldValueDisplay === "Loading...") {
+        oldValueHtmlPicker = "Loading...";
+      } else {
+        oldValueHtmlPicker = escapeHtml(oldValueDisplay);
+      }
+
+      // For picker: displayValue should be the ID (from ColumnNewValue)
+      // The ID will be stored in data-user-id attribute
+      // initPeoplePicker will convert ID to display name for visual display
+      const pickerValue = newValue || ""; // This is the User ID
+
+      const inputHtml = buildInputHtml(fieldName, dataType, pickerValue, readOnly);
+      const fieldBlock = `
+        <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${dataType}" data-picker-old-id="${oldValueId}" data-old-value-id="${escapeHtml(oldValueId)}">
+            <label>${escapeHtml(
+        labelText
+      )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue" data-original-id="${oldValueId}">${oldValueHtmlPicker}</span>)</label>
+            ${inputHtml}
+        </div>
+      `;
+      container.append(fieldBlock);
+
+      // Initialize People Picker for this field after a delay
+      // initPeoplePicker will read the ID from data-user-id and convert it to display name
+      setTimeout(function () {
+        const $pickerInput = $("#" + fieldName);
+        if ($pickerInput.length && $pickerInput.hasClass("peoplePicker")) {
+          initPeoplePicker();
+        }
+      }, 500);
+
+      return; // Exit early for picker fields
+    }
+
+    // Handle dropdownValues type - create dropdown with options from meta.options.choices
+    if (dataType === "dropdownvalues") {
+      // Get dropdownValues metadata from API response or columns
+      let dropdownMeta = {};
+      if (apiResponse && apiResponse.result && apiResponse.result.columnsDetails) {
+        const apiColumns = apiResponse.result.columnsDetails || [];
+        const matchingApiCol = apiColumns.find((apiCol) => {
+          let jsonField = {};
+          try {
+            jsonField = JSON.parse(apiCol.jsonField || "{}");
+          } catch (e) { }
+          return jsonField.InternalName === fieldName;
+        });
+        if (matchingApiCol) {
+          try {
+            dropdownMeta = JSON.parse(matchingApiCol.jsonField || "{}");
+          } catch (e) { }
+        }
+      }
+      
+      // Format oldValue for display - if it's a value from choices, use data-trans attribute for translation
+      let oldValueDisplayHtml = "";
+      if (!oldValueRaw || oldValueRaw === "" || oldValueRaw === "null" || oldValueRaw === "undefined") {
+        oldValueDisplayHtml = '<span data-trans-nodata class="Resources"></span>';
+      } else if (oldValueRaw === "0" || oldValueRaw === 0) {
+        oldValueDisplayHtml = "0";
+      } else {
+        // Check if oldValue matches one of the choice values
+        if (dropdownMeta.options && dropdownMeta.options.choices && Array.isArray(dropdownMeta.options.choices)) {
+          const matchingChoice = dropdownMeta.options.choices.find(function(choice) {
+            return choice.value === oldValueRaw;
+          });
+          if (matchingChoice) {
+            // Use data-trans attribute for translation
+            const oldValueTransAttr = `data-trans-${oldValueRaw}`;
+            oldValueDisplayHtml = `<span ${oldValueTransAttr} class="Resources"></span>`;
+          } else {
+            oldValueDisplayHtml = escapeHtml(oldValueRaw);
+          }
+        } else {
+          oldValueDisplayHtml = escapeHtml(oldValueRaw);
+        }
+      }
+      
+      const selectId = fieldName;
+      // Use newValue (raw value) for comparison (not escaped) to match choice.value exactly
+      const currentValue = newValue || "";
+      
+      // Build options HTML directly from dropdownMeta.options.choices
+      // Only select empty option if no value is set
+      const emptyOptionSelected = !currentValue ? " selected" : "";
+      let optionsHtml = `<option value="" disabled${emptyOptionSelected}></option>`;
+      if (dropdownMeta.options && dropdownMeta.options.choices && Array.isArray(dropdownMeta.options.choices)) {
+        dropdownMeta.options.choices.forEach(function(choice) {
+          const choiceValue = escapeHtml(choice.value || "");
+          const choiceDisplay = escapeHtml(choice.display || choice.value || "");
+          const selectedAttr = (currentValue && choice.value === currentValue) ? " selected" : "";
+          const transAttr = `data-trans-${choice.value}`;
+          optionsHtml += `<option value="${choiceValue}" ${transAttr} class="Resources"${selectedAttr}>${choiceDisplay}</option>`;
+        });
+      }
+      
+      const selectHtml = `<select id="${selectId}" class="form-control"${readOnly ? " disabled" : ""}>${optionsHtml}</select>`;
+      
+      // Save original oldValue (before translation) in data attribute for API submission
+      const oldValueOriginal = oldValueRaw || "";
+      const oldValueAttr = oldValueOriginal ? ` data-dropdown-old-value="${escapeHtml(oldValueOriginal)}"` : "";
+      
+      // Add data-trans attribute to label - use DisplayNameEn as translation key (standard format)
+      const labelTransKey = dropdownMeta.DisplayNameEn || dropdownMeta.DisplayName || "";
+      const labelTransAttr = labelTransKey ? ` data-trans="${labelTransKey}"` : "";
+      const labelClass = labelTransKey ? " class=\"Resources\"" : "";
+      
+      const fieldBlock = `
+        <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${dataType}"${oldValueAttr}>
+            <label${labelTransAttr}${labelClass}>${escapeHtml(
+        labelText
+      )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueDisplayHtml}</span>)</label>
+            ${selectHtml}
+        </div>
+      `;
+      container.append(fieldBlock);
+      changeResources();
+      return;
+    }
+
+    // Handle yesnoradio type - create radio buttons with options from dropdownMeta.options.choices
+    if (dataType === "yesnoradio") {
+      // Get yesnoradio metadata from API response or columns
+      let yesnoMeta = {};
+      if (apiResponse && apiResponse.result && apiResponse.result.columnsDetails) {
+        const apiColumns = apiResponse.result.columnsDetails || [];
+        const matchingApiCol = apiColumns.find((apiCol) => {
+          let jsonField = {};
+          try {
+            jsonField = JSON.parse(apiCol.jsonField || "{}");
+          } catch (e) { }
+          return jsonField.InternalName === fieldName;
+        });
+        if (matchingApiCol) {
+          try {
+            yesnoMeta = JSON.parse(matchingApiCol.jsonField || "{}");
+          } catch (e) { }
+        }
+      }
+      
+      // Format oldValue for display - if it's a value from choices, use data-trans attribute for translation
+      let oldValueDisplayHtml = "";
+      if (!oldValueRaw || oldValueRaw === "" || oldValueRaw === "null" || oldValueRaw === "undefined") {
+        oldValueDisplayHtml = '<span data-trans-nodata class="Resources"></span>';
+      } else if (oldValueRaw === "0" || oldValueRaw === 0) {
+        oldValueDisplayHtml = "0";
+      } else {
+        // Check if oldValue matches one of the choice values
+        if (yesnoMeta.options && yesnoMeta.options.choices && Array.isArray(yesnoMeta.options.choices)) {
+          const matchingChoice = yesnoMeta.options.choices.find(function(choice) {
+            return choice.value === oldValueRaw;
+          });
+          if (matchingChoice) {
+            // Use data-trans attribute for translation
+            const oldValueTransAttr = `data-trans-${oldValueRaw}`;
+            oldValueDisplayHtml = `<span ${oldValueTransAttr} class="Resources"></span>`;
+          } else {
+            oldValueDisplayHtml = escapeHtml(oldValueRaw);
+          }
+        } else {
+          oldValueDisplayHtml = escapeHtml(oldValueRaw);
+        }
+      }
+      
+      // Use newValue (raw value) for comparison (not escaped) to match choice.value exactly
+      const currentValue = newValue || "";
+      
+      let radioButtonsHtml = "";
+      if (yesnoMeta.options && yesnoMeta.options.choices && Array.isArray(yesnoMeta.options.choices)) {
+        yesnoMeta.options.choices.forEach(function(choice) {
+          const choiceValue = escapeHtml(choice.value || "");
+          const choiceDisplay = escapeHtml(choice.display || choice.value || "");
+          const checkedAttr = (currentValue && choice.value === currentValue) ? " checked" : "";
+          const transAttr = `data-trans-${choice.value}`;
+          const radioId = fieldName + "_" + choice.value;
+          radioButtonsHtml += `<input class="form-control yesnolistener" type="radio" name="${escapeHtml(labelText)}" id="${radioId}" value="${choiceValue}" placeholder="${escapeHtml(labelText)}" data-targetfieldrequired="undefined" data-targetfield="undefined" data-targetfieldvalue="undefined"${readOnly ? " disabled" : ""}${checkedAttr} /><label ${transAttr} for="${radioId}" class="Resources radiolabel">${choiceDisplay}</label>`;
+        });
+      }
+      
+      // Save original oldValue (before translation) in data attribute for API submission
+      const oldValueOriginal = oldValueRaw || "";
+      const oldValueAttr = oldValueOriginal ? ` data-dropdown-old-value="${escapeHtml(oldValueOriginal)}"` : "";
+      
+      // Add data-trans attribute to label - use DisplayNameEn as translation key (standard format)
+      const labelTransKey = yesnoMeta.DisplayNameEn || yesnoMeta.DisplayName || "";
+      const labelTransAttr = labelTransKey ? ` data-trans="${labelTransKey}"` : "";
+      const labelClass = labelTransKey ? " class=\"Resources\"" : "";
+      
+      const fieldBlock = `
+        <div class="${colClass} mb-3 dynamicField radioLabelField" data-field-id="${fieldName}" data-field-type="${dataType}"${oldValueAttr}>
+            <label${labelTransAttr}${labelClass}>${escapeHtml(
+        labelText
+      )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueDisplayHtml}</span>)</label>
+            <div>${radioButtonsHtml}</div>
+        </div>
+      `;
+      container.append(fieldBlock);
+      changeResources();
+      return;
+    }
+
+    // Handle lookup type - create dropdown
+    if (dataType === "lookup") {
+      // Get lookup metadata from API response or columns
+      let lookupMeta = {};
+      if (apiResponse && apiResponse.result && apiResponse.result.columnsDetails) {
+        const apiColumns = apiResponse.result.columnsDetails || [];
+        const matchingApiCol = apiColumns.find((apiCol) => {
+          let jsonField = {};
+          try {
+            jsonField = JSON.parse(apiCol.jsonField || "{}");
+          } catch (e) { }
+          return jsonField.InternalName === fieldName;
+        });
+        if (matchingApiCol) {
+          try {
+            lookupMeta = JSON.parse(matchingApiCol.jsonField || "{}");
+          } catch (e) { }
+        }
+      }
+      
+      const source = lookupMeta.source || "";
+      const dispFieldKey = lookupMeta.Dispfieldkey || "Name";
+      const dispFieldKeyEn = lookupMeta.DispfieldkeyEn || dispFieldKey;
+      const valFieldKey = lookupMeta.valfieldkey || "Title";
+      
+      // Convert oldValue (valfieldkey) to display text (Dispfieldkey)
+      // IMPORTANT: Save the original value (valfieldkey) in data attribute for API submission
+      let oldValueDisplay = oldValueRaw;
+      const originalValue = oldValueRaw; // This is the valfieldkey value
+      if (oldValueDisplay && oldValueDisplay !== "" && oldValueDisplay !== "null" && oldValueDisplay !== "undefined" && oldValueDisplay !== "0" && oldValueDisplay !== 0) {
+        // Fetch display text from list
+        if (source) {
+          const query = _spPageContextInfo.webAbsoluteUrl +
+            `/_api/web/lists/getbytitle('${source}')/items?$top=5000&$filter=DeletionStatus ne 'Deleted' and ${valFieldKey} eq '${oldValueDisplay.replace(/'/g, "''")}'`;
+          
+          $.ajax({
+            url: query,
+            method: "GET",
+            headers: { Accept: "application/json; odata=verbose" },
+            success: function (data) {
+              if (data.d && data.d.results && data.d.results.length > 0) {
+                const item = data.d.results[0];
+                const displayText = lang == null || lang == "ar"
+                  ? (item[dispFieldKey] || oldValueDisplay)
+                  : (item[dispFieldKeyEn] || item[dispFieldKey] || oldValueDisplay);
+                
+                const $fieldDiv = container
+                  .find(`#${fieldName}`)
+                  .closest(".dynamicField");
+                const $oldValueSpan = $fieldDiv.find(".oldValue");
+                if ($oldValueSpan.length) {
+                  $oldValueSpan.text(displayText);
+                  $fieldDiv.attr("data-lookup-old-value", originalValue);
+                }
+              }
+            },
+            error: function (err) {
+              const $fieldDiv = container
+                .find(`#${fieldName}`)
+                .closest(".dynamicField");
+              if ($fieldDiv.length) {
+                $fieldDiv.attr("data-lookup-old-value", originalValue);
+              }
+            }
+          });
+          oldValueDisplay = "Loading..."; // Temporary text while loading
+        } else {
+          // If source is not available, still save original value
+          // This will be set in the fieldBlock below
+        }
+      }
+      
+      // Format oldValue for display
+      let oldValueHtml = "";
+      if (!oldValueDisplay || oldValueDisplay === "" || oldValueDisplay === "null" || oldValueDisplay === "undefined") {
+        oldValueHtml = '<span data-trans-nodata class="Resources"></span>';
+      } else if (oldValueDisplay === "0" || oldValueDisplay === 0) {
+        oldValueHtml = "0";
+      } else if (oldValueDisplay === "Loading...") {
+        oldValueHtml = "Loading...";
+      } else {
+        oldValueHtml = escapeHtml(oldValueDisplay);
+      }
+      
+      // Create dropdown HTML
+      const selectId = fieldName;
+      const safeValue = escapeHtml(newValue || "");
+      const selectHtml = `<select id="${selectId}" class="form-control"${readOnly ? " disabled" : ""}><option value="" disabled selected></option></select>`;
+      
+      // Save original value (valfieldkey) in data attribute if available
+      // originalValue is already set above from oldValueRaw
+      const lookupOldValueAttr = originalValue && originalValue !== "" && originalValue !== "null" && originalValue !== "undefined" && originalValue !== "0" && originalValue !== 0 ? ` data-lookup-old-value="${escapeHtml(originalValue)}"` : "";
+      
+      const fieldBlock = `
+        <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${dataType}" data-lookup-source="${escapeHtml(source)}" data-lookup-disp="${escapeHtml(dispFieldKey)}" data-lookup-disp-en="${escapeHtml(dispFieldKeyEn)}" data-lookup-val="${escapeHtml(valFieldKey)}"${lookupOldValueAttr}>
+            <label>${escapeHtml(
+        labelText
+      )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueHtml}</span>)</label>
+            ${selectHtml}
+        </div>
+      `;
+      container.append(fieldBlock);
+      
+      // Load options from list
+      if (source) {
+        // Use alphabetical order by dispFieldKey
+        const orderBy = dispFieldKey + " asc";
+        loadListOptions(source, `#${selectId}`, dispFieldKey, dispFieldKeyEn, valFieldKey, "", orderBy);
+        
+        // Set selected value after options are loaded
+        setTimeout(function() {
+          const $select = $(`#${selectId}`);
+          if ($select.length && safeValue) {
+            $select.val(safeValue);
+          }
+        }, 1000);
+      }
+      
+      return; // Exit early for lookup fields
+    }
+
+    // Regular fields (non-picker, non-lookup) - original code
     const inputHtml = buildInputHtml(
       fieldName,
       dataType,
@@ -1202,18 +4068,191 @@ function renderViewDynamicFields(columns) {
       readOnly
     );
 
+    // Format oldValue for display: empty/null/undefined -> "No data", 0 -> "0", otherwise -> value
+    // For date fields, convert oldValue to mm/dd/yyyy format
+    let formattedOldValue = oldValueRaw;
+    if ((dataType === "date" || dataType === "datetime" || dataType === "datetimetoparent") && oldValueRaw && oldValueRaw !== "" && oldValueRaw !== "null" && oldValueRaw !== "undefined" && oldValueRaw !== "0" && oldValueRaw !== 0) {
+      try {
+        let d = new Date(oldValueRaw);
+        if (isNaN(d)) {
+          // Try to parse mm/dd/yyyy format
+          const mmddyyyy = String(oldValueRaw).match(/(\d{2})\/(\d{2})\/(\d{4})/);
+          if (mmddyyyy) {
+            d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
+          }
+        }
+        if (!isNaN(d)) {
+          const month = ("0" + (d.getMonth() + 1)).slice(-2);
+          const day = ("0" + d.getDate()).slice(-2);
+          const year = d.getFullYear();
+          formattedOldValue = `${month}/${day}/${year}`;
+        }
+      } catch (e) { }
+    }
+    
+    let oldValueHtml = "";
+    if (!formattedOldValue || formattedOldValue === "" || formattedOldValue === "null" || formattedOldValue === "undefined") {
+      oldValueHtml = '<span data-trans-nodata class="Resources"></span>';
+    } else if (formattedOldValue === "0" || formattedOldValue === 0) {
+      oldValueHtml = "0";
+    } else {
+      oldValueHtml = escapeHtml(formattedOldValue);
+    }
+
+    // IMPORTANT: Add data-field-id attribute so handleChangeItemsAPI can find the field
     const fieldBlock = `
-      <div class="${colClass} mb-3 dynamicField">
+      <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${dataType}">
           <label>${escapeHtml(
-            labelText
-          )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueEscaped}</span>)</label>
+      labelText
+    )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueHtml}</span>)</label>
           ${inputHtml}
       </div>
     `;
     container.append(fieldBlock);
   }
 
+  // If API response is provided, use it directly
+  if (apiResponse && apiResponse.result && apiResponse.result.columnsDetails) {
+    const apiColumns = apiResponse.result.columnsDetails || [];
+    const labelMap = {};
+    apiColumns.forEach((apiCol) => {
+      let jsonField = {};
+      try {
+        jsonField = JSON.parse(apiCol.jsonField || "{}");
+      } catch (e) { }
+      if (jsonField.InternalName) {
+        labelMap[jsonField.InternalName] =
+          lang == null || lang == "ar"
+            ? jsonField.DisplayName ||
+            jsonField.DisplayNameEn ||
+            jsonField.InternalName
+            : jsonField.DisplayNameEn ||
+            jsonField.DisplayName ||
+            jsonField.InternalName;
+      }
+    });
+
+    if (columns && columns.length) {
+      columns.forEach((col) => {
+        let labelText = labelMap[col.ColumnInternalName];
+
+        // IMPORTANT: For picker fields, get the old value ID from API response
+        // Find matching API column to get the value (which is the User ID)
+        const matchingApiCol = apiColumns.find((apiCol) => {
+          let jsonField = {};
+          try {
+            jsonField = JSON.parse(apiCol.jsonField || "{}");
+          } catch (e) { }
+          return jsonField.InternalName === col.ColumnInternalName;
+        });
+
+        if (matchingApiCol) {
+          let jsonField = {};
+          try {
+            jsonField = JSON.parse(matchingApiCol.jsonField || "{}");
+          } catch (e) { }
+
+          // Get label from jsonField
+          if (!labelText) {
+            labelText =
+              lang == null || lang == "ar"
+                ? jsonField.DisplayName ||
+                jsonField.DisplayNameEn ||
+                col.ColumnInternalName
+                : jsonField.DisplayNameEn ||
+                jsonField.DisplayName ||
+                col.ColumnInternalName;
+          }
+
+          // IMPORTANT: For picker fields, save the API value (User ID) as old value
+          if (jsonField.type && jsonField.type.toLowerCase() === "picker" && matchingApiCol.value) {
+            // API returns User ID in value field - save it as old value ID
+            col.ColumnOldValue = matchingApiCol.value.toString();
+          }
+          
+          // IMPORTANT: For lookup fields, save the API value as old value
+          if (jsonField.type && jsonField.type.toLowerCase() === "lookup" && matchingApiCol.value) {
+            // API returns lookup value in value field - save it as old value
+            col.ColumnOldValue = matchingApiCol.value ? matchingApiCol.value.toString() : "";
+          }
+        }
+
+        // If not found in API labelMap, try ChangeItems displayNameMap
+        if (
+          !labelText &&
+          displayNameMapFromChangeItems &&
+          displayNameMapFromChangeItems[col.ColumnInternalName]
+        ) {
+          const changeItemDisplayName =
+            displayNameMapFromChangeItems[col.ColumnInternalName];
+          labelText =
+            lang == null || lang == "ar"
+              ? changeItemDisplayName.DisplayName ||
+              changeItemDisplayName.DisplayNameEn ||
+              col.ColumnInternalName
+              : changeItemDisplayName.DisplayNameEn ||
+              changeItemDisplayName.DisplayName ||
+              col.ColumnInternalName;
+        }
+
+        if (!labelText) {
+          labelText = col.Title || col.ColumnInternalName;
+        }
+
+        appendField(col, labelText);
+      });
+
+      // Initialize People Pickers if any picker fields exist
+      setTimeout(function () {
+        const $pickers = $("input.peoplePicker");
+        if ($pickers.length > 0) {
+          initPeoplePicker();
+        }
+      }, 500);
+    }
+
+    changeResources();
+
+    if (window.isEdit) {
+      $(
+        ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
+      ).prop("disabled", false);
+    }
+    return;
+  }
+
+  // Otherwise, call API if we have the required values
+  // But skip API call if actionType is add, merge, split, or delete
   if (changeItemCode && approvalLevel && itemCode) {
+    // Check actionType - if add, merge, split, or delete, don't call API
+    var meta = getSelectedChangeItemMeta();
+    if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+      // Don't call API, just render fields directly without API
+      if (columns && columns.length) {
+        columns.forEach((col) => {
+          let labelText = col.Title || col.ColumnInternalName;
+          if (
+            displayNameMapFromChangeItems &&
+            displayNameMapFromChangeItems[col.ColumnInternalName]
+          ) {
+            const changeItemDisplayName =
+              displayNameMapFromChangeItems[col.ColumnInternalName];
+            labelText =
+              lang == null || lang == "ar"
+                ? changeItemDisplayName.DisplayName ||
+                changeItemDisplayName.DisplayNameEn ||
+                col.ColumnInternalName
+                : changeItemDisplayName.DisplayNameEn ||
+                changeItemDisplayName.DisplayName ||
+                col.ColumnInternalName;
+          }
+          appendField(col, labelText);
+        });
+      }
+      changeResources();
+      return;
+    }
+    
     const url = `${APIURL}/general/getchangeitemsdetails/${encodeURIComponent(
       changeItemCode
     )}/${encodeURIComponent(approvalLevel)}/${encodeURIComponent(itemCode)}`;
@@ -1233,42 +4272,282 @@ function renderViewDynamicFields(columns) {
           let jsonField = {};
           try {
             jsonField = JSON.parse(apiCol.jsonField || "{}");
-          } catch (e) {}
+          } catch (e) { }
           if (jsonField.InternalName) {
             labelMap[jsonField.InternalName] =
               lang == null || lang == "ar"
-                ? jsonField.DisplayName || jsonField.InternalName
-                : jsonField.DisplayNameEn || jsonField.InternalName;
+                ? jsonField.DisplayName ||
+                jsonField.DisplayNameEn ||
+                jsonField.InternalName
+                : jsonField.DisplayNameEn ||
+                jsonField.DisplayName ||
+                jsonField.InternalName;
           }
         });
 
         if (columns && columns.length) {
           columns.forEach((col) => {
-            const labelText =
-              labelMap[col.ColumnInternalName] ||
-              col.Title ||
-              col.ColumnInternalName;
+            // Try to get label from labelMap first
+            let labelText = labelMap[col.ColumnInternalName];
+
+            // If not found in API labelMap, try ChangeItems displayNameMap
+            if (
+              !labelText &&
+              displayNameMapFromChangeItems &&
+              displayNameMapFromChangeItems[col.ColumnInternalName]
+            ) {
+              const changeItemDisplayName =
+                displayNameMapFromChangeItems[col.ColumnInternalName];
+              labelText =
+                lang == null || lang == "ar"
+                  ? changeItemDisplayName.DisplayName ||
+                  changeItemDisplayName.DisplayNameEn ||
+                  col.ColumnInternalName
+                  : changeItemDisplayName.DisplayNameEn ||
+                  changeItemDisplayName.DisplayName ||
+                  col.ColumnInternalName;
+            }
+
+            // If not found in labelMap, try to find it in apiColumns directly
+            // IMPORTANT: Find matching API column to get value (User ID for picker fields)
+            const matchingApiCol = apiColumns.find((apiCol) => {
+              let jsonField = {};
+              try {
+                jsonField = JSON.parse(apiCol.jsonField || "{}");
+              } catch (e) { }
+              return jsonField.InternalName === col.ColumnInternalName;
+            });
+
+            if (matchingApiCol) {
+              let jsonField = {};
+              try {
+                jsonField = JSON.parse(matchingApiCol.jsonField || "{}");
+              } catch (e) { }
+
+              // Get label from jsonField
+              if (!labelText) {
+                labelText =
+                  lang == null || lang == "ar"
+                    ? jsonField.DisplayName ||
+                    jsonField.DisplayNameEn ||
+                    col.ColumnInternalName
+                    : jsonField.DisplayNameEn ||
+                    jsonField.DisplayName ||
+                    col.ColumnInternalName;
+              }
+
+              // IMPORTANT: For picker fields, save the API value (User ID) as old value
+              if (jsonField.type && jsonField.type.toLowerCase() === "picker" && matchingApiCol.value) {
+                // API returns User ID in value field - save it as old value ID
+                col.ColumnOldValue = matchingApiCol.value.toString();
+              }
+              
+              // IMPORTANT: For lookup fields, save the API value as old value
+              if (jsonField.type && jsonField.type.toLowerCase() === "lookup" && matchingApiCol.value) {
+                // API returns lookup value in value field - save it as old value
+                col.ColumnOldValue = matchingApiCol.value ? matchingApiCol.value.toString() : "";
+              }
+            }
+
+            // Fallback to Title or ColumnInternalName
+            if (!labelText) {
+              labelText = col.Title || col.ColumnInternalName;
+            }
+
             appendField(col, labelText);
           });
+
+          // Initialize People Pickers if any picker fields exist
+          setTimeout(function () {
+            const $pickers = $("input.peoplePicker");
+            if ($pickers.length > 0) {
+              initPeoplePicker();
+            }
+          }, 500);
         }
 
         changeResources();
+
+        // If in edit mode, ensure dynamic fields remain enabled
+        if (window.isEdit) {
+          $(
+            ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
+          ).prop("disabled", false);
+        }
       },
       error: function (xhr) {
-        console.error("Error fetching change items:", xhr);
-        if (columns && columns.length) {
-          columns.forEach((col) =>
-            appendField(col, col.Title || col.ColumnInternalName)
-          );
+        // Check actionType - if add, merge, split, or delete, don't call API
+        var meta = getSelectedChangeItemMeta();
+        if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+          // Don't call API, just render fields directly without API
+          if (columns && columns.length) {
+            columns.forEach((col) => {
+              let labelText = col.Title || col.ColumnInternalName;
+              if (
+                displayNameMapFromChangeItems &&
+                displayNameMapFromChangeItems[col.ColumnInternalName]
+              ) {
+                const changeItemDisplayName =
+                  displayNameMapFromChangeItems[col.ColumnInternalName];
+                labelText =
+                  lang == null || lang == "ar"
+                    ? changeItemDisplayName.DisplayName ||
+                    changeItemDisplayName.DisplayNameEn ||
+                    col.ColumnInternalName
+                    : changeItemDisplayName.DisplayNameEn ||
+                    changeItemDisplayName.DisplayName ||
+                    col.ColumnInternalName;
+              }
+              appendField(col, labelText);
+            });
+          }
           changeResources();
+          return;
+        }
+        
+        if (columns && columns.length) {
+          // Try to fetch DisplayName from API even on error
+          const url = `${APIURL}/general/getchangeitemsdetails/${encodeURIComponent(
+            changeItemCode
+          )}/${encodeURIComponent(approvalLevel)}/${encodeURIComponent(
+            itemCode
+          )}`;
+
+          $.ajax({
+            url: url,
+            method: "GET",
+            headers: { Accept: "application/json" },
+            success: function (res) {
+              const apiColumns =
+                res && res.result && res.result.columnsDetails
+                  ? res.result.columnsDetails
+                  : [];
+
+              const labelMap = {};
+              apiColumns.forEach((apiCol) => {
+                let jsonField = {};
+                try {
+                  jsonField = JSON.parse(apiCol.jsonField || "{}");
+                } catch (e) { }
+                if (jsonField.InternalName) {
+                  labelMap[jsonField.InternalName] =
+                    lang == null || lang == "ar"
+                      ? jsonField.DisplayName ||
+                      jsonField.DisplayNameEn ||
+                      jsonField.InternalName
+                      : jsonField.DisplayNameEn ||
+                      jsonField.DisplayName ||
+                      jsonField.InternalName;
+                }
+              });
+
+              columns.forEach((col) => {
+                const labelText =
+                  labelMap[col.ColumnInternalName] ||
+                  col.Title ||
+                  col.ColumnInternalName;
+                appendField(col, labelText);
+              });
+
+              changeResources();
+
+              // Initialize People Pickers for any picker fields
+              setTimeout(function () {
+                initPeoplePicker();
+              }, 300);
+
+              if (window.isEdit) {
+                $(
+                  ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
+                ).prop("disabled", false);
+              }
+            },
+            error: function (err) {
+              // If API fails, use ChangeItems displayNameMap or Title/ColumnInternalName as fallback
+              columns.forEach((col) => {
+                let labelText = col.Title || col.ColumnInternalName;
+                if (
+                  displayNameMapFromChangeItems &&
+                  displayNameMapFromChangeItems[col.ColumnInternalName]
+                ) {
+                  const changeItemDisplayName =
+                    displayNameMapFromChangeItems[col.ColumnInternalName];
+                  labelText =
+                    lang == null || lang == "ar"
+                      ? changeItemDisplayName.DisplayName ||
+                      changeItemDisplayName.DisplayNameEn ||
+                      col.ColumnInternalName
+                      : changeItemDisplayName.DisplayNameEn ||
+                      changeItemDisplayName.DisplayName ||
+                      col.ColumnInternalName;
+                }
+                appendField(col, labelText);
+              });
+
+              // After all fields are appended, initialize People Pickers using interval
+              let pickerInitAttempts = 0;
+              const pickerInitInterval = setInterval(function () {
+                pickerInitAttempts++;
+                const $pickers = $("input.peoplePicker");
+
+                if ($pickers.length > 0) {
+                  clearInterval(pickerInitInterval);
+                  initPeoplePicker();
+                } else if (pickerInitAttempts >= 10) {
+                  clearInterval(pickerInitInterval);
+                }
+              }, 500);
+
+              changeResources();
+
+              if (window.isEdit) {
+                $(
+                  ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
+                ).prop("disabled", false);
+              }
+            },
+          });
         }
       },
     });
   } else {
-    columns.forEach((col) =>
-      appendField(col, col.Title || col.ColumnInternalName)
-    );
+    // No API call - use ChangeItems displayNameMap or Title/ColumnInternalName
+    columns.forEach((col) => {
+      let labelText = col.Title || col.ColumnInternalName;
+      if (
+        displayNameMapFromChangeItems &&
+        displayNameMapFromChangeItems[col.ColumnInternalName]
+      ) {
+        const changeItemDisplayName =
+          displayNameMapFromChangeItems[col.ColumnInternalName];
+        labelText =
+          lang == null || lang == "ar"
+            ? changeItemDisplayName.DisplayName ||
+            changeItemDisplayName.DisplayNameEn ||
+            col.ColumnInternalName
+            : changeItemDisplayName.DisplayNameEn ||
+            changeItemDisplayName.DisplayName ||
+            col.ColumnInternalName;
+      }
+      appendField(col, labelText);
+    });
+
+    // Initialize People Pickers if any picker fields exist
+    setTimeout(function () {
+      const $pickers = $("input.peoplePicker");
+      if ($pickers.length > 0) {
+        initPeoplePicker();
+      }
+    }, 500);
+
     changeResources();
+
+    // If in edit mode, ensure dynamic fields remain enabled
+    if (window.isEdit) {
+      $(
+        ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
+      ).prop("disabled", false);
+    }
   }
 }
 function handleParentChange(parent) {
@@ -1354,7 +4633,7 @@ function loadChangeItemsForEdit(
     success: function (data) {
       data.d.results.forEach((item) => {
         $changeItem.append(
-          `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-action="${item.ActionType}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
+          `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
         );
       });
       if (currentChangeItem) {
@@ -1362,7 +4641,7 @@ function loadChangeItemsForEdit(
       }
     },
     error: function (err) {
-      console.error("Error loading ChangeItems for edit:", err);
+      console.error(`Error loading list ${listName}:`, err);
     },
   });
 }
@@ -1407,3 +4686,413 @@ function initializeEditMode(changeItemValue) {
     }, 300);
   }
 }
+
+// Display rejection note section after changeItemsRow
+function displayRejectionNoteSection(rejectionNote, isArabic) {
+  // Remove existing rejection note section if any
+  $(".rejection-note-section").remove();
+
+  if (!rejectionNote) {
+    return;
+  }
+
+  var lastNoteLabel = isArabic ? "آخر ملحوظة مسجلة:" : "Last recorded note:";
+  var directionClass = isArabic ? "ar" : "en";
+
+  // Escape HTML in rejection note
+  var lastRejectionNoteEscaped = (rejectionNote || "").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "\\'").replace(/"/g, "&quot;");
+
+  var rejectionNoteSection =
+    '<div class="row mb-3 rejection-note-row">' +
+    '<div class="my-4 d-flex w-100">' +
+    '<div class="rejection-note-section ' + directionClass + '">' +
+    '<label class="rejection-note-label">' + lastNoteLabel + '</label>' +
+    '<div class="rejection-note-content">' + lastRejectionNoteEscaped + '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
+
+  // Insert after changeItemsRow
+  $(".changeItemsRow").after(rejectionNoteSection);
+  changeResources();
+}
+
+// Workflow approval popup function
+function showWorkflowApprovalPopup() {
+  var currentTaskID = taskID || taskId || window.taskID || window.taskid;
+  if (!currentTaskID) {
+    alert("Task ID not found");
+    return;
+  }
+
+  var ctx = SP.ClientContext.get_current();
+  var taskList = ctx.get_web().get_lists().getByTitle("Tasks");
+  var taskItem = taskList.getItemById(parseInt(currentTaskID));
+
+  ctx.load(taskItem);
+  ctx.executeQueryAsync(
+    function () {
+      // Get StageIDApprove and StageIDReject directly from Task
+      var stageIDApprove = taskItem.get_item("StageIDApprove") || "";
+      var stageIDReject = taskItem.get_item("StageIDReject") || "";
+      var taskTitle = taskItem.get_item("Title");
+      var stageName = taskTitle;
+      var relatedItemTitle = taskItem.get_item("RelatedItemTitle") || "";
+      var currentTaskCreated = taskItem.get_item("Created");
+
+      // Get task configuration from localStorage for display name
+      var tasktitlearr = [];
+      if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
+        tasktitlearr = JSON.parse(
+          localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
+        );
+        tasktitlearr = tasktitlearr.filter(function (item) {
+          return item.code == taskTitle;
+        });
+
+        if (tasktitlearr.length > 0) {
+          // Use StageIDApprove and StageIDReject from Task if available, otherwise from localStorage
+          if (!stageIDApprove && tasktitlearr[0].StageIDApprove) {
+            stageIDApprove = tasktitlearr[0].StageIDApprove;
+          }
+          if (!stageIDReject && tasktitlearr[0].StageIDReject) {
+            stageIDReject = tasktitlearr[0].StageIDReject;
+          }
+
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            stageName = tasktitlearr[0].name || taskTitle;
+          } else {
+            stageName = tasktitlearr[0].nameEn || taskTitle;
+          }
+        }
+      }
+
+      //Show the cause of rejection
+      // If StageIDReject is empty, get the last rejection note
+      var lastRejectionNote = "";
+      var showLastRejectionNote = false;
+
+      if (!stageIDReject && relatedItemTitle) {
+        showLastRejectionNote = true;
+        // Query all tasks with same RelatedItemTitle and filter in JavaScript
+        // This is more reliable than CAML date filtering
+        var ctx3 = SP.ClientContext.get_current();
+        var taskList3 = ctx3.get_web().get_lists().getByTitle("Tasks");
+        var camlQuery2 = new SP.CamlQuery();
+        var queryXml2 = "<View><Query><Where>" +
+          "<Eq><FieldRef Name='RelatedItemTitle'/><Value Type='Text'>" + relatedItemTitle.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</Value></Eq>" +
+          "</Where><OrderBy><FieldRef Name='Created' Ascending='True'/></OrderBy></Query><RowLimit>100</RowLimit></View>";
+        camlQuery2.set_viewXml(queryXml2);
+        var allTasks = taskList3.getItems(camlQuery2);
+        ctx3.load(allTasks);
+        ctx3.executeQueryAsync(
+          function () {
+            var allTasksEnum = allTasks.getEnumerator();
+            var rejectedTasks = [];
+
+            while (allTasksEnum.moveNext()) {
+              var task = allTasksEnum.get_current();
+              var taskTakenAction = task.get_item("TakenAction");
+              var taskCreated = task.get_item("Created");
+              var taskBody = task.get_item("Body") || "";
+
+              // Filter: TakenAction = reject AND Created < currentTaskCreated
+              if (taskTakenAction && taskTakenAction.toLowerCase() === "reject") {
+                if (currentTaskCreated && taskCreated) {
+                  if (taskCreated < currentTaskCreated) {
+                    rejectedTasks.push({
+                      created: taskCreated,
+                      body: taskBody
+                    });
+                  }
+                } else if (!currentTaskCreated) {
+                  // If no currentTaskCreated, take all rejected tasks
+                  rejectedTasks.push({
+                    created: taskCreated,
+                    body: taskBody
+                  });
+                }
+              }
+            }
+
+            // Get the oldest rejected task (first in ascending order)
+            if (rejectedTasks.length > 0) {
+              // Sort by Created ascending to get the oldest
+              rejectedTasks.sort(function (a, b) {
+                return a.created - b.created;
+              });
+              lastRejectionNote = rejectedTasks[0].body || "";
+            }
+
+            showPopupWithRejectionNote();
+          },
+          function (sender, args) {
+            // If query fails, show popup without rejection note
+            showPopupWithRejectionNote();
+          }
+        );
+      } else {
+        showPopupWithRejectionNote();
+      }
+
+      function showPopupWithRejectionNote() {
+        // Show popup with approve/reject buttons - using same format as Workflow.js
+        var isArabic =
+          localStorage.getItem("lng") == null ||
+          localStorage.getItem("lng") == "ar";
+        var notesLabel = isArabic ? "ملاحظات" : "Notes";
+        var approveLabel = isArabic ? "موافق" : "Approve";
+        var rejectLabel = isArabic ? "طلب معلومات اضافية" : "Request Additional Information";
+        var cancelLabel = isArabic ? "إلغاء" : "Cancel";
+        var fillNotesMsg = isArabic
+          ? "يرجى تعبئة الملاحظات"
+          : "Please fill notes";
+        var lastNoteLabel = isArabic ? "آخر ملحوظة مسجلة:" : "Last recorded note:";
+
+        // Escape single quotes in stage IDs for use in onclick
+        var stageIDApproveEscaped = (stageIDApprove || "").replace(/'/g, "\\'");
+        var stageIDRejectEscaped = (stageIDReject || "").replace(/'/g, "\\'");
+
+        // Escape HTML in rejection note
+        var lastRejectionNoteEscaped = (lastRejectionNote || "").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "\\'").replace(/"/g, "&quot;");
+
+        // Display rejection note section after changeItemsRow if exists
+        if (showLastRejectionNote && lastRejectionNote) {
+          displayRejectionNoteSection(lastRejectionNote, isArabic);
+        }
+
+        if (isArabic) {
+          $("body").append(
+            '<div class="popupComment"><div class="wrapcomments">' +
+            "<label>" +
+            notesLabel +
+            "</label>" +
+            '<textarea id="commenttext" rows="4" cols="50"></textarea>' +
+            "<div class='btn-cont'>" +
+            '<button class="commentsub btn btn-action btn-save" onclick="handleWorkflowApproval(true, \'' +
+            stageIDApproveEscaped +
+            "', '" +
+            stageIDRejectEscaped +
+            "')\">" +
+            approveLabel +
+            "</button>" +
+            '<button class="commentsub btn btn-action" onclick="handleWorkflowApproval(false, \'' +
+            stageIDApproveEscaped +
+            "', '" +
+            stageIDRejectEscaped +
+            '\')" style="background: #853232; margin-left: 10px;">' +
+            rejectLabel +
+            "</button>" +
+            '<button onclick="$(\'.popupComment\').remove();" class="commentsub" style="margin-left: 10px;">' +
+            cancelLabel +
+            "</button>" +
+            "</div>" +
+            '<p class="fillcomment"></p>' +
+            "</div></div>"
+          );
+        } else {
+          $("body").append(
+            '<div class="popupComment"><div class="wrapcomments">' +
+            "<label>" +
+            notesLabel +
+            "</label>" +
+            '<textarea id="commenttext" rows="4" cols="50"></textarea>' +
+            "<div class='btn-cont'>" +
+            '<button class="commentsub btn btn-action btn-save" onclick="handleWorkflowApproval(true, \'' +
+            stageIDApproveEscaped +
+            "', '" +
+            stageIDRejectEscaped +
+            "')\">" +
+            approveLabel +
+            "</button>" +
+            '<button class="commentsub btn btn-action" onclick="handleWorkflowApproval(false, \'' +
+            stageIDApproveEscaped +
+            "', '" +
+            stageIDRejectEscaped +
+            '\')" style="background: #853232; margin-left: 10px;">' +
+            rejectLabel +
+            "</button>" +
+            '<button onclick="$(\'.popupComment\').remove();" class="commentsub" style="margin-left: 10px;">' +
+            cancelLabel +
+            "</button>" +
+            "</div>" +
+            '<p class="fillcomment"></p>' +
+            "</div></div>"
+          );
+        }
+      }
+    },
+    function (sender, args) {
+      alert("Error loading task information: " + args.get_message());
+    }
+  );
+}
+
+// Handle workflow approval/rejection - must be in global scope for onclick
+window.handleWorkflowApproval = function (
+  isApproved,
+  stageIDApprove,
+  stageIDReject
+) {
+  var currentTaskID = taskID || taskId || window.taskID || window.taskid;
+  var comment = $("#commenttext").val();
+
+  // If rejected, comment is required
+  if (!isApproved && !comment) {
+    $(".fillcomment").html(
+      "<p style='color: red;'>" +
+      (localStorage.getItem("lng") == "en"
+        ? "Please fill notes"
+        : "يرجى تعبئة الملاحظات") +
+      "</p>"
+    );
+    return;
+  }
+
+  var stageToSet = isApproved ? stageIDApprove : stageIDReject;
+
+  if (!stageToSet) {
+    alert(
+      localStorage.getItem("lng") == "en"
+        ? "Stage ID not found"
+        : "لم يتم العثور على معرف المرحلة"
+    );
+    return;
+  }
+
+  if (!currentTaskID) {
+    alert(
+      localStorage.getItem("lng") == "en"
+        ? "Task ID not found"
+        : "لم يتم العثور على معرف المهمة"
+    );
+    return;
+  }
+
+  // Update Task first - save comment to Body field (same as Workflow.js)
+  var ctx = SP.ClientContext.get_current();
+  var taskList = ctx.get_web().get_lists().getByTitle("Tasks");
+  var taskItem = taskList.getItemById(parseInt(currentTaskID));
+
+  var stageAction = isApproved ? "approve" : "reject";
+  taskItem.set_item("Status", "Closed");
+  taskItem.set_item("WFInstanceID", null);
+  taskItem.set_item("Body", comment || "");
+  taskItem.set_item("TakenAction", stageAction);
+  taskItem.update();
+  ctx.load(taskItem);
+
+  ctx.executeQueryAsync(
+    function () {
+      // Update WFStage field in NewChangeRequests list
+      var list = ctx.get_web().get_lists().getByTitle("NewChangeRequests");
+      var camlQuery = new SP.CamlQuery();
+      camlQuery.set_viewXml(
+        "<View><Query><Where>" +
+        "<Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+        crItemCode +
+        "</Value></Eq>" +
+        "</Where></Query></View>"
+      );
+
+      var items = list.getItems(camlQuery);
+      ctx.load(items);
+      ctx.executeQueryAsync(
+        function () {
+          var enumerator = items.getEnumerator();
+          if (enumerator.moveNext()) {
+            var item = enumerator.get_current();
+            item.set_item("WFStage", stageToSet);
+            item.update();
+            ctx.load(item);
+            ctx.executeQueryAsync(
+              function () {
+                $(".popupComment").remove();
+
+                // If approved and stageIDApprove == "approved", call apply API
+                if (
+                  isApproved &&
+                  stageIDApprove &&
+                  stageIDApprove.toLowerCase() === "approved" &&
+                  crItemCode
+                ) {
+                  $.ajax({
+                    url: `${APIURL}/general/applychangerequestchanges/${crItemCode}`,
+                    method: "GET",
+                    headers: { Accept: "application/json" },
+                    success: function (res) {
+                      alert(
+                        localStorage.getItem("lng") == "en"
+                          ? "Submitted successfully"
+                          : "تم الإرسال بنجاح"
+                      );
+                      // Redirect to listing page
+                      var listingUrl =
+                        _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/Listing.aspx?ListKey=changerequests";
+                      window.location.href = listingUrl;
+                    },
+                    error: function (xhr) {
+                      alert(
+                        localStorage.getItem("lng") == "en"
+                          ? "Submitted successfully, but error applying changes"
+                          : "تم الإرسال بنجاح، لكن حدث خطأ في تطبيق التغييرات"
+                      );
+                      // Redirect to listing page
+                      var listingUrl =
+                        _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/Listing.aspx?ListKey=changerequests";
+                      window.location.href = listingUrl;
+                    },
+                  });
+                } else {
+                  alert(
+                    localStorage.getItem("lng") == "en"
+                      ? "Submitted successfully"
+                      : "تم الإرسال بنجاح"
+                  );
+                  // Redirect to listing page
+                  var listingUrl =
+                    _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/Listing.aspx?ListKey=changerequests";
+                  window.location.href = listingUrl;
+                }
+              },
+              function (sender, args) {
+                alert(
+                  localStorage.getItem("lng") == "en"
+                    ? "Error updating item"
+                    : "خطأ في تحديث العنصر"
+                );
+              }
+            );
+          } else {
+            alert(
+              localStorage.getItem("lng") == "en"
+                ? "Item not found"
+                : "لم يتم العثور على العنصر"
+            );
+          }
+        },
+        function (sender, args) {
+          alert(
+            localStorage.getItem("lng") == "en"
+              ? "Error loading items"
+              : "خطأ في تحميل العناصر"
+          );
+        }
+      );
+    },
+    function (sender, args) {
+      alert(
+        localStorage.getItem("lng") == "en"
+          ? "Error updating task"
+          : "خطأ في تحديث المهمة"
+      );
+    }
+  );
+};
+

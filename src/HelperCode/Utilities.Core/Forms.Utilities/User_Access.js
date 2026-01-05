@@ -907,7 +907,7 @@ window.userCalls = {
         
           break;
      case "PerformanceReportsQA":
-        USER_HomePage = "home.aspx";
+        USER_HomePage = "MainIndicators.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -949,7 +949,7 @@ window.userCalls = {
         Delete_Access = [];
         break;
     case "CQTeam":
-        USER_HomePage = "home.aspx";
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -975,7 +975,7 @@ window.userCalls = {
         Delete_Access = [];
         break;
     case "IPME":
-        USER_HomePage = "home.aspx";
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -1505,7 +1505,9 @@ window.userCalls = {
           "intiativecompliancemajors",
           "developmentrequirements",
           "strategiccalendar",
-          "measurementcyclesupport"
+          "measurementcyclesupport",
+          "changerequests",
+          "changeitemapprovalcontrol"
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -1549,7 +1551,9 @@ window.userCalls = {
           "intiativecompliancemajors",
           "developmentrequirements",
           "strategiccalendar",
-          "measurementcyclesupport"
+          "measurementcyclesupport",
+          "changerequests",
+          "changeitemapprovalcontrol"
         ];
         Delete_Access = [
           "benefitmatrix",
@@ -4770,6 +4774,21 @@ window.userCalls = {
                   targetPages: [],
                 },
               ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                //RelatedInitiative
+                // parentRelationField: "RelatedInitiative",
+                // RelationField: "Title",
+                // RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                  // parentRelationField: "Title",
+                  // RelationField: "InitiativeCode",
+                  // RelationFieldType: "Text",
+                },
+              },
             },
           ],
         },
@@ -4835,7 +4854,7 @@ window.userCalls = {
                 },
               },
             },
-            {
+             {
               level: 1,
               listName: "NewChangeRequests",
               accessConditions: [
@@ -4846,6 +4865,21 @@ window.userCalls = {
                   targetPages: [],
                 },
               ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                //RelatedInitiative
+                // parentRelationField: "RelatedInitiative",
+                // RelationField: "Title",
+                // RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                  // parentRelationField: "Title",
+                  // RelationField: "InitiativeCode",
+                  // RelationFieldType: "Text",
+                },
+              },
             },
           ],
         },
@@ -5859,7 +5893,7 @@ window.userCalls = {
                 },
               },
             },
-            {
+             {
               level: 1,
               listName: "NewChangeRequests",
               accessConditions: [
@@ -5870,6 +5904,21 @@ window.userCalls = {
                   targetPages: [],
                 },
               ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                //RelatedInitiative
+                // parentRelationField: "RelatedInitiative",
+                // RelationField: "Title",
+                // RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                  // parentRelationField: "Title",
+                  // RelationField: "InitiativeCode",
+                  // RelationFieldType: "Text",
+                },
+              },
             },
           ],
         },
@@ -6621,7 +6670,7 @@ window.userCalls = {
                 },
               },
             },
-            {
+             {
               level: 1,
               listName: "NewChangeRequests",
               accessConditions: [
@@ -6632,6 +6681,21 @@ window.userCalls = {
                   targetPages: [],
                 },
               ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                //RelatedInitiative
+                // parentRelationField: "RelatedInitiative",
+                // RelationField: "Title",
+                // RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                  // parentRelationField: "Title",
+                  // RelationField: "InitiativeCode",
+                  // RelationFieldType: "Text",
+                },
+              },
             },
           ],
         },
@@ -7475,7 +7539,7 @@ window.userCalls = {
                 },
               },
             },
-            {
+             {
               level: 1,
               listName: "NewChangeRequests",
               accessConditions: [
@@ -7486,6 +7550,21 @@ window.userCalls = {
                   targetPages: [],
                 },
               ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                //RelatedInitiative
+                // parentRelationField: "RelatedInitiative",
+                // RelationField: "Title",
+                // RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                  // parentRelationField: "Title",
+                  // RelationField: "InitiativeCode",
+                  // RelationFieldType: "Text",
+                },
+              },
             },
           ],
         },
@@ -10083,6 +10162,29 @@ var Tasks_Info_Request_User = {
       puid,
       rurl //rurl,
     ) {
+      // Handle Change Requests workflows directly without needing rurl
+      if (
+        wfname == "StrategicCR" ||
+        wfname == "ExecutionCR" ||
+        wfname == "OperationCR"
+      ) {
+        var critemcode = pcode && pcode != "null" ? pcode : "";
+        window.open(
+          _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/ChangeRequests.aspx?isview=true&" +
+            wfname +
+            "&critemcode=" +
+            critemcode +
+            "&TID=" +
+            taskid +
+            "&IID=" +
+            ritemid +
+            "&WFs",
+          "_self"
+        );
+        return;
+      }
+
       if (wfname == "Project") {
         curstage_org = User_Stages_Data_Request.g.StagesArray.filter(function (
           obj
@@ -10101,7 +10203,9 @@ var Tasks_Info_Request_User = {
           ) {
             return obj.stage == stageid;
           });
-        var rurl = targerstage_org[0].relatedURL;
+        var rurl = targerstage_org.length > 0 && targerstage_org[0].relatedURL 
+          ? targerstage_org[0].relatedURL 
+          : "";
       }
       Tasks_Info_Request_User.g.handlelinks(
         pcode,
@@ -10365,6 +10469,12 @@ var Tasks_Info_Request_User = {
             wfname == "MSCreateObjective"
           ) {
             keyNameParams = "sos";
+          } else if (
+            wfname == "StrategicCR" ||
+            wfname == "ExecutionCR" ||
+            wfname == "OperationCR"
+          ) {
+            keyNameParams = "changerequest";
           }
           switch (tasktype) {
             case "SubmitProject":
@@ -10393,7 +10503,28 @@ var Tasks_Info_Request_User = {
               );
               break;
             default:
-              if (rurl.toLowerCase().indexOf("icode") > -1) {
+              if (
+                wfname == "StrategicCR" ||
+                wfname == "ExecutionCR" ||
+                wfname == "OperationCR"
+              ) {
+                // Change Requests workflows - use pcode as critemcode (pcode contains RelatedItemTitle for CR)
+                var critemcode = pcode && pcode != "null" ? pcode : "";
+                // For Change Requests, always use ChangeRequests.aspx
+                window.open(
+                  _spPageContextInfo.webAbsoluteUrl +
+                    "/SitePages/ChangeRequests.aspx?isview=true&" +
+                    wfname +
+                    "&critemcode=" +
+                    critemcode +
+                    "&TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&WFs",
+                  "_self"
+                );
+              } else if (rurl.toLowerCase().indexOf("icode") > -1) {
                 //view page with pcode
                 rurl = rurl.replace("&ICODE=", "");
 

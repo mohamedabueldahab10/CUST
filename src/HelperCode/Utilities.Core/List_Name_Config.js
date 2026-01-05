@@ -858,6 +858,15 @@ var ListArray = [
 		projectrelated: false,
 		subfolder: true,
 	},
+	{
+		delegations: "Delegations",
+		ListingTitle: "التفويض",
+		FormTitle: "التفويض",
+		TitleEn: "Delegations",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
 	
 ];
 var PageArray = [
