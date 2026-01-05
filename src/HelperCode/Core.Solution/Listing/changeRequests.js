@@ -581,6 +581,8 @@ function getAllowedParentItemTypes() {
     currentRole === "EPMO"
   ) {
     return ["SOs", "MainKpi", "Initiatives", "Projects"];
+  } else if (currentRole === "SPMAdmin") {
+    return ["SOs", "MainKpi"];
   } else if (currentRole === "ObjectiveOwner") {
     return ["SOs"];
   } else if (currentRole === "PerformanceLeader") {

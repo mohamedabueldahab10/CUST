@@ -2137,7 +2137,9 @@ window.userCalls = {
           "kpiequations",
           "developmentrequirements",
           "strategiccalendar",
-          "measurementcyclesupport"
+          "measurementcyclesupport",
+          "changeRequests.aspx",
+          "changerequests" 
         ];
         CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = [
@@ -2165,7 +2167,10 @@ window.userCalls = {
           "changerequest",
           "developmentrequirements",
           "strategiccalendar",
-          "measurementcyclesupport"
+          "measurementcyclesupport",
+          "changeRequests.aspx",
+          "changerequests" 
+
         ];
 
         Edit_Access = [
@@ -2182,7 +2187,10 @@ window.userCalls = {
           "developmentrequirements",
           //"changerequest",
           "strategiccalendar",
-          "measurementcyclesupport"
+          "measurementcyclesupport",
+          "changeRequests.aspx",
+          "changerequests" 
+
         ];
         Delete_Access = [
           "mainkpi",
