@@ -264,7 +264,16 @@ var workflowname,
   isProjectComplianceUpdate =
   window.location.href.indexOf("ProjectCompliance.aspx") > -1,
   isInitiativeComplianceUpdate =
-  window.location.href.indexOf("InitiativeCompliance.aspx") > -1;
+  window.location.href.indexOf("InitiativeCompliance.aspx") > -1,
+  isStrategicCR =
+  window.location.href.indexOf("ChangeRequests.aspx") > -1 &&
+  window.location.href.indexOf("StrategicCR") > -1,
+  isExecutionCR =
+  window.location.href.indexOf("ChangeRequests.aspx") > -1 &&
+  window.location.href.indexOf("ExecutionCR") > -1,
+  isOperationCR =
+  window.location.href.indexOf("ChangeRequests.aspx") > -1 &&
+  window.location.href.indexOf("OperationCR") > -1;  
 
 var fieldtoedit,
   bulkeditlist,
@@ -302,6 +311,8 @@ var projectGuid;
 var PNAME;
 
 var RelatedProjectCODE = "";
+
+var CRITEMCODE = "";
 
 var accessCurrentTask = false;
 var DeliverablesDone;
@@ -1404,7 +1415,50 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isStrategicCR) {
+  workflowname = "StrategicCR";
+  bulkeditlist = "Change Request";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isExecutionCR) {
+  workflowname = "ExecutionCR";
+  bulkeditlist = "Change Request";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isOperationCR) {
+  workflowname = "OperationCR";
+  bulkeditlist = "Change Request";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } 
+
 // else if (isInitiativeComplianceUpdate) {
 //   workflowname = "ComplianceUpdate";
 //   bulkeditlist = "Initiatives";
@@ -1424,6 +1478,7 @@ else if (isSOsWf) {
 
 
 //*****1 */
+
 if (
   window.location.href.indexOf("PCODE") > -1 &&
   window.location.href.toLowerCase().indexOf("&wfs") > -1 && // to avoid lunch project workflow name
@@ -1798,6 +1853,11 @@ var Task_PCODE_Data_Request_WFs = {
         : "";
       tasktype = oListItem.get_item("TaskType"); //user acttion type
       peojectC = oListItem.get_item("ProjectCode");
+      if (isStrategicCR || isExecutionCR || isOperationCR) {
+        CRITEMCODE = oListItem.get_item("RelatedItemTitle")
+          ? oListItem.get_item("RelatedItemTitle")
+          : "";
+      }
       projectNameTitle = oListItem.get_item("ProjectName")
         ? oListItem.get_item("ProjectName")
         : oListItem.get_item("RelatedItemName"); // to get the related task name
@@ -4513,6 +4573,15 @@ var Task_Edit_Data = {
               listkey +
               "&ICODE=" +
               peojectC;
+          } else if (
+            isStrategicCR ||
+            isExecutionCR ||
+            isOperationCR
+          ) {
+            window.location =
+              _spPageContextInfo.siteAbsoluteUrl +
+              "/SitePages/ChangeRequests.aspx?isview=true&critemcode=" +
+              CRITEMCODE;
           } else {
             window.location =
               _spPageContextInfo.siteAbsoluteUrl +
@@ -5535,6 +5604,15 @@ var reset_Delivered_Value = {
                 listkey +
                 "&ICODE=" +
                 peojectC;
+            } else if (
+              isStrategicCR ||
+              isExecutionCR ||
+              isOperationCR
+            ) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/ChangeRequests.aspx?isview=true&critemcode=" +
+                CRITEMCODE;
             } else {
               window.location =
                 _spPageContextInfo.siteAbsoluteUrl +
@@ -5657,6 +5735,15 @@ debugger;
                 listkey +
                 "&ICODE=" +
                 peojectC;
+            } else if (
+              isStrategicCR ||
+              isExecutionCR ||
+              isOperationCR
+            ) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/ChangeRequests.aspx?isview=true&critemcode=" +
+                CRITEMCODE;
             } else {
               window.location =
                 _spPageContextInfo.siteAbsoluteUrl +

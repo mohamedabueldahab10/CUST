@@ -92,6 +92,14 @@ var projectIsNotActiveStatus = ""
 
 
 
+function setProjectHandlecircleBgNoFunded(statusCode) {
+  if (statusCode === "stat35") {
+    $(".handlecircle").css("background", "#d3d3d3");
+  } else {
+    $(".handlecircle").css("background", "");
+  }
+}
+
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -619,6 +627,9 @@ var Project_Home_Info_Request = {
     }
 
     $(".project-details-ctx .card.h-100").html(card1.join("")); // attaching card 1
+    
+    // Apply stat35 background color after DOM is ready
+    setProjectHandlecircleBgNoFunded(projectProgressStatusSchedule);
 
     $("#PjPriority").append(
       "<span data-trans-" +
@@ -4083,6 +4094,7 @@ var Get_ProjectStatus_Info = {
 
     $(".myCompletionStatus").addClass("statuscolor" + ProgressStatusSchedule);
     $(".handlecircle").addClass("circlecolor" + ProgressStatusSchedule);
+    setProjectHandlecircleBgNoFunded(ProgressStatusSchedule);
 
 
     $(".myCompletionStatusMilestone")
@@ -4100,6 +4112,9 @@ var Get_ProjectStatus_Info = {
       .addClass(ProgressStatusDeliverable);
 
     changeResources();
+    
+    // Re-apply stat35 background color after changeResources to ensure it's applied
+    setProjectHandlecircleBgNoFunded(ProgressStatusSchedule);
 
     $("button.updateprogress").removeClass("loader-action");
     $("button.updateprogress").addClass("loader-action-success");
@@ -4107,6 +4122,9 @@ var Get_ProjectStatus_Info = {
   onError: function (sender, args) {
     $("button.updateprogress").removeClass("loader-action");
     $("button.updateprogress").addClass("loader-action-error");
+    
+    // Apply stat35 background color even if API fails
+    setProjectHandlecircleBgNoFunded(projectProgressStatusSchedule);
 
     console.log(
       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()

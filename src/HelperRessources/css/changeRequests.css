@@ -1,5 +1,6 @@
 .ItemPseudoFields,
-.changeItemsRow {
+.changeItemsRow,
+.CRAttachmentsBlock {
     background: #fff;
     border-radius: 12px;
     padding: 1rem 1.5rem;
@@ -16,6 +17,17 @@
     color: #14415a;
     display: block;
     margin-bottom: 0.25rem;
+}
+
+.changeRequests-container label.required-field:after {
+    content: "*";
+    color: red;
+    margin-left: 3px;
+    font-weight: bold;
+}
+
+.sp-peoplepicker-topLevel {
+    border: none
 }
 
 .changeRequests-container select.form-control,
@@ -148,6 +160,51 @@
     box-shadow: none;
 }
 
+.rejection-note-section {
+    width: 100%;
+    background: #fff5f5;
+    border: 1px solid #ffcccc;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 2px 8px rgba(133, 50, 50, 0.1);
+}
+
+.ar .rejection-note-section {
+    border-right: 4px solid #853232;
+}
+
+.en .rejection-note-section {
+    border-left: 4px solid #853232;
+}
+
+.rejection-note-section .rejection-note-label {
+    font-weight: 600;
+    color: #853232;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.rejection-note-section .rejection-note-content {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Rejection note section direction */
+.rejection-note-section.ar {
+    direction: rtl;
+    text-align: right;
+}
+
+.rejection-note-section.en {
+    direction: ltr;
+    text-align: left;
+}
+
 @media (max-width: 768px) {
     .changeRequests-container .row {
         margin-bottom: 0.75rem;
@@ -156,4 +213,40 @@
     .changeRequests-container label {
         font-size: 13px;
     }
+
+    .rejection-note-section {
+        padding: 0.75rem 1rem;
+    }
+
+    .rejection-note-section .rejection-note-label,
+    .rejection-note-section .rejection-note-content {
+        font-size: 13px;
+    }
+}
+
+.ar .btn-cont {
+    direction: rtl;
+}
+
+.en .btn-cont {
+    direction: ltr;
+}
+
+.sp-peoplepicker-topLevel {
+    border: none !important
+}
+
+.dynamicField.radioLabelField div {
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    align-items: center;
+    direction: rtl;
+}
+
+.dynamicField.radioLabelField div input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    margin-inline-end: 7px !important;
 }
