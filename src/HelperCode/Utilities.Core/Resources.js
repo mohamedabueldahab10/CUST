@@ -1327,10 +1327,10 @@
     MainKPIs: "المؤشرات",
     parentitemtype: "نوع العنصر",
     kpi: "المؤشر",
-    parentselecteditem: "العنصر المختار",
+    parentselecteditem: "اسم عنصر التغيير",
     childitemtype: "نوع العنصر الفرعي",
     childselecteditem: "العنصر الفرعي المختار",
-    changeitem: "عنصر التغيير",
+    changeitem: "بند التغيير",
     approvallevel: "المستوى الاستراتيجي",
     approvallevel1: "مستوى أول",
     approvallevel2: "مستوى ثاني",
@@ -1339,6 +1339,12 @@
     positiveimpact: "الأثر الإيجابي",
     impactlevel: "مستوى الأثر",
     previousvalue: "القيمة السابقة:",
+    crlevel1: "مستوى اول",
+    crlevel2: "مستوى ثاني",
+    crstrategic: "مسار استراتيجي",
+    crexecution : "مسار تنفيذي",
+    croperationally: "مسار تشغيلي",
+
 
     "urgent":"عاجل",
     "veryimportant":"مهم جدا",
@@ -2692,6 +2698,12 @@ restoration:"restoration",
     positiveimpact: "Positive Impact",
     impactlevel: "Impact Level",
     previousvalue: "Previous Value:",
+    crlevel1: "Level 1",
+    crlevel2: "Level 2",
+    crstrategic: "Strategy",
+    crexecution : "Execution",
+    croperationally: "Operational",
+
 
 
 

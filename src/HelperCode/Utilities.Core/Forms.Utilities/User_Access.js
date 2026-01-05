@@ -907,7 +907,7 @@ window.userCalls = {
         
           break;
      case "PerformanceReportsQA":
-        USER_HomePage = "home.aspx";
+        USER_HomePage = "MainIndicators.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -949,7 +949,7 @@ window.userCalls = {
         Delete_Access = [];
         break;
     case "CQTeam":
-        USER_HomePage = "home.aspx";
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
@@ -975,7 +975,7 @@ window.userCalls = {
         Delete_Access = [];
         break;
     case "IPME":
-        USER_HomePage = "home.aspx";
+        USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
