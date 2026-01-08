@@ -5505,6 +5505,9 @@ debugger;
           targetElement = `data-targetElement=${element.targetElement}`;
         }
 
+        var classNameValue = element.hasOwnProperty("className") ? element.className : "";
+        var displayValue = element.hasOwnProperty("display") ? element.display : "";
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit +
@@ -5514,7 +5517,7 @@ debugger;
           dontSubmitRequired +
           " " +
           " " +
-          element.className +
+          classNameValue +
           " " +
           hideField +
           ' " ' +
@@ -5544,7 +5547,7 @@ debugger;
           '" ' +
           notAllowForGroups +
           ' style="display:' +
-          element.display +
+          displayValue +
           '">' +
           '<label for="' +
           element.InternalName +
@@ -5603,6 +5606,185 @@ debugger;
           descPhrase +
           "</div>" +
           "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+
+      case "groupsOfPicker":
+        // Support both 'parent' and 'parentField' properties
+        var parentFieldName = element.hasOwnProperty("parentField") 
+          ? element.parentField 
+          : (element.hasOwnProperty("parent") ? element.parent : "");
+        
+        var parentFieldAttr = parentFieldName 
+          ? `data-parent-field="${parentFieldName}"` 
+          : "";
+        
+        var classNameValue = element.hasOwnProperty("className") ? element.className : "";
+        var displayValue = element.hasOwnProperty("display") ? element.display : "";
+
+        // Check if options and choices exist
+        var choices = [];
+        if (element.hasOwnProperty("options") && 
+            element.options && 
+            element.options.hasOwnProperty("choices") && 
+            Array.isArray(element.options.choices)) {
+          choices = element.options.choices;
+        }
+
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          classNameValue +
+          " " +
+          hideField +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          displayValue +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          "</label>" +
+          "<select " +
+          toggleDisabledValues +
+          " " +
+          toggleValues +
+          " " +
+          ToggleName +
+          " " +
+          toggleDisabledName +
+          " " +
+          RequiredName +
+          " " +
+          requiredValues +
+          ' type="groupsOfPicker" value="" placeholder="' +
+          displayName +
+          '" ' +
+          dynamic +
+          ' class="form-control SPIField groups-of-picker" id="' +
+          element.InternalName +
+          '" ' +
+          parentFieldAttr +
+          " " +
+          element.state +
+          " " +
+          element.validation +
+          '><option value="" ' +
+          selected +
+          " disabled>Select Group</option>";
+        for (var i = 0; i < choices.length; i++) {
+          htmlBody +=
+            '<option value="' +
+            choices[i] +
+            '">' +
+            choices[i] +
+            "</option>";
+        }
+        htmlBody +=
+          "</select>" +
+          '<div class="inputInfo ' +
+          isexist +
+          '">' +
+          descPhrase +
+          "</div>" +
+          "</div>";
+        
+        // Add event listener to load groups when parent picker changes
+        if (parentFieldName) {
+          var groupsOfPickerId = element.InternalName;
+          var parentPickerId = parentFieldName;
+          
+          // Use setTimeout to ensure the DOM is ready and picker is initialized
+          setTimeout(function() {
+            // Listen for user:changed event from the parent picker
+            $('#' + parentPickerId).on("user:changed", function() {
+              var groupsSelect = $('#' + groupsOfPickerId);
+              if (groupsSelect.length) {
+                // Get the selected user from picker
+                var hiddenInput = $('#' + parentPickerId + '_TopSpan_HiddenInput');
+                if (hiddenInput.length && hiddenInput.val()) {
+                  try {
+                    // Replace &quot; with " before parsing JSON
+                    var inputValue = hiddenInput.val().replace(/&quot;/g, '"');
+                    var userData = JSON.parse(inputValue);
+                    if (userData && userData.length > 0) {
+                      var userLogin = userData[0].Key || userData[0].AutoFillKey || "";
+                      if (userLogin) {
+                        // Use the full Key format for SharePoint API (e.g., "i:0#.w|prod\\g.zouebi")
+                        loadUserGroupsFromSharePoint(userLogin, groupsOfPickerId);
+                      } else {
+                        groupsSelect.find('option:not(:first)').remove();
+                      }
+                    } else {
+                      groupsSelect.find('option:not(:first)').remove();
+                    }
+                  } catch (e) {
+                    console.error("Error parsing user data:", e);
+                    groupsSelect.find('option:not(:first)').remove();
+                  }
+                } else {
+                  groupsSelect.find('option:not(:first)').remove();
+                }
+              }
+            });
+            
+            // Also trigger on initial load if picker already has a value (for edit mode or pre-filled forms)
+            setTimeout(function() {
+              var hiddenInput = $('#' + parentPickerId + '_TopSpan_HiddenInput');
+              if (hiddenInput.length && hiddenInput.val()) {
+                try {
+                  // Replace &quot; with " before parsing JSON
+                  var inputValue = hiddenInput.val().replace(/&quot;/g, '"');
+                  var userData = JSON.parse(inputValue);
+                  if (userData && userData.length > 0) {
+                    var userLogin = userData[0].Key || userData[0].AutoFillKey || "";
+                    if (userLogin) {
+                      // Use the full Key format for SharePoint API
+                      loadUserGroupsFromSharePoint(userLogin, groupsOfPickerId);
+                    }
+                  }
+                } catch (e) {
+                  console.error("Error parsing user data on initial load:", e);
+                }
+              }
+            }, 1000);
+          }, 500);
+        }
+        
         OnSuccess(flag, htmlBody);
         break;
 
@@ -16718,6 +16900,104 @@ $(document).ready(function () {
   }, 3000);
 });
 
-
+// Function to load user groups from SharePoint
+function loadUserGroupsFromSharePoint(loginName, groupsSelectId) {
+  var groupsSelect = $('#' + groupsSelectId);
+  if (!groupsSelect.length) {
+    return;
+  }
+  
+  // Clear existing options except the first one
+  groupsSelect.find('option:not(:first)').remove();
+  groupsSelect.prop('disabled', true);
+  
+  // First, use ensureUser to get the User ID, then get groups by ID
+  // This works better than getbyloginname for complex login formats
+  var ensureUserUrl = _spPageContextInfo.webAbsoluteUrl + "/_api/web/ensureuser";
+  
+  // Get RequestDigest - try from DOM first, then from context
+  var requestDigest = $("#__REQUESTDIGEST").val() || 
+                      (typeof _spPageContextInfo !== "undefined" && _spPageContextInfo.formDigestValue) || 
+                      "";
+  
+  $.ajax({
+    url: ensureUserUrl,
+    method: "POST",
+    headers: {
+      "Accept": "application/json;odata=verbose",
+      "Content-Type": "application/json;odata=verbose",
+      "X-RequestDigest": requestDigest
+    },
+    data: JSON.stringify({
+      'logonName': loginName
+    }),
+    success: function(userData) {
+      if (userData.d && userData.d.Id) {
+        var userId = userData.d.Id;
+        // Now get groups using User ID
+        var groupsUrl = _spPageContextInfo.webAbsoluteUrl + 
+          "/_api/web/GetUserById(" + userId + ")/Groups";
+        
+        $.ajax({
+          url: groupsUrl,
+          method: "GET",
+          headers: {
+            "Accept": "application/json;odata=verbose"
+          },
+          success: function(data) {
+            groupsSelect.find('option:not(:first)').remove(); // Clear again to be safe
+            if (data.d && data.d.results && data.d.results.length > 0) {
+              // Add groups as options
+              data.d.results.forEach(function(group) {
+                var groupTitle = group.Title || group.LoginName || "";
+                if (groupTitle) {
+                  groupsSelect.append(
+                    $('<option></option>')
+                      .attr('value', groupTitle)
+                      .text(groupTitle)
+                  );
+                }
+              });
+            } else {
+              groupsSelect.append('<option value="" disabled>No groups found</option>');
+            }
+            groupsSelect.prop('disabled', false);
+          },
+          error: function(xhr, status, error) {
+            console.error("Error loading user groups from SharePoint:", xhr.responseText);
+            groupsSelect.prop('disabled', false);
+            if (groupsSelect.siblings('.inputInfo').length) {
+              groupsSelect.siblings('.inputInfo').text(
+                localStorage.getItem("lng") == "ar" || !localStorage.getItem("lng")
+                  ? "حدث خطأ في تحميل المجموعات"
+                  : "Error loading groups"
+              );
+            }
+          }
+        });
+      } else {
+        groupsSelect.prop('disabled', false);
+        if (groupsSelect.siblings('.inputInfo').length) {
+          groupsSelect.siblings('.inputInfo').text(
+            localStorage.getItem("lng") == "ar" || !localStorage.getItem("lng")
+              ? "حدث خطأ في تحميل المجموعات"
+              : "Error loading groups"
+          );
+        }
+      }
+    },
+    error: function(xhr, status, error) {
+      console.error("Error ensuring user in SharePoint:", xhr.responseText);
+      groupsSelect.prop('disabled', false);
+      if (groupsSelect.siblings('.inputInfo').length) {
+        groupsSelect.siblings('.inputInfo').text(
+          localStorage.getItem("lng") == "ar" || !localStorage.getItem("lng")
+            ? "حدث خطأ في تحميل المجموعات"
+            : "Error loading groups"
+        );
+      }
+    }
+  });
+}
 
      

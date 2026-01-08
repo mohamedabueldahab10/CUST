@@ -791,6 +791,8 @@
     p2: "التخطيط",
     p3: "التنفيذ",
     p4: "الاغلاق",
+    p0:"قيد الموافقة",
+    p5:"لم يبدأ",
     monthlyreport : "التقرير الشهري",
     //initiativeMainHome
     instrategy: "استراتيجي",
@@ -1707,6 +1709,8 @@ restoration:"restoration",
     p2: "Planning",
     p3: "Execution",
     p4: "Closure",
+    p0: "Under Approval",
+    p5: "Not Started",
     //////////////////
     rsupport1: "Reliance",
     rsupport2: "Issues",

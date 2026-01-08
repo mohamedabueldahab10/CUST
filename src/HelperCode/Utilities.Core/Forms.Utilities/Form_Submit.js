@@ -476,6 +476,7 @@ window.New_Data_Submit = {
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=picker],
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=multipicker],
             .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> select[type=dropdown],
+             .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> select[type=groupsOfPicker],
              .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> textarea,
               .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`
     ).each(function () {
@@ -634,6 +635,8 @@ window.New_Data_Submit = {
             New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
           });
         }
+      } else if ($(this).attr("type") == "groupsOfPicker") {
+        New_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
       } else if ($(this).hasClass("percentagefield")) {
         New_Data_Submit.g.oListItem.set_item(
           $(this).attr("id"),
@@ -2057,6 +2060,7 @@ window.Edit_Data_Submit = {
         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=multipicker],
         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=picker],
          .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field):not(.hide-field)> select[type=dropdown],
+         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> select[type=groupsOfPicker],
           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`).each(
       function () {
@@ -2264,6 +2268,12 @@ window.Edit_Data_Submit = {
               Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
             });
           }
+        } else if ($(this).attr("type") == "groupsOfPicker") {
+          $(this).find(":disabled").removeAttr("disabled"); // avoid remove the data when the field is disabled
+          Edit_Data_Submit.g.oListItem.set_item(
+            $(this).attr("id"),
+            $(this).val()
+          );
         } else if ($(this).hasClass("percentagefield")) {
           Edit_Data_Submit.g.oListItem.set_item(
             $(this).attr("id"),

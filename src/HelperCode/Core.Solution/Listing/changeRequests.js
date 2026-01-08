@@ -501,7 +501,6 @@ function getLoggedInUser() {
         resolve({ user: LoggedInUser, userId: LoggedInUserId });
       },
       error: function (err) {
-        console.error("Error getting logged in user:", err);
         reject(err);
       },
     });
@@ -581,8 +580,6 @@ function getAllowedParentItemTypes() {
     currentRole === "EPMO"
   ) {
     return ["SOs", "MainKpi", "Initiatives", "Projects"];
-  } else if (currentRole === "SPMAdmin") {
-    return ["SOs", "MainKpi"];
   } else if (currentRole === "ObjectiveOwner") {
     return ["SOs"];
   } else if (currentRole === "PerformanceLeader") {
@@ -884,7 +881,6 @@ var checkchangerequestshtml = setInterval(function () {
         }
       })
       .catch(function (err) {
-        console.error("Error initializing security:", err);
         filterParentItemTypeOptions();
         loadSectors();
         loadStrategyOptions();
@@ -1398,9 +1394,7 @@ function loadListOptions(
         $select.append(optionHtml);
       });
     },
-    error: function (err) {
-      console.error(`Error loading list ${listName}:`, err);
-    },
+    error: function (err) { },
   });
 }
 
@@ -1593,9 +1587,7 @@ function loadChangeItems(listName, parentType = "", childType = "") {
         );
       });
     },
-    error: function (err) {
-      console.error(`Error loading list ${listName}:`, err);
-    },
+    error: function (err) { },
   });
 }
 
@@ -1751,7 +1743,6 @@ function renderDynamicChangeFields(columns) {
         renderFieldsWithDisplayNames(apiColumns, displayNameMap, lang, container, apiColumns);
       },
       error: function (xhr) {
-        console.error("Error fetching DisplayNames from API:", xhr);
         renderFieldsWithDisplayNames(columns, {}, lang, container, []);
       },
     });
@@ -2813,11 +2804,9 @@ function handleChangeItemsAPI(crCode) {
         contentType: "application/json",
         data: JSON.stringify(apiBody),
         success: function (res) {
-          console.log("API success (no pickers):", res);
           resolve(res);
         },
         error: function (xhr) {
-          console.error("API error (no pickers):", xhr);
           reject(xhr);
         },
       });
@@ -2861,16 +2850,13 @@ function handleChangeItemsAPI(crCode) {
         contentType: "application/json",
         data: JSON.stringify(apiBody),
         success: function (res) {
-          console.log("API success (with pickers):", res);
           resolve(res);
         },
         error: function (xhr) {
-          console.error("API error (with pickers):", xhr);
           reject(xhr);
         },
       });
     }).catch(function (error) {
-      console.error("Error in picker promises:", error);
       reject(error);
     });
   });
@@ -2889,15 +2875,12 @@ function startChangeRequestWorkflow(crCode) {
       headers: { Accept: "application/json" },
       success: function (res) {
         if (res && res.isSuccess) {
-          console.log("Workflow started successfully:", res);
           resolve(res);
         } else {
-          console.error("Workflow start failed:", res);
           reject(res || { message: "Workflow start failed" });
         }
       },
       error: function (xhr) {
-        console.error("Workflow API Error:", xhr);
         reject(xhr);
       },
     });
@@ -3195,9 +3178,7 @@ function loadExistingChangeDetails(crCode) {
         $row.append(html);
       });
     },
-    error: function (err) {
-      console.error(`Error loading list ${listName}:`, err);
-    },
+    error: function (err) { },
   });
 }
 
@@ -3452,9 +3433,7 @@ function loadChangeItemsForView(changeItemCode, newCRCode) {
         loadNewChangeRequestDetails(newCRCode, changeItemColumnInternalName);
       }, 300);
     },
-    error: function (err) {
-      console.error(`Error loading list ${listName}:`, err);
-    },
+    error: function (err) { },
   });
 }
 
@@ -3582,7 +3561,6 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
               }
             },
             error: function (xhr) {
-              console.error("Error fetching change items:", xhr);
               // Render with ChangeItems DisplayName map (fallback)
               renderViewDynamicFields(
                 data.d.results,
@@ -4642,9 +4620,7 @@ function loadChangeItemsForEdit(
         $changeItem.val(currentChangeItem);
       }
     },
-    error: function (err) {
-      console.error(`Error loading list ${listName}:`, err);
-    },
+    error: function (err) { },
   });
 }
 function initializeViewOrEdit() {
