@@ -674,16 +674,50 @@ window.New_Data_Submit = {
 
     //to handle the for default value submittion
     $(`[data-formdefaultvalue]`).each(function (index) {
-      var parsingData = eval($(this).data("formdefaultvalue"));
+      var dataAttr = $(this).attr("data-formdefaultvalue");
+      if (!dataAttr) return;
+      
+      // Replace single quotes with double quotes for proper JSON parsing
+      var jsonString = dataAttr.replace(/'/g, '"');
+      var parsingData;
+      try {
+        parsingData = JSON.parse(jsonString);
+      } catch (e) {
+        // Fallback to eval if JSON.parse fails
+        parsingData = eval($(this).data("formdefaultvalue"));
+      }
 
-      // var listColumnName = parsingData[index].fieldName;
-      // var listColumnValue = parsingData[index].value;
-      // var allowToRole = parsingData[index].roles;
+      if (!parsingData || !Array.isArray(parsingData)) return;
+
       parsingData.forEach((el) => {
-        if (el.roles.includes("allRoles")) {
-          New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
-        } else if (el.roles.includes(currentUserRole)) {
-          New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+        if (!el || !el.fieldName) return;
+        
+        // Check if user has access - check roles array against currentUserRole or Groups
+        var hasAccess = false;
+        if (el.roles && Array.isArray(el.roles)) {
+          if (el.roles.includes("allRoles")) {
+            hasAccess = true;
+          } else if (currentUserRole && el.roles.includes(currentUserRole)) {
+            hasAccess = true;
+          } else {
+            // Check if any of user's groups match the roles
+            var userGroups = window.Groups || (typeof Groups !== 'undefined' ? Groups : []);
+            if (userGroups && Array.isArray(userGroups) && userGroups.length > 0) {
+              hasAccess = el.roles.some(role => userGroups.includes(role));
+            }
+          }
+        }
+        
+        if (hasAccess) {
+          // Handle LoggedInUser value - convert to actual user
+          if (el.value && el.value.toString().toLowerCase() === "loggedinuser") {
+            New_Data_Submit.g.oListItem.set_item(
+              el.fieldName,
+              SP.FieldUserValue.fromUser(UserN.LoginName)
+            );
+          } else {
+            New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+          }
         }
       });
     });
@@ -2312,13 +2346,50 @@ window.Edit_Data_Submit = {
 
     //to handle the for default value submittion
     $(`[data-formdefaultvalue]`).each(function (index) {
-      var parsingData = eval($(this).data("formdefaultvalue"));
+      var dataAttr = $(this).attr("data-formdefaultvalue");
+      if (!dataAttr) return;
+      
+      // Replace single quotes with double quotes for proper JSON parsing
+      var jsonString = dataAttr.replace(/'/g, '"');
+      var parsingData;
+      try {
+        parsingData = JSON.parse(jsonString);
+      } catch (e) {
+        // Fallback to eval if JSON.parse fails
+        parsingData = eval($(this).data("formdefaultvalue"));
+      }
+
+      if (!parsingData || !Array.isArray(parsingData)) return;
 
       parsingData.forEach((el) => {
-        if (el.roles.includes("allRoles")) {
-          Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
-        } else if (el.roles.includes(currentUserRole)) {
-          Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+        if (!el || !el.fieldName) return;
+        
+        // Check if user has access - check roles array against currentUserRole or Groups
+        var hasAccess = false;
+        if (el.roles && Array.isArray(el.roles)) {
+          if (el.roles.includes("allRoles")) {
+            hasAccess = true;
+          } else if (currentUserRole && el.roles.includes(currentUserRole)) {
+            hasAccess = true;
+          } else {
+            // Check if any of user's groups match the roles
+            var userGroups = window.Groups || (typeof Groups !== 'undefined' ? Groups : []);
+            if (userGroups && Array.isArray(userGroups) && userGroups.length > 0) {
+              hasAccess = el.roles.some(role => userGroups.includes(role));
+            }
+          }
+        }
+        
+        if (hasAccess) {
+          // Handle LoggedInUser value - convert to actual user
+          if (el.value && el.value.toString().toLowerCase() === "loggedinuser") {
+            Edit_Data_Submit.g.oListItem.set_item(
+              el.fieldName,
+              SP.FieldUserValue.fromUser(UserN.LoginName)
+            );
+          } else {
+            Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+          }
         }
       });
     });

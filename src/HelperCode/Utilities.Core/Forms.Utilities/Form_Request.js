@@ -168,7 +168,7 @@ window.Edit_Data_Request = {
     // $('h2.DahsFormTitle').append(' - " '+oListItem.get_item('Project_Name')+' "');
 
     $(
-      ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input[type=checkbox],.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=date], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container"
+      ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input[type=checkbox],.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=groupsOfPicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=date], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container"
     ).each(function () {
       switch ($(this).attr("type")) {
         case "date":
@@ -288,6 +288,95 @@ window.Edit_Data_Request = {
             budgetitemValue = oListItem.get_item("" + $(this).attr("id") + "");
           }
 
+          break;
+
+        case "groupsOfPicker":
+          // Get the current value from list item
+          var groupsOfPickerCurrentValue = oListItem.get_item($(this).attr("id"));
+          
+          // Get parent field name from data-parent-field attribute
+          var parentFieldName = $(this).attr("data-parent-field");
+          var groupsSelectId = $(this).attr("id");
+          
+          if (parentFieldName) {
+            // Get the parent picker field value
+            var parentFieldValue = oListItem.get_item(parentFieldName);
+            
+            if (parentFieldValue) {
+              // Function to get user login and load groups
+              var loadGroupsForUser = function(retryCount) {
+                retryCount = retryCount || 0;
+                var maxRetries = 5;
+                
+                var userLogin = null;
+                var parentHiddenInput = $('#' + parentFieldName + '_TopSpan_HiddenInput');
+                
+                // Try to get from hidden input if picker is already initialized
+                if (parentHiddenInput.length && parentHiddenInput.val()) {
+                  try {
+                    var inputValue = parentHiddenInput.val().replace(/&quot;/g, '"');
+                    var userData = JSON.parse(inputValue);
+                    if (userData && userData.length > 0) {
+                      userLogin = userData[0].Key || userData[0].AutoFillKey || "";
+                    }
+                  } catch (e) {
+                    console.error("Error parsing parent picker data:", e);
+                  }
+                }
+                
+                // If we still don't have login, try to get from FieldUserValue
+                if (!userLogin && parentFieldValue && parentFieldValue.get_email) {
+                  try {
+                    var userEmail = parentFieldValue.get_email();
+                    if (userEmail) {
+                      // Try to construct login name from email as fallback
+                      userLogin = "i:0#.w|" + userEmail;
+                    }
+                  } catch (e) {
+                    console.error("Error getting email from parent field:", e);
+                  }
+                }
+                
+                // Load groups if we have a login
+                if (userLogin) {
+                  // Check if function is available, retry if not
+                  if (typeof window.loadUserGroupsFromSharePoint === 'function') {
+                    window.loadUserGroupsFromSharePoint(userLogin, groupsSelectId, groupsOfPickerCurrentValue);
+                  } else if (retryCount < maxRetries) {
+                    // Function not available yet, retry after a short delay
+                    setTimeout(function() {
+                      loadGroupsForUser(retryCount + 1);
+                    }, 200);
+                  } else {
+                    console.error("loadUserGroupsFromSharePoint function not found after retries. Make sure Form_Render.js is loaded.");
+                  }
+                } else {
+                  console.warn("No user login available for groupsOfPicker field:", groupsSelectId);
+                }
+              };
+              
+              // Wait for parent picker to be initialized, then load groups
+              // Try immediately first
+              setTimeout(function() {
+                loadGroupsForUser();
+              }, 500);
+              
+              // Also try again after a longer delay in case picker takes longer to initialize
+              setTimeout(function() {
+                var parentHiddenInput = $('#' + parentFieldName + '_TopSpan_HiddenInput');
+                if (parentHiddenInput.length && !parentHiddenInput.val()) {
+                  // Picker still not initialized, try one more time
+                  loadGroupsForUser();
+                }
+              }, 1500);
+            }
+          }
+          
+          // Save the value attribute for consistency
+          if (groupsOfPickerCurrentValue) {
+            $(this).attr("value", groupsOfPickerCurrentValue);
+          }
+          
           break;
 
         case "radio":

@@ -194,7 +194,7 @@ window.ListInfo = {
 
         if (formDefaultValues && formDefaultValues.length) {
           dataFormDefaultValue =
-            'data-formDefaultValue="' +
+            'data-formdefaultvalue="' +
             JSON.stringify(formDefaultValues).replaceAll(`"`, `'`) +
             '"';
         } else {
@@ -16901,7 +16901,7 @@ $(document).ready(function () {
 });
 
 // Function to load user groups from SharePoint
-function loadUserGroupsFromSharePoint(loginName, groupsSelectId) {
+window.loadUserGroupsFromSharePoint = function(loginName, groupsSelectId, selectedValue) {
   var groupsSelect = $('#' + groupsSelectId);
   if (!groupsSelect.length) {
     return;
@@ -16958,6 +16958,16 @@ function loadUserGroupsFromSharePoint(loginName, groupsSelectId) {
                   );
                 }
               });
+              
+              // Set the selected value if provided (for edit mode)
+              if (selectedValue) {
+                // Use setTimeout to ensure DOM is updated
+                setTimeout(function() {
+                  groupsSelect.val(selectedValue);
+                  // Also set the value attribute for consistency
+                  groupsSelect.attr("value", selectedValue);
+                }, 100);
+              }
             } else {
               groupsSelect.append('<option value="" disabled>No groups found</option>');
             }
