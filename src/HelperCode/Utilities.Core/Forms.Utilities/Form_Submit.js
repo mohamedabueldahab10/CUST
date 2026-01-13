@@ -1523,6 +1523,49 @@ var Set_Code_Submit = {
           Documents_Library = "SPM General Services";
           folderdirectory = listkey;
         } //
+        // Handle delegations - call API after title generation
+        if (listkey == "delegations") {
+          // Call delegation API with generated Title
+          $.ajax({
+            url: `${APIURL}/delegation/delegateuser/${Code}`,
+            method: "GET",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+              $(".errormsg").hide();
+              $(".successmsg").show();
+              $(".btn-save").addClass("success");
+              if (localStorage.getItem("lng") == null ||
+                  localStorage.getItem("lng") == "ar") {
+                alert("تم حفظ البيانات بنجاح");
+              } else {
+                alert("Data saved successfully");
+              }
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=" +
+                listkey +
+                PCODE_STRING;
+            },
+            error: function (xhr, status, error) {
+              console.error("Error calling delegation API:", error);
+              $(".errormsg").hide();
+              $(".successmsg").show();
+              $(".btn-save").addClass("success");
+              if (localStorage.getItem("lng") == null ||
+                  localStorage.getItem("lng") == "ar") {
+                alert("تم حفظ البيانات بنجاح");
+              } else {
+                alert("Data saved successfully");
+              }
+              window.location =
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=" +
+                listkey +
+                PCODE_STRING;
+            }
+          });
+          return; // Exit early to prevent other logic from executing
+        }
         if (
           listkey != "projects" &&
           listkey != "initiatives" &&
@@ -4968,6 +5011,55 @@ function UploadQuerySuccess() {
       New_ProjectStages_Submit.init();
     } // if on new page other than project
     else {
+      // Handle delegations - call API after title generation (with file upload)
+      if (listkey == "delegations") {
+        // Reconstruct the generated Title/Code for delegations
+        var prt1 = listkey.substring(0, 2).toUpperCase(),
+          prt2 = String(new Date().getFullYear()).slice(4 - 2),
+          prt3 = IID.toString().padStart(4, "0");
+        var delegationCode = prt1 + "-" + prt2 + "-" + prt3;
+        
+        // Call delegation API with generated Title
+        $.ajax({
+          url: `${APIURL}/delegation/delegateuser/${delegationCode}`,
+          method: "GET",
+          contentType: "application/json; charset=utf-8",
+          success: function (response) {
+            $(".errormsg").hide();
+            $(".successmsg").show();
+            $(".btn-save").addClass("success");
+            if (localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar") {
+              alert("تم حفظ البيانات بنجاح");
+            } else {
+              alert("Data saved successfully");
+            }
+            window.location =
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=" +
+              listkey +
+              PCODE_STRING;
+          },
+          error: function (xhr, status, error) {
+            console.error("Error calling delegation API:", error);
+            $(".errormsg").hide();
+            $(".successmsg").show();
+            $(".btn-save").addClass("success");
+            if (localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar") {
+              alert("تم حفظ البيانات بنجاح");
+            } else {
+              alert("Data saved successfully");
+            }
+            window.location =
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=" +
+              listkey +
+              PCODE_STRING;
+          }
+        });
+        return; // Exit early to prevent other logic from executing
+      }
       if ($(".Details-Item.NewItem").length > 0) {
         //calling new master submit
         New_Data_Submit.g.checkNewMasterDetails();

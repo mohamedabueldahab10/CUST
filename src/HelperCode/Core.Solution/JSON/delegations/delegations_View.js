@@ -36,15 +36,15 @@ var Information_Form = [
       },
       {
         InternalName: "Status",
-        DisplayNameEn: "Status",
-        DisplayName: "الحالة",
+        DisplayNameEn: "Delegation Status",
+        DisplayName: "حالة التفويض",
         type: "dropdownValues",
         options: {
           choices: [
-            { display: "active", value: "active" },
-            { display: "pending", value: "pending" },
-            { display: "cancelled", value: "cancelled" },
-            { display: "finished", value: "finished" },
+            { display: "delactive", value: "delactive" },
+            { display: "delpending", value: "delpending" },
+            { display: "delcancelled", value: "delcancelled" },
+            { display: "delfinished", value: "delfinished" },
           ],
         },
       },

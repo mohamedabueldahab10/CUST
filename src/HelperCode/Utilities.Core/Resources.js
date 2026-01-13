@@ -1358,6 +1358,12 @@
     "q2":"الربع الثاني",
     "q3":"الربع الثالث",
     "q4":"الربع الرابع",
+    
+    // Delegation Status
+    delactive: "فعال",
+    delpending: "معلق",
+    delcancelled: "ملغي",
+    delfinished: "منتهي",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -2720,6 +2726,12 @@ restoration:"restoration",
     "q2":"Second Quarter",
     "q3":"Third Quarter",
     "q4":"Fourth Quarter",
+    
+    // Delegation Status
+    delactive: "Active",
+    delpending: "Pending",
+    delcancelled: "Cancelled",
+    delfinished: "Finished",
   },
 };
 
