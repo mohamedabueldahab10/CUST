@@ -1,6 +1,7 @@
 .ItemPseudoFields,
 .changeItemsRow,
-.CRAttachmentsBlock {
+.CRAttachmentsBlock,
+.CRObservationsBlock {
     background: #fff;
     border-radius: 12px;
     padding: 1rem 1.5rem;

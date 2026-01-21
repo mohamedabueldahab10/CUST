@@ -476,7 +476,6 @@ window.New_Data_Submit = {
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=picker],
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=multipicker],
             .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> select[type=dropdown],
-             .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> select[type=groupsOfPicker],
              .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> textarea,
               .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`
     ).each(function () {
@@ -635,8 +634,6 @@ window.New_Data_Submit = {
             New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
           });
         }
-      } else if ($(this).attr("type") == "groupsOfPicker") {
-        New_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
       } else if ($(this).hasClass("percentagefield")) {
         New_Data_Submit.g.oListItem.set_item(
           $(this).attr("id"),
@@ -674,50 +671,16 @@ window.New_Data_Submit = {
 
     //to handle the for default value submittion
     $(`[data-formdefaultvalue]`).each(function (index) {
-      var dataAttr = $(this).attr("data-formdefaultvalue");
-      if (!dataAttr) return;
-      
-      // Replace single quotes with double quotes for proper JSON parsing
-      var jsonString = dataAttr.replace(/'/g, '"');
-      var parsingData;
-      try {
-        parsingData = JSON.parse(jsonString);
-      } catch (e) {
-        // Fallback to eval if JSON.parse fails
-        parsingData = eval($(this).data("formdefaultvalue"));
-      }
+      var parsingData = eval($(this).data("formdefaultvalue"));
 
-      if (!parsingData || !Array.isArray(parsingData)) return;
-
+      // var listColumnName = parsingData[index].fieldName;
+      // var listColumnValue = parsingData[index].value;
+      // var allowToRole = parsingData[index].roles;
       parsingData.forEach((el) => {
-        if (!el || !el.fieldName) return;
-        
-        // Check if user has access - check roles array against currentUserRole or Groups
-        var hasAccess = false;
-        if (el.roles && Array.isArray(el.roles)) {
-          if (el.roles.includes("allRoles")) {
-            hasAccess = true;
-          } else if (currentUserRole && el.roles.includes(currentUserRole)) {
-            hasAccess = true;
-          } else {
-            // Check if any of user's groups match the roles
-            var userGroups = window.Groups || (typeof Groups !== 'undefined' ? Groups : []);
-            if (userGroups && Array.isArray(userGroups) && userGroups.length > 0) {
-              hasAccess = el.roles.some(role => userGroups.includes(role));
-            }
-          }
-        }
-        
-        if (hasAccess) {
-          // Handle LoggedInUser value - convert to actual user
-          if (el.value && el.value.toString().toLowerCase() === "loggedinuser") {
-            New_Data_Submit.g.oListItem.set_item(
-              el.fieldName,
-              SP.FieldUserValue.fromUser(UserN.LoginName)
-            );
-          } else {
-            New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
-          }
+        if (el.roles.includes("allRoles")) {
+          New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+        } else if (el.roles.includes(currentUserRole)) {
+          New_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
         }
       });
     });
@@ -1523,49 +1486,6 @@ var Set_Code_Submit = {
           Documents_Library = "SPM General Services";
           folderdirectory = listkey;
         } //
-        // Handle delegations - call API after title generation
-        if (listkey == "delegations") {
-          // Call delegation API with generated Title
-          $.ajax({
-            url: `${APIURL}/delegation/delegateuser/${Code}`,
-            method: "GET",
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-              $(".errormsg").hide();
-              $(".successmsg").show();
-              $(".btn-save").addClass("success");
-              if (localStorage.getItem("lng") == null ||
-                  localStorage.getItem("lng") == "ar") {
-                alert("تم حفظ البيانات بنجاح");
-              } else {
-                alert("Data saved successfully");
-              }
-              window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                PCODE_STRING;
-            },
-            error: function (xhr, status, error) {
-              console.error("Error calling delegation API:", error);
-              $(".errormsg").hide();
-              $(".successmsg").show();
-              $(".btn-save").addClass("success");
-              if (localStorage.getItem("lng") == null ||
-                  localStorage.getItem("lng") == "ar") {
-                alert("تم حفظ البيانات بنجاح");
-              } else {
-                alert("Data saved successfully");
-              }
-              window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                PCODE_STRING;
-            }
-          });
-          return; // Exit early to prevent other logic from executing
-        }
         if (
           listkey != "projects" &&
           listkey != "initiatives" &&
@@ -2137,7 +2057,6 @@ window.Edit_Data_Submit = {
         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=multipicker],
         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> div[type=picker],
          .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field):not(.hide-field)> select[type=dropdown],
-         .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> select[type=groupsOfPicker],
           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`).each(
       function () {
@@ -2345,12 +2264,6 @@ window.Edit_Data_Submit = {
               Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
             });
           }
-        } else if ($(this).attr("type") == "groupsOfPicker") {
-          $(this).find(":disabled").removeAttr("disabled"); // avoid remove the data when the field is disabled
-          Edit_Data_Submit.g.oListItem.set_item(
-            $(this).attr("id"),
-            $(this).val()
-          );
         } else if ($(this).hasClass("percentagefield")) {
           Edit_Data_Submit.g.oListItem.set_item(
             $(this).attr("id"),
@@ -2389,50 +2302,13 @@ window.Edit_Data_Submit = {
 
     //to handle the for default value submittion
     $(`[data-formdefaultvalue]`).each(function (index) {
-      var dataAttr = $(this).attr("data-formdefaultvalue");
-      if (!dataAttr) return;
-      
-      // Replace single quotes with double quotes for proper JSON parsing
-      var jsonString = dataAttr.replace(/'/g, '"');
-      var parsingData;
-      try {
-        parsingData = JSON.parse(jsonString);
-      } catch (e) {
-        // Fallback to eval if JSON.parse fails
-        parsingData = eval($(this).data("formdefaultvalue"));
-      }
-
-      if (!parsingData || !Array.isArray(parsingData)) return;
+      var parsingData = eval($(this).data("formdefaultvalue"));
 
       parsingData.forEach((el) => {
-        if (!el || !el.fieldName) return;
-        
-        // Check if user has access - check roles array against currentUserRole or Groups
-        var hasAccess = false;
-        if (el.roles && Array.isArray(el.roles)) {
-          if (el.roles.includes("allRoles")) {
-            hasAccess = true;
-          } else if (currentUserRole && el.roles.includes(currentUserRole)) {
-            hasAccess = true;
-          } else {
-            // Check if any of user's groups match the roles
-            var userGroups = window.Groups || (typeof Groups !== 'undefined' ? Groups : []);
-            if (userGroups && Array.isArray(userGroups) && userGroups.length > 0) {
-              hasAccess = el.roles.some(role => userGroups.includes(role));
-            }
-          }
-        }
-        
-        if (hasAccess) {
-          // Handle LoggedInUser value - convert to actual user
-          if (el.value && el.value.toString().toLowerCase() === "loggedinuser") {
-            Edit_Data_Submit.g.oListItem.set_item(
-              el.fieldName,
-              SP.FieldUserValue.fromUser(UserN.LoginName)
-            );
-          } else {
-            Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
-          }
+        if (el.roles.includes("allRoles")) {
+          Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
+        } else if (el.roles.includes(currentUserRole)) {
+          Edit_Data_Submit.g.oListItem.set_item(el.fieldName, el.value);
         }
       });
     });
@@ -5011,55 +4887,6 @@ function UploadQuerySuccess() {
       New_ProjectStages_Submit.init();
     } // if on new page other than project
     else {
-      // Handle delegations - call API after title generation (with file upload)
-      if (listkey == "delegations") {
-        // Reconstruct the generated Title/Code for delegations
-        var prt1 = listkey.substring(0, 2).toUpperCase(),
-          prt2 = String(new Date().getFullYear()).slice(4 - 2),
-          prt3 = IID.toString().padStart(4, "0");
-        var delegationCode = prt1 + "-" + prt2 + "-" + prt3;
-        
-        // Call delegation API with generated Title
-        $.ajax({
-          url: `${APIURL}/delegation/delegateuser/${delegationCode}`,
-          method: "GET",
-          contentType: "application/json; charset=utf-8",
-          success: function (response) {
-            $(".errormsg").hide();
-            $(".successmsg").show();
-            $(".btn-save").addClass("success");
-            if (localStorage.getItem("lng") == null ||
-                localStorage.getItem("lng") == "ar") {
-              alert("تم حفظ البيانات بنجاح");
-            } else {
-              alert("Data saved successfully");
-            }
-            window.location =
-              _spPageContextInfo.webAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=" +
-              listkey +
-              PCODE_STRING;
-          },
-          error: function (xhr, status, error) {
-            console.error("Error calling delegation API:", error);
-            $(".errormsg").hide();
-            $(".successmsg").show();
-            $(".btn-save").addClass("success");
-            if (localStorage.getItem("lng") == null ||
-                localStorage.getItem("lng") == "ar") {
-              alert("تم حفظ البيانات بنجاح");
-            } else {
-              alert("Data saved successfully");
-            }
-            window.location =
-              _spPageContextInfo.webAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=" +
-              listkey +
-              PCODE_STRING;
-          }
-        });
-        return; // Exit early to prevent other logic from executing
-      }
       if ($(".Details-Item.NewItem").length > 0) {
         //calling new master submit
         New_Data_Submit.g.checkNewMasterDetails();
