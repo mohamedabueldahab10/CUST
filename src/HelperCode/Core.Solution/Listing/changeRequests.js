@@ -1184,9 +1184,7 @@ function loadListOptionsPromise(listName, selectId, dispFieldKey, dispFieldKeyEn
 // Function to call API and populate Sector, SubSector, and ApprovalLevel
 // After API completes, automatically calls getchangeitemsdetails
 function callGetSectorAndSubSectorAPI(changeItemCode, parentItemCode) {
-console.log("🔵 [callGetSectorAndSubSectorAPI] Called with:", changeItemCode, parentItemCode);
 if (!changeItemCode || !parentItemCode) {
-  console.log("🔵 [callGetSectorAndSubSectorAPI] Missing parameters, returning");
   return;
 }
 
@@ -1200,7 +1198,6 @@ $.ajax({
   method: "GET",
   contentType: "application/json; charset=utf-8",
   success: function (response) {
-    console.log("getSectorAndSubSector API response:", response);
     if (response && response.isSuccess && response.result) {
       // Populate Sector
       if (response.result.sector) {
@@ -1242,15 +1239,12 @@ $.ajax({
       
       // Populate ApprovalLevel and ensure it's always disabled
       if (response.result.approvalLevel) {
-        console.log("🟢 [callGetSectorAndSubSectorAPI] Setting ApprovalLevel:", response.result.approvalLevel);
         $("#ApprovalLevel").val(response.result.approvalLevel).prop("disabled", true);
         
         // After setting ApprovalLevel, call getchangeitemsdetails with classification parameter
-        console.log("🟢 [callGetSectorAndSubSectorAPI] Calling fetchChangeItemDetails after API success");
         const classification = (parentType === "MainKpi" && response.result.classification) ? response.result.classification : null;
         fetchChangeItemDetails(changeItemCode, response.result.approvalLevel, parentItemCode, classification);
       } else {
-        console.log("🟢 [callGetSectorAndSubSectorAPI] No approvalLevel in response");
         $("#ApprovalLevel").val("").prop("disabled", true);
         $("#Classification").val("");
         $(".changeItemsRow").find(".dynamicField").remove();
@@ -1280,11 +1274,9 @@ $(document).on(
 "#ChangeItem, #ApprovalLevel, #ParentItemCode, #ChildItemCode",
 function () {
   const fieldId = $(this).attr("id");
-  console.log("🟣 [ChangeEvent] Field changed:", fieldId, "Value:", $(this).val());
   
   // Don't process change event during initial data load in edit/view mode
   if (window.isLoadingChangeRequestData && (window.isEdit || window.isView)) {
-    console.log("🟣 [ChangeEvent] Blocked: isLoadingChangeRequestData");
     return;
   }
   
@@ -1297,8 +1289,6 @@ function () {
   
   // If ChangeItem, ParentItemCode, or ChildItemCode changed - call API to get Sector/SubSector/ApprovalLevel
   if (fieldId === "ChangeItem" || fieldId === "ParentItemCode" || fieldId === "ChildItemCode") {
-    console.log("🟣 [ChangeEvent] ChangeItem/ParentItemCode/ChildItemCode changed");
-    
     // Clear fields
     $("#Sector").val("");
     $("#SubSector").val("");
@@ -1308,19 +1298,15 @@ function () {
     
     // If both ChangeItem and ParentItemCode exist, call API
     if (changeItemCode && itemCode) {
-      console.log("🟣 [ChangeEvent] Both ChangeItem and itemCode exist, calling API");
       callGetSectorAndSubSectorAPI(changeItemCode, itemCode);
       return;
     } else {
-      console.log("🟣 [ChangeEvent] Missing ChangeItem or itemCode, clearing fields");
       return;
     }
   }
   
   // If ApprovalLevel changed manually (not from API), call getchangeitemsdetails
   if (fieldId === "ApprovalLevel") {
-    console.log("🟣 [ChangeEvent] ApprovalLevel changed manually");
-    
     // Check actionType - if add, merge, split, or delete, hide dynamic section
     var meta = getSelectedChangeItemMeta();
     if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
@@ -1329,7 +1315,6 @@ function () {
     } else {
       // Call getchangeitemsdetails if all required fields are available
       if (changeItemCode && approvalLevel && itemCode) {
-        console.log("🟣 [ChangeEvent] All fields available, calling fetchChangeItemDetails");
         $(".changeItemsRow").find(".dynamicField").remove();
         // Get classification if it's MainKpi
         const parentType = $("#ParentItemType").val();
@@ -1570,6 +1555,27 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   
   // Check actionType - if add, skip Parent/Child fields validation
   var meta = getSelectedChangeItemMeta();
+  
+  // Validate actionType - must be one of: add, split, merge, delete
+  if (!meta.actionType || meta.actionType.trim() === "") {
+    console.log("يرجى اختيار نوع الإجراء (add, split, merge, delete)");
+    return false;
+  }
+  
+  // If actionType is not add, split, merge, or delete, check if dynamicField exists
+  if (meta.actionType !== "add" && meta.actionType !== "split" && 
+      meta.actionType !== "merge" && meta.actionType !== "delete") {
+    const dynamicFieldsCount = $(".changeItemsRow .dynamicField").length;
+    if (dynamicFieldsCount === 0) {
+      alert(
+        localStorage.getItem("lng") == "en"
+          ? "There are no fields to change according to your choices. Please review the data!"
+          : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
+      );
+      return false;
+    }
+  }
+  
   var isAddAction = meta.actionType === "add";
 
   // Validate required fields (same as searchDocuments.js)
@@ -2199,13 +2205,8 @@ function buildInputHtml(fieldName, fieldType, value, readOnly) {
 }
 
 function renderDynamicChangeFields(columns) {
-  console.log("🔴 [renderDynamicChangeFields] Called with", columns ? columns.length : 0, "columns");
-  console.trace("🔴 [renderDynamicChangeFields] Stack trace");
-  
   const lang = localStorage.getItem("lng");
   const container = $(".changeItemsRow");
-  const existingFields = container.find(".dynamicField").length;
-  console.log("🔴 [renderDynamicChangeFields] Existing dynamic fields before removal:", existingFields);
   container.find(".dynamicField").remove();
 
   // Check actionType - if add, merge, split, or delete, hide dynamic section and don't render fields
@@ -2685,10 +2686,6 @@ function renderFieldsWithDisplayNames(
     }
   });
 
-  const finalFieldsCount = container.find(".dynamicField").length;
-  console.log("🔴 [renderDynamicChangeFields] Finished rendering. Total dynamic fields:", finalFieldsCount);
-  console.log("🔴 [renderDynamicChangeFields] ========================================");
-
   changeResources();
 
   // After all fields are appended, initialize People Pickers using interval (for New mode)
@@ -2726,7 +2723,6 @@ function renderFieldsWithDisplayNames(
 // This function is kept for backward compatibility but is no longer used
 // The logic is now directly in event handlers and callGetSectorAndSubSectorAPI
 function tryFetchChangeDetails() {
-  console.log("🟡 [tryFetchChangeDetails] Called (deprecated, use fetchChangeItemDetails directly)");
   const changeItemCode = $("#ChangeItem").val();
   const approvalLevel = $("#ApprovalLevel").val();
   let itemCode = $("#ParentItemCode").val();
@@ -2748,10 +2744,7 @@ function tryFetchChangeDetails() {
   fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode);
 }
 function fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode, classification) {
-console.log("🟠 [fetchChangeItemDetails] Called with:", { changeItemCode, approvalLevel, itemCode, classification });
-
 if (!changeItemCode || !approvalLevel || !itemCode) {
-  console.log("🟠 [fetchChangeItemDetails] Missing parameters, returning");
   $(".changeItemsRow").find(".dynamicField").remove();
   currentApprovalPath = "";
   currentSecurityGroupName = "";
@@ -2798,12 +2791,17 @@ $(".changeItemsRow").find(".dynamicField").remove();
         result.columnsDetails &&
         result.columnsDetails.length
     ) {
-      console.log("🟠 [fetchChangeItemDetails] Success, calling renderDynamicChangeFields with", result.columnsDetails.length, "columns");
       renderDynamicChangeFields(result.columnsDetails);
     } else {
       $(".changeItemsRow").find(".dynamicField").remove();
       currentApprovalPath = "";
       currentSecurityGroupName = "";
+      // Show general alert if no fields to change
+      alert(
+        localStorage.getItem("lng") == "en"
+          ? "There are no fields to change according to your choices. Please review the data!"
+          : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
+      );
     }
   },
   error: function (xhr) {
@@ -2811,6 +2809,12 @@ $(".changeItemsRow").find(".dynamicField").remove();
     $(".changeItemsRow").find(".dynamicField").remove();
     currentApprovalPath = "";
     currentSecurityGroupName = "";
+    // Show general alert for all errors
+    alert(
+      localStorage.getItem("lng") == "en"
+        ? "There are no fields to change according to your choices. Please review the data!"
+        : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
+    );
   },
   });
 }
