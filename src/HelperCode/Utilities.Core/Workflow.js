@@ -3280,6 +3280,12 @@ var SubmitField_BulkEdit = {
                   } else if (periodType === "year") {
                     month = 12;
                   }
+                  var performanceAnalysis = $("#PerformanceAnalysis").val() || "";
+                  var actualKpiDateRaw = $("#ActualkpiDate").val() || "";
+                  var actualkpiDate = actualKpiDateRaw
+                    ? new Date(actualKpiDateRaw).toISOString().split("T")[0]
+                    : "";
+
                   const payload = {
                     mainKPICode: $("#Title").val(),
                     year,
@@ -3292,6 +3298,8 @@ var SubmitField_BulkEdit = {
                     f: parseFloat($("#F").val() || 0),
                     g: parseFloat($("#G").val() || 0),
                     finalValue: parseFloat($("#Equation").val() || 0),
+                    performanceAnalysis: performanceAnalysis,
+                    actualkpiDate: actualkpiDate,
                     createdByUserId: 0,
                   };
                   const userData = await $.ajax({
