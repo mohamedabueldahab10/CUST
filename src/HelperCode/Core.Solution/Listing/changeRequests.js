@@ -8,6 +8,7 @@ window.isWF =
   window.location.href.indexOf("&wfs") > -1;
 window.crItemCode = "";
 window.crItemId = 0;
+window.currentIsActive = true; // Track IsActive status from API
 // IMPORTANT: don't lowercase CR code; it is case-sensitive for folders and display (e.g., NCR-25-0001)
 try {
   var m = hrefOriginal.match(/critemcode=([^&]+)/i);
@@ -1287,6 +1288,14 @@ function () {
     itemCode = $("#ChildItemCode").val();
   const approvalLevel = $("#ApprovalLevel").val();
   
+  // Reset IsActive status when key fields change (will be updated by API call)
+  if (window.isNew && (fieldId === "ChangeItem" || fieldId === "ParentItemCode" || fieldId === "ChildItemCode" || fieldId === "ApprovalLevel")) {
+    window.currentIsActive = true;
+    if ($("#CRSubmitButton").length) {
+      $("#CRSubmitButton").prop("disabled", false);
+    }
+  }
+  
   // If ChangeItem, ParentItemCode, or ChildItemCode changed - call API to get Sector/SubSector/ApprovalLevel
   if (fieldId === "ChangeItem" || fieldId === "ParentItemCode" || fieldId === "ChildItemCode") {
     // Clear fields
@@ -1552,6 +1561,16 @@ function toggleEditModeFields() {
 $(document).on("click", "#CRSubmitButton", function (e) {
   e.preventDefault();
   e.stopPropagation();
+  
+  // Check IsActive for new forms - prevent submission if item is not active
+  if (window.isNew && window.currentIsActive === false) {
+    alert(
+      localStorage.getItem("lng") == "en"
+        ? "The item is not editable"
+        : "العنصر غير قابل للتعديل"
+    );
+    return false;
+  }
   
   // Check actionType - if add, skip Parent/Child fields validation
   var meta = getSelectedChangeItemMeta();
@@ -2258,6 +2277,14 @@ function renderDynamicChangeFields(columns) {
       method: "GET",
       headers: { Accept: "application/json" },
       success: function (res) {
+        const result = res && res.result ? res.result : {};
+        
+        // Check IsActive for new forms
+        if (!handleIsActiveCheck(result)) {
+          // Item is not active, don't proceed with rendering fields
+          return;
+        }
+
         const apiColumns =
           res && res.result && res.result.columnsDetails
             ? res.result.columnsDetails
@@ -2743,6 +2770,35 @@ function tryFetchChangeDetails() {
   
   fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode);
 }
+// Helper function to handle IsActive check for new forms
+function handleIsActiveCheck(result) {
+  // Store IsActive value globally (API returns isActive with lowercase 'i')
+  if (result && result.hasOwnProperty("isActive")) {
+    window.currentIsActive = result.isActive !== false; // true if isActive is true or undefined, false if explicitly false
+  }
+  
+  // Only check IsActive for new forms
+  if (window.isNew && result && result.isActive === false) {
+    // Show alert
+    alert(
+      localStorage.getItem("lng") == "en"
+        ? "The item is not editable"
+        : "العنصر غير قابل للتعديل"
+    );
+    // Disable submit button
+    if ($("#CRSubmitButton").length) {
+      $("#CRSubmitButton").prop("disabled", true);
+    }
+    return false; // Indicates item is not active
+  } else {
+    // Enable submit button if it was disabled
+    if ($("#CRSubmitButton").length && window.isNew) {
+      $("#CRSubmitButton").prop("disabled", false);
+    }
+    return true; // Indicates item is active
+  }
+}
+
 function fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode, classification) {
 if (!changeItemCode || !approvalLevel || !itemCode) {
   $(".changeItemsRow").find(".dynamicField").remove();
@@ -2783,6 +2839,15 @@ $(".changeItemsRow").find(".dynamicField").remove();
       const result = res && res.result ? res.result : {};
       currentApprovalPath = result.approvalPath || "";
       currentSecurityGroupName = result.securityGroupName || "";
+
+      // Check IsActive for new forms
+      if (!handleIsActiveCheck(result)) {
+        // Item is not active, don't proceed with rendering fields
+        $(".changeItemsRow").find(".dynamicField").remove();
+        currentApprovalPath = "";
+        currentSecurityGroupName = "";
+        return;
+      }
 
       if (
         res &&
@@ -4429,6 +4494,14 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
             method: "GET",
             headers: { Accept: "application/json" },
             success: function (apiRes) {
+              const result = apiRes && apiRes.result ? apiRes.result : {};
+              
+              // Check IsActive for new forms
+              if (!handleIsActiveCheck(result)) {
+                // Item is not active, don't proceed with rendering fields
+                return;
+              }
+
               renderViewDynamicFields(
                 data.d.results,
                 apiRes,
@@ -5297,6 +5370,14 @@ function renderViewDynamicFields(
             method: "GET",
             headers: { Accept: "application/json" },
             success: function (res) {
+              const result = res && res.result ? res.result : {};
+              
+              // Check IsActive for new forms
+              if (!handleIsActiveCheck(result)) {
+                // Item is not active, don't proceed with rendering fields
+                return;
+              }
+
               const apiColumns =
                 res && res.result && res.result.columnsDetails
                   ? res.result.columnsDetails

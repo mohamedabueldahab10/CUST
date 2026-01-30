@@ -15,7 +15,7 @@ var Information_Form = [
 								fieldNameInList: "WFInitiatedBy",
 								fieldValueInList: "LoggedInUser",
 							},
-              { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable01" },]
+              { fieldNameInList: "WFStage", fieldValueInList: "VROProjDeliverable03" },]
           },
           {
             condition: "lms",
@@ -24,7 +24,7 @@ var Information_Form = [
               fieldNameInList: "WFInitiatedBy",
               fieldValueInList: "LoggedInUser",
             },
-            { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable01" }]
+            { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable03" }]
           },
           {
             condition: "strategically",
@@ -33,7 +33,7 @@ var Information_Form = [
               fieldNameInList: "WFInitiatedBy",
               fieldValueInList: "LoggedInUser",
             },
-            { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable01" }]
+            { fieldNameInList: "WFStage", fieldValueInList: "EPMOProjDeliverable03" }]
           },
 
         ]
@@ -92,11 +92,11 @@ var Information_Form = [
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
-        type: 'weightfloatpercentage',
+        type: 'number',
         listname: 'Deliverables',
         targetcode: 'ProjectCode',
-        targetelement: 'Weight',
-        seconedtarget: 'Amount',
+      /*  targetelement: 'Weight',
+        seconedtarget: 'Amount',*/
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
         // "state":"disabled",
@@ -119,13 +119,14 @@ var Information_Form = [
         descPhraseEn: " From Budget", 
         targetelement: 'Weight',
         validation: 'required',
+        display:'none',
         security: {
           groups: [
             'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
-            {
+           /* {
         InternalName: 'Exchangetype',
         DisplayNameEn: 'Exchange type',
         DisplayName: 'نوع الصرف',
@@ -149,7 +150,7 @@ var Information_Form = [
           { value: 'partial', fields:  ['InvoiceNumber', 'InvoiceDate'] },
           { value: 'delivery', fields: ['Delivered'] },
       ],
-      },
+      },*/
      
       {
         InternalName: 'Quantity',
@@ -161,7 +162,7 @@ var Information_Form = [
         state:"disabled",
         // dynamic: 'parent',
       },
-        {
+   /*     {
         InternalName: 'Disbursedquantity',
         DisplayNameEn: 'Disbursed quantity',
         DisplayName: 'الكميه المنصرفه',
@@ -170,7 +171,7 @@ var Information_Form = [
         ToggleName:'Disbursedquantity',
         display:'none',
         dynamic: 'parent',
-      },
+      },*/
         {
         InternalName: 'AmountPrice',
         DisplayNameEn: 'AmountPrice',
@@ -179,7 +180,7 @@ var Information_Form = [
         validation: 'required',
         // type: 'float',
       },
-         {
+     /*    {
         InternalName: 'PurchaseRequestNumber',
         DisplayNameEn: 'PurchaseRequestNumber',
         DisplayName: 'رقم طلب الاحتياج',
@@ -218,7 +219,7 @@ var Information_Form = [
         DisplayName: 'رقم السطر فى موارد',
         type: "string",  
         state:"disabled"
-      },
+      },*/
       // {
       //   "InternalName": "Status",
       //   "DisplayName": "الحالة",

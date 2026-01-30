@@ -4453,19 +4453,18 @@ var Task_Edit_Data = {
         stageAction = "reject";
       }
     }
-    Task_Edit_Data.g.oListItem.set_item("Status", "Closed");
-    Task_Edit_Data.g.oListItem.set_item("WFInstanceID", null);
-    
 
-    Task_Edit_Data.g.oListItem.set_item(
-      "Body",
-      $("textarea#commenttext").val()
-    );
-    Task_Edit_Data.g.oListItem.set_item("TakenAction", stageAction); // check logic
-    Task_Edit_Data.g.oListItem.update();
-   
-    clientContext.load(Task_Edit_Data.g.oListItem);
-    clientContext.executeQueryAsync(
+    function doCloseTask() {
+      Task_Edit_Data.g.oListItem.set_item("Status", "Closed");
+      Task_Edit_Data.g.oListItem.set_item("WFInstanceID", null);
+      Task_Edit_Data.g.oListItem.set_item(
+        "Body",
+        $("textarea#commenttext").val()
+      );
+      Task_Edit_Data.g.oListItem.set_item("TakenAction", stageAction);
+      Task_Edit_Data.g.oListItem.update();
+      clientContext.load(Task_Edit_Data.g.oListItem);
+      clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
         // console.log('successful');
         $(".errormsg").hide();
@@ -4604,6 +4603,60 @@ var Task_Edit_Data = {
         );
       })
     );
+    }
+
+    if (stageState == true && taskActionType == "Conditional" && taskCondition && Array.isArray(taskCondition) && taskCondition.length > 0) {
+      var first = taskCondition[0];
+      var parentList = (first.parentlist || "").toString();
+      var relationshipField = (first.relationshipfield || first.parentKeyField || "").toString();
+      var fieldToRead = (first.field || "").toString();
+      var parentKeyVal = (typeof window.PCODE !== "undefined" && window.PCODE != null && window.PCODE !== "") ? window.PCODE : peojectC;
+      if (parentList && relationshipField && fieldToRead) {
+        getParentFieldValue(parentList, relationshipField, parentKeyVal, fieldToRead, function (parentValue) {
+          var targetStage = resolveTargetStageFromTaskCondition(parentValue, taskCondition);
+          if (targetStage) {
+            var ctx = SP.ClientContext.get_current();
+            var taskList = ctx.get_web().get_lists().getByTitle("Tasks");
+            var taskItem = taskList.getItemById(taskid);
+            taskItem.set_item("StageIDApprove", targetStage);
+            taskItem.update();
+            ctx.load(taskItem);
+            ctx.executeQueryAsync(
+              function () {
+                var childListTitle = (first.list || "").toString().trim();
+                var childItemId = relateditemid ? (typeof relateditemid === "number" ? relateditemid : parseInt(relateditemid, 10)) : 0;
+                if (childListTitle && childItemId) {
+                  var ctx2 = SP.ClientContext.get_current();
+                  var childList = ctx2.get_web().get_lists().getByTitle(childListTitle);
+                  var childItem = childList.getItemById(childItemId);
+                  childItem.set_item("WFStage", targetStage);
+                  childItem.set_item("Stage", targetStage);
+                  childItem.update();
+                  ctx2.load(childItem);
+                  ctx2.executeQueryAsync(
+                    function () {
+                      doCloseTask();
+                    },
+                    function (sender, args) {
+                      doCloseTask();
+                    }
+                  );
+                } else {
+                  doCloseTask();
+                }
+              },
+              function (sender, args) {
+                doCloseTask();
+              }
+            );
+          } else {
+            doCloseTask();
+          }
+        });
+        return;
+      }
+    }
+    doCloseTask();
   },
   g: {},
 };
@@ -5140,6 +5193,75 @@ function _uploadFile() {
 function evalExpr(expr) {
   Function("return " + expr + ";");
   return eval("(" + expr + ")");
+}
+
+function getParentFieldValue(parentListTitle, parentKeyField, parentKeyValue, fieldToRead, callback) {
+  if (!parentListTitle || !parentKeyField || parentKeyValue == null || parentKeyValue === "" || !fieldToRead) {
+    callback(null);
+    return;
+  }
+  var ctx = SP.ClientContext.get_current();
+  var list = ctx.get_web().get_lists().getByTitle(parentListTitle);
+  var caml = new SP.CamlQuery();
+  var safeVal = String(parentKeyValue).replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;");
+  caml.set_viewXml(
+    "<View><Query><Where><Eq><FieldRef Name='" + parentKeyField + "'/><Value Type='Text'>" + safeVal + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+  );
+  var items = list.getItems(caml);
+  ctx.load(items);
+  ctx.executeQueryAsync(
+    function () {
+      if (items.get_count() > 0) {
+        var item = items.getItemAtIndex(0);
+        var val = item.get_item(fieldToRead);
+        callback(val != null ? val : null);
+      } else if (parentKeyField === "ProjectCode") {
+        var caml2 = new SP.CamlQuery();
+        caml2.set_viewXml(
+          "<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" + safeVal + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+        );
+        var items2 = list.getItems(caml2);
+        ctx.load(items2);
+        ctx.executeQueryAsync(
+          function () {
+            if (items2.get_count() > 0) {
+              var item2 = items2.getItemAtIndex(0);
+              var val2 = item2.get_item(fieldToRead);
+              callback(val2 != null ? val2 : null);
+            } else {
+              callback(null);
+            }
+          },
+          function () {
+            callback(null);
+          }
+        );
+      } else {
+        callback(null);
+      }
+    },
+    function (sender, args) {
+      callback(null);
+    }
+  );
+}
+
+function resolveTargetStageFromTaskCondition(parentFieldValue, conditionConfig) {
+  if (!conditionConfig || !Array.isArray(conditionConfig) || conditionConfig.length === 0) return null;
+  try {
+    for (var i = 0; i < conditionConfig.length; i++) {
+      var el = conditionConfig[i];
+      var cond = el.condition;
+      if (!cond || !el.targetStage) continue;
+      var condAfter = String(cond).replace(/'fieldValue'|"fieldValue"/g, function () {
+        if (parentFieldValue == null || parentFieldValue === undefined) return "null";
+        if (typeof parentFieldValue === "string") return "'" + String(parentFieldValue).replace(/'/g, "\\'") + "'";
+        return parentFieldValue;
+      });
+      if (evalExpr(condAfter)) return el.targetStage;
+    }
+  } catch (e) {}
+  return null;
 }
 
 //////////////

@@ -2964,7 +2964,38 @@ window.View_Data_Request = {
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? No_Data
               : oListItem.get_item("" + $(this).attr("id") + "");
-          $(this).text(value);
+          
+          // Handle GroupName translation for delegations in view mode
+          if (listkey == "delegations" && $(this).attr("id") == "GroupName" && value && value != No_Data) {
+            // Use userCalls.g.SPGroups directly to find the role
+            var role = null;
+            if (typeof userCalls !== 'undefined' && userCalls.g && userCalls.g.SPGroups && Array.isArray(userCalls.g.SPGroups)) {
+              for (var spIdx = 0; spIdx < userCalls.g.SPGroups.length; spIdx++) {
+                var spGroup = userCalls.g.SPGroups[spIdx];
+                if (spGroup.groupsName && Array.isArray(spGroup.groupsName)) {
+                  for (var gnIdx = 0; gnIdx < spGroup.groupsName.length; gnIdx++) {
+                    if (spGroup.groupsName[gnIdx] === value && spGroup.Role) {
+                      role = spGroup.Role;
+                      break;
+                    }
+                  }
+                  if (role) break;
+                }
+              }
+            }
+            
+            if (role) {
+              $(this).html('<span data-trans-' + role + ' class="Resources">' + value + '</span>');
+              // Call changeResources to translate
+              if (typeof changeResources === "function") {
+                changeResources();
+              }
+            } else {
+              $(this).text(value);
+            }
+          } else {
+            $(this).text(value);
+          }
         }
       }
     });
@@ -2994,7 +3025,10 @@ window.View_Data_Request = {
     if (USERisWF) {
       $(".container-body .d-flex.btnactionrow").hide();
     } else {
-      Get_AllTaskHistoryRelatedToForm.init();
+      // Don't call Get_AllTaskHistoryRelatedToForm.init() for delegations
+      if (listkey != "delegations") {
+        Get_AllTaskHistoryRelatedToForm.init();
+      }
     }
 
     //handle top menu navigation
@@ -9430,6 +9464,11 @@ window.Get_AllTaskHistoryRelatedToForm = {
     let historyHTML = ``;
     let isThereHistory = false;
 
+    // Don't show AllTaskHistoryRelatedToForm for delegations
+    if (listkey == "delegations") {
+      return;
+    }
+    
     if (!$(".task-history-ctx").length) {
       historyHTML = `
       <div class="section3 row col-12 px-0 task-history-ctx mx-0 AllTaskHistoryRelatedToForm">
@@ -9596,6 +9635,11 @@ window.Get_AllTaskHistoryRelatedToForm = {
   },
 
   loadMore: function () {
+    // Don't call Get_AllTaskHistoryRelatedToForm.init() for delegations
+    if (listkey == "delegations") {
+      return;
+    }
+    
     if (Get_AllTaskHistoryRelatedToForm.g.position != null) {
       isLoadMore = true;
       Get_AllTaskHistoryRelatedToForm.g.camlQuery.set_listItemCollectionPosition(

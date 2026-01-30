@@ -503,7 +503,7 @@ window.ListInfo = {
               function () {
                 // Special handling for DelegateFrom field in delegations
                 if (listkey == "delegations" && currentPickerId == "DelegateFrom") {
-                  var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "SOsOwner", "ObjectiveOwner"];
+                  var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner","PerformanceLeader"];
                   var currentRole = window.currentUserRole || "";
                   
                   if (allowedRoles.indexOf(currentRole) > -1) {
@@ -17382,11 +17382,58 @@ window.loadUserGroupsFromSharePoint = function(loginName, groupsSelectId, select
                   // Also set the value attribute for consistency
                   groupsSelect.attr("value", selectedValue);
                 }, 100);
+              } else if (window.listkey == "delegations" && groupsSelectId == "GroupName") {
+                // Auto-select group based on currentUserRole for delegations (only for allowed roles)
+                var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner", "PerformanceLeader"];
+                var currentRole = window.currentUserRole || "";
+                
+                // Only auto-select and disable if currentRole is in allowedRoles
+                if (allowedRoles.indexOf(currentRole) > -1 && typeof userCalls !== 'undefined' && userCalls.g && userCalls.g.SPGroups && Array.isArray(userCalls.g.SPGroups)) {
+                  // Find the group name that matches currentUserRole
+                  var matchingGroupName = null;
+                  for (var spIdx = 0; spIdx < userCalls.g.SPGroups.length; spIdx++) {
+                    var spGroup = userCalls.g.SPGroups[spIdx];
+                    if (spGroup.Role === currentRole && spGroup.groupsName && Array.isArray(spGroup.groupsName)) {
+                      // Check if any of the group names exist in the select options
+                      for (var gnIdx = 0; gnIdx < spGroup.groupsName.length; gnIdx++) {
+                        var groupName = spGroup.groupsName[gnIdx];
+                        if (groupsSelect.find('option[value="' + groupName + '"]').length > 0) {
+                          matchingGroupName = groupName;
+                          break;
+                        }
+                      }
+                      if (matchingGroupName) break;
+                    }
+                  }
+                  
+                  // Auto-select the matching group
+                  if (matchingGroupName) {
+                    setTimeout(function() {
+                      groupsSelect.val(matchingGroupName);
+                      groupsSelect.attr("value", matchingGroupName);
+                    }, 100);
+                  }
+                  
+                  // Disable the select in new and edit modes for delegations (only for allowed roles)
+                  setTimeout(function() {
+                    if (window.isNew || window.isEdit) {
+                      groupsSelect.prop('disabled', true);
+                    }
+                  }, 200);
+                }
               }
             } else {
               groupsSelect.append('<option value="" disabled>No groups found</option>');
             }
-            groupsSelect.prop('disabled', false);
+            
+            // Only enable if not delegations with allowed role or if not in new/edit mode
+            var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner", "PerformanceLeader"];
+            var currentRole = window.currentUserRole || "";
+            var shouldDisable = window.listkey == "delegations" && groupsSelectId == "GroupName" && (window.isNew || window.isEdit) && allowedRoles.indexOf(currentRole) > -1;
+            
+            if (!shouldDisable) {
+              groupsSelect.prop('disabled', false);
+            }
           },
           error: function(xhr, status, error) {
             console.error("Error loading user groups from SharePoint:", xhr.responseText);

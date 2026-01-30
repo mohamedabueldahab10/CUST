@@ -1017,12 +1017,38 @@ window.ListingData = {
 							"</h4>" +
 							"</div>";
 					  } else {
+						// Handle GroupName translation for delegations
+						var fieldValue = obj[key];
+						var fieldValueHtml = fieldValue;
+						
+						if (listkey == "delegations" && Field_In_Use[0].InternalName == "GroupName" && fieldValue) {
+						  // Use userCalls.g.SPGroups directly to find the role
+						  var role = null;
+						  if (typeof userCalls !== 'undefined' && userCalls.g && userCalls.g.SPGroups && Array.isArray(userCalls.g.SPGroups)) {
+							for (var spIdx = 0; spIdx < userCalls.g.SPGroups.length; spIdx++) {
+							  var spGroup = userCalls.g.SPGroups[spIdx];
+							  if (spGroup.groupsName && Array.isArray(spGroup.groupsName)) {
+								for (var gnIdx = 0; gnIdx < spGroup.groupsName.length; gnIdx++) {
+								  if (spGroup.groupsName[gnIdx] === fieldValue && spGroup.Role) {
+									role = spGroup.Role;
+									break;
+								  }
+								}
+								if (role) break;
+							  }
+							}
+						  }
+						  
+						  if (role) {
+							fieldValueHtml = '<span data-trans-' + role + ' class="Resources">' + fieldValue + '</span>';
+						  }
+						}
 						
 						var isHTML = USERPCODE && Field_In_Use[0].InternalName == "ProjectCode" ? '' :
 						  '<div class="d-inline-flex wordBreak flex-column mx-2  " style="width:20%!important" ' + PrjRelated_Behavior + '>' +
 						  // '<h4 class="text-warning">' + obj[key] + '</h4>' +
 						  '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-						  '<h4 class="text-warning">' + obj[key] + '</h4>' +
+						  '<h4 class="text-warning">' + fieldValueHtml + '</h4>' +
 						  '</div>';
 					  }
 					}
@@ -2463,8 +2489,35 @@ window.ListingData = {
 
 				  });
 				} else {
+				  // Handle GroupName translation for delegations in filter
+				  var filterValue = AllData[L][z];
+				  var filterValueHtml = filterValue;
+				  
+				  if (listkey == "delegations" && FilterNames[L] == "GroupName" && filterValue) {
+					// Use userCalls.g.SPGroups directly to find the role
+					var role = null;
+					if (typeof userCalls !== 'undefined' && userCalls.g && userCalls.g.SPGroups && Array.isArray(userCalls.g.SPGroups)) {
+					  for (var spIdx = 0; spIdx < userCalls.g.SPGroups.length; spIdx++) {
+						var spGroup = userCalls.g.SPGroups[spIdx];
+						if (spGroup.groupsName && Array.isArray(spGroup.groupsName)) {
+						  for (var gnIdx = 0; gnIdx < spGroup.groupsName.length; gnIdx++) {
+							if (spGroup.groupsName[gnIdx] === filterValue && spGroup.Role) {
+							  role = spGroup.Role;
+							  break;
+							}
+						  }
+						  if (role) break;
+						}
+					  }
+					}
+					
+					if (role) {
+					  filterValueHtml = '<span data-trans-' + role + ' class="Resources">' + filterValue + '</span>';
+					}
+				  }
+				  
 				  FilterationcontractsHTML +=
-					'<label class="dropdown-item"><span title="' + AllData[L][z] + '" class="textintofilter">' + AllData[L][z] + '</span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value=\'' + AllData[L][z] + '\'>' +
+					'<label class="dropdown-item"><span title="' + filterValue + '" class="textintofilter">' + filterValueHtml + '</span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value=\'' + filterValue + '\'>' +
 					'</label>'
 				}
 			  }
