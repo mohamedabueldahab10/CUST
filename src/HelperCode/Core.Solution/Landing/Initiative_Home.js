@@ -1292,7 +1292,8 @@ var Projects_Info_Request = {
           "</div>" +
           '<div class="d-flex justify-content-center align-items-start">'+
           '<span class="icon-user lg d-inline-flex align-items-center text-center circlecolor' +
-          projectstatusBasedOnScheduleForStyling +'"></span>'
+          projectstatusBasedOnScheduleForStyling +'"' +
+          (projectstatusBasedOnScheduleForStyling == "stat35" ? ' style="background: #d3d3d3;"' : '') + '></span>'
       +
            '<div class="d-inline-flex flex-column mx-2">' +
                 '<span data-trans-completionstatus class="Resources des-13"></span>' +

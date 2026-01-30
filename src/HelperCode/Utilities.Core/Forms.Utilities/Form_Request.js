@@ -122,6 +122,8 @@ window.relatedToIdea = [{ listName: "Tasks", RelatedItem: "ProjectCode" }];
 
 window.Edit_Data_Request = {
   onSuccess: async function (sender, args) {
+    // Reset retry count
+    Edit_Data_Request.g.retryCount = 0;
     var pillersRadio = "";
 
     if (listkey == "kpiequations") {
@@ -168,7 +170,7 @@ window.Edit_Data_Request = {
     // $('h2.DahsFormTitle').append(' - " '+oListItem.get_item('Project_Name')+' "');
 
     $(
-      ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input[type=checkbox],.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=date], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container"
+      ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input[type=checkbox],.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=groupsOfPicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=date], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container"
     ).each(function () {
       switch ($(this).attr("type")) {
         case "date":
@@ -290,6 +292,95 @@ window.Edit_Data_Request = {
 
           break;
 
+        case "groupsOfPicker":
+          // Get the current value from list item
+          var groupsOfPickerCurrentValue = oListItem.get_item($(this).attr("id"));
+          
+          // Get parent field name from data-parent-field attribute
+          var parentFieldName = $(this).attr("data-parent-field");
+          var groupsSelectId = $(this).attr("id");
+          
+          if (parentFieldName) {
+            // Get the parent picker field value
+            var parentFieldValue = oListItem.get_item(parentFieldName);
+            
+            if (parentFieldValue) {
+              // Function to get user login and load groups
+              var loadGroupsForUser = function(retryCount) {
+                retryCount = retryCount || 0;
+                var maxRetries = 5;
+                
+                var userLogin = null;
+                var parentHiddenInput = $('#' + parentFieldName + '_TopSpan_HiddenInput');
+                
+                // Try to get from hidden input if picker is already initialized
+                if (parentHiddenInput.length && parentHiddenInput.val()) {
+                  try {
+                    var inputValue = parentHiddenInput.val().replace(/&quot;/g, '"');
+                    var userData = JSON.parse(inputValue);
+                    if (userData && userData.length > 0) {
+                      userLogin = userData[0].Key || userData[0].AutoFillKey || "";
+                    }
+                  } catch (e) {
+                    console.error("Error parsing parent picker data:", e);
+                  }
+                }
+                
+                // If we still don't have login, try to get from FieldUserValue
+                if (!userLogin && parentFieldValue && parentFieldValue.get_email) {
+                  try {
+                    var userEmail = parentFieldValue.get_email();
+                    if (userEmail) {
+                      // Try to construct login name from email as fallback
+                      userLogin = "i:0#.w|" + userEmail;
+                    }
+                  } catch (e) {
+                    console.error("Error getting email from parent field:", e);
+                  }
+                }
+                
+                // Load groups if we have a login
+                if (userLogin) {
+                  // Check if function is available, retry if not
+                  if (typeof window.loadUserGroupsFromSharePoint === 'function') {
+                    window.loadUserGroupsFromSharePoint(userLogin, groupsSelectId, groupsOfPickerCurrentValue);
+                  } else if (retryCount < maxRetries) {
+                    // Function not available yet, retry after a short delay
+                    setTimeout(function() {
+                      loadGroupsForUser(retryCount + 1);
+                    }, 200);
+                  } else {
+                    console.error("loadUserGroupsFromSharePoint function not found after retries. Make sure Form_Render.js is loaded.");
+                  }
+                } else {
+                  console.warn("No user login available for groupsOfPicker field:", groupsSelectId);
+                }
+              };
+              
+              // Wait for parent picker to be initialized, then load groups
+              // Try immediately first
+              setTimeout(function() {
+                loadGroupsForUser();
+              }, 500);
+              
+              // Also try again after a longer delay in case picker takes longer to initialize
+              setTimeout(function() {
+                var parentHiddenInput = $('#' + parentFieldName + '_TopSpan_HiddenInput');
+                if (parentHiddenInput.length && !parentHiddenInput.val()) {
+                  // Picker still not initialized, try one more time
+                  loadGroupsForUser();
+                }
+              }, 1500);
+            }
+          }
+          
+          // Save the value attribute for consistency
+          if (groupsOfPickerCurrentValue) {
+            $(this).attr("value", groupsOfPickerCurrentValue);
+          }
+          
+          break;
+
         case "radio":
           var radioval = oListItem.get_item($(this).attr("id"));
           // to handle the master details section show and hide
@@ -346,6 +437,45 @@ window.Edit_Data_Request = {
           } else {
             $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
           }
+          break;
+
+        case "lookupWithDynamicQuery":
+          // Handle lookupWithDynamicQuery fields - they are rendered as dropdowns
+          var lookupValue = null;
+          try {
+            lookupValue = oListItem.get_item($(this).attr("id"));
+          } catch (e) {
+            console.log("[Edit_Data_Request] Error getting lookupWithDynamicQuery field value:", e);
+            lookupValue = null;
+          }
+          
+          // Store the value to set it after options are loaded
+          var fieldId = $(this).attr("id");
+          var queryFieldValueFromField = $(this).data("queryfieldvaluefromfield");
+          
+          if (lookupValue != null) {
+            // If this field depends on another field (like RelatedChangeItemCode depends on ItemType)
+            // we need to wait for the source field to be set first
+            if (queryFieldValueFromField) {
+              var sourceFieldValue = $("#" + queryFieldValueFromField).val();
+              if (sourceFieldValue) {
+                // Source field is already set, we can set the value directly
+                $(this).val(lookupValue);
+                $(this).attr("value", lookupValue);
+              } else {
+                // Source field is not set yet, store the value to set it later
+                $(this).attr("data-pending-value", lookupValue);
+                console.log("[Edit_Data_Request] Storing pending value for", fieldId, ":", lookupValue);
+              }
+            } else {
+              // No dependency, set the value directly
+              $(this).val(lookupValue);
+              $(this).attr("value", lookupValue);
+            }
+          }
+          
+          // Note: The dropdown options will be loaded dynamically based on queryFieldValueFromField
+          // This happens in Form_Render.js when the source field changes
           break;
 
         default:
@@ -1350,7 +1480,251 @@ window.Edit_Data_Request = {
     setTimeout(function () {
       isOnLoad2 = false;
     }, 2000);
+
+    // disable fields in delegation form when status is cancelled or finished
+    if (USERisEdit && USERlistkey == "delegations") {
+      var statusValue = $("#Status").val();
+      if (statusValue == "delcancelled" || statusValue == "delfinished") {
+        $("body").append(
+          "<style>" +
+            ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+            ".form-control{color: #b1b1b1 !important;" +
+            "border-color: #e1e1e1 !important;" +
+            "background-color: #fdfdfd !important;" +
+            "opacity: .6;pointer-events: none;}" +
+            "</style>"
+        );
+      }
+    }
+    
+    // Handle getValueFromLookup dynamically after all data is loaded
+    // Use setTimeout to ensure all fields are loaded
+    setTimeout(function() {
+      Edit_Data_Request.handleGetValueFromLookup();
+    }, 800);
   },
+  
+  // Function to handle getValueFromLookup dynamically
+  handleGetValueFromLookup: function() {
+    var oListItem = null;
+    
+    // Try to get oListItem from Edit or View Data Request
+    if (typeof Edit_Data_Request !== "undefined" && Edit_Data_Request.g && Edit_Data_Request.g.oListItem) {
+      oListItem = Edit_Data_Request.g.oListItem;
+    } else if (typeof View_Data_Request !== "undefined" && View_Data_Request.g && View_Data_Request.g.oListItem) {
+      oListItem = View_Data_Request.g.oListItem;
+    }
+    
+    // Find all fields that have getValueFromLookup
+    var fieldsWithGetValueFromLookup = $('[data-getvaluefromlookup="true"]');
+    
+    fieldsWithGetValueFromLookup.each(function() {
+      var $targetField = $(this);
+      var targetFieldId = $targetField.attr("id");
+      var lookupFieldName = $targetField.data("getvaluefromlookup-field");
+      var lookupList = $targetField.data("getvaluefromlookup-list");
+      var fieldToGet = $targetField.data("getvaluefromlookup-fieldtoget");
+      
+      if (!lookupFieldName || !lookupList || !fieldToGet) {
+        return;
+      }
+      
+      // Get the lookup field value
+      var lookupValue = "";
+      var $lookupField = $("#" + lookupFieldName);
+      
+      // First, try to get from oListItem if available (most reliable)
+      if (oListItem) {
+        try {
+          lookupValue = oListItem.get_item(lookupFieldName);
+        } catch (e) {
+          // Error getting from oListItem, continue to try other methods
+        }
+      }
+      
+      // If not from oListItem, try to get from field
+      if (!lookupValue && $lookupField.length > 0) {
+        if ($lookupField.attr("type") === "lookup" || $lookupField.is("p[type='lookup']")) {
+          // For View mode - get value from data attribute or text
+          lookupValue = $lookupField.data("lookup-value") || $lookupField.attr("data-value") || $lookupField.text().trim();
+        } else if ($lookupField.attr("type") === "dropdown" || $lookupField.is("select")) {
+          // For Edit mode - get value from select
+          lookupValue = $lookupField.val();
+        } else {
+          // Try to get from hidden input or text content
+          var hiddenInput = $("#" + lookupFieldName + "_TopSpan_HiddenInput");
+          if (hiddenInput.length && hiddenInput.val()) {
+            try {
+              var inputValue = hiddenInput.val().replace(/&quot;/g, '"');
+              var userData = JSON.parse(inputValue);
+              if (userData && userData.length > 0) {
+                lookupValue = userData[0].Key || userData[0].AutoFillKey || userData[0].DisplayText || "";
+              }
+            } catch (e) {
+              // Error parsing hidden input, continue
+            }
+          }
+          if (!lookupValue) {
+            lookupValue = $lookupField.text().trim();
+          }
+        }
+      }
+      
+      // If we have a lookup value, get the field value from the lookup list
+      if (lookupValue) {
+        var $lookupFieldElement = $lookupField;
+        var valFieldKey = $lookupFieldElement.data("valfieldkey") || "Title";
+        
+        var customQuery =
+          '<View><Query><Where><And><Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq><Eq><FieldRef Name="' +
+          valFieldKey +
+          '" /><Value Type="Text">' +
+          lookupValue +
+          '</Value></Eq></And></Where><OrderBy><FieldRef Name="Modified" Ascending="False" /></OrderBy></Query><RowLimit>1</RowLimit></View>';
+        
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          lookupList,
+          customQuery,
+          [fieldToGet],
+          function (records, record, listItem, isDone) {
+            if (isDone && records.length > 0 && records[0][fieldToGet]) {
+              var valueToSet = records[0][fieldToGet];
+              var actualValueToSet = valueToSet; // Store the actual value from lookup
+              
+              // Find the matching option value (case-insensitive)
+              var $selectField = $("select#" + targetFieldId);
+              if ($selectField.length > 0) {
+                var $option = $selectField.find('option[value="' + valueToSet + '"]');
+                if ($option.length === 0) {
+                  // Try case-insensitive match
+                  $selectField.find('option').each(function() {
+                    if ($(this).val().toLowerCase() === valueToSet.toLowerCase()) {
+                      actualValueToSet = $(this).val(); // Use the actual dropdown value
+                      return false;
+                    }
+                  });
+                } else {
+                  actualValueToSet = $option.val();
+                }
+              }
+              
+              if ($targetField.is("select") || $targetField.attr("type") === "dropdown") {
+                $targetField.val(actualValueToSet);
+                // Trigger change event if in edit mode
+                if (window.isEdit) {
+                  setTimeout(function() {
+                    $targetField.trigger("change");
+                    
+                    // If this is ItemType field, trigger change on RelatedChangeItemCode to reload it and apply toggleValues
+                    if (targetFieldId === "ItemType") {
+                      // Apply toggleValues for ItemType field first
+                      if (typeof ListInfo !== "undefined" && ListInfo.g && ListInfo.g.toggleFields) {
+                        var $itemTypeField = $("#ItemType");
+                        if ($itemTypeField.length > 0 && $itemTypeField.attr("data-togglevalues")) {
+                          ListInfo.g.toggleFields($itemTypeField);
+                          
+                          // After toggleValues is applied, load Classification value if it's visible
+                          setTimeout(function() {
+                            var $classificationField = $("#Classification");
+                            if ($classificationField.length > 0 && $classificationField.is(":visible")) {
+                              if (oListItem) {
+                                try {
+                                  var classificationValue = oListItem.get_item("Classification");
+                                  if (classificationValue) {
+                                    $classificationField.val(classificationValue);
+                                    $classificationField.attr("value", classificationValue);
+                                  }
+                                } catch (e) {
+                                  // Error getting Classification from oListItem
+                                }
+                              }
+                            }
+                          }, 300);
+                        }
+                      }
+                      
+                      // Load RelatedChangeItemCode after ItemType is set
+                      var $relatedChangeItemCode = $("select#RelatedChangeItemCode.lookupWithDynamicQuery");
+                      if ($relatedChangeItemCode.length > 0) {
+                        setTimeout(function() {
+                          // Trigger change to reload options based on ItemType
+                          $relatedChangeItemCode.trigger("change");
+                          
+                          // After options are loaded, set the value from oListItem or pending value
+                          setTimeout(function() {
+                            var valueToSet = null;
+                            
+                            // First, try to get from pending value
+                            var pendingValue = $relatedChangeItemCode.attr("data-pending-value");
+                            if (pendingValue) {
+                              valueToSet = pendingValue;
+                              $relatedChangeItemCode.removeAttr("data-pending-value");
+                            } else if (oListItem) {
+                              // Try to get from oListItem
+                              try {
+                                valueToSet = oListItem.get_item("RelatedChangeItemCode");
+                              } catch (e) {
+                                // Error getting RelatedChangeItemCode from oListItem
+                              }
+                            }
+                            
+                            if (valueToSet) {
+                              // Try to find matching option (case-insensitive)
+                              var $option = $relatedChangeItemCode.find('option[value="' + valueToSet + '"]');
+                              if ($option.length === 0) {
+                                $relatedChangeItemCode.find('option').each(function() {
+                                  if ($(this).val().toLowerCase() === valueToSet.toLowerCase()) {
+                                    valueToSet = $(this).val();
+                                    return false;
+                                  }
+                                });
+                              }
+                              $relatedChangeItemCode.val(valueToSet);
+                              $relatedChangeItemCode.attr("value", valueToSet);
+                            }
+                          }, 500);
+                        }, 200);
+                      }
+                    }
+                  }, 100);
+                }
+              } else if ($targetField.is("p") || $targetField.attr("type") === "lookup") {
+                // For view mode, set the text content
+                var displayText = valueToSet;
+                if ($selectField.length > 0) {
+                  var $option = $selectField.find('option[value="' + actualValueToSet + '"]');
+                  if ($option.length > 0) {
+                    displayText = $option.text();
+                  } else {
+                    // Fallback: try to find by text match
+                    $selectField.find('option').each(function() {
+                      if ($(this).val().toLowerCase() === actualValueToSet.toLowerCase()) {
+                        displayText = $(this).text();
+                        return false;
+                      }
+                    });
+                  }
+                }
+                $targetField.text(displayText);
+                $targetField.attr("data-viewtogglevalue", actualValueToSet);
+              }
+            }
+          }
+        );
+      } else {
+        // If no value found, retry after a short delay (in case lookup is still loading)
+        // But only retry once to avoid infinite loop
+        if (!Edit_Data_Request.g.retryCount) {
+          Edit_Data_Request.g.retryCount = 1;
+          setTimeout(function() {
+            Edit_Data_Request.handleGetValueFromLookup();
+          }, 500);
+        }
+      }
+    });
+  },
+  
   onError: function (sender, args) {
     console.log(
       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
@@ -1370,6 +1744,7 @@ window.Edit_Data_Request = {
   },
   // Global variables
   g: {
+    retryCount: 0,
     append: function () {
       const logo = require("../../../HelperRessources/img/main-logo.png");
       $(".o365cs-nav-header16 .o365cs-nav-o365Branding").html(
@@ -1664,6 +2039,8 @@ window.RelatedIdeaProject = {
 };
 window.View_Data_Request = {
   onSuccess: function (sender, args) {
+    // Reset retry count
+    View_Data_Request.g.retryCount = 0;
     var strategyType = "";
     var pillersRadio = "";
 
@@ -2008,11 +2385,17 @@ window.View_Data_Request = {
 
                     if (!isMasterSection) {
                       var elementId = $(this).attr("id"); // get element Id
-                      var elementValue = oListItem.get_item(elementId); // get element value
+                      var elementValue = null;
+                      try {
+                        elementValue = oListItem.get_item(elementId); // get element value
+                      } catch (e) {
+                        console.log("[View_Data_Request] Error getting element value:", e);
+                        elementValue = null;
+                      }
 
                       if (
-                        oListItem.get_item(elementId) &&
-                        oListItem.get_item(elementId) == elementValue
+                        elementValue != null &&
+                        elementValue == elementValue
                       ) {
                         // matching between value on list
                         var parentElement = $(this).data(
@@ -2048,10 +2431,16 @@ window.View_Data_Request = {
 
                     if (!isMasterSection) {
                       var elementId = $(this).attr("id"); // get element Id
-                      var elementValue = oListItem.get_item(elementId); // get element value
+                      var elementValue = null;
+                      try {
+                        elementValue = oListItem.get_item(elementId); // get element value
+                      } catch (e) {
+                        console.log("[View_Data_Request] Error getting element value:", e);
+                        elementValue = null;
+                      }
                       if (
-                        oListItem.get_item(elementId) &&
-                        oListItem.get_item(elementId) == elementValue
+                        elementValue != null &&
+                        elementValue == elementValue
                       ) {
                         // matching between value on list
                         var parentElement = $(this).data(
@@ -2118,7 +2507,12 @@ window.View_Data_Request = {
           ),
           $this = $(this);
 
+        var fieldId = $(this).attr("id");
         var listFields = ["ID", valfieldkey, Dispfieldkey];
+        // Add ListName to fields if this is RelatedChangeItemCode
+        if (fieldId === "RelatedChangeItemCode") {
+          listFields.push("ListName");
+        }
         if (
           parentrelatedfilterkeylvl1 &&
           parentrelatedfilterkeylvl1 != "undefined"
@@ -2133,14 +2527,28 @@ window.View_Data_Request = {
           // listFields = ["ID",valfieldkey, Dispfieldkey, parentrelatedfilterkeylvl1];
         }
 
-        if (oListItem.get_item($(this).attr("id")) == null) {
+        var lookupFieldValue = null;
+        try {
+          var lookupItem = oListItem.get_item($(this).attr("id"));
+          // If it's a lookup field, get the lookup value (Title)
+          if (lookupItem && typeof lookupItem.get_lookupValue === "function") {
+            lookupFieldValue = lookupItem.get_lookupValue();
+          } else if (lookupItem) {
+            lookupFieldValue = lookupItem;
+          }
+        } catch (e) {
+          console.log("[View_Data_Request] Error getting lookup field value:", e);
+          lookupFieldValue = null;
+        }
+        
+        if (lookupFieldValue == null) {
           $(this).html(No_Data);
         } else {
           customquery =
             "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
             $(this).data("valfieldkey") +
             '" /><Value Type="Text">' +
-            oListItem.get_item($(this).attr("id")) +
+            lookupFieldValue +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
 
           sphttp.get(
@@ -2163,6 +2571,72 @@ window.View_Data_Request = {
                         el["ID"] +
                         ""
                     );
+                  
+                  // Handle getValueFromLookup - update fields that depend on this lookup
+                  // Check if any field has getValueFromLookup pointing to this field
+                  $('[data-getvaluefromlookup="true"][data-getvaluefromlookup-field="' + fieldId + '"]').each(function() {
+                    var $targetField = $(this);
+                    var targetFieldId = $targetField.attr("id");
+                    var lookupList = $targetField.data("getvaluefromlookup-list") || listname;
+                    var fieldToGet = $targetField.data("getvaluefromlookup-fieldtoget");
+                    
+                    if (fieldToGet && el[fieldToGet]) {
+                      var valueToSet = el[fieldToGet];
+                      var actualValueToSet = valueToSet; // Store the actual value from lookup
+                      
+                      console.log("[View Mode Lookup] Setting value for ItemType:", {
+                        valueToSet: valueToSet,
+                        targetFieldId: targetFieldId,
+                        isP: $targetField.is("p"),
+                        targetField: $targetField[0]
+                      });
+                      
+                      // Find the matching option value (case-insensitive)
+                      var $selectField = $("select#" + targetFieldId);
+                      if ($selectField.length > 0) {
+                        var $option = $selectField.find('option[value="' + valueToSet + '"]');
+                        if ($option.length === 0) {
+                          // Try case-insensitive match
+                          $selectField.find('option').each(function() {
+                            if ($(this).val().toLowerCase() === valueToSet.toLowerCase()) {
+                              actualValueToSet = $(this).val(); // Use the actual dropdown value
+                              return false;
+                            }
+                          });
+                        } else {
+                          actualValueToSet = $option.val();
+                        }
+                      }
+                      
+                      if ($targetField.is("select") || $targetField.attr("type") === "dropdown") {
+                        $targetField.val(actualValueToSet);
+                        // Trigger change event if in edit mode
+                        if (window.isEdit) {
+                          setTimeout(function() {
+                            $targetField.trigger("change");
+                          }, 100);
+                        }
+                      } else if ($targetField.is("p")) {
+                        // For view mode, set the value using span with data-trans attribute
+                        // Use the value directly from ListName, convert to lowercase
+                        var displayKey = valueToSet ? valueToSet.toLowerCase() : actualValueToSet.toLowerCase();
+                        
+                        console.log("[View Mode Lookup] Setting span for ItemType:", {
+                          displayKey: displayKey,
+                          dataTransAttr: "data-trans-" + displayKey
+                        });
+                        
+                        // Set the value using span with data-trans attribute
+                        var dataTransAttr = "data-trans-" + displayKey;
+                        $targetField.html('<span ' + dataTransAttr + ' class="Resources">' + displayKey + '</span>');
+                        $targetField.attr("data-viewtogglevalue", actualValueToSet);
+                        // Call changeResources to translate
+                        if (typeof changeResources === "function") {
+                          changeResources();
+                        }
+                      }
+                    }
+                  });
 
                   // dont submit part
 
@@ -2184,10 +2658,16 @@ window.View_Data_Request = {
 
                       if (!isMasterSection) {
                         var elementId = $(this).attr("id"); // get element Id
-                        var elementValue = oListItem.get_item(elementId); // get element value
+                        var elementValue = null;
+                        try {
+                          elementValue = oListItem.get_item(elementId); // get element value
+                        } catch (e) {
+                          console.log("[View_Data_Request] Error getting element value:", e);
+                          elementValue = null;
+                        }
                         if (
-                          oListItem.get_item(elementId) &&
-                          oListItem.get_item(elementId) == elementValue
+                          elementValue != null &&
+                          elementValue == elementValue
                         ) {
                           // matching between value on list
                           var parentElement = $(this).data(
@@ -2302,10 +2782,16 @@ window.View_Data_Request = {
 
                       if (!isMasterSection) {
                         var elementId = $(this).attr("id"); // get element Id
-                        var elementValue = oListItem.get_item(elementId); // get element value
+                        var elementValue = null;
+                        try {
+                          elementValue = oListItem.get_item(elementId); // get element value
+                        } catch (e) {
+                          console.log("[View_Data_Request] Error getting element value:", e);
+                          elementValue = null;
+                        }
                         if (
-                          oListItem.get_item(elementId) &&
-                          oListItem.get_item(elementId) == elementValue
+                          elementValue != null &&
+                          elementValue == elementValue
                         ) {
                           // matching between value on list
                           var parentElement = $(this).data(
@@ -2478,7 +2964,38 @@ window.View_Data_Request = {
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? No_Data
               : oListItem.get_item("" + $(this).attr("id") + "");
-          $(this).text(value);
+          
+          // Handle GroupName translation for delegations in view mode
+          if (listkey == "delegations" && $(this).attr("id") == "GroupName" && value && value != No_Data) {
+            // Use userCalls.g.SPGroups directly to find the role
+            var role = null;
+            if (typeof userCalls !== 'undefined' && userCalls.g && userCalls.g.SPGroups && Array.isArray(userCalls.g.SPGroups)) {
+              for (var spIdx = 0; spIdx < userCalls.g.SPGroups.length; spIdx++) {
+                var spGroup = userCalls.g.SPGroups[spIdx];
+                if (spGroup.groupsName && Array.isArray(spGroup.groupsName)) {
+                  for (var gnIdx = 0; gnIdx < spGroup.groupsName.length; gnIdx++) {
+                    if (spGroup.groupsName[gnIdx] === value && spGroup.Role) {
+                      role = spGroup.Role;
+                      break;
+                    }
+                  }
+                  if (role) break;
+                }
+              }
+            }
+            
+            if (role) {
+              $(this).html('<span data-trans-' + role + ' class="Resources">' + value + '</span>');
+              // Call changeResources to translate
+              if (typeof changeResources === "function") {
+                changeResources();
+              }
+            } else {
+              $(this).text(value);
+            }
+          } else {
+            $(this).text(value);
+          }
         }
       }
     });
@@ -2508,7 +3025,10 @@ window.View_Data_Request = {
     if (USERisWF) {
       $(".container-body .d-flex.btnactionrow").hide();
     } else {
-      Get_AllTaskHistoryRelatedToForm.init();
+      // Don't call Get_AllTaskHistoryRelatedToForm.init() for delegations
+      if (listkey != "delegations") {
+        Get_AllTaskHistoryRelatedToForm.init();
+      }
     }
 
     //handle top menu navigation
@@ -3090,7 +3610,233 @@ window.View_Data_Request = {
     setTimeout(function () {
       isOnLoad2 = false;
     }, 2000);
+    // to disable the save btn in delegation view mode when status is cancelled or finished
+    if (USERlistkey == "delegations" && USERisView) {
+      var statusValue = $("#Status").attr("data-viewtogglevalue");
+      if (statusValue == "delcancelled" || statusValue == "delfinished") {
+        $("body").append(
+          "<style>" +
+            ".btn-save{opacity: .6;pointer-events: none;display:none}" +
+            "</style>"
+        );
+      }
+    }
+    
+    // Handle getValueFromLookup dynamically after all data is loaded
+    // Use setTimeout to ensure all fields are loaded
+    setTimeout(function() {
+      View_Data_Request.handleGetValueFromLookup();
+    }, 800);
     //alert(PCODE_STRING);
+  },
+  
+  // Function to handle getValueFromLookup dynamically
+  handleGetValueFromLookup: function() {
+    var oListItem = null;    
+    // Try to get oListItem from Edit or View Data Request
+    if (typeof Edit_Data_Request !== "undefined" && Edit_Data_Request.g && Edit_Data_Request.g.oListItem) {
+      oListItem = Edit_Data_Request.g.oListItem;
+      console.log("[View_Data_Request.handleGetValueFromLookup] Got oListItem from Edit_Data_Request");
+    } else if (typeof View_Data_Request !== "undefined" && View_Data_Request.g && View_Data_Request.g.oListItem) {
+      oListItem = View_Data_Request.g.oListItem;
+      console.log("[View_Data_Request.handleGetValueFromLookup] Got oListItem from View_Data_Request");
+    } else {
+      console.log("[View_Data_Request.handleGetValueFromLookup] No oListItem found");
+    }
+    
+    // Find all fields that have getValueFromLookup
+    var fieldsWithGetValueFromLookup = $('[data-getvaluefromlookup="true"]');    
+    fieldsWithGetValueFromLookup.each(function() {
+      var $targetField = $(this);
+      var targetFieldId = $targetField.attr("id");
+      var lookupFieldName = $targetField.data("getvaluefromlookup-field");
+      var lookupList = $targetField.data("getvaluefromlookup-list");
+      var fieldToGet = $targetField.data("getvaluefromlookup-fieldtoget");
+      
+      if (!lookupFieldName || !lookupList || !fieldToGet) {
+        return;
+      }
+      
+      // Get the lookup field value
+      var lookupValue = "";
+      var $lookupField = $("#" + lookupFieldName);
+      
+      // Track if we got lookupValue from oListItem (which means it's Title)
+      var gotFromOListItem = false;
+      
+      // First, try to get from oListItem if available (most reliable)
+      if (oListItem) {
+        try {
+          var lookupItem = oListItem.get_item(lookupFieldName);
+          // If it's a lookup field, get the lookup value (Title)
+          if (lookupItem && typeof lookupItem.get_lookupValue === "function") {
+            lookupValue = lookupItem.get_lookupValue();
+            gotFromOListItem = true; // This is definitely Title
+          } else if (lookupItem) {
+            lookupValue = lookupItem;
+            gotFromOListItem = true; // This is likely Title too
+          }
+          console.log("[View_Data_Request.handleGetValueFromLookup] Got lookupValue from oListItem:", lookupValue, "for field:", lookupFieldName);
+        } catch (e) {
+          console.log("[View_Data_Request.handleGetValueFromLookup] Error getting from oListItem:", e);
+          // Error getting from oListItem, continue to try other methods
+        }
+      }
+      
+      // If not from oListItem, try to get from field
+      if (!lookupValue && $lookupField.length > 0) {
+        if ($lookupField.attr("type") === "lookup" || $lookupField.is("p[type='lookup']")) {
+          // For View mode - get value from data attribute or text content
+          // This is likely display text (ItemName), not Title
+          lookupValue = $lookupField.data("lookup-value") || $lookupField.attr("data-value") || $lookupField.text().trim();
+        } else if ($lookupField.attr("type") === "dropdown" || $lookupField.is("select")) {
+          // For Edit mode - get value from select
+          lookupValue = $lookupField.val();
+        } else {
+          // Try to get from hidden input or text content
+          var hiddenInput = $("#" + lookupFieldName + "_TopSpan_HiddenInput");
+          if (hiddenInput.length && hiddenInput.val()) {
+            try {
+              var inputValue = hiddenInput.val().replace(/&quot;/g, '"');
+              var userData = JSON.parse(inputValue);
+              if (userData && userData.length > 0) {
+                lookupValue = userData[0].Key || userData[0].AutoFillKey || userData[0].DisplayText || "";
+              }
+            } catch (e) {
+              // Error parsing hidden input, continue
+            }
+          }
+          if (!lookupValue) {
+            lookupValue = $lookupField.text().trim();
+          }
+        }
+      }
+      
+      // If we have a lookup value, get the field value from the lookup list
+      if (lookupValue) {
+        var $lookupFieldElement = $lookupField;
+        var valFieldKey = $lookupFieldElement.data("valfieldkey") || "Title";
+        var dispFieldKey = $lookupFieldElement.data("dispfieldkey") || "ItemName";
+        
+        // If we got it from oListItem, it's definitely Title, otherwise it might be display text
+        // Use valFieldKey (Title) if we got it from oListItem, otherwise check if it's display text
+        var searchFieldKey = gotFromOListItem ? valFieldKey : 
+                            ($lookupField.is("p[type='lookup']") ? dispFieldKey : valFieldKey);
+        
+        console.log("[View_Data_Request.handleGetValueFromLookup] Using search field:", searchFieldKey, "lookupValue:", lookupValue, "gotFromOListItem:", gotFromOListItem);
+        
+        var customQuery =
+          '<View><Query><Where><And><Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq><Eq><FieldRef Name="' +
+          searchFieldKey +
+          '" /><Value Type="Text">' +
+          lookupValue +
+          '</Value></Eq></And></Where><OrderBy><FieldRef Name="Modified" Ascending="False" /></OrderBy></Query><RowLimit>1</RowLimit></View>';
+        
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          lookupList,
+          customQuery,
+          [fieldToGet],
+          function (records, record, listItem, isDone) {
+            if (isDone && records.length > 0 && records[0][fieldToGet]) {
+              var valueToSet = records[0][fieldToGet];
+              var actualValueToSet = valueToSet; // Store the actual value from lookup
+              
+              console.log("[View_Data_Request.handleGetValueFromLookup] Setting value for ItemType:", {
+                valueToSet: valueToSet,
+                targetFieldId: targetFieldId,
+                isP: $targetField.is("p"),
+                targetField: $targetField[0]
+              });
+              
+              // Find the matching option value (case-insensitive)
+              var $selectField = $("select#" + targetFieldId);
+              if ($selectField.length > 0) {
+                var $option = $selectField.find('option[value="' + valueToSet + '"]');
+                if ($option.length === 0) {
+                  // Try case-insensitive match
+                  $selectField.find('option').each(function() {
+                    if ($(this).val().toLowerCase() === valueToSet.toLowerCase()) {
+                      actualValueToSet = $(this).val(); // Use the actual dropdown value
+                      return false;
+                    }
+                  });
+                } else {
+                  actualValueToSet = $option.val();
+                }
+              }
+              
+              if ($targetField.is("select") || $targetField.attr("type") === "dropdown") {
+                $targetField.val(actualValueToSet);
+                // Trigger change event if in edit mode
+                if (window.isEdit) {
+                  setTimeout(function() {
+                    $targetField.trigger("change");
+                    
+                    // If this is ItemType field, apply toggleValues
+                    if (targetFieldId === "ItemType") {
+                      // Apply toggleValues for ItemType field
+                      if (typeof ListInfo !== "undefined" && ListInfo.g && ListInfo.g.toggleFields) {
+                        var $itemTypeField = $("#ItemType");
+                        if ($itemTypeField.length > 0 && $itemTypeField.attr("data-togglevalues")) {
+                          ListInfo.g.toggleFields($itemTypeField);
+                          
+                          // After toggleValues is applied, load Classification value if it's visible
+                          setTimeout(function() {
+                            var $classificationField = $("#Classification");
+                            if ($classificationField.length > 0 && $classificationField.is(":visible")) {
+                              if (oListItem) {
+                                try {
+                                  var classificationValue = oListItem.get_item("Classification");
+                                  if (classificationValue) {
+                                    $classificationField.val(classificationValue);
+                                    $classificationField.attr("value", classificationValue);
+                                  }
+                                } catch (e) {
+                                  // Error getting Classification from oListItem
+                                }
+                              }
+                            }
+                          }, 300);
+                        }
+                      }
+                    }
+                  }, 100);
+                }
+              } else if ($targetField.is("p")) {
+                // For view mode, set the value using span with data-trans attribute
+                // Use the value directly from ListName, convert to lowercase
+                var displayKey = valueToSet ? valueToSet.toLowerCase() : actualValueToSet.toLowerCase();
+                
+                console.log("[View_Data_Request.handleGetValueFromLookup] Setting span for ItemType:", {
+                  displayKey: displayKey,
+                  dataTransAttr: "data-trans-" + displayKey
+                });
+                
+                // Set the value using span with data-trans attribute
+                var dataTransAttr = "data-trans-" + displayKey;
+                $targetField.html('<span ' + dataTransAttr + ' class="Resources">' + displayKey + '</span>');
+                $targetField.attr("data-viewtogglevalue", actualValueToSet);
+                // Call changeResources to translate
+                if (typeof changeResources === "function") {
+                  changeResources();
+                }
+              }
+            }
+          }
+        );
+      } else {
+        // If no value found, retry after a short delay (in case lookup is still loading)
+        // But only retry once to avoid infinite loop
+        if (!View_Data_Request.g.retryCount) {
+          View_Data_Request.g.retryCount = 1;
+          console.log("[View_Data_Request.handleGetValueFromLookup] Scheduling retry...");
+          setTimeout(function() {
+            View_Data_Request.handleGetValueFromLookup();
+          }, 500);
+        }
+      }
+    });
   },
   onError: function (sender, args) {
     console.log(
@@ -3112,6 +3858,7 @@ window.View_Data_Request = {
   },
   // Global variables
   g: {
+    retryCount: 0,
     append: function () {
       const logo = require("../../../HelperRessources/img/main-logo.png");
 
@@ -3953,22 +4700,55 @@ var Master_Details_Request = {
               Dispfieldkey = $(this).data("dispfieldkey"),
               listname = $(this).data("listname"),
               $this = $(this),
+              fieldId = $(this).attr("id"),
               customquery =
                 '<View><Query><Where><Eq><FieldRef Name="' +
                 $(this).data("valfieldkey") +
                 '" /><Value Type="Text">' +
                 oListItem.get_item($(this).attr("id")) +
                 "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+            // Add ListName to fields if this is RelatedChangeItemCode
+            var fieldsToFetch = [valfieldkey, Dispfieldkey];
+            if (fieldId === "RelatedChangeItemCode") {
+              fieldsToFetch.push("ListName");
+            }
+            
             sphttp.get(
               _spPageContextInfo.siteServerRelativeUrl,
               listname,
               customquery,
-              [valfieldkey, Dispfieldkey],
+              fieldsToFetch,
               function (records, record, listItem, isDone) {
                 if (isDone) {
                   records.forEach(function (el, index) {
                     $this.html(el[Dispfieldkey]);
                   });
+                  
+                  // Handle getValueFromLookup - update fields that depend on this lookup
+                  // Check if any field has getValueFromLookup pointing to this field
+                  if (records.length > 0) {
+                    $('[data-getvaluefromlookup="true"][data-getvaluefromlookup-field="' + fieldId + '"]').each(function() {
+                      var $targetField = $(this);
+                      var lookupList = $targetField.data("getvaluefromlookup-list") || listname;
+                      var fieldToGet = $targetField.data("getvaluefromlookup-fieldtoget");
+                      
+                      if (fieldToGet && records[0][fieldToGet]) {
+                        var valueToSet = records[0][fieldToGet];
+                        if ($targetField.is("select") || $targetField.attr("type") === "dropdown") {
+                          $targetField.val(valueToSet);
+                          // Trigger change event if in edit mode
+                          if (window.isEdit) {
+                            setTimeout(function() {
+                              $targetField.trigger("change");
+                            }, 100);
+                          }
+                        } else if ($targetField.is("p") || $targetField.attr("type") === "lookup") {
+                          // For view mode, just set the value
+                          $targetField.val(valueToSet);
+                        }
+                      }
+                    });
+                  }
                 }
               }
             );
@@ -4333,6 +5113,135 @@ var Master_Details_Request = {
         );
       }
     }
+    
+    // Handle getValueFromLookup dynamically after all data is loaded
+    // Use setTimeout to ensure all fields are loaded
+    setTimeout(function() {
+      Edit_Data_Request.handleGetValueFromLookup();
+    }, 800);
+  },
+  
+  // Function to handle getValueFromLookup dynamically
+  handleGetValueFromLookup: function() {
+    var oListItem = null;
+    
+    // Try to get oListItem from Edit or View Data Request
+    if (typeof Edit_Data_Request !== "undefined" && Edit_Data_Request.g && Edit_Data_Request.g.oListItem) {
+      oListItem = Edit_Data_Request.g.oListItem;
+    } else if (typeof View_Data_Request !== "undefined" && View_Data_Request.g && View_Data_Request.g.oListItem) {
+      oListItem = View_Data_Request.g.oListItem;
+    }
+    
+    // Find all fields that have getValueFromLookup
+    var fieldsWithGetValueFromLookup = $('[data-getvaluefromlookup="true"]');
+    
+    fieldsWithGetValueFromLookup.each(function() {
+      var $targetField = $(this);
+      var targetFieldId = $targetField.attr("id");
+      var lookupFieldName = $targetField.data("getvaluefromlookup-field");
+      var lookupList = $targetField.data("getvaluefromlookup-list");
+      var fieldToGet = $targetField.data("getvaluefromlookup-fieldtoget");
+      
+      if (!lookupFieldName || !lookupList || !fieldToGet) {
+        return;
+      }
+      
+      // Get the lookup field value
+      var lookupValue = "";
+      var $lookupField = $("#" + lookupFieldName);
+      
+      // First, try to get from oListItem if available (most reliable)
+      if (oListItem) {
+        try {
+          lookupValue = oListItem.get_item(lookupFieldName);
+        } catch (e) {}
+      }
+      
+      // If not from oListItem, try to get from field
+      if (!lookupValue && $lookupField.length > 0) {
+        if ($lookupField.attr("type") === "lookup" || $lookupField.is("p[type='lookup']")) {
+          // For View mode - get value from data attribute
+          lookupValue = $lookupField.data("lookup-value") || $lookupField.attr("data-value");
+        } else if ($lookupField.attr("type") === "dropdown" || $lookupField.is("select")) {
+          // For Edit mode - get value from select
+          lookupValue = $lookupField.val();
+        }
+      }
+      
+      // If we have a lookup value, get the field value from the lookup list
+      if (lookupValue) {
+        var $lookupFieldElement = $lookupField;
+        var valFieldKey = $lookupFieldElement.data("valfieldkey") || "Title";
+        
+        var customQuery =
+          '<View><Query><Where><And><Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq><Eq><FieldRef Name="' +
+          valFieldKey +
+          '" /><Value Type="Text">' +
+          lookupValue +
+          '</Value></Eq></And></Where><OrderBy><FieldRef Name="Modified" Ascending="False" /></OrderBy></Query><RowLimit>1</RowLimit></View>';
+        
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          lookupList,
+          customQuery,
+          [fieldToGet],
+          function (records, record, listItem, isDone) {
+            if (isDone && records.length > 0 && records[0][fieldToGet]) {
+              var valueToSet = records[0][fieldToGet];
+              
+              if ($targetField.is("select") || $targetField.attr("type") === "dropdown") {
+                // Try to find matching option (case-insensitive)
+                var $option = $targetField.find('option[value="' + valueToSet + '"]');
+                if ($option.length === 0) {
+                  // Try case-insensitive match
+                  $targetField.find('option').each(function() {
+                    if ($(this).val().toLowerCase() === valueToSet.toLowerCase()) {
+                      valueToSet = $(this).val();
+                      return false;
+                    }
+                  });
+                }
+                $targetField.val(valueToSet);
+                // Trigger change event if in edit mode
+                if (window.isEdit) {
+                  setTimeout(function() {
+                    $targetField.trigger("change");
+                  }, 100);
+                }
+              } else if ($targetField.is("p") || $targetField.attr("type") === "lookup") {
+                // For view mode, set the text content
+                var displayText = valueToSet;
+                var $selectField = $("select#" + targetFieldId);
+                if ($selectField.length > 0) {
+                  var $option = $selectField.find('option[value="' + valueToSet + '"]');
+                  if ($option.length === 0) {
+                    $selectField.find('option').each(function() {
+                      if ($(this).val().toLowerCase() === valueToSet.toLowerCase()) {
+                        displayText = $(this).text();
+                        return false;
+                      }
+                    });
+                  } else {
+                    displayText = $option.text();
+                  }
+                }
+                $targetField.text(displayText);
+                $targetField.attr("data-viewtogglevalue", valueToSet);
+              }
+            }
+          }
+        );
+      } else {
+        // If no value found, retry after a short delay (in case lookup is still loading)
+        // But only retry once to avoid infinite loop
+        if (!Edit_Data_Request.g.retryCount) {
+          Edit_Data_Request.g.retryCount = 1;
+          setTimeout(function() {
+            Edit_Data_Request.handleGetValueFromLookup();
+          }, 500);
+        }
+      }
+    });
   },
   onError: function (sender, args) {
     console.log(
@@ -4796,6 +5705,49 @@ window.RelatedInitiative_Data_Request = {
                 var id = $(this).attr("id");
                 if (id) {
                   $(`#${id}`).val(oListItem.get_item(id));
+                  
+                  // Handle getValueFromLookup - check if this field is a lookup that other fields depend on
+                  var $thisField = $(this);
+                  var fieldId = id;
+                  
+                  // Check if any field has getValueFromLookup pointing to this field
+                  $('[data-getvaluefromlookup="true"][data-getvaluefromlookup-field="' + fieldId + '"]').each(function() {
+                    var $targetField = $(this);
+                    var lookupList = $targetField.data("getvaluefromlookup-list");
+                    var fieldToGet = $targetField.data("getvaluefromlookup-fieldtoget");
+                    var lookupValue = oListItem.get_item(fieldId);
+                    
+                    if (lookupValue && lookupList && fieldToGet) {
+                      var valFieldKey = $thisField.data("valfieldkey") || "Title";
+                      var customQuery =
+                        '<View><Query><Where><And><Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq><Eq><FieldRef Name="' +
+                        valFieldKey +
+                        '" /><Value Type="Text">' +
+                        lookupValue +
+                        '</Value></Eq></And></Where><OrderBy><FieldRef Name="Modified" Ascending="False" /></OrderBy></Query><RowLimit>1</RowLimit></View>';
+                      
+                      sphttp.get(
+                        _spPageContextInfo.siteServerRelativeUrl,
+                        lookupList,
+                        customQuery,
+                        [fieldToGet],
+                        function (records, record, listItem, isDone) {
+                          if (isDone && records.length > 0 && records[0][fieldToGet]) {
+                            var valueToSet = records[0][fieldToGet];
+                            if ($targetField.is("select") || $targetField.attr("type") === "dropdown") {
+                              $targetField.val(valueToSet);
+                              // Trigger change event if in edit mode
+                              if (window.isEdit) {
+                                setTimeout(function() {
+                                  $targetField.trigger("change");
+                                }, 100);
+                              }
+                            }
+                          }
+                        }
+                      );
+                    }
+                  });
                 }
               } else {
                 var id = $(this).attr("id");
@@ -8451,6 +9403,11 @@ window.Get_TaskHistory = {
 };
 window.Get_AllTaskHistoryRelatedToForm = {
   init: function () {
+    // Don't show AllTaskHistoryRelatedToForm for delegations
+    if (listkey == "delegations") {
+      return;
+    }
+    
     $("button.loadMore").addClass("disabled");
 
     var clientContext = new SP.ClientContext.get_current();
@@ -8512,6 +9469,11 @@ window.Get_AllTaskHistoryRelatedToForm = {
     let historyHTML = ``;
     let isThereHistory = false;
 
+    // Don't show AllTaskHistoryRelatedToForm for delegations
+    if (listkey == "delegations") {
+      return;
+    }
+    
     if (!$(".task-history-ctx").length) {
       historyHTML = `
       <div class="section3 row col-12 px-0 task-history-ctx mx-0 AllTaskHistoryRelatedToForm">
@@ -8678,6 +9640,11 @@ window.Get_AllTaskHistoryRelatedToForm = {
   },
 
   loadMore: function () {
+    // Don't call Get_AllTaskHistoryRelatedToForm.init() for delegations
+    if (listkey == "delegations") {
+      return;
+    }
+    
     if (Get_AllTaskHistoryRelatedToForm.g.position != null) {
       isLoadMore = true;
       Get_AllTaskHistoryRelatedToForm.g.camlQuery.set_listItemCollectionPosition(

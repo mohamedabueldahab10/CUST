@@ -1507,6 +1507,159 @@ window.userCalls = {
           "strategiccalendar",
           "measurementcyclesupport",
           "changerequests",
+          "changeitemapprovalcontrol",
+          "delegations"
+        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+        Edit_Access = [
+          "benefitmatrix",
+          "initiatives",
+          "initiativeupdates",
+          "projectupdates",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativemom",
+          "initiativerisks",
+          "initiativeobjectives",
+          "initiativestakeholders",
+          "initiativetasks",
+          "initiativelessonslearned",
+          "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "closureinitiative",
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          // "sos",
+          "mainkpi",
+          //"changerequest",
+          "achievements",
+          "monthlyreport",
+          "compliancemajors",
+          "intiativecompliancemajors",
+          "developmentrequirements",
+          "strategiccalendar",
+          "measurementcyclesupport",
+          "changerequests",
+          "changeitemapprovalcontrol",
+          "delegations"
+        ];
+        Delete_Access = [
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativeupdates",
+          "projectupdates",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativemom",
+          "initiativerisks",
+          "initiativeobjectives",
+          "initiativestakeholders",
+          "initiativetasks",
+          "initiativelessonslearned",
+          "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "closureinitiative",
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "sos",
+          "mainkpi",
+          "monthlyreport"
+        ];
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi",
+        ];
+        // Delete_Access = AllListKeys;
+        // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
+        break;
+        
+         case "HeadCommitte":
+        USER_HomePage = "InitiativesMain.aspx";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isEPMO = true;
+        //***** */
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "اللجنة العليا";
+        en_UserRole = "Head Committee";
+        //CRUD
+        Create_Access = [
+          "benefitmatrix",
+          "initiativeupdates",
+          "projectupdates",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativemom",
+          "initiativerisks",
+          "initiativeobjectives",
+          "initiativestakeholders",
+          "initiativetasks",
+          "initiativelessonslearned",
+          "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "closureinitiative",
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "Targets.aspx",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "changerequest",
+          "sos",
+          "mainkpi",
+          "achievements",
+          "monthlyreport",
+          "compliancemajors",
+          "intiativecompliancemajors",
+          "developmentrequirements",
+          "strategiccalendar",
+          "measurementcyclesupport",
+          "changerequests",
           "changeitemapprovalcontrol"
         ];
         Read_Access = AllListKeys;
@@ -1599,7 +1752,8 @@ window.userCalls = {
         // Delete_Access = AllListKeys;
         // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;
-      case "Minister":
+      
+        case "Minister":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -1713,7 +1867,8 @@ window.userCalls = {
           "contracts",
           "documents",
           "changerequest",
-          "changerequests" 
+          "changerequests" ,
+          "delegations"
 
         ];
         CreateChangeRequest_Access = [
@@ -1744,7 +1899,8 @@ window.userCalls = {
           "projecthome.aspx",
           "nesteddeliverables",
           "changeRequests.aspx",
-          "changerequests"
+          "changerequests",
+          "delegations"
         ];
         Edit_Access = [
           "projects",
@@ -1763,7 +1919,8 @@ window.userCalls = {
           "contracts",
           "documents",
           "projecthome.aspx",
-          "nesteddeliverables"
+          "nesteddeliverables",
+          "delegations"
           //////////////////////////
         ];
         Delete_Access = [
@@ -1817,7 +1974,8 @@ window.userCalls = {
           "TaskHistory.aspx",
           "home.aspx",
           "tasks",
-          "projecthome.aspx"
+          "projecthome.aspx",
+          "delegations"
         ];
         Edit_Access = ["projecthome.aspx"];
         Delete_Access = [];
@@ -1872,7 +2030,8 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
-          "changerequests" 
+          "changerequests" ,
+          "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = [
@@ -1913,6 +2072,7 @@ window.userCalls = {
           "initiativesmain.aspx",
           "home.aspx",
           "projecthome.aspx",
+          "delegations"
         ];
         Edit_Access = [
           // "initiatives",
@@ -1943,6 +2103,7 @@ window.userCalls = {
           "exchangeschema",
           "communicationplans",
           "contracts",
+          "delegations"
           //"changerequest",
         ];
         Delete_Access = [
@@ -2014,6 +2175,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
+          "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = [
@@ -2053,6 +2215,7 @@ window.userCalls = {
           "initiativesmain.aspx",
           "home.aspx",
           "projecthome.aspx",
+          "delegations"
         ];
 
         Edit_Access = [
@@ -2080,6 +2243,7 @@ window.userCalls = {
           "exchangeschema",
           "communicationplans",
           "contracts",
+          "delegations"
           //"changerequest",
         ];
         Delete_Access = [
@@ -2137,7 +2301,9 @@ window.userCalls = {
           "kpiequations",
           "developmentrequirements",
           "strategiccalendar",
-          "measurementcyclesupport"
+          "measurementcyclesupport",
+          "changeRequests.aspx",
+          "changerequests" 
         ];
         CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = [
@@ -2165,7 +2331,10 @@ window.userCalls = {
           "changerequest",
           "developmentrequirements",
           "strategiccalendar",
-          "measurementcyclesupport"
+          "measurementcyclesupport",
+          "changeRequests.aspx",
+          "changerequests" 
+
         ];
 
         Edit_Access = [
@@ -2182,7 +2351,10 @@ window.userCalls = {
           "developmentrequirements",
           //"changerequest",
           "strategiccalendar",
-          "measurementcyclesupport"
+          "measurementcyclesupport",
+          "changeRequests.aspx",
+          "changerequests" 
+
         ];
         Delete_Access = [
           "mainkpi",
@@ -4449,6 +4621,10 @@ window.userCalls = {
       {
         Role: "EPMO",
         groupsName: ["EPMO"],
+      },
+       {
+        Role: "HeadCommitte",
+        groupsName: ["HeadCommitte"],
       },
       {
         Role: "SAAP",
@@ -10169,9 +10345,31 @@ var Tasks_Info_Request_User = {
         wfname == "OperationCR"
       ) {
         var critemcode = pcode && pcode != "null" ? pcode : "";
+        // Get relatedURL from stage data to determine isview or isedit
+        var relatedURL = "";
+        if (rurl && rurl.length > 0) {
+          relatedURL = rurl;
+        } else {
+          targerstage_org =
+            Generic_WF_Stages_Data_Request.g.GWFStagesArray.filter(function (
+              obj
+            ) {
+              return obj.stage == stageid;
+            });
+          relatedURL = targerstage_org.length > 0 && targerstage_org[0].relatedURL 
+            ? targerstage_org[0].relatedURL 
+            : "";
+        }
+        // Determine if isview or isedit based on relatedURL
+        var viewMode = "isview";
+        if (relatedURL && relatedURL.toLowerCase().indexOf("isedit") > -1) {
+          viewMode = "isedit";
+        } else if (relatedURL && relatedURL.toLowerCase().indexOf("isview") > -1) {
+          viewMode = "isview";
+        }
         window.open(
           _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/ChangeRequests.aspx?isview=true&" +
+            "/SitePages/ChangeRequests.aspx?" + viewMode + "=true&" +
             wfname +
             "&critemcode=" +
             critemcode +
@@ -10510,10 +10708,17 @@ var Tasks_Info_Request_User = {
               ) {
                 // Change Requests workflows - use pcode as critemcode (pcode contains RelatedItemTitle for CR)
                 var critemcode = pcode && pcode != "null" ? pcode : "";
+                // Determine if isview or isedit based on relatedURL (rurl)
+                var viewMode = "isview";
+                if (rurl && rurl.toLowerCase().indexOf("isedit") > -1) {
+                  viewMode = "isedit";
+                } else if (rurl && rurl.toLowerCase().indexOf("isview") > -1) {
+                  viewMode = "isview";
+                }
                 // For Change Requests, always use ChangeRequests.aspx
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
-                    "/SitePages/ChangeRequests.aspx?isview=true&" +
+                    "/SitePages/ChangeRequests.aspx?" + viewMode + "=true&" +
                     wfname +
                     "&critemcode=" +
                     critemcode +
@@ -12045,7 +12250,6 @@ var Get_Configure_Api = {
   onSuccess: function (sender, args) {
     var collListItem = Get_Configure_Api.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       APIURL = oListItem.get_item("Value");

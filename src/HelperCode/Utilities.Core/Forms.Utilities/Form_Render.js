@@ -194,7 +194,7 @@ window.ListInfo = {
 
         if (formDefaultValues && formDefaultValues.length) {
           dataFormDefaultValue =
-            'data-formDefaultValue="' +
+            'data-formdefaultvalue="' +
             JSON.stringify(formDefaultValues).replaceAll(`"`, `'`) +
             '"';
         } else {
@@ -492,14 +492,82 @@ window.ListInfo = {
           //handle people picker inputs
           $("div[type=picker]").each(function () {
             var mp = new MyPeoplePicker();
+            var pickerId = $(this).attr("id");
+            var currentPickerId = pickerId; // Store in local variable to avoid closure issues
             mp.init(
-              $(this).attr("id"),
+              pickerId,
               {
                 PrincipalAccountType: "User",
                 AllowMultipleValues: false,
               },
               function () {
-                console.log("pick is done");
+                // Special handling for DelegateFrom field in delegations
+                if (listkey == "delegations" && currentPickerId == "DelegateFrom") {
+                  var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner","PerformanceLeader"];
+                  var currentRole = window.currentUserRole || "";
+                  
+                  if (allowedRoles.indexOf(currentRole) > -1) {
+                    // In New mode: set current user and wait for resolution
+                    if (isNew && UserN && UserN.LoginName) {
+                      setTimeout(function() {
+                        var peoplePicker = SPClientPeoplePicker.SPClientPeoplePickerDict[currentPickerId + "_TopSpan"];
+                        if (peoplePicker) {
+                          peoplePicker.AddUserKeys(UserN.LoginName);
+                          
+                          // Wait for user to be resolved, then add missing fields
+                          setTimeout(function() {
+                            var hiddenInput = $("#" + currentPickerId + "_TopSpan_HiddenInput");
+                            if (hiddenInput.length && hiddenInput.val()) {
+                              try {
+                                var inputValue = hiddenInput.val().replace(/&quot;/g, '"');
+                                var userData = JSON.parse(inputValue);
+                                if (userData && userData.length > 0) {
+                                  var user = userData[0];
+                                  if (!user.AutoFillKey) user.AutoFillKey = user.Key || UserN.LoginName;
+                                  if (!user.AutoFillDisplayText) user.AutoFillDisplayText = user.DisplayText || UserN.Title;
+                                  if (!user.AutoFillSubDisplayText) user.AutoFillSubDisplayText = (user.EntityData && user.EntityData.Title) ? user.EntityData.Title : "";
+                                  if (!user.AutoFillTitleText) {
+                                    var email = (user.EntityData && user.EntityData.Email) ? user.EntityData.Email : "";
+                                    user.AutoFillTitleText = email + "\n" + (user.ProviderDisplayName || "") + "\n" + (user.Description || "");
+                                  }
+                                  if (!user.DomainText) {
+                                    var domainMatch = user.Key ? user.Key.match(/[^|]+$/i) : null;
+                                    user.DomainText = domainMatch ? domainMatch[0].split('\\')[0] : window.location.hostname;
+                                  }
+                                  if (!user.LocalSearchTerm) {
+                                    user.LocalSearchTerm = user.DisplayText ? user.DisplayText.split(' ')[0].toLowerCase() : "";
+                                  }
+                                  hiddenInput.val(JSON.stringify(userData));
+                                  $("#" + currentPickerId).find(".sp-peoplepicker-userSpan").removeAttr("aria-invalid");
+                                  $("#" + currentPickerId).removeClass("picker-error").addClass("picker-valid");
+                                  
+                                  var $groupsPicker = $("#GroupName");
+                                  if ($groupsPicker.length) {
+                                    var userLogin = user.Key || user.AutoFillKey || UserN.LoginName;
+                                    if (userLogin) {
+                                      loadUserGroupsFromSharePoint(userLogin, "GroupName");
+                                    }
+                                  }
+                                }
+                              } catch (e) {}
+                            }
+                            $(".PPField.SPIField.form-control#DelegateFrom").attr('disabled', true);
+                            $("#DelegateFrom_TopSpan_InitialHelpText").css('display', 'none');
+                          }, 2000);
+                        } else {
+                          $(".PPField.SPIField.form-control#DelegateFrom").attr('disabled', true);
+                          $("#DelegateFrom_TopSpan_InitialHelpText").css('display', 'none');
+                        }
+                      }, 500);
+                    } else {
+                      // In Edit mode: just disable
+                      setTimeout(function() {
+                        $(".PPField.SPIField.form-control#DelegateFrom").attr('disabled', true);
+                        $("#DelegateFrom_TopSpan_InitialHelpText").css('display', 'none');
+                      }, 500);
+                    }
+                  }
+                }
               }
             );
           });
@@ -512,10 +580,10 @@ window.ListInfo = {
                 AllowMultipleValues: true,
               },
               function () {
-                console.log("multipick is done");
               }
             );
           });
+          
           // handling dynamic fields that change data on the form
           $("select[dynamic=mainfield]").on("change", function () {
             var dyfieldname = $(this).attr("id");
@@ -644,6 +712,63 @@ window.ListInfo = {
               dynamicAffectSelect.init(affectedSelectsInfo);
             }
           }});
+          
+          // Handle lookupWithDynamicQuery - update lookup when source field changes
+          $(document).on("change", "select, input", function () {
+            var sourceFieldName = $(this).attr("id");
+            if (!sourceFieldName) return;
+            
+            // Check if any lookupWithDynamicQuery field depends on this field
+            $(".lookupWithDynamicQuery[data-queryfieldvaluefromfield='" + sourceFieldName + "']").each(function () {
+              var $lookupField = $(this);
+              var sourceFieldValue = $("#" + sourceFieldName).val();
+              var listName = $lookupField.data("listname");
+              var valFieldKey = $lookupField.data("valfieldkey");
+              var dispFieldKey = $lookupField.data("dispfieldkey");
+              var queryField = $lookupField.data("queryfield");
+              var queryFieldType = $lookupField.data("queryfieldtype");
+              
+              // Clear current options except the first one
+              $lookupField.find("option:not(:first)").remove();
+              $lookupField.val("");
+              
+              if (sourceFieldValue) {
+                var customQuery =
+                  "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+                  queryField +
+                  '" /><Value Type="' +
+                  queryFieldType +
+                  '">' +
+                  sourceFieldValue +
+                  "</Value></Eq></And></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
+                
+                var itemsID = [];
+                sphttp.get(
+                  _spPageContextInfo.siteServerRelativeUrl,
+                  listName,
+                  customQuery,
+                  [valFieldKey, dispFieldKey],
+                  function (records, record, listItem, isDone) {
+                    if (listItem) itemsID.push(listItem.get_id());
+                    if (isDone) {
+                      records.forEach(function (el, index) {
+                        $lookupField.append(
+                          '<option option-id="' +
+                          itemsID[index] +
+                          '" value="' +
+                          el[valFieldKey] +
+                          '">' +
+                          el[dispFieldKey] +
+                          "</option>"
+                        );
+                      });
+                    }
+                  }
+                );
+              }
+            });
+          });
+          
           //max min dates
           $("input[type=date]:not([minimumdate=undefined])").change(
             function () {
@@ -5505,6 +5630,9 @@ debugger;
           targetElement = `data-targetElement=${element.targetElement}`;
         }
 
+        var classNameValue = element.hasOwnProperty("className") ? element.className : "";
+        var displayValue = element.hasOwnProperty("display") ? element.display : "";
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit +
@@ -5514,7 +5642,7 @@ debugger;
           dontSubmitRequired +
           " " +
           " " +
-          element.className +
+          classNameValue +
           " " +
           hideField +
           ' " ' +
@@ -5544,7 +5672,7 @@ debugger;
           '" ' +
           notAllowForGroups +
           ' style="display:' +
-          element.display +
+          displayValue +
           '">' +
           '<label for="' +
           element.InternalName +
@@ -5603,6 +5731,197 @@ debugger;
           descPhrase +
           "</div>" +
           "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+
+      case "groupsOfPicker":
+        // Support both 'parent' and 'parentField' properties
+        var parentFieldName = element.hasOwnProperty("parentField") 
+          ? element.parentField 
+          : (element.hasOwnProperty("parent") ? element.parent : "");
+        
+        var parentFieldAttr = parentFieldName 
+          ? `data-parent-field="${parentFieldName}"` 
+          : "";
+        
+        var classNameValue = element.hasOwnProperty("className") ? element.className : "";
+        var displayValue = element.hasOwnProperty("display") ? element.display : "";
+
+        // Check if options and choices exist
+        var choices = [];
+        if (element.hasOwnProperty("options") && 
+            element.options && 
+            element.options.hasOwnProperty("choices") && 
+            Array.isArray(element.options.choices)) {
+          choices = element.options.choices;
+        }
+
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          classNameValue +
+          " " +
+          hideField +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          displayValue +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          "</label>" +
+          "<select " +
+          toggleDisabledValues +
+          " " +
+          toggleValues +
+          " " +
+          ToggleName +
+          " " +
+          toggleDisabledName +
+          " " +
+          RequiredName +
+          " " +
+          requiredValues +
+          ' type="groupsOfPicker" value="" placeholder="' +
+          displayName +
+          '" ' +
+          dynamic +
+          ' class="form-control SPIField groups-of-picker" id="' +
+          element.InternalName +
+          '" ' +
+          parentFieldAttr +
+          " " +
+          element.state +
+          " " +
+          element.validation +
+          '><option value="" ' +
+          selected +
+          " disabled>Select Group</option>";
+        for (var i = 0; i < choices.length; i++) {
+          var groupName = choices[i];
+          var role = window.getRoleForGroupName ? window.getRoleForGroupName(groupName) : null;
+          var dataTransAttr = role ? ' data-trans-' + role + ' class="Resources"' : '';
+          htmlBody +=
+            '<option value="' +
+            groupName +
+            '"' +
+            dataTransAttr +
+            '>' +
+            groupName +
+            "</option>";
+        }
+        htmlBody +=
+          "</select>" +
+          '<div class="inputInfo ' +
+          isexist +
+          '">' +
+          descPhrase +
+          "</div>" +
+          "</div>";
+        
+        // Call changeResources after DOM is ready to translate groups options
+        setTimeout(function() {
+          if (typeof changeResources === 'function') {
+            changeResources();
+          }
+        }, 100);
+        
+        // Add event listener to load groups when parent picker changes
+        if (parentFieldName) {
+          var groupsOfPickerId = element.InternalName;
+          var parentPickerId = parentFieldName;
+          
+          // Use setTimeout to ensure the DOM is ready and picker is initialized
+          setTimeout(function() {
+            // Listen for user:changed event from the parent picker
+            $('#' + parentPickerId).on("user:changed", function() {
+              var groupsSelect = $('#' + groupsOfPickerId);
+              if (groupsSelect.length) {
+                // Get the selected user from picker
+                var hiddenInput = $('#' + parentPickerId + '_TopSpan_HiddenInput');
+                if (hiddenInput.length && hiddenInput.val()) {
+                  try {
+                    // Replace &quot; with " before parsing JSON
+                    var inputValue = hiddenInput.val().replace(/&quot;/g, '"');
+                    var userData = JSON.parse(inputValue);
+                    if (userData && userData.length > 0) {
+                      var userLogin = userData[0].Key || userData[0].AutoFillKey || "";
+                      if (userLogin) {
+                        // Use the full Key format for SharePoint API (e.g., "i:0#.w|prod\\g.zouebi")
+                        loadUserGroupsFromSharePoint(userLogin, groupsOfPickerId);
+                      } else {
+                        groupsSelect.find('option:not(:first)').remove();
+                      }
+                    } else {
+                      groupsSelect.find('option:not(:first)').remove();
+                    }
+                  } catch (e) {
+                    console.error("Error parsing user data:", e);
+                    groupsSelect.find('option:not(:first)').remove();
+                  }
+                } else {
+                  groupsSelect.find('option:not(:first)').remove();
+                }
+              }
+            });
+            
+            // Also trigger on initial load if picker already has a value (for edit mode or pre-filled forms)
+            setTimeout(function() {
+              var hiddenInput = $('#' + parentPickerId + '_TopSpan_HiddenInput');
+              if (hiddenInput.length && hiddenInput.val()) {
+                try {
+                  // Replace &quot; with " before parsing JSON
+                  var inputValue = hiddenInput.val().replace(/&quot;/g, '"');
+                  var userData = JSON.parse(inputValue);
+                  if (userData && userData.length > 0) {
+                    var userLogin = userData[0].Key || userData[0].AutoFillKey || "";
+                    if (userLogin) {
+                      // Use the full Key format for SharePoint API
+                      loadUserGroupsFromSharePoint(userLogin, groupsOfPickerId);
+                    }
+                  }
+                } catch (e) {
+                  console.error("Error parsing user data on initial load:", e);
+                }
+              }
+            }, 1000);
+          }, 500);
+        }
+        
         OnSuccess(flag, htmlBody);
         break;
 
@@ -5730,6 +6049,7 @@ debugger;
             childFieldIdSource +
             " " +
             stopinvokeparent +
+            (element.getValueFromLookup ? ' data-getvaluefromlookup="true" data-getvaluefromlookup-field="' + element.getValueFromLookup.lookupField + '" data-getvaluefromlookup-list="' + element.getValueFromLookup.lookupList + '" data-getvaluefromlookup-fieldtoget="' + element.getValueFromLookup.lookupFieldToGet + '"' : '') +
             ' type="dropdown" value="" placeholder="' +
             displayName +
             '" ' +
@@ -8368,6 +8688,157 @@ debugger;
             }
           }
         );
+        break;
+
+      case "lookupWithDynamicQuery":
+        // This type allows queryFieldValue to be taken dynamically from another field
+        // queryFieldValueFromField: the InternalName of the field to get the value from
+        var customQuery;
+        var queryFieldValueToUse = "";
+        
+        // Get the value from the source field if queryFieldValueFromField is specified
+        if (element.queryFieldValueFromField) {
+          var sourceFieldElement = $("select#" + element.queryFieldValueFromField + ", input#" + element.queryFieldValueFromField);
+          if (sourceFieldElement.length > 0) {
+            queryFieldValueToUse = sourceFieldElement.val() || "";
+          }
+        } else {
+          queryFieldValueToUse = element.queryFieldValue || "";
+        }
+        
+        // Build query only if we have a value (or if queryFieldValueFromField is not set, use static value)
+        if (queryFieldValueToUse || !element.queryFieldValueFromField) {
+          customQuery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            element.queryField +
+            '" /><Value Type="' +
+            element.queryFieldType +
+            '">' +
+            queryFieldValueToUse +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
+        } else {
+          // If no value from source field, return empty query
+          customQuery =
+            "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
+        }
+
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          element.className +
+          " " +
+          hideField +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '    data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          "</label>" +
+          "<select " +
+          ToggleName +
+          " " +
+          toggleDisabledName +
+          " " +
+          RequiredName +
+          "  " +
+          element.validation +
+          " " +
+          (element.queryFieldValueFromField ? 'dynamic="' + element.queryFieldValueFromField + '" ' : '') +
+          ' data-listname="' +
+          element.source +
+          '" data-valfieldkey="' +
+          element.valfieldkey +
+          '" data-Dispfieldkey="' +
+          element.Dispfieldkey +
+          '"  data-filterfield="' +
+          (element.filterField || "") +
+          '" data-queryfieldvalue="' +
+          queryFieldValueToUse +
+          '" data-queryfield="' +
+          element.queryField +
+          '" data-queryfieldtype="' +
+          element.queryFieldType +
+          '" data-queryfieldvaluefromfield="' +
+          (element.queryFieldValueFromField || "") +
+          '" data-filterfieldtype="' +
+          (element.filterFieldType || "") +
+          '" class="form-control lookupWithDynamicQuery" type="dropdown" id="' +
+          element.InternalName +
+          '" value="" placeholder="' +
+          displayName +
+          '" ' +
+          element.state +
+          '><option value="" ' +
+          selected +
+          " disabled>" +
+          displayName +
+          "</option>";
+
+        var itemsID = [];
+        if (queryFieldValueToUse || !element.queryFieldValueFromField) {
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            element.source,
+            customQuery,
+            [element.valfieldkey, element.Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (listItem) itemsID.push(listItem.get_id());
+              if (isDone) {
+                records.forEach(function (el, index) {
+                  htmlBody +=
+                    '<option option-id="' +
+                    itemsID[index] +
+                    '" value="' +
+                    el[element.valfieldkey] +
+                    '">' +
+                    el[element.Dispfieldkey] +
+                    "</option>";
+                });
+                htmlBody += "</select></div>";
+                OnSuccess(flag, htmlBody);
+              }
+            }
+          );
+        } else {
+          htmlBody += "</select></div>";
+          OnSuccess(flag, htmlBody);
+        }
         break;
 
       case "relatedProjectlookupWithQuery": //to specific data related to 2 columns added by mahmoud and aisha
@@ -12435,6 +12906,11 @@ window.View_ListInfo = {
           break;
 
         case "dropdownValues":
+          var getValueFromLookupAttrs = "";
+          if (element.getValueFromLookup) {
+            getValueFromLookupAttrs = ' data-getvaluefromlookup="true" data-getvaluefromlookup-field="' + element.getValueFromLookup.lookupField + '" data-getvaluefromlookup-list="' + element.getValueFromLookup.lookupList + '" data-getvaluefromlookup-fieldtoget="' + element.getValueFromLookup.lookupFieldToGet + '"';
+          }
+          
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit +
@@ -12481,6 +12957,7 @@ window.View_ListInfo = {
             "</label>" +
             "<p " +
             toggleValues +
+            getValueFromLookupAttrs +
             ' type="dropdown"  data-viewtogglevalue="" class="viewmode-value" id="' +
             element.InternalName +
             '" ' +
@@ -12893,6 +13370,72 @@ window.View_ListInfo = {
             break;
         
         case "lookupWithQuery":
+          htmlBody =
+            '<div class="col-md-6 CFIELD" ' +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
+            " " +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '    data-groups="' +
+            groups +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            " " +
+            `${
+              element.showlink
+                ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
+                : ""
+            }` +
+            "</label>" +
+            '<p type="lookup" data-listname="' +
+            element.source +
+            '" data-valfieldkey="' +
+            element.valfieldkey +
+            '" data-Dispfieldkey="' +
+            element.Dispfieldkey +
+            '" class="viewmode-value" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            ' data-linkedto="' +
+            element.linkedto +
+            '"></p>' +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
+        case "lookupWithDynamicQuery":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +
             dontSubmit +
@@ -16718,6 +17261,213 @@ $(document).ready(function () {
   }, 3000);
 });
 
+// Function to get Role for a group name from userCalls.g.SPGroups
+window.getRoleForGroupName = function(groupName) {
+  if (typeof userCalls === 'undefined' || !userCalls.g || !userCalls.g.SPGroups) {
+    return null;
+  }
+  
+  for (var i = 0; i < userCalls.g.SPGroups.length; i++) {
+    var spGroup = userCalls.g.SPGroups[i];
+    if (spGroup.groupsName && Array.isArray(spGroup.groupsName)) {
+      for (var j = 0; j < spGroup.groupsName.length; j++) {
+        if (spGroup.groupsName[j] === groupName && spGroup.Role) {
+          return spGroup.Role;
+        }
+      }
+    }
+  }
+  return null;
+};
 
+// Function to translate groups options by adding data-trans and class attributes
+window.translateGroupsOptions = function(selectElement) {
+  if (!selectElement || !selectElement.length) {
+    return;
+  }
+  
+  selectElement.find('option:not(:first)').each(function() {
+    var $option = $(this);
+    var groupName = $option.val();
+    if (groupName) {
+      var role = window.getRoleForGroupName(groupName);
+      if (role) {
+        $option.attr('data-trans-' + role, '');
+        $option.addClass('Resources');
+      }
+    }
+  });
+  
+  // Call changeResources to apply translations
+  if (typeof changeResources === 'function') {
+    changeResources();
+  }
+};
 
-     
+// Function to load user groups from SharePoint
+window.loadUserGroupsFromSharePoint = function(loginName, groupsSelectId, selectedValue) {
+  var groupsSelect = $('#' + groupsSelectId);
+  if (!groupsSelect.length) {
+    return;
+  }
+  
+  // Clear existing options except the first one
+  groupsSelect.find('option:not(:first)').remove();
+  groupsSelect.prop('disabled', true);
+  
+  // First, use ensureUser to get the User ID, then get groups by ID
+  // This works better than getbyloginname for complex login formats
+  var ensureUserUrl = _spPageContextInfo.webAbsoluteUrl + "/_api/web/ensureuser";
+  
+  // Get RequestDigest - try from DOM first, then from context
+  var requestDigest = $("#__REQUESTDIGEST").val() || 
+                      (typeof _spPageContextInfo !== "undefined" && _spPageContextInfo.formDigestValue) || 
+                      "";
+  
+  $.ajax({
+    url: ensureUserUrl,
+    method: "POST",
+    headers: {
+      "Accept": "application/json;odata=verbose",
+      "Content-Type": "application/json;odata=verbose",
+      "X-RequestDigest": requestDigest
+    },
+    data: JSON.stringify({
+      'logonName': loginName
+    }),
+    success: function(userData) {
+      if (userData.d && userData.d.Id) {
+        var userId = userData.d.Id;
+        // Now get groups using User ID
+        var groupsUrl = _spPageContextInfo.webAbsoluteUrl + 
+          "/_api/web/GetUserById(" + userId + ")/Groups";
+        
+        $.ajax({
+          url: groupsUrl,
+          method: "GET",
+          headers: {
+            "Accept": "application/json;odata=verbose"
+          },
+          success: function(data) {
+            groupsSelect.find('option:not(:first)').remove(); // Clear again to be safe
+            if (data.d && data.d.results && data.d.results.length > 0) {
+              // Add groups as options
+              data.d.results.forEach(function(group) {
+                var groupTitle = group.Title || group.LoginName || "";
+                if (groupTitle) {
+                  var role = window.getRoleForGroupName ? window.getRoleForGroupName(groupTitle) : null;
+                  var $option = $('<option></option>')
+                    .attr('value', groupTitle)
+                    .text(groupTitle);
+                  
+                  if (role) {
+                    $option.attr('data-trans-' + role, '');
+                    $option.addClass('Resources');
+                  }
+                  
+                  groupsSelect.append($option);
+                }
+              });
+              
+              // Translate groups options
+              if (typeof window.translateGroupsOptions === 'function') {
+                window.translateGroupsOptions(groupsSelect);
+              }
+              
+              // Set the selected value if provided (for edit mode)
+              if (selectedValue) {
+                // Use setTimeout to ensure DOM is updated
+                setTimeout(function() {
+                  groupsSelect.val(selectedValue);
+                  // Also set the value attribute for consistency
+                  groupsSelect.attr("value", selectedValue);
+                }, 100);
+              } else if (window.listkey == "delegations" && groupsSelectId == "GroupName") {
+                // Auto-select group based on currentUserRole for delegations (only for allowed roles)
+                var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner", "PerformanceLeader"];
+                var currentRole = window.currentUserRole || "";
+                
+                // Only auto-select and disable if currentRole is in allowedRoles
+                if (allowedRoles.indexOf(currentRole) > -1 && typeof userCalls !== 'undefined' && userCalls.g && userCalls.g.SPGroups && Array.isArray(userCalls.g.SPGroups)) {
+                  // Find the group name that matches currentUserRole
+                  var matchingGroupName = null;
+                  for (var spIdx = 0; spIdx < userCalls.g.SPGroups.length; spIdx++) {
+                    var spGroup = userCalls.g.SPGroups[spIdx];
+                    if (spGroup.Role === currentRole && spGroup.groupsName && Array.isArray(spGroup.groupsName)) {
+                      // Check if any of the group names exist in the select options
+                      for (var gnIdx = 0; gnIdx < spGroup.groupsName.length; gnIdx++) {
+                        var groupName = spGroup.groupsName[gnIdx];
+                        if (groupsSelect.find('option[value="' + groupName + '"]').length > 0) {
+                          matchingGroupName = groupName;
+                          break;
+                        }
+                      }
+                      if (matchingGroupName) break;
+                    }
+                  }
+                  
+                  // Auto-select the matching group
+                  if (matchingGroupName) {
+                    setTimeout(function() {
+                      groupsSelect.val(matchingGroupName);
+                      groupsSelect.attr("value", matchingGroupName);
+                    }, 100);
+                  }
+                  
+                  // Disable the select in new and edit modes for delegations (only for allowed roles)
+                  setTimeout(function() {
+                    if (window.isNew || window.isEdit) {
+                      groupsSelect.prop('disabled', true);
+                    }
+                  }, 200);
+                }
+              }
+            } else {
+              groupsSelect.append('<option value="" disabled>No groups found</option>');
+            }
+            
+            // Only enable if not delegations with allowed role or if not in new/edit mode
+            var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner", "PerformanceLeader"];
+            var currentRole = window.currentUserRole || "";
+            var shouldDisable = window.listkey == "delegations" && groupsSelectId == "GroupName" && (window.isNew || window.isEdit) && allowedRoles.indexOf(currentRole) > -1;
+            
+            if (!shouldDisable) {
+              groupsSelect.prop('disabled', false);
+            }
+          },
+          error: function(xhr, status, error) {
+            console.error("Error loading user groups from SharePoint:", xhr.responseText);
+            groupsSelect.prop('disabled', false);
+            if (groupsSelect.siblings('.inputInfo').length) {
+              groupsSelect.siblings('.inputInfo').text(
+                localStorage.getItem("lng") == "ar" || !localStorage.getItem("lng")
+                  ? "حدث خطأ في تحميل المجموعات"
+                  : "Error loading groups"
+              );
+            }
+          }
+        });
+      } else {
+        groupsSelect.prop('disabled', false);
+        if (groupsSelect.siblings('.inputInfo').length) {
+          groupsSelect.siblings('.inputInfo').text(
+            localStorage.getItem("lng") == "ar" || !localStorage.getItem("lng")
+              ? "حدث خطأ في تحميل المجموعات"
+              : "Error loading groups"
+          );
+        }
+      }
+    },
+    error: function(xhr, status, error) {
+      console.error("Error ensuring user in SharePoint:", xhr.responseText);
+      groupsSelect.prop('disabled', false);
+      if (groupsSelect.siblings('.inputInfo').length) {
+        groupsSelect.siblings('.inputInfo').text(
+          localStorage.getItem("lng") == "ar" || !localStorage.getItem("lng")
+            ? "حدث خطأ في تحميل المجموعات"
+            : "Error loading groups"
+        );
+      }
+    }
+  });
+}
