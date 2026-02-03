@@ -68,6 +68,10 @@ if (window.location.href.includes("ICODE")) {
 if (window.location.href.includes("STCODE")) {
   STCODE = window.location.href.split('STCODE=')[1].split('&')[0];
 }
+var KpiCode = '';
+if (window.location.href.includes("KpiCode")) {
+  KpiCode = window.location.href.split('KpiCode=')[1].split('&')[0];
+}
 
 //get SP_ListName and PageTitle from List_Name_Config js
 for (var i = 0; i < ListArray.length; i++) {
@@ -91,6 +95,10 @@ if (listkey == 'projects' && PCODE != null && PCODE != '') {
   // PCODE_STRING = '&PCODE='+PCODE;
   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' + PCODE + '</Value></Values></In></And></Where></Query></View>';
   PQueryFilteration = '<Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' + PCODE + '</Value></Eq>';
+}
+else if ((listkey == 'mainkpianalysis' || listkey == 'mainkpiissues') && KpiCode != null && KpiCode != '') {
+  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+  PQueryFilteration = '<Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq>';
 }
 else if (UserICode != null && UserICode != '') {
   if(listkey=="projects"){
@@ -633,7 +641,11 @@ window.ListingData = {
 		//   </Query>
 		// </View>`
 	  } else {
-		if (UserICode != null && UserICode != '') {
+		if ((listkey == 'mainkpianalysis' || listkey == 'mainkpiissues') && KpiCode != null && KpiCode != '') {
+		  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+		  PQueryFilteration = '<Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq>';
+		}
+		else if (UserICode != null && UserICode != '') {
 		  if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
 			PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where><OrderBy><FieldRef Name=\'PlannedCompletedDate\' Ascending=\'False\' /></OrderBy></Query></View>';
 			PQueryFilteration = '<In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
@@ -765,6 +777,9 @@ window.ListingData = {
 				PCODE_STRING = '&PCODE=' + RecordsWithPCode[i].PrCODE;
 				html += '<li class="list-group-item link-arrow">' +
 				  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" target="_blank"   href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
+			  } else if ((listkey == 'mainkpianalysis' || listkey == 'mainkpiissues') && KpiCode) {
+				html += '<li class="list-group-item link-arrow">' +
+				  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor" target="_blank" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + "&IID=" + RecordsWithID[i].ID + "&KpiCode=" + KpiCode + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
 			  } else if (!PCODE && !ICODE && !STCODE) {
 				html += '<li class="list-group-item link-arrow">' +
 				  '<a id="ID' + i + '" class="mb-0 py-3 px-2 d-flex justify-content-between Listing-Anchor"  target="_blank" href="' + _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=" + listkey + PCODE_STRING + "&IID=" + RecordsWithID[i].ID + isWFs + '">' + '<span class="acc-title d-inline-flex black paddingEnd16px">' + indexofListing + '</span>'
@@ -1226,6 +1241,8 @@ window.ListingData = {
 			var HtmlStart = 
 				(listkey == "changerequests")
 					? '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/ChangeRequests.aspx?isnew=true"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
+				: ((listkey == 'mainkpianalysis' || listkey == 'mainkpiissues') && KpiCode)
+					? '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + '&KpiCode=' + KpiCode + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
 				: (USERProjRelated.indexOf(listkey) > -1 && PCODE) 
 					|| (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && !STCODE && listkey != 'tasks') 
 					|| (listkey == 'changerequest') 
@@ -1462,6 +1479,9 @@ window.ListingData = {
 	  if (PCODE != null && PCODE != '') {
 		PQueryFilteration = '<In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' + PCODE + '</Value></Values></In>';
 	  }
+	  else if ((listkey == 'mainkpianalysis' || listkey == 'mainkpiissues') && KpiCode != null && KpiCode != '') {
+		PQueryFilteration = '<Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq>';
+	  }
 	  else if (ICODE != null && ICODE != '') {
 		if (listkey == 'projects') {
 		  PQueryFilteration = '<In><FieldRef Name="RelatedInitiative" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
@@ -1533,7 +1553,10 @@ window.ListingData = {
 		  PQuery = '<View><Query><Where>' + PQueryFilteration + '</Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
 
 		}
-		if (PCODE != null && PCODE != '') {
+		else if ((listkey == 'mainkpianalysis' || listkey == 'mainkpiissues') && KpiCode != null && KpiCode != '') {
+		  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq></And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+		}
+		else if (PCODE != null && PCODE != '') {
 		  PQuery = '<View><Query><Where><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' + PCODE + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
 		} else if (ICODE != null && ICODE != '') {
 			if (listkey == 'projects') {

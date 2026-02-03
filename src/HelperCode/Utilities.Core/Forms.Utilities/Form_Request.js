@@ -3219,12 +3219,27 @@ window.View_Data_Request = {
 
       if (!USERisWF) {
         $("#printableArea").prepend(
-          '<a class="linkmsg alert" href="' +
-            _spPageContextInfo.siteAbsoluteUrl +
-            "/sitepages/Targets.aspx?KpiCode=" +
-            KPICode +
-            '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-kpiresulttext class="Resources">' +
-            "</span></a>"
+          '<style>.kpi-link-item:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1);}</style>' +
+          '<div class="kpi-links-wrapper" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;">' +
+            '<a class="linkmsg alert kpi-link-item" href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Targets.aspx?KpiCode=" +
+              KPICode +
+              '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:#e7f3ff;color:#0066cc;border:1px solid #b3d9ff;">' +
+              '<i class="fas fa-info-circle iconfontawesome"></i><span data-trans-kpiresulttext class="Resources"></span></a>' +
+            '<a class="linkmsg alert kpi-link-item" href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=mainkpiissues&KpiCode=" +
+              KPICode +
+              '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:#fff4e6;color:#cc6600;border:1px solid #ffd9b3;">' +
+              '<i class="fas fa-exclamation-triangle iconfontawesome"></i><span data-trans-mainkpiissuestext class="Resources"></span></a>' +
+            '<a class="linkmsg alert kpi-link-item" href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=mainkpianalysis&KpiCode=" +
+              KPICode +
+              '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:#e6f7ed;color:#006633;border:1px solid #b3e0c4;">' +
+              '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-mainkpianalysistext class="Resources"></span></a>' +
+          "</div>"
         );
       }
       var yearValue = $("#Actual").parent().parent().find("#Year").text();
@@ -3873,13 +3888,17 @@ window.View_Data_Request = {
     },
     clickbait: function () {
       $("button.btn-save").on("click", function () {
-        window.location =
-          _spPageContextInfo.webAbsoluteUrl +
+        var editUrl = _spPageContextInfo.webAbsoluteUrl +
           "/SitePages/Edit.aspx?ListKey=" +
           listkey +
           "&IID=" +
           IID +
           PCODE_STRING;
+        if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+          var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+          if (kpiCode) editUrl += "&KpiCode=" + kpiCode;
+        }
+        window.location = editUrl;
       });
       $("button.btn-delete").on("click", function () {
         Delete_Item_Submit.g.Delete_Message();
@@ -3910,11 +3929,15 @@ window.View_Data_Request = {
             "/sitepages/ProjectHome.aspx?PCODE=" +
             PCODE;
         } else {
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
+          var cancelUrl = spPageContextInfo.webAbsoluteUrl +
             "/SitePages/Listing.aspx?ListKey=" +
             listkey +
             PCODE_STRING;
+          if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+            var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+            if (kpiCode) cancelUrl += "&KpiCode=" + kpiCode;
+          }
+          window.location = cancelUrl;
         }
       });
     },

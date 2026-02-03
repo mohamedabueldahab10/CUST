@@ -1,4 +1,4 @@
-﻿var Resources = {
+var Resources = {
   ar: {
     clearfilter: "مسح التصفية",
     title1: "راعي المشروع",
@@ -481,6 +481,13 @@
     planning: "مرحلة التخطيط",
     closure: "مرحلة الإغلاق",
     preinitation: "مرحلة الاعداد",
+    financialresources: "الموارد المالية",
+    humanresources: "الموارد البشرية",
+    planning2: "التخطيط",
+    execution2: "التنفيذ",
+    governance: "الحوكمة",
+    externalapprovals: "الموافقات الخارجية",
+    measurement: "القياس",
 
     //Listing
     sort: "التصنيف حسب: ",
@@ -986,6 +993,8 @@
     latedeliverablescount: "عدد المخرجات المتأخرة",
     "currentyear:": "السنة الحالية: ",
     kpiresulttext: "المستهدفات والقيم الفعلية للمؤشر",
+    mainkpiissuestext: "تحديات المؤشر",
+    mainkpianalysistext: "تحليل المؤشر",
     benefitmetricstext: "بيانات مقياس المنفعة",
     sublevel2: "مستوى ثاني",
     sublevel3: "مستوى ثالث",
@@ -1878,6 +1887,15 @@ restoration:"restoration",
     planning: "Planning",
     closure: "Closure",
     preInitiation: "Pre-Initiation",
+
+    financialresources: "Financial Resources",
+    humanresources: "Human Resources",
+    planning2: "Planning",
+    execution2: "Execution",
+    governance: "Governance",
+    externalapprovals: "External Approvals",
+    measurement: "Measurement",
+
     //kpi classification
     kpiclassification: "KPI Classification",
     kpiassigned: "KPI assigned to a supreme command",
@@ -2373,6 +2391,8 @@ restoration:"restoration",
     latedeliverablescount: "Late Deliverables Count",
     currentyear: "Current Year :",
     kpiresulttext: "Kpi Target and Actual",
+    mainkpiissuestext: "KPI Issues",
+    mainkpianalysistext: "KPI Analysis",
     benefitmetricstext: "Benefit Metrics Result",
     sublevel2: "Level 2",
     sublevel3: "Level 3",

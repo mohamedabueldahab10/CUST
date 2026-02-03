@@ -62,7 +62,8 @@ if (
   (window.PCODE = ""),
   (window.ICODE = ""),
   (window.STCODE = ""),
-  (window.PCODE_STRING = "");
+  (window.PCODE_STRING = ""),
+  (window.KPICODE_STRING = "");
 window.btnDeleteLabel = "";
 var siteRootName = window.location.href.split("/")[4];
 window.validattachments = [];

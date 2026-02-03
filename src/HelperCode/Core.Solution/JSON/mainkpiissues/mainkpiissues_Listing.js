@@ -1,0 +1,35 @@
+var Listing_Info = [
+  {
+    InternalName: "Title",
+    DisplayName: "عنوان التحدي",
+    DisplayNameEn: "Challenge Title",
+    type: "text",
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: "Category",
+    DisplayName: "تصنيف التحدي",
+    DisplayNameEn: "Category",
+    type: "dropdownValues",
+    needTrans: true,
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: "Description",
+    DisplayNameEn: "Description",
+    DisplayName: "وصف التحدي",
+    type: "multiline",
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: "RequiredSupportNotes",
+    DisplayNameEn: "Required Support Notes",
+    DisplayName: "الدعم المطلوب",
+    type: "multiline",
+    inlisting: true,
+    infilter: false,
+  },
+];

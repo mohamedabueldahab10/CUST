@@ -1025,6 +1025,10 @@ window.New_Data_Submit = {
       //  to handle the initiative status when create a new one
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
     }
+    if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+      var kpiCodeFromUrl = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+      if (kpiCodeFromUrl) New_Data_Submit.g.oListItem.set_item("KPICode", kpiCodeFromUrl);
+    }
 
     /*if(listkey="engineeringprojects")
     {
@@ -1417,6 +1421,22 @@ var Set_Code_Submit = {
         prt3 = IID.toString().padStart(4, "0");
         Code = prt1 + "-" + prt2 + "-" + prt3;
         Set_Code_Submit.g.oListItem.set_item("Title", Code);
+      } else if (listkey == "mainkpiissues") {
+        var prt1 = 'MKI',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
+        var kpiCodeFromUrl = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+        if (kpiCodeFromUrl) Set_Code_Submit.g.oListItem.set_item("KPICode", kpiCodeFromUrl);
+      } else if (listkey == "mainkpianalysis") {
+        var prt1 = 'MKA',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
+        var kpiCodeFromUrl = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+        if (kpiCodeFromUrl) Set_Code_Submit.g.oListItem.set_item("KPICode", kpiCodeFromUrl);
       } else if (listkey == "measurementcyclesupport") {
         var prt1 = 'MC',
         prt2 = String(new Date().getFullYear()).slice(4 - 2),
@@ -1600,13 +1620,17 @@ var Set_Code_Submit = {
                     alert("تم حفظ البيانات بنجاح");
                     console.log('alert success')
                 } else {
-                    alert("Data saved successfully");
+                  alert("Data saved successfully");
                 }
-                  window.location =
-                    _spPageContextInfo.webAbsoluteUrl +
+                  var redirectUrl = _spPageContextInfo.webAbsoluteUrl +
                     "/SitePages/Listing.aspx?ListKey=" +
                     listkey +
                     PCODE_STRING;
+                  if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+                    var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+                    if (kpiCode) redirectUrl += "&KpiCode=" + kpiCode;
+                  }
+                  window.location = redirectUrl;
                 }
                 // For delegations, do nothing here - API callback will handle alert and redirect
               }
@@ -3520,13 +3544,17 @@ window.Edit_Data_Submit = {
                 }
               } else {
                 if (fileCount == 0) {
-                window.location =
-                  _spPageContextInfo.webAbsoluteUrl +
+                var redirectUrl = _spPageContextInfo.webAbsoluteUrl +
                   "/SitePages/View.aspx?ListKey=" +
                   listkey +
                   "&IID=" +
                   IID +
                   PCODE_STRING;
+                if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+                  var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+                  if (kpiCode) redirectUrl += "&KpiCode=" + kpiCode;
+                }
+                window.location = redirectUrl;
                 } //_spPageContextInfo.webServerRelativeUrl+
               }
             }

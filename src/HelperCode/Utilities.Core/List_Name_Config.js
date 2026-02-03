@@ -867,6 +867,24 @@ var ListArray = [
 		projectrelated: false,
 		subfolder: true,
 	},
+	{
+		mainkpiissues: "MainKPIIssues",
+		ListingTitle: "تحديات المؤشرات الرئيسية",
+		FormTitle: "تحديات المؤشرات الرئيسية",
+		TitleEn: "Main KPI Issues",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
+	{
+		mainkpianalysis: "MainKPIAnalysis",
+		ListingTitle: "تحليل المؤشرات الرئيسية",
+		FormTitle: "تحليل المؤشرات الرئيسية",
+		TitleEn: "Main KPI Analysis",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
 	
 ];
 var PageArray = [
