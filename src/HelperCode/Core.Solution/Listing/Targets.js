@@ -30,6 +30,14 @@ if (isBenefitCode) {
 }
 var firstRender = true;
 
+// Empty numeric fields stay empty instead of showing 0 (customer requirement)
+function toNumOrEmpty(val) {
+  if (val === null || val === undefined || val === '') return '';
+  var n = Number(val);
+  if (isNaN(n)) return '';
+  return Number(n.toFixed(2));
+}
+
 var MainKPIs_Info_Request = {
   preinit: function () {
     if ($(".d-flex").length) {
@@ -276,51 +284,51 @@ var MainKPIs_Info_Request = {
       var category = oListItem.get_item("Category") || UserNo_Data;
       var relatedInstrument =
         oListItem.get_item("RelatedInstrument") || UserNo_Data;
-      var target = (oListItem.get_item("Target") ? Number(oListItem.get_item("Target").toFixed(2)) : 0);
-      var targetQ1 = (oListItem.get_item("TargetQ1") ? Number(oListItem.get_item("TargetQ1").toFixed(2)) : 0);
-      var targetQ2 = (oListItem.get_item("TargetQ2") ? Number(oListItem.get_item("TargetQ2").toFixed(2)) : 0);
-      var targetQ3 = (oListItem.get_item("TargetQ3") ? Number(oListItem.get_item("TargetQ3").toFixed(2)) : 0);
-      var targetQ4 = (oListItem.get_item("TargetQ4") ? Number(oListItem.get_item("TargetQ4").toFixed(2)) : 0);
+      var target = toNumOrEmpty(oListItem.get_item("Target"));
+      var targetQ1 = toNumOrEmpty(oListItem.get_item("TargetQ1"));
+      var targetQ2 = toNumOrEmpty(oListItem.get_item("TargetQ2"));
+      var targetQ3 = toNumOrEmpty(oListItem.get_item("TargetQ3"));
+      var targetQ4 = toNumOrEmpty(oListItem.get_item("TargetQ4"));
       //////
-      var targetY = (oListItem.get_item("TargetY") ? Number(oListItem.get_item("TargetY").toFixed(2)) : 0);
-      var targetMid1 = (oListItem.get_item("TargetMid1") ? Number(oListItem.get_item("TargetMid1").toFixed(2)) : 0);
-      var targetMid2 = (oListItem.get_item("TargetMid2") ? Number(oListItem.get_item("TargetMid2").toFixed(2)) : 0);
-      var targetM1 = (oListItem.get_item("TargetM1") ? Number(oListItem.get_item("TargetM1").toFixed(2)) : 0);
-      var targetM2 = (oListItem.get_item("TargetM2") ? Number(oListItem.get_item("TargetM2").toFixed(2)) : 0);
-      var targetM3 = (oListItem.get_item("TargetM3") ? Number(oListItem.get_item("TargetM3").toFixed(2)) : 0);
-      var targetM4 = (oListItem.get_item("TargetM4") ? Number(oListItem.get_item("TargetM4").toFixed(2)) : 0);
-      var targetM5 = (oListItem.get_item("TargetM5") ? Number(oListItem.get_item("TargetM5").toFixed(2)) : 0);
-      var targetM6 = (oListItem.get_item("TargetM6") ? Number(oListItem.get_item("TargetM6").toFixed(2)) : 0);
-      var targetM7 = (oListItem.get_item("TargetM7") ? Number(oListItem.get_item("TargetM7").toFixed(2)) : 0);
-      var targetM8 = (oListItem.get_item("TargetM8") ? Number(oListItem.get_item("TargetM8").toFixed(2)) : 0);
-      var targetM9 = (oListItem.get_item("TargetM9") ? Number(oListItem.get_item("TargetM9").toFixed(2)) : 0);
-      var targetM10 = (oListItem.get_item("TargetM10") ? Number(oListItem.get_item("TargetM10").toFixed(2)) : 0);
-      var targetM11 = (oListItem.get_item("TargetM11") ? Number(oListItem.get_item("TargetM11").toFixed(2)) : 0);
-      var targetM12 = (oListItem.get_item("TargetM12") ? Number(oListItem.get_item("TargetM12").toFixed(2)) : 0);
+      var targetY = toNumOrEmpty(oListItem.get_item("TargetY"));
+      var targetMid1 = toNumOrEmpty(oListItem.get_item("TargetMid1"));
+      var targetMid2 = toNumOrEmpty(oListItem.get_item("TargetMid2"));
+      var targetM1 = toNumOrEmpty(oListItem.get_item("TargetM1"));
+      var targetM2 = toNumOrEmpty(oListItem.get_item("TargetM2"));
+      var targetM3 = toNumOrEmpty(oListItem.get_item("TargetM3"));
+      var targetM4 = toNumOrEmpty(oListItem.get_item("TargetM4"));
+      var targetM5 = toNumOrEmpty(oListItem.get_item("TargetM5"));
+      var targetM6 = toNumOrEmpty(oListItem.get_item("TargetM6"));
+      var targetM7 = toNumOrEmpty(oListItem.get_item("TargetM7"));
+      var targetM8 = toNumOrEmpty(oListItem.get_item("TargetM8"));
+      var targetM9 = toNumOrEmpty(oListItem.get_item("TargetM9"));
+      var targetM10 = toNumOrEmpty(oListItem.get_item("TargetM10"));
+      var targetM11 = toNumOrEmpty(oListItem.get_item("TargetM11"));
+      var targetM12 = toNumOrEmpty(oListItem.get_item("TargetM12"));
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      var actual = (oListItem.get_item("Actual") ? Number(oListItem.get_item("Actual").toFixed(2)) : 0);
-      var actualQ1 = (oListItem.get_item("ActualQ1") ? Number(oListItem.get_item("ActualQ1").toFixed(2)) : 0);
-      var actualQ2 = (oListItem.get_item("ActualQ2") ? Number(oListItem.get_item("ActualQ2").toFixed(2)) : 0);
-      var actualQ3 = (oListItem.get_item("ActualQ3") ? Number(oListItem.get_item("ActualQ3").toFixed(2)) : 0);
-      var actualQ4 = (oListItem.get_item("ActualQ4") ? Number(oListItem.get_item("ActualQ4").toFixed(2)) : 0);
+      var actual = toNumOrEmpty(oListItem.get_item("Actual"));
+      var actualQ1 = toNumOrEmpty(oListItem.get_item("ActualQ1"));
+      var actualQ2 = toNumOrEmpty(oListItem.get_item("ActualQ2"));
+      var actualQ3 = toNumOrEmpty(oListItem.get_item("ActualQ3"));
+      var actualQ4 = toNumOrEmpty(oListItem.get_item("ActualQ4"));
       //////
-      var actualY = (oListItem.get_item("ActualY") ? Number(oListItem.get_item("ActualY").toFixed(2)) : 0);
-      var actualMid1 = (oListItem.get_item("ActualMid1") ? Number(oListItem.get_item("ActualMid1").toFixed(2)) : 0);
-      var actualMid2 = (oListItem.get_item("ActualMid2") ? Number(oListItem.get_item("ActualMid2").toFixed(2)) : 0);
-      var actualM1 = (oListItem.get_item("ActualM1") ? Number(oListItem.get_item("ActualM1").toFixed(2)) : 0);
-      var actualM2 = (oListItem.get_item("ActualM2") ? Number(oListItem.get_item("ActualM2").toFixed(2)) : 0);
-      var actualM3 = (oListItem.get_item("ActualM3") ? Number(oListItem.get_item("ActualM3").toFixed(2)) : 0);
-      var actualM4 = (oListItem.get_item("ActualM4") ? Number(oListItem.get_item("ActualM4").toFixed(2)) : 0);
-      var actualM5 = (oListItem.get_item("ActualM5") ? Number(oListItem.get_item("ActualM5").toFixed(2)) : 0);
-      var actualM6 = (oListItem.get_item("ActualM6") ? Number(oListItem.get_item("ActualM6").toFixed(2)) : 0);
-      var actualM7 = (oListItem.get_item("ActualM7") ? Number(oListItem.get_item("ActualM7").toFixed(2)) : 0);
-      var actualM8 = (oListItem.get_item("ActualM8") ? Number(oListItem.get_item("ActualM8").toFixed(2)) : 0);
-      var actualM9 = (oListItem.get_item("ActualM9") ? Number(oListItem.get_item("ActualM9").toFixed(2)) : 0);
-      var actualM10 = (oListItem.get_item("ActualM10") ? Number(oListItem.get_item("ActualM10").toFixed(2)) : 0);
-      var actualM11 = (oListItem.get_item("ActualM11") ? Number(oListItem.get_item("ActualM11").toFixed(2)) : 0);
-      var actualM12 = (oListItem.get_item("ActualM12") ? Number(oListItem.get_item("ActualM12").toFixed(2)) : 0);
-      var TotalAllTarget = (oListItem.get_item("Total") ? Number(oListItem.get_item("Total").toFixed(2)) : 0);
-      var totalAllActual = (oListItem.get_item("Actual") ? Number(oListItem.get_item("Actual").toFixed(2)) : 0);
+      var actualY = toNumOrEmpty(oListItem.get_item("ActualY"));
+      var actualMid1 = toNumOrEmpty(oListItem.get_item("ActualMid1"));
+      var actualMid2 = toNumOrEmpty(oListItem.get_item("ActualMid2"));
+      var actualM1 = toNumOrEmpty(oListItem.get_item("ActualM1"));
+      var actualM2 = toNumOrEmpty(oListItem.get_item("ActualM2"));
+      var actualM3 = toNumOrEmpty(oListItem.get_item("ActualM3"));
+      var actualM4 = toNumOrEmpty(oListItem.get_item("ActualM4"));
+      var actualM5 = toNumOrEmpty(oListItem.get_item("ActualM5"));
+      var actualM6 = toNumOrEmpty(oListItem.get_item("ActualM6"));
+      var actualM7 = toNumOrEmpty(oListItem.get_item("ActualM7"));
+      var actualM8 = toNumOrEmpty(oListItem.get_item("ActualM8"));
+      var actualM9 = toNumOrEmpty(oListItem.get_item("ActualM9"));
+      var actualM10 = toNumOrEmpty(oListItem.get_item("ActualM10"));
+      var actualM11 = toNumOrEmpty(oListItem.get_item("ActualM11"));
+      var actualM12 = toNumOrEmpty(oListItem.get_item("ActualM12"));
+      var TotalAllTarget = toNumOrEmpty(oListItem.get_item("Total"));
+      var totalAllActual = toNumOrEmpty(oListItem.get_item("Actual"));
       // console.log(TotalAllTarget,'TotalAllTarget')
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       var performanceleader = oListItem.get_item("PerformanceLeader")
@@ -334,24 +342,24 @@ var MainKPIs_Info_Request = {
       var calculationMethod =
         oListItem.get_item("CalculationMethod") || UserNo_Data;
 
-      var total = 0
-      var totalActual = 0
+      var total = 0;
+      var totalActual = 0;
       if (filteredValue == 'year') {
-        total = targetY || 0
-        totalActual = actualY || 0
+        total = (Number(targetY) || 0);
+        totalActual = (Number(actualY) || 0);
       } else if (filteredValue == 'quarter') {
-        total = targetQ1 + targetQ2 + targetQ3 + targetQ4 || 0;
-        totalActual = actualQ1 + actualQ2 + actualQ3 + actualQ4 || 0;
+        total = (Number(targetQ1) || 0) + (Number(targetQ2) || 0) + (Number(targetQ3) || 0) + (Number(targetQ4) || 0);
+        totalActual = (Number(actualQ1) || 0) + (Number(actualQ2) || 0) + (Number(actualQ3) || 0) + (Number(actualQ4) || 0);
       } else if (filteredValue == 'midterm') {
-        total = targetMid1 + targetMid2 || 0
-        totalActual = actualMid1 + actualMid2 || 0
+        total = (Number(targetMid1) || 0) + (Number(targetMid2) || 0);
+        totalActual = (Number(actualMid1) || 0) + (Number(actualMid2) || 0);
       } else if (filteredValue == 'monthly') {
-        total = targetM1 + targetM2 + targetM3 + targetM4 + targetM5 + targetM6 + targetM7 + targetM8 + targetM9 + targetM10 + targetM11 + targetM12 || 0;
-        totalActual = actualM1 + actualM2 + actualM3 + actualM4 + actualM5 + actualM6 + actualM7 + actualM8 + actualM9 + actualM10 + actualM11 + actualM12 || 0;
+        total = (Number(targetM1) || 0) + (Number(targetM2) || 0) + (Number(targetM3) || 0) + (Number(targetM4) || 0) + (Number(targetM5) || 0) + (Number(targetM6) || 0) + (Number(targetM7) || 0) + (Number(targetM8) || 0) + (Number(targetM9) || 0) + (Number(targetM10) || 0) + (Number(targetM11) || 0) + (Number(targetM12) || 0);
+        totalActual = (Number(actualM1) || 0) + (Number(actualM2) || 0) + (Number(actualM3) || 0) + (Number(actualM4) || 0) + (Number(actualM5) || 0) + (Number(actualM6) || 0) + (Number(actualM7) || 0) + (Number(actualM8) || 0) + (Number(actualM9) || 0) + (Number(actualM10) || 0) + (Number(actualM11) || 0) + (Number(actualM12) || 0);
       }
 
-      total = Number(total.toFixed(2))
-      totalActual = Number(totalActual.toFixed(2))
+      total = Number(total.toFixed(2));
+      totalActual = Number(totalActual.toFixed(2));
 
 
       Operational_Array.push({
@@ -380,7 +388,7 @@ var MainKPIs_Info_Request = {
           '<tr data-target_list="KPIResults" data-id="' + oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
           `<th rowspan="2"><span>${name}</span><span class="target_recurrencechanged Resources" ${recurrenceChanged == 'yes' ? "data-trans-recurrencechanged" : ""}></span><span class="target_recurrencechanged Resources" ${kpiDraft == 'draft' ? "data-trans-draftkpi" : ""}></span></th>` +
           '<th scope="row" class="Resources" data-trans-target></th>' +
-          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + total +
+          ' <td id="totalTarget" class="myInput" data-internal="Total" data-id="' + oListItem.get_id() + '">' + (total === 0 ? '' : total) +
           "</td>" +
           // ' <td id="totalTarget"><input class="QarterInputStyle inputStyle1 myInput" data-internal="Total"  data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '"type="number" name="" value="' +
           // TotalAllTarget +
@@ -400,7 +408,7 @@ var MainKPIs_Info_Request = {
           oListItem.get_id() + '" data-category="' + category + '" is-updated="false" id="MyTr">' +
           '<th scope="row" class="Resources" data-trans-actual></th>' +
           ' <td id="totalActual" class="myInput" data-internal="Actual" data-id="' + oListItem.get_id() + '">' +
-          totalActual +
+          (totalActual === 0 ? '' : totalActual) +
           "</td>" +
           ' <td><input class="QarterInputStyle inputStyle1 actualStyle myInput" data-recurrencechanged="' + recurrenceChanged + '" data-kpidraft="' + kpiDraft + '" data-internal="ActualY" type="number" name="" value="' +
           actualY +
@@ -1714,17 +1722,18 @@ var InitiativeKPIs_Info_Request = {
       var name = oListItem.get_item("Name") || UserNo_Data;
       var relatedInstrumentKpi =
         oListItem.get_item("RelatedInstrumentKPI") || UserNo_Data;
-      var target = oListItem.get_item("Target") || 0;
-      var targetQ1 = oListItem.get_item("TargetQ1") || 0;
-      var targetQ2 = oListItem.get_item("TargetQ2") || 0;
-      var targetQ3 = oListItem.get_item("TargetQ3") || 0;
-      var targetQ4 = oListItem.get_item("TargetQ4") || 0;
+      var target = toNumOrEmpty(oListItem.get_item("Target"));
+      var targetQ1 = toNumOrEmpty(oListItem.get_item("TargetQ1"));
+      var targetQ2 = toNumOrEmpty(oListItem.get_item("TargetQ2"));
+      var targetQ3 = toNumOrEmpty(oListItem.get_item("TargetQ3"));
+      var targetQ4 = toNumOrEmpty(oListItem.get_item("TargetQ4"));
       var performanceleader = oListItem.get_item("PerformanceLeader")
         ? oListItem.get_item("PerformanceLeader").get_lookupValue()
         : UserN.Title;
       var dataSource = oListItem.get_item("DataSource") || UserNo_Data;
       var resultType = oListItem.get_item("ResultType") || null;
-      var total = targetQ1 + targetQ2 + targetQ3 + targetQ4 || 0;
+      var total = (Number(targetQ1) || 0) + (Number(targetQ2) || 0) + (Number(targetQ3) || 0) + (Number(targetQ4) || 0);
+      total = total === 0 ? '' : Number(total.toFixed(2));
 
       Instrument_Array.push({
         id: oListItem.get_id(),
@@ -1931,11 +1940,11 @@ var InstrumentKPIs_Info_Request = {
       var name = oListItem.get_item("Name") || UserNo_Data;
       var relatedInstrument =
         oListItem.get_item("RelatedInstrument") || UserNo_Data;
-      var target = oListItem.get_item("Target") || 0;
-      var targetQ1 = oListItem.get_item("TargetQ1") || 0;
-      var targetQ2 = oListItem.get_item("TargetQ2") || 0;
-      var targetQ3 = oListItem.get_item("TargetQ3") || 0;
-      var targetQ4 = oListItem.get_item("TargetQ4") || 0;
+      var target = toNumOrEmpty(oListItem.get_item("Target"));
+      var targetQ1 = toNumOrEmpty(oListItem.get_item("TargetQ1"));
+      var targetQ2 = toNumOrEmpty(oListItem.get_item("TargetQ2"));
+      var targetQ3 = toNumOrEmpty(oListItem.get_item("TargetQ3"));
+      var targetQ4 = toNumOrEmpty(oListItem.get_item("TargetQ4"));
       var performanceleader = oListItem.get_item("PerformanceLeader")
         ? oListItem.get_item("PerformanceLeader").get_lookupValue()
         : UserN.Title;
@@ -1944,7 +1953,8 @@ var InstrumentKPIs_Info_Request = {
       var dataSource = oListItem.get_item("DataSource") || UserNo_Data;
       var periodType = oListItem.get_item("PeriodType") || UserNo_Data;
       var resultType = oListItem.get_item("ResultType") || null;
-      var total = targetQ1 + targetQ2 + targetQ3 + targetQ4 || 0;
+      var total = (Number(targetQ1) || 0) + (Number(targetQ2) || 0) + (Number(targetQ3) || 0) + (Number(targetQ4) || 0);
+      total = total === 0 ? '' : Number(total.toFixed(2));
 
       Instrument_Array.push({
         id: oListItem.get_id(),
@@ -2106,18 +2116,17 @@ window.checkTypes = {
 
       if (value) {
         total_value += Number(value);
-        $('#totalTarget[data-id="' + $this.getAttribute("data-id") + '"]').text(
-          Number(total_value.toFixed(2))
-        );
       }
       if (valueActual) {
-
         total_value_actual += Number(valueActual);
-        $('#totalActual[data-id="' + $this.getAttribute("data-id") + '"]').text(
-          Number(total_value_actual.toFixed(2))
-        );
       }
     }
+    $('#totalTarget[data-id="' + $this.getAttribute("data-id") + '"]').text(
+      total_value === 0 ? '' : Number(total_value.toFixed(2))
+    );
+    $('#totalActual[data-id="' + $this.getAttribute("data-id") + '"]').text(
+      total_value_actual === 0 ? '' : Number(total_value_actual.toFixed(2))
+    );
     dataId = $this.getAttribute("data-id");
     $('#MyTr[data-id="' + dataId + '"]').attr("is-updated", "true");
   },

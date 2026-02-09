@@ -885,6 +885,15 @@ var ListArray = [
 		projectrelated: false,
 		subfolder: true,
 	},
+	{
+		sosanalysis: "SOsAnalysis",
+		ListingTitle: "تحليل الأهداف الاستراتيجية",
+		FormTitle: "تحليل الأهداف الاستراتيجية",
+		TitleEn: "SO Analysis",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
 	
 ];
 var PageArray = [

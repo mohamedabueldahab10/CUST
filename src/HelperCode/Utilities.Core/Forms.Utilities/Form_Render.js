@@ -62,6 +62,7 @@ if (
   (window.PCODE = ""),
   (window.ICODE = ""),
   (window.STCODE = ""),
+  (window.sosCode = ""),
   (window.PCODE_STRING = ""),
   (window.KPICODE_STRING = "");
 window.btnDeleteLabel = "";
@@ -103,6 +104,9 @@ if (window.location.href.indexOf("PCODE=") > -1) {
 } else if (window.location.href.indexOf("STCODE=") > -1) {
   STCODE = window.location.href.split("STCODE=")[1].split("&")[0];
   PCODE_STRING = "&STCODE=" + STCODE;
+} else if (window.location.href.indexOf("sosCode=") > -1) {
+  sosCode = decodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+  PCODE_STRING = "&sosCode=" + encodeURIComponent(sosCode);
 }
 //determinig json file name
 if (isNew) {
@@ -7729,6 +7733,12 @@ debugger;
             "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
             PCODE +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        } else if (sosCode && element.sosCodeInList) {
+          var sosCodeEscaped = (sosCode || "").replace(/'/g, "''");
+          sourcelistQuery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"SOCode\" /><Value Type=\"Text\">" +
+            sosCodeEscaped +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
 
         if (
@@ -7957,6 +7967,12 @@ debugger;
             "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
             ICODE +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        } else if (sosCode && element.sosCodeInList) {
+          var sosCodeEscaped2 = (sosCode || "").replace(/'/g, "''");
+          sourcelistQuery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"SOCode\" /><Value Type=\"Text\">" +
+            sosCodeEscaped2 +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
 
         var itemIDlist = [],
@@ -8180,6 +8196,12 @@ debugger;
 								<Eq><FieldRef Name=\"${element.projectScopeSecondConditionFieldType}\" /><Value Type=\"${element.projectScopeSecondConditionFieldType}\">${element.projectScopeSecondConditionFieldValue}</Value></Eq></And></And>
 								</Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>`;
             }
+          } else if (sosCode && element.sosCodeInList) {
+            var sosCodeEscaped3 = (sosCode || "").replace(/'/g, "''");
+            customQuery =
+              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"SOCode\" /><Value Type=\"Text\">" +
+              sosCodeEscaped3 +
+              "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
           } else if (
             (ICODE && element.initiativeCodeInList) ||
             (RListKey == "initiatives" && element.initiativeCodeInList)
@@ -8840,6 +8862,25 @@ debugger;
           htmlBody += "</select></div>";
           OnSuccess(flag, htmlBody);
         }
+        break;
+
+      case "lookupdropdown":
+      case "lookupfromlookup":
+        // عرض فقط في وضع التحرير أيضاً (لا يُستخدم في الـ submit)
+        var dispKey = element.Dispfieldkey;
+        if (element.BIlanguage && (localStorage.getItem("lng") == "en") && element.DispfieldkeyEn) dispKey = element.DispfieldkeyEn;
+        htmlBody =
+          '<div class="col-md-6 CFIELD dont-submit dont-request ' + (element.className || "") + ' " ' + thistip + " " + hidestagesIDs + " " +
+          showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " + isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " +
+          isWfshowstagesIDs + "  " + isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
+          ' data-groups="' + groups + '" ' + notAllowForGroups + ' style="display:' + element.display + '">' +
+          '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+          '<p type="' + element.type + '" data-listname="' + element.source + '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+          '" data-dispfieldkey="' + dispKey + '" data-parentlookupfield="' + (element.parentLookupField || "KPICode") +
+          (element.type === "lookupfromlookup" ? '" data-secondsource="' + (element.secondsource || "") + '" data-seconddispfieldkey="' + (element.secondDispfieldkey || "Name") + '" data-secondvalfieldkey="' + (element.secondvalfieldkey || "Title") : "") +
+          '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+          "</div>";
+        OnSuccess(flag, htmlBody);
         break;
 
       case "relatedProjectlookupWithQuery": //to specific data related to 2 columns added by mahmoud and aisha
@@ -13278,6 +13319,69 @@ window.View_ListInfo = {
             "</div>";
           OnSuccess(flag, htmlBody);
           ///////////////////////////////////////////////
+          break;
+
+        case "lookupdropdown":
+          if (element.BIlanguage == true) {
+            if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+              dispfieldkey = element.Dispfieldkey;
+            } else {
+              dispfieldkey = element.DispfieldkeyEn || element.Dispfieldkey;
+            }
+          } else {
+            dispfieldkey = element.Dispfieldkey;
+          }
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            (element.className || "") + ' " ' + thistip + " " + hidestagesIDs + " " +
+            showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " +
+            isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " + isWfshowstagesIDs + "  " +
+            isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
+            '        data-groups="' + groups + '" ' + notAllowForGroups +
+            '  style="display:' + element.display + '">' +
+            '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+            '<p type="lookupdropdown" data-listname="' + element.source +
+            '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+            '" data-dispfieldkey="' + dispfieldkey +
+            '" data-parentlookupfield="' + (element.parentLookupField || "KPICode") +
+            '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
+        case "lookupfromlookup":
+          if (element.BIlanguage == true) {
+            if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+              dispfieldkey = element.Dispfieldkey;
+            } else {
+              dispfieldkey = element.DispfieldkeyEn || element.Dispfieldkey;
+            }
+          } else {
+            dispfieldkey = element.Dispfieldkey;
+          }
+          var secondDisp = element.secondDispfieldkey || "Name";
+          var secondVal = element.secondvalfieldkey || "Title";
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            (element.className || "") + ' " ' + thistip + " " + hidestagesIDs + " " +
+            showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " +
+            isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " + isWfshowstagesIDs + "  " +
+            isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
+            '        data-groups="' + groups + '" ' + notAllowForGroups +
+            '  style="display:' + element.display + '">' +
+            '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+            '<p type="lookupfromlookup" data-listname="' + element.source +
+            '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+            '" data-dispfieldkey="' + dispfieldkey +
+            '" data-parentlookupfield="' + (element.parentLookupField || "KPICode") +
+            '" data-secondsource="' + (element.secondsource || "") +
+            '" data-seconddispfieldkey="' + secondDisp +
+            '" data-secondvalfieldkey="' + secondVal +
+            '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
           break;
         
         case "LookupPicker":

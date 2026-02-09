@@ -4966,6 +4966,26 @@ window.userCalls = {
                 },
               },
             },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
           ],
         },
       },
@@ -4991,6 +5011,26 @@ window.userCalls = {
                 // parentRelationField: "RelatedInitiative",
                 // RelationField: "Title",
                 // RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
                 subRelation: {
                   level: 3,
                   listName: "",
@@ -5057,6 +5097,26 @@ window.userCalls = {
                 },
               },
             },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
           ],
         },
       },
@@ -5089,6 +5149,26 @@ window.userCalls = {
                   // parentRelationField: "Title",
                   // RelationField: "InitiativeCode",
                   // RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
                 },
               },
             },
