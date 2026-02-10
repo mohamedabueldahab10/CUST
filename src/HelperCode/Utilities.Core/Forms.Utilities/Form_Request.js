@@ -120,6 +120,25 @@ window.relatedToProject = [
 
 window.relatedToIdea = [{ listName: "Tasks", RelatedItem: "ProjectCode" }];
 
+window.updatePageTitleLinkForKpiOrSos = function () {
+  if (listkey != "mainkpiissues" && listkey != "mainkpianalysis" && listkey != "sosanalysis") return;
+  var listingUrl = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey;
+  if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+    if (window.location.href.indexOf("KpiCode=") > -1)
+      listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+  } else if (listkey == "sosanalysis") {
+    if (window.location.href.indexOf("sosCode=") > -1)
+      listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+  }
+  if ($(".page-title a").length) {
+    $(".page-title a").attr("href", listingUrl);
+  } else {
+    setTimeout(function () {
+      if ($(".page-title a").length) $(".page-title a").attr("href", listingUrl);
+    }, 500);
+  }
+};
+
 window.Edit_Data_Request = {
   onSuccess: async function (sender, args) {
     // Reset retry count
@@ -693,6 +712,15 @@ window.Edit_Data_Request = {
       if (sector) {
         Department_Sector_Info.init(sector); // to get the departments related to sector
       }
+    }
+    if (listkey == "cryearlycalendar") {
+      $("#Year").attr("min", 1900).attr("max", 2100);
+      $("#Quarter").attr("min", 1).attr("max", 4);
+    }
+    if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
+      setTimeout(function () {
+        window.updatePageTitleLinkForKpiOrSos && window.updatePageTitleLinkForKpiOrSos();
+      }, 300);
     }
     if (listkey == "deliverables" && PCODE) {
       var Delivered = $("#Delivered:checked").val();
@@ -1491,6 +1519,23 @@ window.Edit_Data_Request = {
       if(listkey == "mainkpi" && isEdit) {
         var relatedMainGoal = $('#RelatedStrategyObjective').val();
         Get_Related_Sos_Sector.init(relatedMainGoal);
+        // ToDate must not go below its value at load (only increase or stay same)
+        var fromDateVal = $("#FromDate").val();
+        var toDateValAtLoad = $("#ToDate").val();
+        var toNum = Number(toDateValAtLoad);
+        var hasToDateAtLoad = toDateValAtLoad !== "" && toDateValAtLoad != null && !isNaN(toNum) && toNum !== 0;
+        var minAllowedYear = hasToDateAtLoad ? toNum : (Number(fromDateVal) || 0);
+        if (minAllowedYear) $("#ToDate").attr("min", minAllowedYear);
+        $("#ToDate").data("minAllowedYear", minAllowedYear);
+        $("#ToDate").off("input.toDateMin change.toDateMin");
+        $("#ToDate").on("input.toDateMin change.toDateMin", function () {
+          var minAllowed = $(this).data("minAllowedYear");
+          if (!minAllowed) return;
+          var val = Number($(this).val());
+          if (!isNaN(val) && val < minAllowed) {
+            $(this).val(minAllowed);
+          }
+        });
       }
     },2000);
     $(".loader-box").fadeOut();
@@ -3160,9 +3205,9 @@ window.View_Data_Request = {
       $(".container-body .d-flex.btnactionrow").hide();
     } else {
       // Don't call Get_AllTaskHistoryRelatedToForm.init() for delegations
-      if (listkey != "delegations") {
-        Get_AllTaskHistoryRelatedToForm.init();
-      }
+    if (listkey != "delegations" && listkey != "cryearlycalendar") {
+      Get_AllTaskHistoryRelatedToForm.init();
+    }
     }
 
     //handle top menu navigation
@@ -4088,6 +4133,9 @@ window.View_Data_Request = {
           if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
             var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
             if (kpiCode) cancelUrl += "&KpiCode=" + kpiCode;
+          } else if (listkey == "sosanalysis") {
+            var sosCodeCancel = window.location.href.indexOf("sosCode=") > -1 ? window.location.href.split("sosCode=")[1].split("&")[0] : "";
+            if (sosCodeCancel) cancelUrl += "&sosCode=" + encodeURIComponent(sosCodeCancel);
           }
           window.location = cancelUrl;
         }

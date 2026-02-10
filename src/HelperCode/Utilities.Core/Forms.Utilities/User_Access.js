@@ -2292,6 +2292,9 @@ window.userCalls = {
           "sos",
           "benefitmatrix",
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
@@ -2313,6 +2316,9 @@ window.userCalls = {
           "risks",
           "goalstrategy",
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "sos",
           "tasks",
           "initiatives",
@@ -2339,6 +2345,9 @@ window.userCalls = {
 
         Edit_Access = [
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "sos",
           "deliverablemetrics",
           "benefitmatrix",
@@ -2358,6 +2367,9 @@ window.userCalls = {
         ];
         Delete_Access = [
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "sos",
           "benefitmatrix",
           "benefitmetrics",
@@ -2390,6 +2402,9 @@ window.userCalls = {
         en_UserRole = "Strategy Performance Management";
         //CRUD
         Create_Access = [
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "changerequest",
@@ -2402,8 +2417,11 @@ window.userCalls = {
           "risks",
           "goalstrategy",
           "sos",
+          "sosanalysis",
           "tasks",
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
           "Targets.aspx",
           "benefitmatrix",
           "projects",
@@ -2418,12 +2436,19 @@ window.userCalls = {
         ];
 
         Edit_Access = [
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           // "changerequest",
           // "benefits"
         ];
-        Delete_Access = [];
+        Delete_Access = [
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
+        ];
         break;
 
       case "VROP":
@@ -3991,6 +4016,8 @@ window.userCalls = {
         en_UserRole = "Performance Leader";
         //CRUD
         Create_Access = [
+          "mainkpianalysis",
+          "mainkpiissues",
           "Targets.aspx",
           "BenefitMetrics.aspx",
           "changerequest",
@@ -3999,6 +4026,9 @@ window.userCalls = {
         ];
         Read_Access = [
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "sos",
           "goalstrategy",
           "tasks",
@@ -4019,6 +4049,8 @@ window.userCalls = {
         Edit_Access = [
           "Targets.aspx",
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
           // "sos",
           "benefitmetrics",
           "BenefitMetrics.aspx",
@@ -4921,6 +4953,14 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelProjectManager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -5003,6 +5043,14 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelProjectOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -5055,6 +5103,14 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelInitiativeManager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -5134,6 +5190,14 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelInitiativeOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -9021,12 +9085,20 @@ var Access_Project_Info_Request = {
             !isKnowledgeBase &&
             !isAllTasks
           ) {
+            var listingUrl = _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey;
+            if (USERlistkey == "mainkpiissues" || USERlistkey == "mainkpianalysis") {
+              if (window.location.href.indexOf("KpiCode=") > -1) {
+                listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+              }
+            } else if (USERlistkey == "sosanalysis") {
+              if (window.location.href.indexOf("sosCode=") > -1) {
+                listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+              }
+            }
             $(".page-title").html(
-              '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/Listing.aspx?ListKey=" +
-                USERlistkey +
-                '">' +
+              '<a href="' + listingUrl + '">' +
                 USERPageTitle +
                 ""
             );

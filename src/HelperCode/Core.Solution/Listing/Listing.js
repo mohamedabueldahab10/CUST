@@ -128,6 +128,26 @@ else if (isTasks) {
 	'<And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And>';
 }
 
+function updatePageTitleLinkForKpiOrSos() {
+  if (listkey != "mainkpiissues" && listkey != "mainkpianalysis" && listkey != "sosanalysis") return;
+  var listingUrl = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey;
+  if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+    if (KpiCode) listingUrl += "&KpiCode=" + KpiCode;
+  } else if (listkey == "sosanalysis") {
+    if (sosCode) listingUrl += "&sosCode=" + encodeURIComponent(sosCode);
+  }
+  if ($(".page-title a").length) {
+    $(".page-title a").attr("href", listingUrl);
+  } else {
+    setTimeout(function () {
+      if ($(".page-title a").length) $(".page-title a").attr("href", listingUrl);
+    }, 500);
+  }
+}
+if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
+  setTimeout(updatePageTitleLinkForKpiOrSos, 300);
+}
+
 //function to get data from sharepoint list (JSOM)
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {

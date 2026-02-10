@@ -79,16 +79,24 @@ var Information_Form = [
         options: {
           choices: [
             {
-              display: 'hight',
-              value: 'hight',
+              display: 'rare',
+              value: 'rare',
             },
             {
-              display: 'medium',
-              value: 'medium',
+              display: 'unlikely',
+              value: 'unlikely',
             },
             {
-              display: 'low',
-              value: 'low',
+              display: 'possible',
+              value: 'possible',
+            },
+            {
+              display: 'likely',
+              value: 'likely',
+            },
+            {
+              display: 'frequent',
+              value: 'frequent',
             },
           ],
         },
@@ -122,6 +130,10 @@ var Information_Form = [
         options: {
           choices: [
             {
+              display: 'verylow',
+              value: 'verylow',
+            },
+            {
               display: 'low',
               value: 'low',
             },
@@ -130,8 +142,12 @@ var Information_Form = [
               value: 'medium',
             },
             {
-              display: 'hight',
-              value: 'hight',
+              display: 'high2',
+              value: 'high2',
+            },
+            {
+              display: 'critical2',
+              value: 'critical2',
             },
           ],
         },
@@ -277,6 +293,44 @@ var Information_Form = [
             },
           ],
         },
+      },
+      {
+        InternalName: 'RiskRating',
+        DisplayNameEn: 'Risk Rating',
+        DisplayName: 'تقييم المخاطر',
+        type: "number",   
+        "state": "disabled"   
+      },
+       {
+        InternalName: 'RiskRatingStatus',
+        DisplayName: 'حالة تقييم المخاطر',
+        DisplayNameEn: 'Risk Rating Status',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            {
+              display: 'stat36',
+              value: 'stat36',
+            },
+            {
+              display: 'stat37',
+              value: 'stat37',
+            },
+            {
+              display: 'stat38',
+              value: 'stat38',
+            },
+            {
+              display: 'stat39',
+              value: 'stat39',
+            },
+            {
+              display: 'stat40',
+              value: 'stat40',
+            },
+          ],
+        },
+      "state": "disabled"
       },
       // {
       //   InternalName: 'MoveItToIssueList',

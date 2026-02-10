@@ -76,16 +76,24 @@ var Information_Form = [
         options: {
           choices: [
             {
-              display: 'hight',
-              value: 'hight',
+              display: 'rare',
+              value: 'rare',
             },
             {
-              display: 'medium',
-              value: 'medium',
+              display: 'unlikely',
+              value: 'unlikely',
             },
             {
-              display: 'low',
-              value: 'low',
+              display: 'possible',
+              value: 'possible',
+            },
+            {
+              display: 'likely',
+              value: 'likely',
+            },
+            {
+              display: 'frequent',
+              value: 'frequent',
             },
           ],
         },
@@ -119,16 +127,24 @@ var Information_Form = [
         options: {
           choices: [
             {
-              display: 'hight',
-              value: 'hight',
+              display: 'verylow',
+              value: 'verylow',
+            },
+            {
+              display: 'low',
+              value: 'low',
             },
             {
               display: 'medium',
               value: 'medium',
             },
             {
-              display: 'low',
-              value: 'low',
+              display: 'high2',
+              value: 'high2',
+            },
+            {
+              display: 'critical2',
+              value: 'critical2',
             },
           ],
         },
@@ -270,6 +286,44 @@ var Information_Form = [
           ],
         },
       },
+      {
+        InternalName: 'RiskRating',
+        DisplayNameEn: 'Risk Rating',
+        DisplayName: 'تقييم المخاطر',
+        type: "number",   
+        "state": "disabled"   
+      },
+       {
+        InternalName: 'RiskRatingStatus',
+        DisplayName: 'حالة تقييم المخاطر',
+        DisplayNameEn: 'Risk Rating Status',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            {
+              display: 'stat36',
+              value: 'stat36',
+            },
+            {
+              display: 'stat37',
+              value: 'stat37',
+            },
+            {
+              display: 'stat38',
+              value: 'stat38',
+            },
+            {
+              display: 'stat39',
+              value: 'stat39',
+            },
+            {
+              display: 'stat40',
+              value: 'stat40',
+            },
+          ],
+        },
+      "state": "disabled"
+      },
       // {
       //   InternalName: 'MoveItToIssueList',
       //   DisplayName: 'نقلها للائحة التحديات',
@@ -290,6 +344,32 @@ var Information_Form = [
       // },
     ],
   },
+   {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      }
+   ]},
   {
     label: 'الوثائق الداعمة',
     labelEn: 'Supporting Documents',

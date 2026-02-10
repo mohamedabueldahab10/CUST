@@ -161,6 +161,8 @@ var Resources = {
     medium: "متوسط",
     low: "منخفض",
     critical: "حرج",
+    high2: "عالي",
+    critical2: "عالي جدا",
     cancelled3: "ملغاة",
     //Change Request Status
     open: "مفتوح",
@@ -256,6 +258,15 @@ var Resources = {
     monitor: "المراقبة",
     leave: "الترك",
 
+    //Probability (risk)
+    rare: "نادر",
+    unlikely: "غير محتمل",
+    possible: "ممكن",
+    likely: "محتمل",
+    frequent: "مؤكد غالباً",
+    //Impact level
+    verylow: "منخفض جداً",
+
     //Issues Type
     issue: "تحدي",
     risk: "خطر",
@@ -319,6 +330,11 @@ var Resources = {
     stat29: "قيد الموافقة",
     stat34: "غير ممول",
     stat35: "غير ممول",
+    stat36: "غير مؤثر",
+    stat37: "منخفض",
+    stat38: "متوسط",
+    stat39: "مرتفع",
+    stat40: "حرج",
     ////////////////// for Project Status
     stat8: "متأخر جدا",
     stat9: "متأخر",
@@ -1537,6 +1553,8 @@ var Resources = {
     medium: "Medium",
     low: "Low",
     critical: "Critical",
+    high2: "High",
+    critical2: "Very High",
     cancelled3: "Cancelled",
     //budget item
     support: "Support",
@@ -1677,6 +1695,16 @@ restoration:"restoration",
     avoid: "Avoid",
     leave: "Leave",
     assumption: "Assumption",
+
+    //Probability (risk)
+    rare: "Rare",
+    unlikely: "Unlikely",
+    possible: "Possible",
+    likely: "Likely",
+    frequent: "Frequent",
+    //Impact level
+    verylow: "Very Low",
+
     expectedbud: "Expected Disbursement",
     approve: "Approve",
     reject: "Reject",
@@ -1700,6 +1728,11 @@ restoration:"restoration",
     stat29: "Under Approval",
     stat34: "Unfunded",
     stat35: "Unfunded",
+    stat36: "Very Low",
+    stat37: "Low",
+    stat38: "Medium",
+    stat39: "High",
+    stat40: "Critical",
 
     //////////////////// for project status
     stat8: "Too Late",

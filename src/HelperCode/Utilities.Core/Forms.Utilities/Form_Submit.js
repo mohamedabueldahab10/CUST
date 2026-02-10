@@ -1637,6 +1637,49 @@ var Set_Code_Submit = {
                       PCODE_STRING;
                   }
                 });
+              } else if (listkey == "strategiccalendar") {
+                var strategicCalendarTitle = Code;
+                $.ajax({
+                  url: `${APIURL}/general/updatedatareceptionenddate/${encodeURIComponent(strategicCalendarTitle)}`,
+                  method: "GET",
+                  contentType: "application/json; charset=utf-8",
+                  success: function (response) {
+                    $(".errormsg").hide();
+                    $(".successmsg").show();
+                    $(".btn-save").addClass("success");
+                    if (response && response.Result === false) {
+                      if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                        alert("حدث خطأ أثناء تحديث تاريخ الانتهاء من استقبال البيانات وبعدها تم الحفظ بنجاح");
+                      } else {
+                        alert("An error occurred while updating the data reception end date. Data was saved successfully.");
+                      }
+                    }
+                    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                      alert("تم حفظ البيانات بنجاح");
+                    } else {
+                      alert("Data saved successfully");
+                    }
+                    window.location = _spPageContextInfo.webAbsoluteUrl +
+                      "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+                  },
+                  error: function () {
+                    $(".errormsg").hide();
+                    $(".successmsg").show();
+                    $(".btn-save").addClass("success");
+                    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                      alert("حدث خطأ أثناء تحديث تاريخ الانتهاء من استقبال البيانات وبعدها تم الحفظ بنجاح");
+                    } else {
+                      alert("An error occurred while updating the data reception end date. Data was saved successfully.");
+                    }
+                    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                      alert("تم حفظ البيانات بنجاح");
+                    } else {
+                      alert("Data saved successfully");
+                    }
+                    window.location = _spPageContextInfo.webAbsoluteUrl +
+                      "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+                  }
+                });
               } else {
                 // For delegations, don't show alert here - it will be shown after API call
                 // The API call will handle the alert and redirect
@@ -3466,8 +3509,8 @@ window.Edit_Data_Submit = {
           } else if (USERisWF && workflowname != "Project") {
             Continue_Submit_Field.init();
           } else {
-            // For delegations, don't show alert here - it will be shown after API call
-            if (listkey != "delegations") {
+            // For delegations and strategiccalendar, don't show alert here - will be shown after API call
+            if (listkey != "delegations" && listkey != "strategiccalendar") {
               $(".btn-save").addClass("success");
               if ( localStorage.getItem("lng") == null ||
               localStorage.getItem("lng") == "ar") {
@@ -3585,6 +3628,64 @@ window.Edit_Data_Submit = {
                       "&IID=" +
                       IID +
                       PCODE_STRING;
+                  }
+                }
+              } else if (listkey == "strategiccalendar") {
+                var strategicCalendarTitle = $("#Title").val();
+                if (strategicCalendarTitle) {
+                  $.ajax({
+                    url: `${APIURL}/general/updatedatareceptionenddate/${encodeURIComponent(strategicCalendarTitle)}`,
+                    method: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                      $(".errormsg").hide();
+                      $(".successmsg").show();
+                      $(".btn-save").addClass("success");
+                      if (response && response.Result === false) {
+                        if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                          alert("حدث خطأ أثناء تحديث تاريخ الانتهاء من استقبال البيانات وبعدها تم الحفظ بنجاح");
+                        } else {
+                          alert("An error occurred while updating the data reception end date. Data was saved successfully.");
+                        }
+                      }
+                      if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                        alert("تم حفظ البيانات بنجاح");
+                      } else {
+                        alert("Data saved successfully");
+                      }
+                      window.location = _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+                    },
+                    error: function () {
+                      $(".errormsg").hide();
+                      $(".successmsg").show();
+                      $(".btn-save").addClass("success");
+                      if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                        alert("حدث خطأ أثناء تحديث تاريخ الانتهاء من استقبال البيانات وبعدها تم الحفظ بنجاح");
+                      } else {
+                        alert("An error occurred while updating the data reception end date. Data was saved successfully.");
+                      }
+                      if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                        alert("تم حفظ البيانات بنجاح");
+                      } else {
+                        alert("Data saved successfully");
+                      }
+                      window.location = _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+                    }
+                  });
+                } else {
+                  if (fileCount == 0) {
+                    $(".errormsg").hide();
+                    $(".successmsg").show();
+                    $(".btn-save").addClass("success");
+                    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                      alert("تم حفظ البيانات بنجاح");
+                    } else {
+                      alert("Data saved successfully");
+                    }
+                    window.location = _spPageContextInfo.webAbsoluteUrl +
+                      "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
                   }
                 }
               } else {
@@ -4545,6 +4646,32 @@ var New_Master_Details_Submit = {
             $(".successmsg").show();
             $(".btn-save").addClass("success");
 
+            if (listkey == "mainkpi") {
+              var kpiCode = $("#Title").val();
+              var redirectUrl = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+              var showSuccessAndRedirect = function () {
+                if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                  alert("تم حفظ البيانات بنجاح");
+                } else {
+                  alert("Data saved successfully");
+                }
+                if (!mainKpiIsUpload || isuploaddone) {
+                  window.location = redirectUrl;
+                }
+              };
+              $.ajax({
+                url: `${APIURL}/general/createkpiresults/${kpiCode}`,
+                method: "GET",
+                success: function () {
+                  debugger;
+                  console.log("api called successfully");
+                  showSuccessAndRedirect();
+                },
+                error: function () {
+                  showSuccessAndRedirect();
+                }
+              });
+            } else {
             if ( localStorage.getItem("lng") == null ||
             localStorage.getItem("lng") == "ar") {
               alert("تم حفظ البيانات بنجاح");
@@ -4599,6 +4726,7 @@ var New_Master_Details_Submit = {
                   PCODE_STRING;
                 }
               }
+            }
             }
           }
         }

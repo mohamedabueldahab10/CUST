@@ -5,13 +5,15 @@ var Information_Form = [
     description: "",
     descriptionEn: "",
     subFields: [
-      // {
-      //   InternalName: "Title",
-      //   DisplayName: "العنوان",
-      //   DisplayNameEn: "Title",
-      //   type: "string",
-      //   validation: "required",
-      // },
+      {
+        "InternalName": "Title",
+        "DisplayNameEn": "Strategic Calendar Code",
+        "DisplayName": "رمز التقويم الاستراتيجي",
+        "type": "string",
+        display: 'none',
+        state: 'disabled',
+
+      },
       {
         InternalName: "Year",
         DisplayName: "السنة",
@@ -27,7 +29,8 @@ var Information_Form = [
         DisplayName: "الربع",
         DisplayNameEn: "Quarter",
         type: "number",
-        numberOfDigits: "1",        
+        numberOfDigits: "1",
+        validation: "required",
         descPhraseAr: "يجب إدخال رقم من 1 إلى 4",
         descPhraseEn: "Enter a number from 1 to 4", 
         max:4
@@ -46,18 +49,21 @@ var Information_Form = [
         DisplayNameEn: "Finish Date",
         type: "datetime",
         min: "StartDate",
+        validation: "required",
       },
       {
         InternalName: "ReminderDate",
         DisplayName: "تاريخ التذكير",
         DisplayNameEn: "Reminder Date",
         type: "datetime",
+        validation: "required",
       },
       {
         InternalName: "SendToRoles",
         DisplayName: "الأدوار المرسلة إليها",
         DisplayNameEn: "Send To Roles",
         type: "dropdownValuesMultiselect",
+        validation: "required",
         options: {
           choices: [
             { display: "SubSectorHead", value: "SubSectorHead" },
@@ -71,6 +77,7 @@ var Information_Form = [
         DisplayName: "أنواع التذكير",
         DisplayNameEn: "Reminder Types",
         type: "dropdownValuesMultiselect",
+        validation: "required",
         options: {
           choices: [
             { display: "Projects", value: "Projects" },
@@ -84,6 +91,7 @@ var Information_Form = [
         DisplayName: "عناصر التذكير",
         DisplayNameEn: "Reminder Items",
         type: "dropdownValuesMultiselect",
+        validation: "required",
         options: {
           choices: [
             { display: "Deliverables", value: "Deliverables" },
@@ -95,9 +103,10 @@ var Information_Form = [
       },
       {
         InternalName: "IsActive",
-        DisplayName: "مفعلة",
+        DisplayName: "تفعيل/إغلاق",
         DisplayNameEn: "Active",
         type: 'yesnoradio',
+        validation: "required",
         options: {
           choices: [
             {
@@ -118,6 +127,7 @@ var Information_Form = [
         type: "datetime",
         min: "StartDate",
         max: "FinishDate",
+        validation: "required",
       },
       {
         InternalName: "DataReceptionEndDate",
@@ -126,6 +136,7 @@ var Information_Form = [
         type: "datetime",
         min: "StartDate",
         max: "FinishDate",
+        state: "disabled",
       },
       {
         InternalName: "AgenciesMeetingsDate",
@@ -134,12 +145,14 @@ var Information_Form = [
         type: "datetime",
         min: "StartDate",
         max: "FinishDate",
+        validation: "required",
       },
       {
         InternalName: "ExecutiveCommitteesMeetingsDate",
         DisplayName: "تاريخ عقد اجتماعات اللجان التنفيذية",
         DisplayNameEn: "Executive Committees Meetings Date",
         type: "datetime",
+        validation: "required",
       },
       {
         InternalName: "SteeringCommitteesMeetingsDate",
@@ -148,13 +161,14 @@ var Information_Form = [
         type: "datetime",
         min: "StartDate",
         max: "FinishDate",
+        validation: "required",
       },
-      {
-        InternalName: "TeamMembers",
-        DisplayName: "أسماء فريق العمل",
-        DisplayNameEn: "Team Members",
-        type: "multipicker",
-      },
+      // {
+      //   InternalName: "TeamMembers",
+      //   DisplayName: "أسماء فريق العمل",
+      //   DisplayNameEn: "Team Members",
+      //   type: "multipicker",
+      // },
     ],
   },
   {

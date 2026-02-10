@@ -859,6 +859,15 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
+		cryearlycalendar: "CRYearlyCalendar",
+		ListingTitle: "التقويم السنوي",
+		FormTitle: "التقويم السنوي",
+		TitleEn: "Yearly Calendar",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
+	{
 		delegations: "Delegations",
 		ListingTitle: "التفويض",
 		FormTitle: "التفويض",

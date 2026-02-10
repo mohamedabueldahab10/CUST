@@ -2087,6 +2087,17 @@ window.ListInfo = {
               GetManHoursHistory.preinit();
               }
 
+            if (listkey == "cryearlycalendar") {
+              $("#Year").attr("min", 1900).attr("max", 2100);
+              $("#Quarter").attr("min", 1).attr("max", 4);
+            }
+
+            if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
+              setTimeout(function () {
+                window.updatePageTitleLinkForKpiOrSos && window.updatePageTitleLinkForKpiOrSos();
+              }, 500);
+            }
+
             // if (USERisWF) {
             //   $(".form-btns-wrapper").hide();
             // }
@@ -3307,6 +3318,11 @@ debugger;
         if (element.numberOfDigits) {
           numberOfDigits = `maxlength=${element.numberOfDigits}`;
         }
+        var numberMinMax = "";
+        if (listkey == "cryearlycalendar") {
+          if (element.InternalName == "Year") numberMinMax = ' min="1900" max="2100"';
+          else if (element.InternalName == "Quarter") numberMinMax = ' min="1" max="4"';
+        }
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -3364,6 +3380,7 @@ debugger;
           RequiredName +
           ' type="number" ' +
           numberOfDigits +
+          numberMinMax +
           ' step="any" placeholder="' +
           displayName +
           '" ' +
@@ -9311,7 +9328,33 @@ debugger;
               $("#FundingStatus").val("").prop("disabled", false);
           }
       });
-  }  
+  }
+    if ((listkey === "risks" || listkey === "initiativerisks") && (isEdit || isNew)) {
+      function calculateRiskRating() {
+        var impact = $("#Impact").val();
+        var probability = $("#Probability").val();
+        if (!impact || !probability) return;
+        $.ajax({
+          url: `${APIURL}/job/calculateriskrating/${encodeURIComponent(impact)}/${encodeURIComponent(probability)}`,
+          type: "GET",
+          headers: { Accept: "application/json;odata=verbose" },
+          success: function (data) {
+            if (data && data.isSuccess && data.result) {
+              $("#RiskRating").val(data.result.riskRating != null ? data.result.riskRating : "");
+              $("#RiskRatingStatus").val(data.result.riskRatingStatus || "");
+            } else {
+              $("#RiskRating").val("");
+              $("#RiskRatingStatus").val("");
+            }
+          },
+          error: function () {
+            $("#RiskRating").val("");
+            $("#RiskRatingStatus").val("");
+          },
+        });
+      }
+      $("#Impact, #Probability").on("change", calculateRiskRating);
+    }
     if (listkey == "deliverables" && (isEdit || isNew)) {
       if (typeof USERPCODE !== "undefined" && USERPCODE) {
         $.ajax({

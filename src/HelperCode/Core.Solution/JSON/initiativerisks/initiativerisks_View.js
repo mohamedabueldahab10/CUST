@@ -82,16 +82,24 @@ var Information_Form = [
         options: {
           choices: [
             {
-              display: 'hight',
-              value: 'hight',
+              display: 'rare',
+              value: 'rare',
             },
             {
-              display: 'medium',
-              value: 'medium',
+              display: 'unlikely',
+              value: 'unlikely',
             },
             {
-              display: 'low',
-              value: 'low',
+              display: 'possible',
+              value: 'possible',
+            },
+            {
+              display: 'likely',
+              value: 'likely',
+            },
+            {
+              display: 'frequent',
+              value: 'frequent',
             },
           ],
         },
@@ -116,16 +124,24 @@ var Information_Form = [
         options: {
           choices: [
             {
-              display: 'hight',
-              value: 'hight',
+              display: 'verylow',
+              value: 'verylow',
+            },
+            {
+              display: 'low',
+              value: 'low',
             },
             {
               display: 'medium',
               value: 'medium',
             },
             {
-              display: 'low',
-              value: 'low',
+              display: 'high2',
+              value: 'high2',
+            },
+            {
+              display: 'critical2',
+              value: 'critical2',
             },
           ],
         },
@@ -141,6 +157,42 @@ var Information_Form = [
         DisplayName: 'خطة التعامل مع الخطر',
         DisplayNameEn: 'Resolution Plan',
         type: 'multiline',
+      },
+       {
+        InternalName: 'RiskRating',
+        DisplayNameEn: 'Risk Rating',
+        DisplayName: 'تقييم المخاطر',
+        type: "number",   
+      },
+       {
+        InternalName: 'RiskRatingStatus',
+        DisplayName: 'حالة تقييم المخاطر',
+        DisplayNameEn: 'Risk Rating Status',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            {
+              display: 'stat36',
+              value: 'stat36',
+            },
+            {
+              display: 'stat37',
+              value: 'stat37',
+            },
+            {
+              display: 'stat38',
+              value: 'stat38',
+            },
+            {
+              display: 'stat39',
+              value: 'stat39',
+            },
+            {
+              display: 'stat40',
+              value: 'stat40',
+            },
+          ],
+        },
       },
       {
         InternalName: 'Comments',
@@ -264,6 +316,26 @@ var Information_Form = [
       // },
     ]
   },
+   {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline',
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline',
+      }
+   ]},
   {
       label: '',
       labelEn: '',
