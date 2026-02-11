@@ -2608,7 +2608,12 @@ window.View_Data_Request = {
           console.log("[View_Data_Request] Error getting lookup field value:", e);
           lookupFieldValue = null;
         }
-        
+        try {
+          if (lookupFieldValue == null || lookupFieldValue === "") {
+            var urlKey = { "KPICode": "KpiCode", "SOCode": "sosCode", "ProjectCode": "PCODE", "PCODE": "PCODE", "InitiativeCode": "ICODE", "ICODE": "ICODE" }[fieldId];
+            if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) lookupFieldValue = decodeURIComponent(window.location.href.split(urlKey + "=")[1].split("&")[0]);
+          }
+        } catch (e) {}
         if (lookupFieldValue == null) {
           $(this).html(No_Data);
         } else {
@@ -2967,6 +2972,12 @@ window.View_Data_Request = {
         } catch (e) {
           lookupFieldValue = null;
         }
+        try {
+          if (lookupFieldValue == null || lookupFieldValue === "") {
+            var urlKey = { "KPICode": "KpiCode", "SOCode": "sosCode", "ProjectCode": "PCODE", "PCODE": "PCODE", "InitiativeCode": "ICODE", "ICODE": "ICODE" }[parentLookupField];
+            if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) lookupFieldValue = decodeURIComponent(window.location.href.split(urlKey + "=")[1].split("&")[0]);
+          }
+        } catch (e) {}
         if (lookupFieldValue == null || !listname || !Dispfieldkey) {
           $this.html(No_Data);
         } else {
@@ -3016,6 +3027,12 @@ window.View_Data_Request = {
         } catch (e) {
           lookupFieldValue = null;
         }
+        try {
+          if (lookupFieldValue == null || lookupFieldValue === "") {
+            var urlKey = { "KPICode": "KpiCode", "SOCode": "sosCode", "ProjectCode": "PCODE", "PCODE": "PCODE", "InitiativeCode": "ICODE", "ICODE": "ICODE" }[parentLookupField];
+            if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) lookupFieldValue = decodeURIComponent(window.location.href.split(urlKey + "=")[1].split("&")[0]);
+          }
+        } catch (e) {}
         if (lookupFieldValue == null || !listname || !secondsource) {
           $this.html(No_Data);
         } else {

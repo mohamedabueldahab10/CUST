@@ -8893,7 +8893,7 @@ debugger;
           ' data-groups="' + groups + '" ' + notAllowForGroups + ' style="display:' + element.display + '">' +
           '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
           '<p type="' + element.type + '" data-listname="' + element.source + '" data-valfieldkey="' + (element.valfieldkey || "Title") +
-          '" data-dispfieldkey="' + dispKey + '" data-parentlookupfield="' + (element.parentLookupField || "KPICode") +
+          '" data-dispfieldkey="' + dispKey + '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
           (element.type === "lookupfromlookup" ? '" data-secondsource="' + (element.secondsource || "") + '" data-seconddispfieldkey="' + (element.secondDispfieldkey || "Name") + '" data-secondvalfieldkey="' + (element.secondvalfieldkey || "Title") : "") +
           '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
           "</div>";
@@ -13387,7 +13387,7 @@ window.View_ListInfo = {
             '<p type="lookupdropdown" data-listname="' + element.source +
             '" data-valfieldkey="' + (element.valfieldkey || "Title") +
             '" data-dispfieldkey="' + dispfieldkey +
-            '" data-parentlookupfield="' + (element.parentLookupField || "KPICode") +
+            '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
             '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);
@@ -13418,7 +13418,7 @@ window.View_ListInfo = {
             '<p type="lookupfromlookup" data-listname="' + element.source +
             '" data-valfieldkey="' + (element.valfieldkey || "Title") +
             '" data-dispfieldkey="' + dispfieldkey +
-            '" data-parentlookupfield="' + (element.parentLookupField || "KPICode") +
+            '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
             '" data-secondsource="' + (element.secondsource || "") +
             '" data-seconddispfieldkey="' + secondDisp +
             '" data-secondvalfieldkey="' + secondVal +
