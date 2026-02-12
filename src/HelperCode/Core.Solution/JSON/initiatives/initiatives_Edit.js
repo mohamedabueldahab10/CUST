@@ -293,50 +293,8 @@ var Information_Form = [
             ],
           },
         ],
-        },
-        {
-        InternalName: 'RelatedStrategyReadonly',
-        DisplayNameEn: 'Related Strategy Read Only',
-        DisplayName: 'الاستراتيجية المطلعه',
-        type: 'lookup',
-        // dontSubmit: true,
-        source: 'GoalStrategy',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',        
-        "validation": "required",
-        // dynamic: 'parent',
-        // dynamic: 'Types',
-        // dynamic:'parent',
-        seconeddynamic: 'Types',
-        dynamic: 'parent', //main field that affect on other chiled field
-        filterField: 'Types',
-        filterFieldType: 'Text',
-        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
-        //in case not parent add below attrs
-        //role access
-        accessFilter: [
-          {
-            role: 'VROE',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Choice',
-                values: ['vision'],
-              },
-            ],
-          },
-          {
-            role: 'LMSUExecution',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Choice',
-                values: ['lms'],
-              },
-            ],
-          },
-        ],
       },
+       
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
@@ -445,6 +403,143 @@ var Information_Form = [
 
           ]
         },
+        // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
+        // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
+        // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+      },
+         {
+        InternalName: 'RelatedStrategyReadonly',
+        DisplayNameEn: 'Related Strategy Read Only',
+        DisplayName: 'الاستراتيجية المطلعه',
+        type: 'lookup',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',        
+        "validation": "required",
+        // dynamic: 'parent',
+        // dynamic: 'Types',
+        // dynamic:'parent',
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+        //in case not parent add below attrs
+        //role access
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['lms'],
+              },
+            ],
+          },
+        ],
+      },
+        {
+        InternalName: 'RelatedReadOnlyObjectiveLevel',
+        DisplayNameEn: 'Related Objective Level',
+        DisplayName: 'مستوى الهدف المطلع',        
+        "validation": "required",
+        dontSubmit: true,
+        grandFieldId: 'RelatedStrategyReadonly', // we add this field to handle the two field filtration(parent Id in current form)
+        childFieldId: 'RelatedReadonlyObjective', // we add this field to handle the two field filtration (child Id in current form)
+        childFieldIdSource: 'Types', // we add this field to handle the two field filtration (child internal name in destination list)
+        //
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'main', value: 'main' },
+            { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel3', value: 'sublevel3' },
+            // {
+            //   display: 'objl1',
+            //   value: 'objl1',
+            // },
+            // {
+            //   display: 'objl2',
+            //   value: 'objl2',
+            // },
+            // {
+            //   display: 'objl3',
+            //   value: 'objl3',
+            // },
+          ],
+        },
+        // validation: 'required',
+      },
+        {
+        InternalName: 'RelatedReadonlyObjective',
+        DisplayNameEn: 'RelatedReadonlyObjective',
+        DisplayName: 'الهدف المطلع',
+        type: 'lookup',
+        source: 'SOs',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        grpfieldkey: 'Title',
+        "validation": "required",
+        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المطلع بالاستراتيجية المختارة",
+        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
+        //
+        dynamic: 'RelatedStrategyReadonly',
+        filterField: 'RelatedStrategyReadonly',
+        filterFieldType: 'Text',
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'VROP',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'LMSP',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['lms'],
+              },
+            ],
+          },
+        ],
         // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
@@ -1156,6 +1251,15 @@ var Information_Form = [
            /* { display: "partiallyfunded", value: "partiallyfunded" },
             { display: "zero", value: "zero" },*/
           ],
+        },
+         security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
         },
       },
       {
