@@ -139,6 +139,21 @@ window.updatePageTitleLinkForKpiOrSos = function () {
   }
 };
 
+window.CheckActiveCalendarQuarterForAnalysis = function (callback) {
+  var apiUrl = (typeof APIURL !== "undefined" ? APIURL : "") + "/general/checkactivecalendarquarterforanalysis";
+  $.ajax({
+    url: apiUrl,
+    method: "GET",
+    dataType: "json",
+    success: function (data) {
+      if (typeof callback === "function") callback(data);
+    },
+    error: function () {
+      if (typeof callback === "function") callback({ isSuccess: false, result: { isActive: false } });
+    }
+  });
+};
+
 window.Edit_Data_Request = {
   onSuccess: async function (sender, args) {
     // Reset retry count
@@ -1478,7 +1493,7 @@ window.Edit_Data_Request = {
             if (!data.d.results || data.d.results.length === 0) {
               // no record, do nothing
               console.log('no record to show in KPIResultsHistory');
-              return;
+            return;
             }
       
             var item = data.d.results[0]; // take latest record
@@ -1557,6 +1572,24 @@ window.Edit_Data_Request = {
             "</style>"
         );
       }
+    }
+
+    if (listkey === "mainkpianalysis" || listkey === "sosanalysis") {
+      window.CheckActiveCalendarQuarterForAnalysis && window.CheckActiveCalendarQuarterForAnalysis(function (data) {
+        if (!data.result || !data.result.isActive) {
+          $("body").append(
+            "<style>" +
+              ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+              ".form-control{color: #b1b1b1 !important;" +
+              "border-color: #e1e1e1 !important;" +
+              "background-color: #fdfdfd !important;" +
+              "opacity: .6;pointer-events: none;}" +
+              "</style>"
+          );
+          var isAr = localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+          alert(isAr ? "الربع الاستراتيجي غير نشط. لا يمكن تعديل التحليل." : "Strategic calendar quarter is not active. Editing is not allowed.");
+        }
+      });
     }
     
     // Handle getValueFromLookup dynamically after all data is loaded
@@ -3849,6 +3882,18 @@ window.View_Data_Request = {
             "</style>"
         );
       }
+    }
+
+    if (listkey === "mainkpianalysis" || listkey === "sosanalysis") {
+      window.CheckActiveCalendarQuarterForAnalysis && window.CheckActiveCalendarQuarterForAnalysis(function (data) {
+        if (!data.result || !data.result.isActive) {
+          $("body").append(
+            "<style>" +
+              ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+              "</style>"
+          );
+        }
+      });
     }
     
     // Handle getValueFromLookup dynamically after all data is loaded

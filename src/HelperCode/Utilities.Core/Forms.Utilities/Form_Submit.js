@@ -1348,11 +1348,29 @@ window.New_Data_Submit = {
     Cancel: function () {
       $("button.btn-cancel").on("click", function () {
         // window.history.back();
-        window.location =
+        var cancelUrl =
           _spPageContextInfo.webAbsoluteUrl +
           "/SitePages/Listing.aspx?ListKey=" +
           listkey +
-          PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+          (typeof PCODE_STRING !== "undefined" ? PCODE_STRING : ""); //_spPageContextInfo.webServerRelativeUrl+
+
+        // Preserve codes on New forms when returning back to Listing
+        if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+          var kpiCode =
+            window.location.href.indexOf("KpiCode=") > -1
+              ? window.location.href.split("KpiCode=")[1].split("&")[0]
+              : "";
+          if (kpiCode) cancelUrl += "&KpiCode=" + encodeURIComponent(kpiCode);
+        } else if (listkey == "sosanalysis") {
+          var sosCodeCancel =
+            window.location.href.indexOf("sosCode=") > -1
+              ? window.location.href.split("sosCode=")[1].split("&")[0]
+              : "";
+          if (sosCodeCancel)
+            cancelUrl += "&sosCode=" + encodeURIComponent(sosCodeCancel);
+        }
+
+        window.location = cancelUrl;
       });
     },
     checkNewMasterDetails: function () {
@@ -3050,6 +3068,12 @@ window.Edit_Data_Submit = {
                 month = 12;
             }
     
+            var performanceAnalysis = $("#PerformanceAnalysis").val() || "";
+            var actualKpiDateRaw = $("#ActualkpiDate").val() || "";
+            var actualkpiDate = actualKpiDateRaw
+                ? new Date(actualKpiDateRaw).toISOString().split("T")[0]
+                : "";
+
             const payload = {
                 mainKPICode: $("#Title").val(),
                 year,
@@ -3062,6 +3086,8 @@ window.Edit_Data_Submit = {
                 f: parseFloat($("#F").val() || 0),
                 g: parseFloat($("#G").val() || 0),
                 finalValue: parseFloat($("#Equation").val() || 0),
+                performanceAnalysis: performanceAnalysis,
+                actualkpiDate: actualkpiDate,
                 createdByUserId: 0,
             };
     
@@ -3132,6 +3158,46 @@ window.Edit_Data_Submit = {
     clientContext.load(Edit_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+        // mainkpi Edit: call createkpiresults AFTER list save and BEFORE showing any success alert
+        // We call afterSuccess() only AFTER this API finishes, so alert always comes after createkpiresults.
+        if (listkey == "mainkpi") {
+          window.__createKpiResultsCalled = false;
+          var kpiCode = $("#Title").val();
+          var proceedAfterCreateKpiResults = function () {
+            Edit_Data_Submit.g.afterSuccess();
+          };
+
+          if (typeof APIURL !== "undefined" && APIURL) {
+            window.__createKpiResultsCalled = true;
+            var createUrl =
+              APIURL + "/general/createkpiresults/" + encodeURIComponent(kpiCode);
+            console.log("[mainkpi edit] calling createkpiresults:", createUrl);
+            debugger;
+            $.ajax({
+              url: createUrl,
+              method: "GET",
+              success: function (res) {
+                console.log("[mainkpi edit] createkpiresults success", res);
+                proceedAfterCreateKpiResults();
+              },
+              error: function (xhr, status, err) {
+                console.warn(
+                  "[mainkpi edit] createkpiresults error",
+                  status,
+                  err,
+                  xhr
+                );
+                proceedAfterCreateKpiResults();
+              }
+            });
+          } else {
+            console.warn(
+              "[mainkpi edit] APIURL missing; skipping createkpiresults"
+            );
+            proceedAfterCreateKpiResults();
+          }
+          return;
+        }
 
         if( listkey == "projects"){
         if(User_ProjUID == null || User_ProjUID == "لا يوجد" || User_ProjUID == "No Data")
@@ -3417,14 +3483,21 @@ window.Edit_Data_Submit = {
     },
     Cancel: function () {
       $("button.btn-cancel").on("click", function () {
-        window.location =
+        var cancelUrl =
           _spPageContextInfo.webAbsoluteUrl +
           "/SitePages/View.aspx?ListKey=" +
           listkey +
           "&IID=" +
           IID +
-          PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-        // console.log(PCODE_STRING);
+          (typeof PCODE_STRING !== "undefined" ? PCODE_STRING : "");
+        if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+          var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+          if (kpiCode) cancelUrl += "&KpiCode=" + encodeURIComponent(kpiCode);
+        } else if (listkey == "sosanalysis") {
+          var sosCodeCancel = window.location.href.indexOf("sosCode=") > -1 ? window.location.href.split("sosCode=")[1].split("&")[0] : "";
+          if (sosCodeCancel) cancelUrl += "&sosCode=" + encodeURIComponent(sosCodeCancel);
+        }
+        window.location = cancelUrl;
       });
     },
     checkEditMasterDetails: function () {
@@ -3510,7 +3583,8 @@ window.Edit_Data_Submit = {
             Continue_Submit_Field.init();
           } else {
             // For delegations and strategiccalendar, don't show alert here - will be shown after API call
-            if (listkey != "delegations" && listkey != "strategiccalendar") {
+            // For mainkpi, we also delay the alert to its own branch
+            if (listkey != "delegations" && listkey != "strategiccalendar" && listkey != "mainkpi") {
               $(".btn-save").addClass("success");
               if ( localStorage.getItem("lng") == null ||
               localStorage.getItem("lng") == "ar") {
@@ -3541,20 +3615,46 @@ window.Edit_Data_Submit = {
                 ).attr("option-id") +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == "mainkpi") {
-              Edit_KPI_Results.init(
-                kpiName,
-                kpiType,
-                kpiSector,
-                kpiSubSector,
-                kpiPortfolio,
-                kpiMainGoalRelated,
-                kpiSubGoalRelated,
-                kpiPerformanceAnalysis,
-                kpiRecurrenceChanged,
-                kpicurrentYear,
-                kpiTotalActual
-              );
-             
+              var kpiCode = $("#Title").val();
+              var redirectUrl = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey + (typeof PCODE_STRING !== "undefined" ? PCODE_STRING : "");
+              var showSuccessAndRedirect = function () {
+                $(".btn-save").addClass("success");
+                if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                  alert("تم حفظ البيانات بنجاح");
+                } else {
+                  alert("Data saved successfully");
+                }
+                window.location = redirectUrl;
+              };
+              if (typeof APIURL !== "undefined" && APIURL) {
+                // createkpiresults should already have been called in executeQueryAsync success for edit.
+                // Fallback: if we reached here from another path, call it once.
+                if (!window.__createKpiResultsCalled) {
+                  $.ajax({
+                    url: APIURL + "/general/createkpiresults/" + encodeURIComponent(kpiCode),
+                    method: "GET",
+                    success: showSuccessAndRedirect,
+                    error: showSuccessAndRedirect
+                  });
+                } else {
+                  showSuccessAndRedirect();
+                }
+              } else {
+                Edit_KPI_Results.init(
+                  kpiName,
+                  kpiType,
+                  kpiSector,
+                  kpiSubSector,
+                  kpiPortfolio,
+                  kpiMainGoalRelated,
+                  kpiSubGoalRelated,
+                  kpiPerformanceAnalysis,
+                  kpiRecurrenceChanged,
+                  kpicurrentYear,
+                  kpiTotalActual
+                );
+                showSuccessAndRedirect();
+              }
             }  else if (listkey == "benefits") {
               Edit_KPI_Results.init(
                 kpiName,
@@ -4663,7 +4763,6 @@ var New_Master_Details_Submit = {
                 url: `${APIURL}/general/createkpiresults/${kpiCode}`,
                 method: "GET",
                 success: function () {
-                  debugger;
                   console.log("api called successfully");
                   showSuccessAndRedirect();
                 },

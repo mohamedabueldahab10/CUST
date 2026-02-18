@@ -8,14 +8,6 @@ var Listing_Info = [
     infilter: false,
   },
   {
-    InternalName: "Analysis",
-    DisplayName: "تحليل الأداء",
-    DisplayNameEn: "Analysis",
-    type: "multiline",
-    inlisting: true,
-    infilter: false,
-  },
-  {
     InternalName: "Quarter",
     DisplayNameEn: "Quarter",
     DisplayName: "الربع",
@@ -37,7 +29,7 @@ var Listing_Info = [
     DisplayNameEn: "Measurement Launch Date",
     type: "date",
     inlisting: true,
-    infilter: false,
+    infilter: true,
   },
   {
     InternalName: "MeasurementLaunchEndDate",
@@ -45,6 +37,6 @@ var Listing_Info = [
     DisplayNameEn: "Measurement Launch End Date",
     type: "date",
     inlisting: true,
-    infilter: false,
+    infilter: true,
   },
 ];

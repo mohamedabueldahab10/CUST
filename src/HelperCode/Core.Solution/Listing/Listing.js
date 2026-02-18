@@ -575,6 +575,16 @@ window.ListingData = {
 
 	  if (isRoleDataLevelAccess && (!UserICode && !USERPCODE && isEmptyFilter)) {
 		PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
+		// mainkpiissues, mainkpianalysis, sosanalysis: non-admin must only see items filtered by KpiCode/sosCode from URL
+		if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
+		  if ((listkey == "mainkpianalysis" || listkey == "mainkpiissues") && KpiCode != null && KpiCode != "") {
+			PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+			PQueryFilteration = '<Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq>';
+		  } else if (listkey == "sosanalysis" && sosCode != null && sosCode != "") {
+			PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+			PQueryFilteration = '<Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq>';
+		  }
+		}
 		console.log(PQuery, "PQuery odddds")
 		//SO-23-0167:::SO-22-0174
 
@@ -702,6 +712,16 @@ window.ListingData = {
 	  }
 	}
 
+	// Apply KpiCode/sosCode filter last so it is never overridden (KpiCode and sosCode are strings)
+	if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
+	  if ((listkey == "mainkpianalysis" || listkey == "mainkpiissues") && KpiCode != null && KpiCode !== "") {
+		PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+		PQueryFilteration = '<Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq>';
+	  } else if (listkey == "sosanalysis" && sosCode != null && sosCode !== "") {
+		PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+		PQueryFilteration = '<Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq>';
+	  }
+	}
 
 	if (userProjects && userProjects.length == 0 && (USERProjRelated.indexOf(USERlistkey) > -1 || USERisProjects)) {
 	  $('div#particles-foreground, div#particles-background, .vertical-centered-box').remove();
@@ -1295,6 +1315,88 @@ window.ListingData = {
 			
 			if (originalstate) {
 			  $('.content-list-head > .listing-new-at').html(HtmlStart);
+			  
+			  // Active calendar quarter check for sosanalysis / mainkpianalysis
+			  if (listkey === "sosanalysis" || listkey === "mainkpianalysis") {
+			    if (!$("#analysis-calendar-msg-styles").length) {
+			      $("head").append(
+			        '<style id="analysis-calendar-msg-styles">' +
+			        '.analysis-calendar-msg-wrapper.d-flex{display:flex;align-items:flex-start;}' +
+			        '.analysis-calendar-msg{position:relative;display:flex;align-items:flex-start;gap:12px;width:fit-content;max-width:100%;padding:7px 14px;margin-bottom:14px;border-radius:10px;box-shadow:0 4px 14px rgba(24,58,102,.12),0 2px 6px rgba(0,0,0,.06);background:#fff;border:1px solid rgba(24,58,102,.08);overflow:hidden;}' +
+			        '.analysis-calendar-msg__strip{position:absolute;left:0;top:0;bottom:0;width:5px;}' +
+			        '.analysis-calendar-msg.analysis-calendar-info .analysis-calendar-msg__strip{background:linear-gradient(180deg,#148287 0%,#183a66 100%);}' +
+			        '.analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__strip{background:linear-gradient(180deg,#f7941d 0%,#183a66 100%);}' +
+			        '.analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__strip{background:linear-gradient(180deg,#f7941d 0%,#c0392b 100%);}' +
+			        '.analysis-calendar-msg__icon{flex-shrink:0;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;}' +
+			        '.analysis-calendar-msg.analysis-calendar-info .analysis-calendar-msg__icon{background:rgba(20,130,135,.15);color:#148287;}' +
+			        '.analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__icon{background:rgba(247,148,29,.18);color:#183a66;}' +
+			        '.analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__icon{background:rgba(247,148,29,.2);color:#c0392b;}' +
+			        '.analysis-calendar-msg__text{flex:1;color:#183a66;font-size:14px;line-height:1.5;font-weight:500;padding-top:4px;}' +
+			        '.analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__text{color:#183a66;}' +
+			        '.analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__text{color:#183a66;}' +
+			        '</style>'
+			      );
+			    }
+			    var isAr = localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+			    var apiUrl = (typeof APIURL !== "undefined" ? APIURL : "") + "/general/checkactivecalendarquarterforanalysis";
+			    $.ajax({
+			      url: apiUrl,
+			      method: "GET",
+			      dataType: "json",
+			      success: function (data) {
+			        var msg = "";
+			        var msgType = "info";
+			        if (!data.isSuccess) {
+			          msg = (data.errorMessageAr && isAr) || (data.errorMessageEn && !isAr) ? (isAr ? data.errorMessageAr : data.errorMessageEn) : (isAr ? "لا يمكن إضافة تحليل في الربع الحالي." : "Cannot add analysis for the current quarter.");
+			          msgType = "warn";
+			        } else if (!data.result || !data.result.isActive) {
+			          msg = (data.additionalInfo && data.additionalInfo.trim()) ? data.additionalInfo : (isAr ? "التقويم الاستراتيجي غير نشط. لا يمكن الإضافة." : "Strategic calendar quarter is not active. Adding is not allowed.");
+			          msgType = "warn";
+			        } else {
+			          var apiYear = data.result.year;
+			          var apiQuarter = data.result.quarter;
+			          var existsSameQuarter = false;
+			          for (var r = 0; r < records.length; r++) {
+			            if (Number(records[r].Year) === apiYear && Number(records[r].Quarter) === apiQuarter) {
+			              existsSameQuarter = true;
+			              break;
+			            }
+			          }
+			          if (existsSameQuarter) {
+			            msg = isAr ? "يُسمح بعنصر واحد فقط لكل سنة وربع. يوجد بالفعل تحليل للربع الحالي." : "Only one item per year and quarter is allowed. An analysis for the current quarter already exists.";
+			            msgType = "info";
+			          }
+			        }
+			        if (msg) {
+			          $(".btn-add").css({ opacity: 0.6, "pointer-events": "none", display: "none" });
+			          var cardClass = msgType === "warn" ? "analysis-calendar-msg analysis-calendar-warn" : "analysis-calendar-msg analysis-calendar-info";
+			          $(".additionalInfo").html(
+			            '<div class="analysis-calendar-msg-wrapper d-flex">' +
+			              '<div class="' + cardClass + '">' +
+			                '<div class="analysis-calendar-msg__strip"></div>' +
+			                '<div class="analysis-calendar-msg__icon">' + (msgType === "warn" ? '&#9888;' : '&#8505;') + '</div>' +
+			                '<div class="analysis-calendar-msg__text">' + msg + '</div>' +
+			              '</div>' +
+			            '</div>'
+			          );
+			        }
+			      },
+			      error: function () {
+			        var isArErr = localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+			        var errMsg = isArErr ? "تعذر التحقق من التقويم الاستراتيجي النشط. لا يمكن تفعيل زر الإضافة." : "Could not verify active strategic calendar. Add button cannot be enabled.";
+			        $(".btn-add").css({ opacity: 0.6, "pointer-events": "none", display: "none" });
+			        $(".additionalInfo").html(
+			          '<div class="analysis-calendar-msg-wrapper d-flex">' +
+			            '<div class="analysis-calendar-msg analysis-calendar-error">' +
+			              '<div class="analysis-calendar-msg__strip"></div>' +
+			              '<div class="analysis-calendar-msg__icon">&#10071;</div>' +
+			              '<div class="analysis-calendar-msg__text">' + errMsg + '</div>' +
+			            '</div>' +
+			          '</div>'
+			        );
+			      }
+			    });
+			  }
 			  
 			  // if (PCODE && (listkey == 'deliverables' || listkey == 'milestones') && !projectActualBudget) {
 			  //   var HtmlStartNoProjBudgetMsg = '<div data-trans-addActualBudget class="actualBudget d-flex w-100 mx-3 mb-3 ErrorMsg Resources"></div>';

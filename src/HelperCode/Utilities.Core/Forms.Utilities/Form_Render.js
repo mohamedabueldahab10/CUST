@@ -2192,6 +2192,49 @@ window.ListInfo = {
             if (listkey == "goalstrategy") {
               ListInfo.g.requiredSpillarsName();
             }
+
+            if (isNew && (listkey === "mainkpianalysis" || listkey === "sosanalysis")) {
+              if (window.CheckActiveCalendarQuarterForAnalysis) {
+                window.CheckActiveCalendarQuarterForAnalysis(function (data) {
+                  if (data.isSuccess && data.result && data.result.isActive) {
+                    var r = data.result;
+                    function tryFillFields() {
+                      var $year = $("#Year");
+                      var $quarter = $("#Quarter");
+                      var $mLaunch = $("#MeasurementLaunchDate");
+                      var $mEnd = $("#MeasurementLaunchEndDate");
+                      if (!$year.length || !$quarter.length) return false;
+                      $year.val(r.year).prop("readonly", true).addClass("disabled");
+                      $quarter.val(r.quarter).prop("readonly", true).addClass("disabled");
+                      if (r.measurementLaunchDate) {
+                        var d1 = r.measurementLaunchDate.slice(0, 10);
+                        $mLaunch.val(d1).prop("readonly", true).addClass("disabled");
+                      }
+                      if (r.dataReceptionEndDate) {
+                        var d2 = r.dataReceptionEndDate.slice(0, 10);
+                        $mEnd.val(d2).prop("readonly", true).addClass("disabled");
+                      }
+                      $(".CFIELD .disabled").removeAttr("required");
+                      return true;
+                    }
+                    if (!tryFillFields()) {
+                      setTimeout(tryFillFields, 300);
+                    }
+                  } else {
+                    $("body").append(
+                      "<style>" +
+                        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+                        ".form-control{color: #b1b1b1 !important;" +
+                        "border-color: #e1e1e1 !important;" +
+                        "background-color: #fdfdfd !important;" +
+                        "opacity: .6;pointer-events: none;}" +
+                        "</style>"
+                    );
+                    alert("الربع الاستراتيجي غير نشط. لا يمكن إضافة تحليل.");
+                  }
+                });
+              }
+            }
             // if (USERisWF || UserHaveLicense == false) {
             //   $(".form-btns-wrapper").hide();
             //   $(".btnactionrow").hide();
@@ -10656,7 +10699,12 @@ debugger;
               }
             }
             if (listkey == "initiatives") {
-              if (item == "RelatedStrategyObjective") {
+              if (
+                item == "RelatedStrategyObjective" ||
+                item == "RelatedStrategyReadonly" ||
+                item == "RelatedReadOnlyObjectiveLevel" ||
+                item == "RelatedReadonlyObjective"
+              ) {
                 myFieldParent.find(">*").attr("required", false);
               }
             }
