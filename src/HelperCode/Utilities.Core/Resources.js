@@ -161,6 +161,8 @@
     medium: "متوسط",
     low: "منخفض",
     critical: "حرج",
+    high2: "عالي",
+    critical2: "عالي جدا",
     cancelled3: "ملغاة",
     //Change Request Status
     open: "مفتوح",
@@ -256,6 +258,15 @@
     monitor: "المراقبة",
     leave: "الترك",
 
+    //Probability (risk)
+    rare: "نادر",
+    unlikely: "غير محتمل",
+    possible: "ممكن",
+    likely: "محتمل",
+    frequent: "مؤكد غالباً",
+    //Impact level
+    verylow: "منخفض جداً",
+
     //Issues Type
     issue: "تحدي",
     risk: "خطر",
@@ -319,6 +330,11 @@
     stat29: "قيد الموافقة",
     stat34: "غير ممول",
     stat35: "غير ممول",
+    stat36: "غير مؤثر",
+    stat37: "منخفض",
+    stat38: "متوسط",
+    stat39: "مرتفع",
+    stat40: "حرج",
     ////////////////// for Project Status
     stat8: "متأخر جدا",
     stat9: "متأخر",
@@ -481,6 +497,13 @@
     planning: "مرحلة التخطيط",
     closure: "مرحلة الإغلاق",
     preinitation: "مرحلة الاعداد",
+    financialresources: "الموارد المالية",
+    humanresources: "الموارد البشرية",
+    planning2: "التخطيط",
+    execution2: "التنفيذ",
+    governance: "الحوكمة",
+    externalapprovals: "الموافقات الخارجية",
+    measurement: "القياس",
 
     //Listing
     sort: "التصنيف حسب: ",
@@ -986,6 +1009,9 @@
     latedeliverablescount: "عدد المخرجات المتأخرة",
     "currentyear:": "السنة الحالية: ",
     kpiresulttext: "المستهدفات والقيم الفعلية للمؤشر",
+    mainkpiissuestext: "تحديات المؤشر",
+    mainkpianalysistext: "تحليل المؤشر",
+    sosanalysislinktext: "تحليل الهدف الاستراتيجي",
     benefitmetricstext: "بيانات مقياس المنفعة",
     sublevel2: "مستوى ثاني",
     sublevel3: "مستوى ثالث",
@@ -1527,6 +1553,8 @@
     medium: "Medium",
     low: "Low",
     critical: "Critical",
+    high2: "High",
+    critical2: "Very High",
     cancelled3: "Cancelled",
     //budget item
     support: "Support",
@@ -1667,6 +1695,16 @@ restoration:"restoration",
     avoid: "Avoid",
     leave: "Leave",
     assumption: "Assumption",
+
+    //Probability (risk)
+    rare: "Rare",
+    unlikely: "Unlikely",
+    possible: "Possible",
+    likely: "Likely",
+    frequent: "Frequent",
+    //Impact level
+    verylow: "Very Low",
+
     expectedbud: "Expected Disbursement",
     approve: "Approve",
     reject: "Reject",
@@ -1690,6 +1728,11 @@ restoration:"restoration",
     stat29: "Under Approval",
     stat34: "Unfunded",
     stat35: "Unfunded",
+    stat36: "Very Low",
+    stat37: "Low",
+    stat38: "Medium",
+    stat39: "High",
+    stat40: "Critical",
 
     //////////////////// for project status
     stat8: "Too Late",
@@ -1878,6 +1921,15 @@ restoration:"restoration",
     planning: "Planning",
     closure: "Closure",
     preInitiation: "Pre-Initiation",
+
+    financialresources: "Financial Resources",
+    humanresources: "Human Resources",
+    planning2: "Planning",
+    execution2: "Execution",
+    governance: "Governance",
+    externalapprovals: "External Approvals",
+    measurement: "Measurement",
+
     //kpi classification
     kpiclassification: "KPI Classification",
     kpiassigned: "KPI assigned to a supreme command",
@@ -2373,6 +2425,9 @@ restoration:"restoration",
     latedeliverablescount: "Late Deliverables Count",
     currentyear: "Current Year :",
     kpiresulttext: "Kpi Target and Actual",
+    mainkpiissuestext: "KPI Issues",
+    mainkpianalysistext: "KPI Analysis",
+    sosanalysislinktext: "Objective Analysis",
     benefitmetricstext: "Benefit Metrics Result",
     sublevel2: "Level 2",
     sublevel3: "Level 3",

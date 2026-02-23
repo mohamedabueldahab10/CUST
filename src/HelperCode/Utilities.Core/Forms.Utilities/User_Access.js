@@ -2292,6 +2292,8 @@ window.userCalls = {
           "sos",
           "benefitmatrix",
           "mainkpi",
+          "mainkpianalysis",
+          "sosanalysis",
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
@@ -2313,6 +2315,9 @@ window.userCalls = {
           "risks",
           "goalstrategy",
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "sos",
           "tasks",
           "initiatives",
@@ -2339,6 +2344,9 @@ window.userCalls = {
 
         Edit_Access = [
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "sos",
           "deliverablemetrics",
           "benefitmatrix",
@@ -2358,6 +2366,9 @@ window.userCalls = {
         ];
         Delete_Access = [
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "sos",
           "benefitmatrix",
           "benefitmetrics",
@@ -2390,6 +2401,8 @@ window.userCalls = {
         en_UserRole = "Strategy Performance Management";
         //CRUD
         Create_Access = [
+          "mainkpianalysis",
+          "sosanalysis",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "changerequest",
@@ -2402,8 +2415,11 @@ window.userCalls = {
           "risks",
           "goalstrategy",
           "sos",
+          "sosanalysis",
           "tasks",
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
           "Targets.aspx",
           "benefitmatrix",
           "projects",
@@ -2418,12 +2434,19 @@ window.userCalls = {
         ];
 
         Edit_Access = [
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           // "changerequest",
           // "benefits"
         ];
-        Delete_Access = [];
+        Delete_Access = [
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
+        ];
         break;
 
       case "VROP":
@@ -3444,7 +3467,8 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "achievements",
-          "developmentrequirements"
+          "developmentrequirements",
+          "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
@@ -3478,7 +3502,8 @@ window.userCalls = {
           "contracts",
           //"changerequest",
           "achievements",
-          "developmentrequirements"
+          "developmentrequirements",
+          "delegations"
         ];
         Delete_Access = [
           // for initiative
@@ -3697,8 +3722,8 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "achievements",
-          "changerequests" 
-
+          "changerequests",
+          "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
@@ -3736,7 +3761,8 @@ window.userCalls = {
           "contracts",
           //"changerequest",
           "achievements",
-          "nesteddeliverables"
+          "nesteddeliverables",
+          "delegations"
         ];
         Delete_Access = [
           // for initiative
@@ -3949,9 +3975,12 @@ window.userCalls = {
         ar_UserRole = "مالك الهدف";
         en_UserRole = "Objective Owner";
 
-        Create_Access = ["mainkpi", "changerequest",  
-                "changerequests" 
-      ];
+        Create_Access = [
+          "mainkpi",
+          "changerequest",
+          "changerequests",
+          "delegations"
+        ];
         Read_Access = [
           "mainkpi",
           "sos",
@@ -3962,9 +3991,12 @@ window.userCalls = {
           "tasks",
           "changerequest",
           "changeRequests.aspx",
-          "changerequests"        ];
+          "changerequests",
+          "delegations"
+        ];
         Edit_Access = [
           "mainkpi",
+          "delegations",
           //"changerequest"
         ];
         Delete_Access = [];
@@ -3991,6 +4023,8 @@ window.userCalls = {
         en_UserRole = "Performance Leader";
         //CRUD
         Create_Access = [
+          "mainkpianalysis",
+          "mainkpiissues",
           "Targets.aspx",
           "BenefitMetrics.aspx",
           "changerequest",
@@ -3999,6 +4033,9 @@ window.userCalls = {
         ];
         Read_Access = [
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
+          "sosanalysis",
           "sos",
           "goalstrategy",
           "tasks",
@@ -4019,6 +4056,8 @@ window.userCalls = {
         Edit_Access = [
           "Targets.aspx",
           "mainkpi",
+          "mainkpianalysis",
+          "mainkpiissues",
           // "sos",
           "benefitmetrics",
           "BenefitMetrics.aspx",
@@ -4360,6 +4399,13 @@ window.userCalls = {
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
 
+    // mainkpiissues: only Performance Leader may see the create button
+    if (!isPerformanceLeader) {
+      Create_Access = Create_Access.filter(function (name) {
+        return name !== "mainkpiissues";
+      });
+    }
+
     switch (
       true //Create Access
     ) {
@@ -4405,6 +4451,16 @@ window.userCalls = {
               "</style>"
           );
         });
+        // mainkpiissues: show .btn-add only for Administrator or PerformanceLeader
+        if (USERlistkey === "mainkpiissues" && currentUserRole !== "Administrator" && currentUserRole !== "PerformanceLeader") {
+          $("body").append("<style>.btn-add{display:none!important}</style>");
+          var hideMainKpiIssuesAddBtn = setInterval(function () {
+            if ($(".btn-add").length) {
+              $(".btn-add").css("display", "none");
+            }
+          }, 500);
+          setTimeout(function () { clearInterval(hideMainKpiIssuesAddBtn); }, 15000);
+        }
         break;
     }
 
@@ -4921,6 +4977,14 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelProjectManager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -4966,6 +5030,26 @@ window.userCalls = {
                 },
               },
             },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
           ],
         },
       },
@@ -4983,6 +5067,14 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelProjectOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -4991,6 +5083,26 @@ window.userCalls = {
                 // parentRelationField: "RelatedInitiative",
                 // RelationField: "Title",
                 // RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
                 subRelation: {
                   level: 3,
                   listName: "",
@@ -5015,6 +5127,14 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelInitiativeManager",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -5057,6 +5177,26 @@ window.userCalls = {
                 },
               },
             },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
           ],
         },
       },
@@ -5074,6 +5214,14 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelInitiativeOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -5089,6 +5237,26 @@ window.userCalls = {
                   // parentRelationField: "Title",
                   // RelationField: "InitiativeCode",
                   // RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
                 },
               },
             },
@@ -8941,12 +9109,20 @@ var Access_Project_Info_Request = {
             !isKnowledgeBase &&
             !isAllTasks
           ) {
+            var listingUrl = _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey;
+            if (USERlistkey == "mainkpiissues" || USERlistkey == "mainkpianalysis") {
+              if (window.location.href.indexOf("KpiCode=") > -1) {
+                listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+              }
+            } else if (USERlistkey == "sosanalysis") {
+              if (window.location.href.indexOf("sosCode=") > -1) {
+                listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+              }
+            }
             $(".page-title").html(
-              '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/Listing.aspx?ListKey=" +
-                USERlistkey +
-                '">' +
+              '<a href="' + listingUrl + '">' +
                 USERPageTitle +
                 ""
             );

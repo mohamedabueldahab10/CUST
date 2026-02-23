@@ -1,0 +1,42 @@
+var Listing_Info = [
+  {
+    InternalName: "Title",
+    DisplayName: "عنوان التحليل",
+    DisplayNameEn: "Analysis Title",
+    type: "text",
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: "Quarter",
+    DisplayNameEn: "Quarter",
+    DisplayName: "الربع",
+    type: "number",
+    inlisting: true,
+    infilter: true,
+  },
+  {
+    InternalName: "Year",
+    DisplayNameEn: "Year",
+    DisplayName: "السنة",
+    type: "number",
+    inlisting: true,
+    infilter: true,
+  },
+  {
+    InternalName: "MeasurementLaunchDate",
+    DisplayName: "بداية دورة القياس للربع الحالي",
+    DisplayNameEn: "Measurement Launch Date",
+    type: "date",
+    inlisting: true,
+    infilter: true,
+  },
+  {
+    InternalName: "MeasurementLaunchEndDate",
+    DisplayName: "نهاية دورة القياس للربع الحالي",
+    DisplayNameEn: "Measurement Launch End Date",
+    type: "date",
+    inlisting: true,
+    infilter: true,
+  },
+];

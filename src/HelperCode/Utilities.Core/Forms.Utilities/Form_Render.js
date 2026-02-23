@@ -62,7 +62,9 @@ if (
   (window.PCODE = ""),
   (window.ICODE = ""),
   (window.STCODE = ""),
-  (window.PCODE_STRING = "");
+  (window.sosCode = ""),
+  (window.PCODE_STRING = ""),
+  (window.KPICODE_STRING = "");
 window.btnDeleteLabel = "";
 var siteRootName = window.location.href.split("/")[4];
 window.validattachments = [];
@@ -102,6 +104,9 @@ if (window.location.href.indexOf("PCODE=") > -1) {
 } else if (window.location.href.indexOf("STCODE=") > -1) {
   STCODE = window.location.href.split("STCODE=")[1].split("&")[0];
   PCODE_STRING = "&STCODE=" + STCODE;
+} else if (window.location.href.indexOf("sosCode=") > -1) {
+  sosCode = decodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+  PCODE_STRING = "&sosCode=" + encodeURIComponent(sosCode);
 }
 //determinig json file name
 if (isNew) {
@@ -2082,6 +2087,17 @@ window.ListInfo = {
               GetManHoursHistory.preinit();
               }
 
+            if (listkey == "cryearlycalendar") {
+              $("#Year").attr("min", 1900).attr("max", 2100);
+              $("#Quarter").attr("min", 1).attr("max", 4);
+            }
+
+            if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
+              setTimeout(function () {
+                window.updatePageTitleLinkForKpiOrSos && window.updatePageTitleLinkForKpiOrSos();
+              }, 500);
+            }
+
             // if (USERisWF) {
             //   $(".form-btns-wrapper").hide();
             // }
@@ -2175,6 +2191,49 @@ window.ListInfo = {
             }
             if (listkey == "goalstrategy") {
               ListInfo.g.requiredSpillarsName();
+            }
+
+            if (isNew && (listkey === "mainkpianalysis" || listkey === "sosanalysis")) {
+              if (window.CheckActiveCalendarQuarterForAnalysis) {
+                window.CheckActiveCalendarQuarterForAnalysis(function (data) {
+                  if (data.isSuccess && data.result && data.result.isActive) {
+                    var r = data.result;
+                    function tryFillFields() {
+                      var $year = $("#Year");
+                      var $quarter = $("#Quarter");
+                      var $mLaunch = $("#MeasurementLaunchDate");
+                      var $mEnd = $("#MeasurementLaunchEndDate");
+                      if (!$year.length || !$quarter.length) return false;
+                      $year.val(r.year).prop("readonly", true).addClass("disabled");
+                      $quarter.val(r.quarter).prop("readonly", true).addClass("disabled");
+                      if (r.measurementLaunchDate) {
+                        var d1 = r.measurementLaunchDate.slice(0, 10);
+                        $mLaunch.val(d1).prop("readonly", true).addClass("disabled");
+                      }
+                      if (r.dataReceptionEndDate) {
+                        var d2 = r.dataReceptionEndDate.slice(0, 10);
+                        $mEnd.val(d2).prop("readonly", true).addClass("disabled");
+                      }
+                      $(".CFIELD .disabled").removeAttr("required");
+                      return true;
+                    }
+                    if (!tryFillFields()) {
+                      setTimeout(tryFillFields, 300);
+                    }
+                  } else {
+                    $("body").append(
+                      "<style>" +
+                        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+                        ".form-control{color: #b1b1b1 !important;" +
+                        "border-color: #e1e1e1 !important;" +
+                        "background-color: #fdfdfd !important;" +
+                        "opacity: .6;pointer-events: none;}" +
+                        "</style>"
+                    );
+                    alert("الربع الاستراتيجي غير نشط. لا يمكن إضافة تحليل.");
+                  }
+                });
+              }
             }
             // if (USERisWF || UserHaveLicense == false) {
             //   $(".form-btns-wrapper").hide();
@@ -3302,6 +3361,11 @@ debugger;
         if (element.numberOfDigits) {
           numberOfDigits = `maxlength=${element.numberOfDigits}`;
         }
+        var numberMinMax = "";
+        if (listkey == "cryearlycalendar") {
+          if (element.InternalName == "Year") numberMinMax = ' min="1900" max="2100"';
+          else if (element.InternalName == "Quarter") numberMinMax = ' min="1" max="4"';
+        }
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -3359,6 +3423,7 @@ debugger;
           RequiredName +
           ' type="number" ' +
           numberOfDigits +
+          numberMinMax +
           ' step="any" placeholder="' +
           displayName +
           '" ' +
@@ -7728,6 +7793,12 @@ debugger;
             "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"ProjectCode\" /><Value Type=\"Text\">" +
             PCODE +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        } else if (sosCode && element.sosCodeInList) {
+          var sosCodeEscaped = (sosCode || "").replace(/'/g, "''");
+          sourcelistQuery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"SOCode\" /><Value Type=\"Text\">" +
+            sosCodeEscaped +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
 
         if (
@@ -7956,6 +8027,12 @@ debugger;
             "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
             ICODE +
             "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+        } else if (sosCode && element.sosCodeInList) {
+          var sosCodeEscaped2 = (sosCode || "").replace(/'/g, "''");
+          sourcelistQuery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"SOCode\" /><Value Type=\"Text\">" +
+            sosCodeEscaped2 +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
         }
 
         var itemIDlist = [],
@@ -8179,6 +8256,12 @@ debugger;
 								<Eq><FieldRef Name=\"${element.projectScopeSecondConditionFieldType}\" /><Value Type=\"${element.projectScopeSecondConditionFieldType}\">${element.projectScopeSecondConditionFieldValue}</Value></Eq></And></And>
 								</Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>`;
             }
+          } else if (sosCode && element.sosCodeInList) {
+            var sosCodeEscaped3 = (sosCode || "").replace(/'/g, "''");
+            customQuery =
+              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"SOCode\" /><Value Type=\"Text\">" +
+              sosCodeEscaped3 +
+              "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
           } else if (
             (ICODE && element.initiativeCodeInList) ||
             (RListKey == "initiatives" && element.initiativeCodeInList)
@@ -8841,6 +8924,25 @@ debugger;
         }
         break;
 
+      case "lookupdropdown":
+      case "lookupfromlookup":
+        // عرض فقط في وضع التحرير أيضاً (لا يُستخدم في الـ submit)
+        var dispKey = element.Dispfieldkey;
+        if (element.BIlanguage && (localStorage.getItem("lng") == "en") && element.DispfieldkeyEn) dispKey = element.DispfieldkeyEn;
+        htmlBody =
+          '<div class="col-md-6 CFIELD dont-submit dont-request ' + (element.className || "") + ' " ' + thistip + " " + hidestagesIDs + " " +
+          showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " + isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " +
+          isWfshowstagesIDs + "  " + isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
+          ' data-groups="' + groups + '" ' + notAllowForGroups + ' style="display:' + element.display + '">' +
+          '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+          '<p type="' + element.type + '" data-listname="' + element.source + '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+          '" data-dispfieldkey="' + dispKey + '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
+          (element.type === "lookupfromlookup" ? '" data-secondsource="' + (element.secondsource || "") + '" data-seconddispfieldkey="' + (element.secondDispfieldkey || "Name") + '" data-secondvalfieldkey="' + (element.secondvalfieldkey || "Title") : "") +
+          '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+
       case "relatedProjectlookupWithQuery": //to specific data related to 2 columns added by mahmoud and aisha
         var customQuery;
         if (element.queryField2 && element.notEqual) {
@@ -9269,7 +9371,33 @@ debugger;
               $("#FundingStatus").val("").prop("disabled", false);
           }
       });
-  }  
+  }
+    if ((listkey === "risks" || listkey === "initiativerisks") && (isEdit || isNew)) {
+      function calculateRiskRating() {
+        var impact = $("#Impact").val();
+        var probability = $("#Probability").val();
+        if (!impact || !probability) return;
+        $.ajax({
+          url: `${APIURL}/job/calculateriskrating/${encodeURIComponent(impact)}/${encodeURIComponent(probability)}`,
+          type: "GET",
+          headers: { Accept: "application/json;odata=verbose" },
+          success: function (data) {
+            if (data && data.isSuccess && data.result) {
+              $("#RiskRating").val(data.result.riskRating != null ? data.result.riskRating : "");
+              $("#RiskRatingStatus").val(data.result.riskRatingStatus || "");
+            } else {
+              $("#RiskRating").val("");
+              $("#RiskRatingStatus").val("");
+            }
+          },
+          error: function () {
+            $("#RiskRating").val("");
+            $("#RiskRatingStatus").val("");
+          },
+        });
+      }
+      $("#Impact, #Probability").on("change", calculateRiskRating);
+    }
     if (listkey == "deliverables" && (isEdit || isNew)) {
       if (typeof USERPCODE !== "undefined" && USERPCODE) {
         $.ajax({
@@ -10571,7 +10699,12 @@ debugger;
               }
             }
             if (listkey == "initiatives") {
-              if (item == "RelatedStrategyObjective") {
+              if (
+                item == "RelatedStrategyObjective" ||
+                item == "RelatedStrategyReadonly" ||
+                item == "RelatedReadOnlyObjectiveLevel" ||
+                item == "RelatedReadonlyObjective"
+              ) {
                 myFieldParent.find(">*").attr("required", false);
               }
             }
@@ -13277,6 +13410,69 @@ window.View_ListInfo = {
             "</div>";
           OnSuccess(flag, htmlBody);
           ///////////////////////////////////////////////
+          break;
+
+        case "lookupdropdown":
+          if (element.BIlanguage == true) {
+            if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+              dispfieldkey = element.Dispfieldkey;
+            } else {
+              dispfieldkey = element.DispfieldkeyEn || element.Dispfieldkey;
+            }
+          } else {
+            dispfieldkey = element.Dispfieldkey;
+          }
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            (element.className || "") + ' " ' + thistip + " " + hidestagesIDs + " " +
+            showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " +
+            isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " + isWfshowstagesIDs + "  " +
+            isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
+            '        data-groups="' + groups + '" ' + notAllowForGroups +
+            '  style="display:' + element.display + '">' +
+            '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+            '<p type="lookupdropdown" data-listname="' + element.source +
+            '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+            '" data-dispfieldkey="' + dispfieldkey +
+            '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
+            '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
+        case "lookupfromlookup":
+          if (element.BIlanguage == true) {
+            if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+              dispfieldkey = element.Dispfieldkey;
+            } else {
+              dispfieldkey = element.DispfieldkeyEn || element.Dispfieldkey;
+            }
+          } else {
+            dispfieldkey = element.Dispfieldkey;
+          }
+          var secondDisp = element.secondDispfieldkey || "Name";
+          var secondVal = element.secondvalfieldkey || "Title";
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            (element.className || "") + ' " ' + thistip + " " + hidestagesIDs + " " +
+            showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " +
+            isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " + isWfshowstagesIDs + "  " +
+            isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
+            '        data-groups="' + groups + '" ' + notAllowForGroups +
+            '  style="display:' + element.display + '">' +
+            '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+            '<p type="lookupfromlookup" data-listname="' + element.source +
+            '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+            '" data-dispfieldkey="' + dispfieldkey +
+            '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
+            '" data-secondsource="' + (element.secondsource || "") +
+            '" data-seconddispfieldkey="' + secondDisp +
+            '" data-secondvalfieldkey="' + secondVal +
+            '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
           break;
         
         case "LookupPicker":

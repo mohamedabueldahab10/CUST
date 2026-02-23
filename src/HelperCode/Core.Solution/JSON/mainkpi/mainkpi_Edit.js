@@ -94,7 +94,7 @@ var Information_Form = [
             'SPM Admin',
             'VRO_E',
             'LMSU-Execution',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
           ],
@@ -128,7 +128,7 @@ var Information_Form = [
             'SPM Admin',
             'VRO_E',
             'LMSU-Execution',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
           ],
@@ -268,7 +268,7 @@ var Information_Form = [
             'SPM Admin',
             'VRO_E',
             'LMSU-Execution',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
           ],
@@ -410,7 +410,7 @@ var Information_Form = [
             'SPM Admin',
             'VRO_E',
             'LMSU-Execution',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
           ],
@@ -462,7 +462,7 @@ var Information_Form = [
             'SPM Admin',
             'VRO_E',
             'LMSU-Execution',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
           ],
@@ -604,11 +604,66 @@ var Information_Form = [
         //   groups: [
         //     'LMS_P',
         //     'SPM Admin',
-        //     'SPM Team',
+        //      
         //     'VRO_P',
         //     'System Admin Group',
         //   ],
         // },
+      },
+          {
+        InternalName: 'FromDate',
+        DisplayName: 'من سنة',
+        DisplayNameEn: 'From Date',
+        max: 'ToDate',
+        // type: "datetime",
+        type: 'yearInput',
+        //   "state": "disabled",
+        //   dynamic: "Initiative",
+        // options: {
+        //   choices: [
+        //     '2020',
+        //     '2021',
+        //     '2022',
+        //     '2023',
+        //     '2024',
+        //     '2025',
+        //     '2026',
+        //     '2027',
+        //     '2028',
+        //     '2029',
+        //     '2030',
+        //   ],
+        // },
+        validation: 'required',
+        Errmsgkey: 'fromyearpattern',
+        "state" : "disabled",
+      },
+      {
+        InternalName: 'ToDate',
+        DisplayName: 'الى سنة',
+        DisplayNameEn: 'To Year',
+        type: 'yearInput',
+        // type: "datetime",
+        min: 'FromDate',
+        Errmsgkey: 'toyearpattern',
+        //   "state": "disabled",
+        //   dynamic: "Initiative",
+        // options: {
+        //   choices: [
+        //     '2020',
+        //     '2021',
+        //     '2022',
+        //     '2023',
+        //     '2024',
+        //     '2025',
+        //     '2026',
+        //     '2027',
+        //     '2028',
+        //     '2029',
+        //     '2030',
+        //   ],
+        // },
+        validation: 'required',
       },
       {
         InternalName: 'CategoryKPI',
@@ -626,7 +681,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -681,7 +736,7 @@ var Information_Form = [
             'LMS_P',
             'SPM Admin',
             'Performance Leaders',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -691,7 +746,7 @@ var Information_Form = [
         },
       },
       {
-        InternalName: 'CalculationMethod',
+        InternalName: 'Calculation',
         DisplayNameEn: 'Calculation Method',
         DisplayName: 'طريقة الاحتساب',
         ToggleName: "CalculationMethod",
@@ -709,7 +764,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -737,7 +792,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -760,7 +815,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -845,7 +900,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -872,7 +927,7 @@ var Information_Form = [
       //       groups: [
       //         'LMS_P',
       //         'SPM Admin',
-      //         'SPM Team',
+      //          
       //         'VRO_P',
       //         'Administrators for Project Web App',
       //         'Project Managers for Project Web App',
@@ -979,7 +1034,7 @@ var Information_Form = [
       //       groups: [
       //         'LMS_P',
       //         'SPM Admin',
-      //         'SPM Team',
+      //          
       //         'VRO_P',
       //         'System Admin Group',
       //       ],
@@ -1009,7 +1064,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1070,7 +1125,7 @@ var Information_Form = [
       //       groups: [
       //         'LMS_P',
       //         'SPM Admin',
-      //         'SPM Team',
+      //          
       //         'VRO_P',
       //         'System Admin Group',
       //       ],
@@ -1305,7 +1360,7 @@ var Information_Form = [
       //     "type": "string",
       //     security: {
       //         groups: ["LMS_P",
-      //             'SPM Admin', 'SPM Team', 'VRO_P', 'System Admin Group', 'Project Managers for Project Web App'
+      //             'SPM Admin',   'VRO_P', 'System Admin Group', 'Project Managers for Project Web App'
       //         ]
       //     },
       // },
@@ -1320,7 +1375,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1340,7 +1395,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1362,7 +1417,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1384,7 +1439,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1408,7 +1463,7 @@ var Information_Form = [
       //     groups: [
       //       'LMS_P',
       //       'SPM Admin',
-      //       'SPM Team',
+      //        
       //       'VRO_P',
       //       'System Admin Group',
       //       'VRO_E',
@@ -1457,7 +1512,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1482,7 +1537,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1515,7 +1570,7 @@ var Information_Form = [
       //     groups: [
       //       'LMS_P',
       //       'SPM Admin',
-      //       'SPM Team',
+      //        
       //       'VRO_P',
       //       'System Admin Group',
       //       'VRO_E',
@@ -1532,7 +1587,7 @@ var Information_Form = [
       //     groups: [
       //       'LMS_P',
       //       'SPM Admin',
-      //       'SPM Team',
+      //        
       //       'VRO_P',
       //       'System Admin Group',
       //       'VRO_E',
@@ -1549,7 +1604,7 @@ var Information_Form = [
       //     groups: [
       //       'LMS_P',
       //       'SPM Admin',
-      //       'SPM Team',
+      //        
       //       'VRO_P',
       //       'System Admin Group',
       //       'VRO_E',
@@ -1653,7 +1708,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1675,7 +1730,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1695,7 +1750,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1726,7 +1781,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1768,7 +1823,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1793,7 +1848,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1814,7 +1869,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1834,7 +1889,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'System Admin Group',
             'VRO_E',
@@ -1949,6 +2004,7 @@ var Information_Form = [
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -1973,12 +2029,13 @@ var Information_Form = [
         security: {
           groups: [
             'LMS_P',
-            'SPM Team',
+             
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -2000,12 +2057,13 @@ var Information_Form = [
         security: {
           groups: [
             'LMS_P',
-            'SPM Team',
+             
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -2060,7 +2118,7 @@ var Information_Form = [
         security: {
           groups: [
             'LMS_P',
-            'SPM Team',
+             'SPM Team',
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
@@ -2126,6 +2184,7 @@ var Information_Form = [
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -2147,6 +2206,7 @@ var Information_Form = [
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -2169,6 +2229,7 @@ var Information_Form = [
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -2191,6 +2252,7 @@ var Information_Form = [
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -2213,6 +2275,7 @@ var Information_Form = [
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -2235,6 +2298,7 @@ var Information_Form = [
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -2257,6 +2321,7 @@ var Information_Form = [
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SPM Team',
             'EPMO',
             'SPM Admin'
           ],
@@ -2302,6 +2367,7 @@ var Information_Form = [
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',
+            'SPM Team',
             'VRO_E',
             'LMSU-Execution',
             'EPMO',
@@ -2319,6 +2385,7 @@ var Information_Form = [
         security: {
           groups: [
             'Performance Leaders',
+            'SPM Team',
             'System Admin Group',
           ],
         },
@@ -2354,7 +2421,7 @@ var Information_Form = [
           groups: [
             'LMS_P',
             'SPM Admin',
-            'SPM Team',
+             
             'VRO_P',
             'Performance Leaders',
             'System Admin Group',

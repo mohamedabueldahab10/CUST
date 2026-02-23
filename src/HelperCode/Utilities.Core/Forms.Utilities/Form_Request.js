@@ -120,6 +120,40 @@ window.relatedToProject = [
 
 window.relatedToIdea = [{ listName: "Tasks", RelatedItem: "ProjectCode" }];
 
+window.updatePageTitleLinkForKpiOrSos = function () {
+  if (listkey != "mainkpiissues" && listkey != "mainkpianalysis" && listkey != "sosanalysis") return;
+  var listingUrl = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey;
+  if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+    if (window.location.href.indexOf("KpiCode=") > -1)
+      listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+  } else if (listkey == "sosanalysis") {
+    if (window.location.href.indexOf("sosCode=") > -1)
+      listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+  }
+  if ($(".page-title a").length) {
+    $(".page-title a").attr("href", listingUrl);
+  } else {
+    setTimeout(function () {
+      if ($(".page-title a").length) $(".page-title a").attr("href", listingUrl);
+    }, 500);
+  }
+};
+
+window.CheckActiveCalendarQuarterForAnalysis = function (callback) {
+  var apiUrl = (typeof APIURL !== "undefined" ? APIURL : "") + "/general/checkactivecalendarquarterforanalysis";
+  $.ajax({
+    url: apiUrl,
+    method: "GET",
+    dataType: "json",
+    success: function (data) {
+      if (typeof callback === "function") callback(data);
+    },
+    error: function () {
+      if (typeof callback === "function") callback({ isSuccess: false, result: { isActive: false } });
+    }
+  });
+};
+
 window.Edit_Data_Request = {
   onSuccess: async function (sender, args) {
     // Reset retry count
@@ -172,12 +206,19 @@ window.Edit_Data_Request = {
     $(
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input:not([type=file]), .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> input[type=checkbox],.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=multipicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> div[type=picker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=dropdown], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> select[type=groupsOfPicker], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)>  textarea,.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=date], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request)> .datetimeinputs input[type=datetime-local], .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .multiselect-container"
     ).each(function () {
+      // NOTE: support dummyfield suffix so same internal name can be reused
+      // Example: InternalName + 'dummyfieldXYZ' -> underlying field is InternalName
+      var fieldId = $(this).attr("id");
+      if (fieldId && fieldId.includes("dummyfield")) {
+        fieldId = fieldId.split("dummyfield")[0];
+      }
+
       switch ($(this).attr("type")) {
         case "date":
           var d =
-            oListItem.get_item("" + $(this).attr("id") + "") == null
+            oListItem.get_item(fieldId) == null
               ? "empty"
-              : oListItem.get_item("" + $(this).attr("id") + "");
+              : oListItem.get_item(fieldId);
               var minValue = $(this).attr("min");
 
           if (d != "empty") {
@@ -215,9 +256,9 @@ window.Edit_Data_Request = {
 
         case "datetime-local":
           var d =
-            oListItem.get_item("" + $(this).attr("id") + "") == null
+            oListItem.get_item(fieldId) == null
               ? "empty"
-              : oListItem.get_item("" + $(this).attr("id") + "");
+              : oListItem.get_item(fieldId);
           if (d != "empty") {
             var riyadh = new Date(d.getTime());
             var year = riyadh.getFullYear();
@@ -237,10 +278,10 @@ window.Edit_Data_Request = {
           
         case "picker":
             var pemail =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
+              oListItem.get_item(fieldId) == null
                 ? enternameemail
                 : oListItem
-                    .get_item("" + $(this).attr("id") + "")
+                    .get_item(fieldId)
                     .get_lookupValue();
   
             $(this).attr("data-email", pemail);
@@ -248,7 +289,7 @@ window.Edit_Data_Request = {
             if (pemail != enternameemail)
               $(this).attr(
                 "user-email",
-                oListItem.get_item($(this).attr("id")).get_email()
+                oListItem.get_item(fieldId).get_email()
               );
   
             var idinternal = $(this).attr("id");
@@ -258,9 +299,9 @@ window.Edit_Data_Request = {
             break;
         case "multipicker":
           var pemail =
-            oListItem.get_item("" + $(this).attr("id") + "") == null
+            oListItem.get_item(fieldId) == null
               ? []
-              : oListItem.get_item("" + $(this).attr("id") + "");
+              : oListItem.get_item(fieldId);
 
           var userItems = [];
 
@@ -274,27 +315,27 @@ window.Edit_Data_Request = {
           mp.init($(this).attr("id"), { AllowMultipleValues: true });
           break;
         case "dropdown":
-          $(this).val(oListItem.get_item($(this).attr("id")));
+          $(this).val(oListItem.get_item(fieldId));
 
-          $(this).attr("value", oListItem.get_item($(this).attr("id"))); // save the value in select to use it edit select[dynamic=parent]
+          $(this).attr("value", oListItem.get_item(fieldId)); // save the value in select to use it edit select[dynamic=parent]
 
           if ($(this).attr("id") == "SubSector") {
-            departmenetValue = oListItem.get_item("" + $(this).attr("id") + "");
+            departmenetValue = oListItem.get_item(fieldId);
           }
           if ($(this).attr("id") == "ExternalEntities") {
             externalEntityValue = oListItem.get_item(
-              "" + $(this).attr("id") + ""
+              fieldId
             );
           }
           if ($(this).attr("id") == "BudgetItem") {
-            budgetitemValue = oListItem.get_item("" + $(this).attr("id") + "");
+            budgetitemValue = oListItem.get_item(fieldId);
           }
 
           break;
 
         case "groupsOfPicker":
           // Get the current value from list item
-          var groupsOfPickerCurrentValue = oListItem.get_item($(this).attr("id"));
+          var groupsOfPickerCurrentValue = oListItem.get_item(fieldId);
           
           // Get parent field name from data-parent-field attribute
           var parentFieldName = $(this).attr("data-parent-field");
@@ -382,7 +423,7 @@ window.Edit_Data_Request = {
           break;
 
         case "radio":
-          var radioval = oListItem.get_item($(this).attr("id"));
+          var radioval = oListItem.get_item(fieldId);
           // to handle the master details section show and hide
           if (listkey == "goalstrategy") {
             pillersRadio = radioval;
@@ -403,20 +444,30 @@ window.Edit_Data_Request = {
           } else
             $('input[id="' + $(this).attr("id") + '"]')
               .filter(
-                '[value="' + oListItem.get_item($(this).attr("id")) + '"]'
+                '[value="' + oListItem.get_item(fieldId) + '"]'
               )
               .attr("checked", true);
           break;
 
         case "checkbox":
-          if (oListItem.get_item($(this).attr("id")))
+          if (oListItem.get_item(fieldId))
             $(this).prop("checked", true);
           break;
 
         case "multiselect":
-          if (oListItem.get_item($(this).attr("myfield"))) {
+          // Support dummyfield suffix on the underlying multi-select field name
+          let multiselectFieldId = $(this).attr("myfield");
+          if (
+            multiselectFieldId &&
+            typeof multiselectFieldId === "string" &&
+            multiselectFieldId.includes("dummyfield")
+          ) {
+            multiselectFieldId = multiselectFieldId.split("dummyfield")[0];
+          }
+
+          if (oListItem.get_item(multiselectFieldId)) {
             var myselections = oListItem
-              .get_item($(this).attr("myfield"))
+              .get_item(multiselectFieldId)
               .split(":::");
 
             initiativeDelevrableArr = myselections; // to use it in edit page to get the data checked
@@ -430,12 +481,12 @@ window.Edit_Data_Request = {
 
         case "number":
           if ($(this).hasClass("percentagefield")) {
-            var num = oListItem.get_item($(this).attr("id")) * 100;
+            var num = oListItem.get_item(fieldId) * 100;
             if (num % 1 != 0)
               $(this).val(parseFloat(Math.round(num * 100) / 100).toFixed(2));
             else $(this).val(num);
           } else {
-            $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
+            $(this).val(oListItem.get_item(fieldId));
           }
           break;
 
@@ -443,7 +494,7 @@ window.Edit_Data_Request = {
           // Handle lookupWithDynamicQuery fields - they are rendered as dropdowns
           var lookupValue = null;
           try {
-            lookupValue = oListItem.get_item($(this).attr("id"));
+            lookupValue = oListItem.get_item(fieldId);
           } catch (e) {
             console.log("[Edit_Data_Request] Error getting lookupWithDynamicQuery field value:", e);
             lookupValue = null;
@@ -676,6 +727,15 @@ window.Edit_Data_Request = {
       if (sector) {
         Department_Sector_Info.init(sector); // to get the departments related to sector
       }
+    }
+    if (listkey == "cryearlycalendar") {
+      $("#Year").attr("min", 1900).attr("max", 2100);
+      $("#Quarter").attr("min", 1).attr("max", 4);
+    }
+    if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
+      setTimeout(function () {
+        window.updatePageTitleLinkForKpiOrSos && window.updatePageTitleLinkForKpiOrSos();
+      }, 300);
     }
     if (listkey == "deliverables" && PCODE) {
       var Delivered = $("#Delivered:checked").val();
@@ -1433,7 +1493,7 @@ window.Edit_Data_Request = {
             if (!data.d.results || data.d.results.length === 0) {
               // no record, do nothing
               console.log('no record to show in KPIResultsHistory');
-              return;
+            return;
             }
       
             var item = data.d.results[0]; // take latest record
@@ -1474,6 +1534,23 @@ window.Edit_Data_Request = {
       if(listkey == "mainkpi" && isEdit) {
         var relatedMainGoal = $('#RelatedStrategyObjective').val();
         Get_Related_Sos_Sector.init(relatedMainGoal);
+        // ToDate must not go below its value at load (only increase or stay same)
+        var fromDateVal = $("#FromDate").val();
+        var toDateValAtLoad = $("#ToDate").val();
+        var toNum = Number(toDateValAtLoad);
+        var hasToDateAtLoad = toDateValAtLoad !== "" && toDateValAtLoad != null && !isNaN(toNum) && toNum !== 0;
+        var minAllowedYear = hasToDateAtLoad ? toNum : (Number(fromDateVal) || 0);
+        if (minAllowedYear) $("#ToDate").attr("min", minAllowedYear);
+        $("#ToDate").data("minAllowedYear", minAllowedYear);
+        $("#ToDate").off("input.toDateMin change.toDateMin");
+        $("#ToDate").on("input.toDateMin change.toDateMin", function () {
+          var minAllowed = $(this).data("minAllowedYear");
+          if (!minAllowed) return;
+          var val = Number($(this).val());
+          if (!isNaN(val) && val < minAllowed) {
+            $(this).val(minAllowed);
+          }
+        });
       }
     },2000);
     $(".loader-box").fadeOut();
@@ -1495,6 +1572,24 @@ window.Edit_Data_Request = {
             "</style>"
         );
       }
+    }
+
+    if (listkey === "mainkpianalysis" || listkey === "sosanalysis") {
+      window.CheckActiveCalendarQuarterForAnalysis && window.CheckActiveCalendarQuarterForAnalysis(function (data) {
+        if (!data.result || !data.result.isActive) {
+          $("body").append(
+            "<style>" +
+              ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+              ".form-control{color: #b1b1b1 !important;" +
+              "border-color: #e1e1e1 !important;" +
+              "background-color: #fdfdfd !important;" +
+              "opacity: .6;pointer-events: none;}" +
+              "</style>"
+          );
+          var isAr = localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+          alert(isAr ? "الربع الاستراتيجي غير نشط. لا يمكن تعديل التحليل." : "Strategic calendar quarter is not active. Editing is not allowed.");
+        }
+      });
     }
     
     // Handle getValueFromLookup dynamically after all data is loaded
@@ -2047,11 +2142,17 @@ window.View_Data_Request = {
     $(
       ".section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.dont-request) > .viewmode-value"
     ).each(async function () {
+      // NOTE: support dummyfield suffix so same internal name can be reused
+      var fieldId = $(this).attr("id");
+      if (fieldId && fieldId.includes("dummyfield")) {
+        fieldId = fieldId.split("dummyfield")[0];
+      }
+
       if ($(this).attr("type") == "date") {
         var d =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? "empty"
-            : oListItem.get_item("" + $(this).attr("id") + "");
+            : oListItem.get_item(fieldId);
           var minDateAttr = $(this).attr("min");
 
         if (d != "empty") {
@@ -2111,22 +2212,22 @@ window.View_Data_Request = {
         }
       } else if ($(this).attr("type") == "picker") {
         var pp =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? No_Data
             : oListItem
-                .get_item("" + $(this).attr("id") + "")
+                .get_item(fieldId)
                 .get_lookupValue();
         $(this).text(pp);
         if (pp != UserNo_Data)
           $(this).attr(
             "user-email",
-            oListItem.get_item($(this).attr("id")).get_email()
+            oListItem.get_item(fieldId).get_email()
           );
       } else if ($(this).attr("type") == "multipicker") {
         var pp =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? No_Data
-            : oListItem.get_item("" + $(this).attr("id") + "");
+            : oListItem.get_item(fieldId);
 
         usersItems = "";
 
@@ -2138,9 +2239,9 @@ window.View_Data_Request = {
         $(this).html(usersItems);
       } else if ($(this).attr("type") == "dropdown") {
         var value =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? No_Data
-            : oListItem.get_item("" + $(this).attr("id") + "");
+            : oListItem.get_item(fieldId);
         // $(this).text(value);
         $(this).attr("data-viewtogglevalue", value);
         if (listkey == "goalstrategy") {
@@ -2235,9 +2336,9 @@ window.View_Data_Request = {
         }
       } else if ($(this).attr("type") == "radio") {
         var radioval =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? "no"
-            : oListItem.get_item("" + $(this).attr("id") + "");
+            : oListItem.get_item(fieldId);
         // to handle the master details section show and hide
         if (listkey == "goalstrategy") {
           pillersRadio = radioval;
@@ -2260,9 +2361,9 @@ window.View_Data_Request = {
         } else $(this).text(radioval);
       } else if ($(this).attr("type") == "checkbox") {
         var value =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? No_Data
-            : oListItem.get_item("" + $(this).attr("id") + "");
+            : oListItem.get_item(fieldId);
         if (value)
           if (
             localStorage.getItem("lng") == null ||
@@ -2280,9 +2381,9 @@ window.View_Data_Request = {
         }
       } else if ($(this).attr("type") == "percentage") {
         var num =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? No_Data
-            : oListItem.get_item($(this).attr("id")) * 100;
+            : oListItem.get_item(fieldId) * 100;
         if (num % 1 != 0)
           $(this).text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
         else $(this).text(num);
@@ -2291,18 +2392,18 @@ window.View_Data_Request = {
         $(this).attr("type") == "float"
       ) {
         var value =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? No_Data
-            : oListItem.get_item("" + $(this).attr("id") + "");
+            : oListItem.get_item(fieldId);
 
         $(this).text(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       } else if ($(this).attr("type") == "multiselectForFiles") {
 
         var value =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? No_Data
             : oListItem
-              .get_item("" + $(this).attr("id") + "")
+              .get_item(fieldId)
               .split(":::")
               .join("<br>");
         $(this).html(value);
@@ -2334,9 +2435,9 @@ window.View_Data_Request = {
         }
 
         var value =
-          oListItem.get_item("" + $(this).attr("id") + "") == null
+          oListItem.get_item(fieldId) == null
             ? No_Data
-            : oListItem.get_item("" + $(this).attr("id") + "").split(":::");
+            : oListItem.get_item(fieldId).split(":::");
 
         var customquerymulti =
           "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><In><FieldRef Name=\"" +
@@ -2472,7 +2573,7 @@ window.View_Data_Request = {
 
         //   $(this).html(value);
       } else if ($(this).attr("type") == "multiselecttranslatedstring") {
-        var rawValue = oListItem.get_item($(this).attr("id"));
+        var rawValue = oListItem.get_item(fieldId);
         var $this = $(this);
       
         if (!rawValue || rawValue == "undefined" || rawValue.trim() == "") {
@@ -2529,7 +2630,7 @@ window.View_Data_Request = {
 
         var lookupFieldValue = null;
         try {
-          var lookupItem = oListItem.get_item($(this).attr("id"));
+          var lookupItem = oListItem.get_item(fieldId);
           // If it's a lookup field, get the lookup value (Title)
           if (lookupItem && typeof lookupItem.get_lookupValue === "function") {
             lookupFieldValue = lookupItem.get_lookupValue();
@@ -2540,7 +2641,12 @@ window.View_Data_Request = {
           console.log("[View_Data_Request] Error getting lookup field value:", e);
           lookupFieldValue = null;
         }
-        
+        try {
+          if (lookupFieldValue == null || lookupFieldValue === "") {
+            var urlKey = { "KPICode": "KpiCode", "SOCode": "sosCode", "ProjectCode": "PCODE", "PCODE": "PCODE", "InitiativeCode": "ICODE", "ICODE": "ICODE" }[fieldId];
+            if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) lookupFieldValue = decodeURIComponent(window.location.href.split(urlKey + "=")[1].split("&")[0]);
+          }
+        } catch (e) {}
         if (lookupFieldValue == null) {
           $(this).html(No_Data);
         } else {
@@ -2882,6 +2988,129 @@ window.View_Data_Request = {
             }
           );
         }
+      } else if ($(this).attr("type") == "lookupdropdown") {
+        var parentLookupField = $(this).data("parentlookupfield") || "KPICode",
+          valfieldkey = $(this).data("valfieldkey") || "Title",
+          Dispfieldkey = $(this).data("dispfieldkey"),
+          listname = $(this).data("listname"),
+          $this = $(this);
+        var lookupFieldValue = null;
+        try {
+          var lookupItem = oListItem.get_item(parentLookupField);
+          if (lookupItem && typeof lookupItem.get_lookupValue === "function") {
+            lookupFieldValue = lookupItem.get_lookupValue();
+          } else if (lookupItem) {
+            lookupFieldValue = lookupItem;
+          }
+        } catch (e) {
+          lookupFieldValue = null;
+        }
+        try {
+          if (lookupFieldValue == null || lookupFieldValue === "") {
+            var urlKey = { "KPICode": "KpiCode", "SOCode": "sosCode", "ProjectCode": "PCODE", "PCODE": "PCODE", "InitiativeCode": "ICODE", "ICODE": "ICODE" }[parentLookupField];
+            if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) lookupFieldValue = decodeURIComponent(window.location.href.split(urlKey + "=")[1].split("&")[0]);
+          }
+        } catch (e) {}
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          $this.html(No_Data);
+        } else {
+          customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey + "\" /><Value Type=\"Text\">" + lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var rawValue = records[0][Dispfieldkey];
+                var key = (typeof rawValue === "string" ? rawValue : String(rawValue)).toLowerCase();
+                var displayText;
+                if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                  displayText = Resources.ar && Resources.ar[key] ? Resources.ar[key] : rawValue;
+                } else {
+                  displayText = Resources.en && Resources.en[key] ? Resources.en[key] : rawValue;
+                }
+                $this.text(displayText);
+              } else {
+                $this.html(No_Data);
+              }
+            }
+          );
+        }
+      } else if ($(this).attr("type") == "lookupfromlookup") {
+        var parentLookupField = $(this).data("parentlookupfield") || "KPICode",
+          valfieldkey = $(this).data("valfieldkey") || "Title",
+          Dispfieldkey = $(this).data("dispfieldkey"),
+          listname = $(this).data("listname"),
+          secondsource = $(this).data("secondsource"),
+          secondDispfieldkey = $(this).data("seconddispfieldkey") || "Name",
+          secondvalfieldkey = $(this).data("secondvalfieldkey") || "Title",
+          $this = $(this);
+        var lookupFieldValue = null;
+        try {
+          var lookupItem = oListItem.get_item(parentLookupField);
+          if (lookupItem && typeof lookupItem.get_lookupValue === "function") {
+            lookupFieldValue = lookupItem.get_lookupValue();
+          } else if (lookupItem) {
+            lookupFieldValue = lookupItem;
+          }
+        } catch (e) {
+          lookupFieldValue = null;
+        }
+        try {
+          if (lookupFieldValue == null || lookupFieldValue === "") {
+            var urlKey = { "KPICode": "KpiCode", "SOCode": "sosCode", "ProjectCode": "PCODE", "PCODE": "PCODE", "InitiativeCode": "ICODE", "ICODE": "ICODE" }[parentLookupField];
+            if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) lookupFieldValue = decodeURIComponent(window.location.href.split(urlKey + "=")[1].split("&")[0]);
+          }
+        } catch (e) {}
+        if (lookupFieldValue == null || !listname || !secondsource) {
+          $this.html(No_Data);
+        } else {
+          customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey + "\" /><Value Type=\"Text\">" + lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var secondLookupValue = records[0][Dispfieldkey];
+                if (typeof secondLookupValue === "object" && secondLookupValue != null && typeof secondLookupValue.get_lookupValue === "function") {
+                  secondLookupValue = secondLookupValue.get_lookupValue();
+                }
+                if (!secondLookupValue) {
+                  $this.html(No_Data);
+                  return;
+                }
+                var secondQuery =
+                  "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+                  secondvalfieldkey + "\" /><Value Type=\"Text\">" + secondLookupValue +
+                  "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+                sphttp.get(
+                  _spPageContextInfo.siteServerRelativeUrl,
+                  secondsource,
+                  secondQuery,
+                  [secondDispfieldkey],
+                  function (recs2, r2, li2, done2) {
+                    if (done2 && recs2.length > 0 && recs2[0][secondDispfieldkey] != null) {
+                      $this.html(recs2[0][secondDispfieldkey]);
+                    } else {
+                      $this.html(No_Data);
+                    }
+                  }
+                );
+              } else {
+                $this.html(No_Data);
+              }
+            }
+          );
+        }
       } else if ($(this).attr("type") === "LookupPicker") {
         let fieldId = $(this).attr("id").includes("dummyfield")
           ? $(this).attr("id").split("dummyfield")[0]
@@ -2944,14 +3173,14 @@ window.View_Data_Request = {
         if (listkey == "sos" && $(this).attr("id") == "Status") {
           // add this here to handle status of strategic objective in view and print
           var statusTitle = "",
-            value = oListItem.get_item("" + $(this).attr("id") + "");
+            value = oListItem.get_item(fieldId);
           statusTitle = await StrategicObjectives_Status.init(value);
           $(this).text(statusTitle);
         } else if ($(this).data("translatefromresources") == true) {
           var value =
-            oListItem.get_item("" + $(this).attr("id") + "") == null
+            oListItem.get_item(fieldId) == null
               ? No_Data
-              : oListItem.get_item("" + $(this).attr("id") + "");
+              : oListItem.get_item(fieldId);
 
           if (
             localStorage.getItem("lng") == null ||
@@ -2961,9 +3190,9 @@ window.View_Data_Request = {
           } else $(this).text(Resources.en[value]);
         } else {
           var value =
-            oListItem.get_item("" + $(this).attr("id") + "") == null
+            oListItem.get_item(fieldId) == null
               ? No_Data
-              : oListItem.get_item("" + $(this).attr("id") + "");
+              : oListItem.get_item(fieldId);
           
           // Handle GroupName translation for delegations in view mode
           if (listkey == "delegations" && $(this).attr("id") == "GroupName" && value && value != No_Data) {
@@ -3026,9 +3255,9 @@ window.View_Data_Request = {
       $(".container-body .d-flex.btnactionrow").hide();
     } else {
       // Don't call Get_AllTaskHistoryRelatedToForm.init() for delegations
-      if (listkey != "delegations") {
-        Get_AllTaskHistoryRelatedToForm.init();
-      }
+    if (listkey != "delegations" && listkey != "cryearlycalendar") {
+      Get_AllTaskHistoryRelatedToForm.init();
+    }
     }
 
     //handle top menu navigation
@@ -3219,12 +3448,27 @@ window.View_Data_Request = {
 
       if (!USERisWF) {
         $("#printableArea").prepend(
-          '<a class="linkmsg alert" href="' +
-            _spPageContextInfo.siteAbsoluteUrl +
-            "/sitepages/Targets.aspx?KpiCode=" +
-            KPICode +
-            '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-kpiresulttext class="Resources">' +
-            "</span></a>"
+          '<style>.kpi-link-item:hover,.sos-link-item:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1);}</style>' +
+          '<div class="kpi-links-wrapper" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;">' +
+            '<a class="linkmsg alert kpi-link-item" href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Targets.aspx?KpiCode=" +
+              KPICode +
+              '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(24,58,102,0.12);color:#183a66;border:1px solid rgba(24,58,102,0.35);">' +
+              '<i class="fas fa-info-circle iconfontawesome"></i><span data-trans-kpiresulttext class="Resources"></span></a>' +
+            '<a class="linkmsg alert kpi-link-item" href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=mainkpiissues&KpiCode=" +
+              KPICode +
+              '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(247,148,29,0.18);color:#f7941d;border:1px solid rgba(247,148,29,0.45);">' +
+              '<i class="fas fa-exclamation-triangle iconfontawesome"></i><span data-trans-mainkpiissuestext class="Resources"></span></a>' +
+            '<a class="linkmsg alert kpi-link-item" href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=mainkpianalysis&KpiCode=" +
+              KPICode +
+              '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(20,130,130,0.18);color:#148282;border:1px solid rgba(20,130,130,0.4);">' +
+              '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-mainkpianalysistext class="Resources"></span></a>' +
+          "</div>"
         );
       }
       var yearValue = $("#Actual").parent().parent().find("#Year").text();
@@ -3240,6 +3484,24 @@ window.View_Data_Request = {
         var htmlMsg =
           '<div data-trans-draftsos class="kpiPeriodChanged ErrorMsg Resources"></div>';
         $(".btnactionrow").html(htmlMsg);
+      }
+
+      if (!USERisWF) {
+        // SOs list has Title as code (no SOCode column); SOCode exists only in SOSAnalysis list
+        var sosCodeForLinks = oListItem.get_item("Title") ? String(oListItem.get_item("Title")).trim() : "";
+        if (sosCodeForLinks) {
+          $("#printableArea").prepend(
+            '<style>.sos-link-item:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1);}</style>' +
+            '<div class="sos-links-wrapper" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;">' +
+              '<a class="linkmsg alert sos-link-item" href="' +
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=sosanalysis&sosCode=" +
+                encodeURIComponent(sosCodeForLinks) +
+                '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(20,130,130,0.18);color:#148282;border:1px solid rgba(20,130,130,0.4);">' +
+                '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-sosanalysislinktext class="Resources"></span></a>' +
+            "</div>"
+          );
+        }
       }
     }
 
@@ -3621,6 +3883,18 @@ window.View_Data_Request = {
         );
       }
     }
+
+    if (listkey === "mainkpianalysis" || listkey === "sosanalysis") {
+      window.CheckActiveCalendarQuarterForAnalysis && window.CheckActiveCalendarQuarterForAnalysis(function (data) {
+        if (!data.result || !data.result.isActive) {
+          $("body").append(
+            "<style>" +
+              ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+              "</style>"
+          );
+        }
+      });
+    }
     
     // Handle getValueFromLookup dynamically after all data is loaded
     // Use setTimeout to ensure all fields are loaded
@@ -3873,13 +4147,17 @@ window.View_Data_Request = {
     },
     clickbait: function () {
       $("button.btn-save").on("click", function () {
-        window.location =
-          _spPageContextInfo.webAbsoluteUrl +
+        var editUrl = _spPageContextInfo.webAbsoluteUrl +
           "/SitePages/Edit.aspx?ListKey=" +
           listkey +
           "&IID=" +
           IID +
           PCODE_STRING;
+        if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+          var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+          if (kpiCode) editUrl += "&KpiCode=" + kpiCode;
+        }
+        window.location = editUrl;
       });
       $("button.btn-delete").on("click", function () {
         Delete_Item_Submit.g.Delete_Message();
@@ -3910,11 +4188,18 @@ window.View_Data_Request = {
             "/sitepages/ProjectHome.aspx?PCODE=" +
             PCODE;
         } else {
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
+          var cancelUrl = _spPageContextInfo.webAbsoluteUrl +
             "/SitePages/Listing.aspx?ListKey=" +
             listkey +
             PCODE_STRING;
+          if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+            var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+            if (kpiCode) cancelUrl += "&KpiCode=" + kpiCode;
+          } else if (listkey == "sosanalysis") {
+            var sosCodeCancel = window.location.href.indexOf("sosCode=") > -1 ? window.location.href.split("sosCode=")[1].split("&")[0] : "";
+            if (sosCodeCancel) cancelUrl += "&sosCode=" + encodeURIComponent(sosCodeCancel);
+          }
+          window.location = cancelUrl;
         }
       });
     },
@@ -4442,11 +4727,17 @@ var Master_Details_Request = {
             oListItem.get_id() +
             '"] > .CFIELD > .viewmode-value'
         ).each(function () {
+          // NOTE: support dummyfield suffix for master details view mode
+          let masterFieldId = $(this).attr("id");
+          if (masterFieldId && typeof masterFieldId === "string" && masterFieldId.includes("dummyfield")) {
+            masterFieldId = masterFieldId.split("dummyfield")[0];
+          }
+
           if ($(this).attr("type") == "date") {
             var d =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
+              oListItem.get_item(masterFieldId) == null
                 ? "empty"
-                : oListItem.get_item("" + $(this).attr("id") + "");
+                : oListItem.get_item(masterFieldId);
             if (d != "empty") {
               var local = d.getTime();
               var offset = d.getTimezoneOffset() * (60 * 1000);
@@ -4493,17 +4784,17 @@ var Master_Details_Request = {
             $(this).text(datetouse2);
           } else if ($(this).attr("type") == "picker") {
             var pp =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
+              oListItem.get_item(masterFieldId) == null
                 ? No_Data
                 : oListItem
-                    .get_item("" + $(this).attr("id") + "")
+                    .get_item(masterFieldId)
                     .get_lookupValue();
             $(this).text(pp);
           } else if ($(this).attr("type") == "dropdown") {
             var value =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
+              oListItem.get_item(masterFieldId) == null
                 ? No_Data
-                : oListItem.get_item("" + $(this).attr("id") + "");
+                : oListItem.get_item(masterFieldId);
             if (
               localStorage.getItem("lng") == null ||
               localStorage.getItem("lng") == "ar"
@@ -4512,9 +4803,9 @@ var Master_Details_Request = {
             } else $(this).text(Resources.en[value]);
           } else if ($(this).attr("type") == "radio") {
             var radioval =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
+              oListItem.get_item(masterFieldId) == null
                 ? "no"
-                : oListItem.get_item("" + $(this).attr("id") + "");
+                : oListItem.get_item(masterFieldId);
             // to handle the master details section show and hide
             if (listkey == "goalstrategy") {
               pillersRadio = radioval;
@@ -4541,9 +4832,9 @@ var Master_Details_Request = {
             } else $(this).text(radioval);
           } else if ($(this).attr("type") == "checkbox") {
             var value =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
+              oListItem.get_item(masterFieldId) == null
                 ? No_Data
-                : oListItem.get_item("" + $(this).attr("id") + "");
+                : oListItem.get_item(masterFieldId);
             if (value)
               if (
                 localStorage.getItem("lng") == null ||
@@ -4559,9 +4850,9 @@ var Master_Details_Request = {
             } else $(this).text(Resources.en["no"]);
           } else if ($(this).attr("type") == "percentage") {
             var num =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
+              oListItem.get_item(masterFieldId) == null
                 ? No_Data
-                : oListItem.get_item($(this).attr("id")) * 100;
+                : oListItem.get_item(masterFieldId) * 100;
             if (num % 1 != 0)
               $(this).text(parseFloat(Math.round(num * 100) / 100).toFixed(2));
             else $(this).text(num);
@@ -4570,9 +4861,9 @@ var Master_Details_Request = {
             $(this).attr("type") == "float"
           ) {
             var value =
-              oListItem.get_item("" + $(this).attr("id") + "") == null
+              oListItem.get_item(masterFieldId) == null
                 ? No_Data
-                : oListItem.get_item("" + $(this).attr("id") + "");
+                : oListItem.get_item(masterFieldId);
 
             $(this).text(
               value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -9403,11 +9694,6 @@ window.Get_TaskHistory = {
 };
 window.Get_AllTaskHistoryRelatedToForm = {
   init: function () {
-    // Don't show AllTaskHistoryRelatedToForm for delegations
-    if (listkey == "delegations") {
-      return;
-    }
-    
     $("button.loadMore").addClass("disabled");
 
     var clientContext = new SP.ClientContext.get_current();

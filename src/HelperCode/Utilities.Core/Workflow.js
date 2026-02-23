@@ -215,8 +215,10 @@ var workflowname,
     window.location.href.indexOf("sos&LMSCreateObjective") > -1,
   isInitiativeClosure =
     window.location.href.indexOf("closureform&InitiativeClosure") > -1,
-    isDevelopmentRequirements =
+  isDevelopmentRequirements =
     window.location.href.indexOf("developmentrequirements") > -1,
+  isKPIIssue =
+    window.location.href.toLowerCase().indexOf("mainkpiissues") > -1,
   isProjectClosure =
     window.location.href.indexOf("closureform&ProjectClosure") > -1,
   isVROCRProject =
@@ -393,6 +395,20 @@ if (isStrategyWf) {
     '</Value></Eq><And><Eq><FieldRef Name="RelatedItemID" /><Value Type="Text">' +
     IID2 +
     '</Value></Eq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></And></Where></Query></View>';
+} else if (isKPIIssue) {
+  workflowname = "KPIIssue";
+  bulkeditlist = "MainKPIIssues";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isIssuePage) {
   workflowname = "Issues";
   bulkeditlist = "Issues";
@@ -1131,8 +1147,7 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-}
- else if (isVROCreateKPI) {
+} else if (isVROCreateKPI) {
   workflowname = "VROCreateKPI";
   bulkeditlist = "MainKPI";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];

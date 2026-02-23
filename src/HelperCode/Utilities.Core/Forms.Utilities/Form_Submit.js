@@ -480,9 +480,18 @@ window.New_Data_Submit = {
              .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> textarea,
               .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`
     ).each(function () {
+      // NOTE: support dummyfield suffix so same internal name can be reused
+      let fieldId = $(this).attr("id");
+      if (fieldId && typeof fieldId === "string" && fieldId.includes("dummyfield")) {
+        fieldId = fieldId.split("dummyfield")[0];
+      }
+
       if ($(this).attr("type") == "picker") {
         if ($(this).find("span.sp-peoplepicker-userSpan").length) {
           var id = $(this).attr("INppicker");
+          if (id && typeof id === "string" && id.includes("dummyfield")) {
+            id = id.split("dummyfield")[0];
+          }
           var ppp =
             $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
             undefined
@@ -500,11 +509,14 @@ window.New_Data_Submit = {
           ($(this).attr("id") == "MitigationOwner" && listkey == "risks")
         ) {
           var ppp = SP.FieldUserValue.fromUser(UserN.LoginName.split("|")[1]);
-          New_Data_Submit.g.oListItem.set_item($(this).attr("id"), ppp);
+          New_Data_Submit.g.oListItem.set_item(fieldId, ppp);
         }
       } else if ($(this).attr("type") == "multipicker") {
         if ($(this).find("span.sp-peoplepicker-userSpan").length) {
           var id = $(this).attr("INppicker");
+          if (id && typeof id === "string" && id.includes("dummyfield")) {
+            id = id.split("dummyfield")[0];
+          }
           var users = [];
           $("span.sp-peoplepicker-userSpan").each(function () {
             var ppp =
@@ -545,7 +557,7 @@ window.New_Data_Submit = {
             month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
 
           if (dateval && timeval)
-            New_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
+            New_Data_Submit.g.oListItem.set_item(fieldId, ydate);
         } else {
           var dateval = $(this).val().replace("-", "/");
           var ydate = !dateval
@@ -554,7 +566,7 @@ window.New_Data_Submit = {
                 .join("/")
                 .replace("-", "/");
           if (dateval)
-            New_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
+            New_Data_Submit.g.oListItem.set_item(fieldId, ydate);
         }
       } else if ($(this).attr("type") == "datetime-local") {
         if ($(this).hasClass("withTime")) {
@@ -583,19 +595,19 @@ window.New_Data_Submit = {
             month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
 
           if (dateval)
-            New_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
+            New_Data_Submit.g.oListItem.set_item(fieldId, ydate);
         }
       } else if ($(this).attr("type") == "radio") {
         var checkedvalue = $(
           'input[id="' + $(this).attr("id") + '"]:checked'
         ).val();
         if (checkedvalue == "yes") {
-          New_Data_Submit.g.oListItem.set_item($(this).attr("id"), "yes");
+          New_Data_Submit.g.oListItem.set_item(fieldId, "yes");
         } else if (checkedvalue == "no") {
-          New_Data_Submit.g.oListItem.set_item($(this).attr("id"), "no");
+          New_Data_Submit.g.oListItem.set_item(fieldId, "no");
         } else
           New_Data_Submit.g.oListItem.set_item(
-            $(this).attr("id"),
+            fieldId,
             checkedvalue
           );
 
@@ -607,10 +619,10 @@ window.New_Data_Submit = {
           'input[id="' + $(this).attr("id") + '"]:checked'
         ).length;
         if (checkedvalue)
-          New_Data_Submit.g.oListItem.set_item($(this).attr("id"), true);
-        else New_Data_Submit.g.oListItem.set_item($(this).attr("id"), false);
+          New_Data_Submit.g.oListItem.set_item(fieldId, true);
+        else New_Data_Submit.g.oListItem.set_item(fieldId, false);
       } else if ($(this).attr("type") == "dropdown") {
-        New_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
+        New_Data_Submit.g.oListItem.set_item(fieldId, $(this).val());
         var SubmitForApprovalValue;
         if ($(this).attr("id") == "SubmitForApproval") {
           SubmitForApprovalValue = $(this).val();
@@ -636,10 +648,10 @@ window.New_Data_Submit = {
           });
         }
       } else if ($(this).attr("type") == "groupsOfPicker") {
-        New_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
+        New_Data_Submit.g.oListItem.set_item(fieldId, $(this).val());
       } else if ($(this).hasClass("percentagefield")) {
         New_Data_Submit.g.oListItem.set_item(
-          $(this).attr("id"),
+          fieldId,
           $(this).val() / 100
         );
       } else if ($(this).attr("type") == "multiselect") {
@@ -651,8 +663,13 @@ window.New_Data_Submit = {
           });
 
         myselections = myselections.join(":::");
+        // Support dummyfield suffix on myfield attribute
+        let multiselectFieldId = $(this).attr("myfield");
+        if (multiselectFieldId && typeof multiselectFieldId === "string" && multiselectFieldId.includes("dummyfield")) {
+          multiselectFieldId = multiselectFieldId.split("dummyfield")[0];
+        }
         New_Data_Submit.g.oListItem.set_item(
-          $(this).attr("myfield"),
+          multiselectFieldId,
           myselections
         );
         // console.log("inside multiselect")
@@ -669,7 +686,7 @@ window.New_Data_Submit = {
         //     myselections
         //   );
       } else
-        New_Data_Submit.g.oListItem.set_item($(this).attr("id"), $(this).val());
+        New_Data_Submit.g.oListItem.set_item(fieldId, $(this).val());
     });
 
     //to handle the for default value submittion
@@ -1025,6 +1042,14 @@ window.New_Data_Submit = {
       //  to handle the initiative status when create a new one
       New_Data_Submit.g.oListItem.set_item("InitiativeProgressStatus", "stat6");
     }
+    if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+      var kpiCodeFromUrl = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+      if (kpiCodeFromUrl) New_Data_Submit.g.oListItem.set_item("KPICode", kpiCodeFromUrl);
+    }
+    if (listkey == "sosanalysis") {
+      var sosCodeFromUrl = window.location.href.indexOf("sosCode=") > -1 ? decodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]) : "";
+      if (sosCodeFromUrl) New_Data_Submit.g.oListItem.set_item("SOCode", sosCodeFromUrl);
+    }
 
     /*if(listkey="engineeringprojects")
     {
@@ -1323,11 +1348,29 @@ window.New_Data_Submit = {
     Cancel: function () {
       $("button.btn-cancel").on("click", function () {
         // window.history.back();
-        window.location =
+        var cancelUrl =
           _spPageContextInfo.webAbsoluteUrl +
           "/SitePages/Listing.aspx?ListKey=" +
           listkey +
-          PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+          (typeof PCODE_STRING !== "undefined" ? PCODE_STRING : ""); //_spPageContextInfo.webServerRelativeUrl+
+
+        // Preserve codes on New forms when returning back to Listing
+        if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+          var kpiCode =
+            window.location.href.indexOf("KpiCode=") > -1
+              ? window.location.href.split("KpiCode=")[1].split("&")[0]
+              : "";
+          if (kpiCode) cancelUrl += "&KpiCode=" + encodeURIComponent(kpiCode);
+        } else if (listkey == "sosanalysis") {
+          var sosCodeCancel =
+            window.location.href.indexOf("sosCode=") > -1
+              ? window.location.href.split("sosCode=")[1].split("&")[0]
+              : "";
+          if (sosCodeCancel)
+            cancelUrl += "&sosCode=" + encodeURIComponent(sosCodeCancel);
+        }
+
+        window.location = cancelUrl;
       });
     },
     checkNewMasterDetails: function () {
@@ -1417,6 +1460,30 @@ var Set_Code_Submit = {
         prt3 = IID.toString().padStart(4, "0");
         Code = prt1 + "-" + prt2 + "-" + prt3;
         Set_Code_Submit.g.oListItem.set_item("Title", Code);
+      } else if (listkey == "mainkpiissues") {
+        var prt1 = 'MKI',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
+        var kpiCodeFromUrl = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+        if (kpiCodeFromUrl) Set_Code_Submit.g.oListItem.set_item("KPICode", kpiCodeFromUrl);
+      } else if (listkey == "mainkpianalysis") {
+        var prt1 = 'MKA',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
+        var kpiCodeFromUrl = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+        if (kpiCodeFromUrl) Set_Code_Submit.g.oListItem.set_item("KPICode", kpiCodeFromUrl);
+      } else if (listkey == "sosanalysis") {
+        var prt1 = 'SOA',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
+        var sosCodeFromUrl = window.location.href.indexOf("sosCode=") > -1 ? decodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]) : "";
+        if (sosCodeFromUrl) Set_Code_Submit.g.oListItem.set_item("SOCode", sosCodeFromUrl);
       } else if (listkey == "measurementcyclesupport") {
         var prt1 = 'MC',
         prt2 = String(new Date().getFullYear()).slice(4 - 2),
@@ -1543,10 +1610,14 @@ var Set_Code_Submit = {
             } else {
               // Handle delegations - call API after saving to List (NEW - no files)
               if (listkey == "delegations") {
+                var prt1 = listkey.substring(0, 2).toUpperCase(),
+                  prt2 = String(new Date().getFullYear()).slice(-2),
+                  prt3 = IID.toString().padStart(4, "0");
+                var delegationCode = prt1 + "-" + prt2 + "-" + prt3;
                 console.log("Calling delegation API after saving to List (NEW - no files)");
-                console.log("Delegation Code:", Code);
+                console.log("Delegation Code:", delegationCode);
                 $.ajax({
-                  url: `${APIURL}/delegation/delegateuser/${Code}`,
+                  url: `${APIURL}/delegation/delegateuser/${delegationCode}`,
                   method: "GET",
                   contentType: "application/json; charset=utf-8",
                   success: function (response) {
@@ -1584,6 +1655,49 @@ var Set_Code_Submit = {
                       PCODE_STRING;
                   }
                 });
+              } else if (listkey == "strategiccalendar") {
+                var strategicCalendarTitle = Code;
+                $.ajax({
+                  url: `${APIURL}/general/updatedatareceptionenddate/${encodeURIComponent(strategicCalendarTitle)}`,
+                  method: "GET",
+                  contentType: "application/json; charset=utf-8",
+                  success: function (response) {
+                    $(".errormsg").hide();
+                    $(".successmsg").show();
+                    $(".btn-save").addClass("success");
+                    if (response && response.Result === false) {
+                      if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                        alert("حدث خطأ أثناء تحديث تاريخ الانتهاء من استقبال البيانات وبعدها تم الحفظ بنجاح");
+                      } else {
+                        alert("An error occurred while updating the data reception end date. Data was saved successfully.");
+                      }
+                    }
+                    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                      alert("تم حفظ البيانات بنجاح");
+                    } else {
+                      alert("Data saved successfully");
+                    }
+                    window.location = _spPageContextInfo.webAbsoluteUrl +
+                      "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+                  },
+                  error: function () {
+                    $(".errormsg").hide();
+                    $(".successmsg").show();
+                    $(".btn-save").addClass("success");
+                    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                      alert("حدث خطأ أثناء تحديث تاريخ الانتهاء من استقبال البيانات وبعدها تم الحفظ بنجاح");
+                    } else {
+                      alert("An error occurred while updating the data reception end date. Data was saved successfully.");
+                    }
+                    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                      alert("تم حفظ البيانات بنجاح");
+                    } else {
+                      alert("Data saved successfully");
+                    }
+                    window.location = _spPageContextInfo.webAbsoluteUrl +
+                      "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+                  }
+                });
               } else {
                 // For delegations, don't show alert here - it will be shown after API call
                 // The API call will handle the alert and redirect
@@ -1596,13 +1710,17 @@ var Set_Code_Submit = {
                     alert("تم حفظ البيانات بنجاح");
                     console.log('alert success')
                 } else {
-                    alert("Data saved successfully");
+                  alert("Data saved successfully");
                 }
-                  window.location =
-                    _spPageContextInfo.webAbsoluteUrl +
+                  var redirectUrl = _spPageContextInfo.webAbsoluteUrl +
                     "/SitePages/Listing.aspx?ListKey=" +
                     listkey +
                     PCODE_STRING;
+                  if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+                    var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+                    if (kpiCode) redirectUrl += "&KpiCode=" + kpiCode;
+                  }
+                  window.location = redirectUrl;
                 }
                 // For delegations, do nothing here - API callback will handle alert and redirect
               }
@@ -2129,7 +2247,12 @@ window.Edit_Data_Submit = {
           .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)>  textarea,
            .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field) > .multiselect-container`).each(
       function () {
-        var fieldIdForUse = $(this).attr("id");
+        // NOTE: support dummyfield suffix so same internal name can be reused
+        let fieldId = $(this).attr("id");
+        if (fieldId && typeof fieldId === "string" && fieldId.includes("dummyfield")) {
+          fieldId = fieldId.split("dummyfield")[0];
+        }
+        var fieldIdForUse = fieldId;
         if (listkey == "mainkpi" && isEdit &&!isWF &&( (isPerformanceLeader && ($('#WFStage').val() !== "approved")) || isSPMAdmin)) {
           var skipFieldsForPerfLeader = ["A","B","CC","D","E","F","G","Quarter","Months","Midterms","Year","Equation"];
           if (skipFieldsForPerfLeader.indexOf(fieldIdForUse) !== -1) return;
@@ -2137,6 +2260,9 @@ window.Edit_Data_Submit = {
         if ($(this).attr("type") == "picker") {
           if ($(this).find("span.sp-peoplepicker-userSpan").length) {
             var id = $(this).attr("INppicker");
+            if (id && typeof id === "string" && id.includes("dummyfield")) {
+              id = id.split("dummyfield")[0];
+            }
             var ppp =
               $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
               undefined
@@ -2149,6 +2275,9 @@ window.Edit_Data_Submit = {
         } else if ($(this).attr("type") == "multipicker") {
           if ($(this).find("span.sp-peoplepicker-userSpan").length) {
             var id = $(this).attr("INppicker");
+            if (id && typeof id === "string" && id.includes("dummyfield")) {
+              id = id.split("dummyfield")[0];
+            }
             var users = [];
             $("span.sp-peoplepicker-userSpan").each(function () {
               var ppp =
@@ -2202,11 +2331,11 @@ window.Edit_Data_Submit = {
 
               if (dateval && timeval)
                 Edit_Data_Submit.g.oListItem.set_item(
-                  $(this).attr("id"),
+                  fieldId,
                   ydate
                 );
             } else {
-              Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), null);
+              Edit_Data_Submit.g.oListItem.set_item(fieldId, null);
             }
           } else {
             if ($(this).val()) {
@@ -2218,11 +2347,11 @@ window.Edit_Data_Submit = {
                     .replace("-", "/");
               if (dateval)
                 Edit_Data_Submit.g.oListItem.set_item(
-                  $(this).attr("id"),
+                  fieldId,
                   ydate
                 );
             } else {
-              Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), null);
+              Edit_Data_Submit.g.oListItem.set_item(fieldId, null);
             }
           }
         } else if ($(this).attr("type") == "datetime-local") {
@@ -2261,7 +2390,7 @@ window.Edit_Data_Submit = {
               sec;
 
             if (dateval)
-              Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), ydate);
+              Edit_Data_Submit.g.oListItem.set_item(fieldId, ydate);
           }
         } else if ($(this).attr("type") == "radio") {
           // var checkedvalue = $('input[id="' + $(this).attr('id') + '"]:checked').val();
@@ -2270,12 +2399,12 @@ window.Edit_Data_Submit = {
             'input[id="' + $(this).attr("id") + '"]:checked'
           ).val();
           if (checkedvalue == "yes") {
-            Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), "yes");
+            Edit_Data_Submit.g.oListItem.set_item(fieldId, "yes");
           } else if (checkedvalue == "no" || checkedvalue == "undefined") {
-            Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), "no");
+            Edit_Data_Submit.g.oListItem.set_item(fieldId, "no");
           } else
             Edit_Data_Submit.g.oListItem.set_item(
-              $(this).attr("id"),
+              fieldId,
               checkedvalue
             );
 
@@ -2299,14 +2428,14 @@ window.Edit_Data_Submit = {
             'input[id="' + $(this).attr("id") + '"]:checked'
           ).length;
           if (checkedvalue)
-            Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), true);
-          else Edit_Data_Submit.g.oListItem.set_item($(this).attr("id"), false);
+            Edit_Data_Submit.g.oListItem.set_item(fieldId, true);
+          else Edit_Data_Submit.g.oListItem.set_item(fieldId, false);
         } else if ($(this).attr("type") == "dropdown") {
           
           $(this).find(":disabled").removeAttr("disabled"); // avoid remove the data when the dropdown field is disabled
 
           Edit_Data_Submit.g.oListItem.set_item(
-            $(this).attr("id"),
+            fieldId,
             $(this).val()
           );
           var SubmitForApprovalValue;
@@ -2336,12 +2465,12 @@ window.Edit_Data_Submit = {
         } else if ($(this).attr("type") == "groupsOfPicker") {
           $(this).find(":disabled").removeAttr("disabled"); // avoid remove the data when the field is disabled
           Edit_Data_Submit.g.oListItem.set_item(
-            $(this).attr("id"),
+            fieldId,
             $(this).val()
           );
         } else if ($(this).hasClass("percentagefield")) {
           Edit_Data_Submit.g.oListItem.set_item(
-            $(this).attr("id"),
+            fieldId,
             $(this).val() / 100
           );
         } else if ($(this).attr("type") == "multiselect") {
@@ -2353,13 +2482,18 @@ window.Edit_Data_Submit = {
               myselections.push($(this).val());
             });
           myselections = myselections.join(":::");
+          // Support dummyfield suffix on myfield attribute
+          let multiselectFieldId = $(this).attr("myfield");
+          if (multiselectFieldId && typeof multiselectFieldId === "string" && multiselectFieldId.includes("dummyfield")) {
+            multiselectFieldId = multiselectFieldId.split("dummyfield")[0];
+          }
           Edit_Data_Submit.g.oListItem.set_item(
-            $(this).attr("myfield"),
+            multiselectFieldId,
             myselections
           );
         } else {
           Edit_Data_Submit.g.oListItem.set_item(
-            $(this).attr("id"),
+            fieldId,
             $(this).val()
           );
         }
@@ -2934,6 +3068,12 @@ window.Edit_Data_Submit = {
                 month = 12;
             }
     
+            var performanceAnalysis = $("#PerformanceAnalysis").val() || "";
+            var actualKpiDateRaw = $("#ActualkpiDate").val() || "";
+            var actualkpiDate = actualKpiDateRaw
+                ? new Date(actualKpiDateRaw).toISOString().split("T")[0]
+                : "";
+
             const payload = {
                 mainKPICode: $("#Title").val(),
                 year,
@@ -2946,6 +3086,8 @@ window.Edit_Data_Submit = {
                 f: parseFloat($("#F").val() || 0),
                 g: parseFloat($("#G").val() || 0),
                 finalValue: parseFloat($("#Equation").val() || 0),
+                performanceAnalysis: performanceAnalysis,
+                actualkpiDate: actualkpiDate,
                 createdByUserId: 0,
             };
     
@@ -3016,6 +3158,46 @@ window.Edit_Data_Submit = {
     clientContext.load(Edit_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+        // mainkpi Edit: call createkpiresults AFTER list save and BEFORE showing any success alert
+        // We call afterSuccess() only AFTER this API finishes, so alert always comes after createkpiresults.
+        if (listkey == "mainkpi") {
+          window.__createKpiResultsCalled = false;
+          var kpiCode = $("#Title").val();
+          var proceedAfterCreateKpiResults = function () {
+            Edit_Data_Submit.g.afterSuccess();
+          };
+
+          if (typeof APIURL !== "undefined" && APIURL) {
+            window.__createKpiResultsCalled = true;
+            var createUrl =
+              APIURL + "/general/createkpiresults/" + encodeURIComponent(kpiCode);
+            console.log("[mainkpi edit] calling createkpiresults:", createUrl);
+            debugger;
+            $.ajax({
+              url: createUrl,
+              method: "GET",
+              success: function (res) {
+                console.log("[mainkpi edit] createkpiresults success", res);
+                proceedAfterCreateKpiResults();
+              },
+              error: function (xhr, status, err) {
+                console.warn(
+                  "[mainkpi edit] createkpiresults error",
+                  status,
+                  err,
+                  xhr
+                );
+                proceedAfterCreateKpiResults();
+              }
+            });
+          } else {
+            console.warn(
+              "[mainkpi edit] APIURL missing; skipping createkpiresults"
+            );
+            proceedAfterCreateKpiResults();
+          }
+          return;
+        }
 
         if( listkey == "projects"){
         if(User_ProjUID == null || User_ProjUID == "لا يوجد" || User_ProjUID == "No Data")
@@ -3301,14 +3483,21 @@ window.Edit_Data_Submit = {
     },
     Cancel: function () {
       $("button.btn-cancel").on("click", function () {
-        window.location =
+        var cancelUrl =
           _spPageContextInfo.webAbsoluteUrl +
           "/SitePages/View.aspx?ListKey=" +
           listkey +
           "&IID=" +
           IID +
-          PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
-        // console.log(PCODE_STRING);
+          (typeof PCODE_STRING !== "undefined" ? PCODE_STRING : "");
+        if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+          var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+          if (kpiCode) cancelUrl += "&KpiCode=" + encodeURIComponent(kpiCode);
+        } else if (listkey == "sosanalysis") {
+          var sosCodeCancel = window.location.href.indexOf("sosCode=") > -1 ? window.location.href.split("sosCode=")[1].split("&")[0] : "";
+          if (sosCodeCancel) cancelUrl += "&sosCode=" + encodeURIComponent(sosCodeCancel);
+        }
+        window.location = cancelUrl;
       });
     },
     checkEditMasterDetails: function () {
@@ -3393,8 +3582,9 @@ window.Edit_Data_Submit = {
           } else if (USERisWF && workflowname != "Project") {
             Continue_Submit_Field.init();
           } else {
-            // For delegations, don't show alert here - it will be shown after API call
-            if (listkey != "delegations") {
+            // For delegations and strategiccalendar, don't show alert here - will be shown after API call
+            // For mainkpi, we also delay the alert to its own branch
+            if (listkey != "delegations" && listkey != "strategiccalendar" && listkey != "mainkpi") {
               $(".btn-save").addClass("success");
               if ( localStorage.getItem("lng") == null ||
               localStorage.getItem("lng") == "ar") {
@@ -3425,20 +3615,46 @@ window.Edit_Data_Submit = {
                 ).attr("option-id") +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == "mainkpi") {
-              Edit_KPI_Results.init(
-                kpiName,
-                kpiType,
-                kpiSector,
-                kpiSubSector,
-                kpiPortfolio,
-                kpiMainGoalRelated,
-                kpiSubGoalRelated,
-                kpiPerformanceAnalysis,
-                kpiRecurrenceChanged,
-                kpicurrentYear,
-                kpiTotalActual
-              );
-             
+              var kpiCode = $("#Title").val();
+              var redirectUrl = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey + (typeof PCODE_STRING !== "undefined" ? PCODE_STRING : "");
+              var showSuccessAndRedirect = function () {
+                $(".btn-save").addClass("success");
+                if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                  alert("تم حفظ البيانات بنجاح");
+                } else {
+                  alert("Data saved successfully");
+                }
+                window.location = redirectUrl;
+              };
+              if (typeof APIURL !== "undefined" && APIURL) {
+                // createkpiresults should already have been called in executeQueryAsync success for edit.
+                // Fallback: if we reached here from another path, call it once.
+                if (!window.__createKpiResultsCalled) {
+                  $.ajax({
+                    url: APIURL + "/general/createkpiresults/" + encodeURIComponent(kpiCode),
+                    method: "GET",
+                    success: showSuccessAndRedirect,
+                    error: showSuccessAndRedirect
+                  });
+                } else {
+                  showSuccessAndRedirect();
+                }
+              } else {
+                Edit_KPI_Results.init(
+                  kpiName,
+                  kpiType,
+                  kpiSector,
+                  kpiSubSector,
+                  kpiPortfolio,
+                  kpiMainGoalRelated,
+                  kpiSubGoalRelated,
+                  kpiPerformanceAnalysis,
+                  kpiRecurrenceChanged,
+                  kpicurrentYear,
+                  kpiTotalActual
+                );
+                showSuccessAndRedirect();
+              }
             }  else if (listkey == "benefits") {
               Edit_KPI_Results.init(
                 kpiName,
@@ -3514,15 +3730,77 @@ window.Edit_Data_Submit = {
                       PCODE_STRING;
                   }
                 }
+              } else if (listkey == "strategiccalendar") {
+                var strategicCalendarTitle = $("#Title").val();
+                if (strategicCalendarTitle) {
+                  $.ajax({
+                    url: `${APIURL}/general/updatedatareceptionenddate/${encodeURIComponent(strategicCalendarTitle)}`,
+                    method: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                      $(".errormsg").hide();
+                      $(".successmsg").show();
+                      $(".btn-save").addClass("success");
+                      if (response && response.Result === false) {
+                        if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                          alert("حدث خطأ أثناء تحديث تاريخ الانتهاء من استقبال البيانات وبعدها تم الحفظ بنجاح");
+                        } else {
+                          alert("An error occurred while updating the data reception end date. Data was saved successfully.");
+                        }
+                      }
+                      if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                        alert("تم حفظ البيانات بنجاح");
+                      } else {
+                        alert("Data saved successfully");
+                      }
+                      window.location = _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+                    },
+                    error: function () {
+                      $(".errormsg").hide();
+                      $(".successmsg").show();
+                      $(".btn-save").addClass("success");
+                      if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                        alert("حدث خطأ أثناء تحديث تاريخ الانتهاء من استقبال البيانات وبعدها تم الحفظ بنجاح");
+                      } else {
+                        alert("An error occurred while updating the data reception end date. Data was saved successfully.");
+                      }
+                      if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                        alert("تم حفظ البيانات بنجاح");
+                      } else {
+                        alert("Data saved successfully");
+                      }
+                      window.location = _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+                    }
+                  });
+                } else {
+                  if (fileCount == 0) {
+                    $(".errormsg").hide();
+                    $(".successmsg").show();
+                    $(".btn-save").addClass("success");
+                    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                      alert("تم حفظ البيانات بنجاح");
+                    } else {
+                      alert("Data saved successfully");
+                    }
+                    window.location = _spPageContextInfo.webAbsoluteUrl +
+                      "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+                  }
+                }
               } else {
                 if (fileCount == 0) {
-                window.location =
-                  _spPageContextInfo.webAbsoluteUrl +
+                var redirectUrl = _spPageContextInfo.webAbsoluteUrl +
                   "/SitePages/View.aspx?ListKey=" +
                   listkey +
                   "&IID=" +
                   IID +
                   PCODE_STRING;
+                if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+                  var kpiCode = window.location.href.indexOf("KpiCode=") > -1 ? window.location.href.split("KpiCode=")[1].split("&")[0] : "";
+                  if (kpiCode) redirectUrl += "&KpiCode=" + kpiCode;
+                }
+                window.location = redirectUrl;
                 } //_spPageContextInfo.webServerRelativeUrl+
               }
             }
@@ -4468,6 +4746,31 @@ var New_Master_Details_Submit = {
             $(".successmsg").show();
             $(".btn-save").addClass("success");
 
+            if (listkey == "mainkpi") {
+              var kpiCode = $("#Title").val();
+              var redirectUrl = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey + PCODE_STRING;
+              var showSuccessAndRedirect = function () {
+                if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                  alert("تم حفظ البيانات بنجاح");
+                } else {
+                  alert("Data saved successfully");
+                }
+                if (!mainKpiIsUpload || isuploaddone) {
+                  window.location = redirectUrl;
+                }
+              };
+              $.ajax({
+                url: `${APIURL}/general/createkpiresults/${kpiCode}`,
+                method: "GET",
+                success: function () {
+                  console.log("api called successfully");
+                  showSuccessAndRedirect();
+                },
+                error: function () {
+                  showSuccessAndRedirect();
+                }
+              });
+            } else {
             if ( localStorage.getItem("lng") == null ||
             localStorage.getItem("lng") == "ar") {
               alert("تم حفظ البيانات بنجاح");
@@ -4522,6 +4825,7 @@ var New_Master_Details_Submit = {
                   PCODE_STRING;
                 }
               }
+            }
             }
           }
         }
