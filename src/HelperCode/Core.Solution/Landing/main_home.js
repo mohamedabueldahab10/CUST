@@ -104,22 +104,22 @@ if (
 window.UProjects = [];
 window.RisksCountsForRSupport = 0;
 window.issueCountsForRSupport = 0;
-// var iconstagesm = require("../../../HelperRessources/img/icon-stage-sm.png");
-// var iconstatustimesm = require("../../../HelperRessources/img/icon-status-time-sm.png");
-// var calendar = require("../../../HelperRessources/img/calendar.svg");
-// var iconimportantsm = require("../../../HelperRessources/img/icon-important-sm.png");
-// var iconstrategysm = require("../../../HelperRessources/img/analysis.png");
-// var risk = require("../../../HelperRessources/img/risk.svg");
-// var progress = require("../../../HelperRessources/img/progress.svg");
-// var mizania = require("../../../HelperRessources/img/mizania.svg");
-var iconstagesm = '';
-var iconstatustimesm = '';
-var calendar = '';
-var iconimportantsm = '';
-var iconstrategysm = '';
-var risk = '';
-var progress = '';
-var mizania = '';
+var iconstagesm = require("../../../HelperRessources/img/icon-stage-sm.png");
+var iconstatustimesm = require("../../../HelperRessources/img/icon-status-time-sm.png");
+var calendar = require("../../../HelperRessources/img/calendar.svg");
+var iconimportantsm = require("../../../HelperRessources/img/icon-important-sm.png");
+var iconstrategysm = require("../../../HelperRessources/img/analysis.png");
+var risk = require("../../../HelperRessources/img/risk.svg");
+var progress = require("../../../HelperRessources/img/progress.svg");
+var mizania = require("../../../HelperRessources/img/mizania.svg");
+// var iconstagesm = '';
+// var iconstatustimesm = '';
+// var calendar = '';
+// var iconimportantsm = '';
+// var iconstrategysm = '';
+// var risk = '';
+// var progress = '';
+// var mizania = '';
 
 // new repo
 
@@ -147,6 +147,8 @@ var PQuery =
   isAscending;
 var portfoliosName = [];
 var reversePortfoliosArray = [];
+var filterApplyDebounceTimer = null;
+var FILTER_DEBOUNCE_MS = 350;
 
 var Noverylate = 0,
   Nolate = 0,
@@ -875,56 +877,39 @@ window.Project_Info_Request = {
       $(".page-filter .dropdown-menu label input:checkbox").change(function (
         e
       ) {
-        FilterChoices = [];
-        portfoliosdata = [];
-        portfoliosoptions = [];
+        if (filterApplyDebounceTimer) clearTimeout(filterApplyDebounceTimer);
+        filterApplyDebounceTimer = setTimeout(function () {
+          filterApplyDebounceTimer = null;
+          FilterChoices = [];
+          portfoliosdata = [];
+          portfoliosoptions = [];
 
-        if (isRoleDataLevelAccess) {
-          FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
-        }
-        console.log("inside filter trigger  in main home");
-
-        $(".page-filter .dropdown-menu").each(function () {
-          //looping through filters
-
-          var internalName = $(this).find("input:checkbox").data("internal");
-          var fieldType = $(this).find("input:checkbox").data("type");
-          var BooleanfieldType = $(this)
-            .find("input:checkbox")
-            .data("columntype");
-          // console.log('BooleanfieldType', BooleanfieldType);
-          var selectedchoices = $(this)
-            .find("input:checked")
-            .map(function () {
-              //getting selected choices
-              return $(this).val();
-            })
-            .get();
-          if (selectedchoices.length) {
-            //checking if there are choices
-            // remove cause fix the value of strategy to be yes and no to use it in filter
-
-            // if (BooleanfieldType == "Boolean") {
-            //   debugger
-            //   for (i = 0; i < selectedchoices.length; i++) {
-            //     if (
-            //       selectedchoices[i] == "true" ||
-            //       selectedchoices[i] == "Yes" ||
-            //       selectedchoices[i] == "yes"
-            //     ) {
-            //       selectedchoices[i] = 1;
-            //     } else selectedchoices[i] = 0;
-            //   }
-            // }
-            FilterChoices.push({
-              internalName: internalName,
-              Type: fieldType,
-              Values: selectedchoices,
-            });
-            // console.log('FilterChoices', FilterChoices);
+          if (isRoleDataLevelAccess) {
+            FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
           }
-        });
-        Project_Info_Request.g.camlfilterbuilder();
+
+          $(".page-filter .dropdown-menu").each(function () {
+            var internalName = $(this).find("input:checkbox").data("internal");
+            var fieldType = $(this).find("input:checkbox").data("type");
+            var BooleanfieldType = $(this)
+              .find("input:checkbox")
+              .data("columntype");
+            var selectedchoices = $(this)
+              .find("input:checked")
+              .map(function () {
+                return $(this).val();
+              })
+              .get();
+            if (selectedchoices.length) {
+              FilterChoices.push({
+                internalName: internalName,
+                Type: fieldType,
+                Values: selectedchoices,
+              });
+            }
+          });
+          Project_Info_Request.g.camlfilterbuilder();
+        }, FILTER_DEBOUNCE_MS);
       });
       $(".page-filter .dropdown-menu label.dropdown-item").on(
         "click",
@@ -988,8 +973,11 @@ window.Project_Info_Request = {
         }
       );
       if (FilterChoices.length == 0) {
-        //PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq></Where></Query></View>';
-        PQuery = AccessQuery;
+        if (isRoleDataLevelAccess) {
+          PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
+        } else {
+          PQuery = AccessQuery;
+        }
         Project_Info_Request.init();
       } //if there are choices build caml query
       else {
@@ -999,9 +987,47 @@ window.Project_Info_Request = {
         ).prop({
           disabled: true,
         });
+
+        // Role-based access: dataLevelAccessQuery uses Or. Use data level Where + user filter only.
+        if (isRoleDataLevelAccess) {
+          var userFilterNames = ["Phase", "ProgressStatusSchedule", "SubSector", "Sector", "Priority", "IsStrategicProject"];
+          var userFilterChoices = FilterChoices.filter(function (c) {
+            return userFilterNames.indexOf(c.internalName) !== -1;
+          });
+          if (userFilterChoices.length === 0) {
+            PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
+            Project_Info_Request.init();
+            if ($(".page-filter .dropdown-menu").find("input:checkbox:checked").length === 0) {
+              $("#clearAllFilter").prop("disabled", true);
+            }
+            return;
+          }
+          var dataLevelQueryToUse = dataLevelAccessQuery || AccessQuery;
+          var dataLevelWhereMatch = dataLevelQueryToUse.match(/<Where>([\s\S]*?)<\/Where>/i);
+          var dataLevelWhereContent = dataLevelWhereMatch ? dataLevelWhereMatch[1].trim() : "";
+          var userWhere = "";
+          for (var u = 0; u < userFilterChoices.length; u++) {
+            var fc = userFilterChoices[u];
+            userWhere += "<In><FieldRef Name=\"" + (fc.internalName || "") + "\"/><Values>";
+            for (var v = 0; v < (fc.Values || []).length; v++) {
+              var val = String(fc.Values[v] || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+              userWhere += "<Value Type=\"" + (fc.Type || "Text") + "\">" + val + "</Value>";
+            }
+            userWhere += "</Values></In>";
+          }
+          var combinedWhere = "<Where><And>" + dataLevelWhereContent + userWhere + "</And></Where>";
+          Query_Body = "<View><Query>" + combinedWhere + "<OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+          PQuery = Query_Body;
+          Project_Info_Request.init();
+          if ($(".page-filter .dropdown-menu").find("input:checkbox:checked").length === 0) {
+            $("#clearAllFilter").prop("disabled", true);
+          }
+          return;
+        }
+
         for (var k = 0; k < FilterChoices.length; k++) {
           ViewFields +=
-            '<FieldRef Name="' + FilterChoices[k].InternalName + '"/>';
+            '<FieldRef Name="' + (FilterChoices[k].internalName || FilterChoices[k].InternalName) + '"/>';
         }
         Where_Body =
           "<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>";

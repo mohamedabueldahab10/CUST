@@ -124,8 +124,15 @@ var mizania = require("../../HelperRessources/img/mizania.svg");
 // var progress;//= require("../../HelperRessources/img/progress.svg");
 // var mizania;// = require("../../HelperRessources/img/mizania.svg");
 //filter vars
+// ViewFields to reduce payload (only columns used by the webpart)
+var INITIATIVES_VIEW_FIELDS =
+  "<ViewFields><FieldRef Name='Title'/><FieldRef Name='Name'/><FieldRef Name='Phase'/><FieldRef Name='SubSector'/><FieldRef Name='Sector'/><FieldRef Name='Types'/><FieldRef Name='InitiativeProgressStatus'/><FieldRef Name='Portfolio'/><FieldRef Name='EstimatedCost'/><FieldRef Name='ActualCost'/><FieldRef Name='InitiativeBudget'/><FieldRef Name='IsZeroBudgetInitiative'/><FieldRef Name='Created'/><FieldRef Name='DeletionStatus'/></ViewFields>";
+// Set to 0 for no limit; set e.g. 100 to speed up initial load when there is a lot of data
+var INITIATIVES_ROW_LIMIT = 0;
+var INITIATIVES_PAGE_SIZE = 10;
+var INITIATIVES_ROW_LIMIT_XML = INITIATIVES_ROW_LIMIT > 0 ? "<RowLimit>" + INITIATIVES_ROW_LIMIT + "</RowLimit>" : "";
 var PQuery =
-  "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
+  "<View>" + INITIATIVES_VIEW_FIELDS + INITIATIVES_ROW_LIMIT_XML + "<Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
   originalstate = true,
   FilterChoices = [],
   subsectorfilterarray = [],
@@ -147,6 +154,8 @@ var PQuery =
   isAscending;
 var portfoliosName = [];
 var reversePortfoliosArray = [];
+var filterApplyDebounceTimer = null;
+var FILTER_DEBOUNCE_MS = 350;
 
 var Noverylate = 0,
   Nolate = 0,
@@ -195,7 +204,7 @@ window.initiativeRequest = {
         //   PQuery = SubSectorInitiativeAccessQuery;
         // } else {
         PQuery =
-          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+          "<View>" + INITIATIVES_VIEW_FIELDS + INITIATIVES_ROW_LIMIT_XML + "<Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
         //}
       }
       //**** Start*/check user rule and buld query to get projects;
@@ -764,7 +773,7 @@ window.initiativeRequest = {
     initiativeRequest.g.statisticsbars(); //assigning data to stats
     initiativeRequest.g.handlescrollview(); //intialize viewelement in scroll
     //
-    //calling other data
+    //calling other data (no server-side filter to keep all user roles working)
     Risks_Info_Request.init();
     budgetItemRequest.init();
     // Deliverables_Info_Request.init();//NOTE hide charts and make load faster requirement
@@ -826,52 +835,50 @@ window.initiativeRequest = {
       $(".page-filter .dropdown-menu label input:checkbox").change(function (
         e
       ) {
-        console.log("YYY");
+        if (filterApplyDebounceTimer) clearTimeout(filterApplyDebounceTimer);
+        filterApplyDebounceTimer = setTimeout(function () {
+          filterApplyDebounceTimer = null;
+          FilterChoices = [];
+          portfoliosdata = [];
+          portfoliosoptions = [];
 
-        FilterChoices = [];
-        portfoliosdata = [];
-        portfoliosoptions = [];
-
-        if (isRoleDataLevelAccess) {
-          FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
-        }
-
-        $(".page-filter .dropdown-menu").each(function () {
-          //looping through filters
-          var internalName = $(this).find("input:checkbox").data("internal");
-          var fieldType = $(this).find("input:checkbox").data("type");
-          var BooleanfieldType = $(this)
-            .find("input:checkbox")
-            .data("columntype");
-          // console.log('BooleanfieldType', BooleanfieldType);
-          var selectedchoices = $(this)
-            .find("input:checked")
-            .map(function () {
-              //getting selected choices
-              return $(this).val();
-            })
-            .get();
-          if (selectedchoices.length) {
-            //checking if there are choices
-            if (BooleanfieldType == "Boolean") {
-              for (i = 0; i < selectedchoices.length; i++) {
-                if (
-                  selectedchoices[i] == "true" ||
-                  selectedchoices[i] == "Yes" ||
-                  selectedchoices[i] == "yes"
-                ) {
-                  selectedchoices[i] = 1;
-                } else selectedchoices[i] = 0;
-              }
-            }
-            FilterChoices.push({
-              internalName: internalName,
-              Type: fieldType,
-              Values: selectedchoices,
-            });
+          if (isRoleDataLevelAccess) {
+            FilterChoices = Array.from(dataLevelAccessChoicesForFilters);
           }
-        });
-        initiativeRequest.g.camlfilterbuilder();
+
+          $(".page-filter .dropdown-menu").each(function () {
+            var internalName = $(this).find("input:checkbox").data("internal");
+            var fieldType = $(this).find("input:checkbox").data("type");
+            var BooleanfieldType = $(this)
+              .find("input:checkbox")
+              .data("columntype");
+            var selectedchoices = $(this)
+              .find("input:checked")
+              .map(function () {
+                return $(this).val();
+              })
+              .get();
+            if (selectedchoices.length) {
+              if (BooleanfieldType == "Boolean") {
+                for (i = 0; i < selectedchoices.length; i++) {
+                  if (
+                    selectedchoices[i] == "true" ||
+                    selectedchoices[i] == "Yes" ||
+                    selectedchoices[i] == "yes"
+                  ) {
+                    selectedchoices[i] = 1;
+                  } else selectedchoices[i] = 0;
+                }
+              }
+              FilterChoices.push({
+                internalName: internalName,
+                Type: fieldType,
+                Values: selectedchoices,
+              });
+            }
+          });
+          initiativeRequest.g.camlfilterbuilder();
+        }, FILTER_DEBOUNCE_MS);
       });
       $(".page-filter .dropdown-menu label.dropdown-item").on(
         "click",
@@ -933,12 +940,12 @@ window.initiativeRequest = {
         }
       );
       if (FilterChoices.length == 0) {
-        // if (isInManager || isInOwner) {
-        //   PQuery = InitiativeAccessQuery
-        // } else {
-        PQuery =
-          "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where></Query></View>";
-        // }
+        if (isRoleDataLevelAccess) {
+          PQuery = dataLevelAccessQuery;
+        } else {
+          PQuery =
+            "<View>" + INITIATIVES_VIEW_FIELDS + INITIATIVES_ROW_LIMIT_XML + "<Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+        }
         initiativeRequest.init();
       } //if there are choices build caml query
       else {
@@ -948,9 +955,46 @@ window.initiativeRequest = {
         ).prop({
           disabled: true,
         });
+
+        // Role-based access: dataLevelAccessQuery uses Or (e.g. PM OR Owner). Building from FilterChoices would use And and return 0. So use data level Where + user filter only.
+        if (isRoleDataLevelAccess) {
+          var userFilterNames = ["Phase", "InitiativeProgressStatus", "SubSector"];
+          var userFilterChoices = FilterChoices.filter(function (c) {
+            return userFilterNames.indexOf(c.internalName) !== -1;
+          });
+          if (userFilterChoices.length === 0) {
+            PQuery = dataLevelAccessQuery;
+            initiativeRequest.init();
+            if ($(".page-filter .dropdown-menu").find("input:checkbox:checked").length === 0) {
+              $("#clearAllFilter").prop("disabled", true);
+            }
+            return;
+          }
+          var dataLevelWhereMatch = dataLevelAccessQuery.match(/<Where>([\s\S]*?)<\/Where>/i);
+          var dataLevelWhereContent = dataLevelWhereMatch ? dataLevelWhereMatch[1].trim() : "";
+          var userWhere = "";
+          for (var u = 0; u < userFilterChoices.length; u++) {
+            var fc = userFilterChoices[u];
+            userWhere += "<In><FieldRef Name=\"" + (fc.internalName || "") + "\"/><Values>";
+            for (var v = 0; v < (fc.Values || []).length; v++) {
+              var val = String(fc.Values[v] || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+              userWhere += "<Value Type=\"" + (fc.Type || "Text") + "\">" + val + "</Value>";
+            }
+            userWhere += "</Values></In>";
+          }
+          var combinedWhere = "<Where><And>" + dataLevelWhereContent + userWhere + "</And></Where>";
+          Query_Body = "<View><Query>" + combinedWhere + "<OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+          PQuery = Query_Body;
+          initiativeRequest.init();
+          if ($(".page-filter .dropdown-menu").find("input:checkbox:checked").length === 0) {
+            $("#clearAllFilter").prop("disabled", true);
+          }
+          return;
+        }
+
         for (var k = 0; k < FilterChoices.length; k++) {
           ViewFields +=
-            '<FieldRef Name="' + FilterChoices[k].InternalName + '"/>';
+            '<FieldRef Name="' + (FilterChoices[k].internalName || FilterChoices[k].InternalName) + '"/>';
         }
 
         Where_Body =
@@ -1139,21 +1183,16 @@ window.initiativeRequest = {
               'Type="DateTime"',
               'IncludeTimeValue="False" Type="DateTime"'
             );
-
+            // Keep same query structure as dataLevelAccessQuery when role-based (no ViewFields) so filters work for Initiative Manager etc.
+            var viewPrefix = isRoleDataLevelAccess ? "<View>" : ("<View>" + INITIATIVES_VIEW_FIELDS + INITIATIVES_ROW_LIMIT_XML);
             Query_Body =
-              "<View>" +
-              // '<ViewFields>' + //use it for paging jsom calls
-              //     ViewFields
-              // '</ViewFields>' +
+              viewPrefix +
               "<Query>" +
               "<Where>" +
               Where_Body +
               "</And></Where>" +
-              // '<OrderBy>' +
-              // '<FieldRef Name="' + sortColumn + '" Ascending="'+isAscending+'" />' +
-              // '</OrderBy>' +
+              "<OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy>" +
               "</Query>" +
-              // '<RowLimit>' + pageSize + '</RowLimit>'+
               "</View>";
           }
         }
@@ -1768,7 +1807,6 @@ window.checkInitiativeHomeHtml = setInterval(function () {
 }, 1000);
 //Risks
 var Risks_Info_Request = {
-  // The main Initialization function
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Risks");
@@ -1776,7 +1814,7 @@ var Risks_Info_Request = {
     camlQuery.set_viewXml(
       "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='InitiativeCode' Ascending='False' /></OrderBy></Query></View>"
     );
-    Risks_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    Risks_Info_Request.g.collListItem = oList.getItems(camlQuery);
     clientContext.load(Risks_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, Risks_Info_Request.onSuccess),
@@ -1861,9 +1899,7 @@ var Risks_Info_Request = {
         nor
       );
     }
-    // $('.Rsupprot').text(RSupport);
     changeResources();
-
     Issues_Info_Request.init();
   },
   onError: function (sender, args) {
@@ -1879,7 +1915,6 @@ var Risks_Info_Request = {
 };
 //issues
 var Issues_Info_Request = {
-  // The main Initialization function
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Issues");
@@ -1887,7 +1922,7 @@ var Issues_Info_Request = {
     camlQuery.set_viewXml(
       "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='InitiativeCode' Ascending='False' /></OrderBy></Query></View>"
     );
-    Issues_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    Issues_Info_Request.g.collListItem = oList.getItems(camlQuery);
 
     clientContext.load(Issues_Info_Request.g.collListItem);
     clientContext.executeQueryAsync(
@@ -1999,9 +2034,8 @@ var Issues_Info_Request = {
     PCODE: window.location.href.split("/")[4],
   },
 };
-//Risks
+//Budget Items
 var budgetItemRequest = {
-  // The main Initialization function
   init: function () {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Budget Items");
@@ -2009,7 +2043,7 @@ var budgetItemRequest = {
     camlQuery.set_viewXml(
       "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='InitiativeCode' Ascending='False' /></OrderBy></Query></View>"
     );
-    budgetItemRequest.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    budgetItemRequest.g.collListItem = oList.getItems(camlQuery);
     clientContext.load(budgetItemRequest.g.collListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, budgetItemRequest.onSuccess),
@@ -2053,7 +2087,6 @@ var budgetItemRequest = {
     // 		nor
     // 	);
     // }
-    // $('.Rsupprot').text(RSupport);
     changeResources();
     Issues_Info_Request.init();
   },
