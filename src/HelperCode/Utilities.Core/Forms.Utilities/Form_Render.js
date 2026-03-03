@@ -8943,6 +8943,38 @@ debugger;
         OnSuccess(flag, htmlBody);
         break;
 
+      case "lookupmultiline":
+        var dispKeyM = element.Dispfieldkey;
+        if (element.BIlanguage && (localStorage.getItem("lng") == "en") && element.DispfieldkeyEn) dispKeyM = element.DispfieldkeyEn;
+        htmlBody =
+          '<div class="col-md-6 CFIELD multiline dont-submit dont-request ' + (element.className || "") + ' " ' + thistip + " " + hidestagesIDs + " " +
+          showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " + isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " +
+          isWfshowstagesIDs + "  " + isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
+          ' data-groups="' + groups + '" ' + notAllowForGroups + ' style="display:' + element.display + '">' +
+          '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+          '<p type="lookupmultiline" data-listname="' + element.source + '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+          '" data-dispfieldkey="' + dispKeyM + '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
+          '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+
+      case "lookupdatetime":
+        var dispKeyD = element.Dispfieldkey;
+        if (element.BIlanguage && (localStorage.getItem("lng") == "en") && element.DispfieldkeyEn) dispKeyD = element.DispfieldkeyEn;
+        htmlBody =
+          '<div class="col-md-6 CFIELD dont-submit dont-request ' + (element.className || "") + ' " ' + thistip + " " + hidestagesIDs + " " +
+          showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " + isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " +
+          isWfshowstagesIDs + "  " + isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
+          ' data-groups="' + groups + '" ' + notAllowForGroups + ' style="display:' + element.display + '">' +
+          '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+          '<p type="lookupdatetime" data-listname="' + element.source + '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+          '" data-dispfieldkey="' + dispKeyD + '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
+          '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+
       case "relatedProjectlookupWithQuery": //to specific data related to 2 columns added by mahmoud and aisha
         var customQuery;
         if (element.queryField2 && element.notEqual) {
@@ -13470,6 +13502,62 @@ window.View_ListInfo = {
             '" data-secondsource="' + (element.secondsource || "") +
             '" data-seconddispfieldkey="' + secondDisp +
             '" data-secondvalfieldkey="' + secondVal +
+            '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
+        case "lookupmultiline":
+          if (element.BIlanguage == true) {
+            if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+              dispfieldkey = element.Dispfieldkey;
+            } else {
+              dispfieldkey = element.DispfieldkeyEn || element.Dispfieldkey;
+            }
+          } else {
+            dispfieldkey = element.Dispfieldkey;
+          }
+          htmlBody =
+            '<div class="col-md-6 CFIELD multiline" ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            " " + thistip +
+            ' data-groups="' + groups + '" ' + notAllowForGroups +
+            ' style="display:' + element.display + '">' +
+            '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+            '<p type="lookupmultiline" data-listname="' + element.source +
+            '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+            '" data-dispfieldkey="' + dispfieldkey +
+            '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
+            '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
+        case "lookupdatetime":
+          if (element.BIlanguage == true) {
+            if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+              dispfieldkey = element.Dispfieldkey;
+            } else {
+              dispfieldkey = element.DispfieldkeyEn || element.Dispfieldkey;
+            }
+          } else {
+            dispfieldkey = element.Dispfieldkey;
+          }
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit + " " + dontRequest + " " + dontSubmitRequired + " " +
+            " " + element.className +
+            ' " ' + thistip + " " + hidestagesIDs + " " +
+            showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " +
+            isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " + isWfshowstagesIDs + "  " +
+            isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
+            '        data-groups="' + groups + '" ' + notAllowForGroups +
+            ' style="display:' + element.display + '">' +
+            '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
+            '<p type="lookupdatetime" data-listname="' + element.source +
+            '" data-valfieldkey="' + (element.valfieldkey || "Title") +
+            '" data-dispfieldkey="' + dispfieldkey +
+            '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
             '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
             "</div>";
           OnSuccess(flag, htmlBody);

@@ -1614,7 +1614,7 @@ window.userCalls = {
         ChartHideForInitiatives =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-        ar_UserRole = "اللجنة العليا";
+        ar_UserRole = "أمين لجنة طلبات التغيير";
         en_UserRole = "Head Committee";
         //CRUD
         Create_Access = [
@@ -1660,7 +1660,8 @@ window.userCalls = {
           "strategiccalendar",
           "measurementcyclesupport",
           "changerequests",
-          "changeitemapprovalcontrol"
+          "changeitemapprovalcontrol",
+          "cryearlycalendar"
         ];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
@@ -1706,7 +1707,8 @@ window.userCalls = {
           "strategiccalendar",
           "measurementcyclesupport",
           "changerequests",
-          "changeitemapprovalcontrol"
+          "changeitemapprovalcontrol",
+          "cryearlycalendar"
         ];
         Delete_Access = [
           "benefitmatrix",

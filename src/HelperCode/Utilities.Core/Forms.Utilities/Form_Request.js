@@ -3111,6 +3111,114 @@ window.View_Data_Request = {
             }
           );
         }
+      } else if ($(this).attr("type") == "lookupmultiline") {
+        var parentLookupField = $(this).data("parentlookupfield") || "KPICode",
+          valfieldkey = $(this).data("valfieldkey") || "Title",
+          Dispfieldkey = $(this).data("dispfieldkey"),
+          listname = $(this).data("listname"),
+          $this = $(this);
+        var lookupFieldValue = null;
+        try {
+          var lookupItem = oListItem.get_item(parentLookupField);
+          if (lookupItem && typeof lookupItem.get_lookupValue === "function") {
+            lookupFieldValue = lookupItem.get_lookupValue();
+          } else if (lookupItem) {
+            lookupFieldValue = lookupItem;
+          }
+        } catch (e) {
+          lookupFieldValue = null;
+        }
+        try {
+          if (lookupFieldValue == null || lookupFieldValue === "") {
+            var urlKey = { "KPICode": "KpiCode", "SOCode": "sosCode", "ProjectCode": "PCODE", "PCODE": "PCODE", "InitiativeCode": "ICODE", "ICODE": "ICODE" }[parentLookupField];
+            if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) lookupFieldValue = decodeURIComponent(window.location.href.split(urlKey + "=")[1].split("&")[0]);
+          }
+        } catch (e) {}
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          $this.html(No_Data);
+        } else {
+          customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey + "\" /><Value Type=\"Text\">" + lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var rawValue = records[0][Dispfieldkey];
+                var displayText = (typeof rawValue === "string" ? rawValue : String(rawValue)).replace(/\n/g, "<br>");
+                $this.html(displayText);
+              } else {
+                $this.html(No_Data);
+              }
+            }
+          );
+        }
+      } else if ($(this).attr("type") == "lookupdatetime") {
+        var parentLookupField = $(this).data("parentlookupfield") || "KPICode",
+          valfieldkey = $(this).data("valfieldkey") || "Title",
+          Dispfieldkey = $(this).data("dispfieldkey"),
+          listname = $(this).data("listname"),
+          $this = $(this);
+        var lookupFieldValue = null;
+        try {
+          var lookupItem = oListItem.get_item(parentLookupField);
+          if (lookupItem && typeof lookupItem.get_lookupValue === "function") {
+            lookupFieldValue = lookupItem.get_lookupValue();
+          } else if (lookupItem) {
+            lookupFieldValue = lookupItem;
+          }
+        } catch (e) {
+          lookupFieldValue = null;
+        }
+        try {
+          if (lookupFieldValue == null || lookupFieldValue === "") {
+            var urlKey = { "KPICode": "KpiCode", "SOCode": "sosCode", "ProjectCode": "PCODE", "PCODE": "PCODE", "InitiativeCode": "ICODE", "ICODE": "ICODE" }[parentLookupField];
+            if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) lookupFieldValue = decodeURIComponent(window.location.href.split(urlKey + "=")[1].split("&")[0]);
+          }
+        } catch (e) {}
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          $this.html(No_Data);
+        } else {
+          customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey + "\" /><Value Type=\"Text\">" + lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var d = records[0][Dispfieldkey];
+                if (typeof d === "string") d = new Date(d);
+                if (d && !isNaN(d.getTime())) {
+                  var local = d.getTime();
+                  var offset = d.getTimezoneOffset() * (60 * 1000);
+                  var utc = new Date(local + offset);
+                  var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+                  var datetouse = riyadh.toLocaleString("en-US").split(",")[0].split("/");
+                  datetouse[0] = datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+                  datetouse[1] = datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+                  if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                    var datetouse2 = datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+                  } else {
+                    var datetouse2 = datetouse[1] + "-" + datetouse[0] + "-" + datetouse[2];
+                  }
+                  $this.text(datetouse2);
+                } else {
+                  $this.html(No_Data);
+                }
+              } else {
+                $this.html(No_Data);
+              }
+            }
+          );
+        }
       } else if ($(this).attr("type") === "LookupPicker") {
         let fieldId = $(this).attr("id").includes("dummyfield")
           ? $(this).attr("id").split("dummyfield")[0]

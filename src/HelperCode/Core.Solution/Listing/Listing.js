@@ -166,9 +166,12 @@ window.sphttp = {
 	  camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
 	}
 
-	// if (isLoadMore || isEmptyFilter || filterValue || allTasksClicked) {
-	//   camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
-	// }
+	//for projects, initiatives and tasks only, ensure RowLimit so we never load full list at once
+	if (!isGetDdl && (listkey === 'projects' || listkey === 'initiatives' || listkey === 'tasks')) {
+	  if (!camelQuery.match(/<RowLimit>/)) {
+	    camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
+	  }
+	}
 
 	var fieldsToGet = '<ViewFields>'; // get all data on filter in listing page
 	internalFieldNames.forEach(function (o, i, a) {
@@ -447,7 +450,10 @@ window.sphttp = {
 		  }
 
 		  if (!invokeExcel) { // to not call func twice on load
-			Get_ExcelValues.init(excelListingName, excelListingQuery)
+			// skip duplicate request for projects/initiatives/tasks; Excel data loaded on Export click instead
+			if (listkey !== 'projects' && listkey !== 'initiatives' && listkey !== 'tasks') {
+			  Get_ExcelValues.init(excelListingName, excelListingQuery);
+			}
 		  }
 		  if (!sphttp.g.isGetDdl) sphttp.g.position = SPHTTPitemsEnumerable.get_listItemCollectionPosition();
 		  onEach(records, null, null, true); //true if no more items
@@ -534,8 +540,11 @@ window.ListingData = {
   // The main Initialization function
   preinit: function () {
 
-	if ($('ul.list-group.w-100').length) {
-	  clearInterval(checkListingStatusHtml);
+	if (!$('ul.list-group.w-100').length) return;
+	//  preinit is called every second from setInterval in User_Access; run only once
+	if (window._listingPreinitLoadStarted) return;
+	window._listingPreinitLoadStarted = true;
+	clearInterval(checkListingStatusHtml);
 
 	  $('.user-name').text(UserN.Title.match(/(?<!\p{L}\p{M}*)\p{L}\p{M}*/gu).join(''));
 	  $('.user-name-full').text(UserN.Title);
@@ -567,7 +576,6 @@ window.ListingData = {
 		});
 	  });
 
-	}
   },
   init: function () {
 
@@ -2171,6 +2179,15 @@ window.ListingData = {
 	  }
 	},
 	ExportToExcel: function () {
+	  // for projects/initiatives Excel data is loaded on demand (not on page load)
+	  if ((listkey === 'projects' || listkey === 'initiatives') && ExcelRecordsWithID.length === 0) {
+		var viewF = '<ViewFields>';
+		if (window.IN && window.IN.length) { IN.forEach(function (o) { viewF += '<FieldRef Name="' + o + '" />'; }); }
+		viewF += '<FieldRef Name="DeletionStatus" /></ViewFields>';
+		var exportQuery = (PQuery || excelListingQuery).replace('</Query></View>', '</Query>' + viewF + '</View>');
+		Get_ExcelValues.init(excelListingName, exportQuery, function () { ListingData.g.ExportToExcel(); });
+		return;
+	  }
 	  // var DN = Listing_Info.map((a) => a.DisplayName);
 	  var DN = ""
 	  var FT = Listing_Info.map((a) => a.type);
@@ -2353,6 +2370,10 @@ window.ListingData = {
 		cmlQ = dataLevelAccessQuery ? dataLevelAccessQuery : PQuery;
 	  } else {
 		cmlQ = PQuery;
+	  }
+	  // projects/initiatives - limit DDL query so we don't load full list (was main cause of slowness)
+	  if ((listkey === 'projects' || listkey === 'initiatives') && !cmlQ.match(/<RowLimit>/)) {
+		cmlQ = cmlQ.replace('</Query></View>', '</Query><RowLimit>200</RowLimit></View>');
 	  }
 
 	  sphttp.get(ListURL, SP_ListName, cmlQ, IN, true, function (recordsddl, recordddl, listItem, isDone) {
@@ -3419,7 +3440,8 @@ var StrategicObjectives_Status_Listing = {
 
 
 var Get_ExcelValues = {
-  init: function (listNameForExcel, queryForExcel) {
+  init: function (listNameForExcel, queryForExcel, onDone) {
+	Get_ExcelValues.g._onDone = onDone || null;
 	ExcelRecordsWithID = []
 	var clientContext = new SP.ClientContext.get_current();
 	var oList = clientContext.get_web().get_lists().getByTitle(listNameForExcel);
@@ -3584,7 +3606,11 @@ var Get_ExcelValues = {
 	  }
 	}
 
-	
+	if (Get_ExcelValues.g._onDone) {
+	  var fn = Get_ExcelValues.g._onDone;
+	  Get_ExcelValues.g._onDone = null;
+	  fn();
+	}
   },
   onError: function (sender, args) {
 	console.log(
@@ -3592,6 +3618,6 @@ var Get_ExcelValues = {
 	);
   },
   g: {
-
+	_onDone: null
   }
 }
