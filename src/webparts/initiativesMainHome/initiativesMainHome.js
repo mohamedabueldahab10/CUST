@@ -127,6 +127,8 @@ var mizania = require("../../HelperRessources/img/mizania.svg");
 // ViewFields to reduce payload (only columns used by the webpart)
 var INITIATIVES_VIEW_FIELDS =
   "<ViewFields><FieldRef Name='Title'/><FieldRef Name='Name'/><FieldRef Name='Phase'/><FieldRef Name='SubSector'/><FieldRef Name='Sector'/><FieldRef Name='Types'/><FieldRef Name='InitiativeProgressStatus'/><FieldRef Name='Portfolio'/><FieldRef Name='EstimatedCost'/><FieldRef Name='ActualCost'/><FieldRef Name='InitiativeBudget'/><FieldRef Name='IsZeroBudgetInitiative'/><FieldRef Name='Created'/><FieldRef Name='DeletionStatus'/></ViewFields>";
+// Minimal fields for count-only call: internalProjectCount, externalProjectCount, LMSProjectCount
+var INITIATIVES_COUNT_VIEW_FIELDS = "<ViewFields><FieldRef Name='ID'/><FieldRef Name='Types'/><FieldRef Name='DeletionStatus'/></ViewFields>";
 // Set to 0 for no limit; set e.g. 100 to speed up initial load when there is a lot of data
 var INITIATIVES_ROW_LIMIT = 0;
 var INITIATIVES_PAGE_SIZE = 10;
@@ -155,7 +157,9 @@ var PQuery =
 var portfoliosName = [];
 var reversePortfoliosArray = [];
 var filterApplyDebounceTimer = null;
+var filterRequestTimeoutId = null;
 var FILTER_DEBOUNCE_MS = 350;
+var FILTER_REQUEST_TIMEOUT_MS = 30000;
 
 var Noverylate = 0,
   Nolate = 0,
@@ -207,26 +211,79 @@ window.initiativeRequest = {
           "<View>" + INITIATIVES_VIEW_FIELDS + INITIATIVES_ROW_LIMIT_XML + "<Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
         //}
       }
-      //**** Start*/check user rule and buld query to get projects;
       $(ChartHideForInitiatives).hide();
-      $(".required-support-ctx").show(); // to show the alejra2 elmatloob section after moved to up
-      //**** End*/check user rule and buld query to get projects;
+      $(".required-support-ctx").show();
+      initiativeRequest.initCountOnly();
+      return;
     }
-
+    window._initiativeCountOnlyDone = false;
+    initiativeRequest.initData();
+  },
+  initCountOnly: function () {
+    var baseQuery = isRoleDataLevelAccess ? dataLevelAccessQuery : ("<View>" + INITIATIVES_ROW_LIMIT_XML + "<Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>");
+    var countQuery = baseQuery.indexOf("<ViewFields>") !== -1
+      ? baseQuery.replace(/<ViewFields>[\s\S]*?<\/ViewFields>/i, INITIATIVES_COUNT_VIEW_FIELDS)
+      : baseQuery.replace("</View>", INITIATIVES_COUNT_VIEW_FIELDS + "</View>");
+    if (countQuery.indexOf("<ViewFields>") === -1) {
+      countQuery = countQuery.replace("<View>", "<View>" + INITIATIVES_COUNT_VIEW_FIELDS);
+    }
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("Initiatives");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(countQuery);
+    initiativeRequest.g.collListItem = oList.getItems(camlQuery);
+    clientContext.load(initiativeRequest.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, initiativeRequest.onSuccessCountOnly),
+      Function.createDelegate(this, initiativeRequest.onError)
+    );
+  },
+  onSuccessCountOnly: function (sender, args) {
+    var collListItem = initiativeRequest.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    var initiativesStratigalCount = 0, initiativesVisionCount = 0, initiativesLMSCount = 0;
+    var intiativeType;
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      if (oListItem.get_item("DeletionStatus") === "Deleted") continue;
+      intiativeType = oListItem.get_item("Types") || "nodata";
+      if (intiativeType === "vision") initiativesVisionCount++;
+      else if (intiativeType === "strategically") initiativesStratigalCount++;
+      else if (intiativeType === "lms") initiativesLMSCount++;
+    }
+    var totalInitiatives = initiativesStratigalCount + initiativesVisionCount + initiativesLMSCount;
+    $(".projects-ctx .PNumber").text(totalInitiatives);
+    $("#internalProjectCount").html(initiativesStratigalCount);
+    $("#externalProjectCount").html(initiativesVisionCount);
+    $("#LMSProjectCount").html(initiativesLMSCount);
+    totalforhidstrat = initiativesStratigalCount;
+    totalforhidvis = initiativesVisionCount;
+    totalforhidvisLMS = initiativesLMSCount;
+    window._initiativeCountOnlyDone = true;
+    initiativeRequest.initData();
+  },
+  initData: function () {
+    if (originalstate) {
+      if (isRoleDataLevelAccess) {
+        PQuery = dataLevelAccessQuery;
+      } else {
+        PQuery =
+          "<View>" + INITIATIVES_VIEW_FIELDS + INITIATIVES_ROW_LIMIT_XML + "<Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+      }
+    }
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle("Initiatives");
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(PQuery);
-    initiativeRequest.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-
+    initiativeRequest.g.collListItem = oList.getItems(camlQuery);
     clientContext.load(initiativeRequest.g.collListItem);
-
     clientContext.executeQueryAsync(
       Function.createDelegate(this, initiativeRequest.onSuccess),
       Function.createDelegate(this, initiativeRequest.onError)
     );
   },
   onSuccess: function (sender, args) {
+    if (filterRequestTimeoutId) { clearTimeout(filterRequestTimeoutId); filterRequestTimeoutId = null; }
     var collListItem = initiativeRequest.g.collListItem;
     initiativeRequest.g.listItemEnum = collListItem.getEnumerator();
     var projectshtml = "",
@@ -243,6 +300,7 @@ window.initiativeRequest = {
       initiativesVisionCount = 0,
       initiativesStratigalCount = 0;
     initiativesLMSCount = 0;
+    var initiativesStratigalCards = [], initiativesVisionCards = [], initiativesLMSCards = [];
     var phaseCodeArray = [];
     var phaseNameArray2 = [];
     var Priorityarray = [];
@@ -536,13 +594,15 @@ window.initiativeRequest = {
 
       if (intiativeType === "vision") {
         initiativesVisionHTML += projectshtml;
-
+        initiativesVisionCards.push(projectshtml);
         initiativesVisionCount = initiativesVisionCount + 1;
       } else if (intiativeType === "strategically") {
         initiativesStratigalHTML += projectshtml;
+        initiativesStratigalCards.push(projectshtml);
         initiativesStratigalCount = initiativesStratigalCount + 1;
       } else if (intiativeType === "lms") {
         initiativesLMSHTML += projectshtml;
+        initiativesLMSCards.push(projectshtml);
         initiativesLMSCount = initiativesLMSCount + 1;
       }
 
@@ -572,10 +632,12 @@ window.initiativeRequest = {
         return obj;
       }, {});
 
-    //projectTypecount
-    $("#internalProjectCount").html(initiativesStratigalCount);
-    $("#externalProjectCount").html(initiativesVisionCount);
-    $("#LMSProjectCount").html(initiativesLMSCount);
+    //projectTypecount (skip if already set by count-only call)
+    if (!window._initiativeCountOnlyDone) {
+      $("#internalProjectCount").html(initiativesStratigalCount);
+      $("#externalProjectCount").html(initiativesVisionCount);
+      $("#LMSProjectCount").html(initiativesLMSCount);
+    }
     totalforhidstrat = initiativesStratigalCount;
     totalforhidvis = initiativesVisionCount;
     totalforhidvisLMS = initiativesLMSCount;
@@ -653,9 +715,12 @@ window.initiativeRequest = {
     // handlePhaseChartBarChart(); //NOTE hide charts and make load faster requirement
 
     $(".projects-ctx .PNumber").text(numberofInitiatives);
-    $("div#accordionProject.internalAccordion").html(initiativesStratigalHTML);
-    $("div#accordionProject.externalAccordion").html(initiativesVisionHTML);
-    $("div#accordionProject.LMSAccordion").html(initiativesLMSHTML);
+    initiativeRequest.g.initiativesStratigalCards = initiativesStratigalCards;
+    initiativeRequest.g.initiativesVisionCards = initiativesVisionCards;
+    initiativeRequest.g.initiativesLMSCards = initiativesLMSCards;
+    $("div#accordionProject.internalAccordion").html(initiativesStratigalCards.join(""));
+    $("div#accordionProject.externalAccordion").html(initiativesVisionCards.join(""));
+    $("div#accordionProject.LMSAccordion").html(initiativesLMSCards.join(""));
 
     progressstatusarrayALL = progressstatusarray;
 
@@ -828,6 +893,9 @@ window.initiativeRequest = {
     console.log(
       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
     );
+    if (filterRequestTimeoutId) { clearTimeout(filterRequestTimeoutId); filterRequestTimeoutId = null; }
+    $("body").animate({ opacity: 1 }, { duration: 333 });
+    $(".page-filter .dropdown-menu label.dropdown-item input:checkbox").prop({ disabled: false });
   },
   // Global variables
   g: {
@@ -930,6 +998,7 @@ window.initiativeRequest = {
         (SectorsProjectCount = []),
         (budgetData = []),
         (ScheduleProgressStatusarray = []);
+      if (filterRequestTimeoutId) clearTimeout(filterRequestTimeoutId);
       $("body").animate(
         {
           opacity: 0.5,
@@ -939,6 +1008,11 @@ window.initiativeRequest = {
           complete: function () { },
         }
       );
+      filterRequestTimeoutId = setTimeout(function () {
+        filterRequestTimeoutId = null;
+        $("body").animate({ opacity: 1 }, { duration: 333 });
+        $(".page-filter .dropdown-menu label.dropdown-item input:checkbox").prop({ disabled: false });
+      }, FILTER_REQUEST_TIMEOUT_MS);
       if (FilterChoices.length == 0) {
         if (isRoleDataLevelAccess) {
           PQuery = dataLevelAccessQuery;
@@ -950,11 +1024,7 @@ window.initiativeRequest = {
       } //if there are choices build caml query
       else {
         $("#clearAllFilter").prop("disabled", false);
-        $(
-          ".page-filter .dropdown-menu label.dropdown-item input:checkbox"
-        ).prop({
-          disabled: true,
-        });
+        // Do NOT disable checkboxes so user can select a second filter from another dropdown
 
         // Role-based access: dataLevelAccessQuery uses Or (e.g. PM OR Owner). Building from FilterChoices would use And and return 0. So use data level Where + user filter only.
         if (isRoleDataLevelAccess) {
@@ -981,6 +1051,9 @@ window.initiativeRequest = {
               userWhere += "<Value Type=\"" + (fc.Type || "Text") + "\">" + val + "</Value>";
             }
             userWhere += "</Values></In>";
+          }
+          if (userFilterChoices.length > 1) {
+            userWhere = "<And>" + userWhere + "</And>";
           }
           var combinedWhere = "<Where><And>" + dataLevelWhereContent + userWhere + "</And></Where>";
           Query_Body = "<View><Query>" + combinedWhere + "<OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
@@ -1183,14 +1256,14 @@ window.initiativeRequest = {
               'Type="DateTime"',
               'IncludeTimeValue="False" Type="DateTime"'
             );
-            // Keep same query structure as dataLevelAccessQuery when role-based (no ViewFields) so filters work for Initiative Manager etc.
+            var whereClose = (FilterChoices.length > 2) ? "</Where>" : "</And></Where>";
             var viewPrefix = isRoleDataLevelAccess ? "<View>" : ("<View>" + INITIATIVES_VIEW_FIELDS + INITIATIVES_ROW_LIMIT_XML);
             Query_Body =
               viewPrefix +
               "<Query>" +
               "<Where>" +
               Where_Body +
-              "</And></Where>" +
+              whereClose +
               "<OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy>" +
               "</Query>" +
               "</View>";
@@ -1254,409 +1327,71 @@ window.initiativeRequest = {
       };
     },
     showprojectonclick: function () {
-      $(".accordion#accordionProject.internalAccordion a.view-more").on(
-        "click",
-        function () {
-          var internalselector = $(
-            ".accordion#accordionProject.internalAccordion > .card"
-          ).not(":visible");
-          internalselector.prevObject.length = 5;
-          var internalvisiblelength = $(
-            ".accordion#accordionProject.internalAccordion > .card:visible"
-          ).length;
-          var internaltt = internalvisiblelength + 6;
-          var internaltoshow = $(
-            ".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-            internaltt +
-            ")"
-          );
-          setTimeout(function () {
-            internaltoshow.each(function () {
-              $(this)
-                .css("display", "block")
-                .animate(
-                  {
-                    opacity: 1,
-                    height: 75.5,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(this).attr(
-                        "style",
-                        "display: block; opacity: 1; height: auto;"
-                      );
-                    },
-                  }
-                );
-            });
-            //rechecking visibility
-            internalvisiblelength = $(
-              ".accordion#accordionProject.internalAccordion > .card:visible"
-            ).length;
-            internaltt = internalvisiblelength + 6;
-            internaltoshow = $(
-              ".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-              internaltt +
-              ")"
-            );
-            if (internaltoshow.length == 0) {
-              $(
-                ".accordion#accordionProject.internalAccordion a.view-more"
-              ).animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.internalAccordion a.view-more"
-                    ).attr("style", "display: none!important;");
-                  },
-                }
-              );
-              $(
-                ".accordion#accordionProject.internalAccordion a.view-less"
-              ).animate(
-                {
-                  opacity: 1,
-                  height: 34,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.internalAccordion a.view-less"
-                    ).attr("style", "display: block;");
-                  },
-                }
-              );
-            }
-          }, 133);
-        }
-      );
-      $(".accordion#accordionProject.internalAccordion a.view-less").on(
-        "click",
-        function () {
-          var tohide = $(
-            ".accordion#accordionProject.internalAccordion > .card:nth-child(n+4)"
-          );
-          setTimeout(function () {
-            tohide.each(function () {
-              $(this).animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(this).attr("style", "display: none;");
-                  },
-                }
-              );
-            });
-          }, 133);
-          $(
-            ".accordion#accordionProject.internalAccordion a.view-less"
-          ).animate(
-            {
-              opacity: 0,
-              height: 0,
-            },
-            {
-              duration: 333,
-              complete: function () {
-                $(
-                  ".accordion#accordionProject.internalAccordion a.view-more"
-                ).animate(
-                  {
-                    opacity: 1,
-                    height: 34,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(
-                        ".accordion#accordionProject.internalAccordion a.view-more"
-                      ).attr("style", "display: block;");
-                    },
-                  }
-                );
-              },
-            }
-          );
-        }
-      );
-      $(".accordion#accordionProject.externalAccordion a.view-more").on(
-        "click",
-        function () {
-          var externalselector = $(
-            ".accordion#accordionProject.externalAccordion > .card"
-          ).not(":visible");
-          externalselector.prevObject.length = 5;
-          var externalvisiblelength = $(
-            ".accordion#accordionProject.externalAccordion > .card:visible"
-          ).length;
-          var externaltt = externalvisiblelength + 6;
-          var externaltoshow = $(
-            ".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-            externaltt +
-            ")"
-          );
-          setTimeout(function () {
-            externaltoshow.each(function () {
-              $(this)
-                .css("display", "block")
-                .animate(
-                  {
-                    opacity: 1,
-                    height: 75.5,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(this).attr(
-                        "style",
-                        "display: block; opacity: 1; height: auto;"
-                      );
-                    },
-                  }
-                );
-            });
-            //rechecking visibility
-            externalvisiblelength = $(
-              ".accordion#accordionProject.externalAccordion > .card:visible"
-            ).length;
-            externaltt = externalvisiblelength + 6;
-            externaltoshow = $(
-              ".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-              externaltt +
-              ")"
-            );
-            if (externaltoshow.length == 0) {
-              $(
-                ".accordion#accordionProject.externalAccordion a.view-more"
-              ).animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.externalAccordion a.view-more"
-                    ).attr("style", "display: none!important;");
-                  },
-                }
-              );
-              $(
-                ".accordion#accordionProject.externalAccordion a.view-less"
-              ).animate(
-                {
-                  opacity: 1,
-                  height: 34,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.externalAccordion a.view-less"
-                    ).attr("style", "display: block;");
-                  },
-                }
-              );
-            }
-          }, 133);
-        }
-      );
-      $(".accordion#accordionProject.externalAccordion a.view-less").on(
-        "click",
-        function () {
-          var tohide = $(
-            ".accordion#accordionProject.externalAccordion > .card:nth-child(n+4)"
-          );
-          setTimeout(function () {
-            tohide.each(function () {
-              $(this).animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(this).attr("style", "display: none;");
-                  },
-                }
-              );
-            });
-          }, 133);
-          $(
-            ".accordion#accordionProject.externalAccordion a.view-less"
-          ).animate(
-            {
-              opacity: 0,
-              height: 0,
-            },
-            {
-              duration: 333,
-              complete: function () {
-                $(
-                  ".accordion#accordionProject.externalAccordion a.view-more"
-                ).animate(
-                  {
-                    opacity: 1,
-                    height: 34,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(
-                        ".accordion#accordionProject.externalAccordion a.view-more"
-                      ).attr("style", "display: block;");
-                    },
-                  }
-                );
-              },
-            }
-          );
-        }
-      );
-      //
-      $(".accordion#accordionProject.LMSAccordion a.view-more").on(
-        "click",
-        function () {
-          var externalselector = $(
-            ".accordion#accordionProject.LMSAccordion > .card"
-          ).not(":visible");
-          externalselector.prevObject.length = 5;
-          var externalvisiblelength = $(
-            ".accordion#accordionProject.LMSAccordion > .card:visible"
-          ).length;
-          var externaltt = externalvisiblelength + 6;
-          var externaltoshow = $(
-            ".accordion#accordionProject.LMSAccordion > .card:hidden:nth-child(-n+" +
-            externaltt +
-            ")"
-          );
-          setTimeout(function () {
-            externaltoshow.each(function () {
-              $(this)
-                .css("display", "block")
-                .animate(
-                  {
-                    opacity: 1,
-                    height: 75.5,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(this).attr(
-                        "style",
-                        "display: block; opacity: 1; height: auto;"
-                      );
-                    },
-                  }
-                );
-            });
-            //rechecking visibility
-            externalvisiblelength = $(
-              ".accordion#accordionProject.LMSAccordion > .card:visible"
-            ).length;
-            externaltt = externalvisiblelength + 6;
-            externaltoshow = $(
-              ".accordion#accordionProject.LMSAccordion > .card:hidden:nth-child(-n+" +
-              externaltt +
-              ")"
-            );
-            if (externaltoshow.length == 0) {
-              $(".accordion#accordionProject.LMSAccordion a.view-more").animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.LMSAccordion a.view-more"
-                    ).attr("style", "display: none!important;");
-                  },
-                }
-              );
-              $(".accordion#accordionProject.LMSAccordion a.view-less").animate(
-                {
-                  opacity: 1,
-                  height: 34,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.LMSAccordion a.view-less"
-                    ).attr("style", "display: block;");
-                  },
-                }
-              );
-            }
-          }, 133);
-        }
-      );
-      $(".accordion#accordionProject.LMSAccordion a.view-less").on(
-        "click",
-        function () {
-          var tohide = $(
-            ".accordion#accordionProject.LMSAccordion > .card:nth-child(n+4)"
-          );
-          setTimeout(function () {
-            tohide.each(function () {
-              $(this).animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(this).attr("style", "display: none;");
-                  },
-                }
-              );
-            });
-          }, 133);
-          $(".accordion#accordionProject.LMSAccordion a.view-less").animate(
-            {
-              opacity: 0,
-              height: 0,
-            },
-            {
-              duration: 333,
-              complete: function () {
-                $(
-                  ".accordion#accordionProject.LMSAccordion a.view-more"
-                ).animate(
-                  {
-                    opacity: 1,
-                    height: 34,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(
-                        ".accordion#accordionProject.LMSAccordion a.view-more"
-                      ).attr("style", "display: block;");
-                    },
-                  }
-                );
-              },
-            }
-          );
-        }
-      );
+      var pageSize = INITIATIVES_PAGE_SIZE;
+      function doViewMore(containerSel) {
+        var $acc = $(containerSel);
+        var $hidden = $acc.find(".card").filter(":hidden");
+        var visiblelength = $acc.find(".card:visible").length;
+        var toshow = $acc.find(".card:hidden").slice(0, pageSize);
+        console.log("[view-more initiatives " + containerSel + "] visible:", visiblelength, "hidden:", $hidden.length, "toShow:", toshow.length);
+        setTimeout(function () {
+          toshow.each(function () {
+            $(this).css("display", "block").animate({ opacity: 1, height: 75.5 }, { duration: 333, complete: function () { $(this).attr("style", "display: block; opacity: 1; height: auto;"); } });
+          });
+          visiblelength = $acc.find(".card:visible").length;
+          toshow = $acc.find(".card:hidden").slice(0, pageSize);
+          if (toshow.length === 0) {
+            var $section = $acc.add($acc.parent());
+            $section.find("a.view-more").hide().attr("style", "display: none !important;");
+            $(".projects-ctx a.view-more, div#accordionProject a.view-more").hide().attr("style", "display: none !important;");
+            $section.find("a.view-less").show().attr("style", "display: block !important;");
+          }
+        }, 133);
+      }
+      function doViewLess(containerSel) {
+        var $acc = $(containerSel);
+        var $cards = $acc.find(".card");
+        var tohide = $cards.slice(pageSize);
+        console.log("[view-less initiatives " + containerSel + "] hiding", tohide.length, "cards");
+        setTimeout(function () {
+          tohide.each(function () {
+            $(this).animate({ opacity: 0, height: 0 }, { duration: 333, complete: function () { $(this).attr("style", "display: none;"); } });
+          });
+        }, 133);
+        var $section = $acc.add($acc.parent());
+        $section.find("a.view-less").hide().attr("style", "display: none !important;");
+        $(".projects-ctx a.view-less, div#accordionProject a.view-less").hide().attr("style", "display: none !important;");
+        $section.find("a.view-more").show();
+      }
+      $(".accordion#accordionProject.internalAccordion").on("click", "a.view-more", function (e) { e.preventDefault(); doViewMore("#InternalProjects"); changeResources(); });
+      $(".accordion#accordionProject.internalAccordion").on("click", "a.view-less", function (e) { e.preventDefault(); doViewLess("#InternalProjects"); changeResources(); });
+      $(".accordion#accordionProject.externalAccordion").on("click", "a.view-more", function (e) { e.preventDefault(); doViewMore("#ExternalProjects"); changeResources(); });
+      $(".accordion#accordionProject.externalAccordion").on("click", "a.view-less", function (e) { e.preventDefault(); doViewLess("#ExternalProjects"); changeResources(); });
+      $(".accordion#accordionProject.LMSAccordion").on("click", "a.view-more", function (e) { e.preventDefault(); doViewMore("#LMSProjects"); changeResources(); });
+      $(".accordion#accordionProject.LMSAccordion").on("click", "a.view-less", function (e) { e.preventDefault(); doViewLess("#LMSProjects"); changeResources(); });
+      var $intC = $("#InternalProjects .card");
+      var $extC = $("#ExternalProjects .card");
+      var $lmsC = $("#LMSProjects .card");
+      var $allC = $intC.add($extC).add($lmsC);
+      $allC.show();
+      $allC.slice(pageSize).hide();
+      $(".accordion#accordionProject.internalAccordion a.view-less, .accordion#accordionProject.externalAccordion a.view-less, .accordion#accordionProject.LMSAccordion a.view-less, div#accordionProject a.view-less, .projects-ctx a.view-less").hide().attr("style", "display: none !important;");
+      var totalCards = $allC.length;
+      console.log("[showprojectonclick initiatives] internal:", $intC.length, "external:", $extC.length, "lms:", $lmsC.length, "total:", totalCards, "pageSize:", pageSize);
+      if ($intC.length <= pageSize) {
+        $(".accordion#accordionProject.internalAccordion").add($(".accordion#accordionProject.internalAccordion").parent()).find("a.view-more, a.view-less").hide().attr("style", "display: none !important;");
+      }
+      if ($extC.length <= pageSize) {
+        $(".accordion#accordionProject.externalAccordion").add($(".accordion#accordionProject.externalAccordion").parent()).find("a.view-more, a.view-less").hide().attr("style", "display: none !important;");
+      }
+      if ($lmsC.length <= pageSize) {
+        $(".accordion#accordionProject.LMSAccordion").add($(".accordion#accordionProject.LMSAccordion").parent()).find("a.view-more, a.view-less").hide().attr("style", "display: none !important;");
+      }
+      if (totalCards > pageSize) {
+        $("div#accordionProject a.view-more").show().attr("style", "display: block !important;");
+      } else {
+        $("div#accordionProject a.view-more, div#accordionProject a.view-less").hide().attr("style", "display: none !important;");
+      }
     },
     dateConvert: function (date) {
       if (date) {

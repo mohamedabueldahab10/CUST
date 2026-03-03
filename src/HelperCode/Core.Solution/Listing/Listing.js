@@ -166,8 +166,8 @@ window.sphttp = {
 	  camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
 	}
 
-	//for projects and initiatives only, ensure RowLimit so we never load full list at once
-	if (!isGetDdl && (listkey === 'projects' || listkey === 'initiatives')) {
+	//for projects, initiatives and tasks only, ensure RowLimit so we never load full list at once
+	if (!isGetDdl && (listkey === 'projects' || listkey === 'initiatives' || listkey === 'tasks')) {
 	  if (!camelQuery.match(/<RowLimit>/)) {
 	    camelQuery = camelQuery.replace('</Query></View>', '</Query><RowLimit>30</RowLimit></View>');
 	  }
@@ -450,8 +450,8 @@ window.sphttp = {
 		  }
 
 		  if (!invokeExcel) { // to not call func twice on load
-			// skip duplicate request for projects/initiatives; Excel data loaded on Export click instead
-			if (listkey !== 'projects' && listkey !== 'initiatives') {
+			// skip duplicate request for projects/initiatives/tasks; Excel data loaded on Export click instead
+			if (listkey !== 'projects' && listkey !== 'initiatives' && listkey !== 'tasks') {
 			  Get_ExcelValues.init(excelListingName, excelListingQuery);
 			}
 		  }

@@ -22,7 +22,7 @@ var Listing_Info = [
     DisplayName: "العنصر ذو الصلة",
     DisplayNameEn: "Related Item",
     type: "text",
-    inlisting: false,
+    inlisting: true,
     infilter: false,
   },
   {
@@ -39,6 +39,14 @@ var Listing_Info = [
     DisplayNameEn: "Related To",
     type: "text",
     // needTrans: true,
+    inlisting: true,
+    infilter: false,
+  },
+  {
+    InternalName: "Author",
+    DisplayName: "أنشئ بواسطة",
+    DisplayNameEn: "Created By",
+    type: "picker",
     inlisting: true,
     infilter: false,
   },

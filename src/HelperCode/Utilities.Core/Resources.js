@@ -192,7 +192,7 @@ var Resources = {
     budgetitem: "البند المرتبط",
     pmo: "مكتب تحكم إدارة المشاريع",
     epmo: "مكتب ادارة المشاريع المؤسسي ",
-    headcommitte: "اللجنة العليا",
+    headcommitte: "أمين لجنة طلبات التغيير",
     nodata: "لا يوجد",
     //Contract Type
     main: "مستوى أول",

@@ -1428,11 +1428,11 @@ div#accordionProject .card .acc-header>div:nth-child(-n+5) {
     cursor: pointer;
 }
 
-.accordion#accordionProject>.card:nth-child(n+4) {
+/* .accordion#accordionProject>.card:nth-child(n+4) {
     opacity: 0;
     display: none;
     height: 0;
-}
+} */
 
 .accordion .card-header>.acc-header[aria-expanded="true"]:after {
     content: "";

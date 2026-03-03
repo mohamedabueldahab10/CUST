@@ -124,6 +124,9 @@ var mizania = require("../../../HelperRessources/img/mizania.svg");
 // new repo
 
 //filter vars
+var PROJECT_PAGE_SIZE = 10;
+// Minimal fields for count-only call: PNumber, internalProjectCount, externalProjectCount (no filter data)
+var PROJECT_COUNT_VIEW_FIELDS = "<ViewFields><FieldRef Name='ID'/><FieldRef Name='Status'/><FieldRef Name='ProjectType'/></ViewFields>";
 var PQuery =
   "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>",
   originalstate = true,
@@ -148,7 +151,9 @@ var PQuery =
 var portfoliosName = [];
 var reversePortfoliosArray = [];
 var filterApplyDebounceTimer = null;
+var filterRequestTimeoutId = null;
 var FILTER_DEBOUNCE_MS = 350;
+var FILTER_REQUEST_TIMEOUT_MS = 30000;
 
 var Noverylate = 0,
   Nolate = 0,
@@ -175,9 +180,7 @@ window.Project_Info_Request = {
   },
   // The main Initialization function
   init: function () {
-
     if (originalstate) {
-      //*****call charts filteration */
       if (isRoleDataLevelAccess && !UserICode && !USERPCODE) {
         PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
       } else {
@@ -187,33 +190,63 @@ window.Project_Info_Request = {
         "</View>",
         '<ViewFields> <FieldRef Name="Status"/> <FieldRef Name="ActualBudget"/> <FieldRef Name="Amount"/> <FieldRef Name="EstimatedCost"/> <FieldRef Name="ActualImplementationSchedule"/> <FieldRef Name="Name"/> <FieldRef Name="Title"/> <FieldRef Name="Phase"/> <FieldRef Name="Priority"/> <FieldRef Name="SubSector"/> <FieldRef Name="ProgressStatusSchedule"/> <FieldRef Name="Portfolio"/> <FieldRef Name="Sector"/> <FieldRef Name="ProjectType"/> <FieldRef Name="IsStrategicProject"/> </ViewFields></View>'
       );
-
-      // console.log('Acces Queryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',AccessQuery);
-      //**** Start*/check user rule and buld query to get projects;
       $(ChartHide).hide();
-      //**** End*/check user rule and buld query to get projects;
+      Project_Info_Request.initCountOnly();
+      return;
     }
-
-    // PQuery = PQuery.replace('</Query>', '</Query>' + '<ViewFields><FieldRef Name="Phase" /><FieldRef Name="Status" /></ViewFields>')
-
+    window._countOnlyDone = false;
+    Project_Info_Request.initData();
+  },
+  initCountOnly: function () {
+    var countQuery = PQuery.indexOf("<ViewFields>") !== -1
+      ? PQuery.replace(/<ViewFields>[\s\S]*?<\/ViewFields>/i, PROJECT_COUNT_VIEW_FIELDS)
+      : PQuery.replace("</View>", PROJECT_COUNT_VIEW_FIELDS + "</View>");
     var clientContext = new SP.ClientContext.get_current();
-    var oList = clientContext
-      .get_web()
-      .get_lists()
-      .getByTitle(ListArray[0].projects);
+    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(countQuery);
+    Project_Info_Request.g.collListItem = oList.getItems(camlQuery);
+    clientContext.load(Project_Info_Request.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Project_Info_Request.onSuccessCountOnly),
+      Function.createDelegate(this, Project_Info_Request.onError)
+    );
+  },
+  onSuccessCountOnly: function (sender, args) {
+    var collListItem = Project_Info_Request.g.collListItem;
+    Project_Info_Request.g.listItemEnum = collListItem.getEnumerator();
+    var internalProjectCount = 0, externalProjectCount = 0;
+    var projectType;
+    while (Project_Info_Request.g.listItemEnum.moveNext()) {
+      var oListItem = Project_Info_Request.g.listItemEnum.get_current();
+      if (oListItem.get_item("Status") == "Completed" || oListItem.get_item("Status") == "Cancelled") continue;
+      projectType = oListItem.get_item("ProjectType") || "nodata";
+      if (projectType === "Internal") internalProjectCount++;
+      else if (projectType === "External") externalProjectCount++;
+    }
+    numberofProjects = internalProjectCount + externalProjectCount;
+    $(".projects-ctx .PNumber").text(numberofProjects);
+    $("#internalProjectCount").html(internalProjectCount);
+    $("#externalProjectCount").html(externalProjectCount);
+    totalforhidext = externalProjectCount;
+    totalforhidint = internalProjectCount;
+    window._countOnlyDone = true;
+    Project_Info_Request.initData();
+  },
+  initData: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(ListArray[0].projects);
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(PQuery);
-
-    Project_Info_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-
+    Project_Info_Request.g.collListItem = oList.getItems(camlQuery);
     clientContext.load(Project_Info_Request.g.collListItem);
-
     clientContext.executeQueryAsync(
       Function.createDelegate(this, Project_Info_Request.onSuccess),
       Function.createDelegate(this, Project_Info_Request.onError)
     );
   },
   onSuccess: function (sender, args) {
+    if (filterRequestTimeoutId) { clearTimeout(filterRequestTimeoutId); filterRequestTimeoutId = null; }
     var collListItem = Project_Info_Request.g.collListItem;
     Project_Info_Request.g.listItemEnum = collListItem.getEnumerator();
     var projectshtml = "",
@@ -228,6 +261,7 @@ window.Project_Info_Request = {
       externalProjectHtml = "",
       internalProjectCount = 0,
       externalProjectCount = 0;
+    var internalProjectCards = [], externalProjectCards = [];
     var phaseCodeArray = [];
     var Priorityarray = [];
     var ProgressStatusarray = [];
@@ -558,10 +592,11 @@ window.Project_Info_Request = {
 
         if (projectType === "Internal") {
           internalProjectHtml += projectshtml;
-
+          internalProjectCards.push(projectshtml);
           internalProjectCount = internalProjectCount + 1;
         } else if (projectType === "External") {
           externalProjectHtml += projectshtml;
+          externalProjectCards.push(projectshtml);
           externalProjectCount = externalProjectCount + 1;
         }
 
@@ -575,14 +610,14 @@ window.Project_Info_Request = {
         UProjectsNames.push(projectname);
         UProjects.push(projectcode);
         // console.log('strategy', strategy)
-        if (
-          strategy == true ||
-          strategy == "true" ||
-          strategy == "yes" ||
-          strategy == "Yes"
-        ) {
-          strategyarray.push("yes");
-        } else strategyarray.push("no");
+        // if (
+        //   strategy == true ||
+        //   strategy == "true" ||
+        //   strategy == "yes" ||
+        //   strategy == "Yes"
+        // ) {
+        //   // strategyarray.push("yes");
+        // } else strategyarray.push("no");
         // console.log('strategyarray', strategyarray)
       }
     }
@@ -593,10 +628,7 @@ window.Project_Info_Request = {
         return obj;
       }, {});
 
-    //projectTypecount
-    $("#externalProjectCount").html(externalProjectCount);
-    $("#internalProjectCount").html(internalProjectCount);
-
+    //projectTypecount (PNumber/counts set once below when injecting cards, if not already set by count-only)
     totalforhidext = externalProjectCount;
     totalforhidint = internalProjectCount;
     //Project Progress
@@ -676,15 +708,42 @@ window.Project_Info_Request = {
     handlePhaseChartBarChart();
     handlePriorityChartBarChart();
 
-    $(".projects-ctx .PNumber").text(numberofProjects);
-    $("div#accordionProject.internalAccordion").html(internalProjectHtml);
-    $("div#accordionProject.externalAccordion").html(externalProjectHtml);
+    if (!window._countOnlyDone) {
+      $(".projects-ctx .PNumber").text(numberofProjects);
+      $("#externalProjectCount").html(externalProjectCount);
+      $("#internalProjectCount").html(internalProjectCount);
+    }
+    Project_Info_Request.g.internalProjectCards = internalProjectCards;
+    Project_Info_Request.g.externalProjectCards = externalProjectCards;
+    $("div#accordionProject.internalAccordion").html(internalProjectCards.join(""));
+    $("div#accordionProject.externalAccordion").html(externalProjectCards.join(""));
+    (function applyFirstLoadVisibility() {
+      var pageSize = PROJECT_PAGE_SIZE;
+      var $intCards = $("#InternalProjects .card.ProjectCards");
+      var $extCards = $("#ExternalProjects .card.ProjectCards");
+      var $allCards = $intCards.add($extCards);
+      if ($allCards.length === 0) return;
+      $allCards.slice(0, pageSize).show();
+      $allCards.slice(pageSize).hide();
+      var viewMoreHtml = '<a data-trans-ViewMore class="view-more d-block text-center py-2 Resources"></a><a data-trans-ViewLess class="view-less d-block text-center py-2 Resources" style="display:none!important"></a>';
+      ["#InternalProjects", "#ExternalProjects"].forEach(function (sel) {
+        var $acc = $(sel).find("div.accordion");
+        if ($acc.length && $acc.find("a.view-more").length === 0) $acc.append(viewMoreHtml);
+      });
+      if (typeof changeResources === "function") changeResources();
+      if ($allCards.length > pageSize) {
+        $("#InternalProjects a.view-more, #ExternalProjects a.view-more").show().attr("style", "display: block !important;");
+        $("#InternalProjects a.view-less, #ExternalProjects a.view-less").hide().attr("style", "display: none !important;");
+      } else {
+        $("#InternalProjects a.view-more, #ExternalProjects a.view-more, #InternalProjects a.view-less, #ExternalProjects a.view-less").hide().attr("style", "display: none !important;");
+      }
+    })();
 
     progressstatusarrayALL = progressstatusarray;
     // console.log('progressstatusarrayALL', progressstatusarrayALL);
 
     if (originalstate) {
-      // handling filters  [after culminating data]
+      // handling filters  [after full data load - from initData]
       var phasefilterhtml =
         '<label class="dropdown-item main-action-filter"><button data-trans-CanselSelections class="clear-filter Resources" type="button"></button></label>';
       for (var i = 0; i < phasefilterarray.length; i++) {
@@ -807,6 +866,7 @@ window.Project_Info_Request = {
       });
       Project_Info_Request.g.filtertrigger(); // filter trigger
     }
+    window._countOnlyDone = false;
     Project_Info_Request.g.statisticsbars(); //assigning data to stats
 
     Project_Info_Request.g.handlescrollview(); //intialize viewelement in scroll
@@ -870,6 +930,9 @@ window.Project_Info_Request = {
     console.log(
       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
     );
+    if (filterRequestTimeoutId) { clearTimeout(filterRequestTimeoutId); filterRequestTimeoutId = null; }
+    $("body").animate({ opacity: 1 }, { duration: 333 });
+    $(".page-filter .dropdown-menu label.dropdown-item input:checkbox").prop({ disabled: false });
   },
   // Global variables
   g: {
@@ -963,6 +1026,7 @@ window.Project_Info_Request = {
         (SectorsProjectCount = []),
         (budgetData = []),
         (ScheduleProgressStatusarray = []);
+      if (filterRequestTimeoutId) clearTimeout(filterRequestTimeoutId);
       $("body").animate(
         {
           opacity: 0.5,
@@ -972,6 +1036,11 @@ window.Project_Info_Request = {
           complete: function () { },
         }
       );
+      filterRequestTimeoutId = setTimeout(function () {
+        filterRequestTimeoutId = null;
+        $("body").animate({ opacity: 1 }, { duration: 333 });
+        $(".page-filter .dropdown-menu label.dropdown-item input:checkbox").prop({ disabled: false });
+      }, FILTER_REQUEST_TIMEOUT_MS);
       if (FilterChoices.length == 0) {
         if (isRoleDataLevelAccess) {
           PQuery = dataLevelAccessQuery ? dataLevelAccessQuery : AccessQuery;
@@ -982,11 +1051,7 @@ window.Project_Info_Request = {
       } //if there are choices build caml query
       else {
         $("#clearAllFilter").prop("disabled", false);
-        $(
-          ".page-filter .dropdown-menu label.dropdown-item input:checkbox"
-        ).prop({
-          disabled: true,
-        });
+        // Do NOT disable checkboxes so user can select a second filter from another dropdown
 
         // Role-based access: dataLevelAccessQuery uses Or. Use data level Where + user filter only.
         if (isRoleDataLevelAccess) {
@@ -1014,6 +1079,9 @@ window.Project_Info_Request = {
               userWhere += "<Value Type=\"" + (fc.Type || "Text") + "\">" + val + "</Value>";
             }
             userWhere += "</Values></In>";
+          }
+          if (userFilterChoices.length > 1) {
+            userWhere = "<And>" + userWhere + "</And>";
           }
           var combinedWhere = "<Where><And>" + dataLevelWhereContent + userWhere + "</And></Where>";
           Query_Body = "<View><Query>" + combinedWhere + "<OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
@@ -1215,7 +1283,8 @@ window.Project_Info_Request = {
               'Type="DateTime"',
               'IncludeTimeValue="False" Type="DateTime"'
             );
-            //    console.log(Where_Body);
+            // When FilterChoices.length > 2, Where_Body already has all </And> via ANDC; do not add extra "</And>"
+            var whereClose = (FilterChoices.length > 2) ? "</Where>" : "</And></Where>";
             Query_Body =
               "<View>" +
               // '<ViewFields>' + //use it for paging jsom calls
@@ -1224,7 +1293,7 @@ window.Project_Info_Request = {
               "<Query>" +
               "<Where>" +
               Where_Body +
-              "</And></Where>" +
+              whereClose +
               // '<OrderBy>' +
               // '<FieldRef Name="' + sortColumn + '" Ascending="'+isAscending+'" />' +
               // '</OrderBy>' +
@@ -1291,278 +1360,117 @@ window.Project_Info_Request = {
       };
     },
     showprojectonclick: function () {
-      $(".accordion#accordionProject.internalAccordion a.view-more").on(
-        "click",
-        function () {
-          var internalselector = $(
-            ".accordion#accordionProject.internalAccordion > .card"
-          ).not(":visible");
-          internalselector.prevObject.length = 5;
-          var internalvisiblelength = $(
-            ".accordion#accordionProject.internalAccordion > .card:visible"
-          ).length;
-          var internaltt = internalvisiblelength + 6;
-          var internaltoshow = $(
-            ".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-            internaltt +
-            ")"
-          );
-          setTimeout(function () {
-            internaltoshow.each(function () {
-              $(this)
-                .css("display", "block")
-                .animate(
-                  {
-                    opacity: 1,
-                    height: 75.5,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(this).attr(
-                        "style",
-                        "display: block; opacity: 1; height: auto;"
-                      );
-                    },
-                  }
-                );
-            });
-            //rechecking visibility
-            internalvisiblelength = $(
-              ".accordion#accordionProject.internalAccordion > .card:visible"
-            ).length;
-            internaltt = internalvisiblelength + 6;
-            internaltoshow = $(
-              ".accordion#accordionProject.internalAccordion > .card:hidden:nth-child(-n+" +
-              internaltt +
-              ")"
-            );
-            if (internaltoshow.length == 0) {
-              $(
-                ".accordion#accordionProject.internalAccordion a.view-more"
-              ).animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.internalAccordion a.view-more"
-                    ).attr("style", "display: none!important;");
-                  },
-                }
-              );
-              $(
-                ".accordion#accordionProject.internalAccordion a.view-less"
-              ).animate(
-                {
-                  opacity: 1,
-                  height: 34,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.internalAccordion a.view-less"
-                    ).attr("style", "display: block;");
-                  },
-                }
-              );
-            }
-          }, 133);
-        }
-      );
-      $(".accordion#accordionProject.internalAccordion a.view-less").on(
-        "click",
-        function () {
-          var tohide = $(
-            ".accordion#accordionProject.internalAccordion > .card:nth-child(n+4)"
-          );
-          setTimeout(function () {
-            tohide.each(function () {
-              $(this).animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(this).attr("style", "display: none;");
-                  },
-                }
-              );
-            });
-          }, 133);
-          $(
-            ".accordion#accordionProject.internalAccordion a.view-less"
-          ).animate(
-            {
-              opacity: 0,
-              height: 0,
-            },
-            {
-              duration: 333,
-              complete: function () {
-                $(
-                  ".accordion#accordionProject.internalAccordion a.view-more"
-                ).animate(
-                  {
-                    opacity: 1,
-                    height: 34,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(
-                        ".accordion#accordionProject.internalAccordion a.view-more"
-                      ).attr("style", "display: block;");
-                    },
-                  }
-                );
-              },
-            }
-          );
-        }
-      );
-      $(".accordion#accordionProject.externalAccordion a.view-more").on(
-        "click",
-        function () {
-          var externalselector = $(
-            ".accordion#accordionProject.externalAccordion > .card"
-          ).not(":visible");
-          externalselector.prevObject.length = 5;
-          var externalvisiblelength = $(
-            ".accordion#accordionProject.externalAccordion > .card:visible"
-          ).length;
-          var externaltt = externalvisiblelength + 6;
-          var externaltoshow = $(
-            ".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-            externaltt +
-            ")"
-          );
-          setTimeout(function () {
-            externaltoshow.each(function () {
-              $(this)
-                .css("display", "block")
-                .animate(
-                  {
-                    opacity: 1,
-                    height: 75.5,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(this).attr(
-                        "style",
-                        "display: block; opacity: 1; height: auto;"
-                      );
-                    },
-                  }
-                );
-            });
-            //rechecking visibility
-            externalvisiblelength = $(
-              ".accordion#accordionProject.externalAccordion > .card:visible"
-            ).length;
-            externaltt = externalvisiblelength + 6;
-            externaltoshow = $(
-              ".accordion#accordionProject.externalAccordion > .card:hidden:nth-child(-n+" +
-              externaltt +
-              ")"
-            );
-            if (externaltoshow.length == 0) {
-              $(
-                ".accordion#accordionProject.externalAccordion a.view-more"
-              ).animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.externalAccordion a.view-more"
-                    ).attr("style", "display: none!important;");
-                  },
-                }
-              );
-              $(
-                ".accordion#accordionProject.externalAccordion a.view-less"
-              ).animate(
-                {
-                  opacity: 1,
-                  height: 34,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(
-                      ".accordion#accordionProject.externalAccordion a.view-less"
-                    ).attr("style", "display: block;");
-                  },
-                }
-              );
-            }
-          }, 133);
-        }
-      );
-      $(".accordion#accordionProject.externalAccordion a.view-less").on(
-        "click",
-        function () {
-          var tohide = $(
-            ".accordion#accordionProject.externalAccordion > .card:nth-child(n+4)"
-          );
-          setTimeout(function () {
-            tohide.each(function () {
-              $(this).animate(
-                {
-                  opacity: 0,
-                  height: 0,
-                },
-                {
-                  duration: 333,
-                  complete: function () {
-                    $(this).attr("style", "display: none;");
-                  },
-                }
-              );
-            });
-          }, 133);
-          $(
-            ".accordion#accordionProject.externalAccordion a.view-less"
-          ).animate(
-            {
-              opacity: 0,
-              height: 0,
-            },
-            {
-              duration: 333,
-              complete: function () {
-                $(
-                  ".accordion#accordionProject.externalAccordion a.view-more"
-                ).animate(
-                  {
-                    opacity: 1,
-                    height: 34,
-                  },
-                  {
-                    duration: 333,
-                    complete: function () {
-                      $(
-                        ".accordion#accordionProject.externalAccordion a.view-more"
-                      ).attr("style", "display: block;");
-                    },
-                  }
-                );
-              },
-            }
-          );
-        }
-      );
+      var pageSize = PROJECT_PAGE_SIZE;
+      $("div#accordionProject.internalAccordion").on("click", "a.view-more", function (e) {
+        e.preventDefault();
+        var $acc = $("#InternalProjects");
+        var $hidden = $acc.find(".card.ProjectCards").filter(":hidden");
+        var internalvisiblelength = $acc.find(".card.ProjectCards:visible").length;
+        var internaltt = internalvisiblelength + pageSize;
+        var internaltoshow = $acc.find(".card.ProjectCards:hidden").slice(0, pageSize);
+        console.log("[view-more internal] visible:", internalvisiblelength, "hidden:", $hidden.length, "toShow:", internaltoshow.length);
+        setTimeout(function () {
+          internaltoshow.each(function () {
+            $(this)
+              .css("display", "block")
+              .animate({ opacity: 1, height: 75.5 }, { duration: 333, complete: function () { $(this).attr("style", "display: block; opacity: 1; height: auto;"); } });
+          });
+          internalvisiblelength = $acc.find(".card.ProjectCards:visible").length;
+          internaltt = internalvisiblelength + pageSize;
+          internaltoshow = $acc.find(".card.ProjectCards:hidden").slice(0, pageSize);
+          if (internaltoshow.length === 0) {
+            var $section = $acc.add($acc.parent());
+            $section.find("a.view-more").hide().attr("style", "display: none !important;");
+            $(".projects-ctx a.view-more, div#accordionProject a.view-more").hide().attr("style", "display: none !important;");
+            $section.find("a.view-less").show().attr("style", "display: block !important;");
+          }
+        }, 133);
+        changeResources();
+      });
+      $("div#accordionProject.internalAccordion").on("click", "a.view-less", function (e) {
+        e.preventDefault();
+        var $acc = $("#InternalProjects");
+        var $cards = $acc.find(".card.ProjectCards");
+        var tohide = $cards.slice(pageSize);
+        console.log("[view-less internal] hiding", tohide.length, "cards");
+        setTimeout(function () {
+          tohide.each(function () {
+            $(this).animate({ opacity: 0, height: 0 }, { duration: 333, complete: function () { $(this).attr("style", "display: none;"); } });
+          });
+        }, 133);
+        var $section = $acc.add($acc.parent());
+        $section.find("a.view-less").hide().attr("style", "display: none !important;");
+        $section.find("a.view-more").show();
+        changeResources();
+      });
+      $("div#accordionProject.externalAccordion").on("click", "a.view-more", function (e) {
+        e.preventDefault();
+        var $acc = $("#ExternalProjects");
+        var $hidden = $acc.find(".card.ProjectCards").filter(":hidden");
+        var externalvisiblelength = $acc.find(".card.ProjectCards:visible").length;
+        var externaltt = externalvisiblelength + pageSize;
+        var externaltoshow = $acc.find(".card.ProjectCards:hidden").slice(0, pageSize);
+        console.log("[view-more external] visible:", externalvisiblelength, "hidden:", $hidden.length, "toShow:", externaltoshow.length);
+        setTimeout(function () {
+          externaltoshow.each(function () {
+            $(this)
+              .css("display", "block")
+              .animate({ opacity: 1, height: 75.5 }, { duration: 333, complete: function () { $(this).attr("style", "display: block; opacity: 1; height: auto;"); } });
+          });
+          externalvisiblelength = $acc.find(".card.ProjectCards:visible").length;
+          externaltt = externalvisiblelength + pageSize;
+          externaltoshow = $acc.find(".card.ProjectCards:hidden").slice(0, pageSize);
+          if (externaltoshow.length === 0) {
+            var $section = $acc.add($acc.parent());
+            $section.find("a.view-more").hide().attr("style", "display: none !important;");
+            $(".projects-ctx a.view-more, div#accordionProject a.view-more").hide().attr("style", "display: none !important;");
+            $section.find("a.view-less").show().attr("style", "display: block !important;");
+          }
+        }, 133);
+        changeResources();
+      });
+      $("div#accordionProject.externalAccordion").on("click", "a.view-less", function (e) {
+        e.preventDefault();
+        var $acc = $("#ExternalProjects");
+        var $cards = $acc.find(".card.ProjectCards");
+        var tohide = $cards.slice(pageSize);
+        console.log("[view-less external] hiding", tohide.length, "cards");
+        setTimeout(function () {
+          tohide.each(function () {
+            $(this).animate({ opacity: 0, height: 0 }, { duration: 333, complete: function () { $(this).attr("style", "display: none;"); } });
+          });
+        }, 133);
+        var $section = $acc.add($acc.parent());
+        $section.find("a.view-less").hide().attr("style", "display: none !important;");
+        $(".projects-ctx a.view-less, div#accordionProject a.view-less").hide().attr("style", "display: none !important;");
+        $section.find("a.view-more").show();
+        changeResources();
+      });
+      var $intCards = $("#InternalProjects .card.ProjectCards");
+      var $extCards = $("#ExternalProjects .card.ProjectCards");
+      var $allCards = $intCards.add($extCards);
+      $allCards.slice(0, pageSize).show();
+      $allCards.slice(pageSize).hide();
+      $("div#accordionProject.internalAccordion a.view-less, div#accordionProject.externalAccordion a.view-less, div#accordionProject a.view-less, div#InternalProjects a.view-less, div#ExternalProjects a.view-less").hide().attr("style", "display: none !important;");
+      var totalCards = $allCards.length;
+      console.log("[showprojectonclick] internal:", $intCards.length, "external:", $extCards.length, "total:", totalCards, "pageSize:", pageSize);
+      var viewMoreHtml = '<a data-trans-ViewMore class="view-more d-block text-center py-2 Resources"></a><a data-trans-ViewLess class="view-less d-block text-center py-2 Resources" style="display:none!important"></a>';
+      ["#InternalProjects", "#ExternalProjects"].forEach(function (sel) {
+        var $acc = $(sel).find("div.accordion");
+        if ($acc.length && $acc.find("a.view-more").length === 0) $acc.append(viewMoreHtml);
+      });
+      if ($intCards.length <= pageSize) {
+        $("div#InternalProjects a.view-more, div#InternalProjects a.view-less").hide().attr("style", "display: none !important;");
+      }
+      if ($extCards.length <= pageSize) {
+        $("div#ExternalProjects a.view-more, div#ExternalProjects a.view-less").hide().attr("style", "display: none !important;");
+      }
+      if (totalCards <= pageSize) {
+        $("div#accordionProject a.view-more, div#accordionProject a.view-less, #InternalProjects a.view-more, #ExternalProjects a.view-more").hide().attr("style", "display: none !important;");
+      } else {
+        $("#InternalProjects a.view-more, #ExternalProjects a.view-more, div#accordionProject a.view-more").show().attr("style", "display: block !important;");
+        $("div#accordionProject a.view-less, #InternalProjects a.view-less, #ExternalProjects a.view-less").hide().attr("style", "display: none !important;");
+      }
     },
     dateConvert: function (date) {
       if (date) {
@@ -2346,7 +2254,18 @@ var ProjectsOrder = {
       '<a data-trans-ViewMore class="view-more d-block text-center py-2 Resources"></a>' +
       '<a data-trans-ViewLess class="view-less d-block text-center py-2 Resources" style="display:none!important"></a>';
 
-    $("div#accordionProject").append(htmltest);
+    $("div#accordionProject").each(function () {
+      var $accordion = $(this);
+      if ($accordion.find("a.view-more").length === 0) {
+        $accordion.append(htmltest);
+      } else {
+        // keep view-more/view-less under the cards (they may have been moved up by appendChild reorder)
+        var viewMore = this.querySelector("a.view-more");
+        var viewLess = this.querySelector("a.view-less");
+        if (viewMore) this.appendChild(viewMore);
+        if (viewLess) this.appendChild(viewLess);
+      }
+    });
 
     if (totalforhidext < 4) {
       $(
