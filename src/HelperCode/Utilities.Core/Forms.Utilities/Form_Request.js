@@ -3555,7 +3555,6 @@ window.View_Data_Request = {
       }
 
       if (!USERisWF) {
-        // KPI links: Targets visible; mainkpiissues, mainkpianalysis hidden for now
         $("#printableArea").prepend(
           '<style>.kpi-link-item:hover,.sos-link-item:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1);}</style>' +
           '<div class="kpi-links-wrapper" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;">' +
@@ -3565,21 +3564,20 @@ window.View_Data_Request = {
               KPICode +
               '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(24,58,102,0.12);color:#183a66;border:1px solid rgba(24,58,102,0.35);">' +
               '<i class="fas fa-info-circle iconfontawesome"></i><span data-trans-kpiresulttext class="Resources"></span></a>' +
+            '<a class="linkmsg alert kpi-link-item" href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=mainkpiissues&KpiCode=" +
+              KPICode +
+              '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(247,148,29,0.18);color:#f7941d;border:1px solid rgba(247,148,29,0.45);">' +
+              '<i class="fas fa-exclamation-triangle iconfontawesome"></i><span data-trans-mainkpiissuestext class="Resources"></span></a>' +
+            '<a class="linkmsg alert kpi-link-item" href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=mainkpianalysis&KpiCode=" +
+              KPICode +
+              '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(20,130,130,0.18);color:#148282;border:1px solid rgba(20,130,130,0.4);">' +
+              '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-mainkpianalysistext class="Resources"></span></a>' +
           "</div>"
         );
-        // mainkpiissues, mainkpianalysis - commented to restore later
-        // '<a class="linkmsg alert kpi-link-item" href="' +
-        //   _spPageContextInfo.webAbsoluteUrl +
-        //   "/SitePages/Listing.aspx?ListKey=mainkpiissues&KpiCode=" +
-        //   KPICode +
-        //   '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(247,148,29,0.18);color:#f7941d;border:1px solid rgba(247,148,29,0.45);">' +
-        //   '<i class="fas fa-exclamation-triangle iconfontawesome"></i><span data-trans-mainkpiissuestext class="Resources"></span></a>' +
-        // '<a class="linkmsg alert kpi-link-item" href="' +
-        //   _spPageContextInfo.webAbsoluteUrl +
-        //   "/SitePages/Listing.aspx?ListKey=mainkpianalysis&KpiCode=" +
-        //   KPICode +
-        //   '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(20,130,130,0.18);color:#148282;border:1px solid rgba(20,130,130,0.4);">' +
-        //   '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-mainkpianalysistext class="Resources"></span></a>' +
       }
       var yearValue = $("#Actual").parent().parent().find("#Year").text();
       console.log('yearValue',yearValue);
@@ -3600,18 +3598,17 @@ window.View_Data_Request = {
         // SOs list has Title as code (no SOCode column); SOCode exists only in SOSAnalysis list
         var sosCodeForLinks = oListItem.get_item("Title") ? String(oListItem.get_item("Title")).trim() : "";
         if (sosCodeForLinks) {
-          // SOS analysis link (sos-links-wrapper) - hidden for now
-          // $("#printableArea").prepend(
-          //   '<style>.sos-link-item:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1);}</style>' +
-          //   '<div class="sos-links-wrapper" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;">' +
-          //     '<a class="linkmsg alert sos-link-item" href="' +
-          //       _spPageContextInfo.webAbsoluteUrl +
-          //       "/SitePages/Listing.aspx?ListKey=sosanalysis&sosCode=" +
-          //       encodeURIComponent(sosCodeForLinks) +
-          //       '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(20,130,130,0.18);color:#148282;border:1px solid rgba(20,130,130,0.4);">' +
-          //       '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-sosanalysislinktext class="Resources"></span></a>' +
-          //   "</div>"
-          // );
+          $("#printableArea").prepend(
+            '<style>.sos-link-item:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1);}</style>' +
+            '<div class="sos-links-wrapper" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;">' +
+              '<a class="linkmsg alert sos-link-item" href="' +
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=sosanalysis&sosCode=" +
+                encodeURIComponent(sosCodeForLinks) +
+                '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(20,130,130,0.18);color:#148282;border:1px solid rgba(20,130,130,0.4);">' +
+                '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-sosanalysislinktext class="Resources"></span></a>' +
+            "</div>"
+          );
         }
       }
     }
