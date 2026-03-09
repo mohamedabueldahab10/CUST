@@ -2090,6 +2090,7 @@ window.ListInfo = {
             if (listkey == "cryearlycalendar") {
               $("#Year").attr("min", 1900).attr("max", 2100);
               $("#Quarter").attr("min", 1).attr("max", 4);
+              $("#Month").attr("min", 1).attr("max", 12);
             }
 
             if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
@@ -3365,6 +3366,7 @@ debugger;
         if (listkey == "cryearlycalendar") {
           if (element.InternalName == "Year") numberMinMax = ' min="1900" max="2100"';
           else if (element.InternalName == "Quarter") numberMinMax = ' min="1" max="4"';
+          else if (element.InternalName == "Month") numberMinMax = ' min="1" max="12"';
         }
 
         htmlBody =
