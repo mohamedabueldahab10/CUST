@@ -1957,7 +1957,7 @@ window.userCalls = {
 
         ar_UserRole = "مالك المشروع";
         en_UserRole = "Project Owner";
-        Create_Access = ["projecthome.aspx"];
+        Create_Access = ["projecthome.aspx","delegations"];
         Read_Access = [
           "projects",
           "deliverables",
@@ -1979,7 +1979,7 @@ window.userCalls = {
           "projecthome.aspx",
           "delegations"
         ];
-        Edit_Access = ["projecthome.aspx"];
+        Edit_Access = ["projecthome.aspx","delegations"];
         Delete_Access = [];
 
         break;
@@ -2294,7 +2294,7 @@ window.userCalls = {
           "sos",
           "benefitmatrix",
           "mainkpi",
-          "mainkpianalysis",
+          //"mainkpianalysis",
           "sosanalysis",
           "benefits",
           "benefitmetrics",
@@ -2368,8 +2368,8 @@ window.userCalls = {
         ];
         Delete_Access = [
           "mainkpi",
-          "mainkpianalysis",
-          "mainkpiissues",
+          //"mainkpianalysis",
+         // "mainkpiissues",
           "sosanalysis",
           "sos",
           "benefitmatrix",
@@ -3470,7 +3470,6 @@ window.userCalls = {
           "changerequest",
           "achievements",
           "developmentrequirements",
-          "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
@@ -3505,7 +3504,6 @@ window.userCalls = {
           //"changerequest",
           "achievements",
           "developmentrequirements",
-          "delegations"
         ];
         Delete_Access = [
           // for initiative
@@ -3725,7 +3723,6 @@ window.userCalls = {
           "changerequest",
           "achievements",
           "changerequests",
-          "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
@@ -3764,7 +3761,6 @@ window.userCalls = {
           //"changerequest",
           "achievements",
           "nesteddeliverables",
-          "delegations"
         ];
         Delete_Access = [
           // for initiative
@@ -4030,7 +4026,8 @@ window.userCalls = {
           "Targets.aspx",
           "BenefitMetrics.aspx",
           "changerequest",
-          "changerequests" 
+          "changerequests" ,
+          "delegations"
           
         ];
         Read_Access = [
@@ -4054,7 +4051,7 @@ window.userCalls = {
           "initiativesmain.aspx",
           "changerequest",
           "changeRequests.aspx",
-          "changerequests"        ];
+          "changerequests"  , "delegations"      ];
         Edit_Access = [
           "Targets.aspx",
           "mainkpi",
@@ -4064,7 +4061,7 @@ window.userCalls = {
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "kpiequations",
-          "MainIndicators.aspx",
+          "MainIndicators.aspx","delegations"
           //"changerequest"
         ];
         Delete_Access = [];

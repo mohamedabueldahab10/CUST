@@ -7207,3 +7207,84 @@ span.statuscolorstat28 {
 .AllTaskHistoryRelatedToForm-HistoryLink{
     color:#212529!important
 }
+
+/* Delegations Audit table */
+.delegations-audit-ctx .approvalHeader {
+    background-color: #11adad !important;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 0 8px 3px hsl(210deg 1% 66% / 8%);
+    border-radius: 3px;
+    color: #fff !important;
+    width: 100%;
+    padding: 20px 28px !important;
+    margin-block: 3rem !important;
+}
+.delegations-audit-ctx .hrsd-table-responsive {
+    overflow-x: auto;
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px 0 #B9C4DBA8;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+.delegations-audit-ctx .table.HrsdTable {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    table-layout: auto;
+    background: #fff;
+    white-space: normal;
+}
+.delegations-audit-ctx .table.HrsdTable th {
+    background: #14415a !important;
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0.9rem 1rem !important;
+    text-align: start;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    vertical-align: middle;
+}
+.delegations-audit-ctx .table.HrsdTable td {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0.9rem 1.5rem 0.6rem !important;
+    border-bottom: 1px solid rgba(20, 65, 90, 0.2) !important;
+    vertical-align: baseline;
+    word-break: break-word;
+}
+.delegations-audit-ctx .table.HrsdTable tr:last-child td {
+    border: none !important;
+}
+.delegations-audit-ctx .hrsd-table-responsive::-webkit-scrollbar {
+    height: 14px;
+    width: 10px;
+}
+.delegations-audit-ctx .hrsd-table-responsive::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(94.47deg, #14415a 0.97%, #000 166.42%);
+}
+.delegations-audit-ctx .hrsd-table-responsive::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px rgb(0 0 0 / 30%);
+    background: linear-gradient(94.47deg, #148282 0.97%, #fff 166.42%);
+    border-radius: 10px;
+}
+.delegations-audit-ctx .no-data-td {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.en .delegations-audit-ctx .table.HrsdTable th:first-child { border-top-left-radius: 12px; }
+.en .delegations-audit-ctx .table.HrsdTable th:last-child { border-top-right-radius: 12px; }
+.en .delegations-audit-ctx .table.HrsdTable tbody tr:last-child td:first-child { border-bottom-left-radius: 12px; }
+.en .delegations-audit-ctx .table.HrsdTable tbody tr:last-child td:last-child { border-bottom-right-radius: 12px; }
+.ar .delegations-audit-ctx .table.HrsdTable th:first-child { border-top-right-radius: 12px; }
+.ar .delegations-audit-ctx .table.HrsdTable th:last-child { border-top-left-radius: 12px; }
+.ar .delegations-audit-ctx .table.HrsdTable tbody tr:last-child td:first-child { border-bottom-right-radius: 12px; }
+.ar .delegations-audit-ctx .table.HrsdTable tbody tr:last-child td:last-child { border-bottom-left-radius: 12px; }

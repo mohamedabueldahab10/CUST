@@ -731,6 +731,7 @@ window.Edit_Data_Request = {
     if (listkey == "cryearlycalendar") {
       $("#Year").attr("min", 1900).attr("max", 2100);
       $("#Quarter").attr("min", 1).attr("max", 4);
+      $("#Month").attr("min", 1).attr("max", 12);
     }
     if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
       setTimeout(function () {
@@ -3362,10 +3363,12 @@ window.View_Data_Request = {
     if (USERisWF) {
       $(".container-body .d-flex.btnactionrow").hide();
     } else {
-      // Don't call Get_AllTaskHistoryRelatedToForm.init() for delegations
-    if (listkey != "delegations" && listkey != "cryearlycalendar") {
-      Get_AllTaskHistoryRelatedToForm.init();
-    }
+      // For delegations use Audit (item versions); for others use task history
+      if (listkey == "delegations") {
+        Get_DelegationsAudit.init();
+      } else if (listkey != "cryearlycalendar") {
+        Get_AllTaskHistoryRelatedToForm.init();
+      }
     }
 
     //handle top menu navigation
@@ -9809,7 +9812,6 @@ window.Get_AllTaskHistoryRelatedToForm = {
     var titleToCheck =$('#Title').text();
     var camlQueryXml =``;
     if (titleToCheck){
-      debugger
       camlQueryXml = `<View>
       <Query>
         <Where>
@@ -10052,6 +10054,146 @@ window.Get_AllTaskHistoryRelatedToForm = {
   },
 
   g: {},
+};
+
+// Delegations: show item versions (Audit) via API instead of task history
+window.Get_DelegationsAudit = {
+  init: function () {
+    var url =
+      (typeof APIURL !== "undefined" ? APIURL : "") +
+      "/general/getitemversions/Delegations/" +
+      IID;
+    $.ajax({
+      url: url,
+      method: "GET",
+      dataType: "json",
+      success: Function.createDelegate(this, Get_DelegationsAudit.onSuccess),
+      error: Function.createDelegate(this, Get_DelegationsAudit.onError),
+    });
+  },
+
+  onSuccess: function (data) {
+    if (!data || !data.isSuccess) {
+      Get_DelegationsAudit.renderTable([]);
+      return;
+    }
+    var versions = [];
+    try {
+      var resultStr = data.result;
+      if (typeof resultStr === "string") {
+        versions = JSON.parse(resultStr);
+      } else if (Array.isArray(resultStr)) {
+        versions = resultStr;
+      }
+    } catch (e) {
+      console.log("Get_DelegationsAudit: parse error", e);
+    }
+    Get_DelegationsAudit.renderTable(versions);
+  },
+
+  onError: function () {
+    Get_DelegationsAudit.renderTable([]);
+  },
+
+  renderTable: function (versions) {
+    var isAr =
+      localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+    var Res = isAr ? Resources.ar : Resources.en;
+    var noDataLabel = isAr ? "لا يوجد" : "No Data";
+    var trueLabel = Res.true || (isAr ? "نعم" : "Yes");
+    var falseLabel = Res.false || (isAr ? "لا" : "No");
+
+    function getLookupValue(obj) {
+      if (!obj) return No_Data;
+      if (typeof obj === "object" && obj.LookupValue) return obj.LookupValue;
+      if (typeof obj === "string") return obj;
+      return No_Data;
+    }
+    function formatDate(val) {
+      if (!val || val === No_Data) return No_Data;
+      try {
+        var d = new Date(val);
+        return d.toLocaleDateString("en-US");
+      } catch (e) {
+        return val;
+      }
+    }
+    // Translate GroupName same as groupsOfPicker: getRoleForGroupName -> Resources
+    function translateGroupName(rawGroupName) {
+      if (!rawGroupName || rawGroupName === No_Data) return No_Data;
+      var role = typeof window.getRoleForGroupName === "function"
+        ? window.getRoleForGroupName(rawGroupName)
+        : null;
+      if (role && Res[role.toLowerCase()]) return Res[role.toLowerCase()];
+      return rawGroupName;
+    }
+
+    var rowsHtml = "";
+    for (var i = 0; i < versions.length; i++) {
+      var v = versions[i];
+      var editorDisplay = getLookupValue(v.Editor);
+      var createdDate = formatDate(v.Created_x005f_x0020_x005f_Date || v.Created);
+      var isCurrentText = v.IsCurrentVersion === true ? trueLabel : falseLabel;
+      var delegateFrom = getLookupValue(v.DelegateFrom);
+      var groupNameRaw = v.GroupName != null && v.GroupName !== "" ? v.GroupName : No_Data;
+      var groupName = translateGroupName(groupNameRaw);
+      var delegateTo = getLookupValue(v.DelegateTo);
+      var notes = v.Notes != null && v.Notes !== "" ? v.Notes : No_Data;
+      var statusCode = (v.Status || "").toLowerCase();
+      var statusDisplay = Res[statusCode] != null ? Res[statusCode] : (v.Status || No_Data);
+      var fromDate = formatDate(v.FromDate);
+      var toDate = formatDate(v.ToDate);
+
+      rowsHtml +=
+        "<tr><td>" + editorDisplay +
+        "</td><td>" + createdDate +
+        "</td><td>" + isCurrentText +
+        "</td><td>" + delegateFrom +
+        "</td><td>" + groupName +
+        "</td><td>" + delegateTo +
+        "</td><td>" + notes +
+        "</td><td>" + statusDisplay +
+        "</td><td>" + fromDate +
+        "</td><td>" + toDate +
+        "</td></tr>";
+    }
+
+    var colCount = 10;
+    var tableContent =
+      versions.length > 0
+        ? rowsHtml
+        : '<tr><td colspan="' + colCount + '"><span class="no-data-td">' +
+          noDataLabel +
+          "</span></td></tr>";
+
+    var sectionHtml =
+      '<div class="section3 row col-12 px-0 task-history-ctx mx-0 delegations-audit-ctx">' +
+      '<div class="approvalHeader">' +
+      '<h2 class="Resources" data-trans-audit>Audit</h2>' +
+      "</div>" +
+      '<div class="taskHistory row mx-0 px-0 col-12 flex-column">' +
+      '<div class="hrsd-table-responsive">' +
+      '<table class="table HrsdTable delegations-audit-table">' +
+      "<thead><tr>" +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-editor>Editor</span></span></th>' +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-createddate>Created</span></span></th>' +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-iscurrentversion>Current Version</span></span></th>' +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-delegatefrom>Delegate From</span></span></th>' +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-groupname>Group Name</span></span></th>' +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-delegateto>Delegate To</span></span></th>' +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-notes>Notes</span></span></th>' +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-delegationstatus>Delegation Status</span></span></th>' +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-fromdate>From Date</span></span></th>' +
+      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-todate>To Date</span></span></th>' +
+      "</tr></thead>" +
+      "<tbody>" +
+      tableContent +
+      "</tbody></table></div></div></div>";
+
+    $(".btnactionrow").before(sectionHtml);
+    $(".btnactionrow .form-btns-wrapper").show();
+    changeResources();
+  },
 };
 
 // !in progress
