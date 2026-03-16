@@ -318,6 +318,7 @@ var Resources = {
     notstarted1: "لم تبدأ",
     progress: "التنفيذ",
     closed: "مغلق",
+    active2: "قائم",
     cancelled: "ملغى",
     ///////////////// for initiative status
     stat1: "متأخر جدا",
@@ -1641,6 +1642,7 @@ var Resources = {
     inprogress3: "In Progress",
     onhold: "On Hold",
     closed: "Closed",
+    active2: "Active",
     cancelled: "Cancelled",
     pending3: "Pending",
     //budget type

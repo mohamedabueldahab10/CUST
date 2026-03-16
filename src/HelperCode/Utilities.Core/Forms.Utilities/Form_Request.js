@@ -2243,8 +2243,13 @@ window.View_Data_Request = {
           oListItem.get_item(fieldId) == null
             ? No_Data
             : oListItem.get_item(fieldId);
-        // $(this).text(value);
         $(this).attr("data-viewtogglevalue", value);
+        // cryearlycalendar / changeitemapprovalcontrol ApprovalPath: stored value to Resources key for display strategic->crstrategic
+        var displayValue = value;
+        if ((listkey == "cryearlycalendar" || listkey == "changeitemapprovalcontrol") && fieldId == "ApprovalPath" && value && value !== No_Data) {
+          var approvalPathMap = { strategic: "crstrategic", execution: "crexecution", operation: "croperationally" };
+          displayValue = approvalPathMap[value] || value;
+        }
         if (listkey == "goalstrategy") {
           // to handle the title change
           if ($(this).attr("id") == "Types") {
@@ -2322,8 +2327,8 @@ window.View_Data_Request = {
               localStorage.getItem("lng") == null ||
               localStorage.getItem("lng") == "ar"
             ) {
-              $(this).text(Resources.ar[value.toLowerCase()]);
-            } else $(this).text(Resources.en[value.toLowerCase()]);
+              $(this).text(Resources.ar[displayValue.toLowerCase()]);
+            } else $(this).text(Resources.en[displayValue.toLowerCase()]);
           }
 
           // if (listkey == 'mainkpi' && $(this).attr("id") == 'Year') { // view the year value in main kpi view
@@ -2725,19 +2730,16 @@ window.View_Data_Request = {
                         }
                       } else if ($targetField.is("p")) {
                         // For view mode, set the value using span with data-trans attribute
-                        // Use the value directly from ListName, convert to lowercase
                         var displayKey = valueToSet ? valueToSet.toLowerCase() : actualValueToSet.toLowerCase();
-                        
-                        console.log("[View Mode Lookup] Setting span for ItemType:", {
-                          displayKey: displayKey,
-                          dataTransAttr: "data-trans-" + displayKey
-                        });
-                        
+                        // cryearlycalendar / changeitemapprovalcontrol ApprovalPath
+                        if (typeof listkey !== "undefined" && (listkey === "cryearlycalendar" || listkey === "changeitemapprovalcontrol") && targetFieldId === "ApprovalPath" && actualValueToSet) {
+                          var approvalPathMap = { strategic: "crstrategic", execution: "crexecution", operation: "croperationally" };
+                          displayKey = (approvalPathMap[actualValueToSet] || actualValueToSet).toLowerCase();
+                        }
                         // Set the value using span with data-trans attribute
                         var dataTransAttr = "data-trans-" + displayKey;
                         $targetField.html('<span ' + dataTransAttr + ' class="Resources">' + displayKey + '</span>');
                         $targetField.attr("data-viewtogglevalue", actualValueToSet);
-                        // Call changeResources to translate
                         if (typeof changeResources === "function") {
                           changeResources();
                         }
@@ -4190,19 +4192,15 @@ window.View_Data_Request = {
                 }
               } else if ($targetField.is("p")) {
                 // For view mode, set the value using span with data-trans attribute
-                // Use the value directly from ListName, convert to lowercase
                 var displayKey = valueToSet ? valueToSet.toLowerCase() : actualValueToSet.toLowerCase();
-                
-                console.log("[View_Data_Request.handleGetValueFromLookup] Setting span for ItemType:", {
-                  displayKey: displayKey,
-                  dataTransAttr: "data-trans-" + displayKey
-                });
-                
-                // Set the value using span with data-trans attribute
+                // cryearlycalendar / changeitemapprovalcontrol ApprovalPath
+                if (typeof listkey !== "undefined" && (listkey === "cryearlycalendar" || listkey === "changeitemapprovalcontrol") && targetFieldId === "ApprovalPath" && actualValueToSet) {
+                  var approvalPathMap = { strategic: "crstrategic", execution: "crexecution", operation: "croperationally" };
+                  displayKey = (approvalPathMap[actualValueToSet] || actualValueToSet).toLowerCase();
+                }
                 var dataTransAttr = "data-trans-" + displayKey;
                 $targetField.html('<span ' + dataTransAttr + ' class="Resources">' + displayKey + '</span>');
                 $targetField.attr("data-viewtogglevalue", actualValueToSet);
-                // Call changeResources to translate
                 if (typeof changeResources === "function") {
                   changeResources();
                 }
@@ -6832,18 +6830,20 @@ window.Delete_Data_Submit = {
         $("button.btn-delete").removeClass("loader-action");
         $("button.btn-delete").addClass("loader-action-success");
 
-        if (listkey == "initiatives" || USERisProjects) {
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/Listing.aspx?ListKey=" +
-            listkey;
-        } else {
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/Listing.aspx?ListKey=" +
-            listkey +
-            PCODE_STRING;
+        var listingUrl =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/Listing.aspx?ListKey=" +
+          listkey;
+        if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+          if (window.location.href.indexOf("KpiCode=") > -1)
+            listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+        } else if (listkey == "sosanalysis") {
+          if (window.location.href.indexOf("sosCode=") > -1)
+            listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+        } else if (listkey != "initiatives" && !USERisProjects) {
+          listingUrl += PCODE_STRING;
         }
+        window.location = listingUrl;
       }),
       Function.createDelegate(this, function (sender, args) {
         $("button.btn-delete").removeClass("loader-action");
@@ -7009,11 +7009,20 @@ window.Delete_Item_Submit = {
             } else if (listkey == "benefitmetrics" && ICODE) {
               Delete_Benefits_Results.init();
             } else {
-              window.location =
+              var listingUrl =
                 _spPageContextInfo.webAbsoluteUrl +
                 "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                PCODE_STRING;
+                listkey;
+              if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+                if (window.location.href.indexOf("KpiCode=") > -1)
+                  listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+              } else if (listkey == "sosanalysis") {
+                if (window.location.href.indexOf("sosCode=") > -1)
+                  listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+              } else {
+                listingUrl += PCODE_STRING;
+              }
+              window.location = listingUrl;
             }
           }
         }

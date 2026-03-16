@@ -148,6 +148,15 @@ if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "so
   setTimeout(updatePageTitleLinkForKpiOrSos, 300);
 }
 
+// cryearlycalendar / changeitemapprovalcontrol ApprovalPath: stored value to Resources key for translation
+function getListingTransKey(listkey, internalName, value) {
+  if ((listkey === 'cryearlycalendar' || listkey === 'changeitemapprovalcontrol') && internalName === 'ApprovalPath' && value) {
+    var m = { strategic: 'crstrategic', execution: 'crexecution', operation: 'croperationally' };
+    return m[value] || value;
+  }
+  return value;
+}
+
 //function to get data from sharepoint list (JSOM)
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
@@ -914,15 +923,15 @@ window.ListingData = {
 					if (!isTasks) {
 
 					  if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
-
+						  var transKey = getListingTransKey(listkey, key, obj[key]);
 						html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-						  '<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
+						  '<h4 data-trans-' + transKey + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
 						if (records[i].ProjectType == 'Internal') {
 						  InternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-							'<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
+							'<h4 data-trans-' + transKey + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
 						} else if (records[i].ProjectType == 'External') {
 						  ExternalProjectsHtml += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
-							'<h4 data-trans-' + obj[key] + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
+							'<h4 data-trans-' + transKey + ' class="acc-title d-inline-flex black Resources" style="margin:0px!important;margin-bottom:.5rem!important"></h4>';
 						}
 					  } else {
 						html += '<div class="d-inline-flex flex-column" style="width:25%!important">' +
@@ -944,13 +953,14 @@ window.ListingData = {
 
 
 					  if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
-						html += '<span data-trans-' + obj[key] + ' class="des-13 Resources"></span>' +
+						  var transKey = getListingTransKey(listkey, key, obj[key]);
+						html += '<span data-trans-' + transKey + ' class="des-13 Resources"></span>' +
 						  '</div>';
 						if (records[i].ProjectType == 'Internal') {
-						  InternalProjectsHtml += '<span data-trans-' + obj[key] + ' class="des-13 Resources ' + obj[key] + '"></span>' +
+						  InternalProjectsHtml += '<span data-trans-' + transKey + ' class="des-13 Resources ' + transKey + '"></span>' +
 							'</div>';
 						} else if (records[i].ProjectType == 'External') {
-						  ExternalProjectsHtml += '<span data-trans-' + obj[key] + ' class="des-13 Resources ' + obj[key] + '"></span>' +
+						  ExternalProjectsHtml += '<span data-trans-' + transKey + ' class="des-13 Resources ' + transKey + '"></span>' +
 							'</div>';
 						}
 					  } else {
@@ -996,17 +1006,16 @@ window.ListingData = {
 					  var PriorityName = obj[key];
 					  if (Field_In_Use[0].inlisting) {
 						if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
+						  var transKeyP = getListingTransKey(listkey, 'Priority', PriorityName);
 						  if (records[i].ProjectType == 'Internal') {
 							InternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2 ' + PriorityName + ' " style="width:20%!important">' +
-							  // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
 							  '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-							  '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+							  '<h4 data-trans-' + transKeyP + ' class="text-warning Resources" ></h4>' +
 							  '</div>';
 						  } else if (records[i].ProjectType == 'External') {
 							ExternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  ' + PriorityName + '" style="width:20%!important">' +
-							  // '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
 							  '<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-							  '<h4 data-trans-' + PriorityName + ' class="text-warning Resources" ></h4>' +
+							  '<h4 data-trans-' + transKeyP + ' class="text-warning Resources" ></h4>' +
 							  '</div>';
 						  }
 						} else {
@@ -1027,18 +1036,17 @@ window.ListingData = {
 					  }
 					} else if (Field_In_Use[0].inlisting) {
 					  if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
+						  var transKey = getListingTransKey(listkey, key, obj[key]);
 						if (records[i].ProjectType == 'Internal') {
 						  InternalProjectsHtml +=
 							'<div class="d-inline- wordBreak flex-column mx-2  ' + obj[key] + ' " style="width:20% !important ">' +
-							// '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
 							'<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-							'<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
+							'<h4 data-trans-' + transKey + ' class="text-warning Resources"></h4>' +
 							'</div>';
 						} else if (records[i].ProjectType == 'External') {
 						  ExternalProjectsHtml += '<div class="d-inline-flex wordBreak flex-column mx-2  ' + obj[key] + '" style="width:20%!important">' +
-							// '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
 							'<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-							'<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
+							'<h4 data-trans-' + transKey + ' class="text-warning Resources"></h4>' +
 							'</div>';
 						}
 					  } else {
@@ -1066,11 +1074,11 @@ window.ListingData = {
 					  'onclick="window.open(\' ' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/ProjectHome.aspx?PCODE=' + obj[key] + '\', \'_blank\')"' : '';
 
 					if (Field_In_Use[0].needTrans == true && obj[key] != No_Data) {
+					  var transKey = getListingTransKey(listkey, key, obj[key]);
 					  var isHTML = USERPCODE && Field_In_Use[0].InternalName == "ProjectCode" ? '' :
 						'<div class="d-inline-flex wordBreak flex-column mx-2  ' + obj[key] + '  " style="width:20%!important" ' + PrjRelated_Behavior + '>' +
-						// '<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
 						'<span class="des-13"><span class="state-val">' + displayName + '</span></span>' +
-						'<h4 data-trans-' + obj[key] + ' class="text-warning Resources"></h4>' +
+						'<h4 data-trans-' + transKey + ' class="text-warning Resources"></h4>' +
 						'</div>';
 					} else {
 
@@ -2314,6 +2322,10 @@ window.ListingData = {
 			  var data = mydata[i][IN[j]]
 
 			  if (data) {
+				// cryearlycalendar / changeitemapprovalcontrol ApprovalPath: use Resources key for translation
+				data = ((listkey === 'cryearlycalendar' || listkey === 'changeitemapprovalcontrol') && IN[j] === 'ApprovalPath')
+				  ? (getListingTransKey(listkey, IN[j], data) || data)
+				  : data;
 				data = data.toLowerCase()
 				if (
 				  localStorage.getItem("lng") == null ||
@@ -2371,10 +2383,8 @@ window.ListingData = {
 	  } else {
 		cmlQ = PQuery;
 	  }
-	  // projects/initiatives - limit DDL query so we don't load full list (was main cause of slowness)
-	  if ((listkey === 'projects' || listkey === 'initiatives') && !cmlQ.match(/<RowLimit>/)) {
-		cmlQ = cmlQ.replace('</Query></View>', '</Query><RowLimit>200</RowLimit></View>');
-	  }
+	  // For projects/initiatives/tasks do NOT add RowLimit so filter DDL gets all items matching the query (filter and search work on full result set)
+	  // Listing display still uses RowLimit 30 via sphttp.get(..., isGetDdl: false)
 
 	  sphttp.get(ListURL, SP_ListName, cmlQ, IN, true, function (recordsddl, recordddl, listItem, isDone) {
 		if (isDone) {
@@ -2595,9 +2605,10 @@ window.ListingData = {
 		for (var z = 0; z < AllData[L].length; z++) {
 
 		  if (transFields[L] == true) {
-
+			// cryearlycalendar / changeitemapprovalcontrol ApprovalPath: use Resources key for filter label translation
+			var filterTransKey = getListingTransKey(listkey, FilterNames[L], AllData[L][z]);
 			FilterationcontractsHTML +=
-			  '<label class="dropdown-item"><span data-trans-' + AllData[L][z] + ' class="Resources"></span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + AllData[L][z] + '">' +
+			  '<label class="dropdown-item"><span data-trans-' + filterTransKey + ' class="Resources"></span><input data-type="' + TypsFieldsAll[L] + '" data-internal="' + FilterNames[L] + '" type="checkbox" name="' + FilterNames[L] + '" value="' + AllData[L][z] + '">' +
 			  '</label>'
 		  } else {
 

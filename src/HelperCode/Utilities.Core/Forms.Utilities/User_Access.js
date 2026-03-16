@@ -921,10 +921,10 @@ window.userCalls = {
         ar_UserRole = "إدارة الجودة والتقارير";
         en_UserRole = "PerformanceReportsQA";
         //CRUD
-        Create_Access = [];
+        Create_Access = ["sosanalysis"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        Edit_Access = [];
+        Edit_Access = ["sosanalysis"];
         Delete_Access = [];
         break;
       case "SAAP":
@@ -1957,7 +1957,7 @@ window.userCalls = {
 
         ar_UserRole = "مالك المشروع";
         en_UserRole = "Project Owner";
-        Create_Access = ["projecthome.aspx"];
+        Create_Access = ["projecthome.aspx","delegations"];
         Read_Access = [
           "projects",
           "deliverables",
@@ -1979,7 +1979,7 @@ window.userCalls = {
           "projecthome.aspx",
           "delegations"
         ];
-        Edit_Access = ["projecthome.aspx"];
+        Edit_Access = ["projecthome.aspx","delegations"];
         Delete_Access = [];
 
         break;
@@ -2294,8 +2294,8 @@ window.userCalls = {
           "sos",
           "benefitmatrix",
           "mainkpi",
-          "mainkpianalysis",
-          "sosanalysis",
+          //"mainkpianalysis",
+//          "sosanalysis",
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
@@ -2348,7 +2348,7 @@ window.userCalls = {
           "mainkpi",
           "mainkpianalysis",
           "mainkpiissues",
-          "sosanalysis",
+          //"sosanalysis",
           "sos",
           "deliverablemetrics",
           "benefitmatrix",
@@ -2368,9 +2368,9 @@ window.userCalls = {
         ];
         Delete_Access = [
           "mainkpi",
-          "mainkpianalysis",
-          "mainkpiissues",
-          "sosanalysis",
+          //"mainkpianalysis",
+         // "mainkpiissues",
+          //"sosanalysis",
           "sos",
           "benefitmatrix",
           "benefitmetrics",
@@ -3470,7 +3470,6 @@ window.userCalls = {
           "changerequest",
           "achievements",
           "developmentrequirements",
-          "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
@@ -3505,7 +3504,6 @@ window.userCalls = {
           //"changerequest",
           "achievements",
           "developmentrequirements",
-          "delegations"
         ];
         Delete_Access = [
           // for initiative
@@ -3725,7 +3723,6 @@ window.userCalls = {
           "changerequest",
           "achievements",
           "changerequests",
-          "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = AllListKeys;
@@ -3764,7 +3761,6 @@ window.userCalls = {
           //"changerequest",
           "achievements",
           "nesteddeliverables",
-          "delegations"
         ];
         Delete_Access = [
           // for initiative
@@ -4030,7 +4026,8 @@ window.userCalls = {
           "Targets.aspx",
           "BenefitMetrics.aspx",
           "changerequest",
-          "changerequests" 
+          "changerequests" ,
+          "delegations"
           
         ];
         Read_Access = [
@@ -4054,7 +4051,7 @@ window.userCalls = {
           "initiativesmain.aspx",
           "changerequest",
           "changeRequests.aspx",
-          "changerequests"        ];
+          "changerequests"  , "delegations"      ];
         Edit_Access = [
           "Targets.aspx",
           "mainkpi",
@@ -4064,7 +4061,7 @@ window.userCalls = {
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "kpiequations",
-          "MainIndicators.aspx",
+          "MainIndicators.aspx","delegations"
           //"changerequest"
         ];
         Delete_Access = [];
@@ -4402,7 +4399,8 @@ window.userCalls = {
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
 
     // mainkpiissues: only Performance Leader may see the create button
-    if (!isPerformanceLeader) {
+    // NOTE: Administrators must never be restricted here
+    if (!isPerformanceLeader && !isAdmin) {
       Create_Access = Create_Access.filter(function (name) {
         return name !== "mainkpiissues";
       });
@@ -7043,6 +7041,26 @@ window.userCalls = {
                 },
               },
             },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
           ],
         },
       },
@@ -7909,6 +7927,26 @@ window.userCalls = {
                   // parentRelationField: "Title",
                   // RelationField: "InitiativeCode",
                   // RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
                 },
               },
             },
