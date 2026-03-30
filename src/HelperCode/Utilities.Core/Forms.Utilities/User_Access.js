@@ -4398,8 +4398,6 @@ window.userCalls = {
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
 
-    // mainkpiissues: only Performance Leader may see the create button
-    // NOTE: Administrators must never be restricted here
     if (!isPerformanceLeader && !isAdmin) {
       Create_Access = Create_Access.filter(function (name) {
         return name !== "mainkpiissues";

@@ -230,6 +230,7 @@ async function gettingComplianceDetails() {
                 if (complianceValue === "done" || complianceValue === "تم") selectionValue = "done";
                 else if (complianceValue === "none" || complianceValue === "لم يتم") selectionValue = "none";
                 else if (complianceValue === "note" || complianceValue === "ملاحظات") selectionValue = "note";
+                else if (complianceValue === "notapplicable" || complianceValue === "غير مطابق") selectionValue = "notapplicable";
 
                 var representationValue = "";
                 if (statusValue === "compliance" || statusValue === "ممتثل") representationValue = "compliance";
@@ -261,7 +262,7 @@ function applyComplianceData() {
                     item.selectEl.value = existingData.selection || '';
                     item.representedEl.value = existingData.representation || 'noncompliance';
                     
-                    if (existingData.selection === 'note') {
+                    if (existingData.selection === 'note' || existingData.selection === 'notapplicable') {
                         item.textareaEl.value = existingData.notes || '';
                         item.textareaEl.classList.remove('d-none');
                         item.representedEl.disabled = false;
@@ -424,7 +425,8 @@ function applyComplianceData() {
                     '<option value="" disabled selected>' + (lang === 'ar' ? 'اختر الحالة' : 'Select Status') + '</option>' +
                     '<option value="done">' + (lang === 'ar' ? 'تم' : 'Done') + '</option>' +
                     '<option value="none">' + (lang === 'ar' ? 'لم يتم' : 'none') + '</option>' +
-                    '<option value="note">' + (lang === 'ar' ? 'ملاحظات' : 'With Comments') + '</option>';
+                    '<option value="note">' + (lang === 'ar' ? 'ملاحظات' : 'With Comments') + '</option>' +
+                    '<option value="notapplicable">' + (lang === 'ar' ? 'غير مطابق' : 'Not Applicable') + '</option>';
                 colStatus.appendChild(selectEl);
     
                 var colRepresented = document.createElement('div');
@@ -453,7 +455,7 @@ function applyComplianceData() {
                     
                     if (!textarea || !representedSelect) return;
                     
-                    if (this.value === 'note') {
+                    if (this.value === 'note' || this.value === 'notapplicable') {
                         textarea.classList.remove('d-none');
                         representedSelect.disabled = false;
                         if (representedSelect.value === '') {
@@ -465,7 +467,7 @@ function applyComplianceData() {
                         representedSelect.disabled = true;
                         if (this.value === 'done') {
                             representedSelect.value = 'compliance';
-                        } else if (this.value === 'none') {
+                        } else if (this.value === 'none' || this.value === 'notapplicable') {
                             representedSelect.value = 'noncompliance';
                         }
                     }
@@ -490,11 +492,11 @@ function applyComplianceData() {
                     selectEl.value = existingData.selection || '';
                     representedEl.value = existingData.representation || 'noncompliance';
                     
-                    if (existingData.selection === 'note') {
+                    if (existingData.selection === 'note' || existingData.selection === 'notapplicable') {
                         textareaEl.value = existingData.notes || '';
                         textareaEl.classList.remove('d-none');
                         representedEl.disabled = false; // Enable for notes
-                    } else if (existingData.selection === 'done' || existingData.selection === 'none') {
+                        } else if (existingData.selection === 'done' || existingData.selection === 'none' || existingData.selection === 'notapplicable') {
                         representedEl.disabled = true; // Disable for done/none
                     }
                 } else {
@@ -571,7 +573,7 @@ function applyComplianceData() {
                                 name: item.name,
                                 selection: item.selectEl.value,
                                 representation: item.representedEl.value,
-                                notes: item.selectEl.value === 'note' ? item.textareaEl.value : ''
+                                notes: (item.selectEl.value === 'note' || item.selectEl.value === 'notapplicable') ? item.textareaEl.value : ''
                             };
                         });
                         
@@ -584,8 +586,32 @@ function applyComplianceData() {
                             return item.representedEl.value === 'noncompliance';
                         }).length;
                         var phaseStatus = nonCompliantCount > 0 ? 'noncompliance' : 'compliance';
-    
-                        savePhaseCompliance(currentPhaseCode, results, this, compliantCount, nonCompliantCount, phaseStatus);
+
+                        var isCurrentPhase = isCurrentInitiativePhase(currentPhaseCode);
+                        var progressStage = isCurrentPhase;
+                        var redirect = true;
+
+                        if (typeof currentUserRole !== 'undefined') {
+                            if (currentUserRole === 'CQTeam') {
+                                // CQTeam: save only, no stage move, no redirect
+                                progressStage = false;
+                                redirect = false;
+                            } else if (currentUserRole === 'IPME') {
+                                // IPME: save only, redirect, no stage move
+                                progressStage = false;
+                                redirect = true;
+                            }
+                        }
+
+                        savePhaseCompliance(
+                            currentPhaseCode,
+                            results,
+                            this,
+                            compliantCount,
+                            nonCompliantCount,
+                            phaseStatus,
+                            { progressStage: progressStage, redirect: redirect }
+                        );
                     });
                 })(phaseCode);
     
@@ -634,7 +660,7 @@ function applyComplianceData() {
                             name: item.name,
                             selection: item.selectEl.value,
                             representation: item.representedEl.value,
-                            notes: item.selectEl.value === 'note' ? item.textareaEl.value : ''
+                            notes: (item.selectEl.value === 'note' || item.selectEl.value === 'notapplicable') ? item.textareaEl.value : ''
                         };
                     });
         
@@ -653,6 +679,57 @@ function applyComplianceData() {
             })(phaseCode);
             
             buttonCol.appendChild(rejectBtn);
+        }
+
+        // Add "Move to Next Stage" button only for CQTeam on current phase
+        if (typeof currentUserRole !== 'undefined' &&
+            currentUserRole === 'CQTeam' &&
+            isCurrentInitiativePhase(phaseCode)) {
+
+            var moveNextBtn = document.createElement('button');
+            moveNextBtn.className = 'btn btn-action ms-2 Resources btn-move-next-stage';
+            moveNextBtn.disabled = true;
+            moveNextBtn.textContent = (lang === 'ar') ? 'الانتقال للمرحلة التالية' : 'Move to Next Stage';
+            moveNextBtn.setAttribute("type", "button");
+
+            (function(currentPhaseCode) {
+                moveNextBtn.addEventListener('click', function () {
+                    this.disabled = true;
+                    this.textContent = (lang === 'ar') ? 'جاري المعالجة...' : 'Processing...';
+
+                    var results = phaseItemMap[currentPhaseCode].map(function (item) {
+                        return {
+                            title: 'CM-' + item.title.padStart(2, '0'),
+                            name: item.name,
+                            selection: item.selectEl.value,
+                            representation: item.representedEl.value,
+                            notes: item.selectEl.value === 'note' ? item.textareaEl.value : ''
+                        };
+                    });
+
+                    var phaseItems = phaseItemMap[currentPhaseCode] || [];
+                    var compliantCount = phaseItems.filter(function(item) {
+                        return item.representedEl.value === 'compliance';
+                    }).length;
+                    var nonCompliantCount = phaseItems.filter(function(item) {
+                        return item.representedEl.value === 'noncompliance';
+                    }).length;
+                    var phaseStatus = nonCompliantCount > 0 ? 'noncompliance' : 'compliance';
+
+                    // For CQTeam via Move To Next Stage: progress and redirect
+                    savePhaseCompliance(
+                        currentPhaseCode,
+                        results,
+                        this,
+                        compliantCount,
+                        nonCompliantCount,
+                        phaseStatus,
+                        { progressStage: true, redirect: true }
+                    );
+                });
+            })(phaseCode);
+
+            buttonCol.appendChild(moveNextBtn);
         }
             })
     
@@ -1289,8 +1366,56 @@ async function updateInitiaitveListCompliance(initiativeCode, compliantCount, no
         throw error;
     }
 }
+
+async function callCreateComplianceHistoryItems(payloads) {
+    try {
+        if (typeof APIURL === "undefined" || !APIURL) return;
+        if (!payloads || !payloads.length) return;
+
+        const url = `${APIURL}/general/createcompliancehistoryitem`;
+
+        // cache current user id for this page/session
+        if (typeof window.__complianceHistoryCreatedByUserId === "undefined") {
+            try {
+                const userData = await $.ajax({
+                    url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/currentuser",
+                    method: "GET",
+                    headers: { Accept: "application/json;odata=verbose" },
+                });
+                window.__complianceHistoryCreatedByUserId = userData && userData.d ? userData.d.Id : null;
+            } catch (e) {
+                console.warn("Failed to load current user id:", e);
+                window.__complianceHistoryCreatedByUserId = null;
+            }
+        }
+
+        for (const payload of payloads) {
+            try {
+                if (window.__complianceHistoryCreatedByUserId != null && payload && !payload.createdByUserId) {
+                    payload.createdByUserId = window.__complianceHistoryCreatedByUserId;
+                }
+                const res = await $.ajax({
+                    url,
+                    method: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(payload),
+                });
+
+                console.log("createcompliancehistoryitem success. body:", payload, "response:", res);
+                if (!res || res.isSuccess === false) {
+                    console.warn("createcompliancehistoryitem returned failure:", res);
+                }
+            } catch (xhr) {
+                console.warn("createcompliancehistoryitem failed. body:", payload, "error:", xhr);
+            }
+        }
+    } catch (err) {
+        console.warn("callCreateComplianceHistoryItems error:", err);
+    }
+}
 // Added button parameter to re-enable it after save
-async function savePhaseCompliance(phaseCode, results, buttonElement, compliantCount, nonCompliantCount, phaseStatus) {
+// options: { progressStage: boolean, redirect: boolean }
+async function savePhaseCompliance(phaseCode, results, buttonElement, compliantCount, nonCompliantCount, phaseStatus, options) {
     const initiativeCode = icode || new URLSearchParams(window.location.search).get('ICODE');
     const lang = localStorage.getItem('lng') || 'ar';
     
@@ -1313,6 +1438,11 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
     }
 
     let initiativeTitle = null;
+
+    // Default options if not provided
+    if (!options) {
+        options = { progressStage: true, redirect: true };
+    }
 
     try {
         // 1. Check or create InitiativeCompliance item
@@ -1497,30 +1627,82 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
         }
 
            // Update Initiative List with compliance data ONLY if saving current phase
-           if (isCurrentInitiativePhase(phaseCode)) {
+           if (isCurrentInitiativePhase(phaseCode) &&
+               options.progressStage &&
+               currentInitiativeData) {
         
-                // Progress stage only if saving current phase and initiataive data is available
-    if (currentInitiativeData) {
-        try {
-            if (currentUserRole !== "IPME") {
-               const stageResult = await progressInitiativeStage(initiativeCode, currentInitiativeData);
-            }
-            console.log("Stage progressed to:", stageResult.nextStage);
-        } catch (stageError) {
-            console.error("Failed to progress stage:", stageError);
-            // Don't throw error - stage progression failure shouldn't stop the save
-        }
-    }
-        }
+                // Progress stage only if saving current phase and initiative data is available
+                try {
+                    const stageResult = await progressInitiativeStage(initiativeCode, currentInitiativeData);
+                    console.log("Stage progressed to:", stageResult.nextStage);
+                } catch (stageError) {
+                    console.error("Failed to progress stage:", stageError);
+                    // Don't throw error - stage progression failure shouldn't stop the save
+                }
+           }
         await updateInitiaitveListCompliance(initiativeCode, compliantCount, nonCompliantCount, phaseStatus);
 
         alert((lang === 'ar') ? "تم الحفظ بنجاح" : "Saved successfully");
+
+        // CQTeam: after successful "Save" (no stage move), call compliance history API
+        if (typeof currentUserRole !== "undefined" &&
+            currentUserRole === "CQTeam" &&
+            options &&
+            options.progressStage === false) {
+
+            let masterID = currentInitiativeData && currentInitiativeData.Id ? String(currentInitiativeData.Id) : "";
+            if (!masterID) {
+                try {
+                    const initiativeResponse = await fetch(
+                        `${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/getbytitle('Initiatives')/items?$filter=Title eq '${initiativeCode}'`,
+                        { headers: { Accept: "application/json;odata=verbose" } }
+                    );
+                    if (initiativeResponse.ok) {
+                        const initiativeData = await initiativeResponse.json();
+                        if (initiativeData.d && initiativeData.d.results && initiativeData.d.results.length) {
+                            masterID = String(initiativeData.d.results[0].Id);
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Failed to resolve masterID for compliance history:", e);
+                }
+            }
+
+            const payloads = (results || []).map(function (r) {
+                return {
+                    relatedItemTitle: initiativeCode,
+                    phase: phaseCode,
+                    complianceCode: r.title,
+                    complianceValue: r.selection || "",
+                    status: r.representation || "",
+                    notes: r.notes || "",
+                    masterID: masterID,
+                    masterKey: "initiatives",
+                };
+            });
+
+            await callCreateComplianceHistoryItems(payloads);
+        }
+
+        // Enable "Move to Next Stage" button for this phase (if exists and we stayed on page)
+        // For CQTeam: enable only AFTER API call above completes.
+        if (buttonElement && !options.progressStage) {
+            var section = buttonElement.closest('.phase-section');
+            if (section) {
+                var moveBtn = section.querySelector('.btn-move-next-stage');
+                if (moveBtn) {
+                    moveBtn.disabled = false;
+                }
+            }
+        }
         
-        // Redirect to initiataive home page after successful save
-        setTimeout(function() {
-            window.location.href = _spPageContextInfo.webAbsoluteUrl + 
-                "/sitepages/InitiativeHome.aspx?ICODE=" + initiativeCode;
-        }, 500);
+        // Redirect to initiative home page after successful save if allowed
+        if (options.redirect) {
+            setTimeout(function() {
+                window.location.href = _spPageContextInfo.webAbsoluteUrl + 
+                    "/sitepages/InitiativeHome.aspx?ICODE=" + initiativeCode;
+            }, 500);
+        }
 
     } catch (err) {
         console.error("Error in saving data:", err);
