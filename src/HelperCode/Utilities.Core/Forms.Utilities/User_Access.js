@@ -3897,7 +3897,7 @@ window.userCalls = {
         Create_Access = [
           "goalstrategy",
           "spillars",
-          // "sos",
+          "sos",
           // "mainkpi",
           "changerequest",
         ];
@@ -6928,6 +6928,13 @@ window.userCalls = {
                   targetPages: [],
                   conditionType: "Or",
                 },
+                {
+                  field: "DelPerformanceLeader",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
+                },
               ],
               subRelation: {
                 level: 2,
@@ -6955,9 +6962,17 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
                 },
                 {
                   field: "PerformanceLeader2",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelPerformanceLeader",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
@@ -6987,9 +7002,17 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
                 },
                 {
                   field: "PerformanceLeader2",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelPerformanceLeader",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
@@ -7862,6 +7885,13 @@ window.userCalls = {
                   values: [""],
                   targetPages: [],
                 },
+                {
+                  field: "DelObjectiveOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
+                },
               ],
               subRelation: {
                 level: 2,
@@ -7884,6 +7914,13 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                },
+                {
+                  field: "DelObjectiveOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -11427,6 +11464,23 @@ async function initiateDataLevelAccess(lookupList) {
 let dataLevelAccessQuery = "";
 let dataLevelAccessChoicesForFilters = [];
 
+/** SharePoint CAML allows only binary <Or>; chain N user lookup checks as nested Ors. */
+function buildNestedOrLoggedInUserEqs(fieldNames) {
+  if (!fieldNames || fieldNames.length === 0) {
+    return "";
+  }
+  if (fieldNames.length === 1) {
+    return `<Eq><FieldRef Name="${fieldNames[0]}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+  }
+  var node = `<Eq><FieldRef Name="${
+    fieldNames[fieldNames.length - 1]
+  }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+  for (var idx = fieldNames.length - 2; idx >= 0; idx--) {
+    node = `<Or><Eq><FieldRef Name="${fieldNames[idx]}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>${node}</Or>`;
+  }
+  return node;
+}
+
 let data_Level1_Access = {
   buildCamlQuery: function (
     dataListName,
@@ -11438,6 +11492,60 @@ let data_Level1_Access = {
     let whereBody = ``,
       queryBody = ``,
       whereBodyFinal = ``;
+
+    var finalizeDataLevelQuery = function (wb) {
+      wb = wb.replaceAll(
+        `Type="date"`,
+        `IncludeTimeValue="TRUE" Type="DateTime"`
+      );
+      whereBodyFinal = `<Where>${wb}
+						</Where>`;
+      queryBody = `<View>
+        			<Query>
+        			${whereBodyFinal}
+        			<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        			</Query>
+        		</View>`;
+      data_Level1_Access.g.dataLevelQuery = queryBody;
+      dataLevelAccessQuery = queryBody;
+      data_Level1_Access.g.fieldsConditionConfig = fieldsConditionConfig;
+      data_Level1_Access.g.dataLevel = level;
+      if (level > 1) {
+        SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+          data_Level1_Access.init(dataListName);
+        });
+      } else {
+        tempRoleHierarchies = [];
+        accessCallisDone = true;
+      }
+      console.log("Data 1st level access query", queryBody);
+    };
+
+    var allLoggedInUserOr =
+      fieldsConditionConfig.length > 1 &&
+      fieldsConditionConfig.every(function (c) {
+        return c.type === "LoggedInUser" && c.conditionType === "Or";
+      });
+
+    if (allLoggedInUserOr) {
+      fieldsConditionConfig.forEach(function (el) {
+        dataLevelAccessChoicesForFilters.push({
+          internalName: el.field,
+          Type: el.type,
+          Values: el.values,
+        });
+      });
+      var names = fieldsConditionConfig.map(function (c) {
+        return c.field;
+      });
+      whereBody =
+        "<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+        buildNestedOrLoggedInUserEqs(names) +
+        "</And>";
+      finalizeDataLevelQuery(whereBody);
+      return;
+    }
+
     //dynamic query building
     fieldsConditionConfig.forEach((el, i, a) => {
       //handle case of filters on pages
@@ -11535,46 +11643,7 @@ let data_Level1_Access = {
       }
       //Finish Line, make last changes and build query
       if (i == fieldsConditionConfig.length - 1) {
-        whereBody = whereBody.replaceAll(
-          `Type="date"`,
-          `IncludeTimeValue="TRUE" Type="DateTime"`
-        );
-        whereBodyFinal = `<Where>${whereBody}
-						</Where>`;
-        queryBody = `<View>
-        			<Query>
-        			${whereBodyFinal}
-        			<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
-        			</Query>
-        		</View>`;
-
-        //     queryBody = `<View>
-        //     <Query>
-        //         <Where>
-        //             <And>
-        //                 <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
-        //                 <Or>
-        //                     <Eq><FieldRef Name="PerformanceLeader2" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>
-        //                     <Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>
-        //                 </Or>
-        //             </And>
-        //         </Where>
-        //         <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
-        //     </Query>
-        // </View>`
-        data_Level1_Access.g.dataLevelQuery = queryBody;
-        dataLevelAccessQuery = queryBody;
-        data_Level1_Access.g.fieldsConditionConfig = fieldsConditionConfig;
-        data_Level1_Access.g.dataLevel = level;
-        if (level > 1) {
-          SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
-            data_Level1_Access.init(dataListName);
-          });
-        } else {
-          tempRoleHierarchies = [];
-          accessCallisDone = true;
-        }
-        console.log("Data 1st level access query", queryBody);
+        finalizeDataLevelQuery(whereBody);
       }
     });
   },

@@ -8188,6 +8188,386 @@ debugger;
 
         break;
 
+      case "lookupFromMultiselectedParent":
+        var selectedParentCode = "";
+        if (typeof USERPCODE !== "undefined" && USERPCODE) {
+          selectedParentCode = USERPCODE;
+        } else if (typeof UserICode !== "undefined" && UserICode) {
+          selectedParentCode = UserICode;
+        } else if (typeof UserSTCode !== "undefined" && UserSTCode) {
+          selectedParentCode = UserSTCode;
+        } else if (typeof PCODE !== "undefined" && PCODE) {
+          selectedParentCode = PCODE;
+        } else if (typeof ICODE !== "undefined" && ICODE) {
+          selectedParentCode = ICODE;
+        } else if (typeof STCODE !== "undefined" && STCODE) {
+          selectedParentCode = STCODE;
+        }
+
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          element.className +
+          " " +
+          hideField +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          "</label>" +
+          "<select " +
+          ToggleName +
+          " " +
+          toggleDisabledName +
+          " " +
+          RequiredName +
+          " " +
+          dynamic +
+          ' class="form-control SPIField" type="dropdown" id="' +
+          element.InternalName +
+          '" value="" placeholder="' +
+          displayName +
+          '" ' +
+          element.state +
+          " " +
+          element.validation +
+          '><option value="" ' +
+          selected +
+          " disabled>" +
+          displayName +
+          "</option>";
+
+        if (!selectedParentCode) {
+          htmlBody +=
+            "</select>" +
+            "<span data-trans-" +
+            Errmsgkey +
+            ' class="errMsgField Resources"></span>' +
+            '<div class="inputInfo ' +
+            isexist +
+            '">' +
+            descPhrase +
+            "</div>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+        }
+
+        var parentQuery =
+          "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+          element.codeParentList +
+          "\" /><Value Type=\"Text\">" +
+          selectedParentCode +
+          "</Value></Eq></And></Where><RowLimit>1</RowLimit><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.parentlistname,
+          parentQuery,
+          [element.fieldToGetParent],
+          function (records, record, listItem, isDone) {
+            if (isDone) {
+              var linkedCodes = [];
+              if (
+                records &&
+                records.length > 0 &&
+                records[0][element.fieldToGetParent]
+              ) {
+                linkedCodes = records[0][element.fieldToGetParent]
+                  .split(":::")
+                  .map(function (v) {
+                    return v ? v.trim() : "";
+                  })
+                  .filter(function (v) {
+                    return v !== "";
+                  });
+              }
+
+              var sourceQuery =
+                "<View><Query><Where><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
+
+              sphttp.get(
+                _spPageContextInfo.siteServerRelativeUrl,
+                element.source,
+                sourceQuery,
+                [element.valfieldkey, element.Dispfieldkey, dispfieldkey],
+                function (srcRecords, srcRecord, srcListItem, srcDone) {
+                  if (srcDone) {
+                    srcRecords.forEach(function (el) {
+                      if (linkedCodes.indexOf(el[element.valfieldkey]) > -1) {
+                        htmlBody +=
+                          '<option value="' +
+                          el[element.valfieldkey] +
+                          '">' +
+                          el[dispfieldkey] +
+                          "</option>";
+                      }
+                    });
+
+                    htmlBody +=
+                      "</select>" +
+                      "<span data-trans-" +
+                      Errmsgkey +
+                      ' class="errMsgField Resources"></span>' +
+                      '<div class="inputInfo ' +
+                      isexist +
+                      '">' +
+                      descPhrase +
+                      "</div>" +
+                      "</div>";
+                    OnSuccess(flag, htmlBody);
+                  }
+                }
+              );
+            }
+          }
+        );
+        break;
+
+      case "pickerFromParent":
+        var pickerFromParentId = element.InternalName;
+        var pickerFromParentListener = "#" + element.valfieldkeyCurrentList;
+        var pickerFromParentSource = element.source;
+        var pickerFromParentValField = element.valfieldkey;
+        var pickerFromParentDispField = element.Dispfieldkey;
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          " " +
+          element.className +
+          " " +
+          hideField +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          editableBy +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          ' style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          element.validation +
+          ">" +
+          displayName +
+          "</label>" +
+          "<div " +
+          ToggleName +
+          " " +
+          toggleDisabledName +
+          " " +
+          RequiredName +
+          ' class="PPField SPIField form-control picker-from-parent" type="picker" id="' +
+          element.InternalName +
+          '" value="" placeholder="' +
+          displayName +
+          '" INppicker="' +
+          element.InternalName +
+          '" data-source="' +
+          element.source +
+          '" data-valfieldkeycurrentlist="' +
+          element.valfieldkeyCurrentList +
+          '" data-valfieldkey="' +
+          element.valfieldkey +
+          '" data-dispfieldkey="' +
+          element.Dispfieldkey +
+          '" data-listenerfield="#' +
+          element.valfieldkeyCurrentList +
+          '" ' +
+          element.state +
+          " " +
+          element.validation +
+          "></div>" +
+          '<div class="inputInfo ' +
+          isexist +
+          '">' +
+          descPhrase +
+          "</div>" +
+          "</div>";
+
+        // Keep pickerFromParent logic in Render (same approach as groupsOfPicker).
+        setTimeout(function () {
+          function clearPickerValue(pickerId) {
+            try {
+              var delBtn = $(
+                "#" + pickerId + "_TopSpan_ResolvedList .sp-peoplepicker-delImage"
+              ).first();
+              if (delBtn.length) delBtn.click();
+              $("#" + pickerId + "_TopSpan_HiddenInput").val("");
+              $("#" + pickerId + "_TopSpan_EditorInput").val("");
+            } catch (e) {}
+            $("#" + pickerId).attr("data-email", enternameemail);
+            $("#" + pickerId).removeAttr("user-email");
+          }
+
+          function setPickerValue(pickerId, userKey, displayText, emailKey) {
+            var retry = 0;
+            var maxRetry = 20;
+            var trySet = function () {
+              retry++;
+              var pp =
+                SPClientPeoplePicker &&
+                SPClientPeoplePicker.SPClientPeoplePickerDict
+                  ? SPClientPeoplePicker.SPClientPeoplePickerDict[
+                      pickerId + "_TopSpan"
+                    ]
+                  : null;
+              if (pp && pp.AddUserKeys) {
+                if (displayText) {
+                  $("#" + pickerId).attr("data-email", displayText);
+                }
+                if (emailKey) {
+                  $("#" + pickerId).attr("user-email", emailKey);
+                } else if (userKey) {
+                  $("#" + pickerId).attr("user-email", userKey);
+                }
+                pp.AddUserKeys(userKey);
+                return;
+              }
+              if (retry < maxRetry) setTimeout(trySet, 200);
+            };
+            trySet();
+          }
+
+          $(document)
+            .off("change.pickerFromParent." + pickerFromParentId)
+            .on(
+              "change.pickerFromParent." + pickerFromParentId,
+              pickerFromParentListener,
+              function () {
+                var parentValue = $(this).val();
+
+                clearPickerValue(pickerFromParentId);
+                if (!parentValue) return;
+
+                var safeParentValue = (parentValue || "").replace(/'/g, "''");
+                var apiUrl =
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/_api/web/lists/getbytitle('" +
+                  pickerFromParentSource +
+                  "')/items?$select=ID," +
+                  pickerFromParentValField +
+                  "," +
+                  pickerFromParentDispField +
+                  "/Name," +
+                  pickerFromParentDispField +
+                  "/EMail," +
+                  pickerFromParentDispField +
+                  "/Title&$expand=" +
+                  pickerFromParentDispField +
+                  "&$filter=" +
+                  pickerFromParentValField +
+                  " eq '" +
+                  safeParentValue +
+                  "' and DeletionStatus ne 'Deleted'&$top=1";
+
+                $.ajax({
+                  url: apiUrl,
+                  type: "GET",
+                  headers: { Accept: "application/json;odata=verbose" },
+                  success: function (data) {
+                    var results =
+                      data && data.d && Array.isArray(data.d.results)
+                        ? data.d.results
+                        : [];
+                    if (!results.length) return;
+
+                    var manager = results[0][pickerFromParentDispField];
+                    var managerObj = null;
+                    if (manager && Array.isArray(manager.results)) {
+                      managerObj = manager.results[0];
+                    } else if (Array.isArray(manager)) {
+                      managerObj = manager[0];
+                    } else {
+                      managerObj = manager;
+                    }
+                    if (!managerObj) return;
+
+                    var displayText = managerObj.Title || "";
+                    var emailKey = managerObj.EMail || "";
+                    var userKey =
+                      managerObj.Name || managerObj.EMail || managerObj.Title || "";
+                    if (userKey)
+                      setPickerValue(
+                        pickerFromParentId,
+                        userKey,
+                        displayText,
+                        emailKey
+                      );
+                  },
+                  error: function () {},
+                });
+              }
+            );
+        }, 500);
+
+        OnSuccess(flag, htmlBody);
+        break;
+
       case "lookup":
         var customQuery;
         let roleAccess = [];
@@ -8263,6 +8643,15 @@ debugger;
             customQuery =
               "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"SOCode\" /><Value Type=\"Text\">" +
               sosCodeEscaped3 +
+              "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+          } else if (
+            typeof UserSTCode !== "undefined" &&
+            UserSTCode &&
+            element.StrategicPartnershipCodeInList
+          ) {
+            customQuery =
+              "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"StrategicPartnershipCode\" /><Value Type=\"Text\">" +
+              UserSTCode +
               "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
           } else if (
             (ICODE && element.initiativeCodeInList) ||
@@ -15393,16 +15782,16 @@ var GetProject_Info = {
           });
         } else {
           $(
-            '.section-container [data-isWfhidestageID*="allstages"], .section-container [data-isWfhidestageID*=' +
+            '.section-container [data-isWfhidestageID*="allstages"], .section-container [data-isWfhidestageID*="' +
               value +
-              "]"
+              '"]'
           ).each(function () {
             let tabId = $(this).parent().attr("id");
             $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
           });
 
-          $(".CFIELD[data-isWfhidestageID=" + value + "]").remove();
-          $(".CFIELD[data-isWfshowstageID=" + value + "]").show();
+          $('.CFIELD[data-isWfhidestageID="' + value + '"]').remove();
+          $('.CFIELD[data-isWfshowstageID="' + value + '"]').show();
 
           $("[data-isWfdisablestageID]").each(function () {
             var stageofElement = $(this).attr("data-isWfdisablestageID");
@@ -15500,8 +15889,8 @@ var GetProject_Info = {
           $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
         });
 
-        $("[data-isWfhidestageID*=" + stage + "]").remove();
-        $("[data-isWfshowstageID*=" + stage + "]").show();
+        $('[data-isWfhidestageID*="' + stage + '"]').remove();
+        $('[data-isWfshowstageID*="' + stage + '"]').show();
 
         $("[data-isWfdisablestageID]").each(function () {
           var stageofElement = $(this).attr("data-isWfdisablestageID");
@@ -16819,8 +17208,8 @@ var GetCurrentStage_Info = {
       });
     } else {
       $('[data-showstageID*="allstages"]').show();
-      $(".CFIELD[data-isWfhidestageID=" + stage + "]").remove();
-      $(".CFIELD[data-isWfshowstageID=" + stage + "]").show();
+      $('.CFIELD[data-isWfhidestageID="' + stage + '"]').remove();
+      $('.CFIELD[data-isWfshowstageID="' + stage + '"]').show();
       $("[data-isWfdisablestageID]").each(function () {
         var stageofElement = $(this).attr("data-isWfdisablestageID");
         if (stageofElement.includes(stage)) {

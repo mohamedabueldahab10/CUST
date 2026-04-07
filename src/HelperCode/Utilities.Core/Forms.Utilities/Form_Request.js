@@ -1213,9 +1213,6 @@ window.Edit_Data_Request = {
         $(this).addClass("autofill");
       }
     });
-    if ($(".PPField.SPIField.form-control").attr("disabled") == "disabled") {
-      $("input.sp-peoplepicker-editorInput").prop("disabled", true);
-    }
     function getNestedDeliverablesSum() {
       return new Promise((resolve, reject) => {
         const clientContext = new SP.ClientContext.get_current();
@@ -10785,6 +10782,7 @@ window.get_DynamicValues = {
     }
   },
 };
+
 window.Get_ActualAnnualTotal = {
   onSuccess: function (sender, args) {
     var collListItem = Get_ActualAnnualTotal.g.collListItem;
