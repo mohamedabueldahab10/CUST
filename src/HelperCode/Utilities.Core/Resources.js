@@ -1089,7 +1089,10 @@ var Resources = {
     portfoliomanager: "مدير المحفظة",
     objectiveowner: "مالك الهدف",
     spmohead: "مدير مكتب إدارة المشاريع القطاعي",
-
+    sodvroexecution:"وحدة استراتيجية التنمية الاجتماعية (إدارة التنفيذ)",
+    sodvroperformance:"وحدة استراتيجية التنمية الاجتماعية (إدارة الآداء)",
+    sodvroe:"مكتب ضمان التنفيذ للتنمية الاجتماعية",
+    sod:"استراتيجية التنمية الاجتماعية",
     excelexport: "تصدير إلى Excel",
     planneddisbursement: "المخطط من الصرف",
     planneddisbursementpercent: "نسبة المخطط من الصرف",

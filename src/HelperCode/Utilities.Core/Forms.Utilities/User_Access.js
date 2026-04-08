@@ -85,6 +85,9 @@ var UserRole,
   isLMSUControl = false,
   isLMSUExecution = false,
   isLMSUPerformance = false,
+  isSODVROE = false,
+  isSODVROExecution = false,
+  isSODVROPerformance = false,
   isCRCommittee = false,
   isCRCommitteeVision = false,
   isLMSP = false,
@@ -2972,6 +2975,112 @@ window.userCalls = {
           "changerequest",
         ];
         break;
+      case "SODVROE":
+          USER_HomePage = "InitiativesMain.aspx";
+  
+          $("body").append(
+            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+          );
+          //***** */
+          isSODVROE = true;
+  
+          ChartHide =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+          ChartHideForInitiatives =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+  
+          ar_UserRole = "مكتب ضمان التنفيذ للتنمية الاجتماعية";
+          en_UserRole = "Execution Guarantee Office";
+          //CRUD
+          Create_Access = [
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "contracts",
+            "changerequest",
+            "documents",
+            "developmentrequirements"
+          ];
+          CreateChangeRequest_Access = ["initiatives", "projects"];
+          Read_Access = AllListKeys;
+          Read_Access = Read_Access.concat(SP_Page_Name);
+          Edit_Access = [
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "benefitsequations",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "contracts",
+            //"changerequest",
+            "documents",
+            "developmentrequirements"
+          ];
+          Delete_Access = [
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+          ];
+          break;
 
       case "LMSUControl":
         USER_HomePage = "InitiativesMain.aspx";
@@ -3334,6 +3443,250 @@ window.userCalls = {
 
         break;
 
+        case "SODVROExecution":
+          USER_HomePage = "InitiativesMain.aspx";
+          $("body").append(
+            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+          );
+  
+          isSODVROExecution = true;
+  
+          ChartHide =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+          ChartHideForInitiatives =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+  
+          ar_UserRole = "وحدة استراتيجية التنمية الاجتماعية (إدارة التنفيذ)";
+          en_UserRole = "SODVRO Execution";
+  
+          Create_Access = [
+            "goalstrategy",
+            "sos",
+            "mainkpi",
+            "benefitmatrix",
+            "initiatives",
+            "initiativedeliverables",
+            "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            "projects",
+            "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+            "Targets.aspx",
+            "contracts",
+            "initiativeupdates",
+            "projectupdates",
+          ];
+          CreateChangeRequest_Access = [
+            "initiatives",
+            "projects",
+            "sos",
+            "mainkpi",
+          ];
+          Read_Access = AllListKeys;
+          Read_Access = Read_Access.concat(SP_Page_Name);
+  
+          Edit_Access = [
+            "goalstrategy",
+            "kpiequations",
+            "sos",
+            "mainkpi",
+            "benefitmatrix",
+            "initiatives",
+            "initiativedeliverables",
+            "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            "benefits",
+            "benefitmetrics",
+            "benefitsequations",
+            "BenefitMetrics.aspx",
+            "projects",
+            "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            //"changerequest",
+            "contracts",
+            "initiativeupdates",
+            "projectupdates",
+          ];
+          Delete_Access = [
+            "goalstrategy",
+            // "sos",
+            "mainkpi",
+            "benefitmatrix",
+            "initiatives",
+            "initiativedeliverables",
+            "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            "projects",
+            "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+            "initiativeupdates",
+            "projectupdates",
+          ];
+          break;
+  
+        case "SODVROPerformance":
+          USER_HomePage = "InitiativesMain.aspx";
+  
+          $("body").append(
+            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+          );
+  
+          isSODVROPerformance = true;
+  
+          ChartHide =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+          ChartHideForInitiatives =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+  
+          ar_UserRole = " وحدة استراتيجية التنمية الاجتماعة (إدارة الآداء)";
+          en_UserRole = "SODVRO Performance";
+  
+          Create_Access = [
+            "goalstrategy",
+            // "sos",
+            // "mainkpi",
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+            "contracts",
+          ];
+          CreateChangeRequest_Access = [
+            "initiatives",
+            "projects",
+            "sos",
+            "mainkpi",
+          ];
+          Read_Access = AllListKeys;
+          Read_Access = Read_Access.concat(SP_Page_Name);
+  
+          Edit_Access = [
+            "goalstrategy",
+            // "sos",
+            // "mainkpi",
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "benefitsequations",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            //"changerequest",
+            "contracts",
+          ];
+          Delete_Access = [
+            "goalstrategy",
+            // "sos",
+            // "mainkpi",
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+          ];
+  
+          break;
+  
       case "CRCommittee":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
@@ -5742,6 +6095,78 @@ window.userCalls = {
         },
       },
       {
+        Role: "SODVROE",
+        groupsName: ["SODVRO-E"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["sod"],
+                  targetPages: [
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  },
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["sod"],
+                  targetPages: [
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
         Role: "LMSP",
         groupsName: ["LMS_P"],
         dataFilter: {
@@ -7693,6 +8118,134 @@ window.userCalls = {
                   field: "Types",
                   type: "Text",
                   values: ["lms"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        Role: "SODVROExecution",
+        groupsName: ["SODVRO-Execution"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["sod"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  },
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["sod"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        Role: "SODVROPerformance",
+        groupsName: ["SODVRO-Performance"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["sod"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  },
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["sod"],
                   targetPages: [],
                 },
               ],

@@ -724,7 +724,7 @@ function applyComplianceData() {
                         compliantCount,
                         nonCompliantCount,
                         phaseStatus,
-                        { progressStage: true, redirect: true }
+                        { progressStage: true, redirect: true, action: "moveToNextStage" }
                     );
                 });
             })(phaseCode);
@@ -1642,7 +1642,11 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
            }
         await updateInitiaitveListCompliance(initiativeCode, compliantCount, nonCompliantCount, phaseStatus);
 
-        alert((lang === 'ar') ? "تم الحفظ بنجاح" : "Saved successfully");
+        if (options && options.action === "moveToNextStage") {
+            alert((lang === 'ar') ? "تم الانتقال للمرحلة التالية بنجاح" : "Moved to next stage successfully");
+        } else {
+            alert((lang === 'ar') ? "تم الحفظ بنجاح" : "Saved successfully");
+        }
 
         // CQTeam: after successful "Save" (no stage move), call compliance history API
         if (typeof currentUserRole !== "undefined" &&
