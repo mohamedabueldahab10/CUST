@@ -133,7 +133,12 @@ var workflowname,
     window.location.href.indexOf("initiatives&LMSInitiative") > -1,
   isStrategicPartnerships =
     window.location.href.indexOf("strategicpartnerships&STP") > -1,
-  isAchievements = window.location.href.indexOf("achievements") > -1,
+  isSPAchievements =
+    window.location.href.indexOf(
+      "strategicpartnershipsachievements&SPAchievements"
+    ) > -1,
+  isAchievements =
+    window.location.href.indexOf("achievements") > -1 && !isSPAchievements,
   isVROCRInitiative =
     window.location.href.indexOf("changerequest&VROCRInitiative") > -1,
   isVROCreateInitiative =
@@ -156,6 +161,8 @@ var workflowname,
     window.location.href.indexOf(
       "initiativemilestones&VROInitiativeMilestone"
     ) > -1,
+  isInitiativeBenefits =
+    window.location.href.indexOf("benefits&InitiativeBenefits") > -1,
   isEPMOInitiativeMilestone =
     window.location.href.indexOf(
       "initiativemilestones&EPMOInitiativeMilestone"
@@ -767,6 +774,20 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isInitiativeBenefits) {
+  workflowname = "InitiativeBenefits";
+  bulkeditlist = "Benefits";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isEPMOInitiativeMilestone) {
   workflowname = "EPMOInitiativeMilestone";
   bulkeditlist = "InitiativeMilestones";
@@ -1248,6 +1269,20 @@ else if (isSOsWf) {
 } else if (isLMSActualKPI) {
   workflowname = "LMSActualKPI";
   bulkeditlist = "MainKPI";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isSPAchievements) {
+  workflowname = "SPAchievements";
+  bulkeditlist = "SPAchievements";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
   bulkeditquery =
     '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
@@ -2467,6 +2502,15 @@ var Task_PCODE_Data_Request_WFs = {
     },
     addcomments: function (state, version, withNote = false) {
       stageState = state; // added to handle WF Notes
+      console.log("[WF][addcomments] open popup", {
+        state: state,
+        version: version,
+        withNote: withNote,
+        workflowname: workflowname,
+        tasktype: tasktype,
+        stageid: stageid,
+        taskid: taskid,
+      });
       if (workflowname == "Project") {
         if (version == "Approval" || version == "Submit" || version == "TriApproval") {
           if (
@@ -2654,6 +2698,25 @@ var Task_PCODE_Data_Request_WFs = {
           );
         }
       }
+      window.setTimeout(function () {
+        console.log("[WF][addcomments] popup rendered", {
+          hasPopup: $(".popupComment").length > 0,
+          hasCommentBox: $("#commenttext").length > 0,
+          submitButtons: $(".popupComment .commentsub.btn-save").length,
+        });
+      }, 0);
+      $(".popupComment .commentsub.btn-save")
+        .off("click.wfdebug")
+        .on("click.wfdebug", function () {
+          var commentVal = $("#commenttext").val() || "";
+          console.log("[WF][addcomments] submit clicked", {
+            state: state,
+            version: version,
+            withNote: withNote,
+            commentLength: commentVal.trim().length,
+            rawCommentLength: commentVal.length,
+          });
+        });
     }, 
   },
 };
@@ -3250,6 +3313,10 @@ var SubmitField_BulkEdit = {
 
             // Code to Create item in KPIResultHistory
             async function saveKPIResultsHistory() {
+              if (state != true) {
+                return;
+              }
+
               // approval
               if (
                 listkey === "mainkpi" &&
@@ -3340,7 +3407,9 @@ var SubmitField_BulkEdit = {
                 }
               }
             }
-            saveKPIResultsHistory();
+            if (state == true) {
+              saveKPIResultsHistory();
+            }
 
             // Approve API call
             async function approveKPIResultsHistory(KPITitle) {
@@ -3660,20 +3729,36 @@ window.SubmitThiredAction = {
 
 //phases-stages update
 window.BulkEdit = function (state, withNote = false) {
+  console.log("[WF][BulkEdit] start", {
+    state: state,
+    withNote: withNote,
+    tasktype: tasktype,
+    workflowname: workflowname,
+    stageid: stageid,
+    nxtstageid: nxtstageid,
+    prvstageid: prvstageid,
+    peojectC: peojectC,
+  });
   var noteBoxVal = "";
   if (document.getElementById("commenttext")) {
     noteBoxVal = document.getElementById("commenttext").value;
     noteBoxVal = noteBoxVal.trim();
   }
+  console.log("[WF][BulkEdit] note validation", {
+    withNote: withNote,
+    noteLength: noteBoxVal.length,
+  });
   if (
     localStorage.getItem("lng") == null ||
     localStorage.getItem("lng") == "ar"
   ) {
     if (withNote && noteBoxVal == "") {
+      console.warn("[WF][BulkEdit] blocked because note is required");
       return $(".wrapcomments").append("<p>يرجى تعبئة الملاحظات</p>");
     }
   } else {
     if (withNote && noteBoxVal == "") {
+      console.warn("[WF][BulkEdit] blocked because note is required");
       return $(".wrapcomments").append("<p>Please Fill The Note</p>");
     }
   }
@@ -3688,13 +3773,18 @@ window.BulkEdit = function (state, withNote = false) {
 
   var programList = context.get_web().get_lists().getByTitle("Project Stages");
   var camlQuery = new SP.CamlQuery();
+  var normalizedStageId = (stageid || "").trim();
   camlQuery.set_viewXml(
     '<View><Query><Where><And><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' +
       peojectC +
       '</Value></Eq><Eq><FieldRef Name="StageCode" /><Value Type="Text">' +
-      stageid +
+      normalizedStageId +
       "</Value></Eq></And></Where></Query><RowLimit>1</RowLimit></View>"
   );
+  console.log("[WF][BulkEdit] query Project Stages", {
+    projectCode: peojectC,
+    stageCode: normalizedStageId,
+  });
   //Get items by Query
   var progColl = programList.getItems(camlQuery);
   //Load item collection
@@ -3702,6 +3792,9 @@ window.BulkEdit = function (state, withNote = false) {
   context.executeQueryAsync(
     function () {
       var currentItemArray = [];
+      console.log("[WF][BulkEdit] Project Stages fetched", {
+        count: progColl.get_count(),
+      });
       //Check itemcollection count greater than 0
       if (progColl.get_count() > 0) {
         var progEnum = progColl.getEnumerator();
@@ -3709,6 +3802,11 @@ window.BulkEdit = function (state, withNote = false) {
           var currentItem = progEnum.get_current();
           var progTitle = currentItem.get_item("Title");
           var currentId = currentItem.get_item("ID");
+          console.log("[WF][BulkEdit] updating project stage item", {
+            currentId: currentId,
+            currentStageCode: currentItem.get_item("StageCode"),
+            currentPhaseCode: currentItem.get_item("PhaseCode"),
+          });
           // console.log(currentId);
           //Get Item by current ID
           var items = programList.getItemById(currentId);
@@ -3745,27 +3843,66 @@ window.BulkEdit = function (state, withNote = false) {
             //Item Updated sucess
             console.log("Project Stages are updated Successfully");
             dfd.resolve();
+            console.log("[WF][BulkEdit] Project Stages update success", {
+              tasktype: tasktype,
+              state: state,
+            });
 
             // program_BulkEdit(state);
             if (tasktype == "SubmitField") {
               console.log("Task_Edit_Data.init();");
               Task_Edit_Data.init();
-            } else updateProjectStageGet.init(state); //program_BulkEdit(state);
+            } else {
+              console.log("[WF][BulkEdit] calling updateProjectStageGet.init", {
+                hasUpdateProjectStageGet:
+                  typeof updateProjectStageGet !== "undefined",
+              });
+              updateProjectStageGet.init(state);
+            } //program_BulkEdit(state);
           },
           function (sender, args) {
             //Item updated fail
-            console.log(
-              "Request Failed to get projectlist Items :" + args.get_message()
+            console.error(
+              "[WF][BulkEdit] Request Failed to update project stage items",
+              args.get_message(),
+              args.get_stackTrace ? args.get_stackTrace() : ""
             );
           }
         );
       } else {
+        console.warn("[WF][BulkEdit] no Project Stages rows found for query");
+        if (
+          !curphaseName &&
+          curstage &&
+          curstage.length > 0 &&
+          curstage[0].phase
+        ) {
+          curphaseName = curstage[0].phase;
+          console.log("[WF][BulkEdit] fallback phase from curstage", {
+            curphaseName: curphaseName,
+          });
+        }
+        if (tasktype == "SubmitField") {
+          console.log(
+            "[WF][BulkEdit] fallback path: calling Task_Edit_Data.init without Project Stages row"
+          );
+          Task_Edit_Data.init();
+        } else {
+          console.log(
+            "[WF][BulkEdit] fallback path: calling updateProjectStageGet.init without Project Stages row"
+          );
+          updateProjectStageGet.init(state);
+        }
         dfd.resolve();
       }
     },
     function (sender, args) {
       $(".loader").hide();
-      console.log("Request failed in List " + args.get_message());
+      console.error(
+        "[WF][BulkEdit] Request failed in Project Stages list query",
+        args.get_message(),
+        args.get_stackTrace ? args.get_stackTrace() : ""
+      );
     }
   );
   return dfd.promise();

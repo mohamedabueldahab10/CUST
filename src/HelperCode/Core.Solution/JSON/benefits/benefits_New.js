@@ -4,6 +4,47 @@ var Information_Form = [
     labelEn: " Benefit Data",
     description: "التفاصيل",
     descriptionEn: "Details",
+    formDefaultValues: [
+      {
+        fieldName: "WFModuleCode",
+        value: "InitiativeBenefits",
+        roles: [
+          "System Admin Group",
+          "EPMO",
+          "HeadCommitte",
+          "Initiative Manager",
+          "SPM Admin",
+          "LMSU-Execution",
+          "VRO_E",
+        ],
+      },
+      {
+        fieldName: "WFInitiatedBy",
+        value: "LoggedInUser",
+        roles: [
+          "System Admin Group",
+          "EPMO",
+          "HeadCommitte",
+          "Initiative Manager",
+          "SPM Admin",
+          "LMSU-Execution",
+          "VRO_E",
+        ],
+      },
+      {
+        fieldName: "WFStage",
+        value: "InitiativeBenefits01",
+        roles: [
+          "System Admin Group",
+          "EPMO",
+          "HeadCommitte",
+          "Initiative Manager",
+          "SPM Admin",
+          "LMSU-Execution",
+          "VRO_E",
+        ],
+      },
+    ],
     // formDefaultValues: [
     //   //VRO
     //   { fieldName: 'WFModuleCode', value: 'VROBenefitActual',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },

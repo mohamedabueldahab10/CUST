@@ -202,9 +202,17 @@ window.New_Data_Submit = {
     var pickervalid = true; //check required people picker
     var multiSelectValid = true;
     $("[type=picker][required]").each(function () {
+      var isPickerFromParent = $(this).hasClass("picker-from-parent");
+      var hasResolvedUser = $(this).find("span.sp-peoplepicker-userSpan").length > 0;
+      var hasAutoResolvedValue =
+        isPickerFromParent &&
+        !!$(this).attr("user-email") &&
+        $(this).attr("user-email") != enternameemail;
+
       if (
         listkey == "changerequest" &&
-        $(this).find("span.sp-peoplepicker-userSpan").length == 0
+        !hasResolvedUser &&
+        !hasAutoResolvedValue
       ) {
         if (
           $(this).attr("data-email") == enternameemail ||
@@ -214,7 +222,7 @@ window.New_Data_Submit = {
           $(this).addClass("picker-error");
           $(this).removeClass("picker-valid");
         }
-      } else if ($(this).find("span.sp-peoplepicker-userSpan").length == 0) {
+      } else if (!hasResolvedUser && !hasAutoResolvedValue) {
         pickervalid = false;
         $(this).addClass("picker-error");
         $(this).removeClass("picker-valid");
@@ -226,7 +234,13 @@ window.New_Data_Submit = {
     });
 
     $("[type=picker]").each(function () {
+      var isPickerFromParent = $(this).hasClass("picker-from-parent");
+      var hasAutoResolvedValue =
+        isPickerFromParent &&
+        !!$(this).attr("user-email") &&
+        $(this).attr("user-email") != enternameemail;
       if (
+        !hasAutoResolvedValue &&
         $(this).find("span.sp-peoplepicker-userSpan").attr("aria-invalid") ==
         "true"
       ) {
@@ -236,6 +250,7 @@ window.New_Data_Submit = {
       }
 
       if (
+        !hasAutoResolvedValue &&
         $(this).find("span.ms-formvalidation.sp-peoplepicker-errorMsg").length
       ) {
         pickervalid = false;
@@ -487,22 +502,25 @@ window.New_Data_Submit = {
       }
 
       if ($(this).attr("type") == "picker") {
-        if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-          var id = $(this).attr("INppicker");
-          if (id && typeof id === "string" && id.includes("dummyfield")) {
-            id = id.split("dummyfield")[0];
-          }
-          var ppp =
-            $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-            undefined
-              ? ""
-              : SP.FieldUserValue.fromUser(
-                  $(this)
-                    .find("span.sp-peoplepicker-userSpan")
-                    .attr("sid")
-                    .split("|")
-                    .slice(-1)[0]
-                );
+        var id = $(this).attr("INppicker");
+        if (id && typeof id === "string" && id.includes("dummyfield")) {
+          id = id.split("dummyfield")[0];
+        }
+        var sidAttr = $(this).find("span.sp-peoplepicker-userSpan").attr("sid");
+        var userEmailAttr = $(this).attr("user-email");
+        var ppp = "";
+        var isPickerFromParent = $(this).hasClass("picker-from-parent");
+
+        // pickerFromParent should save by resolved email to avoid invalid sid collisions
+        if (isPickerFromParent && userEmailAttr) {
+          ppp = SP.FieldUserValue.fromUser(userEmailAttr);
+        } else if (sidAttr) {
+          ppp = SP.FieldUserValue.fromUser(sidAttr);
+        } else if (userEmailAttr) {
+          ppp = SP.FieldUserValue.fromUser(userEmailAttr);
+        }
+
+        if (ppp) {
           New_Data_Submit.g.oListItem.set_item(id, ppp);
         } else if (
           ($(this).attr("id") == "ProjectOwner" && listkey == "projects") ||
@@ -1904,8 +1922,16 @@ window.Edit_Data_Submit = {
     var multiSelectValid = true;
 
     $("[type=picker][required]").each(function () {
+      var isPickerFromParent = $(this).hasClass("picker-from-parent");
+      var hasResolvedUser = $(this).find("span.sp-peoplepicker-userSpan").length > 0;
+      var hasAutoResolvedValue =
+        isPickerFromParent &&
+        !!$(this).attr("user-email") &&
+        $(this).attr("user-email") != enternameemail;
+
       if (
-        $(this).find("span.sp-peoplepicker-userSpan").length == 0 &&
+        !hasResolvedUser &&
+        !hasAutoResolvedValue &&
         $(this).attr("data-email") == enternameemail
       ) {
         pickervalid = false;
@@ -1921,7 +1947,13 @@ window.Edit_Data_Submit = {
     });
 
     $("[type=picker]").each(function () {
+      var isPickerFromParent = $(this).hasClass("picker-from-parent");
+      var hasAutoResolvedValue =
+        isPickerFromParent &&
+        !!$(this).attr("user-email") &&
+        $(this).attr("user-email") != enternameemail;
       if (
+        !hasAutoResolvedValue &&
         $(this).find("span.sp-peoplepicker-userSpan").attr("aria-invalid") ==
         "true"
       ) {
@@ -1931,6 +1963,7 @@ window.Edit_Data_Submit = {
       }
 
       if (
+        !hasAutoResolvedValue &&
         $(this).find("span.ms-formvalidation.sp-peoplepicker-errorMsg").length
       ) {
         pickervalid = false;
@@ -2258,18 +2291,24 @@ window.Edit_Data_Submit = {
           if (skipFieldsForPerfLeader.indexOf(fieldIdForUse) !== -1) return;
         }
         if ($(this).attr("type") == "picker") {
-          if ($(this).find("span.sp-peoplepicker-userSpan").length) {
-            var id = $(this).attr("INppicker");
-            if (id && typeof id === "string" && id.includes("dummyfield")) {
-              id = id.split("dummyfield")[0];
-            }
-            var ppp =
-              $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-              undefined
-                ? ""
-                : SP.FieldUserValue.fromUser(
-                    $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-                  ); //.split('|').slice(-1)[0]
+          var id = $(this).attr("INppicker");
+          if (id && typeof id === "string" && id.includes("dummyfield")) {
+            id = id.split("dummyfield")[0];
+          }
+          var sidAttr = $(this).find("span.sp-peoplepicker-userSpan").attr("sid");
+          var userEmailAttr = $(this).attr("user-email");
+          var ppp = "";
+          var isPickerFromParent = $(this).hasClass("picker-from-parent");
+
+          if (isPickerFromParent && userEmailAttr) {
+            ppp = SP.FieldUserValue.fromUser(userEmailAttr);
+          } else if (sidAttr) {
+            ppp = SP.FieldUserValue.fromUser(sidAttr);
+          } else if (userEmailAttr) {
+            ppp = SP.FieldUserValue.fromUser(userEmailAttr);
+          }
+
+          if (ppp) {
             Edit_Data_Submit.g.oListItem.set_item(id, ppp);
           }
         } else if ($(this).attr("type") == "multipicker") {
@@ -7265,3 +7304,4 @@ var checkinProjectEditSubmit = {
   },
   g: {},
 };
+

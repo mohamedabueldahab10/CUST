@@ -1200,54 +1200,84 @@ $.ajax({
   contentType: "application/json; charset=utf-8",
   success: function (response) {
     if (response && response.isSuccess && response.result) {
+      var result = response.result;
+      var isActiveRaw = result.IsActive !== undefined ? result.IsActive : result.isActive;
+      // "no" = not allowed, "yes" or missing = allowed (backward compatibility)
+      var isActive = isActiveRaw === undefined || isActiveRaw === null || String(isActiveRaw).toLowerCase() === "yes";
+
       // Populate Sector
-      if (response.result.sector) {
+      if (result.sector) {
         if ($("#Sector option").length <= 1) {
           loadListOptionsPromise("Internal Entities", "#Sector", "Name", "NameEn", "Title", "EntityType eq 'Sector'", "Name")
             .then(function() {
-              setSelectValue("#Sector", response.result.sector);
+              setSelectValue("#Sector", result.sector);
             })
             .catch(function(err) {
               console.error("Error loading Sector options:", err);
             });
         } else {
-          setSelectValue("#Sector", response.result.sector);
+          setSelectValue("#Sector", result.sector);
         }
       }
       
       // Populate SubSector
-      if (response.result.subSector) {
+      if (result.subSector) {
         if ($("#SubSector option").length <= 1) {
           loadListOptionsPromise("Internal Entities", "#SubSector", "Name", "NameEn", "Title", "EntityType eq 'Department'", "Name")
             .then(function() {
-              setSelectValue("#SubSector", response.result.subSector);
+              setSelectValue("#SubSector", result.subSector);
             })
             .catch(function(err) {
               console.error("Error loading SubSector options:", err);
             });
         } else {
-          setSelectValue("#SubSector", response.result.subSector);
+          setSelectValue("#SubSector", result.subSector);
         }
       }
       
       // Populate Classification (only for MainKpi)
       const parentType = $("#ParentItemType").val();
-      if (parentType === "MainKpi" && response.result.classification) {
-        $("#Classification").val(response.result.classification).prop("disabled", true);
+      if (parentType === "MainKpi" && result.classification) {
+        $("#Classification").val(result.classification).prop("disabled", true);
       } else {
         $("#Classification").val("");
       }
       
       // Populate ApprovalLevel and ensure it's always disabled
-      if (response.result.approvalLevel) {
-        $("#ApprovalLevel").val(response.result.approvalLevel).prop("disabled", true);
-        
-        // After setting ApprovalLevel, call getchangeitemsdetails with classification parameter
-        const classification = (parentType === "MainKpi" && response.result.classification) ? response.result.classification : null;
-        fetchChangeItemDetails(changeItemCode, response.result.approvalLevel, parentItemCode, classification);
+      if (result.approvalLevel) {
+        $("#ApprovalLevel").val(result.approvalLevel).prop("disabled", true);
       } else {
         $("#ApprovalLevel").val("").prop("disabled", true);
         $("#Classification").val("");
+        $(".changeItemsRow").find(".dynamicField").remove();
+      }
+
+      // New change request: enforce IsActive - if "no", agency is not allowed to submit
+      if (window.isNew) {
+        window.currentIsActive = isActive;
+        if (!isActive) {
+          setChangeItemsVisibility(false);
+          $(".changeItemsRow").find(".dynamicField").remove();
+          if ($("#CRSubmitButton").length) {
+            $("#CRSubmitButton").hide();
+          }
+          alert(
+            localStorage.getItem("lng") == "en"
+              ? "The selected item belongs to a Subsector  not authorized to submit change requests!"
+              : "العنصر الذي تم اختياره يتبع لوكالة غير مخوّلة بتقديم طلبات التغيير !"
+          );
+          return;
+        }
+        if ($("#CRSubmitButton").length) {
+          $("#CRSubmitButton").show().css("display", "inline-block");
+        }
+      }
+
+      // After setting ApprovalLevel, call getchangeitemsdetails (for edit/view always; for new only when agency is allowed)
+      if (result.approvalLevel && (!window.isNew || window.currentIsActive !== false)) {
+        const classification = (parentType === "MainKpi" && result.classification) ? result.classification : null;
+        fetchChangeItemDetails(changeItemCode, result.approvalLevel, parentItemCode, classification);
+      } else if (!result.approvalLevel) {
         $(".changeItemsRow").find(".dynamicField").remove();
       }
     } else {
@@ -1292,7 +1322,7 @@ function () {
   if (window.isNew && (fieldId === "ChangeItem" || fieldId === "ParentItemCode" || fieldId === "ChildItemCode" || fieldId === "ApprovalLevel")) {
     window.currentIsActive = true;
     if ($("#CRSubmitButton").length) {
-      $("#CRSubmitButton").prop("disabled", false);
+      $("#CRSubmitButton").prop("disabled", false).show().css("display", "inline-block");
     }
   }
   
@@ -1562,12 +1592,12 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   e.preventDefault();
   e.stopPropagation();
   
-  // Check IsActive for new forms - prevent submission if item is not active
+  // Check IsActive for new forms - prevent submission if agency is not authorized
   if (window.isNew && window.currentIsActive === false) {
     alert(
       localStorage.getItem("lng") == "en"
-        ? "The item is not editable"
-        : "العنصر غير قابل للتعديل"
+        ? "The selected item belongs to an agency not authorized to submit change requests!"
+        : "العنصر الذي تم اختياره يتبع لوكالة غير مخوّلة بتقديم طلبات التغيير !"
     );
     return false;
   }

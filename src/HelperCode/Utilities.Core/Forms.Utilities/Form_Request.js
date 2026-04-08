@@ -869,6 +869,7 @@ window.Edit_Data_Request = {
       KPIMid = oListItem.get_item("Midterms")
         ? oListItem.get_item("Midterms")
         : "";
+      console.log('KPIMid',KPIMid);
       KPIYearHandler = oListItem.get_item("Years")
         ? oListItem.get_item("Years")
         : "";
@@ -1213,9 +1214,6 @@ window.Edit_Data_Request = {
         $(this).addClass("autofill");
       }
     });
-    if ($(".PPField.SPIField.form-control").attr("disabled") == "disabled") {
-      $("input.sp-peoplepicker-editorInput").prop("disabled", true);
-    }
     function getNestedDeliverablesSum() {
       return new Promise((resolve, reject) => {
         const clientContext = new SP.ClientContext.get_current();
@@ -2243,8 +2241,13 @@ window.View_Data_Request = {
           oListItem.get_item(fieldId) == null
             ? No_Data
             : oListItem.get_item(fieldId);
-        // $(this).text(value);
         $(this).attr("data-viewtogglevalue", value);
+        // cryearlycalendar / changeitemapprovalcontrol ApprovalPath: stored value to Resources key for display strategic->crstrategic
+        var displayValue = value;
+        if ((listkey == "cryearlycalendar" || listkey == "changeitemapprovalcontrol") && fieldId == "ApprovalPath" && value && value !== No_Data) {
+          var approvalPathMap = { strategic: "crstrategic", execution: "crexecution", operation: "croperationally" };
+          displayValue = approvalPathMap[value] || value;
+        }
         if (listkey == "goalstrategy") {
           // to handle the title change
           if ($(this).attr("id") == "Types") {
@@ -2322,8 +2325,8 @@ window.View_Data_Request = {
               localStorage.getItem("lng") == null ||
               localStorage.getItem("lng") == "ar"
             ) {
-              $(this).text(Resources.ar[value.toLowerCase()]);
-            } else $(this).text(Resources.en[value.toLowerCase()]);
+              $(this).text(Resources.ar[displayValue.toLowerCase()]);
+            } else $(this).text(Resources.en[displayValue.toLowerCase()]);
           }
 
           // if (listkey == 'mainkpi' && $(this).attr("id") == 'Year') { // view the year value in main kpi view
@@ -2725,19 +2728,16 @@ window.View_Data_Request = {
                         }
                       } else if ($targetField.is("p")) {
                         // For view mode, set the value using span with data-trans attribute
-                        // Use the value directly from ListName, convert to lowercase
                         var displayKey = valueToSet ? valueToSet.toLowerCase() : actualValueToSet.toLowerCase();
-                        
-                        console.log("[View Mode Lookup] Setting span for ItemType:", {
-                          displayKey: displayKey,
-                          dataTransAttr: "data-trans-" + displayKey
-                        });
-                        
+                        // cryearlycalendar / changeitemapprovalcontrol ApprovalPath
+                        if (typeof listkey !== "undefined" && (listkey === "cryearlycalendar" || listkey === "changeitemapprovalcontrol") && targetFieldId === "ApprovalPath" && actualValueToSet) {
+                          var approvalPathMap = { strategic: "crstrategic", execution: "crexecution", operation: "croperationally" };
+                          displayKey = (approvalPathMap[actualValueToSet] || actualValueToSet).toLowerCase();
+                        }
                         // Set the value using span with data-trans attribute
                         var dataTransAttr = "data-trans-" + displayKey;
                         $targetField.html('<span ' + dataTransAttr + ' class="Resources">' + displayKey + '</span>');
                         $targetField.attr("data-viewtogglevalue", actualValueToSet);
-                        // Call changeResources to translate
                         if (typeof changeResources === "function") {
                           changeResources();
                         }
@@ -3365,7 +3365,10 @@ window.View_Data_Request = {
     } else {
       // For delegations use Audit (item versions); for others use task history
       if (listkey == "delegations") {
-        Get_DelegationsAudit.init();
+        Get_ItemVersionsAudit.init("Delegations");
+      } else if (listkey == "mainkpi") {
+        Get_ItemVersionsAudit.init("MainKPI");
+        Get_AllTaskHistoryRelatedToForm.init();
       } else if (listkey != "cryearlycalendar") {
         Get_AllTaskHistoryRelatedToForm.init();
       }
@@ -3509,6 +3512,13 @@ window.View_Data_Request = {
       KPIMid = oListItem.get_item("Midterms")
         ? oListItem.get_item("Midterms")
         : "";
+      console.log("[mainkpi] source Midterms field:", {
+        KPICode: KPICode,
+        Year: KPIYear,
+        PeriodType: oListItem.get_item("PeriodType"),
+        MidtermsRaw: oListItem.get_item("Midterms"),
+        MidtermsMapped: KPIMid
+      });
       KPIYearHandler = oListItem.get_item("Years")
         ? oListItem.get_item("Years")
         : "";
@@ -4190,19 +4200,15 @@ window.View_Data_Request = {
                 }
               } else if ($targetField.is("p")) {
                 // For view mode, set the value using span with data-trans attribute
-                // Use the value directly from ListName, convert to lowercase
                 var displayKey = valueToSet ? valueToSet.toLowerCase() : actualValueToSet.toLowerCase();
-                
-                console.log("[View_Data_Request.handleGetValueFromLookup] Setting span for ItemType:", {
-                  displayKey: displayKey,
-                  dataTransAttr: "data-trans-" + displayKey
-                });
-                
-                // Set the value using span with data-trans attribute
+                // cryearlycalendar / changeitemapprovalcontrol ApprovalPath
+                if (typeof listkey !== "undefined" && (listkey === "cryearlycalendar" || listkey === "changeitemapprovalcontrol") && targetFieldId === "ApprovalPath" && actualValueToSet) {
+                  var approvalPathMap = { strategic: "crstrategic", execution: "crexecution", operation: "croperationally" };
+                  displayKey = (approvalPathMap[actualValueToSet] || actualValueToSet).toLowerCase();
+                }
                 var dataTransAttr = "data-trans-" + displayKey;
                 $targetField.html('<span ' + dataTransAttr + ' class="Resources">' + displayKey + '</span>');
                 $targetField.attr("data-viewtogglevalue", actualValueToSet);
-                // Call changeResources to translate
                 if (typeof changeResources === "function") {
                   changeResources();
                 }
@@ -6832,18 +6838,20 @@ window.Delete_Data_Submit = {
         $("button.btn-delete").removeClass("loader-action");
         $("button.btn-delete").addClass("loader-action-success");
 
-        if (listkey == "initiatives" || USERisProjects) {
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/Listing.aspx?ListKey=" +
-            listkey;
-        } else {
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/Listing.aspx?ListKey=" +
-            listkey +
-            PCODE_STRING;
+        var listingUrl =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/Listing.aspx?ListKey=" +
+          listkey;
+        if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+          if (window.location.href.indexOf("KpiCode=") > -1)
+            listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+        } else if (listkey == "sosanalysis") {
+          if (window.location.href.indexOf("sosCode=") > -1)
+            listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+        } else if (listkey != "initiatives" && !USERisProjects) {
+          listingUrl += PCODE_STRING;
         }
+        window.location = listingUrl;
       }),
       Function.createDelegate(this, function (sender, args) {
         $("button.btn-delete").removeClass("loader-action");
@@ -7009,11 +7017,20 @@ window.Delete_Item_Submit = {
             } else if (listkey == "benefitmetrics" && ICODE) {
               Delete_Benefits_Results.init();
             } else {
-              window.location =
+              var listingUrl =
                 _spPageContextInfo.webAbsoluteUrl +
                 "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                PCODE_STRING;
+                listkey;
+              if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+                if (window.location.href.indexOf("KpiCode=") > -1)
+                  listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+              } else if (listkey == "sosanalysis") {
+                if (window.location.href.indexOf("sosCode=") > -1)
+                  listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+              } else {
+                listingUrl += PCODE_STRING;
+              }
+              window.location = listingUrl;
             }
           }
         }
@@ -9112,6 +9129,17 @@ var View_Current_Kpi = {
         oListItem.get_item("PeriodType") == null
           ? No_Data
           : oListItem.get_item("PeriodType");
+      console.log("[View_Current_Kpi] source row:", {
+        KPI: oListItem.get_item("KPI"),
+        Year: oListItem.get_item("Year"),
+        PeriodType: relatedPeriodType,
+        ActualMid1: oListItem.get_item("ActualMid1"),
+        ActualMid2: oListItem.get_item("ActualMid2"),
+        PerformanceAnalysisActualMid1:
+          oListItem.get_item("PerformanceAnalysisActualMid1"),
+        PerformanceAnalysisActualMid2:
+          oListItem.get_item("PerformanceAnalysisActualMid2"),
+      });
 
       ////////////////////////////
       if (relatedPeriodType == "year") {
@@ -9132,11 +9160,13 @@ var View_Current_Kpi = {
         targetPerioudType +=
           '<p data-trans-actualy class="viewmode-value Resources" id="Years_Previous"></p>';
       } else if (relatedPeriodType == "midterm") {
+        console.log('relatedPeriodType',relatedPeriodType);
         periodType += '<label data-trans-midkpitype class="Resources"></label>';
         targetPerioudType =
           '<label data-trans-midkpitype class="Resources"></label>';
 
         if (currentMonth >= 1 && currentMonth <= 6) {
+          console.log('currentMonth',currentMonth);
           relatedPerformanceAnalysis =
             oListItem.get_item("PerformanceAnalysisActualMid1") || No_Data;
           relatedActualValue = oListItem.get_item("ActualMid1") || 0;
@@ -9160,6 +9190,13 @@ var View_Current_Kpi = {
           targetActualValue = "ActualMid1";
           targetPerformanceAnalysis = "PerformanceAnalysisActualMid1";
         }
+        console.log("[View_Current_Kpi] midterm resolved:", {
+          currentMonth: currentMonth,
+          relatedActualValue: relatedActualValue,
+          relatedPerformanceAnalysis: relatedPerformanceAnalysis,
+          targetActualValue: targetActualValue,
+          targetPerformanceAnalysis: targetPerformanceAnalysis,
+        });
       } else if (relatedPeriodType == "quarter") {
         periodType +=
           '<label data-trans-quarterkpitype class="Resources"></label>';
@@ -10057,24 +10094,27 @@ window.Get_AllTaskHistoryRelatedToForm = {
 };
 
 // Delegations: show item versions (Audit) via API instead of task history
-window.Get_DelegationsAudit = {
-  init: function () {
+window.Get_ItemVersionsAudit = {
+  init: function (versionsListName) {
+    Get_ItemVersionsAudit.currentListName = versionsListName || "Delegations";
     var url =
       (typeof APIURL !== "undefined" ? APIURL : "") +
-      "/general/getitemversions/Delegations/" +
+      "/general/getitemversions/" +
+      versionsListName +
+      "/" +
       IID;
     $.ajax({
       url: url,
       method: "GET",
       dataType: "json",
-      success: Function.createDelegate(this, Get_DelegationsAudit.onSuccess),
-      error: Function.createDelegate(this, Get_DelegationsAudit.onError),
+      success: Function.createDelegate(this, Get_ItemVersionsAudit.onSuccess),
+      error: Function.createDelegate(this, Get_ItemVersionsAudit.onError),
     });
   },
 
   onSuccess: function (data) {
     if (!data || !data.isSuccess) {
-      Get_DelegationsAudit.renderTable([]);
+      Get_ItemVersionsAudit.renderTable([]);
       return;
     }
     var versions = [];
@@ -10086,16 +10126,16 @@ window.Get_DelegationsAudit = {
         versions = resultStr;
       }
     } catch (e) {
-      console.log("Get_DelegationsAudit: parse error", e);
+      console.log("Get_ItemVersionsAudit: parse error", e);
     }
-    Get_DelegationsAudit.renderTable(versions);
+    Get_ItemVersionsAudit.renderTable(versions);
   },
 
   onError: function () {
-    Get_DelegationsAudit.renderTable([]);
+    Get_ItemVersionsAudit.renderTable([]);
   },
 
-  renderTable: function (versions) {
+  renderTable: async function (versions) {
     var isAr =
       localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
     var Res = isAr ? Resources.ar : Resources.en;
@@ -10128,37 +10168,101 @@ window.Get_DelegationsAudit = {
       return rawGroupName;
     }
 
+    var listName = (Get_ItemVersionsAudit.currentListName || "").toLowerCase();
+
+    function getTextValue(val) {
+      if (val == null || val === "") return No_Data;
+      if (typeof val === "object" && val.LookupValue) return val.LookupValue;
+      return val;
+    }
+    function getTranslatedStatus(rawStatus) {
+      var statusCode = (rawStatus || "").toLowerCase();
+      return Res[statusCode] != null ? Res[statusCode] : (rawStatus || No_Data);
+    }
+    function getTranslatedCellValue(fieldKey, rawValue) {
+      if (fieldKey === "isCurrentVersion") {
+        return rawValue === true ? trueLabel : falseLabel;
+      }
+      if (
+        fieldKey === "status" ||
+        fieldKey === "recordstatus" ||
+        fieldKey === "compliancestatus" ||
+        fieldKey === "classification" ||
+        fieldKey === "categorykpi" ||
+        fieldKey === "notmeasurablenow" ||
+        fieldKey === "completionstatus"
+      ) {
+        return getTranslatedStatus(rawValue);
+      }
+      if (fieldKey === "groupName") {
+        return translateGroupName(rawValue);
+      }
+      return getTextValue(rawValue);
+    }
+    function formatFloatValue(val) {
+      if (val == null || val === "") return No_Data;
+      var num = parseFloat(val);
+      if (isNaN(num)) return val;
+      return num % 1 === 0 ? num.toString() : num.toFixed(2).replace(/\.?0+$/, "");
+    }
+
+    var kpiColumns = [
+      { key: "editor", title: isAr ? "المحرر" : "Editor", value: function (v) { return getLookupValue(v.Editor); } },
+      { key: "createddate", title: isAr ? "تاريخ الإنشاء" : "Created Date", value: function (v) { return formatDate(v.Created_x005f_x0020_x005f_Date || v.Created); } },
+      { key: "isCurrentVersion", title: isAr ? "الإصدار الحالي" : "Current Version", value: function (v) { return v.IsCurrentVersion; } },
+      { key: "classification", title: isAr ? "التصنيف" : "Classification", value: function (v) { return v.Classification; } },
+      { key: "categorykpi", title: isAr ? "فئة المؤشر" : "KPI Category", value: function (v) { return v.CategoryKPI; } },
+      { key: "notmeasurablenow", title: isAr ? "يقاس حاليا" : "Measurable Now", value: function (v) { return v.NotMeasurableNow; } },
+      { key: "performanceleader", title: isAr ? "رائد الأداء" : "Performance Leader", value: function (v) { return getLookupValue(v.PerformanceLeader); } },
+      { key: "status", title: isAr ? "حالة الإنجاز" : "Status", value: function (v) { return v.Status; } },
+      { key: "equation", title: isAr ? "القيمة الفعلية" : "Actual Value", value: function (v) { return formatFloatValue(v.Equation); } },
+      { key: "completionstatus", title: isAr ? "مكتمل" : "Completion Status", value: function (v) { return v.CompletionStatus; } }
+    ];
+
+    var delegationColumns = [
+      { key: "editor", title: isAr ? "المحرر" : "Editor", value: function (v) { return getLookupValue(v.Editor); } },
+      { key: "createddate", title: isAr ? "تاريخ الإنشاء" : "Created Date", value: function (v) { return formatDate(v.Created_x005f_x0020_x005f_Date || v.Created); } },
+      { key: "isCurrentVersion", title: isAr ? "الإصدار الحالي" : "Current Version", value: function (v) { return v.IsCurrentVersion; } },
+      { key: "delegatefrom", title: isAr ? "تفويض من" : "Delegate From", value: function (v) { return getLookupValue(v.DelegateFrom); } },
+      { key: "groupName", title: isAr ? "اسم المجموعة" : "Group Name", value: function (v) { return v.GroupName != null && v.GroupName !== "" ? v.GroupName : No_Data; } },
+      { key: "delegateto", title: isAr ? "تفويض إلى" : "Delegate To", value: function (v) { return getLookupValue(v.DelegateTo); } },
+      { key: "notes", title: isAr ? "ملاحظات" : "Notes", value: function (v) { return v.Notes != null && v.Notes !== "" ? v.Notes : No_Data; } },
+      { key: "status", title: isAr ? "حالة التفويض" : "Delegation Status", value: function (v) { return v.Status; } },
+      { key: "fromdate", title: isAr ? "من تاريخ" : "From Date", value: function (v) { return formatDate(v.FromDate); } },
+      { key: "todate", title: isAr ? "إلى تاريخ" : "To Date", value: function (v) { return formatDate(v.ToDate); } }
+    ];
+
+    var columns = [];
+    if (listName == "delegations") {
+      columns = delegationColumns;
+    } else if (listName == "mainkpi") {
+      columns = kpiColumns;
+    } else {
+      columns = delegationColumns;
+    }
     var rowsHtml = "";
     for (var i = 0; i < versions.length; i++) {
       var v = versions[i];
-      var editorDisplay = getLookupValue(v.Editor);
-      var createdDate = formatDate(v.Created_x005f_x0020_x005f_Date || v.Created);
-      var isCurrentText = v.IsCurrentVersion === true ? trueLabel : falseLabel;
-      var delegateFrom = getLookupValue(v.DelegateFrom);
-      var groupNameRaw = v.GroupName != null && v.GroupName !== "" ? v.GroupName : No_Data;
-      var groupName = translateGroupName(groupNameRaw);
-      var delegateTo = getLookupValue(v.DelegateTo);
-      var notes = v.Notes != null && v.Notes !== "" ? v.Notes : No_Data;
-      var statusCode = (v.Status || "").toLowerCase();
-      var statusDisplay = Res[statusCode] != null ? Res[statusCode] : (v.Status || No_Data);
-      var fromDate = formatDate(v.FromDate);
-      var toDate = formatDate(v.ToDate);
-
-      rowsHtml +=
-        "<tr><td>" + editorDisplay +
-        "</td><td>" + createdDate +
-        "</td><td>" + isCurrentText +
-        "</td><td>" + delegateFrom +
-        "</td><td>" + groupName +
-        "</td><td>" + delegateTo +
-        "</td><td>" + notes +
-        "</td><td>" + statusDisplay +
-        "</td><td>" + fromDate +
-        "</td><td>" + toDate +
-        "</td></tr>";
+      rowsHtml += "<tr>";
+      for (var c = 0; c < columns.length; c++) {
+        var col = columns[c];
+        var rawValue = col.value(v);
+        var cellValue = getTranslatedCellValue(col.key, rawValue);
+        rowsHtml += "<td>" + cellValue + "</td>";
+      }
+      rowsHtml += "</tr>";
     }
 
-    var colCount = 10;
+    var colCount = columns.length;
+    var theadHtml = "<thead><tr>";
+    for (var h = 0; h < columns.length; h++) {
+      theadHtml +=
+        '<th><span class="d-flex align-items-center">' +
+        columns[h].title +
+        "</span></th>";
+    }
+    theadHtml += "</tr></thead>";
+
     var tableContent =
       versions.length > 0
         ? rowsHtml
@@ -10174,18 +10278,7 @@ window.Get_DelegationsAudit = {
       '<div class="taskHistory row mx-0 px-0 col-12 flex-column">' +
       '<div class="hrsd-table-responsive">' +
       '<table class="table HrsdTable delegations-audit-table">' +
-      "<thead><tr>" +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-editor>Editor</span></span></th>' +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-createddate>Created</span></span></th>' +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-iscurrentversion>Current Version</span></span></th>' +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-delegatefrom>Delegate From</span></span></th>' +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-groupname>Group Name</span></span></th>' +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-delegateto>Delegate To</span></span></th>' +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-notes>Notes</span></span></th>' +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-delegationstatus>Delegation Status</span></span></th>' +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-fromdate>From Date</span></span></th>' +
-      '<th><span class="d-flex align-items-center"><span class="Resources" data-trans-todate>To Date</span></span></th>' +
-      "</tr></thead>" +
+      theadHtml +
       "<tbody>" +
       tableContent +
       "</tbody></table></div></div></div>";
@@ -10194,6 +10287,7 @@ window.Get_DelegationsAudit = {
     $(".btnactionrow .form-btns-wrapper").show();
     changeResources();
   },
+  currentListName: "Delegations",
 };
 
 // !in progress
@@ -10776,6 +10870,7 @@ window.get_DynamicValues = {
     }
   },
 };
+
 window.Get_ActualAnnualTotal = {
   onSuccess: function (sender, args) {
     var collListItem = Get_ActualAnnualTotal.g.collListItem;

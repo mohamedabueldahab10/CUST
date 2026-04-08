@@ -85,6 +85,9 @@ var UserRole,
   isLMSUControl = false,
   isLMSUExecution = false,
   isLMSUPerformance = false,
+  isSODVROE = false,
+  isSODVROExecution = false,
+  isSODVROPerformance = false,
   isCRCommittee = false,
   isCRCommitteeVision = false,
   isLMSP = false,
@@ -921,10 +924,10 @@ window.userCalls = {
         ar_UserRole = "إدارة الجودة والتقارير";
         en_UserRole = "PerformanceReportsQA";
         //CRUD
-        Create_Access = [];
+        Create_Access = ["sosanalysis"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        Edit_Access = [];
+        Edit_Access = ["sosanalysis"];
         Delete_Access = [];
         break;
       case "SAAP":
@@ -2295,7 +2298,7 @@ window.userCalls = {
           "benefitmatrix",
           "mainkpi",
           //"mainkpianalysis",
-          "sosanalysis",
+//          "sosanalysis",
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
@@ -2348,7 +2351,7 @@ window.userCalls = {
           "mainkpi",
           "mainkpianalysis",
           "mainkpiissues",
-          "sosanalysis",
+          //"sosanalysis",
           "sos",
           "deliverablemetrics",
           "benefitmatrix",
@@ -2370,7 +2373,7 @@ window.userCalls = {
           "mainkpi",
           //"mainkpianalysis",
          // "mainkpiissues",
-          "sosanalysis",
+          //"sosanalysis",
           "sos",
           "benefitmatrix",
           "benefitmetrics",
@@ -2972,6 +2975,112 @@ window.userCalls = {
           "changerequest",
         ];
         break;
+      case "SODVROE":
+          USER_HomePage = "InitiativesMain.aspx";
+  
+          $("body").append(
+            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+          );
+          //***** */
+          isSODVROE = true;
+  
+          ChartHide =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+          ChartHideForInitiatives =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+  
+          ar_UserRole = "مكتب ضمان التنفيذ للتنمية الاجتماعية";
+          en_UserRole = "Execution Guarantee Office";
+          //CRUD
+          Create_Access = [
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "contracts",
+            "changerequest",
+            "documents",
+            "developmentrequirements"
+          ];
+          CreateChangeRequest_Access = ["initiatives", "projects"];
+          Read_Access = AllListKeys;
+          Read_Access = Read_Access.concat(SP_Page_Name);
+          Edit_Access = [
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "benefitsequations",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "contracts",
+            //"changerequest",
+            "documents",
+            "developmentrequirements"
+          ];
+          Delete_Access = [
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+          ];
+          break;
 
       case "LMSUControl":
         USER_HomePage = "InitiativesMain.aspx";
@@ -3334,6 +3443,250 @@ window.userCalls = {
 
         break;
 
+        case "SODVROExecution":
+          USER_HomePage = "InitiativesMain.aspx";
+          $("body").append(
+            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+          );
+  
+          isSODVROExecution = true;
+  
+          ChartHide =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+          ChartHideForInitiatives =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+  
+          ar_UserRole = "وحدة استراتيجية التنمية الاجتماعية (إدارة التنفيذ)";
+          en_UserRole = "SODVRO Execution";
+  
+          Create_Access = [
+            "goalstrategy",
+            "sos",
+            "mainkpi",
+            "benefitmatrix",
+            "initiatives",
+            "initiativedeliverables",
+            "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            "projects",
+            "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+            "Targets.aspx",
+            "contracts",
+            "initiativeupdates",
+            "projectupdates",
+          ];
+          CreateChangeRequest_Access = [
+            "initiatives",
+            "projects",
+            "sos",
+            "mainkpi",
+          ];
+          Read_Access = AllListKeys;
+          Read_Access = Read_Access.concat(SP_Page_Name);
+  
+          Edit_Access = [
+            "goalstrategy",
+            "kpiequations",
+            "sos",
+            "mainkpi",
+            "benefitmatrix",
+            "initiatives",
+            "initiativedeliverables",
+            "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            "benefits",
+            "benefitmetrics",
+            "benefitsequations",
+            "BenefitMetrics.aspx",
+            "projects",
+            "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            //"changerequest",
+            "contracts",
+            "initiativeupdates",
+            "projectupdates",
+          ];
+          Delete_Access = [
+            "goalstrategy",
+            // "sos",
+            "mainkpi",
+            "benefitmatrix",
+            "initiatives",
+            "initiativedeliverables",
+            "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            "projects",
+            "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+            "initiativeupdates",
+            "projectupdates",
+          ];
+          break;
+  
+        case "SODVROPerformance":
+          USER_HomePage = "InitiativesMain.aspx";
+  
+          $("body").append(
+            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+          );
+  
+          isSODVROPerformance = true;
+  
+          ChartHide =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+          ChartHideForInitiatives =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+  
+          ar_UserRole = " وحدة استراتيجية التنمية الاجتماعة (إدارة الآداء)";
+          en_UserRole = "SODVRO Performance";
+  
+          Create_Access = [
+            "goalstrategy",
+            // "sos",
+            // "mainkpi",
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+            "contracts",
+          ];
+          CreateChangeRequest_Access = [
+            "initiatives",
+            "projects",
+            "sos",
+            "mainkpi",
+          ];
+          Read_Access = AllListKeys;
+          Read_Access = Read_Access.concat(SP_Page_Name);
+  
+          Edit_Access = [
+            "goalstrategy",
+            // "sos",
+            // "mainkpi",
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "benefitsequations",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            //"changerequest",
+            "contracts",
+          ];
+          Delete_Access = [
+            "goalstrategy",
+            // "sos",
+            // "mainkpi",
+            "benefitmatrix",
+            // "initiatives",
+            // "initiativedeliverables",
+            // "initiativemilestones",
+            "initiativeissues",
+            "initiativerisks",
+            "initiativemom",
+            "closureinitiative",
+            // "benefits",
+            "benefitmetrics",
+            "BenefitMetrics.aspx",
+            // "projects",
+            // "deliverables",
+            "mom",
+            "risks",
+            "issues",
+            // "milestones",
+            "lessonslearned",
+            "closureform",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "changerequest",
+          ];
+  
+          break;
+  
       case "CRCommittee":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
@@ -3897,7 +4250,7 @@ window.userCalls = {
         Create_Access = [
           "goalstrategy",
           "spillars",
-          // "sos",
+          "sos",
           // "mainkpi",
           "changerequest",
         ];
@@ -4398,8 +4751,7 @@ window.userCalls = {
       (Edit_Access = Edit_Access.map((name) => name.toLowerCase())),
       (Delete_Access = Delete_Access.map((name) => name.toLowerCase()));
 
-    // mainkpiissues: only Performance Leader may see the create button
-    if (!isPerformanceLeader) {
+    if (!isPerformanceLeader && !isAdmin) {
       Create_Access = Create_Access.filter(function (name) {
         return name !== "mainkpiissues";
       });
@@ -5743,6 +6095,78 @@ window.userCalls = {
         },
       },
       {
+        Role: "SODVROE",
+        groupsName: ["SODVRO-E"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["sod"],
+                  targetPages: [
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  },
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["sod"],
+                  targetPages: [
+                    // "home.aspx",
+                    // "new.aspx",
+                    // "edit.aspx?ListKey=projects",
+                  ],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
         Role: "LMSP",
         groupsName: ["LMS_P"],
         dataFilter: {
@@ -6929,6 +7353,13 @@ window.userCalls = {
                   targetPages: [],
                   conditionType: "Or",
                 },
+                {
+                  field: "DelPerformanceLeader",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
+                },
               ],
               subRelation: {
                 level: 2,
@@ -6956,9 +7387,17 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
                 },
                 {
                   field: "PerformanceLeader2",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelPerformanceLeader",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
@@ -6988,9 +7427,17 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                  conditionType: "Or",
                 },
                 {
                   field: "PerformanceLeader2",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
+                },
+                {
+                  field: "DelPerformanceLeader",
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
@@ -7037,6 +7484,26 @@ window.userCalls = {
                   // parentRelationField: "Title",
                   // RelationField: "InitiativeCode",
                   // RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
                 },
               },
             },
@@ -7670,6 +8137,134 @@ window.userCalls = {
         },
       },
       {
+        Role: "SODVROExecution",
+        groupsName: ["SODVRO-Execution"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["sod"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  },
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["sod"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        Role: "SODVROPerformance",
+        groupsName: ["SODVRO-Performance"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "GoalStrategy",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Choice",
+                  values: ["sod"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "SOs",
+                parentRelationField: "Title",
+                RelationField: "RelatedStrategy",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "MainKPI",
+                  parentRelationField: "Title",
+                  RelationField: "RelatedStrategyObjective",
+                  RelationFieldType: "Text",
+                  subRelation: {
+                    level: 4,
+                    listName: "KPIResults",
+                    parentRelationField: "Title",
+                    RelationField: "KPI",
+                    RelationFieldType: "Text",
+                  },
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Initiatives",
+              accessConditions: [
+                {
+                  field: "Types",
+                  type: "Text",
+                  values: ["sod"],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Projects",
+                parentRelationField: "Title",
+                RelationField: "RelatedInitiative",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
         Role: "CRCommittee",
         groupsName: ["CR Committee"],
         dataFilter: {
@@ -7843,6 +8438,13 @@ window.userCalls = {
                   values: [""],
                   targetPages: [],
                 },
+                {
+                  field: "DelObjectiveOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
+                },
               ],
               subRelation: {
                 level: 2,
@@ -7865,6 +8467,13 @@ window.userCalls = {
                   type: "LoggedInUser",
                   values: [""],
                   targetPages: [],
+                },
+                {
+                  field: "DelObjectiveOwner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                  conditionType: "Or",
                 },
               ],
               subRelation: {
@@ -7906,6 +8515,26 @@ window.userCalls = {
                   // parentRelationField: "Title",
                   // RelationField: "InitiativeCode",
                   // RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
                 },
               },
             },
@@ -11388,6 +12017,23 @@ async function initiateDataLevelAccess(lookupList) {
 let dataLevelAccessQuery = "";
 let dataLevelAccessChoicesForFilters = [];
 
+/** SharePoint CAML allows only binary <Or>; chain N user lookup checks as nested Ors. */
+function buildNestedOrLoggedInUserEqs(fieldNames) {
+  if (!fieldNames || fieldNames.length === 0) {
+    return "";
+  }
+  if (fieldNames.length === 1) {
+    return `<Eq><FieldRef Name="${fieldNames[0]}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+  }
+  var node = `<Eq><FieldRef Name="${
+    fieldNames[fieldNames.length - 1]
+  }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+  for (var idx = fieldNames.length - 2; idx >= 0; idx--) {
+    node = `<Or><Eq><FieldRef Name="${fieldNames[idx]}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>${node}</Or>`;
+  }
+  return node;
+}
+
 let data_Level1_Access = {
   buildCamlQuery: function (
     dataListName,
@@ -11399,6 +12045,60 @@ let data_Level1_Access = {
     let whereBody = ``,
       queryBody = ``,
       whereBodyFinal = ``;
+
+    var finalizeDataLevelQuery = function (wb) {
+      wb = wb.replaceAll(
+        `Type="date"`,
+        `IncludeTimeValue="TRUE" Type="DateTime"`
+      );
+      whereBodyFinal = `<Where>${wb}
+						</Where>`;
+      queryBody = `<View>
+        			<Query>
+        			${whereBodyFinal}
+        			<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
+        			</Query>
+        		</View>`;
+      data_Level1_Access.g.dataLevelQuery = queryBody;
+      dataLevelAccessQuery = queryBody;
+      data_Level1_Access.g.fieldsConditionConfig = fieldsConditionConfig;
+      data_Level1_Access.g.dataLevel = level;
+      if (level > 1) {
+        SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+          data_Level1_Access.init(dataListName);
+        });
+      } else {
+        tempRoleHierarchies = [];
+        accessCallisDone = true;
+      }
+      console.log("Data 1st level access query", queryBody);
+    };
+
+    var allLoggedInUserOr =
+      fieldsConditionConfig.length > 1 &&
+      fieldsConditionConfig.every(function (c) {
+        return c.type === "LoggedInUser" && c.conditionType === "Or";
+      });
+
+    if (allLoggedInUserOr) {
+      fieldsConditionConfig.forEach(function (el) {
+        dataLevelAccessChoicesForFilters.push({
+          internalName: el.field,
+          Type: el.type,
+          Values: el.values,
+        });
+      });
+      var names = fieldsConditionConfig.map(function (c) {
+        return c.field;
+      });
+      whereBody =
+        "<And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+        buildNestedOrLoggedInUserEqs(names) +
+        "</And>";
+      finalizeDataLevelQuery(whereBody);
+      return;
+    }
+
     //dynamic query building
     fieldsConditionConfig.forEach((el, i, a) => {
       //handle case of filters on pages
@@ -11496,46 +12196,7 @@ let data_Level1_Access = {
       }
       //Finish Line, make last changes and build query
       if (i == fieldsConditionConfig.length - 1) {
-        whereBody = whereBody.replaceAll(
-          `Type="date"`,
-          `IncludeTimeValue="TRUE" Type="DateTime"`
-        );
-        whereBodyFinal = `<Where>${whereBody}
-						</Where>`;
-        queryBody = `<View>
-        			<Query>
-        			${whereBodyFinal}
-        			<OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
-        			</Query>
-        		</View>`;
-
-        //     queryBody = `<View>
-        //     <Query>
-        //         <Where>
-        //             <And>
-        //                 <Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>
-        //                 <Or>
-        //                     <Eq><FieldRef Name="PerformanceLeader2" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>
-        //                     <Eq><FieldRef Name="PerformanceLeader" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>
-        //                 </Or>
-        //             </And>
-        //         </Where>
-        //         <OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy>
-        //     </Query>
-        // </View>`
-        data_Level1_Access.g.dataLevelQuery = queryBody;
-        dataLevelAccessQuery = queryBody;
-        data_Level1_Access.g.fieldsConditionConfig = fieldsConditionConfig;
-        data_Level1_Access.g.dataLevel = level;
-        if (level > 1) {
-          SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
-            data_Level1_Access.init(dataListName);
-          });
-        } else {
-          tempRoleHierarchies = [];
-          accessCallisDone = true;
-        }
-        console.log("Data 1st level access query", queryBody);
+        finalizeDataLevelQuery(whereBody);
       }
     });
   },
