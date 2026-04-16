@@ -50,7 +50,14 @@ var Information_Form = [
               // { fieldNameInList: "RecurrenceChanged", fieldValueInList: "no" },
             ]
           },
-
+         {
+            condition: "sod",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "SODActualKPI" },
+            { fieldNameInList: "WFStage", fieldValueInList: "SODActualKPI01" },
+            //{ fieldNameInList: "DraftStatus", fieldValueInList: "draft" },
+              // { fieldNameInList: "RecurrenceChanged", fieldValueInList: "no" },
+            ]
+          },
         ]
       }
     ],
@@ -171,6 +178,12 @@ var Information_Form = [
               value: 'lms',
               roles: ['LMSE', 'LMSP','PerformanceLeader', 'LMSUPerformance', 'LMSUControl',  'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
             
+            },
+              {
+              display: 'sod',
+              value: 'sod',
+              roles: ['Administrator'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
+              // customFilterValue: "vision",
             },
           ],
         },

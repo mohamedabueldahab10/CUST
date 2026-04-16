@@ -2109,7 +2109,7 @@ window.ListingData = {
 			keyNameParams = 'deliverables'
 		  } else if (wfname == 'VROCRInitiative' || wfname == 'EPMOCRInitiative' || wfname == 'LMSCRInitiative') {
 			keyNameParams = 'changerequest'
-		  } else if (wfname == 'VROCreateInitiative' || wfname == 'EPMOCreateInitiative' || wfname == 'LMSCreateInitiative') {
+		  } else if (wfname == 'VROCreateInitiative' || wfname == 'EPMOCreateInitiative' || wfname == 'LMSCreateInitiative' || wfname == 'SODCreateInitiative') {
 			keyNameParams = 'initiatives'
 		  } else if (wfname == 'CR' || wfname == 'VROCRProject' || wfname == 'EPMOCRProject' || wfname == 'LMSCRProject') {
 			keyNameParams = 'changerequest';
@@ -2134,7 +2134,7 @@ window.ListingData = {
 			keyNameParams = 'mom'
 		  } else if (wfname == 'InitiativeSample') {
 			keyNameParams = "initiativesample"
-		  } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LMSInitiative') {
+		  } else if (wfname == 'VisionInitiative' || wfname == 'StrategicallyInitiative' || wfname == 'LMSInitiative' || wfname == 'SODInitiative') {
 			keyNameParams = "initiatives"
 		  } else if (wfname == 'StrategicPartnerships') {
 			keyNameParams = 'strategicpartnerships'
@@ -2142,9 +2142,9 @@ window.ListingData = {
 			keyNameParams = 'achievements'
 		  } else if (wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
 			keyNameParams = 'benefitmetrics'
-		  } else if (wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone') {
+		  } else if (wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone' || wfname == 'SODInitiativeMilestone') {
 			keyNameParams = 'initiativemilestones'
-		  } else if (wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable') {
+		  } else if (wfname == 'VROInitiativeDeliverable' || wfname == 'EPMOInitiativeDeliverable' || wfname == 'LMSInitiativeDeliverable' || wfname == 'SODInitiativeDeliverable') {
 			keyNameParams = 'initiativedeliverables'
 		  } else if (wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone') {
 			keyNameParams = 'milestones'

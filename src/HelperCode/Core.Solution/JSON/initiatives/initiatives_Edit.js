@@ -65,6 +65,12 @@ var Information_Form = [
                 'LMSE','EPMO','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
               ],
             },
+              {
+              display: 'sod',
+              value: 'sod',
+              roles: ['Administrator','SODVROExecution','SODVROPerformance','SODVROE','InitiativeManager','InitiativeOwner']
+              
+            },
             // { display: 'others', value: 'others' },
           ],
         },
@@ -77,16 +83,18 @@ var Information_Form = [
 
           ]
         },
+          requiredValues: [
+          { value: 'vision', fields: ['Portfolio'] },
+          { value: 'lms', fields: ['SubSector'] },
+          { value: 'sod', fields: ['SubSector'] },
+          { value: 'strategically', fields: ['SubSector'] },
+      ],
           toggleValues: [
           { value: 'vision', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective','RelatedProgram'] },
           { value: 'lms', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
+          { value: 'sod', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
           { value: 'strategically', fields: [''] },
         ],
-        requiredValues: [
-          { value: 'vision', fields: ['Portfolio'] },
-          { value: 'lms', fields: ['SubSector'] },
-          { value: 'strategically', fields: ['SubSector'] },
-      ],
       },
       {
         InternalName: 'StrategySource',
@@ -294,6 +302,16 @@ var Information_Form = [
               },
             ],
           },
+           {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
         ],
       },
        
@@ -395,6 +413,16 @@ var Information_Form = [
               },
             ],
           },
+           {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
         ], 
           security: {
           groups: [ ],
@@ -447,6 +475,16 @@ var Information_Form = [
                 field: 'Types',
                 type: 'Choice',
                 values: ['lms'],
+              },
+            ],
+          },
+           {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
               },
             ],
           },
@@ -526,6 +564,16 @@ var Information_Form = [
                 field: 'Types',
                 type: 'Text',
                 values: ['lms'],
+              },
+            ],
+          },
+           {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
               },
             ],
           },
@@ -791,6 +839,16 @@ var Information_Form = [
 
           ]
         },
+      },
+            {
+        InternalName: 'ExternalEntityRepresentative',
+        DisplayNameEn: 'External Entity Representative',
+        DisplayName: 'ممثل الجهة الخارجية',
+        type: 'string',
+        maxchar: 255,
+      // validation: 'required',
+      //  descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+      //  descPhraseEn: "max length of letters equal 255",  
       },
       {
         InternalName: "Sector",

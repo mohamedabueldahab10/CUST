@@ -133,6 +133,18 @@ var Information_Form = [
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
+             {
+              display: 'sod',
+              value: 'sod',
+              // roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','InitiativeManager','InitiativeOwner',], groups
+              roles: ['Administrator','SODVROExecution','SODVROPerformance','SODVROE','InitiativeManager','InitiativeOwner'],
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'SODCreateInitiative' },
+                  { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'WFStage', value: 'SODCreateInitiative01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
+              ],
+            },
             // { display: 'others', value: 'others' },
 
           ],
@@ -140,11 +152,13 @@ var Information_Form = [
         requiredValues: [
           { value: 'vision', fields: ['Portfolio'] },
           { value: 'lms', fields: ['SubSector'] },
+          { value: 'sod', fields: ['SubSector'] },
           { value: 'strategically', fields: ['SubSector'] },
       ],
           toggleValues: [
           { value: 'vision', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective','RelatedProgram'] },
           { value: 'lms', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
+          { value: 'sod', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
           { value: 'strategically', fields: [''] },
         ],
       },
@@ -229,6 +243,16 @@ var Information_Form = [
                 field: 'Types',
                 type: 'Choice',
                 values: ['lms'],
+              },
+            ],
+          },
+           {
+            role: 'SODVROExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
               },
             ],
           },
@@ -381,6 +405,16 @@ var Information_Form = [
               },
             ],
           },
+            {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
         ],
         // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
@@ -424,6 +458,16 @@ var Information_Form = [
                 field: 'Types',
                 type: 'Choice',
                 values: ['lms'],
+              },
+            ],
+          },
+           {
+            role: 'SODVROExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
               },
             ],
           },
@@ -496,6 +540,16 @@ var Information_Form = [
               },
             ],
           },
+           {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
           {
             role: 'LMSP',
             conditions: [
@@ -551,6 +605,16 @@ var Information_Form = [
         validation: 'required',
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
         descPhraseEn: " User Should have right access", 
+      },
+        {
+        InternalName: 'ExternalEntityRepresentative',
+        DisplayNameEn: 'External Entity Representative',
+        DisplayName: 'ممثل الجهة الخارجية',
+        type: 'string',
+        maxchar: 255,
+      // validation: 'required',
+      //  descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+      //  descPhraseEn: "max length of letters equal 255",  
       },
       {
         InternalName: 'Sector',
@@ -1444,7 +1508,7 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'المنفعة',
         type: 'string',
-        // validation: 'required',
+        validation: 'required',
         maxchar: '255',
         // withletters:true,
         Errmsgkey:"withletterpattern",

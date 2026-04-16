@@ -21,6 +21,10 @@ var Information_Form = [
       { fieldName: 'DraftStatus', value: '', stages:["MSActualKPI02"] },
       { fieldName: 'WFModuleCode', value: '',stages:["MSActualKPI02"] } ,
       { fieldName: 'WFStage', value: '',stages:["MSActualKPI02"] } ,
+    //SOD
+       { fieldName: 'DraftStatus', value: '', stages:["SODActualKPI02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["SODActualKPI02"] } ,
+      { fieldName: 'WFStage', value: '',stages:["SODActualKPI02"] } ,
     ],
     subFields: [
       {
@@ -69,6 +73,11 @@ var Information_Form = [
             {
               display: 'lms',
               value: 'lms',
+            
+            },
+             {
+              display: 'sod',
+              value: 'sod',
             
             },
             ],
@@ -300,7 +309,7 @@ var Information_Form = [
         type: 'dropdownValues',
         // "validation": "required",
         toggleValues: [
-          { value: 'monthly', fields: ['Actual'] },
+          { value: 'monthly', fields: ['Actual','CalculationMethod'] },
           { value: 'quarter', fields: ['Actual'] },
           { value: 'midterm', fields: ['Actual'] },
         ],
@@ -314,12 +323,12 @@ var Information_Form = [
         },
       },
       {
-        InternalName: 'CalculationMethod',
+        InternalName: 'Calculation',
         DisplayNameEn: 'Calculation Method',
         DisplayName: 'طريقة الاحتساب ',
         type: 'dropdownValues',
-        // "validation": "required",
-    
+        ToggleName: "CalculationMethod",
+       display:'none',
         options: {
           choices: [
             { display: 'last', value: 'last' },
@@ -1066,35 +1075,35 @@ var Information_Form = [
         state: 'disabled',
         //editableBy: "PerformanceLeader",
       },
-      // {
-      //   InternalName: 'Quarter',
-      //   DisplayNameEn: 'Quarter',
-      //   DisplayName: 'الربع',
-      //   ToggleName: 'Quarter',
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       { display: 'quarter1', value: 'ActualQ1' },
-      //       { display: 'quarter2', value: 'ActualQ2' },
-      //       { display: 'quarter3', value: 'ActualQ3' },
-      //       { display: 'quarter4', value: 'ActualQ4' },
-      //     ],
-      //   },
-      // },
-      // {
-      //   InternalName: 'Midterms',
-      //   DisplayNameEn: 'Midterms',
-      //   DisplayName: 'النصف السنوي',
-      //   ToggleName: 'Midterms',
-      //   type: 'dropdownValues',
-      //   options: {
-      //     choices: [
-      //       { display: 'midterm1', value: 'ActualMid1' },
-      //       { display: 'midterm2', value: 'ActualMid2' },
-      //     ],
-      //     // "display":"none"
-      //   },
-      // },
+      {
+        InternalName: 'Quarter',
+        DisplayNameEn: 'Quarter',
+        DisplayName: 'الربع',
+        ToggleName: 'Quarter',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'quarter1', value: 'ActualQ1' },
+            { display: 'quarter2', value: 'ActualQ2' },
+            { display: 'quarter3', value: 'ActualQ3' },
+            { display: 'quarter4', value: 'ActualQ4' },
+          ],
+        },
+      },
+      {
+        InternalName: 'Midterms',
+        DisplayNameEn: 'Midterms',
+        DisplayName: 'النصف السنوي',
+        ToggleName: 'Midterms',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'midterm1', value: 'ActualMid1' },
+            { display: 'midterm2', value: 'ActualMid2' },
+          ],
+          // "display":"none"
+        },
+      },
       // {
       //   InternalName: 'Years',
       //   DisplayNameEn: 'Years',

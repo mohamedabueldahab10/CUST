@@ -21,10 +21,17 @@ var Information_Form = [
       { fieldName: 'Phase', value: 'P5', stages: ["LMSCreateInitiative03"] },
       { fieldName: 'WFStage', value: 'LInStage00.1', stages: ["LMSCreateInitiative03"] },
 
+     //SOD
+      { fieldName: 'DraftStatus', value: '', stages: ["SODCreateInitiative03"] },
+      { fieldName: 'WFModuleCode', value: 'SODInitiative', stages: ["SODCreateInitiative03"] },
+      { fieldName: 'Phase', value: 'P5', stages: ["SODCreateInitiative03"] },
+      { fieldName: 'WFStage', value: 'SODInStage00.1', stages: ["SODCreateInitiative03"] },
+
       //for Closure Phase
       { fieldName: 'Phase', value: 'P4', stages: ["VInStage14"] },
       { fieldName: 'Phase', value: 'P4', stages: ["SInStage12"] },
-      { fieldName: 'Phase', value: 'P4', stages: ["LInStage11"] }
+      { fieldName: 'Phase', value: 'P4', stages: ["LInStage11"] },
+      { fieldName: 'Phase', value: 'P4', stages: ["SODInStage11"] }
     ],
     subFields: [
       {
@@ -64,6 +71,7 @@ var Information_Form = [
         toggleValues: [
           { value: 'vision', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective','RelatedProgram'] },
           { value: 'lms', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
+          { value: 'sod', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
           { value: 'strategically', fields: [''] },
         ],
       },
@@ -292,6 +300,16 @@ var Information_Form = [
               },
             ],
           },
+          {
+            role: 'SODVROExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
+              },
+            ],
+          },
         ],
         "display": "none"
       },
@@ -371,6 +389,26 @@ var Information_Form = [
               },
             ],
           },
+          {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROPerformance',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
         ],
         "display": "none"
       },
@@ -408,6 +446,12 @@ var Information_Form = [
         DisplayNameEn: 'Initiative manager',
         DisplayName: 'مدير المبادرة ',
         type: 'picker',
+      },
+            {
+        InternalName: 'ExternalEntityRepresentative',
+        DisplayNameEn: 'External Entity Representative',
+        DisplayName: 'ممثل الجهة الخارجية',
+        type: 'string',  
       },
       // {
       //   InternalName: 'RelatedStrategyObjective',

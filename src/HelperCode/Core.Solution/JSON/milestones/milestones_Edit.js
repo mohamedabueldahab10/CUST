@@ -94,17 +94,12 @@ var Information_Form = [
         InternalName: "Phase",
         DisplayName: "المرحلة",
         DisplayNameEn: "Phase",
-        // validation: 'required',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'p1', value: 'p1' },
-            { display: 'p2', value: 'p2' },
-            { display: 'p3', value: 'p3' },
-            { display: 'p4', value: 'p4' },
-           
-          ],
-        },
+        type: "lookup",
+        //from other list:
+        source: "Phases",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "PhaseNameEn",
+        valfieldkey: "Title",
       },
       // {
       //   InternalName: 'Weight',
@@ -246,7 +241,7 @@ var Information_Form = [
         security: {
           groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },
-        validation: "required",
+        //validation: "required",
       },
       {
         InternalName: 'Delivered',

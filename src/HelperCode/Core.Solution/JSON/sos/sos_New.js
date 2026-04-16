@@ -178,6 +178,10 @@ var Information_Form = [
                 { fieldName: "DraftStatus", value: "draft" },
               ],
             },
+              { display: 'sod', value: 'sod',
+              roles: ['Administrator' , 'SODVRO-E'],
+            },
+
           ],
         },
 

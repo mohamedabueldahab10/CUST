@@ -54,7 +54,7 @@ var Listing_Info = [
         infilter: false
 
     },
-    {
+   /* {
         "InternalName": "PerformanceLeader2",
         "DisplayNameEn": "Second Performance Leader",
         "DisplayName": "رائد الأداء الثاني",
@@ -62,7 +62,7 @@ var Listing_Info = [
         inlisting: true,
         infilter: false
 
-    },
+    },*/
     // {
     //     "InternalName": "ProgressStatus",
     //     "DisplayName": "حالة الإنجاز",
@@ -81,6 +81,31 @@ var Listing_Info = [
     //     needTrans:true,
        
     // } ,
+      {
+        InternalName: 'Classification',
+        DisplayNameEn: 'Classification',
+        DisplayName: 'تصنيف المؤشر',
+        type: 'dropdownValues',
+        inlisting: true,
+        infilter: true,
+        needTrans:true
+      },
+    {  InternalName: 'NotMeasurableNow',
+        DisplayNameEn: 'Measurable Now',
+        DisplayName: 'يقاس حاليا',
+        type: 'yesnoradio',
+         inlisting: true,
+        infilter: true,
+        needTrans:true
+      },
+      {  InternalName: 'CompletionStatus',
+        DisplayNameEn: 'Completion Status',
+        DisplayName: 'مكتمل',
+        type: 'yesnoradio',
+         inlisting: true,
+        infilter: true,
+        needTrans:true
+      },
     {
         "InternalName": "PeriodType",
         "DisplayName": "تكرار القياس",
@@ -91,6 +116,16 @@ var Listing_Info = [
         needTrans:true
     },
     {
+        "InternalName": "Calculation",
+        "DisplayName": "طريقة الاحتساب",
+        "DisplayNameEn": "Calculation Method",
+        "type": "dropdownValues",
+        inlisting: true,
+        infilter: true,
+        needTrans:true
+    },
+
+    /*{
         "InternalName": "Class",
         DisplayName: "الاستراتيجية المرتبطة",
         DisplayNameEn: "Strategy Type",
@@ -98,7 +133,7 @@ var Listing_Info = [
         inlisting: true,
         infilter: true,
         needTrans:true
-    },
+    },*/
     {
         "InternalName": "Sector",
         "DisplayName": "القطاع",

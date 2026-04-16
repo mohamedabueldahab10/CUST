@@ -12,6 +12,8 @@ var Information_Form = [
       { fieldName: 'Completed', value: 'yes', stages:["EPMOInitiativeMilestone03"] },
       //LMS
       { fieldName: 'Completed', value: 'yes', stages:["LMSInitiativeMilestone02"] },
+      //SOD
+      { fieldName: 'Completed', value: 'yes', stages:["SODInitiativeMilestone03"] },      
   
 
     ],
@@ -124,6 +126,32 @@ var Information_Form = [
         DispfieldkeyEn: 'TaskNameEn',
         valfieldkey: "Title",
         },
+    /*     {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      }
+   ]},*/
     ],
   },
   // {

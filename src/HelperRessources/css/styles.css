@@ -7288,3 +7288,61 @@ span.statuscolorstat28 {
 .ar .delegations-audit-ctx .table.HrsdTable th:last-child { border-top-left-radius: 12px; }
 .ar .delegations-audit-ctx .table.HrsdTable tbody tr:last-child td:first-child { border-bottom-right-radius: 12px; }
 .ar .delegations-audit-ctx .table.HrsdTable tbody tr:last-child td:last-child { border-bottom-left-radius: 12px; }
+
+/* Item versions audit pagination (aligned with searchDocuments look, scoped to audit block) */
+.delegations-audit-ctx .PaginationSection {
+    width: 100%;
+}
+.delegations-audit-ctx .totalOfItems {
+    color: #14415a;
+    font-size: 14px;
+    font-weight: 700;
+}
+.delegations-audit-ctx .pagination-buttons-details {
+    display: inline-flex;
+}
+.delegations-audit-ctx .pagination-buttons-details .pagebtn {
+    border: 1px solid #D4D4D8;
+    background: #14415a;
+    width: 38px;
+    height: 32px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+.delegations-audit-ctx .pagination-buttons-details .pagebtn.active {
+    background: #f7941d;
+    color: #fff;
+}
+.delegations-audit-ctx .pagination-buttons-details .pagebtn[disabled] {
+    opacity: 0.5 !important;
+    cursor: not-allowed;
+    border-color: #14415a !important;
+    background-color: #14415a !important;
+    color: #fff !important;
+}
+.en .delegations-audit-ctx .pagination-buttons-details .prev-page {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.en .delegations-audit-ctx .pagination-buttons-details .next-page {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.ar .delegations-audit-ctx .pagination-buttons-details .prev-page {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.ar .delegations-audit-ctx .pagination-buttons-details .next-page {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.ar .delegations-audit-ctx .pagination-buttons-details .prev-page svg,
+.ar .delegations-audit-ctx .pagination-buttons-details .prev-page i {
+    transform: rotate(180deg);
+}
+.ar .delegations-audit-ctx .pagination-buttons-details .next-page i,
+.ar .delegations-audit-ctx .pagination-buttons-details .next-page svg {
+    transform: rotate(180deg);
+}

@@ -22,7 +22,7 @@ var Information_Form = [
 							},
 							{
 								fieldNameInList: "WFStage",
-								fieldValueInList: "VROInitiativeDeliverable01",
+								fieldValueInList: "VROInitiativeDeliverable05",
 							},
 							{
 								fieldNameInList: "WFInitiatedBy",
@@ -39,7 +39,7 @@ var Information_Form = [
 							},
 							{
 								fieldNameInList: "WFStage",
-								fieldValueInList: "LMSInitiativeDeliverable01",
+								fieldValueInList: "LMSInitiativeDeliverable05",
 							},
 							{
 								fieldNameInList: "WFInitiatedBy",
@@ -56,7 +56,24 @@ var Information_Form = [
 							},
 							{
 								fieldNameInList: "WFStage",
-								fieldValueInList: "EPMOInitiativeDeliverable01",
+								fieldValueInList: "EPMOInitiativeDeliverable05",
+							},
+							{
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
+						],
+					},
+						{
+						condition: "sod",
+						values: [
+							{
+								fieldNameInList: "WFModuleCode",
+								fieldValueInList: "SODInitiativeDeliverable",
+							},
+							{
+								fieldNameInList: "WFStage",
+								fieldValueInList: "SODInitiativeDeliverable05",
 							},
 							{
 								fieldNameInList: "WFInitiatedBy",
@@ -253,8 +270,8 @@ var Information_Form = [
 				DisplayName: "تم التسليم",
 				DisplayNameEn: "Delivered",
 				// disableonstage: "approved",
-				enableOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00',
-				requireOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00',
+				enableOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00,SODInitiativeDeliverable00',
+				requireOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00,SODInitiativeDeliverable00',
 				type: "yesnoradio",
 				// targetfieldrequired: "ActualCompletedDate",
 				targetfieldrequired: ["ActualCompletedDate","getfile","SupportDocumentsDescription" ], 
@@ -328,6 +345,32 @@ var Information_Form = [
 			// }
 		],
 	},
+	 {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      }
+   ]},
 	{
 		label: "الوثائق داعمة",
 		labelEn: "Supporting Documents",
