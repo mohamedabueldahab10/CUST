@@ -22,7 +22,7 @@ var Information_Form = [
 							},
 							{
 								fieldNameInList: "WFStage",
-								fieldValueInList: "VROInitiativeDeliverable05",
+								fieldValueInList: "VROInitiativeDeliverable04",
 							},
 							{
 								fieldNameInList: "WFInitiatedBy",

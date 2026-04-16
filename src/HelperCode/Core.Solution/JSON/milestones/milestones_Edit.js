@@ -48,6 +48,23 @@ var Information_Form = [
             ],
           },
           {
+            condition: 'sod',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'SODProjMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'SODProjMilestone01',
+              },
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
+            ],
+          },
+          {
             condition: 'strategically',
             values: [
               {

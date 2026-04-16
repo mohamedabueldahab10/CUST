@@ -12,6 +12,8 @@ var Information_Form = [
       { fieldName: 'Status', value: 'completed', stages:["EPMOProjDeliverable02"] },
       //LMS
       { fieldName: 'Status', value: 'completed', stages:["LMSProjDeliverable02"] },
+      //SOD
+      { fieldName: 'Status', value: 'completed', stages:["SODProjDeliverable02"] },
       //Strategicpartner ships Deliverables
 
     ],

@@ -342,6 +342,11 @@ window.WorkflowTranslate = [
     nameAr: "مخرج مشروع",
     nameEn: "Project Deliverable",
   },
+  {
+    wfName: "SODProjDeliverable",
+    nameAr: "مخرج مشروع",
+    nameEn: "Project Deliverable",
+  },
 
   {
     wfName: "VROProjMilestone",
@@ -355,6 +360,11 @@ window.WorkflowTranslate = [
   },
   {
     wfName: "LMSProjMilestone",
+    nameAr: "معلم مشروع",
+    nameEn: "Project Milestone",
+  },
+  {
+    wfName: "SODProjMilestone",
     nameAr: "معلم مشروع",
     nameEn: "Project Milestone",
   },
@@ -11486,7 +11496,8 @@ var Tasks_Info_Request_User = {
           } else if (
             wfname == "VROProjMilestone" ||
             wfname == "EPMOProjMilestone" ||
-            wfname == "LMSProjMilestone"
+            wfname == "LMSProjMilestone" ||
+            wfname == "SODProjMilestone"
           ) {
             keyNameParams = "milestones";
           } else if (
@@ -11498,7 +11509,8 @@ var Tasks_Info_Request_User = {
           } else if (
             wfname == "VROProjDeliverable" ||
             wfname == "EPMOProjDeliverable" ||
-            wfname == "LMSProjDeliverable"
+            wfname == "LMSProjDeliverable" ||
+            wfname == "SODProjDeliverable"
           ) {
             keyNameParams = "deliverables";
           } else if (

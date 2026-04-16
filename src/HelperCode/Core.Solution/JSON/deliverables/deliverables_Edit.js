@@ -27,6 +27,15 @@ var Information_Form = [
             { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable03" }]
           },
           {
+            condition: "sod",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "SODProjDeliverable" },
+            {
+              fieldNameInList: "WFInitiatedBy",
+              fieldValueInList: "LoggedInUser",
+            },
+            { fieldNameInList: "WFStage", fieldValueInList: "SODProjDeliverable03" }]
+          },
+          {
             condition: "strategically",
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverable" },
             {
