@@ -32,6 +32,7 @@ var kpiName = "",
   window.nesteddeliverabledisCreated = false;
 
 var mainKpiIsUpload = false;
+window.deferWorkflowContinueUntilUpload = false;
 
 var masterIdWhenCreate = 0;
 
@@ -3569,6 +3570,7 @@ window.Edit_Data_Submit = {
       }
     },
     afterSuccess: function () {
+      window.deferWorkflowContinueUntilUpload = false;
       // determinig folder directory
       if (PCODE || listkey == "projects") {
         Documents_Library = ListArray[2].documents;
@@ -3603,6 +3605,9 @@ window.Edit_Data_Submit = {
         fileCount += document.querySelector("#" + $(this).attr("id")).files
           .length;
       });
+      if (fileCount && USERisWF && workflowname != "Project") {
+        window.deferWorkflowContinueUntilUpload = true;
+      }
 
       if (fileCount) {
         _uploadFile();
@@ -3619,7 +3624,9 @@ window.Edit_Data_Submit = {
           if (USERisWF && workflowname == "Project") {
             BulkEdit(true);
           } else if (USERisWF && workflowname != "Project") {
-            Continue_Submit_Field.init();
+            if (!window.deferWorkflowContinueUntilUpload) {
+              Continue_Submit_Field.init();
+            }
           } else {
             // For delegations and strategiccalendar, don't show alert here - will be shown after API call
             // For mainkpi, we also delay the alert to its own branch
@@ -5379,6 +5386,11 @@ function UploadQuerySuccess() {
   isuploaddone++;
   // console.log('File Uploaded Successfully.');
   if (fileCount == isuploaddone) {
+    if (window.deferWorkflowContinueUntilUpload) {
+      window.deferWorkflowContinueUntilUpload = false;
+      Continue_Submit_Field.init();
+      return;
+    }
     if (isEdit) {
       // if on edit page
       // Handle delegations - call API after saving to List (EDIT - with file upload)
@@ -5759,6 +5771,11 @@ function _uploadFile() {
                       function (file) {
                         isuploaddone++;
                         if (fileCount == isuploaddone) {
+                          if (window.deferWorkflowContinueUntilUpload) {
+                            window.deferWorkflowContinueUntilUpload = false;
+                            Continue_Submit_Field.init();
+                            return;
+                          }
                           if (listkey == "projects") {
                             // if on new project page
                             New_ProjectStages_Submit.init();
@@ -5957,6 +5974,11 @@ function _uploadFile() {
               function (file) {
                 isuploaddone++;
                 if (fileCount == isuploaddone) {
+                  if (window.deferWorkflowContinueUntilUpload) {
+                    window.deferWorkflowContinueUntilUpload = false;
+                    Continue_Submit_Field.init();
+                    return;
+                  }
 
                   if (isEdit) {
                  //   debugger;
@@ -7304,4 +7326,3 @@ var checkinProjectEditSubmit = {
   },
   g: {},
 };
-

@@ -21,10 +21,17 @@ var Information_Form = [
       { fieldName: 'Phase', value: 'P5', stages: ["LMSCreateInitiative03"] },
       { fieldName: 'WFStage', value: 'LInStage00.1', stages: ["LMSCreateInitiative03"] },
 
+     //SOD
+      { fieldName: 'DraftStatus', value: '', stages: ["SODCreateInitiative03"] },
+      { fieldName: 'WFModuleCode', value: 'SODInitiative', stages: ["SODCreateInitiative03"] },
+      { fieldName: 'Phase', value: 'P5', stages: ["SODCreateInitiative03"] },
+      { fieldName: 'WFStage', value: 'SODInStage00.1', stages: ["SODCreateInitiative03"] },
+
       //for Closure Phase
       { fieldName: 'Phase', value: 'P4', stages: ["VInStage14"] },
       { fieldName: 'Phase', value: 'P4', stages: ["SInStage12"] },
-      { fieldName: 'Phase', value: 'P4', stages: ["LInStage11"] }
+      { fieldName: 'Phase', value: 'P4', stages: ["LInStage11"] },
+      { fieldName: 'Phase', value: 'P4', stages: ["SODInStage11"] }
     ],
     subFields: [
       {
@@ -53,9 +60,6 @@ var Information_Form = [
         InternalName: 'Types',
         DisplayNameEn: 'Types',
         DisplayName: 'النوع',
-        toggleValues: [
-          { value: 'vision', fields: ['RelatedProgram'] }, //we can put more than 1  field
-        ],
         type: 'dropdownValues',
         options: {
           choices: [
@@ -64,6 +68,12 @@ var Information_Form = [
             { display: 'others', value: 'others' },
           ],
         },
+        toggleValues: [
+          { value: 'vision', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective','RelatedProgram'] },
+          { value: 'lms', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
+          { value: 'sod', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
+          { value: 'strategically', fields: [''] },
+        ],
       },
       {
         InternalName: 'StrategySource',
@@ -182,18 +192,18 @@ var Information_Form = [
         // showlink:true,
         linkedto: "goalstrategy"
       },
-       {
-        InternalName: 'RelatedStrategyReadonly',
-        DisplayNameEn: 'Related Strategy Read Only',
-        DisplayName: 'الاستراتيجية المطلعه',
-        type: 'lookup',
-        source: 'GoalStrategy',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',
-        // dontSubmit: true,
-        // showlink:true,
-        linkedto: "goalstrategy"
-      },
+      //  {
+      //   InternalName: 'RelatedStrategyReadonly',
+      //   DisplayNameEn: 'Related Strategy Read Only',
+      //   DisplayName: 'الاستراتيجية المطلعه',
+      //   type: 'lookup',
+      //   source: 'GoalStrategy',
+      //   Dispfieldkey: 'Name',
+      //   valfieldkey: 'Title',
+      //   // dontSubmit: true,
+      //   // showlink:true,
+      //   linkedto: "goalstrategy"
+      // },
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
@@ -249,6 +259,159 @@ var Information_Form = [
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
       },
+        {
+        InternalName: 'RelatedStrategyReadonly',
+        DisplayNameEn: 'Related Strategy Read Only',
+        DisplayName: 'الاستراتيجية المطلعه',
+        type: 'lookupWithQuery',
+        ToggleName: 'RelatedStrategyReadonly',
+        queryField: 'Types',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'ministry',
+        // validation: 'required',
+        //from other list:
+
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        dynamic: 'parent',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+        //
+        //in case not parent add below attrs
+        //role access
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
+              },
+            ],
+          },
+        ],
+        "display": "none"
+      },
+       
+      {
+        InternalName: 'RelatedReadOnlyObjectiveLevel',
+        DisplayNameEn: 'Related Objective Level',
+        DisplayName: 'مستوى الهدف المتطلع',
+        grandFieldId: 'RelatedStrategyReadonly',
+        childFieldId: 'RelatedReadonlyObjective',
+        childFieldIdSource: 'Types',
+        type: 'dropdownValues',
+        ToggleName: 'RelatedReadOnlyObjectiveLevel',
+        descPhraseAr: 'تظهر الأهداف بناءً على مستوى الهدف المتطلع والاستراتيجية المختارة',
+        descPhraseEn: 'Objectives appear based on selected Level and Related Strategy Read Only',
+        options: {
+          choices: [
+            { display: 'main', value: 'main' },
+            { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel3', value: 'sublevel3' },
+          ],
+        },
+        "display": "none"
+      },
+      {
+        InternalName: 'RelatedReadonlyObjective',
+        DisplayNameEn: 'Related Readonly Objective',
+        DisplayName: 'الهدف المتطلع',
+        type: 'lookup',
+        ToggleName: 'RelatedReadonlyObjective',
+        source: 'SOs',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        dynamic: 'RelatedStrategyReadonly',
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
+        descPhraseAr: 'تظهر الأهداف بناءً على الاستراتيجية المتطلعة ومستوى الهدف المتطلع',
+        descPhraseEn: 'Objectives appear based on Related Strategy Read Only and Related Objective Level',
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'VROP',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'LMSP',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROPerformance',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
+        ],
+        "display": "none"
+      },
       // {
       //   InternalName: 'RelatedProgram',
       //   DisplayNameEn: 'Related Program',
@@ -283,6 +446,12 @@ var Information_Form = [
         DisplayNameEn: 'Initiative manager',
         DisplayName: 'مدير المبادرة ',
         type: 'picker',
+      },
+            {
+        InternalName: 'ExternalEntityRepresentative',
+        DisplayNameEn: 'External Entity Representative',
+        DisplayName: 'ممثل الجهة الخارجية',
+        type: 'string',  
       },
       // {
       //   InternalName: 'RelatedStrategyObjective',

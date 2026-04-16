@@ -22,7 +22,7 @@ var Information_Form = [
               },
               {
                 fieldNameInList: 'WFStage',
-                fieldValueInList: 'VROInitiativeMilestone01',
+                fieldValueInList: 'VROInitiativeMilestone04',
               },	
               {
 								fieldNameInList: "WFInitiatedBy",
@@ -39,7 +39,7 @@ var Information_Form = [
               },
               {
                 fieldNameInList: 'WFStage',
-                fieldValueInList: 'LMSInitiativeMilestone01',
+                fieldValueInList: 'LMSInitiativeMilestone04',
               },	
               {
 								fieldNameInList: "WFInitiatedBy",
@@ -56,7 +56,24 @@ var Information_Form = [
               },
               {
                 fieldNameInList: 'WFStage',
-                fieldValueInList: 'EPMOInitiativeMilestone01',
+                fieldValueInList: 'EPMOInitiativeMilestone04',
+              },	
+              {
+								fieldNameInList: "WFInitiatedBy",
+								fieldValueInList: "LoggedInUser",
+							},
+            ],
+          },
+           {
+            condition: 'sod',
+            values: [
+              {
+                fieldNameInList: 'WFModuleCode',
+                fieldValueInList: 'SODInitiativeMilestone',
+              },
+              {
+                fieldNameInList: 'WFStage',
+                fieldValueInList: 'SODInitiativeMilestone04',
               },	
               {
 								fieldNameInList: "WFInitiatedBy",
@@ -126,7 +143,7 @@ var Information_Form = [
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
         seconedtarget: 'Amount',
-        validation: 'required',
+       // validation: 'required',
         descPhraseAr: "من ميزانية المبادرة",
         descPhraseEn: " From Initiative Budget", 
         security: {
@@ -142,8 +159,7 @@ var Information_Form = [
         listname: 'Initiatives',
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
-        validation: 'required',
-        "state":"disabled",
+      //  validation: 'required',
         descPhraseAr: "من ميزانية المبادرة",
         descPhraseEn: " From Initiative Budget", 
         security: {
@@ -188,8 +204,8 @@ var Information_Form = [
         DisplayNameEn: 'Delivered',
         type: 'yesnoradio',
         // disableonstage:"approved",
-        enableOnWfTaskStage: 'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
-        requireOnWfTaskStage: 'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
+        enableOnWfTaskStage: 'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00,SODInitiativeMilestone00',
+        requireOnWfTaskStage: 'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00,SODInitiativeMilestone00',
         targetfieldrequired: 'ActualCompletedDate',
         options: {
           choices: [
@@ -240,6 +256,32 @@ var Information_Form = [
       
     ],
   },
+   {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline',
+        maxchar: 300,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+        descPhraseEn: "max length of letters equal 255",
+      }
+   ]},
   {
     label: 'الوثائق داعمة',
     labelEn: 'Supporting Documents',

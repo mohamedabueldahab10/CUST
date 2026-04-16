@@ -275,9 +275,11 @@ window.WorkflowTranslate = [
   { wfName: "VisionInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "StrategicallyInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "LMSInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  { wfName: "SODInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "VROCreateInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "EPMOCreateInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "LMSCreateInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  { wfName: "SODCreateInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
 
   {
     wfName: "VROInitiativeMilestone",
@@ -294,6 +296,11 @@ window.WorkflowTranslate = [
     nameAr: "معلم مبادرة",
     nameEn: "Initiative Milestone",
   },
+  {
+    wfName: "SODInitiativeMilestone",
+    nameAr: "معلم مبادرة",
+    nameEn: "Initiative Milestone",
+  },
 
   {
     wfName: "VROInitiativeDeliverable",
@@ -307,6 +314,11 @@ window.WorkflowTranslate = [
   },
   {
     wfName: "LMSInitiativeDeliverable",
+    nameAr: "مخرج مبادرة",
+    nameEn: "Initiative Deliverable",
+  },
+  {
+    wfName: "SODInitiativeDeliverable",
     nameAr: "مخرج مبادرة",
     nameEn: "Initiative Deliverable",
   },
@@ -4579,6 +4591,7 @@ window.userCalls = {
           "strategicpartnershipsrisks",
           "strategicpartnershipslessonslearned",
           "strategicpartnershipsmom",
+          "strategicpartnershipsachievements",
         ];
 
          Read_Access = [
@@ -4603,7 +4616,8 @@ window.userCalls = {
          "strategicpartnershipsrisks",
          "strategicpartnershipsimpactmeasurement",
          "strategicpartnershipslessonslearned",
-         "strategicpartnershipsmom"
+         "strategicpartnershipsmom",
+         "strategicpartnershipsachievements",
         ];
          Delete_Access = [];
       
@@ -11129,6 +11143,24 @@ var Tasks_Info_Request_User = {
   },
   // Global variables
   g: {
+    _queryParamInstances: function (url, name) {
+      var re = new RegExp("[?&]" + name + "=([^&]*)", "gi");
+      var out = [];
+      var m;
+      while ((m = re.exec(url)) !== null) {
+        out.push(m[1]);
+      }
+      return out;
+    },
+    _urlAlreadyHasSingleCode: function (url, paramName, expected) {
+      var vals = this._queryParamInstances(url, paramName);
+      if (vals.length !== 1) {
+        return false;
+      }
+      var exp =
+        expected != null && expected !== "null" ? String(expected) : "";
+      return vals[0] !== "" && vals[0] === exp;
+    },
     //for tasks functions
     handleids: function (
       pcode,
@@ -11367,7 +11399,8 @@ var Tasks_Info_Request_User = {
           } else if (
             wfname == "VROCreateInitiative" ||
             wfname == "EPMOCreateInitiative" ||
-            wfname == "LMSCreateInitiative"
+            wfname == "LMSCreateInitiative" ||
+            wfname == "SODCreateInitiative"
           ) {
             keyNameParams = "initiatives";
           } else if (
@@ -11422,7 +11455,8 @@ var Tasks_Info_Request_User = {
           } else if (
             wfname == "VisionInitiative" ||
             wfname == "StrategicallyInitiative" ||
-            wfname == "LMSInitiative"
+            wfname == "LMSInitiative" ||
+            wfname == "SODInitiative"
           ) {
             keyNameParams = "initiatives";
           } else if (wfname == "StrategicPartnerships") {
@@ -11438,13 +11472,15 @@ var Tasks_Info_Request_User = {
           } else if (
             wfname == "VROInitiativeMilestone" ||
             wfname == "EPMOInitiativeMilestone" ||
-            wfname == "LMSInitiativeMilestone"
+            wfname == "LMSInitiativeMilestone" ||
+            wfname == "SODInitiativeMilestone"
           ) {
             keyNameParams = "initiativemilestones";
           } else if (
             wfname == "VROInitiativeDeliverable" ||
             wfname == "EPMOInitiativeDeliverable" ||
-            wfname == "LMSInitiativeDeliverable"
+            wfname == "LMSInitiativeDeliverable" ||
+            wfname == "SODInitiativeDeliverable"
           ) {
             keyNameParams = "initiativedeliverables";
           } else if (
@@ -11534,36 +11570,80 @@ var Tasks_Info_Request_User = {
                   "_self"
                 );
               } else if (rurl.toLowerCase().indexOf("icode") > -1) {
-                //view page with pcode
-                rurl = rurl.replace("&ICODE=", "");
+                var icodeValue = icode && icode != "null" ? icode : pcode;
+                if (this._urlAlreadyHasSingleCode(rurl, "ICODE", icodeValue)) {
+                  var tailI = rurl.indexOf("?") > -1 ? "&" : "?";
+                  window.open(
+                    _spPageContextInfo.webAbsoluteUrl +
+                      rurl +
+                      tailI +
+                      "TID=" +
+                      taskid +
+                      "&IID=" +
+                      ritemid +
+                      "&WFs",
+                    "_self"
+                  );
+                } else {
+                  // Ensure only one ICODE exists and keep its correct value.
+                  var cleanRurl = rurl.replace(/([?&])ICODE=[^&]*/gi, "$1");
+                  cleanRurl = cleanRurl
+                    .replace(/[?&]{2,}/g, "&")
+                    .replace(/\?&/g, "?")
+                    .replace(/[?&]$/, "");
+                  var joiner = cleanRurl.indexOf("?") > -1 ? "&" : "?";
 
-                window.open(
-                  _spPageContextInfo.webAbsoluteUrl +
-                    rurl +
-                    "&TID=" +
-                    taskid +
-                    "&IID=" +
-                    ritemid +
-                    "&ICODE=" +
-                    pcode +
-                    "&WFs",
-                  "_self"
-                );
+                  window.open(
+                    _spPageContextInfo.webAbsoluteUrl +
+                      cleanRurl +
+                      joiner +
+                      "ICODE=" +
+                      icodeValue +
+                      "&TID=" +
+                      taskid +
+                      "&IID=" +
+                      ritemid +
+                      "&WFs",
+                    "_self"
+                  );
+                }
               } else if (rurl.toLowerCase().indexOf("pcode") > -1) {
-                rurl = rurl.replace("&PCODE=", "");
+                var pcodeValue = pcode && pcode != "null" ? pcode : "";
+                if (this._urlAlreadyHasSingleCode(rurl, "PCODE", pcodeValue)) {
+                  var tailP = rurl.indexOf("?") > -1 ? "&" : "?";
+                  window.open(
+                    _spPageContextInfo.webAbsoluteUrl +
+                      rurl +
+                      tailP +
+                      "TID=" +
+                      taskid +
+                      "&IID=" +
+                      ritemid +
+                      "&WFs",
+                    "_self"
+                  );
+                } else {
+                  var cleanRurlP = rurl.replace(/([?&])PCODE=[^&]*/gi, "$1");
+                  cleanRurlP = cleanRurlP
+                    .replace(/[?&]{2,}/g, "&")
+                    .replace(/\?&/g, "?")
+                    .replace(/[?&]$/, "");
+                  var joinerP = cleanRurlP.indexOf("?") > -1 ? "&" : "?";
 
-                window.open(
-                  _spPageContextInfo.webAbsoluteUrl +
-                    rurl +
-                    "&TID=" +
-                    taskid +
-                    "&IID=" +
-                    ritemid +
-                    "&PCODE=" +
-                    pcode +
-                    "&WFs",
-                  "_self"
-                );
+                  window.open(
+                    _spPageContextInfo.webAbsoluteUrl +
+                      cleanRurlP +
+                      joinerP +
+                      "PCODE=" +
+                      pcodeValue +
+                      "&TID=" +
+                      taskid +
+                      "&IID=" +
+                      ritemid +
+                      "&WFs",
+                    "_self"
+                  );
+                }
               } else if (rurl.toLowerCase().indexOf("stcode") > -1) {
                 rurl = rurl.replace("&STCODE=", "");
 
@@ -11824,8 +11904,9 @@ var GetInitiativeTitle_Request = {
   onSuccess: function (sender, args) {
     var collListItem = GetInitiativeTitle_Request.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
+    var oListItem = null;
     while (listItemEnum.moveNext()) {
-      var oListItem = listItemEnum.get_current();
+      oListItem = listItemEnum.get_current();
       InitiativeTitle = oListItem.get_item("Name")
         ? oListItem.get_item("Name")
         : UserNo_Data;
@@ -11833,10 +11914,18 @@ var GetInitiativeTitle_Request = {
       InitiativeFinishDate = oListItem.get_item("FinishDate");
     }
 
-    initiativeDiscrepancyCost = oListItem.get_item("DiscrepancyCost") || 0;
-    initiativeDiscrepancyCostPercentage  = oListItem.get_item("DiscrepancyCostPercentage") || 0;
-    initiativeDiscrepancyInDays  = oListItem.get_item("DiscrepancyInDays") || 0;
-    initiativeDiscrepancyPercentage = oListItem.get_item("DiscrepancyPercentage") || 0;
+    if (oListItem) {
+      initiativeDiscrepancyCost = oListItem.get_item("DiscrepancyCost") || 0;
+      initiativeDiscrepancyCostPercentage = oListItem.get_item("DiscrepancyCostPercentage") || 0;
+      initiativeDiscrepancyInDays = oListItem.get_item("DiscrepancyInDays") || 0;
+      initiativeDiscrepancyPercentage = oListItem.get_item("DiscrepancyPercentage") || 0;
+    } else {
+      initiativeDiscrepancyCost = 0;
+      initiativeDiscrepancyCostPercentage = 0;
+      initiativeDiscrepancyInDays = 0;
+      initiativeDiscrepancyPercentage = 0;
+      console.warn("GetInitiativeTitle_Request returned no items; using default discrepancy values.");
+    }
 
     if (USERlistkey == "initiativemilestones" && (isEdit || isNew)) {
       // set min max date on planned date for milestones

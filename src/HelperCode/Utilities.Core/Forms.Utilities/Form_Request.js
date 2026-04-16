@@ -1501,7 +1501,25 @@ window.Edit_Data_Request = {
       
               // Fill fields
               if (item.Year) $("#Year").val(item.Year);
-              if (item.Month) $("#Months").val("ActualM" + item.Month); // adjust to dropdownValues
+              if (item.Month) {
+                var monthVal = parseInt(item.Month, 10);
+                $("#Months").val("ActualM" + monthVal); // adjust to dropdownValues
+
+                // Reverse Workflow mapping: month -> Midterms/Quarter (same as view; .val for edit)
+                var periodTypeVal =
+                  $("#PeriodType").val() ||
+                  "";
+
+                if (periodTypeVal == "midterm") {
+                  if (monthVal == 6) $("#Midterms").val("ActualMid1");
+                  else if (monthVal == 12) $("#Midterms").val("ActualMid2");
+                } else if (periodTypeVal == "quarter") {
+                  if (monthVal == 3) $("#Quarter").val("ActualQ1");
+                  else if (monthVal == 6) $("#Quarter").val("ActualQ2");
+                  else if (monthVal == 9) $("#Quarter").val("ActualQ3");
+                  else if (monthVal == 12) $("#Quarter").val("ActualQ4");
+                }
+              }
               if (item.ComponentA) $("#A").val(item.ComponentA);
               if (item.ComponentB) $("#B").val(item.ComponentB);
               if (item.ComponentC) $("#CC").val(item.ComponentC);
@@ -1510,6 +1528,15 @@ window.Edit_Data_Request = {
               if (item.ComponentF) $("#F").val(item.ComponentF);
               if (item.ComponentG) $("#G").val(item.ComponentG);
               if (item.FinalValue) $("#Equation").val(item.FinalValue);
+              if (item.PerformanceAnalysis)
+                $("#PerformanceAnalysis").val(item.PerformanceAnalysis);
+              if (item.ActualkpiDate) {
+                var actualKpiDateInput = new Date(item.ActualkpiDate);
+                if (!isNaN(actualKpiDateInput.getTime()))
+                  $("#ActualkpiDate").val(actualKpiDateInput.toISOString().split("T")[0]);
+                else
+                  $("#ActualkpiDate").val(item.ActualkpiDate);
+              }
             }
           },
           error: function (err) {
@@ -1550,6 +1577,28 @@ window.Edit_Data_Request = {
             $(this).val(minAllowed);
           }
         });
+
+        var wfRaw = $("#WFStage").val();
+        var wfStageVal =
+          wfRaw == null || wfRaw === undefined ? "" : String(wfRaw).trim();
+        if (
+          !USERisWF &&
+          currentUserRole == "PerformanceLeader" &&
+          wfStageVal !== ""
+        ) {
+          $("body").append(
+            "<style>" +
+              ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+              ".form-control{color: #b1b1b1 !important;" +
+              "border-color: #e1e1e1 !important;" +
+              "background-color: #fdfdfd !important;" +
+              "opacity: .6;pointer-events: none;}" +
+              "</style>"
+          );
+          alert(
+            "هذا المؤشر يخضع لسير موافقات بالفعل. لا يمكنك التعديل عليه حتى تكتمل !"
+          );
+        }
       }
     },2000);
     $(".loader-box").fadeOut();
@@ -3955,7 +4004,38 @@ window.View_Data_Request = {
             if(isView){
              // Fill fields
               if (item.Year) $("#Year").text(item.Year);
-              if (item.Month) $("#Months").text("ActualM" + item.Month); // adjust to dropdownValues
+              if (item.Month) {
+                var monthVal = parseInt(item.Month, 10);
+                $("#Months").text("ActualM" + monthVal); // adjust to dropdownValues
+
+                // Reverse Workflow mapping: month -> Midterms/Quarter
+                var periodTypeVal =
+                  $("#PeriodType").attr("data-viewtogglevalue") ||
+                  $("#PeriodType").text() ||
+                  "";
+
+                var lang =
+                  localStorage.getItem("lng") == null ||
+                  localStorage.getItem("lng") == "ar"
+                    ? "ar"
+                    : "en";
+
+                if (periodTypeVal === "midterm") {
+                  if (monthVal === 6)
+                    $("#Midterms").text(Resources[lang]["midterm1"]);
+                  else if (monthVal === 12)
+                    $("#Midterms").text(Resources[lang]["midterm2"]);
+                } else if (periodTypeVal === "quarter") {
+                  if (monthVal === 3)
+                    $("#Quarter").text(Resources[lang]["quarter1"]);
+                  else if (monthVal === 6)
+                    $("#Quarter").text(Resources[lang]["quarter2"]);
+                  else if (monthVal === 9)
+                    $("#Quarter").text(Resources[lang]["quarter3"]);
+                  else if (monthVal === 12)
+                    $("#Quarter").text(Resources[lang]["quarter4"]);
+                }
+              }
               if (item.ComponentA) $("#A").text(item.ComponentA);
               if (item.ComponentB) $("#B").text(item.ComponentB);
               if (item.ComponentC) $("#CC").text(item.ComponentC);
@@ -3964,6 +4044,15 @@ window.View_Data_Request = {
               if (item.ComponentF) $("#F").text(item.ComponentF);
               if (item.ComponentG) $("#G").text(item.ComponentG);
               if (item.FinalValue) $("#Equation").text(item.FinalValue);
+              if (item.PerformanceAnalysis)
+                $("#PerformanceAnalysis").text(item.PerformanceAnalysis);
+              if (item.ActualkpiDate) {
+                var actualKpiDateText = new Date(item.ActualkpiDate);
+                if (!isNaN(actualKpiDateText.getTime()))
+                  $("#ActualkpiDate").text(actualKpiDateText.toLocaleDateString("en-US"));
+                else
+                  $("#ActualkpiDate").text(item.ActualkpiDate);
+              }
             }
           },
           error: function (err) {
@@ -10135,7 +10224,7 @@ window.Get_ItemVersionsAudit = {
     Get_ItemVersionsAudit.renderTable([]);
   },
 
-  renderTable: async function (versions) {
+  renderTable: function (versions) {
     var isAr =
       localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
     var Res = isAr ? Resources.ar : Resources.en;
@@ -10154,6 +10243,15 @@ window.Get_ItemVersionsAudit = {
       try {
         var d = new Date(val);
         return d.toLocaleDateString("en-US");
+      } catch (e) {
+        return val;
+      }
+    }
+    function formatDateTime(val) {
+      if (!val || val === No_Data) return No_Data;
+      try {
+        var d = new Date(val);
+        return d.toLocaleString("en-US");
       } catch (e) {
         return val;
       }
@@ -10179,6 +10277,14 @@ window.Get_ItemVersionsAudit = {
       var statusCode = (rawStatus || "").toLowerCase();
       return Res[statusCode] != null ? Res[statusCode] : (rawStatus || No_Data);
     }
+    function getTranslatedValueByKey(rawValue) {
+      var normalizedValue = (rawValue || "").toString().toLowerCase();
+      return Res[normalizedValue] != null ? Res[normalizedValue] : (rawValue || No_Data);
+    }
+    function getTranslatedLabelByKey(key, arFallback, enFallback) {
+      var normalizedKey = (key || "").toLowerCase();
+      return Res[normalizedKey] || (isAr ? arFallback : enFallback);
+    }
     function getTranslatedCellValue(fieldKey, rawValue) {
       if (fieldKey === "isCurrentVersion") {
         return rawValue === true ? trueLabel : falseLabel;
@@ -10190,9 +10296,17 @@ window.Get_ItemVersionsAudit = {
         fieldKey === "classification" ||
         fieldKey === "categorykpi" ||
         fieldKey === "notmeasurablenow" ||
-        fieldKey === "completionstatus"
+        fieldKey === "completionstatus" ||
+        fieldKey === "periodtype"
       ) {
         return getTranslatedStatus(rawValue);
+      }
+      if (
+        fieldKey === "months" ||
+        fieldKey === "quarter" ||
+        fieldKey === "midterms"
+      ) {
+        return getTranslatedValueByKey(rawValue);
       }
       if (fieldKey === "groupName") {
         return translateGroupName(rawValue);
@@ -10205,23 +10319,62 @@ window.Get_ItemVersionsAudit = {
       if (isNaN(num)) return val;
       return num % 1 === 0 ? num.toString() : num.toFixed(2).replace(/\.?0+$/, "");
     }
+    function isEditorStartsWithSP(versionItem) {
+      var editorValue = getLookupValue(versionItem ? versionItem.Editor : null);
+      if (!editorValue || editorValue === No_Data) return false;
+      return String(editorValue).trim().toUpperCase().indexOf("SP") === 0;
+    }
 
     var kpiColumns = [
       { key: "editor", title: isAr ? "المحرر" : "Editor", value: function (v) { return getLookupValue(v.Editor); } },
-      { key: "createddate", title: isAr ? "تاريخ الإنشاء" : "Created Date", value: function (v) { return formatDate(v.Created_x005f_x0020_x005f_Date || v.Created); } },
-      { key: "isCurrentVersion", title: isAr ? "الإصدار الحالي" : "Current Version", value: function (v) { return v.IsCurrentVersion; } },
-      { key: "classification", title: isAr ? "التصنيف" : "Classification", value: function (v) { return v.Classification; } },
-      { key: "categorykpi", title: isAr ? "فئة المؤشر" : "KPI Category", value: function (v) { return v.CategoryKPI; } },
+      { key: "createddate", title: isAr ? "تاريخ الإنشاء" : "Created Date", value: function (v) { return formatDateTime(v.Created); } },
       { key: "notmeasurablenow", title: isAr ? "يقاس حاليا" : "Measurable Now", value: function (v) { return v.NotMeasurableNow; } },
       { key: "performanceleader", title: isAr ? "رائد الأداء" : "Performance Leader", value: function (v) { return getLookupValue(v.PerformanceLeader); } },
+      { key: "performanceleader2", title: isAr ? "رائد الأداء 2" : "Performance Leader 2", value: function (v) { return getLookupValue(v.PerformanceLeader2); } },
+      { key: "owner", title: isAr ? "مالك المؤشر" : "Owner", value: function (v) { return getLookupValue(v.Owner); } },
+      { key: "periodtype", title: isAr ? "نوع الفترة" : "Period Type", value: function (v) { return v.PeriodType; } },
       { key: "status", title: isAr ? "حالة الإنجاز" : "Status", value: function (v) { return v.Status; } },
-      { key: "equation", title: isAr ? "القيمة الفعلية" : "Actual Value", value: function (v) { return formatFloatValue(v.Equation); } },
-      { key: "completionstatus", title: isAr ? "مكتمل" : "Completion Status", value: function (v) { return v.CompletionStatus; } }
+      { key: "equation", title: isAr ? "القيمة الفعلية" : "Actual Value", value: function (v) { return formatFloatValue(v.Equation); } }
     ];
+
+    var periodTypeRaw = "";
+    if (listName == "mainkpi") {
+      for (var p = 0; p < versions.length; p++) {
+        if (versions[p] && versions[p].PeriodType) {
+          periodTypeRaw = (versions[p].PeriodType || "").toLowerCase();
+          break;
+        }
+      }
+      if (periodTypeRaw === "monthly") {
+        kpiColumns.push({
+          key: "months",
+          title: getTranslatedLabelByKey("months", "الشهر", "Month"),
+          value: function (v) { return v.Months; }
+        });
+      } else if (periodTypeRaw === "quarter") {
+        kpiColumns.push({
+          key: "quarter",
+          title: getTranslatedLabelByKey("quarter", "الربع", "Quarter"),
+          value: function (v) { return v.Quarter; }
+        });
+      } else if (periodTypeRaw === "midterm") {
+        kpiColumns.push({
+          key: "midterms",
+          title: getTranslatedLabelByKey("midterms", "النصف السنوي", "Midterms"),
+          value: function (v) { return v.Midterms; }
+        });
+      } else if (periodTypeRaw === "year") {
+        kpiColumns.push({
+          key: "year",
+          title: getTranslatedLabelByKey("year", "السنة", "Year"),
+          value: function (v) { return v.Year; }
+        });
+      }
+    }
 
     var delegationColumns = [
       { key: "editor", title: isAr ? "المحرر" : "Editor", value: function (v) { return getLookupValue(v.Editor); } },
-      { key: "createddate", title: isAr ? "تاريخ الإنشاء" : "Created Date", value: function (v) { return formatDate(v.Created_x005f_x0020_x005f_Date || v.Created); } },
+      { key: "createddate", title: isAr ? "تاريخ الإنشاء" : "Created Date", value: function (v) { return formatDateTime(v.Created); } },
       { key: "isCurrentVersion", title: isAr ? "الإصدار الحالي" : "Current Version", value: function (v) { return v.IsCurrentVersion; } },
       { key: "delegatefrom", title: isAr ? "تفويض من" : "Delegate From", value: function (v) { return getLookupValue(v.DelegateFrom); } },
       { key: "groupName", title: isAr ? "اسم المجموعة" : "Group Name", value: function (v) { return v.GroupName != null && v.GroupName !== "" ? v.GroupName : No_Data; } },
@@ -10240,18 +10393,6 @@ window.Get_ItemVersionsAudit = {
     } else {
       columns = delegationColumns;
     }
-    var rowsHtml = "";
-    for (var i = 0; i < versions.length; i++) {
-      var v = versions[i];
-      rowsHtml += "<tr>";
-      for (var c = 0; c < columns.length; c++) {
-        var col = columns[c];
-        var rawValue = col.value(v);
-        var cellValue = getTranslatedCellValue(col.key, rawValue);
-        rowsHtml += "<td>" + cellValue + "</td>";
-      }
-      rowsHtml += "</tr>";
-    }
 
     var colCount = columns.length;
     var theadHtml = "<thead><tr>";
@@ -10263,15 +10404,32 @@ window.Get_ItemVersionsAudit = {
     }
     theadHtml += "</tr></thead>";
 
-    var tableContent =
-      versions.length > 0
-        ? rowsHtml
-        : '<tr><td colspan="' + colCount + '"><span class="no-data-td">' +
-          noDataLabel +
-          "</span></td></tr>";
+    var pageSize = 10;
+    var currentPage = 1;
+    var allVersions = (versions || []).filter(function (versionItem) {
+      return !isEditorStartsWithSP(versionItem);
+    });
+
+    function buildRowsHtml(slice) {
+      var html = "";
+      for (var ri = 0; ri < slice.length; ri++) {
+        var rowItem = slice[ri];
+        html += "<tr>";
+        for (var c = 0; c < columns.length; c++) {
+          var col = columns[c];
+          var rawValue = col.value(rowItem);
+          var cellValue = getTranslatedCellValue(col.key, rawValue);
+          html += "<td>" + cellValue + "</td>";
+        }
+        html += "</tr>";
+      }
+      return html;
+    }
+
+    $(".delegations-audit-ctx.item-versions-audit").remove();
 
     var sectionHtml =
-      '<div class="section3 row col-12 px-0 task-history-ctx mx-0 delegations-audit-ctx">' +
+      '<div class="section3 row col-12 px-0 task-history-ctx mx-0 delegations-audit-ctx item-versions-audit">' +
       '<div class="approvalHeader">' +
       '<h2 class="Resources" data-trans-audit>Audit</h2>' +
       "</div>" +
@@ -10279,12 +10437,66 @@ window.Get_ItemVersionsAudit = {
       '<div class="hrsd-table-responsive">' +
       '<table class="table HrsdTable delegations-audit-table">' +
       theadHtml +
-      "<tbody>" +
-      tableContent +
-      "</tbody></table></div></div></div>";
+      '<tbody class="item-versions-audit-tbody"></tbody></table></div>' +
+      '<div class="PaginationSection d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 px-2">' +
+      "<span><span class=\"totalOfItems audit-versions-total\"></span><span data-trans-records class=\"Resources\"></span></span>" +
+      '<div class="pagination-buttons-details audit-versions-pagination"></div>' +
+      "</div></div></div>";
 
-    $(".btnactionrow").before(sectionHtml);
+    var $section = $(sectionHtml);
+    $(".btnactionrow").before($section);
     $(".btnactionrow .form-btns-wrapper").show();
+
+    var $tbody = $section.find(".item-versions-audit-tbody");
+    var $pagination = $section.find(".audit-versions-pagination");
+    var $totalEl = $section.find(".audit-versions-total");
+
+    function renderAuditPage() {
+      var total = allVersions.length;
+      var totalPages =
+        total === 0 ? 1 : Math.ceil(total / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      if (total === 0) {
+        $tbody.html(
+          '<tr><td colspan="' +
+            colCount +
+            '"><span class="no-data-td">' +
+            noDataLabel +
+            "</span></td></tr>"
+        );
+      } else {
+        var start = (currentPage - 1) * pageSize;
+        var slice = allVersions.slice(start, start + pageSize);
+        $tbody.html(buildRowsHtml(slice));
+      }
+
+      $totalEl.text(total);
+
+      var prevDisabled = total === 0 || currentPage <= 1;
+      var nextDisabled = total === 0 || currentPage >= totalPages;
+      var pagHtml =
+        '<button type="button" class="pagebtn prev-page audit-versions-pagebtn"' +
+        (prevDisabled ? " disabled" : "") +
+        ' data-dir="prev"><i class="fas fa-chevron-left"></i></button>' +
+        '<button type="button" class="pagebtn next-page audit-versions-pagebtn"' +
+        (nextDisabled ? " disabled" : "") +
+        ' data-dir="next"><i class="fas fa-chevron-right"></i></button>';
+      $pagination.html(pagHtml);
+    }
+
+    $section.on("click", ".audit-versions-pagebtn", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var $btn = $(this);
+      if ($btn.is("[disabled]")) return;
+      if ($btn.data("dir") === "prev") currentPage--;
+      else if ($btn.data("dir") === "next") currentPage++;
+      renderAuditPage();
+    });
+
+    renderAuditPage();
     changeResources();
   },
   currentListName: "Delegations",

@@ -131,6 +131,8 @@ var workflowname,
     window.location.href.indexOf("initiatives&StrategicallyInitiative") > -1,
   isLMSInitiative =
     window.location.href.indexOf("initiatives&LMSInitiative") > -1,
+  isSODInitiative =
+    window.location.href.indexOf("initiatives&SODInitiative") > -1,
   isStrategicPartnerships =
     window.location.href.indexOf("strategicpartnerships&STP") > -1,
   isSPAchievements =
@@ -151,12 +153,16 @@ var workflowname,
     window.location.href.indexOf("changerequest&LMSCRInitiative") > -1,
   isLMSCreateInitiative =
     window.location.href.indexOf("initiatives&LMSCreateInitiative") > -1,
+  isSODCreateInitiative =
+    window.location.href.indexOf("initiatives&SODCreateInitiative") > -1,
   isVROBenefitActual =
     window.location.href.indexOf("benefitmetrics&VROBenefitActual") > -1,
   isEPMOBenefitActual =
     window.location.href.indexOf("benefitmetrics&EPMOBenefitActual") > -1,
   isLMSBenefitActual =
     window.location.href.indexOf("benefitmetrics&LMSBenefitActual") > -1,
+  isSODBenefitActual =
+    window.location.href.indexOf("benefitmetrics&SODBenefitActual") > -1,
   isVROInitiativeMilestone =
     window.location.href.indexOf(
       "initiativemilestones&VROInitiativeMilestone"
@@ -171,9 +177,17 @@ var workflowname,
     window.location.href.indexOf(
       "initiativemilestones&LMSInitiativeMilestone"
     ) > -1,
+  isSODInitiativeMilestone =
+    window.location.href.indexOf(
+      "initiativemilestones&SODInitiativeMilestone"
+    ) > -1,
   isVROInitiativeDeliverable =
     window.location.href.indexOf(
       "initiativedeliverables&VROInitiativeDeliverable"
+    ) > -1,
+  isSODInitiativeDeliverable =
+    window.location.href.indexOf(
+      "initiativedeliverables&SODInitiativeDeliverable"
     ) > -1,
   isEPMOInitiativeDeliverable =
     window.location.href.indexOf(
@@ -185,6 +199,8 @@ var workflowname,
     ) > -1,
   isVROProjMilestone =
     window.location.href.indexOf("milestones&VROProjMilestone") > -1,
+  isSODProjMilestone =
+    window.location.href.indexOf("milestones&SODProjMilestone") > -1,
   isEPMOProjMilestone =
     window.location.href.indexOf("milestones&EPMOProjMilestone") > -1,
   isLMSProjMilestone =
@@ -192,6 +208,7 @@ var workflowname,
   isVROCOC = window.location.href.indexOf("coc&VROCOC") > -1,
   isEPMOCOC = window.location.href.indexOf("coc&EPMOCOC") > -1,
   isLMSCOC = window.location.href.indexOf("coc&LMSCOC") > -1,
+  isSODCOC = window.location.href.indexOf("coc&SODCOC") > -1,
   isVROCRObjective =
     window.location.href.indexOf("changerequest&VROCRObjective") > -1,
   isMSCRObjective =
@@ -208,10 +225,13 @@ var workflowname,
   isVROActualKPI = window.location.href.indexOf("mainkpi&VROActualKPI") > -1,
   isMSActualKPI = window.location.href.indexOf("mainkpi&MSActualKPI") > -1,
   isLMSActualKPI = window.location.href.indexOf("mainkpi&LMSActualKPI") > -1,
+  isSODActualKPI = window.location.href.indexOf("mainkpi&SODActualKPI") > -1,
   isVROProjDeliverable =
     window.location.href.indexOf("deliverables&VROProjDeliverable") > -1,
   isEPMOProjDeliverable =
     window.location.href.indexOf("deliverables&EPMOProjDeliverable") > -1,
+  isSODProjDeliverable =
+    window.location.href.indexOf("deliverables&SODProjDeliverable") > -1,
   isLMSProjDeliverable =
     window.location.href.indexOf("deliverables&LMSProjDeliverable") > -1,
   isVROCreateObjective =
@@ -240,6 +260,8 @@ var workflowname,
     window.location.href.indexOf("projects&EPMOCreateProject") > -1,
   isLMSCreateProject =
     window.location.href.indexOf("projects&LMSCreateProject") > -1,
+  isSODCreateProject =
+    window.location.href.indexOf("projects&SODCreateProject") > -1,
   isDOC_CreateProject =
     window.location.href.indexOf("projects&DOC_CreateProject") > -1,
   isFSSBCreateProject =
@@ -544,6 +566,20 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isSODInitiative) {
+  workflowname = "SODInitiative";
+  bulkeditlist = "Initiatives";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isVROCRInitiative) {
   workflowname = "VROCRInitiative";
   bulkeditlist = "Change Request";
@@ -628,6 +664,21 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} 
+ else if (isSODCreateInitiative) {
+  workflowname = "SODCreateInitiative";
+  bulkeditlist = "Initiatives";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isVROCRProject) {
   workflowname = "VROCRProject";
   // bulkeditlist = "Projects";
@@ -675,6 +726,22 @@ else if (isSOsWf) {
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isLMSCreateProject) {
   workflowname = "LMSCreateProject";
+  bulkeditlist = "Projects";
+  // bulkeditlist = "Change Request";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isSODCreateProject) {
+  workflowname = "SODCreateProject";
   bulkeditlist = "Projects";
   // bulkeditlist = "Change Request";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -760,6 +827,21 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+ else if (isSODBenefitActual) {
+  workflowname = "SODBenefitActual";
+  bulkeditlist = "BenefitMetrics";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isVROInitiativeMilestone) {
   workflowname = "VROInitiativeMilestone";
   bulkeditlist = "InitiativeMilestones";
@@ -816,8 +898,38 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+ else if (isSODInitiativeMilestone) {
+  workflowname = "SODInitiativeMilestone";
+  bulkeditlist = "InitiativeMilestones";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isVROInitiativeDeliverable) {
   workflowname = "VROInitiativeDeliverable";
+  bulkeditlist = "InitiativeDeliverables";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} 
+else if (isSODInitiativeDeliverable) {
+  workflowname = "SODInitiativeDeliverable";
   bulkeditlist = "InitiativeDeliverables";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
   bulkeditquery =
@@ -860,6 +972,21 @@ else if (isSOsWf) {
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isVROProjMilestone) {
   workflowname = "VROProjMilestone";
+  bulkeditlist = "Milestones";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isSODProjMilestone) {
+  workflowname = "SODProjMilestone";
   bulkeditlist = "Milestones";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
   bulkeditquery =
@@ -942,6 +1069,21 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} 
+ else if (isSODCOC) {
+  workflowname = "SODCOC";
+  bulkeditlist = "Certifications";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isVROProjDeliverable) {
   workflowname = "VROProjDeliverable";
   bulkeditlist = "Deliverables";
@@ -958,6 +1100,21 @@ else if (isSOsWf) {
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isEPMOProjDeliverable) {
   workflowname = "EPMOProjDeliverable";
+  bulkeditlist = "Deliverables";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+ else if (isSODProjDeliverable) {
+  workflowname = "SODProjDeliverable";
   bulkeditlist = "Deliverables";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
   bulkeditquery =
@@ -1280,6 +1437,21 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isSODActualKPI) {
+  workflowname = "SODActualKPI";
+  bulkeditlist = "MainKPI";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isSPAchievements) {
   workflowname = "SPAchievements";
   bulkeditlist = "SPAchievements";
@@ -1535,6 +1707,7 @@ if (
   !isVROCOC &&
   !isEPMOCOC &&
   !isLMSCOC &&
+  !isSODCOC &&
   !isVROProjDeliverable &&
   !isVROProjNDeliverable &&
   !isVROProjMilestone &&
@@ -1543,7 +1716,10 @@ if (
   !isEPMOProjMilestone &&
   !isLMSProjDeliverable &&
   !isLMSProjNDeliverable &&
-  !isLMSProjMilestone 
+  !isLMSProjMilestone &&
+  !isSODProjDeliverable &&
+  // !isSODProjNDeliverable &&
+  !isSODProjMilestone 
 ) {
   // console.log('123');
   peojectC = window.location.href.split("PCODE=")[1].split("&")[0];
@@ -1928,22 +2104,45 @@ var Task_PCODE_Data_Request_WFs = {
         tasktitlearr = JSON.parse(
           localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
         );
+        var currentStageCode = (stagename || "").toString().trim().toLowerCase();
         tasktitlearr = tasktitlearr.filter(function (item) {
-          return item.code == stagename;
+          return (
+            ((item && item.code) || "")
+              .toString()
+              .trim()
+              .toLowerCase() === currentStageCode
+          );
         });
-        taskActionType = tasktitlearr[0].TaskActionType;
-        taskCondition = tasktitlearr[0].TaskCondition
-          ? eval(tasktitlearr[0].TaskCondition)
-          : null;
-        if (
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar"
-        ) {
-          stagename = tasktitlearr[0].name;
-          actionbuttonTitle = tasktitlearr[0].actionButtonTitleAr;
+        if (tasktitlearr.length > 0) {
+          taskActionType = tasktitlearr[0].TaskActionType
+            ? tasktitlearr[0].TaskActionType
+            : "Normal";
+          taskCondition = tasktitlearr[0].TaskCondition
+            ? eval(tasktitlearr[0].TaskCondition)
+            : null;
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            stagename = tasktitlearr[0].name;
+            actionbuttonTitle = tasktitlearr[0].actionButtonTitleAr;
+          } else {
+            stagename = tasktitlearr[0].nameEn;
+            actionbuttonTitle = tasktitlearr[0].actionButtonTitleEn;
+          }
         } else {
-          stagename = tasktitlearr[0].nameEn;
-          actionbuttonTitle = tasktitlearr[0].actionButtonTitleEn;
+          // Fallback: don't break workflow if local storage has no matching stage
+          taskActionType = oListItem.get_item("TaskActionType")
+            ? oListItem.get_item("TaskActionType")
+            : "Normal";
+          taskCondition = null;
+          actionbuttonTitle = stagename;
+          console.warn(
+            "Tasks Configuration stage not found for:",
+            stagename,
+            "Using fallback TaskActionType:",
+            taskActionType
+          );
         }
       }
     }
@@ -2069,7 +2268,7 @@ var Task_PCODE_Data_Request_WFs = {
           break;
         case "Approval":
 {
-        if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject")
+        if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "SODCreateProject")
         {
           // console.log('aaaaaaaaaaaaaa');
           $(".navbar.page-nav.px-5").after(
@@ -2941,7 +3140,7 @@ var SubmitField_BulkEdit = {
       }
     }
 
-    if(WFisEdit && (workflowname == "EPMOCreateProject" || workflowname == "VROCreateProject" || workflowname == "VROCRProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "DevelopmentRequirement") && tasktype == "Submit")
+    if(WFisEdit && (workflowname == "MSActualKPI" || workflowname == "EPMOCreateProject" || workflowname == "VROCreateProject" || workflowname == "VROCRProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "DevelopmentRequirement") && tasktype == "Submit")
     {
       Edit_Data_Submit.init(state);
     }
@@ -3260,22 +3459,22 @@ var SubmitField_BulkEdit = {
             }
 
             // FOR Initiative Compliance changing phases
-            if(nxtstageid == "SInStage10" || nxtstageid == "VInStage12" || nxtstageid == "LInStage09")
+            if(nxtstageid == "SInStage10" || nxtstageid == "VInStage12" || nxtstageid == "LInStage09" || nxtstageid == "SODInStage09")
             {
               items.set_item("Phase", "P1");
             }
 
-            if(nxtstageid == "SInStage12" || nxtstageid == "VInStage14" || nxtstageid == "LInStage11")
+            if(nxtstageid == "SInStage12" || nxtstageid == "VInStage14" || nxtstageid == "LInStage11" || nxtstageid == "SODInStage11")
             {
               items.set_item("Phase", "P2");
             }
 
-            if(nxtstageid == "SInStage14" || nxtstageid == "VInStage16" || nxtstageid == "LInStage13")
+            if(nxtstageid == "SInStage14" || nxtstageid == "VInStage16" || nxtstageid == "LInStage13" || nxtstageid == "SODInStage13")
             {
               items.set_item("Phase", "P3");
             }
 
-            if(nxtstageid == "SInStage16" || nxtstageid == "VInStage18" || nxtstageid == "LInStage15")
+            if(nxtstageid == "SInStage16" || nxtstageid == "VInStage18" || nxtstageid == "LInStage15" || nxtstageid == "SODInStage15")
             {
               items.set_item("Phase", "P4");
             }
@@ -3337,9 +3536,8 @@ var SubmitField_BulkEdit = {
                 isEdit &&
                 listkey === "mainkpi" &&
                 isWF &&
-                currentstage === "MSActualKPI01" &&
-                currentUserRole === "SPMAdmin"
-              ) {
+              ( ( currentstage === "MSActualKPI01" && currentUserRole === "SPMAdmin" ) ||
+               ( currentstage === "MSActualKPI00" && currentUserRole === "PerformanceLeader"  ))) {
                 try {
                   const periodType = $("#PeriodType").val();
                   let year = parseInt($("#Year").val() || 0);
@@ -3498,13 +3696,17 @@ var SubmitField_BulkEdit = {
               } else if( (isVROInitiativeMilestone ||
                 isEPMOInitiativeMilestone ||
                 isLMSInitiativeMilestone ||
+                isSODInitiativeMilestone ||
                 isVROInitiativeDeliverable ||
+                isSODInitiativeDeliverable ||
                 isEPMOInitiativeDeliverable ||
                 isLMSInitiativeDeliverable ||
                 isVROProjMilestone ||
+                isSODProjMilestone ||
                 isEPMOProjMilestone ||
                 isLMSProjMilestone ||
                 isVROProjDeliverable ||
+                isSODProjDeliverable ||
                 isEPMOProjDeliverable ||
                 isLMSProjDeliverable ) && state &&
                 nxtstageid == "approved")
@@ -4627,13 +4829,17 @@ var Task_Edit_Data = {
           (isVROInitiativeMilestone ||
             isEPMOInitiativeMilestone ||
             isLMSInitiativeMilestone ||
+            isSODInitiativeMilestone ||
             isVROInitiativeDeliverable ||
             isEPMOInitiativeDeliverable ||
             isLMSInitiativeDeliverable ||
+            isSODInitiativeDeliverable ||
             isVROProjMilestone ||
             isEPMOProjMilestone ||
             isLMSProjMilestone ||
+            isSODProjMilestone ||
             isVROProjDeliverable ||
+            isSODProjDeliverable ||
             isEPMOProjDeliverable ||
             isLMSProjDeliverable)
         ) {
@@ -4699,13 +4905,16 @@ var Task_Edit_Data = {
             isVROCOC ||
             isEPMOCOC ||
             isLMSCOC ||
+            isSODCOC ||
             isVROProjDeliverable ||
             isVROProjNDeliverable ||
             isVROProjMilestone ||
+            isSODProjMilestone ||
             isEPMOProjDeliverable ||
             isEPMOProjNDeliverable ||
             isEPMOProjMilestone ||
             isLMSProjDeliverable ||
+            isSODProjDeliverable ||
             isLMSProjNDeliverable ||
             isLMSProjMilestone
           ) {
@@ -4719,12 +4928,15 @@ var Task_Edit_Data = {
             isVROBenefitActual ||
             isEPMOBenefitActual ||
             isLMSBenefitActual ||
+            isSODBenefitActual ||
             isVROInitiativeDeliverable ||
             isVROInitiativeMilestone ||
             isEPMOInitiativeDeliverable ||
             isEPMOInitiativeMilestone ||
             isLMSInitiativeDeliverable ||
-            isLMSInitiativeMilestone
+            isLMSInitiativeMilestone ||
+            isSODInitiativeDeliverable ||
+            isSODInitiativeMilestone
           ) {
             window.location =
               _spPageContextInfo.siteAbsoluteUrl +
@@ -5864,7 +6076,10 @@ var reset_Delivered_Value = {
               isEPMOProjMilestone ||
               isLMSProjDeliverable ||
               isLMSProjNDeliverable ||
-              isLMSProjMilestone
+              isLMSProjMilestone ||
+              isSODProjDeliverable ||
+              // isSODProjNDeliverable ||
+              isSODProjMilestone
             ) {
               window.location =
                 _spPageContextInfo.siteAbsoluteUrl +
@@ -5878,7 +6093,9 @@ var reset_Delivered_Value = {
               isEPMOInitiativeDeliverable ||
               isEPMOInitiativeMilestone ||
               isLMSInitiativeDeliverable ||
-              isLMSInitiativeMilestone
+              isLMSInitiativeMilestone ||
+              isSODInitiativeDeliverable ||
+              isSODInitiativeMilestone
             ) {
               window.location =
                 _spPageContextInfo.siteAbsoluteUrl +
@@ -5965,14 +6182,16 @@ debugger;
 
             if( isVROProjMilestone ||
               isEPMOProjMilestone ||
-              isLMSProjMilestone)
+              isLMSProjMilestone ||
+              isSODProjMilestone)
               {
           items.set_item("ActualDate", todayDate);
               }
 
               if( isVROProjDeliverable ||
                 isEPMOProjDeliverable ||
-                isLMSProjDeliverable)
+                isLMSProjDeliverable || 
+                isSODProjDeliverable) 
                 {
                   items.set_item("DeliveredDate", todayDate);
                 }
@@ -5995,7 +6214,10 @@ debugger;
               isEPMOProjMilestone ||
               isLMSProjDeliverable ||
               isLMSProjNDeliverable ||
-              isLMSProjMilestone
+              isLMSProjMilestone ||
+              isSODProjDeliverable ||
+              // isSODProjNDeliverable ||
+              isSODProjMilestone
             ) {
               window.location =
                 _spPageContextInfo.siteAbsoluteUrl +
@@ -6009,7 +6231,9 @@ debugger;
               isEPMOInitiativeDeliverable ||
               isEPMOInitiativeMilestone ||
               isLMSInitiativeDeliverable ||
-              isLMSInitiativeMilestone
+              isLMSInitiativeMilestone ||
+              isSODInitiativeMilestone ||
+              isSODInitiativeDeliverable
             ) {
               window.location =
                 _spPageContextInfo.siteAbsoluteUrl +
