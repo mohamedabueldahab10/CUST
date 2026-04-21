@@ -2148,7 +2148,7 @@ window.ListingData = {
 			keyNameParams = 'initiativedeliverables'
 		  } else if (wfname == 'VROProjMilestone' || wfname == 'EPMOProjMilestone' || wfname == 'LMSProjMilestone' || wfname == 'SODProjMilestone') {
 			keyNameParams = 'milestones'
-		  } else if (wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC') {
+		  } else if (wfname == 'VROCOC' || wfname == 'EPMOCOC' || wfname == 'LMSCOC' || wfname == 'SODCOC') {
 			keyNameParams = 'coc'
 		  } else if (wfname == 'VROProjDeliverable' || wfname == 'EPMOProjDeliverable' || wfname == 'LMSProjDeliverable' || wfname == 'SODProjDeliverable') {
 			keyNameParams = 'deliverables'

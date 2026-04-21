@@ -271,6 +271,7 @@ window.WorkflowTranslate = [
   { wfName: "VROCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
   { wfName: "EPMOCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
   { wfName: "LMSCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
+  { wfName: "SODCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
 
   { wfName: "VisionInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "StrategicallyInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
@@ -11503,7 +11504,8 @@ var Tasks_Info_Request_User = {
           } else if (
             wfname == "VROCOC" ||
             wfname == "EPMOCOC" ||
-            wfname == "LMSCOC"
+            wfname == "LMSCOC" ||
+            wfname == "SODCOC"
           ) {
             keyNameParams = "coc";
           } else if (

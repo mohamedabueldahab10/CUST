@@ -69,7 +69,7 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          { value: 'vision', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective','RelatedProgram'] },
+          { value: 'vision', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective','RelatedProgram','ExternalEntityRepresentative'] },
           { value: 'lms', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
           { value: 'sod', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
           { value: 'strategically', fields: [''] },
@@ -451,7 +451,9 @@ var Information_Form = [
         InternalName: 'ExternalEntityRepresentative',
         DisplayNameEn: 'External Entity Representative',
         DisplayName: 'ممثل الجهة الخارجية',
-        type: 'string',  
+        ToggleName: 'ExternalEntityRepresentative',
+        type: 'string',
+        display: 'none',
       },
       // {
       //   InternalName: 'RelatedStrategyObjective',

@@ -49,6 +49,7 @@ var ActualBudget = 0,
 var totalforhidstrat = 0;
 var totalforhidvis = 0;
 var totalforhidvisLMS = 0;
+var totalforhidvisSOD = 0;
 var myFont = isArabic ? "LTBukra" : "Effra";
 window.SectorsData = [];
 var ScheduleProgressStatusarray = [];
@@ -127,7 +128,7 @@ var mizania = require("../../HelperRessources/img/mizania.svg");
 // ViewFields to reduce payload (only columns used by the webpart)
 var INITIATIVES_VIEW_FIELDS =
   "<ViewFields><FieldRef Name='Title'/><FieldRef Name='Name'/><FieldRef Name='Phase'/><FieldRef Name='SubSector'/><FieldRef Name='Sector'/><FieldRef Name='Types'/><FieldRef Name='InitiativeProgressStatus'/><FieldRef Name='Portfolio'/><FieldRef Name='EstimatedCost'/><FieldRef Name='ActualCost'/><FieldRef Name='InitiativeBudget'/><FieldRef Name='IsZeroBudgetInitiative'/><FieldRef Name='Created'/><FieldRef Name='DeletionStatus'/></ViewFields>";
-// Minimal fields for count-only call: internalProjectCount, externalProjectCount, LMSProjectCount
+// Minimal fields for count-only call: internalProjectCount, externalProjectCount, LMSProjectCount, SODProjectCount
 var INITIATIVES_COUNT_VIEW_FIELDS = "<ViewFields><FieldRef Name='ID'/><FieldRef Name='Types'/><FieldRef Name='DeletionStatus'/></ViewFields>";
 // Set to 0 for no limit; set e.g. 100 to speed up initial load when there is a lot of data
 var INITIATIVES_ROW_LIMIT = 0;
@@ -241,7 +242,7 @@ window.initiativeRequest = {
   onSuccessCountOnly: function (sender, args) {
     var collListItem = initiativeRequest.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
-    var initiativesStratigalCount = 0, initiativesVisionCount = 0, initiativesLMSCount = 0;
+    var initiativesStratigalCount = 0, initiativesVisionCount = 0, initiativesLMSCount = 0, initiativesSODCount = 0;
     var intiativeType;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
@@ -250,15 +251,18 @@ window.initiativeRequest = {
       if (intiativeType === "vision") initiativesVisionCount++;
       else if (intiativeType === "strategically") initiativesStratigalCount++;
       else if (intiativeType === "lms") initiativesLMSCount++;
+      else if (intiativeType === "sod") initiativesSODCount++;
     }
-    var totalInitiatives = initiativesStratigalCount + initiativesVisionCount + initiativesLMSCount;
+    var totalInitiatives = initiativesStratigalCount + initiativesVisionCount + initiativesLMSCount + initiativesSODCount;
     $(".projects-ctx .PNumber").text(totalInitiatives);
     $("#internalProjectCount").html(initiativesStratigalCount);
     $("#externalProjectCount").html(initiativesVisionCount);
     $("#LMSProjectCount").html(initiativesLMSCount);
+    $("#SODProjectCount").html(initiativesSODCount);
     totalforhidstrat = initiativesStratigalCount;
     totalforhidvis = initiativesVisionCount;
     totalforhidvisLMS = initiativesLMSCount;
+    totalforhidvisSOD = initiativesSODCount;
     window._initiativeCountOnlyDone = true;
     initiativeRequest.initData();
   },
@@ -297,10 +301,12 @@ window.initiativeRequest = {
     var initiativesVisionHTML = "",
       initiativesStratigalHTML = "",
       initiativesLMSHTML = "",
+      initiativesSODHTML = "",
       initiativesVisionCount = 0,
       initiativesStratigalCount = 0;
     initiativesLMSCount = 0;
-    var initiativesStratigalCards = [], initiativesVisionCards = [], initiativesLMSCards = [];
+    var initiativesSODCount = 0;
+    var initiativesStratigalCards = [], initiativesVisionCards = [], initiativesLMSCards = [], initiativesSODCards = [];
     var phaseCodeArray = [];
     var phaseNameArray2 = [];
     var Priorityarray = [];
@@ -604,6 +610,10 @@ window.initiativeRequest = {
         initiativesLMSHTML += projectshtml;
         initiativesLMSCards.push(projectshtml);
         initiativesLMSCount = initiativesLMSCount + 1;
+      } else if (intiativeType === "sod") {
+        initiativesSODHTML += projectshtml;
+        initiativesSODCards.push(projectshtml);
+        initiativesSODCount = initiativesSODCount + 1;
       }
 
       phaseCodeArray.push(phases);
@@ -637,10 +647,12 @@ window.initiativeRequest = {
       $("#internalProjectCount").html(initiativesStratigalCount);
       $("#externalProjectCount").html(initiativesVisionCount);
       $("#LMSProjectCount").html(initiativesLMSCount);
+      $("#SODProjectCount").html(initiativesSODCount);
     }
     totalforhidstrat = initiativesStratigalCount;
     totalforhidvis = initiativesVisionCount;
     totalforhidvisLMS = initiativesLMSCount;
+    totalforhidvisSOD = initiativesSODCount;
     //Project Progress
     //Sort Priority
     ProgressStatusarray.sort();
@@ -718,9 +730,11 @@ window.initiativeRequest = {
     initiativeRequest.g.initiativesStratigalCards = initiativesStratigalCards;
     initiativeRequest.g.initiativesVisionCards = initiativesVisionCards;
     initiativeRequest.g.initiativesLMSCards = initiativesLMSCards;
+    initiativeRequest.g.initiativesSODCards = initiativesSODCards;
     $("div#accordionProject.internalAccordion").html(initiativesStratigalCards.join(""));
     $("div#accordionProject.externalAccordion").html(initiativesVisionCards.join(""));
     $("div#accordionProject.LMSAccordion").html(initiativesLMSCards.join(""));
+    $("div#accordionProject.SODAccordion").html(initiativesSODCards.join(""));
 
     progressstatusarrayALL = progressstatusarray;
 
@@ -1369,15 +1383,25 @@ window.initiativeRequest = {
       $(".accordion#accordionProject.externalAccordion").on("click", "a.view-less", function (e) { e.preventDefault(); doViewLess("#ExternalProjects"); changeResources(); });
       $(".accordion#accordionProject.LMSAccordion").on("click", "a.view-more", function (e) { e.preventDefault(); doViewMore("#LMSProjects"); changeResources(); });
       $(".accordion#accordionProject.LMSAccordion").on("click", "a.view-less", function (e) { e.preventDefault(); doViewLess("#LMSProjects"); changeResources(); });
+      $(".accordion#accordionProject.SODAccordion").on("click", "a.view-more", function (e) { e.preventDefault(); doViewMore("#SODProjects"); changeResources(); });
+      $(".accordion#accordionProject.SODAccordion").on("click", "a.view-less", function (e) { e.preventDefault(); doViewLess("#SODProjects"); changeResources(); });
       var $intC = $("#InternalProjects .card");
       var $extC = $("#ExternalProjects .card");
       var $lmsC = $("#LMSProjects .card");
-      var $allC = $intC.add($extC).add($lmsC);
-      $allC.show();
-      $allC.slice(pageSize).hide();
-      $(".accordion#accordionProject.internalAccordion a.view-less, .accordion#accordionProject.externalAccordion a.view-less, .accordion#accordionProject.LMSAccordion a.view-less, div#accordionProject a.view-less, .projects-ctx a.view-less").hide().attr("style", "display: none !important;");
+      var $sodC = $("#SODProjects .card");
+      var $allC = $intC.add($extC).add($lmsC).add($sodC);
+      // Apply pagination per tab, not globally across all tabs.
+      $intC.show();
+      $intC.slice(pageSize).hide();
+      $extC.show();
+      $extC.slice(pageSize).hide();
+      $lmsC.show();
+      $lmsC.slice(pageSize).hide();
+      $sodC.show();
+      $sodC.slice(pageSize).hide();
+      $(".accordion#accordionProject.internalAccordion a.view-less, .accordion#accordionProject.externalAccordion a.view-less, .accordion#accordionProject.LMSAccordion a.view-less, .accordion#accordionProject.SODAccordion a.view-less, div#accordionProject a.view-less, .projects-ctx a.view-less").hide().attr("style", "display: none !important;");
       var totalCards = $allC.length;
-      console.log("[showprojectonclick initiatives] internal:", $intC.length, "external:", $extC.length, "lms:", $lmsC.length, "total:", totalCards, "pageSize:", pageSize);
+      console.log("[showprojectonclick initiatives] internal:", $intC.length, "external:", $extC.length, "lms:", $lmsC.length, "sod:", $sodC.length, "total:", totalCards, "pageSize:", pageSize);
       if ($intC.length <= pageSize) {
         $(".accordion#accordionProject.internalAccordion").add($(".accordion#accordionProject.internalAccordion").parent()).find("a.view-more, a.view-less").hide().attr("style", "display: none !important;");
       }
@@ -1387,7 +1411,10 @@ window.initiativeRequest = {
       if ($lmsC.length <= pageSize) {
         $(".accordion#accordionProject.LMSAccordion").add($(".accordion#accordionProject.LMSAccordion").parent()).find("a.view-more, a.view-less").hide().attr("style", "display: none !important;");
       }
-      if (totalCards > pageSize) {
+      if ($sodC.length <= pageSize) {
+        $(".accordion#accordionProject.SODAccordion").add($(".accordion#accordionProject.SODAccordion").parent()).find("a.view-more, a.view-less").hide().attr("style", "display: none !important;");
+      }
+      if ($intC.length > pageSize || $extC.length > pageSize || $lmsC.length > pageSize || $sodC.length > pageSize) {
         $("div#accordionProject a.view-more").show().attr("style", "display: block !important;");
       } else {
         $("div#accordionProject a.view-more, div#accordionProject a.view-less").hide().attr("style", "display: none !important;");
@@ -2179,6 +2206,11 @@ var ProjectsOrder = {
     if (totalforhidvisLMS < 4) {
       $(
         "div#LMSProjects a.view-more.d-block.text-center.py-2.Resources"
+      ).addClass("disabled");
+    }
+    if (totalforhidvisSOD < 4) {
+      $(
+        "div#SODProjects a.view-more.d-block.text-center.py-2.Resources"
       ).addClass("disabled");
     }
 

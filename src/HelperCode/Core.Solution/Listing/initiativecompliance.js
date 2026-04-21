@@ -1622,6 +1622,27 @@ async function callCreateComplianceHistoryItems(payloads) {
         console.warn("callCreateComplianceHistoryItems error:", err);
     }
 }
+
+async function callUpdateInitiativeOverallComplianceStatus(initiativeCode) {
+    try {
+        if (typeof APIURL === "undefined" || !APIURL) return;
+        if (!initiativeCode) return;
+
+        const url = `${APIURL}/job/updateinitiativeoverallcompliancestatus/${initiativeCode}`;
+        const res = await $.ajax({
+            url,
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+        });
+
+        console.log("updateinitiativeoverallcompliancestatus success:", res);
+        if (!res || res.isSuccess === false) {
+            console.warn("updateinitiativeoverallcompliancestatus returned failure:", res);
+        }
+    } catch (xhr) {
+        console.warn("updateinitiativeoverallcompliancestatus failed:", xhr);
+    }
+}
 // Added button parameter to re-enable it after save
 // options: { progressStage: boolean, redirect: boolean }
 async function savePhaseCompliance(phaseCode, results, buttonElement, compliantCount, nonCompliantCount, phaseStatus, options) {
@@ -1915,6 +1936,11 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
                     globalMoveBtn.disabled = !shouldEnableCQTeamMoveButton();
                 }
             }
+        }
+
+        // After Move To Next Stage and before redirection, refresh overall compliance status.
+        if (options && options.action === "moveToNextStage") {
+            await callUpdateInitiativeOverallComplianceStatus(initiativeCode);
         }
         
         // Redirect to initiative home page after successful save if allowed

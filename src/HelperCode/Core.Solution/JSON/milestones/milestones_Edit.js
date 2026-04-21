@@ -22,7 +22,7 @@ var Information_Form = [
               },
               {
                 fieldNameInList: 'WFStage',
-                fieldValueInList: 'VROProjMilestone01',
+                fieldValueInList: 'VROProjMilestone03',
               },
               {
 								fieldNameInList: "WFInitiatedBy",
@@ -39,7 +39,7 @@ var Information_Form = [
               },
               {
                 fieldNameInList: 'WFStage',
-                fieldValueInList: 'LMSProjMilestone01',
+                fieldValueInList: 'LMSProjMilestone03',
               },
               {
 								fieldNameInList: "WFInitiatedBy",
@@ -56,7 +56,7 @@ var Information_Form = [
               },
               {
                 fieldNameInList: 'WFStage',
-                fieldValueInList: 'SODProjMilestone01',
+                fieldValueInList: 'SODProjMilestone03',
               },
               {
 								fieldNameInList: "WFInitiatedBy",
@@ -73,7 +73,7 @@ var Information_Form = [
               },
               {
                 fieldNameInList: 'WFStage',
-                fieldValueInList: 'EPMOProjMilestone01',
+                fieldValueInList: 'EPMOProjMilestone03',
               },
               {
 								fieldNameInList: "WFInitiatedBy",
@@ -111,12 +111,17 @@ var Information_Form = [
         InternalName: "Phase",
         DisplayName: "المرحلة",
         DisplayNameEn: "Phase",
-        type: "lookup",
-        //from other list:
-        source: "Phases",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "PhaseNameEn",
-        valfieldkey: "Title",
+        // validation: 'required',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'p1', value: 'p1' },
+            { display: 'p2', value: 'p2' },
+            { display: 'p3', value: 'p3' },
+            { display: 'p4', value: 'p4' },
+           
+          ],
+        },
       },
       // {
       //   InternalName: 'Weight',
@@ -222,6 +227,7 @@ var Information_Form = [
         DisplayName: 'الوصف',
         DisplayNameEn: 'Description',
         type: 'multiline',
+        validation: "required",
         maxchar: 5000,
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
@@ -258,30 +264,41 @@ var Information_Form = [
         security: {
           groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
         },
-        //validation: "required",
+        validation: "required",
       },
       {
         InternalName: 'Delivered',
         DisplayName: 'مكتمل',
         DisplayNameEn: 'Completed',
+        ToggleName: 'Delivered',
         targetfieldrequired: 'getFile,ActualDate', // to make the attache required on yes
         targetfield: 'Status',
         targetfieldvalue: 'complete',
-        // validation: 'required',
+        validation: 'required',
         type: 'yesnoradio',
         options: {
           choices: [
-            { display: 'yes', value: 'yes' },
+            { display: 'yes', value: 'yes' , selected: "selected" },
             { display: 'no', value: 'no' },
           ],
         },
+         toggleValues: [
+          { value: 'yes', fields: ['ActualDate'] },
+          { value: 'no', fields: [''] },
+        ],
+         toggleDisabledValues: [
+          { value: 'yes', fields: [''] },
+          { value: 'no', fields: ['ActualDate'] },
+        ],
       },
       {
         InternalName: 'ActualDate',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         DisplayNameEn: 'Actual Date',
+        ToggleName: 'ActualDate',
         // type: 'datetime',
         type: 'datetimetoparent',
+        validation: "required",
         max: 'today',
         Errmsgkey: 'cancelationdatepattern',
         listname: 'Projects', // list name
