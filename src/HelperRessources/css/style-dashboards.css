@@ -2338,7 +2338,7 @@ ul#projectType {
     align-items: center;
 }
 ul#projectType.initiatives-ctx .nav-item {
-    width: 33%;
+    width: 25%;
 }
 ul#projectType .nav-item {
     width: 50%;

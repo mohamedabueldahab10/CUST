@@ -271,6 +271,7 @@ window.WorkflowTranslate = [
   { wfName: "VROCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
   { wfName: "EPMOCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
   { wfName: "LMSCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
+  { wfName: "SODCOC", nameAr: "شهادة انجاز", nameEn: "COC" },
 
   { wfName: "VisionInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "StrategicallyInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
@@ -342,6 +343,11 @@ window.WorkflowTranslate = [
     nameAr: "مخرج مشروع",
     nameEn: "Project Deliverable",
   },
+  {
+    wfName: "SODProjDeliverable",
+    nameAr: "مخرج مشروع",
+    nameEn: "Project Deliverable",
+  },
 
   {
     wfName: "VROProjMilestone",
@@ -355,6 +361,11 @@ window.WorkflowTranslate = [
   },
   {
     wfName: "LMSProjMilestone",
+    nameAr: "معلم مشروع",
+    nameEn: "Project Milestone",
+  },
+  {
+    wfName: "SODProjMilestone",
     nameAr: "معلم مشروع",
     nameEn: "Project Milestone",
   },
@@ -11486,19 +11497,22 @@ var Tasks_Info_Request_User = {
           } else if (
             wfname == "VROProjMilestone" ||
             wfname == "EPMOProjMilestone" ||
-            wfname == "LMSProjMilestone"
+            wfname == "LMSProjMilestone" ||
+            wfname == "SODProjMilestone"
           ) {
             keyNameParams = "milestones";
           } else if (
             wfname == "VROCOC" ||
             wfname == "EPMOCOC" ||
-            wfname == "LMSCOC"
+            wfname == "LMSCOC" ||
+            wfname == "SODCOC"
           ) {
             keyNameParams = "coc";
           } else if (
             wfname == "VROProjDeliverable" ||
             wfname == "EPMOProjDeliverable" ||
-            wfname == "LMSProjDeliverable"
+            wfname == "LMSProjDeliverable" ||
+            wfname == "SODProjDeliverable"
           ) {
             keyNameParams = "deliverables";
           } else if (

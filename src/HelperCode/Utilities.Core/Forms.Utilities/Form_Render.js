@@ -11126,7 +11126,8 @@ debugger;
                 item == "RelatedStrategyObjective" ||
                 item == "RelatedStrategyReadonly" ||
                 item == "RelatedReadOnlyObjectiveLevel" ||
-                item == "RelatedReadonlyObjective"
+                item == "RelatedReadonlyObjective" ||
+                item == "ExternalEntityRepresentative"
               ) {
                 myFieldParent.find(">*").attr("required", false);
               }

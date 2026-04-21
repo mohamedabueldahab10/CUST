@@ -1522,6 +1522,27 @@ async function callCreateComplianceHistoryItems(payloads) {
         console.warn("callCreateComplianceHistoryItems error:", err);
     }
 }
+
+async function callUpdateProjectOverallComplianceStatus(projectCode) {
+    try {
+        if (typeof APIURL === "undefined" || !APIURL) return;
+        if (!projectCode) return;
+
+        const url = `${APIURL}/job/updateprojectoverallcompliancestatus/${projectCode}`;
+        const res = await $.ajax({
+            url,
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+        });
+
+        console.log("updateprojectoverallcompliancestatus success:", res);
+        if (!res || res.isSuccess === false) {
+            console.warn("updateprojectoverallcompliancestatus returned failure:", res);
+        }
+    } catch (xhr) {
+        console.warn("updateprojectoverallcompliancestatus failed:", xhr);
+    }
+}
 // Added button parameter to re-enable it after save
 // options: { progressStage: boolean, redirect: boolean }
 async function savePhaseCompliance(phaseCode, results, buttonElement, compliantCount, nonCompliantCount, phaseStatus, options) {
@@ -1807,6 +1828,11 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
                     moveBtn.disabled = false;
                 }
             }
+        }
+
+        // After Move To Next Stage and before redirection, refresh overall compliance status.
+        if (options && options.action === "moveToNextStage") {
+            await callUpdateProjectOverallComplianceStatus(projectCode);
         }
 
         // Redirect to project home page after successful save if allowed

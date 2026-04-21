@@ -67,6 +67,59 @@ var wfHistoryLink;
 var thiredActionName = "";
 var relatedItemInCr = "";
 var crBody, crUpdateType, crBodyMaster;
+
+function wfGetUrlParamValue(paramName) {
+  var escapedName = paramName.replace(/[[]]/g, "\\[").replace(/[\]]/g, "\\]");
+  var regex = new RegExp("[?&]" + escapedName + "=([^&#]*)", "i");
+  var results = regex.exec(window.location.href);
+  return results && results[1] ? decodeURIComponent(results[1]) : "";
+}
+
+function wfBuildListingUrlWithContext(listKey, extraQuery) {
+  var listingUrl =
+    _spPageContextInfo.siteAbsoluteUrl +
+    "/SitePages/Listing.aspx?ListKey=" +
+    listKey;
+  if (extraQuery) {
+    listingUrl += extraQuery;
+  }
+
+  var normalizedListKey = (listKey || "").toLowerCase();
+  if (
+    normalizedListKey === "initiatives" ||
+    normalizedListKey === "strategicpartnerships"
+  ) {
+    return listingUrl;
+  }
+
+  var hasIcode = listingUrl.toLowerCase().indexOf("icode=") > -1;
+  var hasStcode = listingUrl.toLowerCase().indexOf("stcode=") > -1;
+  var hasPcode = listingUrl.toLowerCase().indexOf("pcode=") > -1;
+  var currentIcode =
+    typeof UserICode !== "undefined" && UserICode
+      ? UserICode
+      : wfGetUrlParamValue("ICODE");
+  var currentStcode =
+    typeof UserSTCode !== "undefined" && UserSTCode
+      ? UserSTCode
+      : wfGetUrlParamValue("STCODE");
+  var currentPcode =
+    typeof window.PCODE !== "undefined" && window.PCODE
+      ? window.PCODE
+      : wfGetUrlParamValue("PCODE");
+
+  if (!hasIcode && currentIcode) {
+    listingUrl += "&ICODE=" + encodeURIComponent(currentIcode);
+  }
+  if (!hasStcode && currentStcode) {
+    listingUrl += "&STCODE=" + encodeURIComponent(currentStcode);
+  }
+  if (!hasPcode && currentPcode && normalizedListKey !== "projects") {
+    listingUrl += "&PCODE=" + encodeURIComponent(currentPcode);
+  }
+  return listingUrl;
+}
+
 window.projectstagename;
 var workflowname,
   stageid,
@@ -3140,9 +3193,20 @@ var SubmitField_BulkEdit = {
       }
     }
 
-    if(WFisEdit && (workflowname == "MSActualKPI" || workflowname == "EPMOCreateProject" || workflowname == "VROCreateProject" || workflowname == "VROCRProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "DevelopmentRequirement") && tasktype == "Submit")
-    {
-      Edit_Data_Submit.init(state);
+    if (
+      WFisEdit &&
+      (workflowname == "MSActualKPI" ||
+        workflowname == "EPMOCreateProject" ||
+        workflowname == "VROCreateProject" ||
+        workflowname == "VROCRProject" ||
+        workflowname == "LMSCreateProject" ||
+        workflowname == "DOC_CreateProject" ||
+        workflowname == "FSSBCreateProject" ||
+        workflowname == "DevelopmentRequirement") &&
+      tasktype == "Submit"
+    ) {
+      Edit_Data_Submit.preinit(state);
+      return;
     }
 
     if (
@@ -4895,12 +4959,10 @@ var Task_Edit_Data = {
               "/SitePages/Listing.aspx?ListKey=" +
               "mainkpi";
           } else if (RelatedProjectCODE) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=" +
-              listkey +
-              "&PCODE=" +
-              RelatedProjectCODE;
+            window.location = wfBuildListingUrlWithContext(
+              listkey,
+              "&PCODE=" + RelatedProjectCODE
+            );
           } else if (
             isVROCOC ||
             isEPMOCOC ||
@@ -4918,12 +4980,10 @@ var Task_Edit_Data = {
             isLMSProjNDeliverable ||
             isLMSProjMilestone
           ) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=" +
-              listkey +
-              "&PCODE=" +
-              peojectC;
+            window.location = wfBuildListingUrlWithContext(
+              listkey,
+              "&PCODE=" + peojectC
+            );
           } else if (
             isVROBenefitActual ||
             isEPMOBenefitActual ||
@@ -4938,12 +4998,10 @@ var Task_Edit_Data = {
             isSODInitiativeDeliverable ||
             isSODInitiativeMilestone
           ) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=" +
-              listkey +
-              "&ICODE=" +
-              peojectC;
+            window.location = wfBuildListingUrlWithContext(
+              listkey,
+              "&ICODE=" + peojectC
+            );
           } else if (
             isStrategicCR ||
             isExecutionCR ||
@@ -4954,10 +5012,7 @@ var Task_Edit_Data = {
               "/SitePages/ChangeRequests.aspx?isview=true&critemcode=" +
               CRITEMCODE;
           } else {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=" +
-              listkey;
+            window.location = wfBuildListingUrlWithContext(listkey);
           }
         }
       }),
@@ -6081,12 +6136,10 @@ var reset_Delivered_Value = {
               // isSODProjNDeliverable ||
               isSODProjMilestone
             ) {
-              window.location =
-                _spPageContextInfo.siteAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                "&PCODE=" +
-                peojectC;
+              window.location = wfBuildListingUrlWithContext(
+                listkey,
+                "&PCODE=" + peojectC
+              );
             } else if (
               isVROInitiativeDeliverable ||
               isVROInitiativeMilestone ||
@@ -6097,12 +6150,10 @@ var reset_Delivered_Value = {
               isSODInitiativeDeliverable ||
               isSODInitiativeMilestone
             ) {
-              window.location =
-                _spPageContextInfo.siteAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                "&ICODE=" +
-                peojectC;
+              window.location = wfBuildListingUrlWithContext(
+                listkey,
+                "&ICODE=" + peojectC
+              );
             } else if (
               isStrategicCR ||
               isExecutionCR ||
@@ -6113,10 +6164,7 @@ var reset_Delivered_Value = {
                 "/SitePages/ChangeRequests.aspx?isview=true&critemcode=" +
                 CRITEMCODE;
             } else {
-              window.location =
-                _spPageContextInfo.siteAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey;
+              window.location = wfBuildListingUrlWithContext(listkey);
             }
 
             // window.location.reload();
@@ -6219,12 +6267,10 @@ debugger;
               // isSODProjNDeliverable ||
               isSODProjMilestone
             ) {
-              window.location =
-                _spPageContextInfo.siteAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                "&PCODE=" +
-                peojectC;
+              window.location = wfBuildListingUrlWithContext(
+                listkey,
+                "&PCODE=" + peojectC
+              );
             } else if (
               isVROInitiativeDeliverable ||
               isVROInitiativeMilestone ||
@@ -6235,12 +6281,10 @@ debugger;
               isSODInitiativeMilestone ||
               isSODInitiativeDeliverable
             ) {
-              window.location =
-                _spPageContextInfo.siteAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey +
-                "&ICODE=" +
-                peojectC;
+              window.location = wfBuildListingUrlWithContext(
+                listkey,
+                "&ICODE=" + peojectC
+              );
             } else if (
               isStrategicCR ||
               isExecutionCR ||
@@ -6251,10 +6295,7 @@ debugger;
                 "/SitePages/ChangeRequests.aspx?isview=true&critemcode=" +
                 CRITEMCODE;
             } else {
-              window.location =
-                _spPageContextInfo.siteAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=" +
-                listkey;
+              window.location = wfBuildListingUrlWithContext(listkey);
             }
 
             // window.location.reload();

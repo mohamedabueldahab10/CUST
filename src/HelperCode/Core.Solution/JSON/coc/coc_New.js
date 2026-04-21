@@ -19,6 +19,11 @@ var Information_Form = [
             { fieldNameInList: "WFStage", fieldValueInList: "LMSCOC01" }]
           },
           {
+            condition: "sod",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "SODCOC" },
+            { fieldNameInList: "WFStage", fieldValueInList: "SODCOC01" }]
+          },
+          {
             condition: "strategically",
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOCOC" },
             { fieldNameInList: "WFStage", fieldValueInList: "EPMOCOC01" }]

@@ -5337,14 +5337,17 @@ button.btn.btn-action.btn-save.Resources.disablebtns:before {
 }
 
 #projectType .nav-item .nav-link.active #internalProjectCount,
-#projectType .nav-item .nav-link.active #externalProjectCount {
+#projectType .nav-item .nav-link.active #externalProjectCount,
+#projectType .nav-item .nav-link.active #LMSProjectCount,
+#projectType .nav-item .nav-link.active #SODProjectCount {
     background: #148287;
     color: white;
 }
 
 .ar #projectType .nav-item .nav-link #internalProjectCount,
 .ar #projectType .nav-item .nav-link #externalProjectCount,
-.ar #projectType .nav-item .nav-link #LMSProjectCount {
+.ar #projectType .nav-item .nav-link #LMSProjectCount,
+.ar #projectType .nav-item .nav-link #SODProjectCount {
     border: 1px solid #148287;
     width: 30px;
     height: 20px;
@@ -5358,7 +5361,8 @@ button.btn.btn-action.btn-save.Resources.disablebtns:before {
 
 .en #projectType .nav-item .nav-link #internalProjectCount,
 .en #projectType .nav-item .nav-link #externalProjectCount,
-.en #projectType .nav-item .nav-link #LMSProjectCount {
+.en #projectType .nav-item .nav-link #LMSProjectCount,
+.en #projectType .nav-item .nav-link #SODProjectCount {
     border: 1px solid #148287;
     width: 30px;
     padding: 3px;

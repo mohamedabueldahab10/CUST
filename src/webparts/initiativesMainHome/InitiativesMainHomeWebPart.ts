@@ -832,6 +832,15 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                         </a>
 
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="SOD"
+                                            data-toggle="tab" href="#SODProjects" role="tab"
+                                            aria-controls="SODProjects" aria-selected="false">
+                                            <span data-trans-sod class="Resources"></span>
+                                            <span id="SODProjectCount"></span>
+                                        </a>
+
+                                    </li>
                                 </ul>
                                 <div class="tab-content" id="projectTypeContent">
                                     <div class="tab-pane fade show active" id="InternalProjects" role="tabpanel"
@@ -849,6 +858,12 @@ export default class InitiativesMainHomeWebPart extends BaseClientSideWebPart<II
                                     <div class="tab-pane fade" id="LMSProjects" role="tabpanel"
                                     aria-labelledby="LMS">
                                     <div class="accordion LMSAccordion" id="accordionProject">
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="SODProjects" role="tabpanel"
+                                    aria-labelledby="SOD">
+                                    <div class="accordion SODAccordion" id="accordionProject">
 
                                     </div>
                                 </div>

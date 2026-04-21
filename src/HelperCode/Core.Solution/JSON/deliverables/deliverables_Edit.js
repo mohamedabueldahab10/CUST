@@ -27,6 +27,15 @@ var Information_Form = [
             { fieldNameInList: "WFStage", fieldValueInList: "LMSProjDeliverable03" }]
           },
           {
+            condition: "sod",
+            values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "SODProjDeliverable" },
+            {
+              fieldNameInList: "WFInitiatedBy",
+              fieldValueInList: "LoggedInUser",
+            },
+            { fieldNameInList: "WFStage", fieldValueInList: "SODProjDeliverable03" }]
+          },
+          {
             condition: "strategically",
             values: [{ fieldNameInList: "WFModuleCode", fieldValueInList: "EPMOProjDeliverable" },
             {
@@ -52,11 +61,11 @@ var Information_Form = [
         InternalName: 'Name',
         DisplayName: 'اسم المخرج',
         DisplayNameEn: 'Name',
-        type: 'multiline',
+        type: 'string',
         validation: 'required',
-        maxchar: 1000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 1000 حرف",
-        descPhraseEn: "max length of letters equal 255",
+        maxchar: '235',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 235 حرف",
+        descPhraseEn: "max length of letters equal 235",
         // withletters: true,
         Errmsgkey: "withletterpattern",
         security: {
@@ -70,10 +79,10 @@ var Information_Form = [
         DisplayName: 'الوصف',
         DisplayNameEn: 'Description',
         type: 'multiline',
-        maxchar: 5000,        
+        maxchar: 235,        
         validation: 'required',
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 235 حرف",
+        descPhraseEn: "max length of letters equal 235",
         security: {
           groups: [
             'System Admin Group','EPMO','LMSU-Execution','VRO_E'
@@ -92,15 +101,15 @@ var Information_Form = [
         InternalName: 'Weight',
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
-        type: 'number',
+        type: 'weightfloatpercentage',
         listname: 'Deliverables',
         targetcode: 'ProjectCode',
-      /*  targetelement: 'Weight',
-        seconedtarget: 'Amount',*/
+        targetelement: 'Weight',
+        seconedtarget: 'Amount',
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
         // "state":"disabled",
-        validation: 'required',
+       // validation: 'required',
         security: {
           groups: [
             'System Admin Group','EPMO','LMSU-Execution','VRO_E'
@@ -118,108 +127,28 @@ var Information_Form = [
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
         targetelement: 'Weight',
-        validation: 'required',
-        display:'none',
+       // validation: 'required',
         security: {
           groups: [
             'System Admin Group','EPMO','LMSU-Execution','VRO_E'
           ]
       },
       },
-           /* {
-        InternalName: 'Exchangetype',
-        DisplayNameEn: 'Exchange type',
-        DisplayName: 'نوع الصرف',
-        validation: 'required',
-        type: 'dropdownValues',
-        dontSubmit: true,
-        options: {
-          choices: [
-            { display: 'general', value: 'general' , selected: 'selected' },
-            { display: 'partial', value: 'partial' },
-            { display: 'delivery', value: 'delivery'}
-          ],
-        },
-        toggleValues: [
-          { value: 'general', fields: ['Quantity'] },
-          { value: 'partial', fields: ['Disbursedquantity'] },
-          { value: 'delivery', fields: [] },
-        ],
-        requiredValues: [
-          { value: 'general', fields: ['InvoiceNumber', 'InvoiceDate'] },
-          { value: 'partial', fields:  ['InvoiceNumber', 'InvoiceDate'] },
-          { value: 'delivery', fields: ['Delivered'] },
-      ],
-      },*/
-     
       {
         InternalName: 'Quantity',
         DisplayNameEn: 'Quantity',
         DisplayName: 'الكمية',
         type: "number",    
-        validation: 'required',
-        ToggleName:'Quantity',
-        state:"disabled",
-        // dynamic: 'parent',
+      //  validation: 'required',
       },
-   /*     {
-        InternalName: 'Disbursedquantity',
-        DisplayNameEn: 'Disbursed quantity',
-        DisplayName: 'الكميه المنصرفه',
-        type: "number",    
-        validation: 'required',
-        ToggleName:'Disbursedquantity',
-        display:'none',
-        dynamic: 'parent',
-      },*/
         {
         InternalName: 'AmountPrice',
         DisplayNameEn: 'AmountPrice',
         DisplayName: 'سعر الوحدة',
         type: "number",        
-        validation: 'required',
+      //  validation: 'required',
         // type: 'float',
       },
-     /*    {
-        InternalName: 'PurchaseRequestNumber',
-        DisplayNameEn: 'PurchaseRequestNumber',
-        DisplayName: 'رقم طلب الاحتياج',
-        type: "number",  
-        state:"disabled"
-      },
-       {
-        InternalName: 'PurchaseOrderNumber',
-        DisplayNameEn: 'PurchaseOrderNumber',
-        DisplayName: 'رقم امر التعميد',
-        type: "number",  
-        state:"disabled"
-      },
-      {
-        InternalName: 'InvoiceNumber',
-        DisplayName: 'رقم الفاتورة',
-        DisplayNameEn: 'Invoice Number',
-        type: 'string',
-        RequiredName: 'InvoiceNumber',
-      },
-      {
-        InternalName: 'InvoiceDate',
-        DisplayName: 'تاريخ الفاتورة',
-        DisplayNameEn: 'Invoice Date',
-        type: 'datetimetoparent',
-        listname: 'Projects', // list name
-        startinternalname: 'BaselineStartDate', // internalname of parent start
-        endinternalname: 'BaselineFinishDate',
-        max: 'today',
-        Errmsgkey: 'cancelationdatepattern',
-        RequiredName: 'InvoiceDate',
-      },
-          {
-        InternalName: 'ProjectLineNumber',
-        DisplayNameEn: 'ProjectLineNumber',
-        DisplayName: 'رقم السطر فى موارد',
-        type: "string",  
-        state:"disabled"
-      },*/
       // {
       //   "InternalName": "Status",
       //   "DisplayName": "الحالة",
@@ -315,7 +244,6 @@ var Information_Form = [
         targetfield: 'Status',
         targetfieldvalue: 'completed',
         type: 'yesnoradio',
-        RequiredName: 'Delivered',
         options: {
           choices: [
             { display: 'yes', value: 'yes' },
@@ -344,9 +272,9 @@ var Information_Form = [
         DisplayNameEn: 'Acceptance Criteria',
         type: 'multiline',
         "validation": "required",
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         security: {
           groups: [
             'System Admin Group','EPMO','LMSU-Execution','VRO_E'
@@ -359,9 +287,9 @@ var Information_Form = [
         DisplayName: 'الملاحظات',
         DisplayNameEn: 'Comments',
         type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         security: {
           groups: [
             'System Admin Group','EPMO','LMSU-Execution','VRO_E'
@@ -491,5 +419,5 @@ var Information_Form = [
   //       // "validation": "required",
   //     },
   //   ],
-  // },
+  // },2
 ]

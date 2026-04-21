@@ -53,9 +53,6 @@ var Information_Form = [
         DisplayName: 'النوع',
         validation: 'required',
         dynamic: 'parent', // parent to get the child depends on this field value
-        toggleValues: [
-          { value: 'vision', fields: ['RelatedProgram'] }, //we can put more than 1  field
-        ],
         type: 'dropdownValues',
         options: {
           choices: [
@@ -136,6 +133,18 @@ var Information_Form = [
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
+             {
+              display: 'sod',
+              value: 'sod',
+              // roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','InitiativeManager','InitiativeOwner',], groups
+              roles: ['Administrator','SODVROExecution','SODVROPerformance','SODVROE','InitiativeManager','InitiativeOwner'],
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'SODCreateInitiative' },
+                  { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'WFStage', value: 'SODCreateInitiative01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
+              ],
+            },
             // { display: 'others', value: 'others' },
 
           ],
@@ -143,8 +152,15 @@ var Information_Form = [
         requiredValues: [
           { value: 'vision', fields: ['Portfolio'] },
           { value: 'lms', fields: ['SubSector'] },
+          { value: 'sod', fields: ['SubSector'] },
           { value: 'strategically', fields: ['SubSector'] },
       ],
+          toggleValues: [
+          { value: 'vision', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective','RelatedProgram','ExternalEntityRepresentative'] },
+          { value: 'lms', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
+          { value: 'sod', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
+          { value: 'strategically', fields: [''] },
+        ],
       },
       {
         InternalName: 'StrategySource',
@@ -230,51 +246,19 @@ var Information_Form = [
               },
             ],
           },
-        ],
-      },
-      {
-        InternalName: 'RelatedStrategyReadonly',
-        DisplayNameEn: 'Related Strategy Read Only',
-        DisplayName: 'الاستراتيجية المطلعه',
-        type: 'lookup',
-        // dontSubmit: true,
-        source: 'GoalStrategy',
-        Dispfieldkey: 'Name',
-        valfieldkey: 'Title',        
-        "validation": "required",
-        // dynamic: 'parent',
-        // dynamic: 'Types',
-        // dynamic:'parent',
-        seconeddynamic: 'Types',
-        dynamic: 'parent', //main field that affect on other chiled field
-        filterField: 'Types',
-        filterFieldType: 'Text',
-        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
-        //in case not parent add below attrs
-        //role access
-        accessFilter: [
-          {
-            role: 'VROE',
+           {
+            role: 'SODVROExecution',
             conditions: [
               {
                 field: 'Types',
                 type: 'Choice',
-                values: ['vision'],
-              },
-            ],
-          },
-          {
-            role: 'LMSUExecution',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Choice',
-                values: ['lms'],
+                values: ['sod'],
               },
             ],
           },
         ],
       },
+    
       {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
@@ -368,7 +352,7 @@ var Information_Form = [
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        type: 'lookupmultiselect',
+        type: 'lookup',
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
@@ -421,10 +405,163 @@ var Information_Form = [
               },
             ],
           },
+            {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
         ],
         // queryField: 'Types', // if i need to make the field with filter should add this like lookupwithquery type
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
+      },
+      {
+        InternalName: 'RelatedStrategyReadonly',
+        DisplayNameEn: 'Related Strategy Read Only',
+        DisplayName: 'الاستراتيجية المطلعه',
+        type: 'lookupWithQuery',
+        ToggleName: 'RelatedStrategyReadonly',
+        queryField: 'Types',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'ministry',
+        // validation: 'required',
+        //from other list:
+
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        dynamic: 'parent',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+        //
+        //in case not parent add below attrs
+        //role access
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['lms'],
+              },
+            ],
+          },
+           {
+            role: 'SODVROExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
+              },
+            ],
+          },
+        ],
+        "display": "none"
+      },
+       
+      {
+        InternalName: 'RelatedReadOnlyObjectiveLevel',
+        DisplayNameEn: 'Related Objective Level',
+        DisplayName: 'مستوى الهدف المتطلع',
+        grandFieldId: 'RelatedStrategyReadonly',
+        childFieldId: 'RelatedReadonlyObjective',
+        childFieldIdSource: 'Types',
+        type: 'dropdownValues',
+        ToggleName: 'RelatedReadOnlyObjectiveLevel',
+        descPhraseAr: 'تظهر الأهداف بناءً على مستوى الهدف المتطلع والاستراتيجية المختارة',
+        descPhraseEn: 'Objectives appear based on selected Level and Related Strategy Read Only',
+        options: {
+          choices: [
+            { display: 'main', value: 'main' },
+            { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel3', value: 'sublevel3' },
+          ],
+        },
+        "display": "none"
+      },
+      {
+        InternalName: 'RelatedReadonlyObjective',
+        DisplayNameEn: 'Related Readonly Objective',
+        DisplayName: 'الهدف المتطلع',
+        type: 'lookup',
+        ToggleName: 'RelatedReadonlyObjective',
+        source: 'SOs',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        dynamic: 'RelatedStrategyReadonly',
+        filterField: 'RelatedStrategy',
+        filterFieldType: 'Text',
+        descPhraseAr: 'تظهر الأهداف بناءً على الاستراتيجية المتطلعة ومستوى الهدف المتطلع',
+        descPhraseEn: 'Objectives appear based on Related Strategy Read Only and Related Objective Level',
+        accessFilter: [
+          {
+            role: 'VROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'VROP',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['lms'],
+              },
+            ],
+          },
+           {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['sod'],
+              },
+            ],
+          },
+          {
+            role: 'LMSP',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Text',
+                values: ['lms'],
+              },
+            ],
+          },
+        ],
+        "display": "none"
       },
       // {
       //   InternalName: 'RelatedProgram',
@@ -469,6 +606,18 @@ var Information_Form = [
         descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
         descPhraseEn: " User Should have right access", 
       },
+        {
+        InternalName: 'ExternalEntityRepresentative',
+        DisplayNameEn: 'External Entity Representative',
+        DisplayName: 'ممثل الجهة الخارجية',
+        ToggleName: 'ExternalEntityRepresentative',
+        type: 'string',
+        maxchar: 255,
+        display: 'none',
+      // validation: 'required',
+      //  descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
+      //  descPhraseEn: "max length of letters equal 255",  
+      },
       {
         InternalName: 'Sector',
         DisplayName: 'القطاع',
@@ -502,7 +651,7 @@ var Information_Form = [
         valfieldkey: 'Title',
         // "state": "disabled"
         RequiredName: 'SubSector',
-        // validation: 'required',
+         validation: 'required',
         isRelatedToParent: true, // to show parent value depends on child like sector and subsector
         dynamic: 'Sector', //InternalName Of Parent field
         filterField: 'ParentEntity', //InternalName Of Parent field
@@ -1361,7 +1510,7 @@ var Information_Form = [
         DisplayNameEn: 'Name',
         DisplayName: 'المنفعة',
         type: 'string',
-        // validation: 'required',
+        validation: 'required',
         maxchar: '255',
         // withletters:true,
         Errmsgkey:"withletterpattern",
