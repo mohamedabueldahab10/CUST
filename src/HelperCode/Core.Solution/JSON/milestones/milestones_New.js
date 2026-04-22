@@ -55,22 +55,16 @@ var Information_Form = [
       //   // "state": "disabled",
       //   // dynamic: "Initiative"
       // },
-  
       {
         InternalName: "Phase",
         DisplayName: "المرحلة",
         DisplayNameEn: "Phase",
-        // validation: 'required',
-        type: 'dropdownValues',
-        options: {
-          choices: [
-            { display: 'p1', value: 'p1' },
-            { display: 'p2', value: 'p2' },
-            { display: 'p3', value: 'p3' },
-            { display: 'p4', value: 'p4' },
-           
-          ],
-        },
+        type: "lookup",
+        //from other list:
+        source: "Phases",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "PhaseNameEn",
+        valfieldkey: "Title",
       },
       {
         InternalName: 'Weight',
@@ -81,8 +75,8 @@ var Information_Form = [
         targetcode: 'ProjectCode',
         targetelement: 'Weight',
         seconedtarget: 'Amount',
-        "state":"disabled",
-        // validation: 'required',
+       // "state":"disabled",
+        validation: 'required',
         descPhraseAr: "من التكلفة",
         descPhraseEn: " From Budget", 
       },
@@ -200,7 +194,7 @@ var Information_Form = [
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
-        validation: "required",
+        //validation: "required",
       },
       //   {
       //     InternalName: 'SupportDocumentsDescription',

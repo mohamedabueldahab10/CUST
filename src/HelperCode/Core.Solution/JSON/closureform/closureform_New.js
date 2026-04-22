@@ -4,6 +4,41 @@ var Information_Form = [
     labelEn: "Closure form",
     descriptionEn: "Details ",
     description: "معلومات نموذج اغلاق مشروع ",
+    formDefaultValues: [
+        { 
+          fieldName: 'WFModuleCode', 
+          value: 'ProjectClosure',
+          roles: ["VRO_E",
+            "LMS_E",
+            "EPMO",
+            "System Admin Group",
+            "SPMO",
+            "Project Managers for Project Web App",
+            "Development Unit"],
+        },
+        { 
+          fieldName: 'WFInitiatedBy', 
+          value: 'LoggedInUser',
+          roles: ["VRO_E",
+            "LMS_E",
+            "EPMO",
+            "System Admin Group",
+            "SPMO",
+            "Project Managers for Project Web App",
+            "Development Unit"],
+        },
+        { 
+          fieldName: 'WFStage', 
+          value: 'ProjectClosure01',
+          roles: ["VRO_E",
+            "LMS_E",
+            "EPMO",
+            "System Admin Group",
+            "SPMO",
+            "Project Managers for Project Web App",
+            "Development Unit"],
+        },
+    ],
     subFields: [
       // {
       //   InternalName: 'Title',
@@ -22,7 +57,6 @@ var Information_Form = [
             { value: "projectcompleted", display: "projectcompleted" },
             { value: "ownerchange", display: "ownerchange" },
             { value: "others", display: "others" },
-
             // 'الغاء المشروع', 'اكتمال المشروع', 'تغير الجهة المالكة', 'أخرى'
           ],
         },

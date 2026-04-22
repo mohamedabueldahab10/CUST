@@ -105,6 +105,13 @@ var Information_Form = [
               roles: ['Administrator', 'EPMO', 'LMSUExecution'],
               // customFilterValue: "lms",
             },
+              {
+              display: 'sod',
+              value: 'sod',
+              // customFilterValue: "lms",
+              roles: ['Administrator','SODVROExecution','SODVROPerformance','SODVROE'],
+              // customFilterValue: "lms",
+            },
             //---end EPMO and Admin Section ----
             {
               display: 'vision',
@@ -539,6 +546,7 @@ var Information_Form = [
             { display: 'kpisuscomp', value: 'kpisuscomp' },
             { display: 'kpivision', value: 'kpivision' },
             { display: 'kpistrategic', value: 'kpistrategic' },
+            { display: 'kpioperational', value: 'kpioperational' },
           ],
         },
         validation: 'required',
@@ -589,6 +597,42 @@ var Information_Form = [
             { display: 'quarter', value: 'quarter' },
             { display: 'midterm', value: 'midterm' },
             { display: 'year', value: 'year' },
+          ],
+        },
+         toggleValues: [
+            { value: 'monthly', fields: ['CalculationMethod'] },
+         ],
+
+      },
+       {
+        InternalName: 'Calculation',
+        DisplayNameEn: 'Calculation Method',
+        DisplayName: 'طريقة الاحتساب',
+        type: 'dropdownValues',
+        ToggleName: "CalculationMethod",
+        display:'none',
+        options: {
+          choices: [
+            { display: 'last', value: 'last' },
+            { display: 'average', value: 'average' },
+            { display: 'sum', value: 'sum' },
+          
+          ],
+        },
+      },
+      {
+        InternalName: 'Lagging',
+        DisplayNameEn: 'Lagging',
+        DisplayName: 'تاريخ استحقاق ادخال بيانات المؤشر Lagging',
+        type: 'yesnoradio',
+        validation: 'required',
+        options: {
+          choices: [
+            { display: 'now', value: 'now' },
+            { display: 'three', value: 'three' },
+            { display: 'six', value: 'six' },
+            { display: 'nine', value: 'nine' },
+            { display: 'twelve', value: 'twelve' },
           ],
         },
       },
@@ -709,8 +753,8 @@ var Information_Form = [
         DisplayName: 'مالك المؤشر',
         type: 'picker', //user
         // validation: 'required',
-        descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
-        descPhraseEn: " User Should have right access",
+      //  descPhraseAr: "يجب ان يكون المستخدم لديه الصلاحية المناسبة",
+      //  descPhraseEn: " User Should have right access",
       },
       {
         InternalName: 'ExternalKPIOwner',
@@ -955,7 +999,6 @@ var Information_Form = [
         Errmsgkey: 'todatepattern',
         type: 'datetime',
         // validation: "required",
-        
       },
     ],
   },

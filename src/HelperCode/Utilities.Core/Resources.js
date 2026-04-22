@@ -1,4 +1,4 @@
-﻿var Resources = {
+var Resources = {
   ar: {
     clearfilter: "مسح التصفية",
     title1: "راعي المشروع",

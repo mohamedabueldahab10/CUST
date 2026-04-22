@@ -33,7 +33,8 @@ var Information_Form = [
             { display: "milestones", value: "Milestones" },
           ],
         },
-        dontSubmit: true,
+        state: "disabled",
+        dontsubmit: true,
         getValueFromLookup: {
           lookupField: "RelatedChangeItemCode",
           lookupList: "ChangeItems",

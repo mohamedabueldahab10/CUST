@@ -12,7 +12,8 @@ var Information_Form = [
       { fieldName: 'Completed', value: 'yes', stages:["EPMOInitiativeDeliverable03"] },
       //LMS
       { fieldName: 'Completed', value: 'yes', stages:["LMSInitiativeDeliverable03"] },
-  
+      //SOD
+      { fieldName: 'Completed', value: 'yes', stages:["SODInitiativeDeliverable03"] },
 
     ],
     subFields: [
@@ -193,6 +194,27 @@ var Information_Form = [
           //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
           // },
           },
+    /*       {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline',
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline',
+      }
+   ]
+   },*/
       // {
       //   InternalName: "WFStage",
       //   DisplayName: "المرحلة",

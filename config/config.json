@@ -258,6 +258,14 @@
         }
       ]
     },
+    "deleted-items-listing-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/deletedItemsListing/DeletedItemsListingWebPart.js",
+          "manifest": "./src/webparts/deletedItemsListing/DeletedItemsListingWebPart.manifest.json"
+        }
+      ]
+    },
     "change-requests-web-part": {
       "components": [
         {
@@ -491,7 +499,7 @@
     "ProjectcomplianceWebPartStrings": "lib/webparts/projectcompliance/loc/{locale}.js",
     "InitiativecomplianceWebPartStrings": "lib/webparts/initiativecompliance/loc/{locale}.js",
     "SearchDocumentsWebPartStrings": "lib/webparts/searchDocuments/loc/{locale}.js",
+    "DeletedItemsListingWebPartStrings": "lib/webparts/deletedItemsListing/loc/{locale}.js",
     "ChangeRequestsWebPartStrings": "lib/webparts/changeRequests/loc/{locale}.js"
-
   }
 }

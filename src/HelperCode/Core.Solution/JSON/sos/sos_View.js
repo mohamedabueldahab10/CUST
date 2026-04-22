@@ -94,6 +94,9 @@ var Information_Form = [
               //   { fieldName: 'DraftStatus', value: '' },
               // ],
             },
+              { display: 'sod', value: 'sod'},
+          
+
             ],
         },
 

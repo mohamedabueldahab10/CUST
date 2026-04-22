@@ -12,51 +12,52 @@ var Information_Form = [
         type: "string",
         state: "disabled",
       },
-      // {
-      //   InternalName: "ItemType",
-      //   DisplayNameEn: "Item Type",
-      //   DisplayName: "نوع البند",
-      //   type: "dropdownValues",
-      //   options: {
-      //     choices: [
-      //       { display: "objective", value: "SOs" },
-      //       { display: "kpi", value: "MainKpi" },
-      //       { display: "initiative", value: "Initiatives" },
-      //       { display: "project", value: "Projects" },
-      //       { display: "initiativesmilestones", value: "InitiativeMilestones" },
-      //       {
-      //         display: "initiativesdeliverables",
-      //         value: "InitiativeDeliverables",
-      //       },
-      //       { display: "benefits", value: "Benefits" },
-      //       { display: "deliverables", value: "Deliverables" },
-      //       { display: "milestones", value: "Milestones" },
-      //     ],
-      //   },
-      //   dontsubmit: true,
-      //   getValueFromLookup: {
-      //     lookupField: "RelatedChangeItemCode",
-      //     lookupList: "ChangeItems",
-      //     lookupFieldToGet: "ListName",
-      //   },
-      //   toggleValues: [
-      //     { value: "MainKpi", fields: ["Classification"] }, //we can put more than 1  field
-      //   ],
-      // },
-      // {
-      //   InternalName: "Classification",
-      //   DisplayNameEn: "Classification",
-      //   DisplayName: "تصنيف المؤشر",
-      //   type: "dropdownValues",
-      //   ToggleName: "Classification",
-      //   display: "none",
-      //   options: {
-      //     choices: [
-      //       { display: "kpioperational", value: "kpioperational" },
-      //       { display: "kpistrategic", value: "kpistrategic" },
-      //     ],
-      //   },
-      // },
+      {
+        InternalName: "ItemType",
+        DisplayNameEn: "Item Type",
+        DisplayName: "نوع البند",
+        type: "dropdownValues",
+        options: {
+          choices: [
+            { display: "objective", value: "SOs" },
+            { display: "kpi", value: "MainKpi" },
+            { display: "initiative", value: "Initiatives" },
+            { display: "project", value: "Projects" },
+            { display: "initiativesmilestones", value: "InitiativeMilestones" },
+            {
+              display: "initiativesdeliverables",
+              value: "InitiativeDeliverables",
+            },
+            { display: "benefits", value: "Benefits" },
+            { display: "deliverables", value: "Deliverables" },
+            { display: "milestones", value: "Milestones" },
+          ],
+        },
+        state: "disabled",
+        dontsubmit: true,
+        getValueFromLookup: {
+          lookupField: "RelatedChangeItemCode",
+          lookupList: "ChangeItems",
+          lookupFieldToGet: "ListName",
+        },
+        toggleValues: [
+          { value: "MainKpi", fields: ["Classification"] }, //we can put more than 1  field
+        ],
+      },
+      {
+        InternalName: "Classification",
+        DisplayNameEn: "Classification",
+        DisplayName: "تصنيف المؤشر",
+        type: "dropdownValues",
+        ToggleName: "Classification",
+        display: "none",
+        options: {
+          choices: [
+            { display: "kpioperational", value: "kpioperational" },
+            { display: "kpistrategic", value: "kpistrategic" },
+          ],
+        },
+      },
       {
         InternalName: "RelatedChangeItemCode",
         DisplayNameEn: "Related Change Item",
