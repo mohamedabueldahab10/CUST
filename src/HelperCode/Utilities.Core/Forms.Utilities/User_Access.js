@@ -830,6 +830,13 @@ window.userCalls = {
             document.title = "Documents Search";
           }
           break;
+      case "DeletedItemsListing.aspx":
+          if (isArabic) {
+            document.title = "المكونات المحذوفة";
+          } else {
+            document.title = "Deleted Items";
+          }
+          break;
       case "changeRequests.aspx":
           if (isArabic) {
             document.title = "طلبات التغيير";

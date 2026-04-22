@@ -964,6 +964,11 @@ var PageArray = [
 		TitleEn: "Documents Search",
 	},
 	{
+		pagename: "DeletedItemsListing.aspx",
+		Title: "المكونات المحذوفة",
+		TitleEn: "Deleted Items",
+	},
+	{
 		pagename: "ChangeRequests.aspx",
 		Title: "طلبات التغيير",
 		TitleEn: "Change Requests",
