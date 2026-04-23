@@ -9,6 +9,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  padding: 6px;
+  border-radius: 10px;
 }
 
 .deleted-item-tab-btn {
@@ -23,6 +25,8 @@
   font-size: 13px;
   font-weight: 600;
   transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 
 .deleted-item-tab-btn:nth-child(2) {
@@ -50,25 +54,97 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.deleted-items-filters-row label {
-  font-weight: 600;
+.deleted-item-tab-btn.active {
+  border-width: 2px;
+  box-shadow: 0 0 0 3px rgba(20, 65, 90, 0.15), 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.deleted-item-tab-btn.active::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  bottom: 0;
+  height: 3px;
+  background: currentColor;
+}
+
+.deleted-items-filters-shell {
+  padding: 10px 10px 0;
+  border: 1px solid rgba(20, 65, 90, 0.08);
+  border-radius: 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 65, 90, 0.04) 0%,
+    rgba(20, 130, 130, 0.03) 100%
+  );
+}
+
+.filter-field-card {
+  padding: 6px 6px 4px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(20, 65, 90, 0.04);
+  transition: all 0.2s ease;
+  animation: filterFadeIn 0.35s ease both;
+}
+
+.filter-field-card:hover {
+  box-shadow: 0 3px 10px rgba(20, 65, 90, 0.08);
+}
+
+.filter-field-card:focus-within {
+  border-color: rgba(20, 130, 130, 0.35);
+  box-shadow: 0 0 0 1px rgba(20, 130, 130, 0.2);
+}
+
+.deleted-items-filters-row .filter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
   color: #14415a;
   margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.deleted-items-filters-row .filter-label i {
+  font-size: 12px;
+  color: #148282;
+  opacity: 0.9;
 }
 
 .deleted-items-filters-row .form-control {
-  border: 1px solid rgba(20, 65, 90, 0.24);
-  border-radius: 8px;
+  border: 1px solid rgba(20, 65, 90, 0.12);
+  border-radius: 9px;
   min-height: 40px;
+  background-color: #fff;
+  padding-inline-end: 32px;
+  font-weight: 600;
+  color: #14415a;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314415a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
 }
 
 .deleted-items-filters-row .form-control:focus {
-  border-color: #148282;
-  box-shadow: 0 0 0 0.2rem rgba(20, 130, 130, 0.2);
+  border-color: rgba(20, 130, 130, 0.65);
+  box-shadow: 0 0 0 0.12rem rgba(20, 130, 130, 0.14);
+  background-color: #fff;
+}
+
+.ar .deleted-items-filters-row .form-control {
+  background-position: left 12px center;
+  padding-inline-start: 34px;
+  padding-inline-end: 12px;
 }
 
 .deleted-items-listing-placeholder {
-  min-height: 120px;
+  min-height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,6 +152,24 @@
   border: 1px dashed rgba(20, 65, 90, 0.2);
   border-radius: 8px;
   background: rgba(20, 65, 90, 0.03);
+}
+
+.deleted-items-listing-placeholder h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #14415a;
+  letter-spacing: 0.2px;
+}
+
+@keyframes filterFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {

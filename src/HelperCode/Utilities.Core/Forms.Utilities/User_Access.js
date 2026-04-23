@@ -129,6 +129,7 @@ var UserRole,
     "stratigicinformation.aspx",
     "InitiativesMain.aspx",
     "Targets.aspx",
+    "DeletedItemsListing.aspx",
     "ChangeRequests.aspx",
     "BenefitMetrics.aspx",
     "StrategicIndicators.aspx",
@@ -830,7 +831,7 @@ window.userCalls = {
             document.title = "Documents Search";
           }
           break;
-      case "DeletedItemsListing.aspx":
+      case "deleteditemslisting.aspx":
           if (isArabic) {
             document.title = "المكونات المحذوفة";
           } else {
