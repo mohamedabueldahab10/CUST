@@ -1335,6 +1335,10 @@ function () {
     $("#Classification").val("");
     $(".changeItemsRow").find(".dynamicField").remove();
     
+    // Apply visibility/required-state immediately before early return
+    handleParentChildFieldsVisibility();
+    changeResources();
+    
     // If both ChangeItem and ParentItemCode exist, call API
     if (changeItemCode && itemCode) {
       callGetSectorAndSubSectorAPI(changeItemCode, itemCode);
@@ -1372,6 +1376,7 @@ function () {
 
 $(document).on("change", "#ParentItemType, #ChildItemType", function () {
 $(".changeItemsRow").find(".dynamicField").remove();
+handleParentChildFieldsVisibility();
 changeResources();
 });
 function setChangeItemsVisibility(visible) {
@@ -1389,7 +1394,8 @@ function setChangeItemsVisibility(visible) {
 // Function to handle visibility and required state of Parent/Child fields based on actionType
 function handleParentChildFieldsVisibility() {
   var meta = getSelectedChangeItemMeta();
-  var isAddAction = meta.actionType === "add";
+  var actionType = (meta.actionType || "").toLowerCase();
+  var shouldHideHierarchyFields = actionType === "add";
   
   // Get field elements
   var $parentItemType = $("#ParentItemType");
@@ -1399,6 +1405,7 @@ function handleParentChildFieldsVisibility() {
   var $classification = $("#Classification");
   var $sector = $("#Sector");
   var $subSector = $("#SubSector");
+  var $approvalLevel = $("#ApprovalLevel");
   
   // Get parent containers
   var $parentItemTypeDiv = $parentItemType.closest(".col-md-6");
@@ -1408,6 +1415,7 @@ function handleParentChildFieldsVisibility() {
   var $classificationDiv = $("#ClassificationDiv");
   var $sectorDiv = $sector.closest(".col-md-6");
   var $subSectorDiv = $subSector.closest(".col-md-6");
+  var $approvalLevelDiv = $approvalLevel.closest(".col-md-6");
   
   // Get labels for required class
   var $parentItemTypeLabel = $parentItemTypeDiv.find("label");
@@ -1417,8 +1425,9 @@ function handleParentChildFieldsVisibility() {
   var $classificationLabel = $classificationDiv.find("label");
   var $sectorLabel = $sectorDiv.find("label");
   var $subSectorLabel = $subSectorDiv.find("label");
+  var $approvalLevelLabel = $approvalLevelDiv.find("label");
   
-  if (isAddAction) {
+  if (shouldHideHierarchyFields) {
     // Hide fields
     $parentItemTypeDiv.hide();
     $parentItemCodeDiv.hide();
@@ -1427,6 +1436,7 @@ function handleParentChildFieldsVisibility() {
     $classificationDiv.hide();
     $sectorDiv.hide();
     $subSectorDiv.hide();
+    $approvalLevelDiv.hide();
     
     // Remove required attribute and classes
     $parentItemType.prop("required", false);
@@ -1458,16 +1468,53 @@ function handleParentChildFieldsVisibility() {
     $subSectorLabel.removeClass("required-field");
     $subSector.removeClass("is-invalid");
     
-    // Clear Classification value
-    $classification.val("");
-  } else {
-    // Show fields (they will be shown/hidden based on other logic)
-    // Don't force show, let existing logic handle visibility
-    // But ensure required state is restored if needed
+    $approvalLevel.prop("required", false);
+    $approvalLevelLabel.removeClass("required-field");
+    $approvalLevel.removeClass("is-invalid");
     
-    // Note: We don't force show here because visibility is controlled by other logic
-    // (e.g., ChildItemTypeDiv is shown only for Initiatives/Projects)
-    // ClassificationDiv is shown only when ParentItemType is MainKpi
+    // Clear hidden values in New mode add action
+    $parentItemType.val("");
+    $parentItemCode.val("");
+    $childItemType.val("");
+    $childItemCode.val("");
+    $classification.val("");
+    $sector.val("");
+    $subSector.val("");
+    $approvalLevel.val("");
+  } else {
+    // Restore visible state when user switches from add to other actions
+    $parentItemTypeDiv.show();
+    $parentItemCodeDiv.show();
+    $childItemTypeDiv.show();
+    $childItemCodeDiv.show();
+    $sectorDiv.show();
+    $subSectorDiv.show();
+    $approvalLevelDiv.show();
+
+    // Keep Classification visibility controlled by parent type
+    if ($("#ParentItemType").val() === "MainKpi") {
+      $classificationDiv.show();
+    } else {
+      $classificationDiv.hide();
+    }
+
+    // Restore required markers for main hierarchy fields
+    $parentItemType.prop("required", true);
+    $parentItemTypeLabel.addClass("required-field");
+    $parentItemCode.prop("required", true);
+    $parentItemCodeLabel.addClass("required-field");
+    $sector.prop("required", true);
+    $sectorLabel.addClass("required-field");
+    $subSector.prop("required", true);
+    $subSectorLabel.addClass("required-field");
+    $approvalLevel.prop("required", true);
+    $approvalLevelLabel.addClass("required-field");
+
+    // Child fields remain conditionally required by validation logic
+    $childItemType.prop("required", false);
+    $childItemTypeLabel.removeClass("required-field");
+    $childItemCode.prop("required", false);
+    $childItemCodeLabel.removeClass("required-field");
   }
 }
 
@@ -1602,8 +1649,10 @@ $(document).on("click", "#CRSubmitButton", function (e) {
     return false;
   }
   
-  // Check actionType - if add, skip Parent/Child fields validation
+  // Check actionType for New mode add action
   var meta = getSelectedChangeItemMeta();
+  var actionType = (meta.actionType || "").toLowerCase();
+  var isNewAddAction = window.isNew && actionType === "add";
   
   // Validate actionType - must be one of: add, split, merge, delete
   if (!meta.actionType || meta.actionType.trim() === "") {
@@ -1625,14 +1674,14 @@ $(document).on("click", "#CRSubmitButton", function (e) {
     }
   }
   
-  var isAddAction = meta.actionType === "add";
+  var isAddAction = actionType === "add";
 
   // Validate required fields (same as searchDocuments.js)
   let isValid = true;
   let firstInvalid = null;
 
   // Validate Sector - skip if actionType is "add"
-  if (!isAddAction) {
+  if (!isAddAction && !isNewAddAction) {
     var sectorVal = $("#Sector").val();
     if (!sectorVal || sectorVal.trim() === "") {
       $("#Sector").addClass("is-invalid");
@@ -1646,7 +1695,7 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   }
 
   // Validate SubSector - skip if actionType is "add"
-  if (!isAddAction) {
+  if (!isAddAction && !isNewAddAction) {
     var subSectorVal = $("#SubSector").val();
     if (!subSectorVal || subSectorVal.trim() === "") {
       $("#SubSector").addClass("is-invalid");
@@ -1670,7 +1719,7 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   }
 
   // Validate ParentItemType - skip if actionType is "add"
-  if (!isAddAction) {
+  if (!isAddAction && !isNewAddAction) {
     var parentItemTypeVal = $("#ParentItemType").val();
     if (!parentItemTypeVal || parentItemTypeVal.trim() === "") {
       $("#ParentItemType").addClass("is-invalid");
@@ -1684,7 +1733,7 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   }
 
   // Validate ParentItemCode - skip if actionType is "add"
-  if (!isAddAction) {
+  if (!isAddAction && !isNewAddAction) {
     var parentItemCodeVal = $("#ParentItemCode").val();
     if (!parentItemCodeVal || parentItemCodeVal.trim() === "") {
       $("#ParentItemCode").addClass("is-invalid");
@@ -1707,12 +1756,16 @@ $(document).on("click", "#CRSubmitButton", function (e) {
     $("#ChangeItem").removeClass("is-invalid");
   }
 
-  // Validate ApprovalLevel
+  // Validate ApprovalLevel (skip in New+add where field is hidden)
   var approvalLevelVal = $("#ApprovalLevel").val();
-  if (!approvalLevelVal || approvalLevelVal.trim() === "") {
-    $("#ApprovalLevel").addClass("is-invalid");
-    if (!firstInvalid) firstInvalid = $("#ApprovalLevel");
-    isValid = false;
+  if (!isNewAddAction) {
+    if (!approvalLevelVal || approvalLevelVal.trim() === "") {
+      $("#ApprovalLevel").addClass("is-invalid");
+      if (!firstInvalid) firstInvalid = $("#ApprovalLevel");
+      isValid = false;
+    } else {
+      $("#ApprovalLevel").removeClass("is-invalid");
+    }
   } else {
     $("#ApprovalLevel").removeClass("is-invalid");
   }
@@ -1758,7 +1811,7 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   }
 
   // Validate ChildItemCode - required if ChildItemType is selected and not empty, but skip if actionType is "add"
-  if (!isAddAction) {
+  if (!isAddAction && !isNewAddAction) {
     var childItemTypeVal = $("#ChildItemType").val();
     if (childItemTypeVal && childItemTypeVal.trim() !== "") {
       var childItemCodeVal = $("#ChildItemCode").val();
@@ -2914,25 +2967,32 @@ $(".changeItemsRow").find(".dynamicField").remove();
   });
 }
 function saveAllChangeRequestFields() {
-  // Check actionType - if add, skip Parent/Child fields validation
+  // Check actionType for New mode add action
   var meta = getSelectedChangeItemMeta();
-  var isAddAction = meta.actionType === "add";
+  var actionType = (meta.actionType || "").toLowerCase();
+  var isAddAction = actionType === "add";
+  var isNewAddAction = window.isNew && actionType === "add";
   
   // Double-check required fields before proceeding (safety check)
   // Also check ChildItemCode if ChildItemType is selected (only if not add action)
   var childItemTypeVal = $("#ChildItemType").val();
   var childItemCodeVal = $("#ChildItemCode").val();
-  var childItemCodeRequired = !isAddAction && childItemTypeVal && childItemTypeVal.trim() !== "" && (!childItemCodeVal || childItemCodeVal.trim() === "");
+  var childItemCodeRequired =
+    !isAddAction &&
+    !isNewAddAction &&
+    childItemTypeVal &&
+    childItemTypeVal.trim() !== "" &&
+    (!childItemCodeVal || childItemCodeVal.trim() === "");
   
   var validationErrors = [];
-  if (!isAddAction && (!$("#Sector").val() || $("#Sector").val().trim() === "")) validationErrors.push("Sector");
-  if (!isAddAction && (!$("#SubSector").val() || $("#SubSector").val().trim() === "")) validationErrors.push("SubSector");
+  if (!isAddAction && !isNewAddAction && (!$("#Sector").val() || $("#Sector").val().trim() === "")) validationErrors.push("Sector");
+  if (!isAddAction && !isNewAddAction && (!$("#SubSector").val() || $("#SubSector").val().trim() === "")) validationErrors.push("SubSector");
   if (!$("#RelatedStrategy").val() || $("#RelatedStrategy").val().trim() === "") validationErrors.push("RelatedStrategy");
-  if (!isAddAction && (!$("#ParentItemType").val() || $("#ParentItemType").val().trim() === "")) validationErrors.push("ParentItemType");
-  if (!isAddAction && (!$("#ParentItemCode").val() || $("#ParentItemCode").val().trim() === "")) validationErrors.push("ParentItemCode");
+  if (!isAddAction && !isNewAddAction && (!$("#ParentItemType").val() || $("#ParentItemType").val().trim() === "")) validationErrors.push("ParentItemType");
+  if (!isAddAction && !isNewAddAction && (!$("#ParentItemCode").val() || $("#ParentItemCode").val().trim() === "")) validationErrors.push("ParentItemCode");
   if (childItemCodeRequired) validationErrors.push("ChildItemCode");
   if (!$("#ChangeItem").val() || $("#ChangeItem").val().trim() === "") validationErrors.push("ChangeItem");
-  if (!$("#ApprovalLevel").val() || $("#ApprovalLevel").val().trim() === "") validationErrors.push("ApprovalLevel");
+  if (!isNewAddAction && (!$("#ApprovalLevel").val() || $("#ApprovalLevel").val().trim() === "")) validationErrors.push("ApprovalLevel");
   if (!$("#ChangeDescription").val() || $("#ChangeDescription").val().trim() === "") validationErrors.push("ChangeDescription");
   if (!$("#ChangeJustification").val() || $("#ChangeJustification").val().trim() === "") validationErrors.push("ChangeJustification");
   if (!$("#ExpectedPositiveImpact").val() || $("#ExpectedPositiveImpact").val().trim() === "") validationErrors.push("ExpectedPositiveImpact");
@@ -2958,16 +3018,18 @@ function saveAllChangeRequestFields() {
     // Fields to save - exclude Parent/Child fields and Sector/SubSector if actionType is "add"
     var fieldsToSave = [
       "ChangeItem",
-      "ApprovalLevel",
       "RelatedStrategy",
       "ChangeDescription",
       "ChangeJustification",
       "ExpectedPositiveImpact",
       "ImpactType",
     ];
+    if (!isNewAddAction) {
+      fieldsToSave.splice(1, 0, "ApprovalLevel");
+    }
     
-    // Only add Parent/Child fields and Sector/SubSector if actionType is not "add"
-    if (!isAddAction) {
+    // Only add Parent/Child fields and Sector/SubSector when not New add action
+    if (!isAddAction && !isNewAddAction) {
       fieldsToSave.unshift("ParentItemType", "ParentItemCode", "ChildItemType", "ChildItemCode");
       fieldsToSave.splice(fieldsToSave.indexOf("RelatedStrategy"), 0, "Sector", "SubSector");
     }
@@ -4262,6 +4324,11 @@ function fillViewFields(item, code) {
         }
         
         // Load ChangeItem value (if exists)
+        if (changeItem) {
+          await loadChangeItemsForView(changeItem, code);
+        }
+      } else {
+        // Add requests may not have parent fields; still load ChangeItem option/value.
         if (changeItem) {
           await loadChangeItemsForView(changeItem, code);
         }

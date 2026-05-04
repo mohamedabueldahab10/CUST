@@ -3739,6 +3739,7 @@ var SubmitField_BulkEdit = {
                 // invoke delete item from cr on these workflows
 
                 Delete_Item_FromCR.init(relatedItemInCr);
+                // NewLogicDelete_Item_FromCR.init(relatedItemInCr);
               } else if (
                 (isMSCRObjective ||
                   isVROCRObjective ||
@@ -5987,6 +5988,8 @@ function changeOnKpiResultDraft(state) {
   return dfd.promise();
 }
 
+//Ghoufran Old Deletions  logic
+/*
 var Delete_Item_FromCR = {
   init: function (relatedItemInCr) {
     if (isMSCRObjective || isVROCRObjective || isLMSCRObjective) {
@@ -6016,6 +6019,101 @@ var Delete_Item_FromCR = {
         console.log("call failed", err);
       },
     });
+  },
+  g: {},
+};
+*/
+
+//Ghoufran New Deletions  logic
+var NewLogicDelete_Item_FromCR = {
+  init: function (relatedItemInCr) {
+    var listKeyToDelete = "";
+    if (isMSCRObjective || isVROCRObjective || isLMSCRObjective) {
+      listKeyToDelete = "sos";
+    } else if (isVROCRProject || isEPMOCRProject || isLMSCRProject) {
+      listKeyToDelete = "projects";
+    } else if (isEPMOCRInitiative || isVROCRInitiative || isLMSCRInitiative) {
+      listKeyToDelete = "initiatives";
+    } else if (isMSCRKPI || isVROCRKPI || isLMSCRKPI) {
+      listKeyToDelete = "mainkpi";
+    }
+    var deletionConfigurations = window.FormsConfigurationsForDeletionsRestoring;
+    if (
+      !listKeyToDelete ||
+      !deletionConfigurations ||
+      !deletionConfigurations.getDeletionConfigByListKey
+    ) {
+      console.log("Delete configuration is missing for CR item delete.");
+      Task_Edit_Data.init();
+      return;
+    }
+    var listDeletionConfig = deletionConfigurations.getDeletionConfigByListKey(
+      listKeyToDelete
+    );
+    if (!listDeletionConfig || !listDeletionConfig.DisplayListName) {
+      console.log("Delete configuration is not found by list key:", listKeyToDelete);
+      Task_Edit_Data.init();
+      return;
+    }
+    var postDeleteRequest = function (itemId) {
+      var requestBody = {
+        ItemId: Number(itemId),
+        DisplayListName: listDeletionConfig.DisplayListName,
+        requestingUserId: Number(_spPageContextInfo.userId),
+        WorkflowNames: listDeletionConfig.WorkflowNames || "",
+        RelatedListNames: listDeletionConfig.RelatedListNames || [],
+      };
+      $.ajax({
+        url: `${APIURL}/general/deleteitemandrelatedtasks`,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(requestBody),
+        success: function () {
+          Task_Edit_Data.init();
+        },
+        error: function (err) {
+          console.log("deleteitemandrelatedtasks call failed", err);
+        },
+      });
+    };
+    var resolveItemIdAndDelete = function () {
+      if (!isNaN(Number(relatedItemInCr))) {
+        postDeleteRequest(Number(relatedItemInCr));
+        return;
+      }
+      var context = SP.ClientContext.get_current();
+      var targetList = context
+        .get_web()
+        .get_lists()
+        .getByTitle(listDeletionConfig.DisplayListName);
+      var camlQuery = new SP.CamlQuery();
+      camlQuery.set_viewXml(
+        "<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+          relatedItemInCr +
+          "</Value></Eq></Where><RowLimit>1</RowLimit></Query></View>"
+      );
+      var relatedItemCollection = targetList.getItems(camlQuery);
+      context.load(relatedItemCollection);
+      context.executeQueryAsync(
+        function () {
+          if (relatedItemCollection.get_count() > 0) {
+            var itemToDelete = relatedItemCollection.getItemAtIndex(0);
+            postDeleteRequest(itemToDelete.get_item("ID"));
+          } else {
+            console.log(
+              "Related item to delete from CR was not found by Title:",
+              relatedItemInCr
+            );
+            Task_Edit_Data.init();
+          }
+        },
+        function (sender, args) {
+          console.log("Failed to resolve related item id from CR:", args.get_message());
+          Task_Edit_Data.init();
+        }
+      );
+    };
+    resolveItemIdAndDelete();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     // Task_Edit_Data.init();

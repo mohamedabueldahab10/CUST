@@ -3416,7 +3416,7 @@ window.View_Data_Request = {
       if (listkey == "delegations") {
         Get_ItemVersionsAudit.init("Delegations");
       } else if (listkey == "mainkpi") {
-        Get_ItemVersionsAudit.init("MainKPI");
+        Get_ItemVersionsWithColumnsAudit.init("MainKPI");
         Get_AllTaskHistoryRelatedToForm.init();
       } else if (listkey != "cryearlycalendar") {
         Get_AllTaskHistoryRelatedToForm.init();
@@ -4367,6 +4367,7 @@ window.View_Data_Request = {
       });
       $("button.btn-delete").on("click", function () {
         Delete_Item_Submit.g.Delete_Message();
+        // NewLogicDelete_Item_Submit.g.Delete_Message();
       });
     },
     Cancel: function () {
@@ -7014,6 +7015,8 @@ window.Delete_Data_Submit = {
   },
 };
 
+//Ghoufran Old Deletions  logic
+
 window.Delete_Item_Via_Api = {
   init: function () {
     var urlHandlerToDelete = "";
@@ -7196,6 +7199,140 @@ window.Delete_Item_Submit = {
     },
   },
 };
+
+//Ghoufran New Deletions  logic
+window.NewLogicDelete_Service = {
+  buildDeleteRequestBody: function () {
+    var deletionConfigurations = window.FormsConfigurationsForDeletionsRestoring;
+    var listDeletionConfig =
+      deletionConfigurations &&
+      deletionConfigurations.getDeletionConfigByListKey &&
+      deletionConfigurations.getDeletionConfigByListKey(listkey);
+    if (!listDeletionConfig) return null;
+    return {
+      ItemId: Number(IID),
+      DisplayListName: listDeletionConfig.DisplayListName,
+      requestingUserId: Number(_spPageContextInfo.userId),
+      WorkflowNames: listDeletionConfig.WorkflowNames || "",
+      RelatedListNames: listDeletionConfig.RelatedListNames || [],
+    };
+  },
+  redirectAfterDelete: function () {
+    if (
+      listkey == "projects" ||
+      listkey == "initiatives" ||
+      listkey == "ideas" ||
+      listkey == "portfolio" ||
+      listkey == "budgetitems" ||
+      listkey == "strategicpartnerships"
+    ) {
+      window.location =
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Listing.aspx?ListKey=" +
+        listkey;
+      return;
+    }
+    var listingUrl =
+      _spPageContextInfo.webAbsoluteUrl +
+      "/SitePages/Listing.aspx?ListKey=" +
+      listkey;
+    if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+      if (window.location.href.indexOf("KpiCode=") > -1)
+        listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+    } else if (listkey == "sosanalysis") {
+      if (window.location.href.indexOf("sosCode=") > -1)
+        listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+    } else {
+      listingUrl += PCODE_STRING;
+    }
+    window.location = listingUrl;
+  },
+  executeUnifiedDelete: function () {
+    $("button.btn-delete").removeClass("loader-action-success");
+    $("button.btn-delete").removeClass("loader-action-error");
+    $("button.btn-delete").addClass("loader-action");
+
+    var requestBody = NewLogicDelete_Service.buildDeleteRequestBody();
+    if (!requestBody) {
+      console.log("Delete configuration is missing for listkey:", listkey);
+      $("button.btn-delete").removeClass("loader-action");
+      $("button.btn-delete").addClass("loader-action-error");
+      return;
+    }
+
+    $.ajax({
+      url: `${APIURL}/general/deleteitemandrelatedtasks`,
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(requestBody),
+      success: function () {
+        $("button.btn-delete").removeClass("loader-action");
+        $("button.btn-delete").addClass("loader-action-success");
+        if (filesUrls.length) {
+          allFileIndex = 0;
+          for (let i = 0; i < filesUrls.length; i++) {
+            deleteAllFileFromDoc.init(filesUrls[i].url);
+          }
+        } else {
+          NewLogicDelete_Service.redirectAfterDelete();
+        }
+      },
+      error: function (err) {
+        console.log("deleteitemandrelatedtasks call failed", err);
+        $("button.btn-delete").removeClass("loader-action");
+        $("button.btn-delete").addClass("loader-action-error");
+      },
+    });
+  },
+  showDeleteConfirmation: function () {
+    var locale, deletetitle;
+    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+      locale = {
+        OK: Resources.ar["yes"],
+        CONFIRM: Resources.ar["yes"],
+        CANCEL: Resources.ar["cancelbutton"],
+      };
+      deletetitle = Resources.ar["deleteconfirmation"];
+    } else {
+      locale = {
+        OK: Resources.en["yes"],
+        CONFIRM: Resources.en["yes"],
+        CANCEL: Resources.en["cancelbutton"],
+      };
+      deletetitle = Resources.en["deleteconfirmation"];
+    }
+    bootbox.addLocale("custom", locale);
+    bootbox.confirm({
+      message: deletetitle,
+      locale: "custom",
+      callback: function (result) {
+        if (result == true) {
+          NewLogicDelete_Service.executeUnifiedDelete();
+        } else {
+          console.log("cancled");
+        }
+      },
+    });
+  },
+};
+
+window.NewLogicDelete_Item_Via_Api = {
+  init: function () {
+    NewLogicDelete_Service.executeUnifiedDelete();
+  },
+};
+
+window.NewLogicDelete_Item_Submit = {
+  init: function () {
+    NewLogicDelete_Service.executeUnifiedDelete();
+  },
+  g: {
+    Delete_Message: function () {
+      NewLogicDelete_Service.showDeleteConfirmation();
+    },
+  },
+};
+// Ghoufran Old Deletions logic 
 
 var Delete_Kpi_Results = {
   init: function () {
@@ -9094,6 +9231,7 @@ var deleteAllFileFromDoc = {
   },
   success: function () {
     if (allFileIndex == filesUrls.length - 1) {
+      //OLD REDIRECT BLOCK (legacy behavior) - START
       if (
         listkey == "projects" ||
         listkey == "ideas" ||
@@ -9115,6 +9253,21 @@ var deleteAllFileFromDoc = {
             PCODE_STRING;
         }
       }
+      //OLD REDIRECT BLOCK (legacy behavior) - END
+
+      // NEW REDIRECT BLOCK (new unified logic) - START
+      // if (
+      //   window.NewLogicDelete_Service &&
+      //   NewLogicDelete_Service.redirectAfterDelete
+      // ) {
+      //   NewLogicDelete_Service.redirectAfterDelete();
+      // } else {
+      //   window.location =
+      //     _spPageContextInfo.webAbsoluteUrl +
+      //     "/SitePages/Listing.aspx?ListKey=" +
+      //     listkey;
+      // }
+      //  NEW REDIRECT BLOCK (new unified logic) - END
     }
     allFileIndex++;
 
@@ -10500,6 +10653,380 @@ window.Get_ItemVersionsAudit = {
     changeResources();
   },
   currentListName: "Delegations",
+};
+
+// Item versions with dynamic changed columns (new API) - used for MainKPI first
+window.Get_ItemVersionsWithColumnsAudit = {
+  init: function (listName) {
+    Get_ItemVersionsWithColumnsAudit.currentListName = listName || "";
+    var viewJsonPath = "";
+    if ((listName || "").toLowerCase() == "mainkpi") {
+      viewJsonPath = "Style%20Library/spm/JSON/mainkpi/mainkpi_View.js";
+    }
+    var url =
+      (typeof APIURL !== "undefined" ? APIURL : "") +
+      "/general/getversionswithcolumns";
+    $.ajax({
+      url: url,
+      method: "POST",
+      contentType: "application/json",
+      dataType: "json",
+      data: JSON.stringify({
+        listName: listName,
+        itemId: Number(IID),
+        fileURL: viewJsonPath,
+      }),
+      success: Function.createDelegate(
+        this,
+        Get_ItemVersionsWithColumnsAudit.onSuccess
+      ),
+      error: Function.createDelegate(
+        this,
+        Get_ItemVersionsWithColumnsAudit.onError
+      ),
+    });
+  },
+
+  onSuccess: function (data) {
+    var versions = [];
+    if (data && data.isSuccess) {
+      if (Array.isArray(data.result)) versions = data.result;
+      else if (typeof data.result === "string") {
+        try {
+          versions = JSON.parse(data.result);
+        } catch (e) {
+          console.log("Get_ItemVersionsWithColumnsAudit: parse error", e);
+        }
+      }
+    }
+    Get_ItemVersionsWithColumnsAudit.renderTable(versions);
+  },
+
+  onError: function () {
+    Get_ItemVersionsWithColumnsAudit.renderTable([]);
+  },
+
+  renderTable: async function (versions) {
+    var isAr =
+      localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+    var Res = isAr ? Resources.ar : Resources.en;
+    var noDataLabel = isAr ? "لا يوجد" : "No Data";
+    var trueLabel = Res.true || (isAr ? "نعم" : "Yes");
+    var falseLabel = Res.false || (isAr ? "لا" : "No");
+
+    function formatDateTime(val) {
+      if (!val) return No_Data;
+      try {
+        return new Date(val).toLocaleString("en-US");
+      } catch (e) {
+        return val || No_Data;
+      }
+    }
+    function parseEditorDisplay(editorRaw) {
+      if (!editorRaw) return No_Data;
+      if (typeof editorRaw !== "string") return editorRaw;
+      var parts = editorRaw.split(":::");
+      return parts.length >= 2 && parts[1] ? parts[1] : editorRaw;
+    }
+    function startsWithSP(editorDisplay) {
+      if (!editorDisplay || editorDisplay === No_Data) return false;
+      return String(editorDisplay).trim().toUpperCase().indexOf("SP") === 0;
+    }
+    function parseJsonField(jsonField) {
+      if (!jsonField) return null;
+      if (typeof jsonField === "object") return jsonField;
+      try {
+        return JSON.parse(jsonField);
+      } catch (e) {
+        return null;
+      }
+    }
+    function translateValue(raw) {
+      if (raw == null || raw === "") return No_Data;
+      var key = String(raw).toLowerCase();
+      return Res[key] != null ? Res[key] : raw;
+    }
+    function parsePickerValue(raw) {
+      if (!raw) return No_Data;
+      var chunks = String(raw).split(";#");
+      var names = [];
+      for (var i = 0; i < chunks.length; i++) {
+        var token = chunks[i];
+        if (!token) continue;
+        var parts = token.split(":::");
+        if (parts.length >= 2 && parts[1]) names.push(parts[1]);
+      }
+      return names.length ? names.join(", ") : raw;
+    }
+    var lookupDisplayCache = {};
+    async function resolveLookupDisplayValue(rawValue, fieldMeta) {
+      if (rawValue == null || rawValue === "") return No_Data;
+      var source = (fieldMeta && fieldMeta.source) || "";
+      var valField = (fieldMeta && fieldMeta.valfieldkey) || "Title";
+      var dispField = (fieldMeta && fieldMeta.Dispfieldkey) || "Title";
+      var dispFieldEn = (fieldMeta && fieldMeta.DispfieldkeyEn) || dispField;
+      if (!source || !valField) return rawValue;
+
+      var cacheKey =
+        [source, valField, dispField, dispFieldEn, String(rawValue)].join("|");
+      if (lookupDisplayCache[cacheKey] != null) {
+        return lookupDisplayCache[cacheKey];
+      }
+
+      var escapedSource = source.replace(/'/g, "''");
+      var escapedValue = String(rawValue).replace(/'/g, "''");
+      var selectedDispField = isAr ? dispField : dispFieldEn;
+      var selectFields = [valField, dispField];
+      if (dispFieldEn && dispFieldEn !== dispField) selectFields.push(dispFieldEn);
+      var url =
+        _spPageContextInfo.webAbsoluteUrl +
+        "/_api/web/lists/getbytitle('" +
+        escapedSource +
+        "')/items?$select=" +
+        selectFields.join(",") +
+        "&$filter=" +
+        valField +
+        " eq '" +
+        escapedValue +
+        "'&$top=1";
+
+      var resolved = await new Promise(function (resolve) {
+        $.ajax({
+          url: url,
+          method: "GET",
+          headers: { Accept: "application/json; odata=verbose" },
+          success: function (data) {
+            var item =
+              data &&
+              data.d &&
+              data.d.results &&
+              data.d.results.length > 0
+                ? data.d.results[0]
+                : null;
+            if (!item) {
+              resolve(rawValue);
+              return;
+            }
+            resolve(
+              item[selectedDispField] ||
+                item[dispField] ||
+                item[dispFieldEn] ||
+                rawValue
+            );
+          },
+          error: function () {
+            resolve(rawValue);
+          },
+        });
+      });
+      lookupDisplayCache[cacheKey] = resolved;
+      return resolved;
+    }
+    function formatValueByType(rawValue, fieldMeta) {
+      if (rawValue == null || rawValue === "") return No_Data;
+      var fType = ((fieldMeta && fieldMeta.type) || "").toLowerCase();
+      if (
+        fType === "dropdownvalues" ||
+        fType === "yesnoradio" ||
+        fType === "radio" ||
+        fType === "select"
+      ) {
+        return translateValue(rawValue);
+      }
+      if (fType === "picker") {
+        return parsePickerValue(rawValue);
+      }
+      if (fType === "datetime" || fType === "date") {
+        return formatDateTime(rawValue);
+      }
+      if (fType === "lookup") {
+        if (String(rawValue).indexOf(":::") > -1 || String(rawValue).indexOf(";#") > -1) {
+          return parsePickerValue(rawValue);
+        }
+        return rawValue;
+      }
+      if (fType === "lookupwithquery") {
+        if (String(rawValue).indexOf(":::") > -1 || String(rawValue).indexOf(";#") > -1) {
+          return parsePickerValue(rawValue);
+        }
+        return rawValue;
+      }
+      return rawValue;
+    }
+
+    var safeVersions = Array.isArray(versions) ? versions : [];
+    var prepared = [];
+    for (var v = 0; v < safeVersions.length; v++) {
+      var ver = safeVersions[v] || {};
+      var editorDisplay = parseEditorDisplay(ver.editor);
+      if (startsWithSP(editorDisplay)) continue;
+      var details = Array.isArray(ver.columnsDetails) ? ver.columnsDetails : [];
+      var changed = [];
+      for (var d = 0; d < details.length; d++) {
+        if (details[d] && details[d].isChanged === true) changed.push(details[d]);
+      }
+      if (changed.length === 0) continue;
+      prepared.push({
+        created: ver.created,
+        editor: editorDisplay,
+        changedColumns: changed,
+      });
+    }
+
+    for (var pv = 0; pv < prepared.length; pv++) {
+      var changedCols = prepared[pv].changedColumns;
+      for (var cd = 0; cd < changedCols.length; cd++) {
+        var parsedMeta = parseJsonField(changedCols[cd].jsonField);
+        if (!parsedMeta) continue;
+        var t = ((parsedMeta.type || "") + "").toLowerCase();
+        var rawVal = changedCols[cd].value;
+        if (
+          (t === "lookup" || t === "lookupwithquery") &&
+          rawVal != null &&
+          rawVal !== "" &&
+          String(rawVal).indexOf(":::") === -1 &&
+          String(rawVal).indexOf(";#") === -1
+        ) {
+          changedCols[cd]._resolvedValue = await resolveLookupDisplayValue(
+            rawVal,
+            parsedMeta
+          );
+        }
+      }
+    }
+
+    var fixedColumns = [
+      { key: "editor", title: isAr ? "المحرر" : "Editor" },
+      { key: "created", title: isAr ? "تاريخ الإنشاء" : "Created Date" },
+      { key: "changes", title: isAr ? "العناصر التي تم التغيير عليها" : "Changed Items" },
+    ];
+
+    var columns = fixedColumns;
+    var colCount = columns.length > 0 ? columns.length : 1;
+    var pageSize = 10;
+    var currentPage = 1;
+
+    function buildRowsHtml(slice) {
+      var html = "";
+      for (var r = 0; r < slice.length; r++) {
+        var row = slice[r];
+        html += "<tr>";
+        for (var c = 0; c < fixedColumns.length; c++) {
+          var fixedKey = fixedColumns[c].key;
+          var fixedValue = No_Data;
+          if (fixedKey === "editor") fixedValue = row.editor || No_Data;
+          else if (fixedKey === "created") fixedValue = formatDateTime(row.created);
+          else if (fixedKey === "changes") {
+            var changesHtml = "";
+            for (var ch = 0; ch < row.changedColumns.length; ch++) {
+              var detail = row.changedColumns[ch];
+              var parsedField = parseJsonField(detail.jsonField);
+              if (!parsedField) continue;
+              var fieldLabel = isAr
+                ? parsedField.DisplayName || parsedField.DisplayNameEn || parsedField.InternalName || "-"
+                : parsedField.DisplayNameEn || parsedField.DisplayName || parsedField.InternalName || "-";
+              var rawDisplayValue =
+                detail._resolvedValue != null ? detail._resolvedValue : detail.value;
+              var value = formatValueByType(rawDisplayValue, parsedField);
+              changesHtml +=
+                '<div class="audit-change-line">' +
+                '<span class="audit-change-label">' + fieldLabel + ":</span> " +
+                '<span class="audit-change-value">' + value + "</span>" +
+                "</div>";
+            }
+            fixedValue = changesHtml || No_Data;
+          }
+          html += "<td>" + fixedValue + "</td>";
+        }
+        html += "</tr>";
+      }
+      return html;
+    }
+
+    var theadHtml = "<thead><tr>";
+    for (var h = 0; h < columns.length; h++) {
+      theadHtml +=
+        '<th><span class="d-flex align-items-center">' +
+        columns[h].title +
+        "</span></th>";
+    }
+    theadHtml += "</tr></thead>";
+
+    $(".delegations-audit-ctx.item-versions-audit").remove();
+    $(".delegations-audit-ctx.item-versions-with-columns-audit").remove();
+
+    var sectionHtml =
+      '<div class="section3 row col-12 px-0 task-history-ctx mx-0 delegations-audit-ctx item-versions-with-columns-audit">' +
+      '<div class="approvalHeader">' +
+      '<h2 class="Resources" data-trans-audit>Audit</h2>' +
+      "</div>" +
+      '<div class="taskHistory row mx-0 px-0 col-12 flex-column">' +
+      '<div class="hrsd-table-responsive">' +
+      '<table class="table HrsdTable delegations-audit-table">' +
+      theadHtml +
+      '<tbody class="item-versions-columns-audit-tbody"></tbody></table></div>' +
+      '<div class="PaginationSection d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 px-2">' +
+      "<span><span class=\"totalOfItems audit-versions-columns-total\"></span><span data-trans-records class=\"Resources\"></span></span>" +
+      '<div class="pagination-buttons-details audit-versions-columns-pagination"></div>' +
+      "</div></div></div>";
+
+    var $section = $(sectionHtml);
+    $(".btnactionrow").before($section);
+    $(".btnactionrow .form-btns-wrapper").show();
+
+    var $tbody = $section.find(".item-versions-columns-audit-tbody");
+    var $pagination = $section.find(".audit-versions-columns-pagination");
+    var $totalEl = $section.find(".audit-versions-columns-total");
+
+    function renderPage() {
+      var total = prepared.length;
+      var totalPages = total === 0 ? 1 : Math.ceil(total / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      if (total === 0) {
+        $tbody.html(
+          '<tr><td colspan="' +
+            colCount +
+            '"><span class="no-data-td">' +
+            noDataLabel +
+            "</span></td></tr>"
+        );
+      } else {
+        var start = (currentPage - 1) * pageSize;
+        var pageData = prepared.slice(start, start + pageSize);
+        $tbody.html(buildRowsHtml(pageData));
+      }
+
+      $totalEl.text(total);
+
+      var prevDisabled = total === 0 || currentPage <= 1;
+      var nextDisabled = total === 0 || currentPage >= totalPages;
+      $pagination.html(
+        '<button type="button" class="pagebtn prev-page audit-versions-columns-pagebtn"' +
+          (prevDisabled ? " disabled" : "") +
+          ' data-dir="prev"><i class="fas fa-chevron-left"></i></button>' +
+          '<button type="button" class="pagebtn next-page audit-versions-columns-pagebtn"' +
+          (nextDisabled ? " disabled" : "") +
+          ' data-dir="next"><i class="fas fa-chevron-right"></i></button>'
+      );
+    }
+
+    $section.on("click", ".audit-versions-columns-pagebtn", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var $btn = $(this);
+      if ($btn.is("[disabled]")) return;
+      if ($btn.data("dir") === "prev") currentPage--;
+      else if ($btn.data("dir") === "next") currentPage++;
+      renderPage();
+    });
+
+    renderPage();
+    changeResources();
+  },
+
+  currentListName: "",
 };
 
 // !in progress
