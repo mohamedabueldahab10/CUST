@@ -6,26 +6,53 @@ var Information_Form = [
     descriptionEn: "",
     workflowSetValues: [
       //VRO
-      { fieldName: 'DraftStatus', value: '', stages:["VROCreateProject02"] },
-      { fieldName: 'WFModuleCode', value: '',stages:["VROCreateProject02"]} ,
-      { fieldName: 'WFStage', value: '',stages:["VROCreateProject02"]} ,
-      { fieldName: 'Stage', value: 'S01',stages:["VROCreateProject02"]} ,
-      { fieldName: 'Phase', value: 'P1',stages:["VROCreateProject02"]} ,
-      { fieldName: 'WorkingStatus', value: 'active',stages:["VROCreateProject02"]} ,
+      { fieldName: 'DraftStatus', value: '', stages:["VROCreateProject03"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["VROCreateProject03"]} ,
+      { fieldName: 'WFStage', value: '',stages:["VROCreateProject03"]} ,
+      { fieldName: 'Stage', value: 'S00.3',stages:["VROCreateProject03"] ,projecttype:["operationally"]} ,
+      { fieldName: 'Stage', value: 'S00.1',stages:["VROCreateProject03"] ,projecttype:["strategy"]} ,
+      { fieldName: 'Phase', value: 'P5',stages:["VROCreateProject03"]} ,
+      { fieldName: 'WorkingStatus', value: 'active',stages:["VROCreateProject03"]} ,
       //EPMO
-      { fieldName: 'DraftStatus', value: '', stages:["EPMOCreateProject02"] },
-      { fieldName: 'WFModuleCode', value: '',stages:["EPMOCreateProject02"]} ,
-      { fieldName: 'WFStage', value: '',stages:["EPMOCreateProject02"]} ,
-      { fieldName: 'Stage', value: 'S01',stages:["EPMOCreateProject02"]} ,
-      { fieldName: 'Phase', value: 'P1',stages:["EPMOCreateProject02"]} ,
-      { fieldName: 'WorkingStatus', value: 'active',stages:["EPMOCreateProject02"]} ,
+      { fieldName: 'DraftStatus', value: '', stages:["EPMOCreateProject03"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["EPMOCreateProject03"]} ,
+      { fieldName: 'WFStage', value: '',stages:["EPMOCreateProject03"]} ,
+      { fieldName: 'Stage', value: 'S00.3',stages:["EPMOCreateProject03"],projecttype:["operationally"]} ,
+      { fieldName: 'Stage', value: 'S00.1',stages:["EPMOCreateProject03"] ,projecttype:["strategy"]} ,
+      { fieldName: 'Phase', value: 'P5',stages:["EPMOCreateProject03"]} ,
+      { fieldName: 'WorkingStatus', value: 'active',stages:["EPMOCreateProject03"]} ,
       //LMS
-      { fieldName: 'DraftStatus', value: '', stages:["LMSCreateProject02"] },
-      { fieldName: 'WFModuleCode', value: '',stages:["LMSCreateProject02"]} ,
-      { fieldName: 'WFStage', value: '',stages:["LMSCreateProject02"]} ,
-      { fieldName: 'Stage', value: 'S01',stages:["LMSCreateProject02"]} ,
-      { fieldName: 'Phase', value: 'P1',stages:["LMSCreateProject02"]} ,
-      { fieldName: 'WorkingStatus', value: 'active',stages:["LMSCreateProject02"]} ,
+      { fieldName: 'DraftStatus', value: '', stages:["LMSCreateProject03"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["LMSCreateProject03"]} ,
+      { fieldName: 'WFStage', value: '',stages:["LMSCreateProject03"]} ,
+      { fieldName: 'Stage', value: 'S00.3',stages:["LMSCreateProject03"],projecttype:["operationally"]} ,
+      { fieldName: 'Stage', value: 'S00.1',stages:["LMSCreateProject03"] ,projecttype:["strategy"]} ,
+      { fieldName: 'Phase', value: 'P5',stages:["LMSCreateProject03"]} ,
+      { fieldName: 'WorkingStatus', value: 'active',stages:["LMSCreateProject03"]} ,
+       //DeptOrgCommiette 
+      { fieldName: 'DraftStatus', value: '', stages:["DOC_CreateProject02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["DOC_CreateProject02"]} ,
+      { fieldName: 'WFStage', value: '',stages:["DOC_CreateProject02"]} ,
+      { fieldName: 'Stage', value: 'S00.3',stages:["DOC_CreateProject02"],projecttype:["operationally"]} ,
+      { fieldName: 'Stage', value: 'S00.1',stages:["DOC_CreateProject02"] ,projecttype:["strategy"]} ,
+      { fieldName: 'Phase', value: 'P5',stages:["DOC_CreateProject02"]} ,
+      { fieldName: 'WorkingStatus', value: 'active',stages:["DOC_CreateProject02"]} ,
+       //FSSBCommiette 
+      { fieldName: 'DraftStatus', value: '', stages:["FSSBCreateProject02"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["FSSBCreateProject02"]} ,
+      { fieldName: 'WFStage', value: '',stages:["FSSBCreateProject02"]} ,
+      { fieldName: 'Stage', value: 'S00.3',stages:["FSSBCreateProject02"],projecttype:["operationally"]} ,
+      { fieldName: 'Stage', value: 'S00.1',stages:["FSSBCreateProject02"] ,projecttype:["strategy"]} ,
+      { fieldName: 'Phase', value: 'P5',stages:["FSSBCreateProject02"]} ,
+      { fieldName: 'WorkingStatus', value: 'active',stages:["FSSBCreateProject02"]} ,
+        //SOD
+      { fieldName: 'DraftStatus', value: '', stages:["SODCreateProject03"] },
+      { fieldName: 'WFModuleCode', value: '',stages:["SODCreateProject03"]} ,
+      { fieldName: 'WFStage', value: '',stages:["SODCreateProject03"]} ,
+      { fieldName: 'Stage', value: 'S00.3',stages:["SODCreateProject03"],projecttype:["operationally"]} ,
+      { fieldName: 'Stage', value: 'S00.1',stages:["SODCreateProject03"] ,projecttype:["strategy"]} ,
+      { fieldName: 'Phase', value: 'P5',stages:["SODCreateProject03"]} ,
+      { fieldName: 'WorkingStatus', value: 'active',stages:["SODCreateProject03"]} ,
     ],
     subFields: [
       {
@@ -185,18 +212,22 @@ var Information_Form = [
       },
       {
         InternalName: "IsStrategicProject",
-        DisplayName: "هل هو مشروع استراتيجي؟",
+        DisplayName: "الرجاء اختيار نوع المشروع",
         DisplayNameEn: "Is Strategic Project?",
         type: "dropdownValues",
         options: {
           choices: [
-            { display: "yes", value: "yes" },
-            { display: "no", value: "no" },
+          /*  { display: "yes", value: "yes" },
+            { display: "no", value: "no" },*/
+            { display: "strategy", value: "strategy" },
+            { display: "operationally", value: "operationally" },
           ],
         },
         toggleValues: [
-          { value: 'yes', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable'] }, //we can put more than 1  field
-          { value: 'no', fields: [''] }, //we can put more than 1  field
+        /*  { value: 'yes', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable' , 'LinkingSection'] }, //we can put more than 1  field
+          { value: 'no', fields: [''] }, //we can put more than 1  field*/
+          { value: 'strategy', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable' , 'LinkingSection'] }, //we can put more than 1  field
+          { value: 'operationally', fields: [''] }, //we can put more than 1  field
         ],
       },
       {
@@ -208,7 +239,8 @@ var Information_Form = [
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
         toggleValues: [
-          { value: 'vision', fields: ['Program'] },
+          { value: 'vision', fields: ['Program','LinkingSection'] },
+          { value: 'lms', fields: ['LinkingSection'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],
         // dontSubmit: true,
@@ -249,6 +281,31 @@ var Information_Form = [
                 { fieldName: 'DraftStatus', value: 'draft' },
               ],
             },
+               {
+              display: 'sod',
+              value: 'sod',
+              customFilterValue: "sod",
+              roles: ['Administrator', 'SODVRO-Execution'],
+              otherFields: [
+                { fieldName: 'Stage', value: 'S01' },
+                { fieldName: 'Phase', value: 'P1' },
+              ],
+              // other roles
+
+            },
+            {
+              display: 'sod',
+              value: 'sod',
+              customFilterValue: "sod",
+              roles: [ 'ProjectManager', 'SODVRO-Execution','SODVRO-Performance','SODVRO-E'],
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'SODCreateProject' },
+                { fieldName: 'WFStage', value: 'SODCreateProject01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
+                { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'Stage', value: 'S00' },
+              ],
+            },
             // { display: 'others', value: 'others' },
             
           ],
@@ -281,7 +338,8 @@ var Information_Form = [
         DisplayName: "مخرج المبادرة المرتبط",
         ToggleName: "RelatedInitiativeDeliverable",
         // type: 'string',
-        type: "multiselectstring",
+        //type: "multiselectstring",
+         type: "lookupmultiselect",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         source: "InitiativeDeliverables",
@@ -348,7 +406,7 @@ var Information_Form = [
       // },
       {
         InternalName: "ProjectType",
-        DisplayName: "نوع المشروع",
+        DisplayName: "نوع تطوير المشروع",
         DisplayNameEn: "Project Type",
         type: "dropdownValues",
         // validation: 'required',
@@ -402,6 +460,38 @@ var Information_Form = [
         min: "BaselineStartDate",
         // "state": "disabled"
       },
+       {
+        InternalName: "BaselineDuration",
+        DisplayName: "مدة الأساس بالأيام",
+        DisplayNameEn: "Baseline Duration",
+        type: "float",
+        // "maxchar": 5000,
+        // hideonstage: "1"
+      },
+       {
+        InternalName: "ActualFinishDate",
+        DisplayName: "تاريخ الانتهاء الفعلي",
+        DisplayNameEn: "Actual Finish Date",
+        type: "datetime", 
+      },
+      {
+        InternalName: "ContractWorkStartDate",
+        DisplayName: "تاريخ بدء الاعمال للعقود",
+        DisplayNameEn: "Contract Work StartDate",
+        type: "datetime", 
+      },
+       {
+        InternalName: "InitiativeStartDate",
+        DisplayName: "تاريخ بدء المبادرة",
+        DisplayNameEn: "Initiative Start Date",
+        type: "datetime",
+      },
+      {
+        InternalName: "InitiativeFinishDate",
+        DisplayName: "تاريخ إنهاء المبادرة",
+        DisplayNameEn: "Initiative Finish Date",
+        type: "datetime",
+      },
       {
         InternalName: "Created",
         DisplayName: "تاريخ انشاء المشروع",
@@ -444,8 +534,15 @@ var Information_Form = [
 
       {
         InternalName: "ExecutionChannels",
-        DisplayName: "الجهة المنفذة",
+        DisplayName: "الشركة المنفذة / المقاول",
         DisplayNameEn: "Execution Channels",
+        // type: 'string',
+        type: "multiline",
+      },
+      {
+        InternalName: "OwnerChannels",
+        DisplayName: "الجهة المالكة",
+        DisplayNameEn: "Owner Channels",
         // type: 'string',
         type: "multiline",
       },
@@ -456,15 +553,8 @@ var Information_Form = [
         type: "multiline",
         // type: 'string',
       },
-      {
-        InternalName: "BaselineDuration",
-        DisplayName: "مدة الأساس بالأيام",
-        DisplayNameEn: "Baseline Duration",
-        type: "float",
-        // "maxchar": 5000,
-        // hideonstage: "1"
-      },
-
+     
+   
       {
         InternalName: "Comments",
         DisplayName: "ملاحظات",
@@ -538,9 +628,15 @@ var Information_Form = [
         },
         toggleValues: [
           { value: 'yes', fields: [] },
-          { value: 'no', fields: ['FundingSection','TenderSection','BudgetSection','Delivrables','Milestones'] },
+          { value: 'no', fields: ['FundingSection','TenderSection','BudgetSection',/*'Delivrables','Milestones' ,*/, 'LinkingSection' ,'MawaredSection','Weight', 'Amount','Quantity','AmountPrice'] },
         ],
       },
+       {
+        InternalName: "ExternalChannels",
+        DisplayName: "هل المشروع يتبع جهة خارجية",
+        DisplayNameEn: "ExternalChannels",
+        type: "dropdownValues",
+       },
       {
         InternalName: "ActualCostWorkCompleted",
         DisplayName: "التكلفة الفعلية للعمل المنجز",
@@ -580,7 +676,35 @@ var Information_Form = [
         DispfieldkeyEn: "PhaseNameEn",
         valfieldkey: "Title",
       },
-
+      {
+        InternalName: "ComplianceStatus",
+        DisplayName: "حالة الامتثال للمرحله",
+        DisplayNameEn: "ComplianceStatus",
+        type: "string"
+       },
+       {
+        InternalName: "ComplianceDegree",
+        DisplayName: "عدد الامتثال",
+        DisplayNameEn: "ComplianceDegree",
+        type: "string"
+       },
+       {
+        InternalName: "NonComplianceDegree",
+        DisplayName: "عدد غير ممتثل",
+        DisplayNameEn: "NonComplianceDegree",
+        type: "string"
+       },
+{
+				InternalName: "WFStage",
+				DisplayName: " مرحلة المراجعة والموافقة",
+				DisplayNameEn: "Stage",
+				type: 'lookup',
+				// validation: 'required',
+				source: "Tasks Configuration",
+				Dispfieldkey: "TaskNameAr",
+				DispfieldkeyEn: 'TaskNameEn',
+				valfieldkey: "Title",
+				}
       // {
       //     "InternalName": "SpentBudget",
       //     "DisplayName": "المبالغ المصروفة",
@@ -871,6 +995,59 @@ var Information_Form = [
       // }
     ],
   },
+   {
+    label: 'المنظور التحليلي',
+    labelEn: 'Analysis Section',
+    description: '',
+    descriptionEn: '',
+    subFields: [
+      
+         {
+        InternalName: 'Analysis',
+        DisplayName: 'التحليل',
+        DisplayNameEn: 'Analysis',
+        type: 'multiline'
+      },
+       {
+        InternalName: 'SuggestSolution',
+        DisplayName: 'المعالجة المقترحة',
+        DisplayNameEn: 'Suggest Solution',
+        type: 'multiline'
+      }
+   ]},
+  {
+    label: "التباين",
+    labelEn: "Discrepancy",
+    toggleName: 'BudgetSection',
+    description: "",
+    descriptionEn: "",
+     subFields: [
+        {
+        InternalName: "DiscrepancyInDays",
+        DisplayName: "قيمة التباين بالأيام",
+        DisplayNameEn: "Discrepancy In Days",
+        type: "float",
+       },
+         {
+        InternalName: "DiscrepancyPercentage",
+        DisplayName: "التباين%",
+        DisplayNameEn: "Discrepancy Percentage",
+        type: "float",
+       },
+         {
+        InternalName: "DiscrepancyCost",
+        DisplayName: "قيمة التباين بالريال",
+        DisplayNameEn: "Discrepancy Cost",
+        type: "float",
+       },
+         {
+        InternalName: "DiscrepancyCostPercentage",
+        DisplayName: "التباين%",
+        DisplayNameEn: "Discrepancy Cost Percentage",
+        type: "float",
+       },
+     ]
+  },
   {
     label: "التمويل",
     labelEn: "Funding",
@@ -1081,7 +1258,7 @@ var Information_Form = [
         type: "float",
         // "state": "disabled"
       },
-
+   
       // {
       //   InternalName: "BudgetStatus",
       //   DisplayName: "حالة تمويل المشروع (حسب الحوكمة)",
@@ -1099,6 +1276,43 @@ var Information_Form = [
       // },
     ],
   },
+   {
+    label: "بند الارتباط",
+    labelEn: "Linking Item",
+    description: "",
+    descriptionEn: "",
+    toggleName: 'LinkingSection',
+    subFields: [
+      {
+        InternalName: "LinkingProgress",
+        DisplayName: "جاري الارتباط",
+        DisplayNameEn: "Linking Progress",
+        type: "float",
+        numberOfDigits: "15",
+      },
+      {
+        InternalName: "ExpensePlan",
+        DisplayName: "مخطط الصرف",
+        DisplayNameEn: "Expense Plan",
+        type: "float",
+        numberOfDigits: "15",
+      },
+       {
+        InternalName: "ExpenseProgress",
+        DisplayName: "جاري الصرف",
+        DisplayNameEn: "Expense Progress",
+        type: "float",
+        numberOfDigits: "15",
+      },
+      {
+        InternalName: "ExpenseLately ",
+        DisplayName: "متأخر من الصرف",
+        DisplayNameEn: "Expense Lately",
+        type: "float",
+        numberOfDigits: "15" ,
+      },  
+    ],
+   },
   {
     label: "الطرح والتعاقد",
     labelEn: "Tendering and Contracting",
@@ -1205,6 +1419,13 @@ var Information_Form = [
         InternalName: "ProjectSponsor",
         DisplayName: "راعي المشروع",
         DisplayNameEn: "Project Sponsor",
+        type: "picker",
+      },
+       {
+        InternalName: "MawaredProjectManager",
+        DisplayName: "مستكمل الطلب فى موارد",
+        DisplayNameEn: "Mawared Project Manager",
+        toggleName: 'MawaredSection',
         type: "picker",
       },
       //   {
@@ -1391,6 +1612,7 @@ var Information_Form = [
         DisplayName: 'الوزن',
         DisplayNameEn: 'Weight',
         type: 'floatpercentage',
+        ToggleName: "Weight",
       },
       //here is an issue
       //   {
@@ -1576,6 +1798,7 @@ var Information_Form = [
         DisplayName: 'الوزن',
         DisplayNameEn: 'Weight',
         type: 'floatpercentage',
+        ToggleName: "Weight",
       },
       // there is an issue 
       // {

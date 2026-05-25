@@ -272,6 +272,7 @@ var workflowname,
   isVROCreateKPI = window.location.href.indexOf("mainkpi&VROCreateKPI") > -1,
   isEPMOCreateKPI = window.location.href.indexOf("mainkpi&EPMOCreateKPI") > -1,
   isLMSCreateKPI = window.location.href.indexOf("mainkpi&LMSCreateKPI") > -1,
+  isSODCreateKPI = window.location.href.indexOf("mainkpi&SODCreateKPI") > -1,
   isVROCRKPI = window.location.href.indexOf("changerequest&VROCRKPI") > -1,
   isMSCRKPI = window.location.href.indexOf("changerequest&MSCRKPI") > -1,
   isLMSCRKPI = window.location.href.indexOf("changerequest&LMSCRKPI") > -1,
@@ -1408,6 +1409,21 @@ else if (isSODProjMilestone) {
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isLMSCreateKPI) {
   workflowname = "LMSCreateKPI";
+  bulkeditlist = "MainKPI";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+}
+else if (isSODCreateKPI) {
+  workflowname = "SODCreateKPI";
   bulkeditlist = "MainKPI";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
   bulkeditquery =
@@ -3715,7 +3731,7 @@ var SubmitField_BulkEdit = {
               } else if (isExecuteCR && crUpdateType.includes("automatic")) {
                 executeCR.init(crBody);
               } else if (
-                (isVROCreateKPI || isEPMOCreateKPI || isLMSCreateKPI ) &&
+                (isVROCreateKPI || isEPMOCreateKPI || isLMSCreateKPI || isSODCreateKPI ) &&
                 nxtstageid == "approved"
               ) {
                 changeOnKpiResultDraft(state);

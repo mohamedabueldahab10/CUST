@@ -13,6 +13,7 @@ var Information_Form = [
         source: "MainKPI",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
+        state: "disabled",
       },
       {
         InternalName: "KPICodedummyfield",
@@ -22,6 +23,7 @@ var Information_Form = [
         source: "MainKPI",
         Dispfieldkey: "KPIType",
         valfieldkey: "Title",
+        state: "disabled",
       },
       {
         InternalName: "KPICodedummyfield",
@@ -31,6 +33,7 @@ var Information_Form = [
         source: "MainKPI",
         Dispfieldkey: "Classification",
         valfieldkey: "Title",
+        state: "disabled",
       },
       {
         InternalName: "KPICodedummyfield",
@@ -43,6 +46,7 @@ var Information_Form = [
         secondsource: "SOs",
         secondDispfieldkey: "Name",
         secondvalfieldkey: "Title",
+        state: "disabled",
       },
     ],
   },

@@ -178,8 +178,10 @@ var Information_Form = [
                 { fieldName: "DraftStatus", value: "draft" },
               ],
             },
-              { display: 'sod', value: 'sod',
-              roles: ['Administrator' , 'SODVRO-E'],
+            {
+              display: 'sod',
+              value: 'sod',
+              roles: ['Administrator', 'SODVROExecution', 'SODVROPerformance', 'SODVROE'],
             },
 
           ],
@@ -253,6 +255,26 @@ var Information_Form = [
                 field: 'Types',
                 type: 'Choice',
                 values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROPerformance',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
               },
             ],
           },

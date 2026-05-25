@@ -179,11 +179,10 @@ var Information_Form = [
               roles: ['LMSE', 'LMSP','PerformanceLeader', 'LMSUPerformance', 'LMSUControl',  'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
             
             },
-              {
+            {
               display: 'sod',
               value: 'sod',
-              roles: ['Administrator'],//the purpose is we dont need the creation cycle if EPMO or Admin create a initiaitve
-              // customFilterValue: "vision",
+              roles: ['Administrator', 'SODVROExecution', 'SODVROPerformance', 'SODVROE', 'PerformanceLeader', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
             },
           ],
         },
@@ -387,6 +386,36 @@ var Information_Form = [
                 field: 'Types',
                 type: 'Choice',
                 values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROPerformance',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
               },
             ],
           },
@@ -2440,6 +2469,7 @@ var Information_Form = [
             'System Admin Group',
             'VRO_E',
             'LMSU-Execution',
+            'SODVRO-Execution',
             'EPMO',
           ],
         },

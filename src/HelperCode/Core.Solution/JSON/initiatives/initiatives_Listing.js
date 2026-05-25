@@ -39,7 +39,6 @@ var Listing_Info = [
   // 	infilter: true
 
   // },
-  // {
   {
     InternalName: 'Types',
     DisplayNameEn: 'Strategy Type',
@@ -50,20 +49,22 @@ var Listing_Info = [
     infilter: true,
   },
   {
-     InternalName: 'RelatedStrategy',
-     DisplayNameEn: 'Related Strategy',
-     DisplayName: 'الاستراتيجية المرتبطة',
-     type: 'lookup',
-     inlisting: true,
+    InternalName: 'RelatedStrategy',
+    DisplayNameEn: 'Related Strategy',
+    DisplayName: 'الاستراتيجية المرتبطة',
+    type: 'lookup',
+    localStorageVariable: 'Dynamo_GoalStrategy',
+    inlisting: true,
     needTrans: false,
     infilter: false,
   },
   {
-     InternalName: 'RelatedStrategyReadonly',
-     DisplayNameEn: 'Related Strategy Read Only',
-     DisplayName: 'الاستراتيجية المطلعه',
-     type: 'lookup',
-     inlisting: true,
+    InternalName: 'RelatedStrategyReadonly',
+    DisplayNameEn: 'Related Strategy Read Only',
+    DisplayName: 'الاستراتيجية المطلعه',
+    type: 'lookup',
+    localStorageVariable: 'Dynamo_GoalStrategy',
+    inlisting: true,
     needTrans: false,
     infilter: false,
   },

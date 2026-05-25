@@ -2066,7 +2066,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
-          "changerequests" ,
+          "changerequests"  ,
           "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
@@ -2100,6 +2100,8 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
+          "changeRequests.aspx",
+          "changerequests"  ,
           "projecthome.aspx",
           "InitiativeHome.aspx",
           "TaskHistory.aspx",
@@ -4435,7 +4437,8 @@ window.userCalls = {
           "initiativesmain.aspx",
           "changerequest",
           "changeRequests.aspx",
-          "changerequests"  , "delegations"      ];
+          "changerequests"  ,
+          "delegations"      ];
         Edit_Access = [
           "Targets.aspx",
           "mainkpi",
@@ -9385,7 +9388,9 @@ var Access_Project_Info_Request = {
         }, 1000);
       } else if (USERisListing && !isfileListing) {
         window.checkListingStatusHtml = setInterval(function () {
-          ListingData.preinit();
+          if (typeof ListingData !== "undefined" && ListingData.preinit) {
+            ListingData.preinit();
+          }
         }, 1000);
       }
     }

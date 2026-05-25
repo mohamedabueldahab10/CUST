@@ -803,7 +803,7 @@ var MainKPIs_Info_Request = {
     }
     $('input[data-internal*="Actual"]').prop('disabled', true);
 
-    if (!isAdmin && !isSPMAdmin && !isVROP && !isLMSP && !isEPMO && !isVROE && !isLMSUExecution && !isSPMAdmin) { // to can the spmAdmin change on  targets
+    if (!isAdmin && !isSPMAdmin && !isVROP && !isLMSP && !isEPMO && !isVROE && !isLMSUExecution && !isSPMAdmin && !isSODVROExecution) { // to can the spmAdmin change on  targets
       $('td input[data-internal*="Target"]').prop('disabled', true);
       $('td input[data-internal="Total"]').prop('disabled', true);
     }

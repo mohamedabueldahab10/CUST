@@ -1008,10 +1008,10 @@ window.New_Data_Submit = {
       // );
       New_Data_Submit.g.oListItem.set_item(
         "ProgressStatusDeliverable",
-        "stat6"
+        "stat12"
       );
-      New_Data_Submit.g.oListItem.set_item("ProgressStatusMilestone", "stat6");
-      New_Data_Submit.g.oListItem.set_item("ProgressStatusSchedule", "stat6");
+      New_Data_Submit.g.oListItem.set_item("ProgressStatusMilestone", "stat12");
+      New_Data_Submit.g.oListItem.set_item("ProgressStatusSchedule", "stat12");
       New_Data_Submit.g.oListItem.set_item("Status", "inprogress");
 
       //لحساب مدة الاساس
@@ -4073,7 +4073,7 @@ var kpiResults = {
     kpiResults.g.oListItem.set_item("Sector", Sector);
     kpiResults.g.oListItem.set_item("SubSector", SubSector);
     kpiResults.g.oListItem.set_item("Portfolio", Portfolio);
-    if (!isAdmin && !isEPMO && !isVROE && !isLMSUExecution && !isSPMAdmin)
+    if (!isAdmin && !isEPMO && !isVROE && !isLMSUExecution && !isSODVROExecution && !isSPMAdmin)
       kpiResults.g.oListItem.set_item("DraftStatus", "draft");
     if (Types == "main") {
       kpiResults.g.oListItem.set_item("RelatedGoal", MainGoalRelated);

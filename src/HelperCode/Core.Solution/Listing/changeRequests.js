@@ -29,6 +29,8 @@ window.isLoadingChangeRequestData = false;
 var LoggedInUser = null;
 var LoggedInUserTitle = null;
 var LoggedInUserId = null;
+var duSubSectorTitlesCache = null;
+var duSubSectorTitlesPromise = null;
 var currentApprovalPath = "";
 var currentSecurityGroupName = "";
 
@@ -678,24 +680,6 @@ var checkchangerequestshtml = setInterval(function () {
           </select>
         </div>
 
-        <div class="col-md-6 mb-3" id="ChildItemTypeDiv" style="display: none">
-          <label data-trans-childitemtype class="Resources"></label>
-          <select id="ChildItemType" class="form-control">
-            <option data-trans-childitemtype value=""></option>
-          </select>
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <label data-trans-changeitem class="Resources"></label>
-          <select id="ChangeItem" class="form-control">
-            <option
-              data-trans-changeitem
-              class="Resources"
-              value=""
-            ></option>
-          </select>
-        </div>
-
         <div class="col-md-6 mb-3">
           <label data-trans-parentselecteditem class="Resources">
             Parent Selected Item</label
@@ -709,6 +693,13 @@ var checkchangerequestshtml = setInterval(function () {
           </select>
         </div>
 
+        <div class="col-md-6 mb-3" id="ChildItemTypeDiv" style="display: none">
+          <label data-trans-childitemtype class="Resources"></label>
+          <select id="ChildItemType" class="form-control">
+            <option data-trans-childitemtype value=""></option>
+          </select>
+        </div>
+
         <div class="col-md-6 mb-3" id="ChildItemCodeDiv" style="display: none">
           <label data-trans-childselecteditem class="Resources"
             >Child Selected Item</label
@@ -716,6 +707,17 @@ var checkchangerequestshtml = setInterval(function () {
           <select id="ChildItemCode" class="form-control">
             <option
               data-trans-childselecteditem
+              class="Resources"
+              value=""
+            ></option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label data-trans-changeitem class="Resources"></label>
+          <select id="ChangeItem" class="form-control">
+            <option
+              data-trans-changeitem
               class="Resources"
               value=""
             ></option>
@@ -1183,16 +1185,18 @@ function loadListOptionsPromise(listName, selectId, dispFieldKey, dispFieldKeyEn
 }
 
 // Function to call API and populate Sector, SubSector, and ApprovalLevel
-// After API completes, automatically calls getchangeitemsdetails
-function callGetSectorAndSubSectorAPI(changeItemCode, parentItemCode) {
-if (!changeItemCode || !parentItemCode) {
+// authItemCode: parent item used for agency/IsActive (SubSector authorization)
+// detailsItemCode: selected item for getchangeitemsdetails (parent or child)
+function callGetSectorAndSubSectorAPI(changeItemCode, authItemCode, detailsItemCode) {
+if (!changeItemCode || !authItemCode) {
   return;
 }
+detailsItemCode = detailsItemCode || authItemCode;
 
 // Clear dynamic fields before calling API
 $(".changeItemsRow").find(".dynamicField").remove();
 
-const url = `${APIURL}/general/getsectorandsubsectorforselecteditem/${encodeURIComponent(changeItemCode)}/${encodeURIComponent(parentItemCode)}`;
+const url = `${APIURL}/general/getsectorandsubsectorforselecteditem/${encodeURIComponent(changeItemCode)}/${encodeURIComponent(authItemCode)}`;
 
 $.ajax({
   url: url,
@@ -1276,7 +1280,7 @@ $.ajax({
       // After setting ApprovalLevel, call getchangeitemsdetails (for edit/view always; for new only when agency is allowed)
       if (result.approvalLevel && (!window.isNew || window.currentIsActive !== false)) {
         const classification = (parentType === "MainKpi" && result.classification) ? result.classification : null;
-        fetchChangeItemDetails(changeItemCode, result.approvalLevel, parentItemCode, classification);
+        fetchChangeItemDetails(changeItemCode, result.approvalLevel, detailsItemCode, classification);
       } else if (!result.approvalLevel) {
         $(".changeItemsRow").find(".dynamicField").remove();
       }
@@ -1313,9 +1317,11 @@ function () {
   
   // Get current values
   const changeItemCode = $("#ChangeItem").val();
-  let itemCode = $("#ParentItemCode").val();
-  if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val())
-    itemCode = $("#ChildItemCode").val();
+  const parentItemCode = $("#ParentItemCode").val();
+  let detailsItemCode = parentItemCode;
+  if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val()) {
+    detailsItemCode = $("#ChildItemCode").val();
+  }
   const approvalLevel = $("#ApprovalLevel").val();
   
   // Reset IsActive status when key fields change (will be updated by API call)
@@ -1326,26 +1332,49 @@ function () {
     }
   }
   
-  // If ChangeItem, ParentItemCode, or ChildItemCode changed - call API to get Sector/SubSector/ApprovalLevel
+  // If ChangeItem, ParentItemCode, or ChildItemCode changed
   if (fieldId === "ChangeItem" || fieldId === "ParentItemCode" || fieldId === "ChildItemCode") {
-    // Clear fields
+    handleParentChildFieldsVisibility();
+    changeResources();
+
+    if (!changeItemCode || !parentItemCode) {
+      if (fieldId !== "ChildItemCode") {
+        $("#Sector").val("");
+        $("#SubSector").val("");
+        $("#ApprovalLevel").val("");
+        $("#Classification").val("");
+      }
+      $(".changeItemsRow").find(".dynamicField").remove();
+      return;
+    }
+
+    // Child has no Sector/SubSector — keep parent values; only refresh change-item details
+    if (fieldId === "ChildItemCode") {
+      $(".changeItemsRow").find(".dynamicField").remove();
+      if (detailsItemCode && approvalLevel) {
+        const parentType = $("#ParentItemType").val();
+        const classification =
+          parentType === "MainKpi" && $("#Classification").val()
+            ? $("#Classification").val()
+            : null;
+        fetchChangeItemDetails(
+          changeItemCode,
+          approvalLevel,
+          detailsItemCode,
+          classification
+        );
+      }
+      return;
+    }
+
+    // ChangeItem or ParentItemCode: Sector/SubSector/ApprovalLevel/IsActive from parent only
     $("#Sector").val("");
     $("#SubSector").val("");
     $("#ApprovalLevel").val("");
     $("#Classification").val("");
     $(".changeItemsRow").find(".dynamicField").remove();
-    
-    // Apply visibility/required-state immediately before early return
-    handleParentChildFieldsVisibility();
-    changeResources();
-    
-    // If both ChangeItem and ParentItemCode exist, call API
-    if (changeItemCode && itemCode) {
-      callGetSectorAndSubSectorAPI(changeItemCode, itemCode);
-      return;
-    } else {
-      return;
-    }
+    callGetSectorAndSubSectorAPI(changeItemCode, parentItemCode, detailsItemCode);
+    return;
   }
   
   // If ApprovalLevel changed manually (not from API), call getchangeitemsdetails
@@ -1357,12 +1386,12 @@ function () {
       $(".changeItemsRow").find(".dynamicField").remove();
     } else {
       // Call getchangeitemsdetails if all required fields are available
-      if (changeItemCode && approvalLevel && itemCode) {
+      if (changeItemCode && approvalLevel && detailsItemCode) {
         $(".changeItemsRow").find(".dynamicField").remove();
         // Get classification if it's MainKpi
         const parentType = $("#ParentItemType").val();
         const classification = (parentType === "MainKpi" && $("#Classification").val()) ? $("#Classification").val() : null;
-        fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode, classification);
+        fetchChangeItemDetails(changeItemCode, approvalLevel, detailsItemCode, classification);
       }
     }
   }
@@ -2048,36 +2077,95 @@ function loadStrategyOptions() {
   });
 }
 
-function loadParentItems(listName, selectId) {
-  var currentRole = window.currentUserRole || "";
-  var filter = "";
+function isDuParentItemsList(listName) {
+  return (
+    listName === "Projects" ||
+    listName === "Initiatives" ||
+    listName === "MainKpi" ||
+    listName === "SOs"
+  );
+}
 
-  var needsSecurityFilter =
+function needsParentItemsSecurityFilter(currentRole, listName) {
+  return (
     (currentRole === "ObjectiveOwner" && listName === "SOs") ||
     (currentRole === "PerformanceLeader" && listName === "MainKpi") ||
     (currentRole === "InitiativeManager" && listName === "Initiatives") ||
-    (currentRole === "ProjectManager" && listName === "Projects");
+    (currentRole === "ProjectManager" && listName === "Projects") ||
+    (currentRole === "DU" && isDuParentItemsList(listName))
+  );
+}
 
-  if (needsSecurityFilter && !LoggedInUserId) {
-    getLoggedInUser()
-      .then(function () {
-        loadParentItems(listName, selectId);
+function getDuSubSectorTitles() {
+  return new Promise(function (resolve, reject) {
+    if (duSubSectorTitlesCache !== null) {
+      resolve(duSubSectorTitlesCache);
+      return;
+    }
+    if (duSubSectorTitlesPromise) {
+      duSubSectorTitlesPromise.then(resolve).catch(reject);
+      return;
+    }
+
+    function fetchDuDepartments() {
+      var query =
+        _spPageContextInfo.webAbsoluteUrl +
+        "/_api/web/lists/getbytitle('Internal Entities')/items?$top=5000&$select=Title&$filter=DeletionStatus ne 'Deleted' and EntityType eq 'Department' and SPMO/Id eq " +
+        LoggedInUserId;
+
+      return new Promise(function (resolveFetch, rejectFetch) {
+        $.ajax({
+          url: query,
+          method: "GET",
+          headers: { Accept: "application/json; odata=verbose" },
+          success: function (data) {
+            var titles = (data.d.results || [])
+              .map(function (item) {
+                return item.Title;
+              })
+              .filter(function (title) {
+                return title && String(title).trim() !== "";
+              });
+            duSubSectorTitlesCache = titles;
+            resolveFetch(titles);
+          },
+          error: function (err) {
+            rejectFetch(err);
+          },
+        });
+      });
+    }
+
+    var fetchChain = LoggedInUserId
+      ? fetchDuDepartments()
+      : getLoggedInUser().then(fetchDuDepartments);
+
+    duSubSectorTitlesPromise = fetchChain
+      .then(function (titles) {
+        resolve(titles);
+        return titles;
       })
       .catch(function (err) {
-        loadListOptions(
-          listName,
-          selectId,
-          "Name",
-          "Name",
-          "Title",
-          "",
-          "Created"
-        );
+        duSubSectorTitlesPromise = null;
+        reject(err);
       });
-    return;
-  }
+  });
+}
 
-  // Security filters based on user role
+function buildDuSubSectorODataFilter(titles) {
+  if (!titles || titles.length === 0) {
+    return "SubSector eq '__DU_NO_ACCESS__'";
+  }
+  var parts = titles.map(function (title) {
+    return "SubSector eq '" + String(title).replace(/'/g, "''") + "'";
+  });
+  if (parts.length === 1) {
+    return parts[0];
+  }
+  return "(" + parts.join(" or ") + ")";
+}
+
+function getParentItemsRoleSecurityFilterParts(currentRole, listName) {
   var securityFilterParts = [];
   if (currentRole === "ObjectiveOwner" && listName === "SOs") {
     if (LoggedInUserId) {
@@ -2085,7 +2173,9 @@ function loadParentItems(listName, selectId) {
     }
   } else if (currentRole === "PerformanceLeader" && listName === "MainKpi") {
     if (LoggedInUserId) {
-      securityFilterParts.push(`(PerformanceLeader/Id eq ${LoggedInUserId} or PerformanceLeader2/Id eq ${LoggedInUserId})`);
+      securityFilterParts.push(
+        `(PerformanceLeader/Id eq ${LoggedInUserId} or PerformanceLeader2/Id eq ${LoggedInUserId})`
+      );
     }
   } else if (
     currentRole === "InitiativeManager" &&
@@ -2099,62 +2189,106 @@ function loadParentItems(listName, selectId) {
       securityFilterParts.push(`ProjectManager/Id eq ${LoggedInUserId}`);
     }
   }
+  return securityFilterParts;
+}
 
-  // Additional filters based on RelatedStrategy and IsStrategicProject
+function getParentItemsSectorFilterParts(listName) {
   var sectorFilterParts = [];
   var relatedStrategy = $("#RelatedStrategy").val();
-  // var types = $("#Classification").val(); // Commented out - Classification filter removed
   var parentItemType = $("#ParentItemType").val();
 
-  // If ParentItemType is Projects, add IsStrategicProject filter
   if (parentItemType === "Projects" && listName === "Projects") {
     sectorFilterParts.push(`IsStrategicProject eq 'strategy'`);
   }
 
-  // If ParentItemType is MainKpi, add Classification filter (kpistrategic or kpioperational)
   if (parentItemType === "MainKpi" && listName === "MainKpi") {
-    sectorFilterParts.push(`(Classification eq 'kpistrategic' or Classification eq 'kpioperational')`);
+    sectorFilterParts.push(
+      `(Classification eq 'kpistrategic' or Classification eq 'kpioperational')`
+    );
   }
 
-  // RelatedStrategy filter applies to MainKpi, SOs, and Initiatives (not Projects)
   if (relatedStrategy && listName !== "Projects") {
     if (listName === "MainKpi" || listName === "SOs" || listName === "Initiatives") {
-      sectorFilterParts.push(`RelatedStrategy eq '${relatedStrategy.replace(/'/g, "''")}'`);
+      sectorFilterParts.push(
+        `RelatedStrategy eq '${relatedStrategy.replace(/'/g, "''")}'`
+      );
     }
   }
 
-  // Sector and SubSector filters removed - commented out for future use if needed
-  // var sector = $("#Sector").val();
-  // var subSector = $("#SubSector").val();
-  // if (sector) {
-  //   sectorFilterParts.push(`Sector eq '${sector.replace(/'/g, "''")}'`);
-  // }
-  // if (subSector) {
-  //   sectorFilterParts.push(`SubSector eq '${subSector.replace(/'/g, "''")}'`);
-  // }
+  return sectorFilterParts;
+}
 
-  // Combine security filters and sector filters
-  var allFilterParts = [];
-  if (securityFilterParts.length > 0) {
-    allFilterParts.push("(" + securityFilterParts.join(" and ") + ")");
-  }
-  if (sectorFilterParts.length > 0) {
-    allFilterParts.push("(" + sectorFilterParts.join(" and ") + ")");
+function resolveParentItemsFilter(listName) {
+  return new Promise(function (resolve) {
+    var currentRole = window.currentUserRole || "";
+    var securityFilterParts = getParentItemsRoleSecurityFilterParts(
+      currentRole,
+      listName
+    );
+    var sectorFilterParts = getParentItemsSectorFilterParts(listName);
+
+    function combineFilters(duSubSectorFilter) {
+      var allFilterParts = [];
+      if (securityFilterParts.length > 0) {
+        allFilterParts.push("(" + securityFilterParts.join(" and ") + ")");
+      }
+      if (duSubSectorFilter) {
+        allFilterParts.push("(" + duSubSectorFilter + ")");
+      }
+      if (sectorFilterParts.length > 0) {
+        allFilterParts.push("(" + sectorFilterParts.join(" and ") + ")");
+      }
+      resolve(allFilterParts.length > 0 ? allFilterParts.join(" and ") : "");
+    }
+
+    if (currentRole === "DU" && isDuParentItemsList(listName)) {
+      getDuSubSectorTitles()
+        .then(function (titles) {
+          combineFilters(buildDuSubSectorODataFilter(titles));
+        })
+        .catch(function () {
+          combineFilters("SubSector eq '__DU_NO_ACCESS__'");
+        });
+      return;
+    }
+
+    combineFilters(null);
+  });
+}
+
+function loadParentItems(listName, selectId) {
+  var currentRole = window.currentUserRole || "";
+
+  if (needsParentItemsSecurityFilter(currentRole, listName) && !LoggedInUserId) {
+    getLoggedInUser()
+      .then(function () {
+        loadParentItems(listName, selectId);
+      })
+      .catch(function (err) {
+        loadListOptions(
+          listName,
+          selectId,
+          "Name",
+          "Name",
+          "Title",
+          "",
+          "Name asc"
+        );
+      });
+    return;
   }
 
-  if (allFilterParts.length > 0) {
-    filter = allFilterParts.join(" and ");
-  }
-
-  loadListOptions(
-    listName,
-    selectId,
-    "Name",
-    "Name",
-    "Title",
-    filter,
-    "Created"
-  );
+  resolveParentItemsFilter(listName).then(function (filter) {
+    loadListOptions(
+      listName,
+      selectId,
+      "Name",
+      "Name",
+      "Title",
+      filter,
+      "Name asc"
+    );
+  });
 }
 
 function loadChildItems(listName, parentTitle, parentType) {
@@ -4011,88 +4145,21 @@ function loadOptionsOnly(listName, selectId, dispFieldKey, dispFieldKeyEn, valFi
 function loadParentItemsOptionsOnly(listName, selectId) {
   return new Promise((resolve) => {
     var currentRole = window.currentUserRole || "";
-    var filter = "";
 
-    var needsSecurityFilter =
-      (currentRole === "ObjectiveOwner" && listName === "SOs") ||
-      (currentRole === "PerformanceLeader" && listName === "MainKpi") ||
-      (currentRole === "InitiativeManager" && listName === "Initiatives") ||
-      (currentRole === "ProjectManager" && listName === "Projects");
-
-    if (needsSecurityFilter && !LoggedInUserId) {
+    if (needsParentItemsSecurityFilter(currentRole, listName) && !LoggedInUserId) {
       getLoggedInUser()
         .then(function () {
           loadParentItemsOptionsOnly(listName, selectId).then(resolve);
         })
         .catch(function (err) {
-          loadOptionsOnly(listName, selectId, "Name", "Name", "Title", "", "Created").then(resolve);
+          loadOptionsOnly(listName, selectId, "Name", "Name", "Title", "", "Name asc").then(resolve);
         });
       return;
     }
 
-    var securityFilterParts = [];
-    if (currentRole === "ObjectiveOwner" && listName === "SOs") {
-      if (LoggedInUserId) {
-        securityFilterParts.push(`ObjectiveOwner/Id eq ${LoggedInUserId}`);
-      }
-    } else if (currentRole === "PerformanceLeader" && listName === "MainKpi") {
-      if (LoggedInUserId) {
-        securityFilterParts.push(`(PerformanceLeader/Id eq ${LoggedInUserId} or PerformanceLeader2/Id eq ${LoggedInUserId})`);
-      }
-    } else if (currentRole === "InitiativeManager" && listName === "Initiatives") {
-      if (LoggedInUserId) {
-        securityFilterParts.push(`InitiativePM/Id eq ${LoggedInUserId}`);
-      }
-    } else if (currentRole === "ProjectManager" && listName === "Projects") {
-      if (LoggedInUserId) {
-        securityFilterParts.push(`ProjectManager/Id eq ${LoggedInUserId}`);
-      }
-    }
-
-    var sectorFilterParts = [];
-    var relatedStrategy = $("#RelatedStrategy").val();
-    // var types = $("#Classification").val(); // Commented out - Classification filter removed
-    var parentItemType = $("#ParentItemType").val();
-
-    // If ParentItemType is Projects, add IsStrategicProject filter
-    if (parentItemType === "Projects" && listName === "Projects") {
-      sectorFilterParts.push(`IsStrategicProject eq 'strategy'`);
-    }
-
-    // If ParentItemType is MainKpi, add Classification filter (kpistrategic or kpioperational)
-    if (parentItemType === "MainKpi" && listName === "MainKpi") {
-      sectorFilterParts.push(`(Classification eq 'kpistrategic' or Classification eq 'kpioperational')`);
-    }
-
-    if (relatedStrategy && listName !== "Projects") {
-      if (listName === "MainKpi" || listName === "SOs" || listName === "Initiatives") {
-        sectorFilterParts.push(`RelatedStrategy eq '${relatedStrategy.replace(/'/g, "''")}'`);
-      }
-    }
-
-    // Sector and SubSector filters removed - commented out for future use if needed
-    // var sector = $("#Sector").val();
-    // var subSector = $("#SubSector").val();
-    // if (sector) {
-    //   sectorFilterParts.push(`Sector eq '${sector.replace(/'/g, "''")}'`);
-    // }
-    // if (subSector) {
-    //   sectorFilterParts.push(`SubSector eq '${subSector.replace(/'/g, "''")}'`);
-    // }
-
-    var allFilterParts = [];
-    if (securityFilterParts.length > 0) {
-      allFilterParts.push("(" + securityFilterParts.join(" and ") + ")");
-    }
-    if (sectorFilterParts.length > 0) {
-      allFilterParts.push("(" + sectorFilterParts.join(" and ") + ")");
-    }
-
-    if (allFilterParts.length > 0) {
-      filter = allFilterParts.join(" and ");
-    }
-
-    loadOptionsOnly(listName, selectId, "Name", "Name", "Title", filter, "Created").then(resolve);
+    resolveParentItemsFilter(listName).then(function (filter) {
+      loadOptionsOnly(listName, selectId, "Name", "Name", "Title", filter, "Name asc").then(resolve);
+    });
   });
 }
 

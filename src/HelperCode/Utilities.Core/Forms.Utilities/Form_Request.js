@@ -1600,6 +1600,57 @@ window.Edit_Data_Request = {
           );
         }
       }
+      if (listkey == "strategicpartnershipsachievements" && (isEdit || isView)) {
+        $("style").filter(function () {
+          return (($(this).html() || "").indexOf("SPAchievementsLock") > -1);
+        }).remove();
+        $(".sp-achievements-approved-msg").remove();
+        var spAchievementsViewXml =
+          "<View><Query><Where><Eq><FieldRef Name='ID'/><Value Type='Counter'>" +
+          Number(IID) +
+          "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
+        var spAchievementsContext = SP.ClientContext.get_current();
+        var spAchievementsList = spAchievementsContext
+          .get_web()
+          .get_lists()
+          .getByTitle("SPAchievements");
+        var spAchievementsCamlQuery = new SP.CamlQuery();
+        spAchievementsCamlQuery.set_viewXml(spAchievementsViewXml);
+        var spAchievementsItems = spAchievementsList.getItems(spAchievementsCamlQuery);
+        spAchievementsContext.load(spAchievementsItems);
+        spAchievementsContext.executeQueryAsync(
+          function () {
+            var spAchievementWfStage = "";
+            var spAchievementsEnum = spAchievementsItems.getEnumerator();
+            if (spAchievementsEnum.moveNext()) {
+              var spAchievementsItem = spAchievementsEnum.get_current();
+              spAchievementWfStage = spAchievementsItem.get_item("WFStage") || "";
+            }
+            if (String(spAchievementWfStage).trim().toLowerCase() == "approved") {
+              $("body").append(
+                "<style>" +
+                  "/*SPAchievementsLock*/" +
+                  ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+                  ".form-control{color: #b1b1b1 !important;" +
+                  "border-color: #e1e1e1 !important;" +
+                  "background-color: #fdfdfd !important;" +
+                  "opacity: .6;pointer-events: none;}" +
+                  "</style>"
+              );
+              var msgText =
+                localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
+                  ? "هذا العنصر مكتمل لا يمكن التعديل عليه"
+                  : "This item is completed and cannot be edited";
+              var htmlMsg =
+                '<div class="kpiPeriodChanged ErrorMsg sp-achievements-approved-msg">' + msgText + "</div>";
+              $(".btnactionrow").after(htmlMsg);
+            }
+          },
+          function (sender, args) {
+            console.error("Error getting SPAchievements WFStage", args.get_message());
+          }
+        );
+      }
     },2000);
     $(".loader-box").fadeOut();
     setTimeout(function () {
@@ -1639,12 +1690,289 @@ window.Edit_Data_Request = {
         }
       });
     }
-    
     // Handle getValueFromLookup dynamically after all data is loaded
     // Use setTimeout to ensure all fields are loaded
     setTimeout(function() {
       Edit_Data_Request.handleGetValueFromLookup();
+      Edit_Data_Request.populateDerivedLookupViewFields(oListItem);
     }, 800);
+  },
+
+  // Read-only derived lookup fields on Edit (same logic as View_Data_Request viewmode handlers)
+  populateDerivedLookupViewFields: function (listItem) {
+    var oListItemRef =
+      listItem ||
+      (Edit_Data_Request.g && Edit_Data_Request.g.oListItem) ||
+      null;
+    var urlLookupKeys = {
+      KPICode: "KpiCode",
+      SOCode: "sosCode",
+      ProjectCode: "PCODE",
+      PCODE: "PCODE",
+      InitiativeCode: "ICODE",
+      ICODE: "ICODE",
+    };
+
+    function getParentLookupValue(parentLookupField) {
+      var lookupFieldValue = null;
+      if (oListItemRef) {
+        try {
+          var lookupItem = oListItemRef.get_item(parentLookupField);
+          if (lookupItem && typeof lookupItem.get_lookupValue === "function") {
+            lookupFieldValue = lookupItem.get_lookupValue();
+          } else if (lookupItem) {
+            lookupFieldValue = lookupItem;
+          }
+        } catch (e) {
+          lookupFieldValue = null;
+        }
+      }
+      try {
+        if (lookupFieldValue == null || lookupFieldValue === "") {
+          var urlKey = urlLookupKeys[parentLookupField];
+          if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) {
+            lookupFieldValue = decodeURIComponent(
+              window.location.href.split(urlKey + "=")[1].split("&")[0]
+            );
+          }
+        }
+      } catch (e) {}
+      return lookupFieldValue;
+    }
+
+    function setDerivedLookupDisplay($el, value, useHtml) {
+      if ($el.is("input")) {
+        $el.val(value != null && value !== undefined ? value : "");
+      } else if (useHtml) {
+        $el.html(value != null && value !== undefined ? value : No_Data);
+      } else {
+        $el.text(value != null && value !== undefined ? value : No_Data);
+      }
+    }
+
+    $(
+      '.section-container:not([data-target_list]) .CFIELD > [data-field-type], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookup"], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookupdropdown"], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookupfromlookup"], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookupmultiline"], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookupdatetime"]'
+    ).each(function () {
+      var $this = $(this);
+      var fieldType = $this.data("field-type") || $this.attr("type");
+
+      if (fieldType == "lookup") {
+        var fieldId = $this.attr("id");
+        if (fieldId && fieldId.includes("dummyfield")) {
+          fieldId = fieldId.split("dummyfield")[0];
+        }
+        var valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname");
+        var lookupFieldValue = getParentLookupValue(fieldId);
+
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                setDerivedLookupDisplay($this, records[0][Dispfieldkey]);
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      } else if (fieldType == "lookupdropdown") {
+        var parentLookupField = $this.data("parentlookupfield") || "KPICode",
+          valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname");
+        var lookupFieldValue = getParentLookupValue(parentLookupField);
+
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var rawValue = records[0][Dispfieldkey];
+                var key = (typeof rawValue === "string" ? rawValue : String(rawValue)).toLowerCase();
+                var displayText;
+                if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                  displayText = Resources.ar && Resources.ar[key] ? Resources.ar[key] : rawValue;
+                } else {
+                  displayText = Resources.en && Resources.en[key] ? Resources.en[key] : rawValue;
+                }
+                setDerivedLookupDisplay($this, displayText);
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      } else if (fieldType == "lookupfromlookup") {
+        var parentLookupField = $this.data("parentlookupfield") || "KPICode",
+          valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname"),
+          secondsource = $this.data("secondsource"),
+          secondDispfieldkey = $this.data("seconddispfieldkey") || "Name",
+          secondvalfieldkey = $this.data("secondvalfieldkey") || "Title";
+        var lookupFieldValue = getParentLookupValue(parentLookupField);
+
+        if (lookupFieldValue == null || !listname || !secondsource) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var secondLookupValue = records[0][Dispfieldkey];
+                if (
+                  typeof secondLookupValue === "object" &&
+                  secondLookupValue != null &&
+                  typeof secondLookupValue.get_lookupValue === "function"
+                ) {
+                  secondLookupValue = secondLookupValue.get_lookupValue();
+                }
+                if (!secondLookupValue) {
+                  setDerivedLookupDisplay($this, No_Data);
+                  return;
+                }
+                var secondQuery =
+                  "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+                  secondvalfieldkey +
+                  '" /><Value Type="Text">' +
+                  secondLookupValue +
+                  "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+                sphttp.get(
+                  _spPageContextInfo.siteServerRelativeUrl,
+                  secondsource,
+                  secondQuery,
+                  [secondDispfieldkey],
+                  function (recs2, r2, li2, done2) {
+                    if (done2 && recs2.length > 0 && recs2[0][secondDispfieldkey] != null) {
+                      setDerivedLookupDisplay($this, recs2[0][secondDispfieldkey]);
+                    } else {
+                      setDerivedLookupDisplay($this, No_Data);
+                    }
+                  }
+                );
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      } else if (fieldType == "lookupmultiline") {
+        var parentLookupField = $this.data("parentlookupfield") || "KPICode",
+          valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname");
+        var lookupFieldValue = getParentLookupValue(parentLookupField);
+
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var rawValue = records[0][Dispfieldkey];
+                var displayText = (typeof rawValue === "string" ? rawValue : String(rawValue)).replace(/\n/g, "<br>");
+                setDerivedLookupDisplay($this, displayText, true);
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      } else if (fieldType == "lookupdatetime") {
+        var parentLookupField = $this.data("parentlookupfield") || "KPICode",
+          valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname");
+        var lookupFieldValue = getParentLookupValue(parentLookupField);
+
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var d = records[0][Dispfieldkey];
+                if (typeof d === "string") d = new Date(d);
+                if (d && !isNaN(d.getTime())) {
+                  var local = d.getTime();
+                  var offset = d.getTimezoneOffset() * (60 * 1000);
+                  var utc = new Date(local + offset);
+                  var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+                  var datetouse = riyadh.toLocaleString("en-US").split(",")[0].split("/");
+                  datetouse[0] = datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+                  datetouse[1] = datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+                  var datetouse2;
+                  if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                    datetouse2 = datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+                  } else {
+                    datetouse2 = datetouse[1] + "-" + datetouse[0] + "-" + datetouse[2];
+                  }
+                  setDerivedLookupDisplay($this, datetouse2);
+                } else {
+                  setDerivedLookupDisplay($this, No_Data);
+                }
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      }
+    });
   },
   
   // Function to handle getValueFromLookup dynamically
@@ -3416,7 +3744,27 @@ window.View_Data_Request = {
       if (listkey == "delegations") {
         Get_ItemVersionsAudit.init("Delegations");
       } else if (listkey == "mainkpi") {
-        Get_ItemVersionsWithColumnsAudit.init("MainKPI");
+        if (isAdmin || isSPMAdmin) {
+          Get_ItemVersionsWithColumnsAudit.init(
+            "MainKPI",
+            IID,
+            "Style%20Library/spm/JSON/mainkpi/mainkpi_View.js"
+          );
+        }
+        Get_AllTaskHistoryRelatedToForm.init();
+      } else if (listkey == "strategicpartnershipsdeliverables") {
+        Get_ItemVersionsWithColumnsAudit.init(
+          "Deliverables",
+          IID,
+          "Style%20Library/spm/JSON/strategicpartnershipsdeliverables/strategicpartnershipsdeliverables_View.js"
+        );
+        Get_AllTaskHistoryRelatedToForm.init();
+      } else if (listkey == "strategicpartnershipsachievements") {
+        Get_ItemVersionsWithColumnsAudit.init(
+          "SPAchievements",
+          IID,
+          "Style%20Library/spm/JSON/strategicpartnershipsachievements/strategicpartnershipsachievements_View.js"
+        );
         Get_AllTaskHistoryRelatedToForm.init();
       } else if (listkey != "cryearlycalendar") {
         Get_AllTaskHistoryRelatedToForm.init();
@@ -4104,6 +4452,57 @@ window.View_Data_Request = {
           );
         }
       });
+    }
+    if (listkey == "strategicpartnershipsachievements" && (isEdit || isView)) {
+      $("style").filter(function () {
+        return (($(this).html() || "").indexOf("SPAchievementsLock") > -1);
+      }).remove();
+      $(".sp-achievements-approved-msg").remove();
+      var spAchievementsViewXml =
+        "<View><Query><Where><Eq><FieldRef Name='ID'/><Value Type='Counter'>" +
+        Number(IID) +
+        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
+      var spAchievementsContext = SP.ClientContext.get_current();
+      var spAchievementsList = spAchievementsContext
+        .get_web()
+        .get_lists()
+        .getByTitle("SPAchievements");
+      var spAchievementsCamlQuery = new SP.CamlQuery();
+      spAchievementsCamlQuery.set_viewXml(spAchievementsViewXml);
+      var spAchievementsItems = spAchievementsList.getItems(spAchievementsCamlQuery);
+      spAchievementsContext.load(spAchievementsItems);
+      spAchievementsContext.executeQueryAsync(
+        function () {
+          var spAchievementWfStage = "";
+          var spAchievementsEnum = spAchievementsItems.getEnumerator();
+          if (spAchievementsEnum.moveNext()) {
+            var spAchievementsItem = spAchievementsEnum.get_current();
+            spAchievementWfStage = spAchievementsItem.get_item("WFStage") || "";
+          }
+          if (String(spAchievementWfStage).trim().toLowerCase() == "approved") {
+            $("body").append(
+              "<style>" +
+                "/*SPAchievementsLock*/" +
+                ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+                ".form-control{color: #b1b1b1 !important;" +
+                "border-color: #e1e1e1 !important;" +
+                "background-color: #fdfdfd !important;" +
+                "opacity: .6;pointer-events: none;}" +
+                "</style>"
+            );
+            var msgText =
+              localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
+                ? "هذا العنصر مكتمل لا يمكن التعديل عليه"
+                : "This item is completed and cannot be edited";
+            var htmlMsg =
+              '<div class="kpiPeriodChanged ErrorMsg sp-achievements-approved-msg">' + msgText + "</div>";
+            $(".btnactionrow").after(htmlMsg);
+          }
+        },
+        function (sender, args) {
+          console.error("Error getting SPAchievements WFStage", args.get_message());
+        }
+      );
     }
     
     // Handle getValueFromLookup dynamically after all data is loaded
@@ -7232,6 +7631,10 @@ window.NewLogicDelete_Service = {
         listkey;
       return;
     }
+    if (listkey == "mainkpi") {
+      Delete_Kpi_Results.init();
+      return;
+    }
     var listingUrl =
       _spPageContextInfo.webAbsoluteUrl +
       "/SitePages/Listing.aspx?ListKey=" +
@@ -8669,6 +9072,7 @@ window.equationKPI = {
         $("p#Equation").text(kpiEquation || 0);
       }
     }
+    // access on equation button  
     if (
       (isAdmin ||
         isSPMAdmin ||
@@ -8676,6 +9080,7 @@ window.equationKPI = {
         isLMSP ||
         isVROE ||
         isLMSUExecution ||
+        isSODVROExecution ||
         isEPMO) &&
       !USERisWF
     ) {
@@ -10657,12 +11062,11 @@ window.Get_ItemVersionsAudit = {
 
 // Item versions with dynamic changed columns (new API) - used for MainKPI first
 window.Get_ItemVersionsWithColumnsAudit = {
-  init: function (listName) {
+  init: function (listName, itemId, viewJsonPath) {
     Get_ItemVersionsWithColumnsAudit.currentListName = listName || "";
-    var viewJsonPath = "";
-    if ((listName || "").toLowerCase() == "mainkpi") {
-      viewJsonPath = "Style%20Library/spm/JSON/mainkpi/mainkpi_View.js";
-    }
+    var resolvedViewJsonPath = viewJsonPath || "";
+    var resolvedItemId =
+      itemId != null && itemId !== "" ? Number(itemId) : Number(IID);
     var url =
       (typeof APIURL !== "undefined" ? APIURL : "") +
       "/general/getversionswithcolumns";
@@ -10673,8 +11077,8 @@ window.Get_ItemVersionsWithColumnsAudit = {
       dataType: "json",
       data: JSON.stringify({
         listName: listName,
-        itemId: Number(IID),
-        fileURL: viewJsonPath,
+        itemId: resolvedItemId,
+        fileURL: resolvedViewJsonPath,
       }),
       success: Function.createDelegate(
         this,
