@@ -639,6 +639,7 @@ window.ListInfo = {
               "data-parentcustomfiltervalue"
             );
             let notInvokeListiner = $(this).data("notinvokelistiner");
+            let forceCascadeObjectives = $(this).data("forcecascadeobjectives");
             if(isDisabled !="disabled"){
             $("[dynamic=" + parentFieldName + "]").each(function () {
               let affectedFieldName = $(this).attr("id");
@@ -668,6 +669,17 @@ window.ListInfo = {
                 queryFieldType: queryFieldType,
                 parentCustomFilterValueFromSibling:
                   parentCustomFilterValueFromSibling,
+                additionalFilterField: $(this).data("additionalfilterfield"),
+                additionalFilterFieldType: $(this).data("additionalfiltertype"),
+                additionalFilterFromField: $(this).data("additionalfilterfrom"),
+                additionalFilterRequireWhenTypes: $(this).attr(
+                  "data-additionalfilterrequiretypes"
+                ),
+                additionalFilterTypesFormField: $(this).attr(
+                  "data-additionalfiltertypesfield"
+                ),
+                additionalFilterLookupId:
+                  $(this).attr("data-additionalfilterlookupid") === "true",
                 // dataSiblingvalue:dataSiblingvalue
               });
             });
@@ -704,19 +716,96 @@ window.ListInfo = {
                 queryFieldType: queryFieldType,
                 parentCustomFilterValueFromSibling:
                   parentCustomFilterValueFromSibling,
+                additionalFilterField: $(this).data("additionalfilterfield"),
+                additionalFilterFieldType: $(this).data("additionalfiltertype"),
+                additionalFilterFromField: $(this).data("additionalfilterfrom"),
+                additionalFilterRequireWhenTypes: $(this).attr(
+                  "data-additionalfilterrequiretypes"
+                ),
+                additionalFilterTypesFormField: $(this).attr(
+                  "data-additionalfiltertypesfield"
+                ),
+                additionalFilterLookupId:
+                  $(this).attr("data-additionalfilterlookupid") === "true",
                 // dataSiblingvalue:dataSiblingvalue
               });
             });
             //
             //
 
-            if (notInvokeListiner) {
+            if (notInvokeListiner && !forceCascadeObjectives) {
               // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
               console.log("Inside not invoke listiner");
             } else {
+              if (forceCascadeObjectives) {
+                $(this).removeData("forcecascadeobjectives");
+              }
               dynamicAffectSelect.init(affectedSelectsInfo);
             }
           }});
+
+          $(document)
+            .off("change.formAdditionalFilterChain", "select")
+            .on("change.formAdditionalFilterChain", "select", function () {
+              var fid = $(this).attr("id");
+              if (!fid) {
+                return;
+              }
+              var $deps = $(
+                "select[data-additionalfilterfrom], ul[data-additionalfilterfrom]"
+              ).filter(function () {
+                var v =
+                  $(this).attr("data-additionalfilterfrom") ||
+                  $(this).data("additionalfilterfrom");
+                return v === fid;
+              });
+              if (!$deps.length) {
+                return;
+              }
+              $deps.each(function () {
+                var depId = $(this).attr("id");
+                if (depId) {
+                  var $depCtrl = $("#" + depId);
+                  // Re-sync level / grand-child query metadata (same as grandFieldInvoke)
+                  // so SO lists always read current RelatedObjectiveLevel when only SubSector changes.
+                  $(".grandFieldInvoke").each(function () {
+                    var cid = $(this).data("childfieldid");
+                    if (!cid || cid !== depId) {
+                      return;
+                    }
+                    var elVal = $(this).val();
+                    var srcName = $(this).data("childfieldidsource");
+                    if (elVal && srcName) {
+                      var $child = $("#" + cid);
+                      if ($child.length) {
+                        $child.data("queryfield", srcName);
+                        $child.data("queryfieldvalue", elVal);
+                        $child.data("queryfieldtype", "Text");
+                      }
+                    }
+                  });
+                  if ($depCtrl.length && $depCtrl.attr("type") === "multiselect") {
+                    $depCtrl
+                      .find("ul.dropdown-menu input:checked")
+                      .prop("checked", false);
+                    $depCtrl.find("ul.dropdown-menu").html("");
+                  } else if ($depCtrl.length && $depCtrl.is("select")) {
+                    $depCtrl.val("");
+                  }
+                }
+                var parentDyn = $(this).attr("dynamic");
+                if (!parentDyn) {
+                  return;
+                }
+                var $p = $("#" + parentDyn);
+                if (!$p.length || !$p.val()) {
+                  return;
+                }
+                // RelatedStrategy has notInvokeListiner; without this flag change() is ignored and SOs never reload
+                $p.data("forcecascadeobjectives", true);
+                $p.trigger("change");
+              });
+            });
           
           // Handle lookupWithDynamicQuery - update lookup when source field changes
           $(document).on("change", "select, input", function () {
@@ -1531,8 +1620,21 @@ window.ListInfo = {
               $(`#${childId}`).data("queryfieldtype", "Text");
 
               // window.setTimeout(function(){
-              $(`select[dynamic=parent][id=${grandId}]`).trigger("change"); // to trigger only one field (correct field)
+              var $grandSel = $(`select[dynamic=parent][id=${grandId}]`);
+              $grandSel.data("forcecascadeobjectives", true);
+              $grandSel.trigger("change"); // to trigger only one field (correct field)
               // },1500)
+              setTimeout(function () {
+                var depField =
+                  $("#" + childId).attr("data-additionalfilterfrom") ||
+                  $("#" + childId).data("additionalfilterfrom");
+                if (depField) {
+                  var $dep = $("#" + depField);
+                  if ($dep.length) {
+                    $dep.trigger("change");
+                  }
+                }
+              }, 0);
             }
           });
 
@@ -2235,6 +2337,16 @@ window.ListInfo = {
                   }
                 });
               }
+            }
+            if (
+              isNew &&
+              typeof Edit_Data_Request !== "undefined" &&
+              Edit_Data_Request.populateDerivedLookupViewFields &&
+              $("[data-field-type]").length
+            ) {
+              setTimeout(function () {
+                Edit_Data_Request.populateDerivedLookupViewFields(null);
+              }, 500);
             }
             // if (USERisWF || UserHaveLicense == false) {
             //   $(".form-btns-wrapper").hide();
@@ -6792,6 +6904,41 @@ debugger;
           parentCustomFilterValue = `data-parentcustomfiltervalue=""`;
         }
         ////////////////////////////////////
+        var additionalFilterDataAttrsMs = "";
+        if (
+          element.additionalFilterField &&
+          element.additionalFilterFromField
+        ) {
+          additionalFilterDataAttrsMs =
+            ' data-additionalfilterfield="' +
+            element.additionalFilterField +
+            '" data-additionalfiltertype="' +
+            (element.additionalFilterFieldType || "Lookup") +
+            '" data-additionalfilterfrom="' +
+            element.additionalFilterFromField +
+            '"';
+          if (
+            element.additionalFilterRequireWhenTypes &&
+            element.additionalFilterRequireWhenTypes.length
+          ) {
+            additionalFilterDataAttrsMs +=
+              ' data-additionalfilterrequiretypes="' +
+              (Array.isArray(element.additionalFilterRequireWhenTypes)
+                ? element.additionalFilterRequireWhenTypes.join(",")
+                : String(element.additionalFilterRequireWhenTypes)) +
+              '"';
+          }
+          if (element.additionalFilterTypesFormField) {
+            additionalFilterDataAttrsMs +=
+              ' data-additionalfiltertypesfield="' +
+              element.additionalFilterTypesFormField +
+              '"';
+          }
+          if (element.additionalFilterLookupId) {
+            additionalFilterDataAttrsMs +=
+              ' data-additionalfilterlookupid="true"';
+          }
+        }
 
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -6861,7 +7008,8 @@ debugger;
           " " +
           seconeddynamic +
           " " +
-          'data-listname="' +
+          additionalFilterDataAttrsMs +
+          ' data-listname="' +
           element.source +
           '" data-valfieldkey="' +
           element.valfieldkey +
@@ -8569,6 +8717,79 @@ debugger;
         break;
 
       case "lookup":
+        if (element.state === "disabled" || element.dontSubmit) {
+          if (element.BIlanguage == true) {
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              dispfieldkey = element.Dispfieldkey;
+            } else {
+              dispfieldkey = element.DispfieldkeyEn || element.Dispfieldkey;
+            }
+          } else {
+            dispfieldkey = element.Dispfieldkey;
+          }
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
+            (element.className || "") +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" ' +
+            notAllowForGroups +
+            '  style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            (element.validation || "") +
+            ">" +
+            displayName +
+            "</label>" +
+            '<input type="text" class="form-control SPIField" ' +
+            (element.state || "disabled") +
+            ' readonly data-field-type="lookup" data-listname="' +
+            element.source +
+            '" data-valfieldkey="' +
+            (element.valfieldkey || "Title") +
+            '" data-dispfieldkey="' +
+            dispfieldkey +
+            '" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            ' value="" />' +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+        }
         var customQuery;
         let roleAccess = [];
 
@@ -8868,6 +9089,40 @@ debugger;
         ) {
           addSeblingClass = "getsiblingdata";
         }
+        var additionalFilterDataAttrs = "";
+        if (
+          element.additionalFilterField &&
+          element.additionalFilterFromField
+        ) {
+          additionalFilterDataAttrs =
+            ' data-additionalfilterfield="' +
+            element.additionalFilterField +
+            '" data-additionalfiltertype="' +
+            (element.additionalFilterFieldType || "Lookup") +
+            '" data-additionalfilterfrom="' +
+            element.additionalFilterFromField +
+            '"';
+          if (
+            element.additionalFilterRequireWhenTypes &&
+            element.additionalFilterRequireWhenTypes.length
+          ) {
+            additionalFilterDataAttrs +=
+              ' data-additionalfilterrequiretypes="' +
+              (Array.isArray(element.additionalFilterRequireWhenTypes)
+                ? element.additionalFilterRequireWhenTypes.join(",")
+                : String(element.additionalFilterRequireWhenTypes)) +
+              '"';
+          }
+          if (element.additionalFilterTypesFormField) {
+            additionalFilterDataAttrs +=
+              ' data-additionalfiltertypesfield="' +
+              element.additionalFilterTypesFormField +
+              '"';
+          }
+          if (element.additionalFilterLookupId) {
+            additionalFilterDataAttrs += ' data-additionalfilterlookupid="true"';
+          }
+        }
         /////////////////////////////////////////////////
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
@@ -8938,6 +9193,8 @@ debugger;
           dynamic +
           " " +
           seconeddynamic +
+          " " +
+          additionalFilterDataAttrs +
           ' data-listname="' +
           element.source +
           '" data-valfieldkey="' +
@@ -9316,20 +9573,167 @@ debugger;
         break;
 
       case "lookupdropdown":
-      case "lookupfromlookup":
-        // عرض فقط في وضع التحرير أيضاً (لا يُستخدم في الـ submit)
-        var dispKey = element.Dispfieldkey;
-        if (element.BIlanguage && (localStorage.getItem("lng") == "en") && element.DispfieldkeyEn) dispKey = element.DispfieldkeyEn;
+        if (element.BIlanguage == true) {
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            dispfieldkey = element.Dispfieldkey;
+          } else {
+            dispfieldkey = element.DispfieldkeyEn || element.Dispfieldkey;
+          }
+        } else {
+          dispfieldkey = element.Dispfieldkey;
+        }
         htmlBody =
-          '<div class="col-md-6 CFIELD dont-submit dont-request ' + (element.className || "") + ' " ' + thistip + " " + hidestagesIDs + " " +
-          showstagesIDs + "  " + disablestagesIDs + "  " + enablestagesIDs + "   " + isWfhidestagesIDs + " " + requireOnWfTaskstagesIDs + " " +
-          isWfshowstagesIDs + "  " + isWfdisablestagesIDs + "  " + isWfenablestagesIDs +
-          ' data-groups="' + groups + '" ' + notAllowForGroups + ' style="display:' + element.display + '">' +
-          '<label for="' + element.InternalName + '" ' + (element.validation || "") + ">" + displayName + "</label>" +
-          '<p type="' + element.type + '" data-listname="' + element.source + '" data-valfieldkey="' + (element.valfieldkey || "Title") +
-          '" data-dispfieldkey="' + dispKey + '" data-parentlookupfield="' + (element.parentLookupField || (element.InternalName && element.InternalName.indexOf("dummyfield") !== -1 ? element.InternalName.replace("dummyfield", "") : "KPICode")) +
-          (element.type === "lookupfromlookup" ? '" data-secondsource="' + (element.secondsource || "") + '" data-seconddispfieldkey="' + (element.secondDispfieldkey || "Name") + '" data-secondvalfieldkey="' + (element.secondvalfieldkey || "Title") : "") +
-          '" class="viewmode-value" id="' + element.InternalName + '" ' + ToggleName + "></p>" +
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          (element.className || "") +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          '  style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          (element.validation || "") +
+          ">" +
+          displayName +
+          "</label>" +
+          '<input type="text" class="form-control SPIField" ' +
+          (element.state || "disabled") +
+          ' readonly data-field-type="lookupdropdown" data-listname="' +
+          element.source +
+          '" data-valfieldkey="' +
+          (element.valfieldkey || "Title") +
+          '" data-dispfieldkey="' +
+          dispfieldkey +
+          '" data-parentlookupfield="' +
+          (element.parentLookupField ||
+            (element.InternalName &&
+            element.InternalName.indexOf("dummyfield") !== -1
+              ? element.InternalName.replace("dummyfield", "")
+              : "KPICode")) +
+          '" id="' +
+          element.InternalName +
+          '" ' +
+          ToggleName +
+          ' value="" />' +
+          "</div>";
+        OnSuccess(flag, htmlBody);
+        break;
+
+      case "lookupfromlookup":
+        if (element.BIlanguage == true) {
+          if (
+            localStorage.getItem("lng") == null ||
+            localStorage.getItem("lng") == "ar"
+          ) {
+            dispfieldkey = element.Dispfieldkey;
+          } else {
+            dispfieldkey = element.DispfieldkeyEn || element.Dispfieldkey;
+          }
+        } else {
+          dispfieldkey = element.Dispfieldkey;
+        }
+        var secondDisp = element.secondDispfieldkey || "Name";
+        var secondVal = element.secondvalfieldkey || "Title";
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          (element.className || "") +
+          ' " ' +
+          thistip +
+          " " +
+          hidestagesIDs +
+          " " +
+          showstagesIDs +
+          "  " +
+          disablestagesIDs +
+          "  " +
+          enablestagesIDs +
+          "   " +
+          isWfhidestagesIDs +
+          " " +
+          requireOnWfTaskstagesIDs +
+          " " +
+          isWfshowstagesIDs +
+          "  " +
+          isWfdisablestagesIDs +
+          "  " +
+          isWfenablestagesIDs +
+          '        data-groups="' +
+          groups +
+          '" ' +
+          notAllowForGroups +
+          '  style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '" ' +
+          (element.validation || "") +
+          ">" +
+          displayName +
+          "</label>" +
+          '<input type="text" class="form-control SPIField" ' +
+          (element.state || "disabled") +
+          ' readonly data-field-type="lookupfromlookup" data-listname="' +
+          element.source +
+          '" data-valfieldkey="' +
+          (element.valfieldkey || "Title") +
+          '" data-dispfieldkey="' +
+          dispfieldkey +
+          '" data-parentlookupfield="' +
+          (element.parentLookupField ||
+            (element.InternalName &&
+            element.InternalName.indexOf("dummyfield") !== -1
+              ? element.InternalName.replace("dummyfield", "")
+              : "KPICode")) +
+          '" data-secondsource="' +
+          (element.secondsource || "") +
+          '" data-seconddispfieldkey="' +
+          secondDisp +
+          '" data-secondvalfieldkey="' +
+          secondVal +
+          '" id="' +
+          element.InternalName +
+          '" ' +
+          ToggleName +
+          ' value="" />' +
           "</div>";
         OnSuccess(flag, htmlBody);
         break;
@@ -14829,7 +15233,8 @@ window.dynamicAffectSelect = {
       var queryFieldName = affectedSelectsInfo[0].queryFieldName
         ? affectedSelectsInfo[0].queryFieldName
         : "";
-      queryFieldName = queryFieldName.includes("--")
+      queryFieldName =
+        queryFieldName && queryFieldName.indexOf("--") >= 0
         ? queryFieldName.split("--")[0]
         : queryFieldName;
       var queryFieldType = affectedSelectsInfo[0].queryFieldType
@@ -14843,6 +15248,16 @@ window.dynamicAffectSelect = {
         .get_lists()
         .getByTitle(affectedSelectsInfo[0].listName);
       var camlQuery = new SP.CamlQuery();
+
+      var camlEscape = function (v) {
+        if (v === null || v === undefined) {
+          return "";
+        }
+        return String(v)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/"/g, "&quot;");
+      };
 
       var Query = "";
       var valueToFilter = affectedSelectsInfo[0].customFilterValue
@@ -14866,6 +15281,112 @@ window.dynamicAffectSelect = {
         valueToFilter = "ministry"; // becuse there is a value we use it in GoalStrategy list
       }
 
+      var af = affectedSelectsInfo[0];
+      var parseAdditionalFilterRequireTypes = function (v) {
+        if (v === null || v === undefined || v === "") {
+          return [];
+        }
+        if (Object.prototype.toString.call(v) === "[object Array]") {
+          return v
+            .map(function (x) {
+              return String(x).trim();
+            })
+            .filter(Boolean);
+        }
+        return String(v)
+          .split(",")
+          .map(function (s) {
+            return s.trim();
+          })
+          .filter(Boolean);
+      };
+      var additionalEqXml = "";
+      if (af.additionalFilterField && af.additionalFilterFromField) {
+        var requireTypes = parseAdditionalFilterRequireTypes(
+          af.additionalFilterRequireWhenTypes
+        );
+        var typesFieldId = af.additionalFilterTypesFormField;
+        var allowAdditionalByType = true;
+        if (requireTypes.length && typesFieldId) {
+          var formTypeVal = $("#" + typesFieldId).val();
+          var typeMatches =
+            formTypeVal &&
+            requireTypes.indexOf(String(formTypeVal).trim()) >= 0;
+          var $addSrcCheck = $("#" + af.additionalFilterFromField);
+          var additionalSrcHasValue =
+            $addSrcCheck.length &&
+            String($addSrcCheck.val() || "").trim() !== "";
+          // Apply extra CAML when Types matches the configured list, OR when the
+          // source field (e.g. SubSector) has a value — otherwise vision/strategic
+          // flows never filter SOs by deputyship and changing SubSector looks "stuck".
+          allowAdditionalByType = typeMatches || additionalSrcHasValue;
+        } else if (requireTypes.length && !typesFieldId) {
+          allowAdditionalByType = false;
+        }
+        if (allowAdditionalByType) {
+          var $addSrc = $("#" + af.additionalFilterFromField);
+          var useLookupId =
+            af.additionalFilterLookupId === true ||
+            af.additionalFilterLookupId === "true";
+          if (useLookupId) {
+            var optId = $addSrc
+              .find("option:selected")
+              .attr("option-id");
+            if (optId) {
+              additionalEqXml =
+                "<Eq><FieldRef Name=\"" +
+                af.additionalFilterField +
+                '" LookupId="TRUE"/><Value Type="Integer">' +
+                camlEscape(optId) +
+                "</Value></Eq>";
+            }
+          } else {
+            var addValRaw = $addSrc.val();
+            if (addValRaw) {
+              var addValEsc = camlEscape(addValRaw);
+              var addType = af.additionalFilterFieldType || "Text";
+              additionalEqXml =
+                "<Eq><FieldRef Name=\"" +
+                af.additionalFilterField +
+                '"/><Value Type="' +
+                addType +
+                '">' +
+                addValEsc +
+                "</Value></Eq>";
+            }
+          }
+        }
+      }
+
+      var hasLevelFilter =
+        queryFieldValue &&
+        queryFieldValue != "undefined" &&
+        queryFieldName &&
+        queryFieldName != "undefined" &&
+        queryFieldType &&
+        queryFieldType != "undefined";
+
+      var valueToFilterEsc = camlEscape(valueToFilter);
+      var queryFieldValueEsc = camlEscape(queryFieldValue);
+
+      // SharePoint CAML: each <And> must have exactly two children — never three <Eq> in one <And>
+      var buildCamlAnd = function (parts) {
+        var list = parts.filter(function (p) {
+          return p && String(p).length > 0;
+        });
+        if (!list.length) {
+          return "";
+        }
+        var acc = list[0];
+        for (var i = 1; i < list.length; i++) {
+          acc = "<And>" + acc + list[i] + "</And>";
+        }
+        return acc;
+      };
+
+      var neqDeletion =
+        '<Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>';
+
       if (
         affectedSelectsInfo[0].isCustomFilterValue === "true" &&
         !affectedSelectsInfo[0].customFilterValue
@@ -14875,29 +15396,58 @@ window.dynamicAffectSelect = {
           <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
           </Where>
         <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
-      } else if (
-        queryFieldValue &&
-        queryFieldValue != "undefined" &&
-        queryFieldName &&
-        queryFieldName != "undefined" &&
-        queryFieldType &&
-        queryFieldType != "undefined"
-      ) {
-        Query = `<View><Query>
-        <Where><And>
-        <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
-        <And>
-        <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
-        <Eq><FieldRef Name="${queryFieldName}" /><Value Type="${queryFieldType}">${queryFieldValue}</Value></Eq></Eq>
-        </And></And></Where>
-        <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
+      } else if (hasLevelFilter) {
+        var eqStrategy =
+          "<Eq><FieldRef Name=\"" +
+          affectedSelectsInfo[0].filterField +
+          '"/><Value Type="' +
+          affectedSelectsInfo[0].filterFieldType +
+          '">' +
+          valueToFilterEsc +
+          "</Value></Eq>";
+        var eqLevel =
+          "<Eq><FieldRef Name=\"" +
+          queryFieldName +
+          '" /><Value Type="' +
+          queryFieldType +
+          '">' +
+          queryFieldValueEsc +
+          "</Value></Eq>";
+        var innerParts = [eqStrategy];
+        if (additionalEqXml) {
+          innerParts.push(additionalEqXml);
+        }
+        innerParts.push(eqLevel);
+        var whereInner = buildCamlAnd([neqDeletion].concat(innerParts));
+        Query =
+          "<View><Query><Where>" +
+          whereInner +
+          '</Where><OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>';
       } else {
-        Query = `<View><Query>
-        <Where><And>
-          <Neq><FieldRef Name="DeletionStatus" /><Value Type="Text">Deleted</Value></Neq>
-          <Eq><FieldRef Name="${affectedSelectsInfo[0].filterField}"/><Value Type="${affectedSelectsInfo[0].filterFieldType}">${valueToFilter}</Value></Eq>
-        </And></Where>
-        <OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>`;
+        var eqOnlyStrategy =
+          "<Eq><FieldRef Name=\"" +
+          affectedSelectsInfo[0].filterField +
+          '"/><Value Type="' +
+          affectedSelectsInfo[0].filterFieldType +
+          '">' +
+          valueToFilterEsc +
+          "</Value></Eq>";
+        if (additionalEqXml) {
+          var whereInner2 = buildCamlAnd([
+            neqDeletion,
+            eqOnlyStrategy,
+            additionalEqXml,
+          ]);
+          Query =
+            "<View><Query><Where>" +
+            whereInner2 +
+            '</Where><OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>';
+        } else {
+          Query =
+            "<View><Query><Where>" +
+            buildCamlAnd([neqDeletion, eqOnlyStrategy]) +
+            '</Where><OrderBy><FieldRef Name="Name" Ascending="True"/></OrderBy></Query></View>';
+        }
 
         //change FieldRef to Name and Acending True to can sort alphapetics arabic and english
         //FieldRef Name="Created" Ascending="True"(if we want to sort to alphapetics you need to Name='Name' and  Ascending='True')
@@ -14908,9 +15458,22 @@ window.dynamicAffectSelect = {
 
       dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
       clientContext.load(dynamicAffectSelect.g.collListItem);
+      dynamicAffectSelect.g.asyncCascadeSeq =
+        (dynamicAffectSelect.g.asyncCascadeSeq || 0) + 1;
+      var cascadeStartedSeq = dynamicAffectSelect.g.asyncCascadeSeq;
       clientContext.executeQueryAsync(
-        Function.createDelegate(this, dynamicAffectSelect.onSuccess),
-        Function.createDelegate(this, dynamicAffectSelect.onError)
+        function (sender, args) {
+          if (cascadeStartedSeq !== dynamicAffectSelect.g.asyncCascadeSeq) {
+            return;
+          }
+          dynamicAffectSelect.onSuccess(sender, args);
+        },
+        function (sender, args) {
+          if (cascadeStartedSeq !== dynamicAffectSelect.g.asyncCascadeSeq) {
+            return;
+          }
+          dynamicAffectSelect.onError(sender, args);
+        }
       );
       // }
     }
@@ -15146,7 +15709,7 @@ window.dynamicAffectSelect = {
 
   // Global variables
   g: {
-    PhasesArray: [],
+    asyncCascadeSeq: 0,
   },
 };
 //phases-stages

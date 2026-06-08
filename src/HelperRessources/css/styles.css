@@ -7350,3 +7350,17 @@ span.statuscolorstat28 {
 .ar .delegations-audit-ctx .pagination-buttons-details .next-page svg {
     transform: rotate(180deg);
 }
+
+/* Changed fields lines in dynamic versions audit */
+.item-versions-with-columns-audit .audit-change-line {
+    margin-bottom: 6px;
+    line-height: 1.6;
+}
+.item-versions-with-columns-audit .audit-change-line:last-child {
+    margin-bottom: 0;
+}
+.item-versions-with-columns-audit .audit-change-label {
+    font-weight: 700;
+    color: #148282;
+    text-decoration: underline;
+}

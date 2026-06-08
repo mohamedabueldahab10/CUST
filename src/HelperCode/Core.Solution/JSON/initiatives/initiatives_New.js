@@ -291,6 +291,48 @@ var Information_Form = [
         },
         // validation: 'required',
       },
+      {
+        InternalName: 'Sector',
+        DisplayName: 'القطاع',
+        DisplayNameEn: 'Sector',
+        type: 'lookupWithQuery',
+        queryField: 'EntityType',
+        queryFieldType: 'dropdownValues', //ex: "Choice"
+        queryFieldValue: 'Sector',
+        dynamic: 'parent',
+        // type: 'lookup',
+        validation: 'required',
+        //from other list:
+        source: 'Internal Entities',
+        // isSector: 'True',
+        // EntityType: 'Sector',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+      },
+      {
+        InternalName: 'SubSector',
+        DisplayName: 'الوكالة',
+        DisplayNameEn: 'Deputyship',
+        type: 'lookup',
+        //from other list:
+        source: 'Internal Entities',
+        // isSector: 'True',
+        // EntityType: 'Department',
+        Dispfieldkey: 'Name',
+        DispfieldkeyEn: 'NameEn',
+        valfieldkey: 'Title',
+        // "state": "disabled"
+        RequiredName: 'SubSector',
+         validation: 'required',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        dynamic: 'Sector', //InternalName Of Parent field
+        filterField: 'ParentEntity', //InternalName Of Parent field
+        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
+        queryField:"EntityType",
+        queryFieldType:"Choice",
+        queryFieldValue:"Department",
+      },
       // {
       //   InternalName: 'RelatedObjective',
       //   DisplayNameEn: 'Related Objective',
@@ -358,12 +400,17 @@ var Information_Form = [
         valfieldkey: 'Title',
         grpfieldkey: 'Title',
         "validation": "required",
-        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة",
-        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
+        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة والوكالة المختارة",
+        descPhraseEn: "The Objectives appear based on selected Level related to the selected Strategy and selected Deputyship", 
         //
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
+        additionalFilterField: 'SubSector',
+        additionalFilterFieldType: 'Text',
+        additionalFilterFromField: 'SubSector',
+        additionalFilterRequireWhenTypes: ['lms', 'sod', 'strategically'],
+        additionalFilterTypesFormField: 'Types',
         accessFilter: [
           {
             role: 'VROE',
@@ -617,48 +664,6 @@ var Information_Form = [
       // validation: 'required',
       //  descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
       //  descPhraseEn: "max length of letters equal 255",  
-      },
-      {
-        InternalName: 'Sector',
-        DisplayName: 'القطاع',
-        DisplayNameEn: 'Sector',
-        type: 'lookupWithQuery',
-        queryField: 'EntityType',
-        queryFieldType: 'dropdownValues', //ex: "Choice"
-        queryFieldValue: 'Sector',
-        dynamic: 'parent',
-        // type: 'lookup',
-        validation: 'required',
-        //from other list:
-        source: 'Internal Entities',
-        // isSector: 'True',
-        // EntityType: 'Sector',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-      },
-      {
-        InternalName: 'SubSector',
-        DisplayName: 'الوكالة',
-        DisplayNameEn: 'Deputyship',
-        type: 'lookup',
-        //from other list:
-        source: 'Internal Entities',
-        // isSector: 'True',
-        // EntityType: 'Department',
-        Dispfieldkey: 'Name',
-        DispfieldkeyEn: 'NameEn',
-        valfieldkey: 'Title',
-        // "state": "disabled"
-        RequiredName: 'SubSector',
-         validation: 'required',
-        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        dynamic: 'Sector', //InternalName Of Parent field
-        filterField: 'ParentEntity', //InternalName Of Parent field
-        filterFieldType: 'Text', //Type In Sharepoint List for Parent field
-        queryField:"EntityType",
-        queryFieldType:"Choice",
-        queryFieldValue:"Department",
       },
       {
         InternalName: 'ExternalEntities',

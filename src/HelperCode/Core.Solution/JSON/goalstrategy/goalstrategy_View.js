@@ -39,6 +39,7 @@ var Information_Form = [
           { value: 'ministry', fields: ['PillarsExist'] },
           { value: 'vision', fields: ['PillarsExist'] },
           { value: 'lms', fields: ['PillarsExist'] },
+          { value: 'sod', fields: ['PillarsExist'] },
           { value: 'sectorial', fields: ['PillarsExist'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],
@@ -60,6 +61,17 @@ var Information_Form = [
                 'Administrator',
                 //  'LMSE', 
                 'LMSP',
+                'BITeam',
+                'StrategyTeam',
+                'Minister'
+              ],
+            },
+            { display: 'sod', value: 'sod',
+              roles: [
+                'Administrator',
+                'SODVROExecution',
+                'SODVROPerformance',
+                'SODVROE',
                 'BITeam',
                 'StrategyTeam',
                 'Minister'

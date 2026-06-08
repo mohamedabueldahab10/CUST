@@ -121,8 +121,12 @@ var UserRole,
   membersGroupCheckArray = [], // to check picker user groups on form submit
   Page_UrlName =
     window.location.pathname.toLowerCase().indexOf("sitepages") > -1
-      ? window.location.pathname.toLowerCase().split("/sitepages/")[1]
-      : "", //get page name.aspx
+      ? window.location.pathname
+          .toLowerCase()
+          .split("/sitepages/")[1]
+          .split("?")[0]
+          .replace(/\/+$/, "")
+      : "",
   currPageArray = [],
   SP_Page_Name = [
     "mainstrategy.aspx",
@@ -145,6 +149,8 @@ var UserRole,
   // USER_HomePage = "home.aspx",
   UserPage_Name = window.location.pathname
     .substring(window.location.pathname.lastIndexOf("/") + 1)
+    .split("?")[0]
+    .replace(/\/+$/, "")
     .toLocaleLowerCase(),
   AllListKeys = [],
   AllPageNames = [],
@@ -201,8 +207,10 @@ var UserRole,
   isfileListing =
     window.location.href.toLowerCase().indexOf("fileslisting") > -1,
   USERisForm = USERisNew || USERisEdit || USERisView ? true : false,
+  // Listing.aspx only (has ListKey=) — not other SitePages whose name contains "listing.aspx".
   USERisListing =
-    window.location.href.toLowerCase().indexOf("listing.aspx") > -1,
+    UserPage_Name === "listing.aspx" &&
+    window.location.href.toLowerCase().indexOf("listkey=") > -1,
   USERisProjects = USERlistkey == "projects" ? true : false,
   USERisIdeas = USERlistkey == "ideas" ? true : false,
   forfilterQuery = "",
@@ -2066,7 +2074,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
-          "changerequests" ,
+          "changerequests"  ,
           "delegations"
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
@@ -2100,6 +2108,8 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
+          "changeRequests.aspx",
+          "changerequests"  ,
           "projecthome.aspx",
           "InitiativeHome.aspx",
           "TaskHistory.aspx",
@@ -2374,7 +2384,8 @@ window.userCalls = {
           "strategiccalendar",
           "measurementcyclesupport",
           "changeRequests.aspx",
-          "changerequests" 
+          "changerequests" ,
+          "DeletedItemsListing.aspx"
 
         ];
 
@@ -4435,7 +4446,8 @@ window.userCalls = {
           "initiativesmain.aspx",
           "changerequest",
           "changeRequests.aspx",
-          "changerequests"  , "delegations"      ];
+          "changerequests"  ,
+          "delegations"      ];
         Edit_Access = [
           "Targets.aspx",
           "mainkpi",
@@ -4810,8 +4822,11 @@ window.userCalls = {
             userCalls.g.Security_Msg();
             console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
           }
-        } else if (isSP_Page) {
-          // on restricted  page
+        } else if (
+          isSP_Page &&
+          Read_Access.indexOf(Page_UrlName) == -1
+        ) {
+          // Standalone SitePages (ChangeRequests, DeletedItemsListing, …): Read without Create is OK
           userCalls.g.Security_Msg();
           console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
@@ -9385,7 +9400,9 @@ var Access_Project_Info_Request = {
         }, 1000);
       } else if (USERisListing && !isfileListing) {
         window.checkListingStatusHtml = setInterval(function () {
-          ListingData.preinit();
+          if (typeof ListingData !== "undefined" && ListingData.preinit) {
+            ListingData.preinit();
+          }
         }, 1000);
       }
     }

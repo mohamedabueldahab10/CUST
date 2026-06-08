@@ -54,7 +54,7 @@ var Listing_Info = [
     InternalName: 'Delivered',
     DisplayName: 'مكتمل',
     DisplayNameEn: 'Completed',
-    type: 'text',
+    type: 'yesnoradio',
     inlisting: true,
     infilter: false,
     needTrans: true,

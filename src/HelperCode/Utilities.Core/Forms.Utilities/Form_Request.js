@@ -1600,6 +1600,57 @@ window.Edit_Data_Request = {
           );
         }
       }
+      if (listkey == "strategicpartnershipsachievements" && (isEdit || isView)) {
+        $("style").filter(function () {
+          return (($(this).html() || "").indexOf("SPAchievementsLock") > -1);
+        }).remove();
+        $(".sp-achievements-approved-msg").remove();
+        var spAchievementsViewXml =
+          "<View><Query><Where><Eq><FieldRef Name='ID'/><Value Type='Counter'>" +
+          Number(IID) +
+          "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
+        var spAchievementsContext = SP.ClientContext.get_current();
+        var spAchievementsList = spAchievementsContext
+          .get_web()
+          .get_lists()
+          .getByTitle("SPAchievements");
+        var spAchievementsCamlQuery = new SP.CamlQuery();
+        spAchievementsCamlQuery.set_viewXml(spAchievementsViewXml);
+        var spAchievementsItems = spAchievementsList.getItems(spAchievementsCamlQuery);
+        spAchievementsContext.load(spAchievementsItems);
+        spAchievementsContext.executeQueryAsync(
+          function () {
+            var spAchievementWfStage = "";
+            var spAchievementsEnum = spAchievementsItems.getEnumerator();
+            if (spAchievementsEnum.moveNext()) {
+              var spAchievementsItem = spAchievementsEnum.get_current();
+              spAchievementWfStage = spAchievementsItem.get_item("WFStage") || "";
+            }
+            if (String(spAchievementWfStage).trim().toLowerCase() == "approved") {
+              $("body").append(
+                "<style>" +
+                  "/*SPAchievementsLock*/" +
+                  ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+                  ".form-control{color: #b1b1b1 !important;" +
+                  "border-color: #e1e1e1 !important;" +
+                  "background-color: #fdfdfd !important;" +
+                  "opacity: .6;pointer-events: none;}" +
+                  "</style>"
+              );
+              var msgText =
+                localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
+                  ? "هذا العنصر مكتمل لا يمكن التعديل عليه"
+                  : "This item is completed and cannot be edited";
+              var htmlMsg =
+                '<div class="kpiPeriodChanged ErrorMsg sp-achievements-approved-msg">' + msgText + "</div>";
+              $(".btnactionrow").after(htmlMsg);
+            }
+          },
+          function (sender, args) {
+            console.error("Error getting SPAchievements WFStage", args.get_message());
+          }
+        );
+      }
     },2000);
     $(".loader-box").fadeOut();
     setTimeout(function () {
@@ -1639,12 +1690,289 @@ window.Edit_Data_Request = {
         }
       });
     }
-    
     // Handle getValueFromLookup dynamically after all data is loaded
     // Use setTimeout to ensure all fields are loaded
     setTimeout(function() {
       Edit_Data_Request.handleGetValueFromLookup();
+      Edit_Data_Request.populateDerivedLookupViewFields(oListItem);
     }, 800);
+  },
+
+  // Read-only derived lookup fields on Edit (same logic as View_Data_Request viewmode handlers)
+  populateDerivedLookupViewFields: function (listItem) {
+    var oListItemRef =
+      listItem ||
+      (Edit_Data_Request.g && Edit_Data_Request.g.oListItem) ||
+      null;
+    var urlLookupKeys = {
+      KPICode: "KpiCode",
+      SOCode: "sosCode",
+      ProjectCode: "PCODE",
+      PCODE: "PCODE",
+      InitiativeCode: "ICODE",
+      ICODE: "ICODE",
+    };
+
+    function getParentLookupValue(parentLookupField) {
+      var lookupFieldValue = null;
+      if (oListItemRef) {
+        try {
+          var lookupItem = oListItemRef.get_item(parentLookupField);
+          if (lookupItem && typeof lookupItem.get_lookupValue === "function") {
+            lookupFieldValue = lookupItem.get_lookupValue();
+          } else if (lookupItem) {
+            lookupFieldValue = lookupItem;
+          }
+        } catch (e) {
+          lookupFieldValue = null;
+        }
+      }
+      try {
+        if (lookupFieldValue == null || lookupFieldValue === "") {
+          var urlKey = urlLookupKeys[parentLookupField];
+          if (urlKey && window.location.href.indexOf(urlKey + "=") > -1) {
+            lookupFieldValue = decodeURIComponent(
+              window.location.href.split(urlKey + "=")[1].split("&")[0]
+            );
+          }
+        }
+      } catch (e) {}
+      return lookupFieldValue;
+    }
+
+    function setDerivedLookupDisplay($el, value, useHtml) {
+      if ($el.is("input")) {
+        $el.val(value != null && value !== undefined ? value : "");
+      } else if (useHtml) {
+        $el.html(value != null && value !== undefined ? value : No_Data);
+      } else {
+        $el.text(value != null && value !== undefined ? value : No_Data);
+      }
+    }
+
+    $(
+      '.section-container:not([data-target_list]) .CFIELD > [data-field-type], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookup"], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookupdropdown"], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookupfromlookup"], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookupmultiline"], .section-container:not([data-target_list]) .CFIELD > .viewmode-value[type="lookupdatetime"]'
+    ).each(function () {
+      var $this = $(this);
+      var fieldType = $this.data("field-type") || $this.attr("type");
+
+      if (fieldType == "lookup") {
+        var fieldId = $this.attr("id");
+        if (fieldId && fieldId.includes("dummyfield")) {
+          fieldId = fieldId.split("dummyfield")[0];
+        }
+        var valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname");
+        var lookupFieldValue = getParentLookupValue(fieldId);
+
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                setDerivedLookupDisplay($this, records[0][Dispfieldkey]);
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      } else if (fieldType == "lookupdropdown") {
+        var parentLookupField = $this.data("parentlookupfield") || "KPICode",
+          valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname");
+        var lookupFieldValue = getParentLookupValue(parentLookupField);
+
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var rawValue = records[0][Dispfieldkey];
+                var key = (typeof rawValue === "string" ? rawValue : String(rawValue)).toLowerCase();
+                var displayText;
+                if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                  displayText = Resources.ar && Resources.ar[key] ? Resources.ar[key] : rawValue;
+                } else {
+                  displayText = Resources.en && Resources.en[key] ? Resources.en[key] : rawValue;
+                }
+                setDerivedLookupDisplay($this, displayText);
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      } else if (fieldType == "lookupfromlookup") {
+        var parentLookupField = $this.data("parentlookupfield") || "KPICode",
+          valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname"),
+          secondsource = $this.data("secondsource"),
+          secondDispfieldkey = $this.data("seconddispfieldkey") || "Name",
+          secondvalfieldkey = $this.data("secondvalfieldkey") || "Title";
+        var lookupFieldValue = getParentLookupValue(parentLookupField);
+
+        if (lookupFieldValue == null || !listname || !secondsource) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var secondLookupValue = records[0][Dispfieldkey];
+                if (
+                  typeof secondLookupValue === "object" &&
+                  secondLookupValue != null &&
+                  typeof secondLookupValue.get_lookupValue === "function"
+                ) {
+                  secondLookupValue = secondLookupValue.get_lookupValue();
+                }
+                if (!secondLookupValue) {
+                  setDerivedLookupDisplay($this, No_Data);
+                  return;
+                }
+                var secondQuery =
+                  "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+                  secondvalfieldkey +
+                  '" /><Value Type="Text">' +
+                  secondLookupValue +
+                  "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+                sphttp.get(
+                  _spPageContextInfo.siteServerRelativeUrl,
+                  secondsource,
+                  secondQuery,
+                  [secondDispfieldkey],
+                  function (recs2, r2, li2, done2) {
+                    if (done2 && recs2.length > 0 && recs2[0][secondDispfieldkey] != null) {
+                      setDerivedLookupDisplay($this, recs2[0][secondDispfieldkey]);
+                    } else {
+                      setDerivedLookupDisplay($this, No_Data);
+                    }
+                  }
+                );
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      } else if (fieldType == "lookupmultiline") {
+        var parentLookupField = $this.data("parentlookupfield") || "KPICode",
+          valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname");
+        var lookupFieldValue = getParentLookupValue(parentLookupField);
+
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var rawValue = records[0][Dispfieldkey];
+                var displayText = (typeof rawValue === "string" ? rawValue : String(rawValue)).replace(/\n/g, "<br>");
+                setDerivedLookupDisplay($this, displayText, true);
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      } else if (fieldType == "lookupdatetime") {
+        var parentLookupField = $this.data("parentlookupfield") || "KPICode",
+          valfieldkey = $this.data("valfieldkey") || "Title",
+          Dispfieldkey = $this.data("dispfieldkey"),
+          listname = $this.data("listname");
+        var lookupFieldValue = getParentLookupValue(parentLookupField);
+
+        if (lookupFieldValue == null || !listname || !Dispfieldkey) {
+          setDerivedLookupDisplay($this, No_Data);
+        } else {
+          var customquery =
+            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
+            valfieldkey +
+            '" /><Value Type="Text">' +
+            lookupFieldValue +
+            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            listname,
+            customquery,
+            [valfieldkey, Dispfieldkey],
+            function (records, record, listItem, isDone) {
+              if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                var d = records[0][Dispfieldkey];
+                if (typeof d === "string") d = new Date(d);
+                if (d && !isNaN(d.getTime())) {
+                  var local = d.getTime();
+                  var offset = d.getTimezoneOffset() * (60 * 1000);
+                  var utc = new Date(local + offset);
+                  var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+                  var datetouse = riyadh.toLocaleString("en-US").split(",")[0].split("/");
+                  datetouse[0] = datetouse[0].length == 1 ? "0" + datetouse[0] : datetouse[0];
+                  datetouse[1] = datetouse[1].length == 1 ? "0" + datetouse[1] : datetouse[1];
+                  var datetouse2;
+                  if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                    datetouse2 = datetouse[2] + "-" + datetouse[0] + "-" + datetouse[1];
+                  } else {
+                    datetouse2 = datetouse[1] + "-" + datetouse[0] + "-" + datetouse[2];
+                  }
+                  setDerivedLookupDisplay($this, datetouse2);
+                } else {
+                  setDerivedLookupDisplay($this, No_Data);
+                }
+              } else {
+                setDerivedLookupDisplay($this, No_Data);
+              }
+            }
+          );
+        }
+      }
+    });
   },
   
   // Function to handle getValueFromLookup dynamically
@@ -3416,7 +3744,27 @@ window.View_Data_Request = {
       if (listkey == "delegations") {
         Get_ItemVersionsAudit.init("Delegations");
       } else if (listkey == "mainkpi") {
-        Get_ItemVersionsAudit.init("MainKPI");
+        if (isAdmin || isSPMAdmin) {
+          Get_ItemVersionsWithColumnsAudit.init(
+            "MainKPI",
+            IID,
+            "Style%20Library/spm/JSON/mainkpi/mainkpi_View.js"
+          );
+        }
+        Get_AllTaskHistoryRelatedToForm.init();
+      } else if (listkey == "strategicpartnershipsdeliverables") {
+        Get_ItemVersionsWithColumnsAudit.init(
+          "Deliverables",
+          IID,
+          "Style%20Library/spm/JSON/strategicpartnershipsdeliverables/strategicpartnershipsdeliverables_View.js"
+        );
+        Get_AllTaskHistoryRelatedToForm.init();
+      } else if (listkey == "strategicpartnershipsachievements") {
+        Get_ItemVersionsWithColumnsAudit.init(
+          "SPAchievements",
+          IID,
+          "Style%20Library/spm/JSON/strategicpartnershipsachievements/strategicpartnershipsachievements_View.js"
+        );
         Get_AllTaskHistoryRelatedToForm.init();
       } else if (listkey != "cryearlycalendar") {
         Get_AllTaskHistoryRelatedToForm.init();
@@ -4105,6 +4453,57 @@ window.View_Data_Request = {
         }
       });
     }
+    if (listkey == "strategicpartnershipsachievements" && (isEdit || isView)) {
+      $("style").filter(function () {
+        return (($(this).html() || "").indexOf("SPAchievementsLock") > -1);
+      }).remove();
+      $(".sp-achievements-approved-msg").remove();
+      var spAchievementsViewXml =
+        "<View><Query><Where><Eq><FieldRef Name='ID'/><Value Type='Counter'>" +
+        Number(IID) +
+        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
+      var spAchievementsContext = SP.ClientContext.get_current();
+      var spAchievementsList = spAchievementsContext
+        .get_web()
+        .get_lists()
+        .getByTitle("SPAchievements");
+      var spAchievementsCamlQuery = new SP.CamlQuery();
+      spAchievementsCamlQuery.set_viewXml(spAchievementsViewXml);
+      var spAchievementsItems = spAchievementsList.getItems(spAchievementsCamlQuery);
+      spAchievementsContext.load(spAchievementsItems);
+      spAchievementsContext.executeQueryAsync(
+        function () {
+          var spAchievementWfStage = "";
+          var spAchievementsEnum = spAchievementsItems.getEnumerator();
+          if (spAchievementsEnum.moveNext()) {
+            var spAchievementsItem = spAchievementsEnum.get_current();
+            spAchievementWfStage = spAchievementsItem.get_item("WFStage") || "";
+          }
+          if (String(spAchievementWfStage).trim().toLowerCase() == "approved") {
+            $("body").append(
+              "<style>" +
+                "/*SPAchievementsLock*/" +
+                ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+                ".form-control{color: #b1b1b1 !important;" +
+                "border-color: #e1e1e1 !important;" +
+                "background-color: #fdfdfd !important;" +
+                "opacity: .6;pointer-events: none;}" +
+                "</style>"
+            );
+            var msgText =
+              localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
+                ? "هذا العنصر مكتمل لا يمكن التعديل عليه"
+                : "This item is completed and cannot be edited";
+            var htmlMsg =
+              '<div class="kpiPeriodChanged ErrorMsg sp-achievements-approved-msg">' + msgText + "</div>";
+            $(".btnactionrow").after(htmlMsg);
+          }
+        },
+        function (sender, args) {
+          console.error("Error getting SPAchievements WFStage", args.get_message());
+        }
+      );
+    }
     
     // Handle getValueFromLookup dynamically after all data is loaded
     // Use setTimeout to ensure all fields are loaded
@@ -4367,6 +4766,7 @@ window.View_Data_Request = {
       });
       $("button.btn-delete").on("click", function () {
         Delete_Item_Submit.g.Delete_Message();
+        // NewLogicDelete_Item_Submit.g.Delete_Message();
       });
     },
     Cancel: function () {
@@ -7014,6 +7414,8 @@ window.Delete_Data_Submit = {
   },
 };
 
+//Ghoufran Old Deletions  logic
+
 window.Delete_Item_Via_Api = {
   init: function () {
     var urlHandlerToDelete = "";
@@ -7196,6 +7598,144 @@ window.Delete_Item_Submit = {
     },
   },
 };
+
+//Ghoufran New Deletions  logic
+window.NewLogicDelete_Service = {
+  buildDeleteRequestBody: function () {
+    var deletionConfigurations = window.FormsConfigurationsForDeletionsRestoring;
+    var listDeletionConfig =
+      deletionConfigurations &&
+      deletionConfigurations.getDeletionConfigByListKey &&
+      deletionConfigurations.getDeletionConfigByListKey(listkey);
+    if (!listDeletionConfig) return null;
+    return {
+      ItemId: Number(IID),
+      DisplayListName: listDeletionConfig.DisplayListName,
+      requestingUserId: Number(_spPageContextInfo.userId),
+      WorkflowNames: listDeletionConfig.WorkflowNames || "",
+      RelatedListNames: listDeletionConfig.RelatedListNames || [],
+    };
+  },
+  redirectAfterDelete: function () {
+    if (
+      listkey == "projects" ||
+      listkey == "initiatives" ||
+      listkey == "ideas" ||
+      listkey == "portfolio" ||
+      listkey == "budgetitems" ||
+      listkey == "strategicpartnerships"
+    ) {
+      window.location =
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Listing.aspx?ListKey=" +
+        listkey;
+      return;
+    }
+    if (listkey == "mainkpi") {
+      Delete_Kpi_Results.init();
+      return;
+    }
+    var listingUrl =
+      _spPageContextInfo.webAbsoluteUrl +
+      "/SitePages/Listing.aspx?ListKey=" +
+      listkey;
+    if (listkey == "mainkpiissues" || listkey == "mainkpianalysis") {
+      if (window.location.href.indexOf("KpiCode=") > -1)
+        listingUrl += "&KpiCode=" + window.location.href.split("KpiCode=")[1].split("&")[0];
+    } else if (listkey == "sosanalysis") {
+      if (window.location.href.indexOf("sosCode=") > -1)
+        listingUrl += "&sosCode=" + encodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]);
+    } else {
+      listingUrl += PCODE_STRING;
+    }
+    window.location = listingUrl;
+  },
+  executeUnifiedDelete: function () {
+    $("button.btn-delete").removeClass("loader-action-success");
+    $("button.btn-delete").removeClass("loader-action-error");
+    $("button.btn-delete").addClass("loader-action");
+
+    var requestBody = NewLogicDelete_Service.buildDeleteRequestBody();
+    if (!requestBody) {
+      console.log("Delete configuration is missing for listkey:", listkey);
+      $("button.btn-delete").removeClass("loader-action");
+      $("button.btn-delete").addClass("loader-action-error");
+      return;
+    }
+
+    $.ajax({
+      url: `${APIURL}/general/deleteitemandrelatedtasks`,
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(requestBody),
+      success: function () {
+        $("button.btn-delete").removeClass("loader-action");
+        $("button.btn-delete").addClass("loader-action-success");
+        if (filesUrls.length) {
+          allFileIndex = 0;
+          for (let i = 0; i < filesUrls.length; i++) {
+            deleteAllFileFromDoc.init(filesUrls[i].url);
+          }
+        } else {
+          NewLogicDelete_Service.redirectAfterDelete();
+        }
+      },
+      error: function (err) {
+        console.log("deleteitemandrelatedtasks call failed", err);
+        $("button.btn-delete").removeClass("loader-action");
+        $("button.btn-delete").addClass("loader-action-error");
+      },
+    });
+  },
+  showDeleteConfirmation: function () {
+    var locale, deletetitle;
+    if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+      locale = {
+        OK: Resources.ar["yes"],
+        CONFIRM: Resources.ar["yes"],
+        CANCEL: Resources.ar["cancelbutton"],
+      };
+      deletetitle = Resources.ar["deleteconfirmation"];
+    } else {
+      locale = {
+        OK: Resources.en["yes"],
+        CONFIRM: Resources.en["yes"],
+        CANCEL: Resources.en["cancelbutton"],
+      };
+      deletetitle = Resources.en["deleteconfirmation"];
+    }
+    bootbox.addLocale("custom", locale);
+    bootbox.confirm({
+      message: deletetitle,
+      locale: "custom",
+      callback: function (result) {
+        if (result == true) {
+          NewLogicDelete_Service.executeUnifiedDelete();
+        } else {
+          console.log("cancled");
+        }
+      },
+    });
+  },
+};
+
+window.NewLogicDelete_Item_Via_Api = {
+  init: function () {
+    NewLogicDelete_Service.executeUnifiedDelete();
+  },
+};
+
+window.NewLogicDelete_Item_Submit = {
+  init: function () {
+    NewLogicDelete_Service.executeUnifiedDelete();
+  },
+  g: {
+    Delete_Message: function () {
+      NewLogicDelete_Service.showDeleteConfirmation();
+    },
+  },
+};
+// Ghoufran Old Deletions logic 
 
 var Delete_Kpi_Results = {
   init: function () {
@@ -8532,6 +9072,7 @@ window.equationKPI = {
         $("p#Equation").text(kpiEquation || 0);
       }
     }
+    // access on equation button  
     if (
       (isAdmin ||
         isSPMAdmin ||
@@ -8539,6 +9080,7 @@ window.equationKPI = {
         isLMSP ||
         isVROE ||
         isLMSUExecution ||
+        isSODVROExecution ||
         isEPMO) &&
       !USERisWF
     ) {
@@ -9094,6 +9636,7 @@ var deleteAllFileFromDoc = {
   },
   success: function () {
     if (allFileIndex == filesUrls.length - 1) {
+      //OLD REDIRECT BLOCK (legacy behavior) - START
       if (
         listkey == "projects" ||
         listkey == "ideas" ||
@@ -9115,6 +9658,21 @@ var deleteAllFileFromDoc = {
             PCODE_STRING;
         }
       }
+      //OLD REDIRECT BLOCK (legacy behavior) - END
+
+      // NEW REDIRECT BLOCK (new unified logic) - START
+      // if (
+      //   window.NewLogicDelete_Service &&
+      //   NewLogicDelete_Service.redirectAfterDelete
+      // ) {
+      //   NewLogicDelete_Service.redirectAfterDelete();
+      // } else {
+      //   window.location =
+      //     _spPageContextInfo.webAbsoluteUrl +
+      //     "/SitePages/Listing.aspx?ListKey=" +
+      //     listkey;
+      // }
+      //  NEW REDIRECT BLOCK (new unified logic) - END
     }
     allFileIndex++;
 
@@ -10500,6 +11058,379 @@ window.Get_ItemVersionsAudit = {
     changeResources();
   },
   currentListName: "Delegations",
+};
+
+// Item versions with dynamic changed columns (new API) - used for MainKPI first
+window.Get_ItemVersionsWithColumnsAudit = {
+  init: function (listName, itemId, viewJsonPath) {
+    Get_ItemVersionsWithColumnsAudit.currentListName = listName || "";
+    var resolvedViewJsonPath = viewJsonPath || "";
+    var resolvedItemId =
+      itemId != null && itemId !== "" ? Number(itemId) : Number(IID);
+    var url =
+      (typeof APIURL !== "undefined" ? APIURL : "") +
+      "/general/getversionswithcolumns";
+    $.ajax({
+      url: url,
+      method: "POST",
+      contentType: "application/json",
+      dataType: "json",
+      data: JSON.stringify({
+        listName: listName,
+        itemId: resolvedItemId,
+        fileURL: resolvedViewJsonPath,
+      }),
+      success: Function.createDelegate(
+        this,
+        Get_ItemVersionsWithColumnsAudit.onSuccess
+      ),
+      error: Function.createDelegate(
+        this,
+        Get_ItemVersionsWithColumnsAudit.onError
+      ),
+    });
+  },
+
+  onSuccess: function (data) {
+    var versions = [];
+    if (data && data.isSuccess) {
+      if (Array.isArray(data.result)) versions = data.result;
+      else if (typeof data.result === "string") {
+        try {
+          versions = JSON.parse(data.result);
+        } catch (e) {
+          console.log("Get_ItemVersionsWithColumnsAudit: parse error", e);
+        }
+      }
+    }
+    Get_ItemVersionsWithColumnsAudit.renderTable(versions);
+  },
+
+  onError: function () {
+    Get_ItemVersionsWithColumnsAudit.renderTable([]);
+  },
+
+  renderTable: async function (versions) {
+    var isAr =
+      localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+    var Res = isAr ? Resources.ar : Resources.en;
+    var noDataLabel = isAr ? "لا يوجد" : "No Data";
+    var trueLabel = Res.true || (isAr ? "نعم" : "Yes");
+    var falseLabel = Res.false || (isAr ? "لا" : "No");
+
+    function formatDateTime(val) {
+      if (!val) return No_Data;
+      try {
+        return new Date(val).toLocaleString("en-US");
+      } catch (e) {
+        return val || No_Data;
+      }
+    }
+    function parseEditorDisplay(editorRaw) {
+      if (!editorRaw) return No_Data;
+      if (typeof editorRaw !== "string") return editorRaw;
+      var parts = editorRaw.split(":::");
+      return parts.length >= 2 && parts[1] ? parts[1] : editorRaw;
+    }
+    function startsWithSP(editorDisplay) {
+      if (!editorDisplay || editorDisplay === No_Data) return false;
+      return String(editorDisplay).trim().toUpperCase().indexOf("SP") === 0;
+    }
+    function parseJsonField(jsonField) {
+      if (!jsonField) return null;
+      if (typeof jsonField === "object") return jsonField;
+      try {
+        return JSON.parse(jsonField);
+      } catch (e) {
+        return null;
+      }
+    }
+    function translateValue(raw) {
+      if (raw == null || raw === "") return No_Data;
+      var key = String(raw).toLowerCase();
+      return Res[key] != null ? Res[key] : raw;
+    }
+    function parsePickerValue(raw) {
+      if (!raw) return No_Data;
+      var chunks = String(raw).split(";#");
+      var names = [];
+      for (var i = 0; i < chunks.length; i++) {
+        var token = chunks[i];
+        if (!token) continue;
+        var parts = token.split(":::");
+        if (parts.length >= 2 && parts[1]) names.push(parts[1]);
+      }
+      return names.length ? names.join(", ") : raw;
+    }
+    var lookupDisplayCache = {};
+    async function resolveLookupDisplayValue(rawValue, fieldMeta) {
+      if (rawValue == null || rawValue === "") return No_Data;
+      var source = (fieldMeta && fieldMeta.source) || "";
+      var valField = (fieldMeta && fieldMeta.valfieldkey) || "Title";
+      var dispField = (fieldMeta && fieldMeta.Dispfieldkey) || "Title";
+      var dispFieldEn = (fieldMeta && fieldMeta.DispfieldkeyEn) || dispField;
+      if (!source || !valField) return rawValue;
+
+      var cacheKey =
+        [source, valField, dispField, dispFieldEn, String(rawValue)].join("|");
+      if (lookupDisplayCache[cacheKey] != null) {
+        return lookupDisplayCache[cacheKey];
+      }
+
+      var escapedSource = source.replace(/'/g, "''");
+      var escapedValue = String(rawValue).replace(/'/g, "''");
+      var selectedDispField = isAr ? dispField : dispFieldEn;
+      var selectFields = [valField, dispField];
+      if (dispFieldEn && dispFieldEn !== dispField) selectFields.push(dispFieldEn);
+      var url =
+        _spPageContextInfo.webAbsoluteUrl +
+        "/_api/web/lists/getbytitle('" +
+        escapedSource +
+        "')/items?$select=" +
+        selectFields.join(",") +
+        "&$filter=" +
+        valField +
+        " eq '" +
+        escapedValue +
+        "'&$top=1";
+
+      var resolved = await new Promise(function (resolve) {
+        $.ajax({
+          url: url,
+          method: "GET",
+          headers: { Accept: "application/json; odata=verbose" },
+          success: function (data) {
+            var item =
+              data &&
+              data.d &&
+              data.d.results &&
+              data.d.results.length > 0
+                ? data.d.results[0]
+                : null;
+            if (!item) {
+              resolve(rawValue);
+              return;
+            }
+            resolve(
+              item[selectedDispField] ||
+                item[dispField] ||
+                item[dispFieldEn] ||
+                rawValue
+            );
+          },
+          error: function () {
+            resolve(rawValue);
+          },
+        });
+      });
+      lookupDisplayCache[cacheKey] = resolved;
+      return resolved;
+    }
+    function formatValueByType(rawValue, fieldMeta) {
+      if (rawValue == null || rawValue === "") return No_Data;
+      var fType = ((fieldMeta && fieldMeta.type) || "").toLowerCase();
+      if (
+        fType === "dropdownvalues" ||
+        fType === "yesnoradio" ||
+        fType === "radio" ||
+        fType === "select"
+      ) {
+        return translateValue(rawValue);
+      }
+      if (fType === "picker") {
+        return parsePickerValue(rawValue);
+      }
+      if (fType === "datetime" || fType === "date") {
+        return formatDateTime(rawValue);
+      }
+      if (fType === "lookup") {
+        if (String(rawValue).indexOf(":::") > -1 || String(rawValue).indexOf(";#") > -1) {
+          return parsePickerValue(rawValue);
+        }
+        return rawValue;
+      }
+      if (fType === "lookupwithquery") {
+        if (String(rawValue).indexOf(":::") > -1 || String(rawValue).indexOf(";#") > -1) {
+          return parsePickerValue(rawValue);
+        }
+        return rawValue;
+      }
+      return rawValue;
+    }
+
+    var safeVersions = Array.isArray(versions) ? versions : [];
+    var prepared = [];
+    for (var v = 0; v < safeVersions.length; v++) {
+      var ver = safeVersions[v] || {};
+      var editorDisplay = parseEditorDisplay(ver.editor);
+      if (startsWithSP(editorDisplay)) continue;
+      var details = Array.isArray(ver.columnsDetails) ? ver.columnsDetails : [];
+      var changed = [];
+      for (var d = 0; d < details.length; d++) {
+        if (details[d] && details[d].isChanged === true) changed.push(details[d]);
+      }
+      if (changed.length === 0) continue;
+      prepared.push({
+        created: ver.created,
+        editor: editorDisplay,
+        changedColumns: changed,
+      });
+    }
+
+    for (var pv = 0; pv < prepared.length; pv++) {
+      var changedCols = prepared[pv].changedColumns;
+      for (var cd = 0; cd < changedCols.length; cd++) {
+        var parsedMeta = parseJsonField(changedCols[cd].jsonField);
+        if (!parsedMeta) continue;
+        var t = ((parsedMeta.type || "") + "").toLowerCase();
+        var rawVal = changedCols[cd].value;
+        if (
+          (t === "lookup" || t === "lookupwithquery") &&
+          rawVal != null &&
+          rawVal !== "" &&
+          String(rawVal).indexOf(":::") === -1 &&
+          String(rawVal).indexOf(";#") === -1
+        ) {
+          changedCols[cd]._resolvedValue = await resolveLookupDisplayValue(
+            rawVal,
+            parsedMeta
+          );
+        }
+      }
+    }
+
+    var fixedColumns = [
+      { key: "editor", title: isAr ? "المحرر" : "Editor" },
+      { key: "created", title: isAr ? "تاريخ الإنشاء" : "Created Date" },
+      { key: "changes", title: isAr ? "العناصر التي تم التغيير عليها" : "Changed Items" },
+    ];
+
+    var columns = fixedColumns;
+    var colCount = columns.length > 0 ? columns.length : 1;
+    var pageSize = 10;
+    var currentPage = 1;
+
+    function buildRowsHtml(slice) {
+      var html = "";
+      for (var r = 0; r < slice.length; r++) {
+        var row = slice[r];
+        html += "<tr>";
+        for (var c = 0; c < fixedColumns.length; c++) {
+          var fixedKey = fixedColumns[c].key;
+          var fixedValue = No_Data;
+          if (fixedKey === "editor") fixedValue = row.editor || No_Data;
+          else if (fixedKey === "created") fixedValue = formatDateTime(row.created);
+          else if (fixedKey === "changes") {
+            var changesHtml = "";
+            for (var ch = 0; ch < row.changedColumns.length; ch++) {
+              var detail = row.changedColumns[ch];
+              var parsedField = parseJsonField(detail.jsonField);
+              if (!parsedField) continue;
+              var fieldLabel = isAr
+                ? parsedField.DisplayName || parsedField.DisplayNameEn || parsedField.InternalName || "-"
+                : parsedField.DisplayNameEn || parsedField.DisplayName || parsedField.InternalName || "-";
+              var rawDisplayValue =
+                detail._resolvedValue != null ? detail._resolvedValue : detail.value;
+              var value = formatValueByType(rawDisplayValue, parsedField);
+              changesHtml +=
+                '<div class="audit-change-line">' +
+                '<span class="audit-change-label">' + fieldLabel + ":</span> " +
+                '<span class="audit-change-value">' + value + "</span>" +
+                "</div>";
+            }
+            fixedValue = changesHtml || No_Data;
+          }
+          html += "<td>" + fixedValue + "</td>";
+        }
+        html += "</tr>";
+      }
+      return html;
+    }
+
+    var theadHtml = "<thead><tr>";
+    for (var h = 0; h < columns.length; h++) {
+      theadHtml +=
+        '<th><span class="d-flex align-items-center">' +
+        columns[h].title +
+        "</span></th>";
+    }
+    theadHtml += "</tr></thead>";
+
+    $(".delegations-audit-ctx.item-versions-audit").remove();
+    $(".delegations-audit-ctx.item-versions-with-columns-audit").remove();
+
+    var sectionHtml =
+      '<div class="section3 row col-12 px-0 task-history-ctx mx-0 delegations-audit-ctx item-versions-with-columns-audit">' +
+      '<div class="approvalHeader">' +
+      '<h2 class="Resources" data-trans-audit>Audit</h2>' +
+      "</div>" +
+      '<div class="taskHistory row mx-0 px-0 col-12 flex-column">' +
+      '<div class="hrsd-table-responsive">' +
+      '<table class="table HrsdTable delegations-audit-table">' +
+      theadHtml +
+      '<tbody class="item-versions-columns-audit-tbody"></tbody></table></div>' +
+      '<div class="PaginationSection d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 px-2">' +
+      "<span><span class=\"totalOfItems audit-versions-columns-total\"></span><span data-trans-records class=\"Resources\"></span></span>" +
+      '<div class="pagination-buttons-details audit-versions-columns-pagination"></div>' +
+      "</div></div></div>";
+
+    var $section = $(sectionHtml);
+    $(".btnactionrow").before($section);
+    $(".btnactionrow .form-btns-wrapper").show();
+
+    var $tbody = $section.find(".item-versions-columns-audit-tbody");
+    var $pagination = $section.find(".audit-versions-columns-pagination");
+    var $totalEl = $section.find(".audit-versions-columns-total");
+
+    function renderPage() {
+      var total = prepared.length;
+      var totalPages = total === 0 ? 1 : Math.ceil(total / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      if (total === 0) {
+        $tbody.html(
+          '<tr><td colspan="' +
+            colCount +
+            '"><span class="no-data-td">' +
+            noDataLabel +
+            "</span></td></tr>"
+        );
+      } else {
+        var start = (currentPage - 1) * pageSize;
+        var pageData = prepared.slice(start, start + pageSize);
+        $tbody.html(buildRowsHtml(pageData));
+      }
+
+      $totalEl.text(total);
+
+      var prevDisabled = total === 0 || currentPage <= 1;
+      var nextDisabled = total === 0 || currentPage >= totalPages;
+      $pagination.html(
+        '<button type="button" class="pagebtn prev-page audit-versions-columns-pagebtn"' +
+          (prevDisabled ? " disabled" : "") +
+          ' data-dir="prev"><i class="fas fa-chevron-left"></i></button>' +
+          '<button type="button" class="pagebtn next-page audit-versions-columns-pagebtn"' +
+          (nextDisabled ? " disabled" : "") +
+          ' data-dir="next"><i class="fas fa-chevron-right"></i></button>'
+      );
+    }
+
+    $section.on("click", ".audit-versions-columns-pagebtn", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var $btn = $(this);
+      if ($btn.is("[disabled]")) return;
+      if ($btn.data("dir") === "prev") currentPage--;
+      else if ($btn.data("dir") === "next") currentPage++;
+      renderPage();
+    });
+
+    renderPage();
+    changeResources();
+  },
+
+  currentListName: "",
 };
 
 // !in progress

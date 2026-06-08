@@ -2180,6 +2180,8 @@ var Benefits_Info_Request = {
           _spPageContextInfo.webAbsoluteUrl +
           "/sitepages/View.aspx?ListKey=benefits&IID=" +
           itemID +
+          "&ICODE=" +
+          itemProjectCode +
           '">' +
           '<div class="d-inline-flex flex-column">' +
           '<h3 class="acc-title d-inline-flex black">' +

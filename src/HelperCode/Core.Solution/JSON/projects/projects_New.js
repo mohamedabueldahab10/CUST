@@ -54,10 +54,10 @@ var Information_Form = [
         DisplayName: "وصف المشروع والتحديات التي يعالجها",
         DisplayNameEn: "Description",
         type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         validation: "required",
-        maxchar: 5000,
+        maxchar: 500,
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -75,10 +75,10 @@ var Information_Form = [
         DisplayName: "نطاق العمل",
         DisplayNameEn: "Scope Of Work",
         type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
         validation: "required",
-        maxchar: 5000,
+        maxchar: 500,
         // security: {
         //   groups: [
         //     "VRO_E",
@@ -96,9 +96,9 @@ var Information_Form = [
         DisplayName: "خارج نطاق العمل",
         DisplayNameEn: "Out Of Scope",
         type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
+        maxchar: 500,
         //"state": "disabled"
       },
       {
@@ -106,9 +106,9 @@ var Information_Form = [
         DisplayName: " إفتراضات المشروع",
         DisplayNameEn: "Project Assumptions",
         type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
+        maxchar: 500,
         //"state": "disabled"
       },
       {
@@ -116,9 +116,9 @@ var Information_Form = [
         DisplayName: "ملاحظات مدير المشروع",
         DisplayNameEn: "PM Notes",
         type: "multiline",
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
-        maxchar: 5000,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
+        maxchar: 500,
         // hideonstage: "1"
       },
 
@@ -163,10 +163,12 @@ var Information_Form = [
             {
               display: "yes",
               value: "yes",
+              
             },
             {
               display: "no",
               value: "no",
+              selected: "selected"
             },
           ],
         },
@@ -177,8 +179,8 @@ var Information_Form = [
             "EPMO",
             "System Admin Group",
             "SPMO",
-            "Development Unit",
-            "ProjectManager"
+            "Project Managers for Project Web App",
+            "Development Unit"
           ],
         },
       },
@@ -239,21 +241,21 @@ var Information_Form = [
         DisplayName: "الرجاء اختيار نوع المشروع",
         DisplayNameEn: "Is Strategic Project?",
         type: "dropdownValues",
-        options: { 
+        options: {
           choices: [
-            { display: "strategy", value: "strategy" },// roles : ['VROE','LMSUExecution','EPMO','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl']  },
-            {
+            { display: "strategy", value: "strategy" }, //, roles: ['EPMO','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],roles: ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],},
+           {
               display: "operationally", value: "operationally",
               roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],
               otherFields: [
-                { fieldName: 'Phase', value: 'P1' },
-                { fieldName: 'Stage', value: 'S01' },
+                { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'Stage', value: 'S00.1' },
                 { fieldName: 'InitiativeType', value: 'strategically' },
               ],
             },
             {//allroles
               // display: "no", value: "no", roles: ['allRoles'],
-              display: "operationally", value: "operationally", roles: ['EPMO','FSSBCommiette','DeptOrgCommiette', 'VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
+              display: "operationally", value: "operationally",// roles: ['EPMO','FSSBCommiette','DeptOrgCommiette','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
 
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'EPMOCreateProject' },
@@ -261,7 +263,7 @@ var Information_Form = [
                 { fieldName: 'InitiativeType', value: 'strategically' },
                 { fieldName: 'DraftStatus', value: 'draft' },
                 { fieldName: 'Phase', value: 'P0' },
-                { fieldName: 'Stage', value: 'S00' },
+                { fieldName: 'Stage', value: 'S00.3' },
               ],
             },
 
@@ -269,7 +271,7 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable' ,'LinkingSection' ,'RelatedInitiativeDate'] }, //we can put more than 1  field
+          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable' ,'LinkingSection','RelatedInitiativeDate'] }, //we can put more than 1  field
         ],
         toggleDisabledValues: [
           { value: 'strategy', fields: ['RelatedInitiativeDate'] },
@@ -286,7 +288,8 @@ var Information_Form = [
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
         toggleValues: [
-          { value: 'vision', fields: ['Program'] },
+          { value: 'vision', fields: ['Program' , ,'LinkingSection'] },
+          { value: 'lms', fields: [ 'LinkingSection'] },
           // {value:'strategically', fields:['StrategyRelatedObjective']}
         ],
         // dontSubmit: true,
@@ -318,6 +321,18 @@ var Information_Form = [
               value: 'lms',
               customFilterValue: "lms",
               roles: ['Administrator', 'LMSUExecution'],
+              otherFields: [
+                { fieldName: 'Stage', value: 'S01' },
+                { fieldName: 'Phase', value: 'P1' },
+              ],
+              // other roles
+
+            },
+            {
+              display: 'sod',
+              value: 'sod',
+              customFilterValue: "sod",
+              roles: ['Administrator', 'SODVRO-Execution'],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -366,7 +381,19 @@ var Information_Form = [
               ],
             },
             // { display: 'others', value: 'others' },
-
+            {
+              display: 'sod',
+              value: 'sod',
+              customFilterValue: "sod",
+              roles: [ 'ProjectManager', 'SODVRO-Execution','SODVRO-Performance','SODVRO-E'],
+              otherFields: [
+                { fieldName: 'WFModuleCode', value: 'SODCreateProject' },
+                { fieldName: 'WFStage', value: 'SODCreateProject01' },
+                { fieldName: 'DraftStatus', value: 'draft' },
+                { fieldName: 'Phase', value: 'P0' },
+                { fieldName: 'Stage', value: 'S00' },
+              ],
+            },
           ],
         },
       },
@@ -435,6 +462,26 @@ var Information_Form = [
               },
             ],
           },
+           {
+            role: "SODVRO-E",
+            conditions: [
+              {
+                field: "Types",
+                type: "Text",
+                values: ["sod"],
+              },
+            ],
+          },
+          {
+            role: "SODVRO-Performance",
+            conditions: [
+              {
+                field: "Types",
+                type: "Text",
+                values: ["sod"],
+              },
+            ],
+          },
         ],
         // "state": "disabled",
         // "className":"autofill"
@@ -445,14 +492,14 @@ var Information_Form = [
         DisplayName: " مخرج المبادرة المرتبط",
         DisplayNameEn: "Related Initiative Deliverable",
         ToggleName: "RelatedInitiativeDeliverable",
+        display: 'none',
         type: "lookupmultiselect",
         //from other list:ma
         source: "InitiativeDeliverables",
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         grpfieldkey: "Title",
-        // state: "disabled",
-        display: 'none',
+        state: "disabled",
       },
       {
         InternalName: "Program",
@@ -511,7 +558,7 @@ var Information_Form = [
         //   groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
         // },
       },
-       {
+      {
         InternalName: "ExternalChannels",
         DisplayName: "هل المشروع يتبع جهة خارجية",
         DisplayNameEn: "ExternalChannels",
@@ -857,17 +904,17 @@ var Information_Form = [
         type: 'dropdownValues',
         validation: "required",
         options: {
-          choices: [
-            { display: "yes", value: "yes" , roles : ['EPMO','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl','Administrator']  },
-            { display: "no", value: "no" , roles : ['EPMO','FSSBCommiette','DeptOrgCommiette','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl','Administrator'] },
+         choices: [
+            { display: "yes", value: "yes" }, //roles : ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl']  },
+            { display: "no", value: "no" }// roles : ['FSSBCommiette','DeptOrgCommiette','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'] },
           ],
         },
-       toggleValues: [
+        toggleValues: [
           { value: 'yes', fields: [] },
-          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection' ,'LinkingSection' ,'Weight', 'Amount','Quantity','AmountPrice'] },
-       ],
+          { value: 'no', fields: ['FundingSection', 'TenderSection', 'BudgetSection',/* 'Delivrables', 'Milestones' ,*/'MawaredSection' ,'Weight', 'Amount','Quantity','AmountPrice'] },
+        ],
         requiredValues: [
-          { value: "no", fields: ["FundingSources","FundingStatus"] }, //we can put more than 1  field
+          { value: "no", fields: ["FundingSources","FundingStatus" ,'ProgramTotalCost']  }, //we can put more than 1  field
         ],
 
       },
@@ -913,7 +960,7 @@ var Information_Form = [
         InternalName: "FundingStatus",
         DisplayName: "حالة التمويل",
         DisplayNameEn: "Funding Status",        
-        "RequiredName": "FundingStatus",
+        RequiredName: "ProgramTotalCost",
         type: "dropdownValues",
         options: {
           choices: [
@@ -1000,7 +1047,8 @@ var Information_Form = [
         DisplayName: "التكلفة الفعلية",
         DisplayNameEn: "Actual Budget",
         type: "float",
-      //  className: "disable_enable_section",
+        RequiredName: "ProgramTotalCost",
+        className: "disable_enable_section",
         descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
         descPhraseEn: "Filed is required to add milestones and Deliverables",
         // "state": "disabled",
@@ -1057,7 +1105,6 @@ var Information_Form = [
         numberOfDigits: "15",
         // "state": "disabled"
       },
-
       // {
       //     "InternalName": "SpentBudget",
       //     "DisplayName": "المبالغ المصروفة",
@@ -1266,12 +1313,11 @@ var Information_Form = [
         InternalName: "ProjectManager",
         DisplayName: "مدير المشروع",
         DisplayNameEn: "Project Manager",
-        descPhraseAr: "يجب ان يكون لديه صلاحيه طلب احتياج فى نظام موارد",
-        descPhraseEn: "Should have permission to request PR in Mawared",
+        descPhraseAr: "يجب ان يكون لديه صلاحيه طلب احتياج فى نظام موارد - لن يتم تسجيل الطلب فى موارد من ليس لديه صلاحيه",
+        descPhraseEn: "Should have permission to request PR in Mawared - Not Registered In Mawared Who hasn`t Permission",
         type: "picker",
         validation: "required",
       },
-     
       // {
 
       //     "InternalName": "DirectorUnit",
@@ -1303,9 +1349,11 @@ var Information_Form = [
         InternalName: "MawaredProjectManager",
         DisplayName: "مستكمل الطلب فى موارد",
         DisplayNameEn: "Mawared Project Manager",
-         descPhraseAr: "يجب ان يكون لديه صلاحيه طلب احتياج فى نظام موارد",
-        descPhraseEn: "Should have permission to request PR in Mawared",
+        toggleName: 'MawaredSection',
+        descPhraseAr: "يجب ان يكون لديه صلاحيه طلب احتياج فى نظام موارد - لن يتم تسجيل الطلب فى موارد من ليس لديه صلاحيه",
+        descPhraseEn: "Should have permission to request PR in Mawared - Not Registered In Mawared Who hasn`t Permission",
         type: "picker",
+       // validation: "required",
       },
       //   {
       //     InternalName: 'ObjectiveOwner',
@@ -1334,7 +1382,6 @@ var Information_Form = [
       // }
     ],
   },
-  
   // {
   //     label: 'الجهات المشاركة الأساسية',
   //     labelEn: 'The Main Participants',
@@ -1423,7 +1470,7 @@ var Information_Form = [
     description: 'التفاصيل (يمكن ادخال القيم عند ادخال التكلفة)',
     descriptionEn: 'Details (you can enter the values when enter the Amount)',
     sectiontype: 'master',
-  //  className: "disable_section", // to make the section disabled on form render
+    //className: "disable_section", // to make the section disabled on form render
     targetlist: 'Deliverables',
     subFields: [
       // {
@@ -1437,10 +1484,10 @@ var Information_Form = [
         DisplayName: 'اسم المخرج',
         DisplayNameEn: 'Deliverable Name',
         type: 'string',
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-        descPhraseEn: "max length of letters equal 255",
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 235 حرف",
+        descPhraseEn: "max length of letters equal 235",
         validation: 'required',
-        maxchar: '255',
+        maxchar: 235,
         // withletters: true,
         Errmsgkey: "withletterpattern",
       },
@@ -1449,9 +1496,9 @@ var Information_Form = [
         DisplayName: 'الوصف',
         DisplayNameEn: 'Description',
         type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 235,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 235 حرف",
+        descPhraseEn: "max length of letters equal 235",
       },
       // {
       //     "InternalName": "Quantity",
@@ -1463,8 +1510,8 @@ var Information_Form = [
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
-        ToggleName: "Weight",
         listname: 'Deliverables',
+        ToggleName: "Weight",
         targetcode: 'ProjectCode',
         targetelement: 'Weight',
         seconedtarget: 'Amount',
@@ -1493,16 +1540,16 @@ var Information_Form = [
         DisplayNameEn: 'Quantity',
         DisplayName: 'الكمية',
         type: "number",    
-        ToggleName:"Quantity",
         validation: 'required',
+        ToggleName: "Quantity",
       },
   	{
         InternalName: 'AmountPrice',
-        DisplayNameEn: 'Amount Price',
+        DisplayNameEn: 'AmountPrice',
         DisplayName: 'سعر الوحدة',
-        type: "number",      
-        ToggleName:"AmountPrice",  
+        type: "number",        
         validation: 'required',
+        ToggleName: "AmountPrice",
         // type: 'float',
       },
       // {
@@ -1631,9 +1678,9 @@ var Information_Form = [
         DisplayName: 'الملاحظات',
         DisplayNameEn: 'Comments',
         type: 'multiline',
-        maxchar: 5000,
-        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",
+        maxchar: 500,
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
+        descPhraseEn: "max length of letters equal 500",
       },
       // {
       //   //tried
@@ -1771,7 +1818,7 @@ var Information_Form = [
         validation: 'required',
         Errmsgkey: 'btwndatepattern',
       },
-    /*  {
+     /* {
         InternalName: 'ActualDate',
         DisplayName: 'تاريخ الاكتمال الفعلي',
         DisplayNameEn: 'Actual Date',
@@ -1782,7 +1829,6 @@ var Information_Form = [
         endinternalname: 'BaselineFinishDate',
         max: 'today',
         Errmsgkey: 'cancelationdatepattern',
-        display:'none'
       },*/
       // {
       //   InternalName: 'CommittedDate',

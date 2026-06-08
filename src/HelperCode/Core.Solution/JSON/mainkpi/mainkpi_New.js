@@ -105,13 +105,6 @@ var Information_Form = [
               roles: ['Administrator', 'EPMO', 'LMSUExecution'],
               // customFilterValue: "lms",
             },
-              {
-              display: 'sod',
-              value: 'sod',
-              // customFilterValue: "lms",
-              roles: ['Administrator','SODVROExecution','SODVROPerformance','SODVROE'],
-              // customFilterValue: "lms",
-            },
             //---end EPMO and Admin Section ----
             {
               display: 'vision',
@@ -145,6 +138,19 @@ var Information_Form = [
               otherFields: [
                 { fieldName: "WFModuleCode", value: "LMSCreateKPI" },
                 { fieldName: "WFStage", value: "LMSCreateKPI01" },
+                { fieldName: "Status", value: "stat31" },
+                { fieldName: "DraftStatus", value: "draft" },
+              ],
+            },
+            {
+              display: 'sod',
+              value: 'sod',
+              roles: ['Administrator',
+                //  'SODVROExecution', 
+                 'SODVROPerformance', 'SODVROE', 'InitiativeManager', 'InitiativeOwner', 'SPMOHead', 'SPMO', 'DU', 'SPMTeam', 'StrategyTeam', 'CRCommittee'],
+              otherFields: [
+                { fieldName: "WFModuleCode", value: "SODCreateKPI" },
+                { fieldName: "WFStage", value: "SODCreateKPI01" },
                 { fieldName: "Status", value: "stat31" },
                 { fieldName: "DraftStatus", value: "draft" },
               ],
@@ -273,6 +279,36 @@ var Information_Form = [
                 field: 'Types',
                 type: 'Choice',
                 values: ['lms'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROPerformance',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
+              },
+            ],
+          },
+          {
+            role: 'SODVROE',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['sod'],
               },
             ],
           },

@@ -321,8 +321,8 @@ var Information_Form = [
         DisplayName: 'مستوى الهدف المرتبط',        
         "validation": "required",
         // dontSubmit: true,        
-        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة",
-        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
+        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة والوكالة المختارة",
+        descPhraseEn: "The Objectives appear based on selected Level related to the selected Strategy and selected Deputyship", 
         grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
         childFieldId: 'RelatedObjective', // we add this field to handle the two field filtration (child Id in current form)
         childFieldIdSource: 'Types', // we add this field to handle the two field filtration (child internal name in destination list)
@@ -355,23 +355,84 @@ var Information_Form = [
         // validation: 'required',
       },
       {
+        InternalName: "Sector",
+        DisplayName: "القطاع",
+        DisplayNameEn: "Sector",
+        type: "lookup",
+        validation: "required",
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Sector",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
+        // ToggleDisabledName:"Sector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", ],
+        // },
+      },
+      {
+        InternalName: "SubSector",
+        DisplayName: "الوكالة",
+        DisplayNameEn: "DeputyShip",
+        type: "lookup",
+        // validation: 'required',
+        RequiredName: 'SubSector',
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Department",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        // disableOnWfTaskStage : "S05,S09",
+        // hideOnWfTaskStage  : "S05;S09",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
+        // ToggleDisabledName:"SubSector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", ],
+        // },
+      },
+      {
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        type: 'lookupmultiselect',
+        type: 'lookup',
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         grpfieldkey: 'Title',        
         "validation": "required",
+        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة والوكالة المختارة",
+        descPhraseEn: "The Objectives appear based on selected Level related to the selected Strategy and selected Deputyship", 
+        //
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
-        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
-        fieldsinformlvl1: 'RelatedStrategy', // fields in look up list
-        sourcefieldlvl1: 'RelatedStrategy',
-        fieldsinformlvl2: 'RelatedObjectiveLevel', // fields in look up list
-        sourcefieldlvl2: 'Types',
+        additionalFilterField: 'SubSector',
+        additionalFilterFieldType: 'Text',
+        additionalFilterFromField: 'SubSector',
+        additionalFilterRequireWhenTypes: ['lms', 'sod', 'strategically'],
+        additionalFilterTypesFormField: 'Types',
         accessFilter: [
           {
             role: 'VROE',
@@ -851,64 +912,6 @@ var Information_Form = [
       // validation: 'required',
       //  descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
       //  descPhraseEn: "max length of letters equal 255",  
-      },
-      {
-        InternalName: "Sector",
-        DisplayName: "القطاع",
-        DisplayNameEn: "Sector",
-        type: "lookup",
-        validation: "required",
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        EntityType: "Sector",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-        disableOnWfTaskStage : "S05,S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-        // ToggleDisabledName:"Sector"
-        // security: {
-        //   groups: ["VRO_E", "LMS_E", ],
-        // },
-      },
-      {
-        InternalName: "SubSector",
-        DisplayName: "الوكالة",
-        DisplayNameEn: "DeputyShip",
-        type: "lookup",
-        // validation: 'required',
-        RequiredName: 'SubSector',
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        EntityType: "Department",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-        // disableOnWfTaskStage : "S05,S09",
-        // hideOnWfTaskStage  : "S05;S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-        // ToggleDisabledName:"SubSector"
-        // security: {
-        //   groups: ["VRO_E", "LMS_E", ],
-        // },
       },
       {
         InternalName: 'ExternalEntities',
