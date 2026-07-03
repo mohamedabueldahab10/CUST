@@ -2532,10 +2532,14 @@ window.Edit_Data_Submit = {
             myselections
           );
         } else {
-          Edit_Data_Submit.g.oListItem.set_item(
-            fieldId,
-            $(this).val()
-          );
+          var fieldValue = $(this).val();
+          if (
+            $(this).data("field-type") === "lookup" &&
+            $(this).attr("data-lookup-value")
+          ) {
+            fieldValue = $(this).attr("data-lookup-value");
+          }
+          Edit_Data_Submit.g.oListItem.set_item(fieldId, fieldValue);
         }
       }
     );
@@ -3641,13 +3645,17 @@ window.Edit_Data_Submit = {
             }
             }
             if (listkey == "kpiequations") {
+              var kpiLookupValue =
+                $("#KPI").attr("data-lookup-value") || $("#KPI").val() || "";
+              var mainKpiId = parseInt(
+                kpiLookupValue.split("-").pop(),
+                10
+              );
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
                 "/SitePages/View.aspx?ListKey=mainkpi" +
                 "&IID=" +
-                $('#KPI option[value="' + $("#KPI").val() + '"]').attr(
-                  "option-id"
-                ) +
+                mainKpiId +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == "benefitsequations") {
               window.location =
@@ -4402,13 +4410,11 @@ var newKPIEquation = {
     var prt1 = listkey.substring(0, 2).toUpperCase(),
       prt2 = String(new Date().getFullYear()).slice(4 - 2),
       prt3 = IID.toString().padStart(4, "0");
-    var Code = prt1 + "-" + prt2 + "-" + prt3;
-    newKPIEquation.g.oListItem.set_item("KPI", Code);
-
-    var eqkey = "kpiequations";
-    (prt1 = eqkey.substring(0, 2).toUpperCase()),
-      (Code = prt1 + "-" + prt2 + "-" + prt3);
-    newKPIEquation.g.oListItem.set_item("Title", Code);
+    var mainKpiTitle = prt1 + "-" + prt2 + "-" + prt3;
+    var eqTitle =
+      "kpiequations".substring(0, 2).toUpperCase() + "-" + prt2 + "-" + prt3;
+    newKPIEquation.g.oListItem.set_item("KPI", mainKpiTitle);
+    newKPIEquation.g.oListItem.set_item("Title", eqTitle);
 
     newKPIEquation.g.oListItem.update();
     clientContext.load(newKPIEquation.g.oListItem);

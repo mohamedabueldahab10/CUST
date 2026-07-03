@@ -3414,6 +3414,23 @@ button.pop-green {
     margin: 0 3px
 }
 
+button.pop-red {
+    color: white;
+    background-color: #853232;
+    padding: 0.675rem 1rem;
+    font-size: 1.9rem;
+    min-width: 12rem;
+    font-weight: 500;
+    margin-left: 1rem;
+    text-align: center !important;
+    margin: 0 3px
+}
+
+button.pop-red:hover {
+    background-color: #fff;
+    color: #853232;
+}
+
 button.pop-green.rejection {
     color: #148287;
     background-color: #fff;

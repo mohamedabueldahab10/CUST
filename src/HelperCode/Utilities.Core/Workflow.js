@@ -155,10 +155,12 @@ var workflowname,
   WF_isuploaddone = 0,
   WFisNew =
     window.location.href.toLowerCase().indexOf("new.aspx") > -1 &&
-    window.location.href.indexOf("WF") > -1,
+    (window.location.href.indexOf("WF") > -1 ||
+    window.location.href.toLowerCase().indexOf("&wfs") > -1),
   WFisEdit =
     window.location.href.toLowerCase().indexOf("edit.aspx") > -1 &&
-    window.location.href.indexOf("WF") > -1,
+    (window.location.href.indexOf("WF") > -1 ||
+    window.location.href.toLowerCase().indexOf("&wfs") > -1),
   WFisForm =
     window.location.href.toLowerCase().indexOf("new.aspx") > -1 ||
     window.location.href.toLowerCase().indexOf("view.aspx") > -1 ||
@@ -3154,7 +3156,6 @@ window.isWfFirst_Upload = true;
 
 var SubmitField_BulkEdit = {
   preinit: function (state, withNote = false) {
-    
     globalStateSubmitField = state;
     if (stageid == "S01" && isWfFirst_Upload) {
       var WF_Fileelements, WF_fileCount;
@@ -3210,7 +3211,7 @@ var SubmitField_BulkEdit = {
     }
 
     if (
-      WFisEdit &&
+      (WFisEdit || (isEdit && USERisWF)) &&
       (workflowname == "MSActualKPI" ||
         workflowname == "EPMOCreateProject" ||
         workflowname == "VROCreateProject" ||
@@ -3253,7 +3254,6 @@ var SubmitField_BulkEdit = {
       tasktype != "SubmitField" &&
       $(".was-validated .form-control:invalid").length == 0
     ) {
-      // console.log("HEre We Are for esc", state)
       SubmitField_BulkEdit.init(state);
     } else {
       if (stageid == "S01") {
@@ -3565,9 +3565,6 @@ var SubmitField_BulkEdit = {
                 var parsingData = eval($(this).data("workflowsetvalue"));
                 parsingData.forEach((el) => {
                   if (el.stages.includes(stageid)) {
-                   
-                    debugger;
-                   
                     if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject")
                     {
                        var projecttype = currentItem.get_item("IsStrategicProject");
@@ -3822,6 +3819,9 @@ var SubmitField_BulkEdit = {
 window.Continue_Submit_Field = {
   // continue submit file that will invoke from edit_data_submit after edit on forms
   init: function () {
+    if (window.deferWorkflowContinueUntilUpload) {
+      return;
+    }
     Task_Edit_Data.init();
   },
 };

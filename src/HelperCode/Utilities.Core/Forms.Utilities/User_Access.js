@@ -207,7 +207,6 @@ var UserRole,
   isfileListing =
     window.location.href.toLowerCase().indexOf("fileslisting") > -1,
   USERisForm = USERisNew || USERisEdit || USERisView ? true : false,
-  // Listing.aspx only (has ListKey=) — not other SitePages whose name contains "listing.aspx".
   USERisListing =
     UserPage_Name === "listing.aspx" &&
     window.location.href.toLowerCase().indexOf("listkey=") > -1,
@@ -1538,7 +1537,7 @@ window.userCalls = {
           "exchangeschema",
           "communicationplans",
           "contracts",
-          "changerequest",
+          // "changerequest",
           "sos",
           "mainkpi",
           "achievements",
@@ -1548,7 +1547,7 @@ window.userCalls = {
           "developmentrequirements",
           "strategiccalendar",
           "measurementcyclesupport",
-          "changerequests",
+          // "changerequests",
           "changeitemapprovalcontrol",
           "delegations"
         ];
@@ -2121,7 +2120,7 @@ window.userCalls = {
           "delegations"
         ];
         Edit_Access = [
-          // "initiatives",
+          "initiatives",
           "initiativedeliverables",
           "initiativeupdates",
           "initiativemilestones",

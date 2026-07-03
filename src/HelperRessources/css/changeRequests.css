@@ -97,68 +97,162 @@
     border-radius: 8px;
 }
 
+.changeRequests-container .buttonsRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.changeRequests-container .cr-action-btn,
+.cr-wf-popup .cr-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 12px 0 #B9C4DBA8;
+    font-size: 14px;
+    line-height: 1.4;
+    min-height: 40px;
+    min-width: 9rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s, color 0.3s, border-color 0.3s;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 !important;
+}
+
+.changeRequests-container .cr-action-btn:hover,
+.cr-wf-popup .cr-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px 0 #B9C4DBA8;
+}
+
+.changeRequests-container .cr-action-btn:active,
+.cr-wf-popup .cr-action-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 12px 0 #B9C4DBA8;
+}
+
+.changeRequests-container .cr-action-btn:disabled,
+.cr-wf-popup .cr-action-btn:disabled {
+    background: #d4d4d8 !important;
+    color: #888 !important;
+    border-color: transparent !important;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.cr-action-btn-save,
 #CRSubmitButton {
     background: #f7941d;
     color: #fff;
-    font-weight: 600;
-    padding: 0.5rem 1.25rem;
-    border-radius: 8px;
-    border: none;
-    box-shadow: 0 2px 12px 0 #B9C4DBA8;
-    font-size: 14px;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
 }
 
+.cr-action-btn-save:hover,
 #CRSubmitButton:hover {
     background: #e57f1a;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px 0 #B9C4DBA8;
 }
 
+.cr-action-btn-save:active,
 #CRSubmitButton:active {
     background: #c66b17;
-    transform: translateY(0);
-    box-shadow: 0 2px 12px 0 #B9C4DBA8;
 }
 
-#CRSubmitButton:disabled {
-    background: #d4d4d8;
-    color: #888;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
+.cr-action-btn-edit,
 #CREditButton {
     background: #148282;
     color: #fff;
-    font-weight: 600;
-    padding: 0.5rem 1.25rem;
-    border-radius: 8px;
-    border: none;
-    box-shadow: 0 2px 12px 0 #B9C4DBA8;
-    font-size: 14px;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
 }
 
+.cr-action-btn-edit:hover,
 #CREditButton:hover {
     background: #117373;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px 0 #B9C4DBA8;
 }
 
+.cr-action-btn-edit:active,
 #CREditButton:active {
     background: #0e5c5c;
-    transform: translateY(0);
-    box-shadow: 0 2px 12px 0 #B9C4DBA8;
 }
 
-#CREditButton:disabled {
-    background: #a3d1d1;
-    color: #888;
-    cursor: not-allowed;
-    box-shadow: none;
+.cr-action-btn-approve,
+#CRWorkflowButton {
+    background: #148287;
+    color: #fff;
+}
+
+.cr-action-btn-approve:hover,
+#CRWorkflowButton:hover {
+    background: #117373;
+    color: #fff;
+}
+
+.cr-action-btn-reject,
+#CRWorkflowRejectButton {
+    background: #853232;
+    color: #fff;
+}
+
+.cr-action-btn-reject:hover,
+#CRWorkflowRejectButton:hover {
+    background: #6f2828;
+    color: #fff;
+}
+
+.cr-action-btn-cancel {
+    background: #e8edf2;
+    color: #14415a;
+    border: 1px solid #9aa8b8;
+    box-shadow: 0 1px 4px rgba(20, 65, 90, 0.12);
+}
+
+.cr-action-btn-cancel:hover {
+    background: #d7e0e8;
+    color: #14415a;
+    border-color: #7f8fa3;
+    box-shadow: 0 2px 6px rgba(20, 65, 90, 0.16);
+}
+
+.cr-wf-popup.popupComment .wrapcomments {
+    min-width: 320px;
+    max-width: 520px;
+    width: 90%;
+    align-items: stretch;
+    text-align: center;
+}
+
+.cr-wf-popup .wrapcomments textarea {
+    width: 100%;
+    min-width: 280px;
+    border-radius: 8px;
+    border: 1px solid #D4D4D8;
+    padding: 0.5rem 0.75rem;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.cr-wf-popup .wrapcomments label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #14415a;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+.cr-wf-popup .btn-cont {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 1rem;
 }
 
 .rejection-note-section {
@@ -206,6 +300,113 @@
     text-align: left;
 }
 
+.workflow-notes-section {
+    width: 100%;
+    background: #f8f9fb;
+    border: 1px solid #d8dee8;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 2px 8px rgba(36, 55, 89, 0.08);
+}
+
+.ar .workflow-notes-section {
+    border-right: 4px solid #2f5f9e;
+}
+
+.en .workflow-notes-section {
+    border-left: 4px solid #2f5f9e;
+}
+
+.workflow-notes-section .workflow-notes-title {
+    font-weight: 700;
+    color: #243759;
+    font-size: 15px;
+    display: block;
+    margin-bottom: 0.85rem;
+}
+
+.workflow-notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.workflow-note-item {
+    background: #fff;
+    border: 1px solid #e3e8ef;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+}
+
+.workflow-note-item.workflow-note-approve {
+    border-right: 3px solid #2e7d32;
+}
+
+.workflow-note-item.workflow-note-reject {
+    border-right: 3px solid #853232;
+}
+
+.workflow-note-item.workflow-note-delegate {
+    border-right: 3px solid #6a5acd;
+}
+
+.en .workflow-note-item.workflow-note-approve,
+.en .workflow-note-item.workflow-note-reject,
+.en .workflow-note-item.workflow-note-delegate {
+    border-right: none;
+    border-left-width: 3px;
+    border-left-style: solid;
+}
+
+.en .workflow-note-item.workflow-note-approve {
+    border-left-color: #2e7d32;
+}
+
+.en .workflow-note-item.workflow-note-reject {
+    border-left-color: #853232;
+}
+
+.en .workflow-note-item.workflow-note-delegate {
+    border-left-color: #6a5acd;
+}
+
+.workflow-note-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 12px;
+    color: #5c667a;
+}
+
+.workflow-note-meta-item strong {
+    color: #243759;
+}
+
+.workflow-note-body {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.workflow-note-empty .workflow-note-body {
+    color: #777;
+    font-style: italic;
+}
+
+.workflow-notes-section.ar {
+    direction: rtl;
+    text-align: right;
+}
+
+.workflow-notes-section.en {
+    direction: ltr;
+    text-align: left;
+}
+
 @media (max-width: 768px) {
     .changeRequests-container .row {
         margin-bottom: 0.75rem;
@@ -221,6 +422,16 @@
 
     .rejection-note-section .rejection-note-label,
     .rejection-note-section .rejection-note-content {
+        font-size: 13px;
+    }
+
+    .workflow-notes-section {
+        padding: 0.75rem 1rem;
+    }
+
+    .workflow-notes-section .workflow-notes-title,
+    .workflow-note-body,
+    .workflow-note-meta {
         font-size: 13px;
     }
 }

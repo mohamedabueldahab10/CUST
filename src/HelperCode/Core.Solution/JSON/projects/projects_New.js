@@ -332,7 +332,7 @@ var Information_Form = [
               display: 'sod',
               value: 'sod',
               customFilterValue: "sod",
-              roles: ['Administrator', 'SODVRO-Execution'],
+              roles: ['Administrator',],
               otherFields: [
                 { fieldName: 'Stage', value: 'S01' },
                 { fieldName: 'Phase', value: 'P1' },
@@ -385,7 +385,7 @@ var Information_Form = [
               display: 'sod',
               value: 'sod',
               customFilterValue: "sod",
-              roles: [ 'ProjectManager', 'SODVRO-Execution','SODVRO-Performance','SODVRO-E'],
+              roles: [ 'ProjectManager', 'SODVROExecution','SODVROPerformance','SODVROE'],
               otherFields: [
                 { fieldName: 'WFModuleCode', value: 'SODCreateProject' },
                 { fieldName: 'WFStage', value: 'SODCreateProject01' },

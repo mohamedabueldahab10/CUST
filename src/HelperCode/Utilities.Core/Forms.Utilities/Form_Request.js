@@ -58,7 +58,11 @@ var projRelatedInit = "",
 var relatedMainGoal = "",
   relatedSubGoal = "",
   indexTypekpi = "",
-  relatedStrategyKpi = "";
+  relatedStrategyKpi = "",
+  kpiTypeValue = "",
+  mainKpiSectorValue = "",
+  mainKpiSubSectorValue = "",
+  mainKpiExternalEntitiesValue = "";
 
 var globalInitiativeCode = "";
 
@@ -315,20 +319,53 @@ window.Edit_Data_Request = {
           mp.init($(this).attr("id"), { AllowMultipleValues: true });
           break;
         case "dropdown":
-          $(this).val(oListItem.get_item(fieldId));
-
-          $(this).attr("value", oListItem.get_item(fieldId)); // save the value in select to use it edit select[dynamic=parent]
+          var dropdownFieldValue = oListItem.get_item(fieldId);
+          if (
+            dropdownFieldValue &&
+            typeof dropdownFieldValue.get_lookupValue === "function"
+          ) {
+            dropdownFieldValue = dropdownFieldValue.get_lookupValue();
+          }
+          var fieldIdForSelect = $(this).attr("id");
+          if (
+            listkey == "mainkpi" &&
+            (fieldIdForSelect === "KPIType" ||
+              fieldIdForSelect === "RelatedStrategyObjective") &&
+            typeof ListInfo !== "undefined" &&
+            ListInfo.g &&
+            ListInfo.g.setSelectFieldValue
+          ) {
+            ListInfo.g.setSelectFieldValue($(this), dropdownFieldValue);
+          } else {
+            $(this).val(dropdownFieldValue);
+            $(this).attr("value", dropdownFieldValue);
+          }
+          if (fieldIdForSelect === "KPIType") {
+            kpiTypeValue = dropdownFieldValue || "";
+            var currentKpiTypeVal =
+              $(this).val() ||
+              $(this).find("option:selected").val() ||
+              $(this).attr("value") ||
+              "";
+            if (listkey == "mainkpi" && !currentKpiTypeVal && kpiTypeValue) {
+              ListInfo.g.setSelectFieldValue($(this), kpiTypeValue);
+            }
+          }
+          if (fieldIdForSelect === "RelatedStrategyObjective") {
+            relatedMainGoal = dropdownFieldValue || relatedMainGoal;
+          }
 
           if ($(this).attr("id") == "SubSector") {
-            departmenetValue = oListItem.get_item(fieldId);
+            departmenetValue = dropdownFieldValue;
+            mainKpiSubSectorValue = dropdownFieldValue || mainKpiSubSectorValue;
           }
           if ($(this).attr("id") == "ExternalEntities") {
-            externalEntityValue = oListItem.get_item(
-              fieldId
-            );
+            externalEntityValue = dropdownFieldValue;
+            mainKpiExternalEntitiesValue =
+              dropdownFieldValue || mainKpiExternalEntitiesValue;
           }
           if ($(this).attr("id") == "BudgetItem") {
-            budgetitemValue = oListItem.get_item(fieldId);
+            budgetitemValue = dropdownFieldValue;
           }
 
           break;
@@ -542,7 +579,12 @@ window.Edit_Data_Request = {
               oListItem.get_item("" + $(this).attr("id") + "")
             );
           }
-          $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
+          var defaultFieldId = $(this).attr("id");
+          var defaultFieldValue = oListItem.get_item("" + defaultFieldId + "");
+          $(this).val(defaultFieldValue);
+          if ($(this).data("field-type") === "lookup" && defaultFieldValue) {
+            $(this).attr("data-lookup-value", defaultFieldValue);
+          }
           break;
       }
     });
@@ -885,6 +927,18 @@ window.Edit_Data_Request = {
 
       relatedMainGoal = oListItem.get_item("RelatedStrategyObjective")
         ? oListItem.get_item("RelatedStrategyObjective")
+        : "";
+      kpiTypeValue = oListItem.get_item("KPIType")
+        ? oListItem.get_item("KPIType")
+        : "";
+      mainKpiSectorValue = oListItem.get_item("Sector")
+        ? oListItem.get_item("Sector")
+        : "";
+      mainKpiSubSectorValue = oListItem.get_item("SubSector")
+        ? oListItem.get_item("SubSector")
+        : "";
+      mainKpiExternalEntitiesValue = oListItem.get_item("ExternalEntities")
+        ? oListItem.get_item("ExternalEntities")
         : "";
       relatedSubGoal = oListItem.get_item("SubRelatedObjective")
         ? oListItem.get_item("SubRelatedObjective")
@@ -1323,22 +1377,83 @@ window.Edit_Data_Request = {
     setTimeout(function () {
       (function () {
         if (!(isEdit || isNew)) return;
-  
-        var fieldsToCheck = [];
+
+        var managerUniquenessConfig = null;
         if (listkey === "projects") {
-          fieldsToCheck = [
-            "ProjectOwner",
-            "ProjectManager",
-            "ProjectSponsor",
-            "MawaredProjectManager",
-          ];
+          managerUniquenessConfig = {
+            uniqueField: "ProjectManager",
+            relatedFields: [
+              "ProjectOwner",
+              "ProjectSponsor",
+              "MawaredProjectManager",
+            ],
+          };
         } else if (listkey === "initiatives") {
-          fieldsToCheck = ["InitiativeOwner", "InitiativePM"];
+          managerUniquenessConfig = {
+            uniqueField: "InitiativePM",
+            relatedFields: ["InitiativeOwner"],
+          };
         } else {
-          console.log("Unknown list type, no fields set for duplicate checking.");
           return;
         }
-  
+
+        var uniqueField = managerUniquenessConfig.uniqueField;
+        var relatedFields = managerUniquenessConfig.relatedFields;
+        var watchedFields = [uniqueField].concat(relatedFields);
+        var uniqueFieldLabel =
+          listkey === "initiatives" ? "مدير المبادرة" : "مدير المشروع";
+        var PLACEHOLDER_EMAIL = "أدخل اسم أو بريد الكتروني...";
+
+        function parseHiddenUsers(fieldId) {
+          var hidVal = $("#" + fieldId + "_TopSpan_HiddenInput").val();
+          if (!hidVal) return [];
+          try {
+            var parsed = JSON.parse(hidVal.replace(/&quot;/g, '"'));
+            if (!Array.isArray(parsed)) return [];
+            return parsed
+              .map(function (u) {
+                var entityEmail =
+                  u.EntityData && u.EntityData.Email ? u.EntityData.Email : "";
+                var key = (u.Key || entityEmail || u.DisplayText || "")
+                  .toString()
+                  .trim()
+                  .toLowerCase();
+                var displayName = (u.DisplayText || u.Key || "").toString().trim();
+                return key ? { key: key, displayName: displayName } : null;
+              })
+              .filter(Boolean);
+          } catch (e) {
+            return [];
+          }
+        }
+
+        function getFieldUsers(fieldId) {
+          var fromHidden = parseHiddenUsers(fieldId);
+          if (fromHidden.length) return fromHidden;
+
+          if (!isNew) return [];
+
+          var resolvedEl = $(
+            "#" + fieldId + "_TopSpan_ResolvedList .ms-entity-resolved"
+          ).first();
+          if (resolvedEl.length) {
+            var displayName = $.trim(resolvedEl.text());
+            if (displayName) {
+              return [{ key: displayName.toLowerCase(), displayName: displayName }];
+            }
+          }
+          var dataEmail = $("#" + fieldId).attr("data-email");
+          if (
+            dataEmail &&
+            dataEmail.trim() !== "" &&
+            dataEmail.trim() !== PLACEHOLDER_EMAIL
+          ) {
+            var email = $.trim(dataEmail);
+            return [{ key: email.toLowerCase(), displayName: email }];
+          }
+          return [];
+        }
+
         function clearField(fieldId) {
           var delBtn = $(
             "#" + fieldId + "_TopSpan_ResolvedList .sp-peoplepicker-delImage"
@@ -1351,125 +1466,100 @@ window.Edit_Data_Request = {
             $("#" + fieldId).attr("data-email", "");
           }
         }
-  
-        function getResolvedName(fieldId) {
-          var el = $(
-            "#" + fieldId + "_TopSpan_ResolvedList .ms-entity-resolved"
-          ).first();
-          if (el.length) return $.trim(el.text());
-          var parentDiv = $("#" + fieldId);
-          var dataEmail = parentDiv.attr("data-email");
-          if (
-            dataEmail &&
-            dataEmail.trim() !== "" &&
-            dataEmail.trim() !== "أدخل اسم أو بريد الكتروني..."
-          )
-            return $.trim(dataEmail);
-          var hid = $("#" + fieldId + "_TopSpan_HiddenInput").val();
-          if (hid && hid.indexOf("DisplayText") !== -1) {
-            try {
-              var parsed = JSON.parse(hid.replace(/&quot;/g, '"'));
-              if (Array.isArray(parsed) && parsed[0] && parsed[0].DisplayText)
-                return parsed[0].DisplayText;
-            } catch (e) {}
-          }
-          return "";
-        }
-  
-        function getNamesFromHidden(fieldId) {
-          var hidVal = $("#" + fieldId + "_TopSpan_HiddenInput").val();
-          if (!hidVal) return [];
-          try {
-            var parsed = JSON.parse(hidVal.replace(/&quot;/g, '"'));
-            return parsed
-              .map((u) => (u.DisplayText ? u.DisplayText.trim() : ""))
-              .filter(Boolean);
-          } catch (e) {
-            return [];
-          }
-        }
-  
-        function checkDuplicates(changedField) {
-          var map = {},
-            duplicateFound = null;
-          fieldsToCheck.forEach((fid) => {
-            var names = isNew ? [getResolvedName(fid)] : getNamesFromHidden(fid);
-            names.forEach((name) => {
-              if (name) {
-                if (map[name])
-                  duplicateFound = { name, first: map[name], second: fid };
-                else map[name] = fid;
+
+        function checkManagerUniqueness() {
+          var managerUsers = getFieldUsers(uniqueField);
+          if (!managerUsers.length) return false;
+
+          var managerKeys = {};
+          managerUsers.forEach(function (u) {
+            managerKeys[u.key] = u.displayName;
+          });
+
+          var conflictName = null;
+          relatedFields.some(function (fieldId) {
+            return getFieldUsers(fieldId).some(function (user) {
+              if (managerKeys[user.key]) {
+                conflictName = managerKeys[user.key];
+                return true;
               }
+              return false;
             });
           });
-          if (duplicateFound) {
-            var toClear = changedField || duplicateFound.second;
-            clearField(toClear);
-            alert(
-              "تم تفريغ هذا الحقل لأن المستخدم '" +
-                duplicateFound.name +
-                "' مكرر في أكثر من حقل."
-            );
-            return true;
-          }
-          return false;
-        }
-  
-        function attachHandlers(fid, picker) {
-          if (picker._duplicateCheckerAttached) return;
-          picker.OnUserResolvedClientScript = () =>
-            setTimeout(() => checkDuplicates(fid), 200);
-          $(document).on(
-            "click",
-            "#" + fid + "_TopSpan_ResolvedList .sp-peoplepicker-delImage",
-            () => setTimeout(() => checkDuplicates(fid), 200)
+
+          if (!conflictName) return false;
+
+          clearField(uniqueField);
+          alert(
+            "تم تفريغ حقل " +
+              uniqueFieldLabel +
+              " لأن المستخدم '" +
+              conflictName +
+              "' موجود في أحد الحقول الأخرى."
           );
+          return true;
+        }
+
+        function scheduleCheck() {
+          setTimeout(checkManagerUniqueness, 200);
+        }
+
+        function attachHandlers(fieldId, picker) {
+          if (picker._managerUniquenessAttached) return;
+
+          var previousOnResolved = picker.OnUserResolvedClientScript;
+          picker.OnUserResolvedClientScript = function () {
+            if (typeof previousOnResolved === "function") {
+              previousOnResolved.apply(this, arguments);
+            }
+            scheduleCheck();
+          };
+
+          $(document).on(
+            "click.managerUniqueness",
+            "#" + fieldId + "_TopSpan_ResolvedList .sp-peoplepicker-delImage",
+            scheduleCheck
+          );
+
           if (isEdit) {
-            $("#" + fid + "_TopSpan_EditorInput").on("input blur", () =>
-              setTimeout(() => checkDuplicates(fid), 200)
+            $("#" + fieldId + "_TopSpan_EditorInput").on(
+              "input.managerUniqueness blur.managerUniqueness",
+              scheduleCheck
+            );
+            $("#" + fieldId + "_TopSpan_HiddenInput").on(
+              "input.managerUniqueness change.managerUniqueness",
+              scheduleCheck
             );
           }
-          picker._duplicateCheckerAttached = true;
+
+          picker._managerUniquenessAttached = true;
         }
-  
-        if (isNew) {
+
+        function waitForPickers(onReady) {
           var retryCount = 0;
-          var retryInterval = setInterval(function () {
-            var allReady = true;
-            fieldsToCheck.forEach((fid) => {
-              var picker =
-                SPClientPeoplePicker.SPClientPeoplePickerDict[fid + "_TopSpan"];
-              if (picker) attachHandlers(fid, picker);
-              else allReady = false;
+          var maxRetries = isEdit ? 100 : 50;
+          var timer = setInterval(function () {
+            var allReady = watchedFields.every(function (fieldId) {
+              return !!SPClientPeoplePicker.SPClientPeoplePickerDict[
+                fieldId + "_TopSpan"
+              ];
             });
             retryCount++;
-            if (allReady || retryCount > 50) {
-              clearInterval(retryInterval);
-              console.log(
-                "Duplicate checker ready for:",
-                fieldsToCheck.join(", ")
-              );
+            if (allReady || retryCount > maxRetries) {
+              clearInterval(timer);
+              if (allReady) onReady();
             }
           }, 300);
-        } else if (isEdit) {
-          fieldsToCheck.forEach((fid) => {
-            var waitCount = 0;
-            var timer = setInterval(() => {
-              var picker =
-                SPClientPeoplePicker.SPClientPeoplePickerDict[fid + "_TopSpan"];
-              var hiddenInput = $("#" + fid + "_TopSpan_HiddenInput");
-              if (picker && hiddenInput.length) {
-                clearInterval(timer);
-                attachHandlers(fid, picker);
-                $(hiddenInput).on("input change", () => checkDuplicates(fid));
-              } else if (waitCount++ > 100) clearInterval(timer);
-            }, 300);
-          });
-          console.log(
-            "Duplicate checker initialized for edit mode:",
-            fieldsToCheck.join(", ")
-          );
         }
+
+        waitForPickers(function () {
+          watchedFields.forEach(function (fieldId) {
+            var picker =
+              SPClientPeoplePicker.SPClientPeoplePickerDict[fieldId + "_TopSpan"];
+            if (picker) attachHandlers(fieldId, picker);
+          });
+          checkManagerUniqueness();
+        });
       })();
     }, 3000);
   });
@@ -1558,8 +1648,31 @@ window.Edit_Data_Request = {
         }
       }
       if(listkey == "mainkpi" && isEdit) {
-        var relatedMainGoal = $('#RelatedStrategyObjective').val();
-        Get_Related_Sos_Sector.init(relatedMainGoal);
+        var objectiveCode =
+          relatedMainGoal ||
+          $("#RelatedStrategyObjective").attr("value") ||
+          $("#RelatedStrategyObjective").val();
+        if (objectiveCode) {
+          Get_Related_Sos_Sector.init(objectiveCode);
+        }
+        if (
+          typeof ListInfo !== "undefined" &&
+          ListInfo.g &&
+          ListInfo.g.toggleFields
+        ) {
+          var $kpiTypeField = $("#KPIType");
+          if ($kpiTypeField.length && $kpiTypeField.attr("data-togglevalues")) {
+            var currentKpiTypeVal =
+              $kpiTypeField.val() ||
+              $kpiTypeField.find("option:selected").val() ||
+              $kpiTypeField.attr("value") ||
+              "";
+            if (!currentKpiTypeVal && kpiTypeValue) {
+              ListInfo.g.setSelectFieldValue($kpiTypeField, kpiTypeValue);
+            }
+            ListInfo.g.toggleFields($kpiTypeField);
+          }
+        }
         // ToDate must not go below its value at load (only increase or stay same)
         var fromDateVal = $("#FromDate").val();
         var toDateValAtLoad = $("#ToDate").val();
@@ -1782,6 +1895,10 @@ window.Edit_Data_Request = {
             [valfieldkey, Dispfieldkey],
             function (records, record, listItem, isDone) {
               if (isDone && records.length > 0 && records[0][Dispfieldkey] != null) {
+                $this.attr(
+                  "data-lookup-value",
+                  records[0][valfieldkey] || lookupFieldValue
+                );
                 setDerivedLookupDisplay($this, records[0][Dispfieldkey]);
               } else {
                 setDerivedLookupDisplay($this, No_Data);
@@ -6185,13 +6302,21 @@ window.Department_Sector_Info = {
       }
     }
 
-    $("#SubSector").prop("disabled", false);
+    var keepMainKpiFieldsDisabled =
+      listkey == "mainkpi" && isEdit;
+
+    if (!keepMainKpiFieldsDisabled) {
+      $("#SubSector").prop("disabled", false);
+    }
+
     $("#SubSector").html(
       '<option data-trans-department class="Resources" value="" selected="" disabled=""></option>'
     );
 
     if ($("#ExternalEntities").length) {
-      $("#ExternalEntities").prop("disabled", false);
+      if (!keepMainKpiFieldsDisabled) {
+        $("#ExternalEntities").prop("disabled", false);
+      }
       $("#ExternalEntities").html(
         '<option data-trans-externalentity class="Resources" value="" selected="" disabled=""></option>'
       );
@@ -6225,10 +6350,27 @@ window.Department_Sector_Info = {
         );
       }
     });
-    if (isEdit || (listkey == "changerequest" && RListKey == "projects")) {
-      $("#SubSector").val(departmenetValue);
-      if ($("#ExternalEntities").length) {
-        $("#ExternalEntities").val(externalEntityValue);
+    if (
+      listkey == "mainkpi" &&
+      Get_Related_Sos_Sector.g &&
+      Get_Related_Sos_Sector.g.fromObjective
+    ) {
+      Get_Related_Sos_Sector.applyObjectiveDependentFields();
+    } else if (isEdit || (listkey == "changerequest" && RListKey == "projects")) {
+      if (listkey == "mainkpi") {
+        Get_Related_Sos_Sector.applyObjectiveField(
+          "SubSector",
+          departmenetValue || mainKpiSubSectorValue
+        );
+        Get_Related_Sos_Sector.applyObjectiveField(
+          "ExternalEntities",
+          externalEntityValue || mainKpiExternalEntitiesValue
+        );
+      } else {
+        $("#SubSector").val(departmenetValue);
+        if ($("#ExternalEntities").length) {
+          $("#ExternalEntities").val(externalEntityValue);
+        }
       }
     }
     $("#SubSector").change(function () {
@@ -6332,6 +6474,7 @@ window.Kpi_Related_Goal = {
     if (isEdit) {
       if (indexTypekpi == "main") {
         $("#RelatedStrategyObjective").val(relatedMainGoal);
+        $("#RelatedStrategyObjective").attr("value", relatedMainGoal);
       }
       //  else if (indexTypekpi == 'sub') {
       //   $('#SubRelatedObjective').val(relatedSubGoal)
@@ -6375,6 +6518,111 @@ window.Kpi_Related_Goal = {
 // end of get related goal
 
 window.Get_Related_Sos_Sector = {
+  isMainKpiReadonlyField: function () {
+    return listkey == "mainkpi" && isEdit;
+  },
+  setReadonlySelectValue: function ($field, value) {
+    if (!$field || !$field.length || value == null || value === "") {
+      return;
+    }
+    if (
+      typeof ListInfo !== "undefined" &&
+      ListInfo.g &&
+      ListInfo.g.setSelectFieldValue
+    ) {
+      ListInfo.g.setSelectFieldValue($field, value);
+    } else {
+      $field.val(value);
+      $field.attr("value", value);
+    }
+  },
+  applyObjectiveField: function (fieldId, value) {
+    var $field = $("#" + fieldId);
+    if (!$field.length) {
+      return;
+    }
+    var keepDisabled = Get_Related_Sos_Sector.isMainKpiReadonlyField();
+
+    if (!value && fieldId === "SubSector" && mainKpiSubSectorValue) {
+      value = mainKpiSubSectorValue;
+    }
+    if (!value && fieldId === "ExternalEntities" && mainKpiExternalEntitiesValue) {
+      value = mainKpiExternalEntitiesValue;
+    }
+
+    if (value) {
+      Get_Related_Sos_Sector.setReadonlySelectValue($field, value);
+      $field.closest(".CFIELD").show().removeClass("hide-field");
+      $field.parent().show().removeClass("hide-field");
+    }
+
+    if (keepDisabled) {
+      $field.prop("disabled", true);
+    } else if (value) {
+      $field.prop("disabled", true);
+    } else {
+      $field.prop("disabled", false);
+    }
+  },
+  applyObjectiveDependentFields: function () {
+    var subSectorValue =
+      Get_Related_Sos_Sector.g.pendingSubSector || mainKpiSubSectorValue || "";
+    var externalEntitiesValue =
+      Get_Related_Sos_Sector.g.pendingExternalEntities ||
+      mainKpiExternalEntitiesValue ||
+      "";
+
+    Get_Related_Sos_Sector.applyObjectiveField("SubSector", subSectorValue);
+    Get_Related_Sos_Sector.applyObjectiveField(
+      "ExternalEntities",
+      externalEntitiesValue
+    );
+    Get_Related_Sos_Sector.g.fromObjective = false;
+    Get_Related_Sos_Sector.g.pendingSubSector = null;
+    Get_Related_Sos_Sector.g.pendingExternalEntities = null;
+
+    if (Get_Related_Sos_Sector.isMainKpiReadonlyField()) {
+      $("#Sector").prop("disabled", true);
+      $("#SubSector").prop("disabled", true);
+      $("#ExternalEntities").prop("disabled", true);
+    }
+  },
+  cascadeSectorFromObjective: function (sector, subSector, externalEntity) {
+    sector = sector || mainKpiSectorValue || "";
+    subSector = subSector || mainKpiSubSectorValue || "";
+    externalEntity = externalEntity || mainKpiExternalEntitiesValue || "";
+
+    if (!sector) {
+      return;
+    }
+    Get_Related_Sos_Sector.g.pendingSubSector = subSector;
+    Get_Related_Sos_Sector.g.pendingExternalEntities = externalEntity;
+    Get_Related_Sos_Sector.g.fromObjective = true;
+
+    var $sector = $("#Sector");
+    Get_Related_Sos_Sector.setReadonlySelectValue($sector, sector);
+    $sector.closest(".CFIELD").show().removeClass("hide-field");
+    $sector.parent().show().removeClass("hide-field");
+
+    if (Get_Related_Sos_Sector.isMainKpiReadonlyField()) {
+      $sector.prop("disabled", true);
+    }
+
+    if ($("select#SubSector[dynamic=Sector]").length) {
+      var wasDisabled = $sector.prop("disabled");
+      if (wasDisabled) {
+        $sector.prop("disabled", false);
+      }
+      $sector.trigger("change");
+      if (Get_Related_Sos_Sector.isMainKpiReadonlyField() || wasDisabled) {
+        $sector.prop("disabled", true);
+      }
+    } else if (typeof Department_Sector_Info !== "undefined") {
+      Department_Sector_Info.init(sector);
+    } else {
+      $sector.trigger("change");
+    }
+  },
   onSuccess: function (sender, args) {
     Get_Related_Sos_Sector.g.array = [];
     var collListItem = Get_Related_Sos_Sector.g.collListItem;
@@ -6382,40 +6630,41 @@ window.Get_Related_Sos_Sector = {
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
 
-      // var KPIType = $('#KPIType').val()
-      // var parentMainSos = ""
-
-      var type = $("#Types").val();
-      var sector = oListItem.get_item("Sector")
-        ? oListItem.get_item("Sector")
-        : "";
-      var subSector = oListItem.get_item("SubSector")
-        ? oListItem.get_item("SubSector")
-        : "";
-      var externalEntity = oListItem.get_item("ExternalEntities")
-        ? oListItem.get_item("ExternalEntities")
-        : "";
-      var portfolio = oListItem.get_item("RelatedPortfolio")
-        ? oListItem.get_item("RelatedPortfolio")
-        : "";
-      $("#Sector").val(sector);
-      $("#SubSector").val(subSector);
-      if ($("#ExternalEntities").length) {
-        $("#ExternalEntities").val(externalEntity);
+      if (listkey == "mainkpi") {
+        var sector = oListItem.get_item("Sector")
+          ? oListItem.get_item("Sector")
+          : mainKpiSectorValue || "";
+        var subSector = oListItem.get_item("SubSector")
+          ? oListItem.get_item("SubSector")
+          : mainKpiSubSectorValue || "";
+        var externalEntity = oListItem.get_item("ExternalEntities")
+          ? oListItem.get_item("ExternalEntities")
+          : mainKpiExternalEntitiesValue || "";
+        Get_Related_Sos_Sector.cascadeSectorFromObjective(
+          sector,
+          subSector,
+          externalEntity
+        );
       }
-
-      // if(KPIType == 'sublevel3'){
-      //   parentMainSos = oListItem.get_item("RelatedStrategyObjective")
-      // }
-      // if (type == 'main') {
-      //   $('#Sector').val(sector)
-      //   $('#SubSector').val(subSector)
-      // } else if (type == 'sub') {
-      //   $('#Sector').val(sector)
-      //   $('#SubSector').val(subSector)
-      //   $('#Portfolio').val(portfolio)
-
-      // }
+    }
+    if (
+      listkey == "mainkpi" &&
+      typeof ListInfo !== "undefined" &&
+      ListInfo.g &&
+      ListInfo.g.toggleFields
+    ) {
+      var $kpiTypeField = $("#KPIType");
+      if ($kpiTypeField.length && $kpiTypeField.attr("data-togglevalues")) {
+        var currentKpiTypeVal =
+          $kpiTypeField.val() ||
+          $kpiTypeField.find("option:selected").val() ||
+          $kpiTypeField.attr("value") ||
+          "";
+        if (!currentKpiTypeVal && kpiTypeValue) {
+          ListInfo.g.setSelectFieldValue($kpiTypeField, kpiTypeValue);
+        }
+        ListInfo.g.toggleFields($kpiTypeField);
+      }
     }
     changeResources();
   },
@@ -6444,6 +6693,9 @@ window.Get_Related_Sos_Sector = {
   },
   g: {
     array: [],
+    fromObjective: false,
+    pendingSubSector: null,
+    pendingExternalEntities: null,
   },
 };
 
@@ -10117,7 +10369,10 @@ var Check_Item_Deleted = {
         } else if (listkey == "mainkpi") {
           $("#RelatedStrategyType").val("");
           if (indexTypekpi == "main") {
-            var sosVal = $("#RelatedStrategyObjective").val();
+            var sosVal =
+              relatedMainGoal ||
+              $("#RelatedStrategyObjective").attr("value") ||
+              $("#RelatedStrategyObjective").val();
             if (!sosVal) {
               $("#Sector").val("");
               $("#SubSector").val("");

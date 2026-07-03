@@ -106,6 +106,86 @@ function getSelectedChangeItemMeta() {
   };
 }
 
+function isMergeSplitDeleteAction(actionType) {
+  var t = (actionType || "").toLowerCase();
+  return t === "merge" || t === "split" || t === "delete";
+}
+
+function buildGetChangeItemsDetailsUrl(
+  changeItemCode,
+  approvalLevel,
+  itemCode,
+  classification
+) {
+  let url = `${APIURL}/general/getchangeitemsdetails/${encodeURIComponent(
+    changeItemCode
+  )}/${encodeURIComponent(approvalLevel)}/${encodeURIComponent(itemCode)}`;
+
+  const parentType = $("#ParentItemType").val();
+  const resolvedClassification =
+    classification ||
+    (parentType === "MainKpi" && $("#Classification").val()
+      ? $("#Classification").val()
+      : null);
+  if (parentType === "MainKpi" && resolvedClassification) {
+    url += `?classification=${encodeURIComponent(resolvedClassification)}`;
+  }
+  return url;
+}
+
+function applyChangeItemWorkflowMetadata(result) {
+  var res = result || {};
+  if (!handleIsActiveCheck(res)) {
+    currentApprovalPath = "";
+    currentSecurityGroupName = "";
+    return false;
+  }
+  currentApprovalPath = res.approvalPath || "";
+  currentSecurityGroupName = res.securityGroupName || "";
+  return true;
+}
+
+function fetchChangeItemWorkflowMetadataPromise(
+  changeItemCode,
+  approvalLevel,
+  itemCode,
+  classification
+) {
+  return new Promise(function (resolve, reject) {
+    if (!changeItemCode || !approvalLevel || !itemCode) {
+      currentApprovalPath = "";
+      currentSecurityGroupName = "";
+      reject(new Error("missing required fields"));
+      return;
+    }
+
+    $.ajax({
+      url: buildGetChangeItemsDetailsUrl(
+        changeItemCode,
+        approvalLevel,
+        itemCode,
+        classification
+      ),
+      method: "GET",
+      headers: { Accept: "application/json" },
+      success: function (res) {
+        const result = res && res.result ? res.result : {};
+        if (applyChangeItemWorkflowMetadata(result)) {
+          resolve(result);
+        } else {
+          reject(new Error("inactive"));
+        }
+      },
+      error: function (xhr) {
+        console.error("[fetchChangeItemWorkflowMetadata] Error:", xhr);
+        currentApprovalPath = "";
+        currentSecurityGroupName = "";
+        reject(xhr);
+      },
+    });
+  });
+}
+
 function getCRAttachmentFiles() {
   var el = document.getElementById("CRAttachments");
   if (!el || !el.files) return [];
@@ -848,9 +928,10 @@ var checkchangerequestshtml = setInterval(function () {
       </div>
       <div class="row my-4">
         <div class="col-12 d-flex justify-content-end w-100 buttonsRow p-0">
-          <button id="CRSubmitButton" class="btn btn-primary mx-3" type="button"><span data-trans-savebutton class="Resources d-flex justify-content-center align-items-center"></span></button>
-          <button id="CREditButton" class="btn btn-primary" type="button" style="display: none"><span data-trans-edit class="Resources d-flex justify-content-center align-items-center"></span></button>
-          <button id="CRWorkflowButton" class="btn pop-green mx-3" type="button" style="display: none"><span data-trans-sendcrtext class="Resources d-flex justify-content-center align-items-center"></span></button>
+          <button id="CRSubmitButton" class="cr-action-btn cr-action-btn-save" type="button"><span data-trans-savebutton class="Resources d-flex justify-content-center align-items-center"></span></button>
+          <button id="CREditButton" class="cr-action-btn cr-action-btn-edit" type="button" style="display: none"><span data-trans-edit class="Resources d-flex justify-content-center align-items-center"></span></button>
+          <button id="CRWorkflowButton" class="cr-action-btn cr-action-btn-approve" type="button" style="display: none"><span data-trans-sendcrtext class="Resources d-flex justify-content-center align-items-center"></span></button>
+          <button id="CRWorkflowRejectButton" class="cr-action-btn cr-action-btn-reject" type="button" style="display: none"><span data-trans-crwfreject class="Resources d-flex justify-content-center align-items-center"></span></button>
         </div>
       </div>
     </div>
@@ -1273,7 +1354,7 @@ $.ajax({
           return;
         }
         if ($("#CRSubmitButton").length) {
-          $("#CRSubmitButton").show().css("display", "inline-block");
+          $("#CRSubmitButton").show().css("display", "inline-flex");
         }
       }
 
@@ -1328,7 +1409,7 @@ function () {
   if (window.isNew && (fieldId === "ChangeItem" || fieldId === "ParentItemCode" || fieldId === "ChildItemCode" || fieldId === "ApprovalLevel")) {
     window.currentIsActive = true;
     if ($("#CRSubmitButton").length) {
-      $("#CRSubmitButton").prop("disabled", false).show().css("display", "inline-block");
+      $("#CRSubmitButton").prop("disabled", false).show().css("display", "inline-flex");
     }
   }
   
@@ -1379,20 +1460,26 @@ function () {
   
   // If ApprovalLevel changed manually (not from API), call getchangeitemsdetails
   if (fieldId === "ApprovalLevel") {
-    // Check actionType - if add, merge, split, or delete, hide dynamic section
     var meta = getSelectedChangeItemMeta();
-    if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+    if (meta.actionType === "add") {
       setChangeItemsVisibility(false);
       $(".changeItemsRow").find(".dynamicField").remove();
-    } else {
-      // Call getchangeitemsdetails if all required fields are available
-      if (changeItemCode && approvalLevel && detailsItemCode) {
-        $(".changeItemsRow").find(".dynamicField").remove();
-        // Get classification if it's MainKpi
-        const parentType = $("#ParentItemType").val();
-        const classification = (parentType === "MainKpi" && $("#Classification").val()) ? $("#Classification").val() : null;
-        fetchChangeItemDetails(changeItemCode, approvalLevel, detailsItemCode, classification);
+    } else if (changeItemCode && approvalLevel && detailsItemCode) {
+      if (isMergeSplitDeleteAction(meta.actionType)) {
+        setChangeItemsVisibility(false);
       }
+      $(".changeItemsRow").find(".dynamicField").remove();
+      const parentType = $("#ParentItemType").val();
+      const classification =
+        parentType === "MainKpi" && $("#Classification").val()
+          ? $("#Classification").val()
+          : null;
+      fetchChangeItemDetails(
+        changeItemCode,
+        approvalLevel,
+        detailsItemCode,
+        classification
+      );
     }
   }
   
@@ -1514,14 +1601,30 @@ function handleParentChildFieldsVisibility() {
     // Restore visible state when user switches from add to other actions
     $parentItemTypeDiv.show();
     $parentItemCodeDiv.show();
-    $childItemTypeDiv.show();
-    $childItemCodeDiv.show();
     $sectorDiv.show();
     $subSectorDiv.show();
     $approvalLevelDiv.show();
 
+    // Child fields only for Initiatives / Projects (same rules as handleParentChange)
+    var parentType = ($("#ParentItemType").val() || "").toString();
+    if (parentType === "Initiatives" || parentType === "Projects") {
+      $childItemTypeDiv.show();
+      $childItemCodeDiv.show();
+    } else {
+      $childItemTypeDiv.hide();
+      $childItemCodeDiv.hide();
+      $childItemType.val("");
+      $childItemCode.val("");
+      $childItemType.prop("required", false);
+      $childItemTypeLabel.removeClass("required-field");
+      $childItemType.removeClass("is-invalid");
+      $childItemCode.prop("required", false);
+      $childItemCodeLabel.removeClass("required-field");
+      $childItemCode.removeClass("is-invalid");
+    }
+
     // Keep Classification visibility controlled by parent type
-    if ($("#ParentItemType").val() === "MainKpi") {
+    if (parentType === "MainKpi") {
       $classificationDiv.show();
     } else {
       $classificationDiv.hide();
@@ -1547,23 +1650,140 @@ function handleParentChildFieldsVisibility() {
   }
 }
 
+function resolveCrTaskStageIds(taskItem) {
+  var stageIDApprove = taskItem.get_item("StageIDApprove") || "";
+  var stageIDReject = taskItem.get_item("StageIDReject") || "";
+  var taskTitle = taskItem.get_item("Title");
+  var taskType = taskItem.get_item("TaskType") || "";
+
+  if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
+    var tasktitlearr = JSON.parse(
+      localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
+    );
+    tasktitlearr = tasktitlearr.filter(function (item) {
+      return item.code == taskTitle;
+    });
+
+    if (tasktitlearr.length > 0) {
+      if (!stageIDApprove && tasktitlearr[0].StageIDApprove) {
+        stageIDApprove = tasktitlearr[0].StageIDApprove;
+      }
+      if (!stageIDReject && tasktitlearr[0].StageIDReject) {
+        stageIDReject = tasktitlearr[0].StageIDReject;
+      }
+    }
+  }
+
+  return {
+    stageIDApprove: stageIDApprove,
+    stageIDReject: stageIDReject,
+    taskType: taskType,
+  };
+}
+
+function canShowCrWorkflowRejectButton(stageIds) {
+  return (
+    stageIds.taskType !== "Submit" &&
+    stageIds.stageIDReject !== null &&
+    stageIds.stageIDReject !== undefined &&
+    stageIds.stageIDReject !== ""
+  );
+}
+
+function buildCrWorkflowPopupHtml(options) {
+  var approveOnclick =
+    "handleWorkflowApproval(true, '" +
+    options.stageIDApproveEscaped +
+    "', '" +
+    options.stageIDRejectEscaped +
+    "')";
+  var rejectOnclick =
+    "handleWorkflowApproval(false, '" +
+    options.stageIDApproveEscaped +
+    "', '" +
+    options.stageIDRejectEscaped +
+    "')";
+
+  var buttonsHtml = "";
+  if (options.showApproveButton) {
+    buttonsHtml +=
+      '<button type="button" class="cr-action-btn cr-action-btn-approve" onclick="' +
+      approveOnclick +
+      '">' +
+      options.approveLabel +
+      "</button>";
+  }
+  if (options.showRejectButton) {
+    buttonsHtml +=
+      '<button type="button" class="cr-action-btn cr-action-btn-reject" onclick="' +
+      rejectOnclick +
+      '">' +
+      options.rejectLabel +
+      "</button>";
+  }
+  buttonsHtml +=
+    '<button type="button" class="cr-action-btn cr-action-btn-cancel" onclick="$(\'.popupComment\').remove();">' +
+    options.cancelLabel +
+    "</button>";
+
+  return (
+    '<div class="popupComment cr-wf-popup"><div class="wrapcomments">' +
+    "<label>" +
+    options.notesLabel +
+    "</label>" +
+    '<textarea id="commenttext" rows="4" cols="50"></textarea>' +
+    "<div class='btn-cont'>" +
+    buttonsHtml +
+    "</div>" +
+    '<p class="fillcomment"></p>' +
+    "</div></div>"
+  );
+}
+
+function updateCRWorkflowRejectButtonVisibility(retryCount) {
+  if (!$("#CRWorkflowRejectButton").length || !window.isWF) {
+    return;
+  }
+
+  retryCount = retryCount || 0;
+  var currentTaskID = taskID || taskId || window.taskID || window.taskid;
+  if (!currentTaskID) {
+    $("#CRWorkflowRejectButton").hide();
+    return;
+  }
+
+  $("#CRWorkflowRejectButton").css("display", "inline-flex");
+}
+
+function setCRWorkflowRejectButtonVisible(visible) {
+  if (!$("#CRWorkflowRejectButton").length) {
+    return;
+  }
+  if (visible) {
+    updateCRWorkflowRejectButtonVisibility();
+  } else {
+    $("#CRWorkflowRejectButton").hide();
+  }
+}
+
+function setCrWorkflowButtonsVisibility() {
+  if (!$("#CRSubmitButton").length || !$("#CREditButton").length) {
+    return;
+  }
+  $("#CREditButton").hide();
+  $("#CRSubmitButton").hide();
+  if ($("#CRWorkflowButton").length) {
+    $("#CRWorkflowButton").css("display", "inline-flex");
+  }
+  setCRWorkflowRejectButtonVisible(true);
+}
+
 function toggleFormEditable(isEditable) {
   const disabled = !isEditable;
 
   $(
     ".changeRequests-container input, .changeRequests-container select, .changeRequests-container textarea"
   ).prop("disabled", disabled);
-
-  // In workflow edit mode, disable all dynamic fields as well
-  if (window.isWF && window.isEdit) {
-    $(
-      ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
-    ).prop("disabled", true);
-    $(".changeItemsRow .dynamicField .sp-peoplepicker-topLevel").css({
-      "pointer-events": "none",
-      opacity: "0.6",
-    });
-  }
 
   // Ensure WFStage stays disabled (it should always be disabled)
   $("#WFStage").prop("disabled", true);
@@ -1580,24 +1800,21 @@ function toggleFormEditable(isEditable) {
 
   if ($("#CRSubmitButton").length && $("#CREditButton").length) {
     if (window.isWF) {
-      // Hide edit button and save button, show workflow button (works for both isview and isedit in workflow mode)
-      $("#CREditButton").hide();
-      $("#CRSubmitButton").hide();
-      if ($("#CRWorkflowButton").length) {
-        $("#CRWorkflowButton").css("display", "inline-block");
-      }
+      setCrWorkflowButtonsVisibility();
     } else if (isEditable) {
-      $("#CRSubmitButton").css("display", "inline-block");
+      $("#CRSubmitButton").css("display", "inline-flex");
       $("#CREditButton").hide();
       if ($("#CRWorkflowButton").length) {
         $("#CRWorkflowButton").hide();
       }
+      setCRWorkflowRejectButtonVisible(false);
     } else {
       $("#CRSubmitButton").hide();
       $("#CREditButton").show();
       if ($("#CRWorkflowButton").length) {
         $("#CRWorkflowButton").hide();
       }
+      setCRWorkflowRejectButtonVisible(false);
     }
   }
 }
@@ -1611,30 +1828,18 @@ function toggleEditModeFields() {
   // Ensure WFStage stays disabled (it should always be disabled)
   $("#WFStage").prop("disabled", true);
 
-  // In workflow edit mode, disable all fields including dynamic fields
-  if (window.isWF) {
-    // Disable dynamic fields in workflow edit mode
-    $(
-      ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
-    ).prop("disabled", true);
-    $(".changeItemsRow .dynamicField .sp-peoplepicker-topLevel").css({
-      "pointer-events": "none",
-      opacity: "0.6",
-    });
-    
-    // Check if this is the last stage to enable Observations
-    checkAndShowObservationsSection();
-  } else {
-    // Enable only the fields that are allowed to be edited in edit mode (non-workflow)
-    $("#ChangeDescription").prop("disabled", false);
-    $("#ChangeJustification").prop("disabled", false);
-    $("#ExpectedPositiveImpact").prop("disabled", false);
-    $("#ImpactType").prop("disabled", false);
+  // Enable only the fields allowed in edit mode (including workflow edit)
+  $("#ChangeDescription").prop("disabled", false);
+  $("#ChangeJustification").prop("disabled", false);
+  $("#ExpectedPositiveImpact").prop("disabled", false);
+  $("#ImpactType").prop("disabled", false);
 
-    // Enable dynamic fields (fields that are generated based on change item selection)
-    $(
-      ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
-    ).prop("disabled", false);
+  $(
+    ".changeItemsRow .dynamicField input, .changeItemsRow .dynamicField textarea, .changeItemsRow .dynamicField select"
+  ).prop("disabled", false);
+
+  if (window.isWF) {
+    checkAndShowObservationsSection();
   }
 
   // Enable attachments in edit mode
@@ -1657,10 +1862,22 @@ function toggleEditModeFields() {
     opacity: "0.6",
   });
 
-  // Show save button and hide edit button
+  // Show workflow buttons only in workflow mode (no separate Save/Edit)
   if ($("#CRSubmitButton").length && $("#CREditButton").length) {
-    $("#CRSubmitButton").css("display", "inline-block");
-    $("#CREditButton").hide();
+    if (window.isWF) {
+      setCrWorkflowButtonsVisibility();
+    } else {
+      $("#CRSubmitButton").css("display", "inline-flex");
+      $("#CREditButton").hide();
+      if ($("#CRWorkflowButton").length) {
+        $("#CRWorkflowButton").hide();
+      }
+      setCRWorkflowRejectButtonVisible(false);
+    }
+  }
+
+  if (window.isNew || window.isEdit) {
+    $("#RelatedStrategy").prop("disabled", true);
   }
 }
 
@@ -1923,7 +2140,18 @@ $(document).on("click", "#CRWorkflowButton", function () {
     alert("Workflow mode or Task ID not found");
   }
 });
+
+$(document).on("click", "#CRWorkflowRejectButton", function () {
+  if (window.isWF && (taskID || taskId || window.taskID || window.taskid)) {
+    executeCrWorkflowDirectReject();
+  } else {
+    alert("Workflow mode or Task ID not found");
+  }
+});
 $(document).on("click", "#CREditButton", function () {
+  if (window.isWF) {
+    return;
+  }
   let href = window.location.href;
   if (href.toLowerCase().indexOf("isview=true") > -1) {
     // If coming from view mode, reload the page with isedit=true
@@ -1943,11 +2171,6 @@ $(document).on("click", "#CREditButton", function () {
   toggleEditModeFields();
   initializeEditMode(currentChangeItem);
   updatePageTitleLink();
-  
-  // If in workflow mode, check and show Observations section
-  if (window.isWF) {
-    checkAndShowObservationsSection();
-  }
 });
 function loadListOptions(
   listName,
@@ -2979,7 +3202,7 @@ function tryFetchChangeDetails() {
   }
   
   var meta = getSelectedChangeItemMeta();
-  if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+  if (meta.actionType === "add") {
     setChangeItemsVisibility(false);
     $(".changeItemsRow").find(".dynamicField").remove();
     return;
@@ -3027,9 +3250,10 @@ if (!changeItemCode || !approvalLevel || !itemCode) {
 // Clear dynamic fields before fetching new ones
 $(".changeItemsRow").find(".dynamicField").remove();
 
-  // Check actionType - if add, merge, split, or delete, hide dynamic section and don't call API
   var meta = getSelectedChangeItemMeta();
-  if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
+  var workflowOnly = isMergeSplitDeleteAction(meta.actionType);
+
+  if (meta.actionType === "add") {
     setChangeItemsVisibility(false);
     $(".changeItemsRow").find(".dynamicField").remove();
     currentApprovalPath = "";
@@ -3037,32 +3261,31 @@ $(".changeItemsRow").find(".dynamicField").remove();
     return;
   }
 
-  // Build URL with classification parameter if it's MainKpi and classification is provided
-  let url = `${APIURL}/general/getchangeitemsdetails/${encodeURIComponent(
-    changeItemCode
-  )}/${encodeURIComponent(approvalLevel)}/${encodeURIComponent(itemCode)}`;
-  
-  // Add classification parameter if it's MainKpi and classification is provided
-  const parentType = $("#ParentItemType").val();
-  if (parentType === "MainKpi" && classification) {
-    url += `?classification=${encodeURIComponent(classification)}`;
+  if (workflowOnly) {
+    setChangeItemsVisibility(false);
+    $(".changeItemsRow").find(".dynamicField").remove();
   }
 
   $.ajax({
-    url: url,
+    url: buildGetChangeItemsDetailsUrl(
+      changeItemCode,
+      approvalLevel,
+      itemCode,
+      classification
+    ),
     method: "GET",
     headers: { Accept: "application/json" },
     success: function (res) {
       const result = res && res.result ? res.result : {};
-      currentApprovalPath = result.approvalPath || "";
-      currentSecurityGroupName = result.securityGroupName || "";
 
-      // Check IsActive for new forms
-      if (!handleIsActiveCheck(result)) {
-        // Item is not active, don't proceed with rendering fields
-        $(".changeItemsRow").find(".dynamicField").remove();
-        currentApprovalPath = "";
-        currentSecurityGroupName = "";
+      if (!applyChangeItemWorkflowMetadata(result)) {
+        if (!workflowOnly) {
+          $(".changeItemsRow").find(".dynamicField").remove();
+        }
+        return;
+      }
+
+      if (workflowOnly) {
         return;
       }
 
@@ -3091,16 +3314,29 @@ $(".changeItemsRow").find(".dynamicField").remove();
     $(".changeItemsRow").find(".dynamicField").remove();
     currentApprovalPath = "";
     currentSecurityGroupName = "";
-    // Show general alert for all errors
-    alert(
-      localStorage.getItem("lng") == "en"
-        ? "There are no fields to change according to your choices. Please review the data!"
-        : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
-    );
+    if (!workflowOnly) {
+      alert(
+        localStorage.getItem("lng") == "en"
+          ? "There are no fields to change according to your choices. Please review the data!"
+          : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
+      );
+    }
   },
   });
 }
-function saveAllChangeRequestFields() {
+function finishChangeRequestSave(saveOptions, successMessageKey) {
+  if (saveOptions && typeof saveOptions.onSuccess === "function") {
+    saveOptions.onSuccess();
+    return true;
+  }
+  if (successMessageKey) {
+    alert(getLocalizedMessage(successMessageKey));
+  }
+  return false;
+}
+
+function saveAllChangeRequestFields(saveOptions) {
+  saveOptions = saveOptions || {};
   // Check actionType for New mode add action
   var meta = getSelectedChangeItemMeta();
   var actionType = (meta.actionType || "").toLowerCase();
@@ -3138,9 +3374,13 @@ function saveAllChangeRequestFields() {
         ? "Please fill all required fields"
         : "يرجى ملء جميع الحقول المطلوبة"
     );
+    if (typeof saveOptions.onValidationFail === "function") {
+      saveOptions.onValidationFail();
+    }
     return;
   }
 
+  function persistChangeRequest() {
   var clientContext = new SP.ClientContext.get_current();
   var oList = clientContext
     .get_web()
@@ -3367,7 +3607,9 @@ function saveAllChangeRequestFields() {
                 })
                 .then(function () {
                   setTimeout(loadCRExistingAttachments, 500);
-                  alert(getLocalizedMessage("editSuccess"));
+                  if (finishChangeRequestSave(saveOptions, "editSuccess")) {
+                    return;
+                  }
                   window.location.replace(
                     _spPageContextInfo.webAbsoluteUrl +
                     "/SitePages/Listing.aspx?ListKey=changerequests"
@@ -3375,17 +3617,26 @@ function saveAllChangeRequestFields() {
                 })
                 .catch(function (err) {
                   alert(getLocalizedMessage("apiError"));
+                  if (typeof saveOptions.onError === "function") {
+                    saveOptions.onError(err);
+                  }
                 });
             } else {
-              // Skip handleChangeItemsAPI call, just upload attachments and redirect
               uploadCRAttachments(crItemCode, window.crItemId)
                 .then(function () {
                   setTimeout(loadCRExistingAttachments, 500);
-                  alert(getLocalizedMessage("editSuccess"));
+                  if (finishChangeRequestSave(saveOptions, "editSuccess")) {
+                    return;
+                  }
                   window.location.replace(
                     _spPageContextInfo.webAbsoluteUrl +
                     "/SitePages/Listing.aspx?ListKey=changerequests"
                   );
+                })
+                .catch(function (err) {
+                  if (typeof saveOptions.onError === "function") {
+                    saveOptions.onError(err);
+                  }
                 });
             }
           },
@@ -3399,6 +3650,44 @@ function saveAllChangeRequestFields() {
       }
     );
   }
+  }
+
+  if (isMergeSplitDeleteAction(actionType) && !currentApprovalPath) {
+    var workflowChangeItemCode = $("#ChangeItem").val();
+    var workflowApprovalLevel = $("#ApprovalLevel").val();
+    var workflowItemCode = $("#ParentItemCode").val();
+    if (
+      $("#ChildItemCodeDiv").is(":visible") &&
+      $("#ChildItemCode").val()
+    ) {
+      workflowItemCode = $("#ChildItemCode").val();
+    }
+    var workflowParentType = $("#ParentItemType").val();
+    var workflowClassification =
+      workflowParentType === "MainKpi" && $("#Classification").val()
+        ? $("#Classification").val()
+        : null;
+
+    fetchChangeItemWorkflowMetadataPromise(
+      workflowChangeItemCode,
+      workflowApprovalLevel,
+      workflowItemCode,
+      workflowClassification
+    )
+      .then(function () {
+        persistChangeRequest();
+      })
+      .catch(function () {
+        alert(
+          localStorage.getItem("lng") == "en"
+            ? "Unable to load workflow details. Please review your selections and try again."
+            : "تعذر تحميل بيانات سير العمل. يرجى مراجعة اختياراتك والمحاولة مجددًا."
+        );
+      });
+    return;
+  }
+
+  persistChangeRequest();
 }
 function handleChangeItemsAPI(crCode) {
   return new Promise(function (resolve, reject) {
@@ -4409,27 +4698,18 @@ function fillViewFields(item, code) {
       handleParentChildFieldsVisibility();
       
       // Toggle edit/view mode
-      if (window.isEdit && window.isWF) {
-        // In workflow edit mode, behave like view mode but show Observations field
-        toggleFormEditable(false);
-        var currentTaskID = taskID || taskId || window.taskID || window.taskid;
-        if ($("#CRWorkflowButton").length) {
-          $("#CRWorkflowButton").css("display", "inline-block");
-        }
-        // Check if this is the last stage (stageIDApprove == "approved") to show Observations
-        checkAndShowObservationsSection();
-      } else if (window.isEdit) {
+      if (window.isEdit) {
         toggleEditModeFields();
       } else if (window.isWF) {
         toggleFormEditable(false);
-        var currentTaskID = taskID || taskId || window.taskID || window.taskid;
-        if ($("#CRWorkflowButton").length) {
-          $("#CRWorkflowButton").css("display", "inline-block");
-        }
-        // Check if this is the last stage (stageIDApprove == "approved") to show Observations
+        setCrWorkflowButtonsVisibility();
         checkAndShowObservationsSection();
       } else {
         toggleFormEditable(false);
+      }
+
+      if (window.isWF) {
+        loadWorkflowTaskNotesSection();
       }
       
       // Show Observations section in view mode
@@ -5867,34 +6147,229 @@ function initializeEditMode(changeItemValue) {
   }
 }
 
-// Display rejection note section after changeItemsRow
-function displayRejectionNoteSection(rejectionNote, isArabic) {
-  // Remove existing rejection note section if any
-  $(".rejection-note-section").remove();
+// Workflow task notes — helpers and display
+function escapeWorkflowNoteHtml(text) {
+  return (text || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
 
-  if (!rejectionNote) {
+function getTaskStageDisplayName(taskCode, isArabic) {
+  if (!taskCode) {
+    return "";
+  }
+  var config = [];
+  try {
+    if (localStorage.getItem("Dynamo_Tasks Configuration")) {
+      config = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
+    }
+  } catch (e) { }
+  var match = config.filter(function (item) {
+    return item.code == taskCode;
+  });
+  if (match.length > 0) {
+    return isArabic
+      ? match[0].name || taskCode
+      : match[0].nameEn || match[0].name || taskCode;
+  }
+  return taskCode;
+}
+
+function getTakenActionLabel(takenAction, isArabic) {
+  var action = (takenAction || "").toLowerCase();
+  if (action === "approve") {
+    return isArabic ? "موافقة" : "Approved";
+  }
+  if (action === "reject") {
+    return isArabic ? "طلب معلومات إضافية" : "Request Additional Information";
+  }
+  if (action === "delegate") {
+    return isArabic ? "تفويض" : "Delegated";
+  }
+  return takenAction || (isArabic ? "إجراء" : "Action");
+}
+
+function formatTaskNoteDate(dateValue, isArabic) {
+  if (!dateValue) {
+    return "";
+  }
+  try {
+    var d = dateValue instanceof Date ? dateValue : new Date(dateValue);
+    if (isNaN(d.getTime())) {
+      return "";
+    }
+    return d.toLocaleString(isArabic ? "ar-SA" : "en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  } catch (e) {
+    return "";
+  }
+}
+
+function getTaskAuthorName(task) {
+  try {
+    var editor = task.get_item("Editor");
+    if (editor && editor.get_lookupValue) {
+      return editor.get_lookupValue();
+    }
+  } catch (e) { }
+  try {
+    var author = task.get_item("Author");
+    if (author && author.get_lookupValue) {
+      return author.get_lookupValue();
+    }
+  } catch (e) { }
+  try {
+    var assignedTo = task.get_item("AssignedTo");
+    if (assignedTo && assignedTo.length > 0 && assignedTo[0].get_lookupValue) {
+      return assignedTo[0].get_lookupValue();
+    }
+  } catch (e) { }
+  return "";
+}
+
+function getWorkflowNoteActionClass(takenAction) {
+  var action = (takenAction || "").toLowerCase();
+  if (action === "approve") {
+    return "workflow-note-approve";
+  }
+  if (action === "reject") {
+    return "workflow-note-reject";
+  }
+  if (action === "delegate") {
+    return "workflow-note-delegate";
+  }
+  return "workflow-note-other";
+}
+
+function displayWorkflowNotesSection(notes, isArabic) {
+  $(".workflow-notes-row").remove();
+
+  var notesWithBody = (notes || []).filter(function (note) {
+    return note.body && String(note.body).trim() !== "";
+  });
+
+  if (notesWithBody.length === 0) {
     return;
   }
 
-  var lastNoteLabel = isArabic ? "آخر ملحوظة مسجلة:" : "Last recorded note:";
   var directionClass = isArabic ? "ar" : "en";
+  var sectionTitle = isArabic ? "ملاحظات سير العمل" : "Workflow Notes";
+  var stageLabel = isArabic ? "المرحلة" : "Stage";
+  var actionLabel = isArabic ? "الإجراء" : "Action";
+  var authorLabel = isArabic ? "بواسطة" : "By";
+  var dateLabel = isArabic ? "التاريخ" : "Date";
 
-  // Escape HTML in rejection note
-  var lastRejectionNoteEscaped = (rejectionNote || "").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "\\'").replace(/"/g, "&quot;");
+  var notesHtml = "";
+  notesWithBody.forEach(function (note) {
+    var actionClass = getWorkflowNoteActionClass(note.action);
 
-  var rejectionNoteSection =
-    '<div class="row mb-3 rejection-note-row">' +
+    notesHtml +=
+      '<div class="workflow-note-item ' + actionClass + '">' +
+      '<div class="workflow-note-meta">' +
+      '<span class="workflow-note-meta-item"><strong>' + stageLabel + ":</strong> " + escapeWorkflowNoteHtml(note.stageName) + "</span>" +
+      '<span class="workflow-note-meta-item"><strong>' + actionLabel + ":</strong> " + escapeWorkflowNoteHtml(note.actionLabel) + "</span>" +
+      '<span class="workflow-note-meta-item"><strong>' + authorLabel + ":</strong> " + escapeWorkflowNoteHtml(note.author || (isArabic ? "غير محدد" : "N/A")) + "</span>" +
+      '<span class="workflow-note-meta-item"><strong>' + dateLabel + ":</strong> " + escapeWorkflowNoteHtml(note.dateLabel) + "</span>" +
+      "</div>" +
+      '<div class="workflow-note-body">' + escapeWorkflowNoteHtml(note.body) + "</div>" +
+      "</div>";
+  });
+
+  var sectionHtml =
+    '<div class="row mb-3 workflow-notes-row">' +
     '<div class="my-4 d-flex w-100">' +
-    '<div class="rejection-note-section ' + directionClass + '">' +
-    '<label class="rejection-note-label">' + lastNoteLabel + '</label>' +
-    '<div class="rejection-note-content">' + lastRejectionNoteEscaped + '</div>' +
-    '</div>' +
-    '</div>' +
-    '</div>';
+    '<div class="workflow-notes-section ' + directionClass + '">' +
+    '<label class="workflow-notes-title">' + sectionTitle + "</label>" +
+    '<div class="workflow-notes-list">' + notesHtml + "</div>" +
+    "</div>" +
+    "</div>" +
+    "</div>";
 
-  // Insert after changeItemsRow
-  $(".changeItemsRow").after(rejectionNoteSection);
+  $(".changeItemsRow").after(sectionHtml);
   changeResources();
+}
+
+function loadWorkflowTaskNotesSection() {
+  if (!window.isWF) {
+    return;
+  }
+
+  var relatedItemTitle = crItemCode || window.crItemCode || "";
+  if (!relatedItemTitle) {
+    $(".workflow-notes-row").remove();
+    return;
+  }
+
+  var isArabic =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+
+  if (typeof SP === "undefined" || !SP.ClientContext) {
+    $(".workflow-notes-row").remove();
+    return;
+  }
+
+  var ctx = SP.ClientContext.get_current();
+  var taskList = ctx.get_web().get_lists().getByTitle("Tasks");
+  var camlQuery = new SP.CamlQuery();
+  var queryXml =
+    "<View><Query><Where><And>" +
+    "<Eq><FieldRef Name='RelatedItemTitle'/><Value Type='Text'>" +
+    relatedItemTitle.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") +
+    "</Value></Eq>" +
+    "<Eq><FieldRef Name='Status'/><Value Type='Choice'>Closed</Value></Eq>" +
+    "</And></Where>" +
+    "<OrderBy><FieldRef Name='Created' Ascending='True'/></OrderBy>" +
+    "</Query><RowLimit>100</RowLimit></View>";
+  camlQuery.set_viewXml(queryXml);
+  var allTasks = taskList.getItems(camlQuery);
+  ctx.load(allTasks);
+  ctx.executeQueryAsync(
+    function () {
+      var notes = [];
+      var allTasksEnum = allTasks.getEnumerator();
+
+      while (allTasksEnum.moveNext()) {
+        var task = allTasksEnum.get_current();
+        var takenAction = task.get_item("TakenAction") || "";
+        var taskBody = task.get_item("Body") || "";
+        var taskTitle = task.get_item("Title") || "";
+        var taskCreated = task.get_item("Modified") || task.get_item("Created");
+
+        if (!taskBody || !String(taskBody).trim()) {
+          continue;
+        }
+
+        notes.push({
+          stageName: getTaskStageDisplayName(taskTitle, isArabic),
+          action: takenAction,
+          actionLabel: getTakenActionLabel(takenAction, isArabic),
+          author: getTaskAuthorName(task),
+          dateLabel: formatTaskNoteDate(taskCreated, isArabic),
+          body: taskBody,
+          created: taskCreated,
+        });
+      }
+
+      notes.sort(function (a, b) {
+        if (a.created && b.created) {
+          return a.created - b.created;
+        }
+        return 0;
+      });
+
+      displayWorkflowNotesSection(notes, isArabic);
+    },
+    function () {
+      $(".workflow-notes-row").remove();
+    }
+  );
 }
 
 // Function to check if this is the last stage and show Observations section
@@ -5947,204 +6422,146 @@ function showWorkflowApprovalPopup() {
   ctx.load(taskItem);
   ctx.executeQueryAsync(
     function () {
-      // Get StageIDApprove and StageIDReject directly from Task
-      var stageIDApprove = taskItem.get_item("StageIDApprove") || "";
-      var stageIDReject = taskItem.get_item("StageIDReject") || "";
-      var taskTitle = taskItem.get_item("Title");
-      var stageName = taskTitle;
-      var relatedItemTitle = taskItem.get_item("RelatedItemTitle") || "";
-      var currentTaskCreated = taskItem.get_item("Created");
-      var taskType = taskItem.get_item("TaskType") || "";
+      var stageIds = resolveCrTaskStageIds(taskItem);
+      var isArabic =
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar";
+      var stageIDApproveEscaped = (stageIds.stageIDApprove || "").replace(/'/g, "\\'");
+      var stageIDRejectEscaped = (stageIds.stageIDReject || "").replace(/'/g, "\\'");
 
-      // Get task configuration from localStorage for display name
-      var tasktitlearr = [];
-      if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
-        tasktitlearr = JSON.parse(
-          localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
-        );
-        tasktitlearr = tasktitlearr.filter(function (item) {
-          return item.code == taskTitle;
-        });
-
-        if (tasktitlearr.length > 0) {
-          // Use StageIDApprove and StageIDReject from Task if available, otherwise from localStorage
-          if (!stageIDApprove && tasktitlearr[0].StageIDApprove) {
-            stageIDApprove = tasktitlearr[0].StageIDApprove;
-          }
-          if (!stageIDReject && tasktitlearr[0].StageIDReject) {
-            stageIDReject = tasktitlearr[0].StageIDReject;
-          }
-
-          if (
-            localStorage.getItem("lng") == null ||
-            localStorage.getItem("lng") == "ar"
-          ) {
-            stageName = tasktitlearr[0].name || taskTitle;
-          } else {
-            stageName = tasktitlearr[0].nameEn || taskTitle;
-          }
-        }
-      }
-
-      //Show the cause of rejection
-      // If StageIDReject is empty, get the last rejection note
-      var lastRejectionNote = "";
-      var showLastRejectionNote = false;
-
-      if (!stageIDReject && relatedItemTitle) {
-        showLastRejectionNote = true;
-        // Query all tasks with same RelatedItemTitle and filter in JavaScript
-        // This is more reliable than CAML date filtering
-        var ctx3 = SP.ClientContext.get_current();
-        var taskList3 = ctx3.get_web().get_lists().getByTitle("Tasks");
-        var camlQuery2 = new SP.CamlQuery();
-        var queryXml2 = "<View><Query><Where>" +
-          "<Eq><FieldRef Name='RelatedItemTitle'/><Value Type='Text'>" + relatedItemTitle.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</Value></Eq>" +
-          "</Where><OrderBy><FieldRef Name='Created' Ascending='True'/></OrderBy></Query><RowLimit>100</RowLimit></View>";
-        camlQuery2.set_viewXml(queryXml2);
-        var allTasks = taskList3.getItems(camlQuery2);
-        ctx3.load(allTasks);
-        ctx3.executeQueryAsync(
-          function () {
-            var allTasksEnum = allTasks.getEnumerator();
-            var rejectedTasks = [];
-
-            while (allTasksEnum.moveNext()) {
-              var task = allTasksEnum.get_current();
-              var taskTakenAction = task.get_item("TakenAction");
-              var taskCreated = task.get_item("Created");
-              var taskBody = task.get_item("Body") || "";
-
-              // Filter: TakenAction = reject AND Created < currentTaskCreated
-              if (taskTakenAction && taskTakenAction.toLowerCase() === "reject") {
-                if (currentTaskCreated && taskCreated) {
-                  if (taskCreated < currentTaskCreated) {
-                    rejectedTasks.push({
-                      created: taskCreated,
-                      body: taskBody
-                    });
-                  }
-                } else if (!currentTaskCreated) {
-                  // If no currentTaskCreated, take all rejected tasks
-                  rejectedTasks.push({
-                    created: taskCreated,
-                    body: taskBody
-                  });
-                }
-              }
-            }
-
-            // Get the oldest rejected task (first in ascending order)
-            if (rejectedTasks.length > 0) {
-              // Sort by Created ascending to get the oldest
-              rejectedTasks.sort(function (a, b) {
-                return a.created - b.created;
-              });
-              lastRejectionNote = rejectedTasks[0].body || "";
-            }
-
-            showPopupWithRejectionNote();
-          },
-          function (sender, args) {
-            // If query fails, show popup without rejection note
-            showPopupWithRejectionNote();
-          }
-        );
-      } else {
-        showPopupWithRejectionNote();
-      }
-
-      function showPopupWithRejectionNote() {
-        // Show popup with approve/reject buttons - using same format as Workflow.js
-        var isArabic =
-          localStorage.getItem("lng") == null ||
-          localStorage.getItem("lng") == "ar";
-        var notesLabel = isArabic ? "ملاحظات" : "Notes";
-        var approveLabel = isArabic ? "موافق" : "Approve";
-        var rejectLabel = isArabic ? "طلب معلومات اضافية" : "Request Additional Information";
-        var cancelLabel = isArabic ? "إلغاء" : "Cancel";
-        var fillNotesMsg = isArabic
-          ? "يرجى تعبئة الملاحظات"
-          : "Please fill notes";
-        var lastNoteLabel = isArabic ? "آخر ملحوظة مسجلة:" : "Last recorded note:";
-
-        // Escape single quotes in stage IDs for use in onclick
-        var stageIDApproveEscaped = (stageIDApprove || "").replace(/'/g, "\\'");
-        var stageIDRejectEscaped = (stageIDReject || "").replace(/'/g, "\\'");
-
-        // Escape HTML in rejection note
-        var lastRejectionNoteEscaped = (lastRejectionNote || "").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-
-        // Display rejection note section after changeItemsRow if exists
-        if (showLastRejectionNote && lastRejectionNote) {
-          displayRejectionNoteSection(lastRejectionNote, isArabic);
-        }
-
-        // Check if TaskType is "Submit" to hide reject button
-        var showRejectButton = taskType !== "Submit";
-        var rejectButtonHtml = showRejectButton 
-          ? '<button class="commentsub btn btn-action" onclick="handleWorkflowApproval(false, \'' +
-            stageIDApproveEscaped +
-            "', '" +
-            stageIDRejectEscaped +
-            '\')" style="background: #853232; margin-left: 10px;">' +
-            rejectLabel +
-            "</button>"
-          : "";
-
-        if (isArabic) {
-          $("body").append(
-            '<div class="popupComment"><div class="wrapcomments">' +
-            "<label>" +
-            notesLabel +
-            "</label>" +
-            '<textarea id="commenttext" rows="4" cols="50"></textarea>' +
-            "<div class='btn-cont'>" +
-            '<button class="commentsub btn btn-action btn-save" onclick="handleWorkflowApproval(true, \'' +
-            stageIDApproveEscaped +
-            "', '" +
-            stageIDRejectEscaped +
-            "')\">" +
-            approveLabel +
-            "</button>" +
-            rejectButtonHtml +
-            '<button onclick="$(\'.popupComment\').remove();" class="commentsub" style="margin-left: 10px;">' +
-            cancelLabel +
-            "</button>" +
-            "</div>" +
-            '<p class="fillcomment"></p>' +
-            "</div></div>"
-          );
-        } else {
-          $("body").append(
-            '<div class="popupComment"><div class="wrapcomments">' +
-            "<label>" +
-            notesLabel +
-            "</label>" +
-            '<textarea id="commenttext" rows="4" cols="50"></textarea>' +
-            "<div class='btn-cont'>" +
-            '<button class="commentsub btn btn-action btn-save" onclick="handleWorkflowApproval(true, \'' +
-            stageIDApproveEscaped +
-            "', '" +
-            stageIDRejectEscaped +
-            "')\">" +
-            approveLabel +
-            "</button>" +
-            rejectButtonHtml +
-            '<button onclick="$(\'.popupComment\').remove();" class="commentsub" style="margin-left: 10px;">' +
-            cancelLabel +
-            "</button>" +
-            "</div>" +
-            '<p class="fillcomment"></p>' +
-            "</div></div>"
-          );
-        }
-      }
+      $(".popupComment").remove();
+      $("body").append(
+        buildCrWorkflowPopupHtml({
+          notesLabel: isArabic ? "ملاحظات" : "Notes",
+          approveLabel: isArabic ? "موافق" : "Approve",
+          rejectLabel: isArabic
+            ? "طلب معلومات اضافية"
+            : "Request Additional Information",
+          cancelLabel: isArabic ? "إلغاء" : "Cancel",
+          stageIDApproveEscaped: stageIDApproveEscaped,
+          stageIDRejectEscaped: stageIDRejectEscaped,
+          showApproveButton: true,
+          showRejectButton: canShowCrWorkflowRejectButton(stageIds),
+        })
+      );
     },
     function (sender, args) {
       alert("Error loading task information: " + args.get_message());
     }
   );
+}
+
+// Direct reject from CRWorkflowRejectButton (outside popup) — no comment popup
+function executeCrWorkflowDirectReject() {
+  var currentTaskID = taskID || taskId || window.taskID || window.taskid;
+  if (!currentTaskID) {
+    alert(
+      localStorage.getItem("lng") == "en"
+        ? "Task ID not found"
+        : "لم يتم العثور على معرف المهمة"
+    );
+    return;
+  }
+
+  if (!crItemCode) {
+    alert(
+      localStorage.getItem("lng") == "en"
+        ? "Change request code not found"
+        : "لم يتم العثور على رمز طلب التغيير"
+    );
+    return;
+  }
+
+  function updateTaskAndChangeRequest() {
+    var ctx = SP.ClientContext.get_current();
+    var taskList = ctx.get_web().get_lists().getByTitle("Tasks");
+    var taskItem = taskList.getItemById(parseInt(currentTaskID));
+
+    taskItem.set_item("StageIDApprove", "");
+    taskItem.set_item("Status", "Closed");
+    taskItem.set_item("WFInstanceID", null);
+    taskItem.set_item("TakenAction", "reject");
+    taskItem.update();
+    ctx.load(taskItem);
+
+    ctx.executeQueryAsync(
+      function () {
+        var list = ctx.get_web().get_lists().getByTitle("NewChangeRequests");
+        var camlQuery = new SP.CamlQuery();
+        camlQuery.set_viewXml(
+          "<View><Query><Where>" +
+          "<Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+          crItemCode +
+          "</Value></Eq>" +
+          "</Where></Query></View>"
+        );
+
+        var items = list.getItems(camlQuery);
+        ctx.load(items);
+        ctx.executeQueryAsync(
+          function () {
+            var enumerator = items.getEnumerator();
+            if (!enumerator.moveNext()) {
+              alert(
+                localStorage.getItem("lng") == "en"
+                  ? "Item not found"
+                  : "لم يتم العثور على العنصر"
+              );
+              return;
+            }
+
+            var item = enumerator.get_current();
+            item.set_item("WFStage", "rejected");
+            item.update();
+            ctx.load(item);
+            ctx.executeQueryAsync(
+              function () {
+                alert(
+                  localStorage.getItem("lng") == "en"
+                    ? "Rejected successfully"
+                    : "تم الرفض بنجاح"
+                );
+                window.location.href =
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/SitePages/Listing.aspx?ListKey=changerequests";
+              },
+              function () {
+                alert(
+                  localStorage.getItem("lng") == "en"
+                    ? "Error updating change request"
+                    : "خطأ في تحديث طلب التغيير"
+                );
+              }
+            );
+          },
+          function () {
+            alert(
+              localStorage.getItem("lng") == "en"
+                ? "Error loading change request"
+                : "خطأ في تحميل طلب التغيير"
+            );
+          }
+        );
+      },
+      function () {
+        alert(
+          localStorage.getItem("lng") == "en"
+            ? "Error updating task"
+            : "خطأ في تحديث المهمة"
+        );
+      }
+    );
+  }
+
+  if (window.isWF && window.isEdit) {
+    saveAllChangeRequestFields({
+      onSuccess: updateTaskAndChangeRequest,
+      onError: function () {},
+    });
+    return;
+  }
+
+  updateTaskAndChangeRequest();
 }
 
 // Handle workflow approval/rejection - must be in global scope for onclick
@@ -6188,135 +6605,145 @@ window.handleWorkflowApproval = function (
     return;
   }
 
-  // Update Task first - save comment to Body field (same as Workflow.js)
-  var ctx = SP.ClientContext.get_current();
-  var taskList = ctx.get_web().get_lists().getByTitle("Tasks");
-  var taskItem = taskList.getItemById(parseInt(currentTaskID));
+  function executeWorkflowTaskUpdate() {
+    var ctx = SP.ClientContext.get_current();
+    var taskList = ctx.get_web().get_lists().getByTitle("Tasks");
+    var taskItem = taskList.getItemById(parseInt(currentTaskID));
 
-  var stageAction = isApproved ? "approve" : "reject";
-  taskItem.set_item("Status", "Closed");
-  taskItem.set_item("WFInstanceID", null);
-  taskItem.set_item("Body", comment || "");
-  taskItem.set_item("TakenAction", stageAction);
-  taskItem.update();
-  ctx.load(taskItem);
+    var stageAction = isApproved ? "approve" : "reject";
+    taskItem.set_item("Status", "Closed");
+    taskItem.set_item("WFInstanceID", null);
+    taskItem.set_item("Body", comment || "");
+    taskItem.set_item("TakenAction", stageAction);
+    taskItem.update();
+    ctx.load(taskItem);
 
-  ctx.executeQueryAsync(
-    function () {
-      // Update WFStage field in NewChangeRequests list
-      var list = ctx.get_web().get_lists().getByTitle("NewChangeRequests");
-      var camlQuery = new SP.CamlQuery();
-      camlQuery.set_viewXml(
-        "<View><Query><Where>" +
-        "<Eq><FieldRef Name='Title'/><Value Type='Text'>" +
-        crItemCode +
-        "</Value></Eq>" +
-        "</Where></Query></View>"
-      );
+    ctx.executeQueryAsync(
+      function () {
+        var list = ctx.get_web().get_lists().getByTitle("NewChangeRequests");
+        var camlQuery = new SP.CamlQuery();
+        camlQuery.set_viewXml(
+          "<View><Query><Where>" +
+          "<Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+          crItemCode +
+          "</Value></Eq>" +
+          "</Where></Query></View>"
+        );
 
-      var items = list.getItems(camlQuery);
-      ctx.load(items);
-      ctx.executeQueryAsync(
-        function () {
-          var enumerator = items.getEnumerator();
-          if (enumerator.moveNext()) {
-            var item = enumerator.get_current();
-            item.set_item("WFStage", stageToSet);
-            
-            // If approved and stageIDApprove == "approved", save Observations field
-            if (isApproved && stageIDApprove && stageIDApprove.toLowerCase() === "approved") {
-              var observations = $("#Observations").val() || "";
-              item.set_item("Observations", observations);
-            }
-            
-            item.update();
-            ctx.load(item);
-            ctx.executeQueryAsync(
-              function () {
-                $(".popupComment").remove();
+        var items = list.getItems(camlQuery);
+        ctx.load(items);
+        ctx.executeQueryAsync(
+          function () {
+            var enumerator = items.getEnumerator();
+            if (enumerator.moveNext()) {
+              var item = enumerator.get_current();
+              item.set_item("WFStage", stageToSet);
 
-                // If approved and stageIDApprove == "approved", call apply API
-                // last stage 
-                if (
-                  isApproved &&
-                  stageIDApprove &&
-                  stageIDApprove.toLowerCase() === "approved" &&
-                  crItemCode
-                ) {
-                  $.ajax({
-                    url: `${APIURL}/general/applychangerequestchanges/${crItemCode}`,
-                    method: "GET",
-                    headers: { Accept: "application/json" },
-                    success: function (res) {
-                      alert(
-                        localStorage.getItem("lng") == "en"
-                          ? "Submitted successfully"
-                          : "تم الإرسال بنجاح"
-                      );
-                      // Redirect to listing page
-                      var listingUrl =
-                        _spPageContextInfo.webAbsoluteUrl +
-                        "/SitePages/Listing.aspx?ListKey=changerequests";
-                      window.location.href = listingUrl;
-                    },
-                    error: function (xhr) {
-                      alert(
-                        localStorage.getItem("lng") == "en"
-                          ? "Submitted successfully, but error applying changes"
-                          : "تم الإرسال بنجاح، لكن حدث خطأ في تطبيق التغييرات"
-                      );
-                      // Redirect to listing page
-                      var listingUrl =
-                        _spPageContextInfo.webAbsoluteUrl +
-                        "/SitePages/Listing.aspx?ListKey=changerequests";
-                      window.location.href = listingUrl;
-                    },
-                  });
-                } else {
+              if (
+                isApproved &&
+                stageIDApprove &&
+                stageIDApprove.toLowerCase() === "approved"
+              ) {
+                var observations = $("#Observations").val() || "";
+                item.set_item("Observations", observations);
+              }
+
+              item.update();
+              ctx.load(item);
+              ctx.executeQueryAsync(
+                function () {
+                  $(".popupComment").remove();
+
+                  if (
+                    isApproved &&
+                    stageIDApprove &&
+                    stageIDApprove.toLowerCase() === "approved" &&
+                    crItemCode
+                  ) {
+                    $.ajax({
+                      url: `${APIURL}/general/applychangerequestchanges/${crItemCode}`,
+                      method: "GET",
+                      headers: { Accept: "application/json" },
+                      success: function () {
+                        alert(
+                          localStorage.getItem("lng") == "en"
+                            ? "Submitted successfully"
+                            : "تم الإرسال بنجاح"
+                        );
+                        window.location.href =
+                          _spPageContextInfo.webAbsoluteUrl +
+                          "/SitePages/Listing.aspx?ListKey=changerequests";
+                      },
+                      error: function () {
+                        alert(
+                          localStorage.getItem("lng") == "en"
+                            ? "Submitted successfully, but error applying changes"
+                            : "تم الإرسال بنجاح، لكن حدث خطأ في تطبيق التغييرات"
+                        );
+                        window.location.href =
+                          _spPageContextInfo.webAbsoluteUrl +
+                          "/SitePages/Listing.aspx?ListKey=changerequests";
+                      },
+                    });
+                  } else {
+                    alert(
+                      localStorage.getItem("lng") == "en"
+                        ? "Submitted successfully"
+                        : "تم الإرسال بنجاح"
+                    );
+                    window.location.href =
+                      _spPageContextInfo.webAbsoluteUrl +
+                      "/SitePages/Listing.aspx?ListKey=changerequests";
+                  }
+                },
+                function () {
                   alert(
                     localStorage.getItem("lng") == "en"
-                      ? "Submitted successfully"
-                      : "تم الإرسال بنجاح"
+                      ? "Error updating item"
+                      : "خطأ في تحديث العنصر"
                   );
-                  // Redirect to listing page
-                  var listingUrl =
-                    _spPageContextInfo.webAbsoluteUrl +
-                    "/SitePages/Listing.aspx?ListKey=changerequests";
-                  window.location.href = listingUrl;
                 }
-              },
-              function (sender, args) {
-                alert(
-                  localStorage.getItem("lng") == "en"
-                    ? "Error updating item"
-                    : "خطأ في تحديث العنصر"
-                );
-              }
-            );
-          } else {
+              );
+            } else {
+              alert(
+                localStorage.getItem("lng") == "en"
+                  ? "Item not found"
+                  : "لم يتم العثور على العنصر"
+              );
+            }
+          },
+          function () {
             alert(
               localStorage.getItem("lng") == "en"
-                ? "Item not found"
-                : "لم يتم العثور على العنصر"
+                ? "Error loading items"
+                : "خطأ في تحميل العناصر"
             );
           }
-        },
-        function (sender, args) {
-          alert(
-            localStorage.getItem("lng") == "en"
-              ? "Error loading items"
-              : "خطأ في تحميل العناصر"
-          );
-        }
-      );
-    },
-    function (sender, args) {
-      alert(
-        localStorage.getItem("lng") == "en"
-          ? "Error updating task"
-          : "خطأ في تحديث المهمة"
-      );
-    }
-  );
+        );
+      },
+      function () {
+        alert(
+          localStorage.getItem("lng") == "en"
+            ? "Error updating task"
+            : "خطأ في تحديث المهمة"
+        );
+      }
+    );
+  }
+
+  if (window.isWF && window.isEdit) {
+    saveAllChangeRequestFields({
+      onSuccess: executeWorkflowTaskUpdate,
+      onValidationFail: function () {
+        $(".popupComment").remove();
+      },
+      onError: function () {
+        $(".popupComment").remove();
+      },
+    });
+    return;
+  }
+
+  executeWorkflowTaskUpdate();
 };
 

@@ -157,6 +157,108 @@ function getListingTransKey(listkey, internalName, value) {
   return value;
 }
 
+var getChangeRequestsItemNameCache = {};
+
+function getChangeRequestsItemName(parentItemType, parentItemCode, childItemType, childItemCode) {
+  return new Promise(function (resolve) {
+    function isEmpty(value) {
+      return value == null || value === "" || value === No_Data;
+    }
+
+    var listName = "";
+    var itemCode = "";
+
+    if (!isEmpty(childItemType) && !isEmpty(childItemCode)) {
+      listName = String(childItemType).trim();
+      itemCode = String(childItemCode).trim();
+    } else if (!isEmpty(parentItemType) && !isEmpty(parentItemCode)) {
+      listName = String(parentItemType).trim();
+      itemCode = String(parentItemCode).trim();
+    } else {
+      resolve(No_Data);
+      return;
+    }
+
+    var cacheKey = listName + "|" + itemCode;
+    if (getChangeRequestsItemNameCache[cacheKey] !== undefined) {
+      resolve(getChangeRequestsItemNameCache[cacheKey]);
+      return;
+    }
+
+    var lang = localStorage.getItem("lng");
+    var safeListName = listName.replace(/'/g, "''");
+    var safeItemCode = itemCode.replace(/'/g, "''");
+    var queryUrl =
+      _spPageContextInfo.webAbsoluteUrl +
+      "/_api/web/lists/getbytitle('" +
+      safeListName +
+      "')/items?$top=1&$filter=" +
+      encodeURIComponent("Title eq '" + safeItemCode + "' and DeletionStatus ne 'Deleted'");
+
+    $.ajax({
+      url: queryUrl,
+      method: "GET",
+      headers: { Accept: "application/json; odata=verbose" },
+      success: function (data) {
+        var results = (data.d && data.d.results) || [];
+        var itemName = No_Data;
+
+        if (results.length) {
+          var item = results[0];
+          if (
+            listName === "MainKpi" ||
+            listName === "Projects" ||
+            listName === "Initiatives" ||
+            listName === "SOs"
+          ) {
+            itemName = item.Name || No_Data;
+          } else if (lang == null || lang === "ar") {
+            itemName = item.Name || item.NameEn || No_Data;
+          } else {
+            itemName = item.NameEn || item.Name || No_Data;
+          }
+        }
+
+        getChangeRequestsItemNameCache[cacheKey] = itemName;
+        resolve(itemName);
+      },
+      error: function (xhr, status, err) {
+        console.log("getChangeRequestsItemName error:", listName, itemCode, status, err);
+        getChangeRequestsItemNameCache[cacheKey] = No_Data;
+        resolve(No_Data);
+      },
+    });
+  });
+}
+
+function isChangeRequestsComputedListingField(fieldInternalName) {
+  return fieldInternalName === "ChangeItemName";
+}
+
+function applyChangeRequestsItemNames(records) {
+  return new Promise(function (resolve) {
+    if (!records || !records.length) {
+      resolve();
+      return;
+    }
+
+    Promise.all(
+      records.map(function (record) {
+        return getChangeRequestsItemName(
+          record.ParentItemType,
+          record.ParentItemCode,
+          record.ChildItemType,
+          record.ChildItemCode
+        ).then(function (itemName) {
+          record.ChangeItemName = itemName;
+        });
+      })
+    ).then(function () {
+      resolve();
+    });
+  });
+}
+
 //function to get data from sharepoint list (JSOM)
 window.sphttp = {
   get: function (listUrl, listDisplayName, camelQuery, internalFieldNames, isGetDdl, onEach, onError) {
@@ -183,12 +285,13 @@ window.sphttp = {
 	}
 
 	var fieldsToGet = '<ViewFields>'; // get all data on filter in listing page
-	internalFieldNames.forEach(function (o, i, a) {
-	  fieldsToGet += '<FieldRef Name="' + o + '" />';
-	  if (i == internalFieldNames.length - 1) {
-		fieldsToGet += '<FieldRef Name="DeletionStatus" /></ViewFields>';
+	internalFieldNames.forEach(function (o) {
+	  if (o === "ChangeItemName") {
+		return;
 	  }
+	  fieldsToGet += '<FieldRef Name="' + o + '" />';
 	});
+	fieldsToGet += '<FieldRef Name="DeletionStatus" /></ViewFields>';
 
 	camelQuery = camelQuery.replace('</Query>', '</Query>' + fieldsToGet);
 
@@ -219,6 +322,10 @@ window.sphttp = {
 				if (internalFieldNames && internalFieldNames.length > 0) {
 				  for (var i = 0; i < internalFieldNames.length; i++) {
 					if (internalFieldNames[i] = Listing_Info[i].InternalName) {
+					  if (isChangeRequestsComputedListingField(internalFieldNames[i])) {
+						record[internalFieldNames[i]] = No_Data;
+						continue;
+					  }
 					  if (Listing_Info[i].type == "date") {
 						
 						// var timezone = String(oListItem.get_item(internalFieldNames[i])) || null;
@@ -290,6 +397,10 @@ window.sphttp = {
 			  if (internalFieldNames && internalFieldNames.length > 0) {
 				for (var i = 0; i < internalFieldNames.length; i++) {
 				  if (internalFieldNames[i] = Listing_Info[i].InternalName) {
+					if (isChangeRequestsComputedListingField(internalFieldNames[i])) {
+					  record[internalFieldNames[i]] = No_Data;
+					  continue;
+					}
 					if (Listing_Info[i].type == "date") {
 					  // var timezone = String(oListItem.get_item(internalFieldNames[i])) || null;
 					  // timezone = timezone ? timezone.split(':')[0].split(' ') : null;
@@ -574,7 +685,9 @@ window.ListingData = {
 	  //call function by get JSON confugration files from style Library
 	  $.getScript(_spPageContextInfo.webAbsoluteUrl + "/Style%20Library/spm/JSON/" + listkey + "/" + JSON_File_Name).done(function (script, textStatus) {
 
-		window.IN = Listing_Info.map(a => a.InternalName);
+		window.IN = Listing_Info.map(function (field) {
+		  return field.InternalName;
+		});
 
 		SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
 		  if (isTasks) {
@@ -776,6 +889,10 @@ window.ListingData = {
 
 
 		  if (isDone) {
+
+			if (listkey === "changerequests") {
+			  await applyChangeRequestsItemNames(records);
+			}
 
 			// console.log(records, "records afteeeeeeeeer")
 
@@ -2190,7 +2307,14 @@ window.ListingData = {
 	  // for projects/initiatives Excel data is loaded on demand (not on page load)
 	  if ((listkey === 'projects' || listkey === 'initiatives') && ExcelRecordsWithID.length === 0) {
 		var viewF = '<ViewFields>';
-		if (window.IN && window.IN.length) { IN.forEach(function (o) { viewF += '<FieldRef Name="' + o + '" />'; }); }
+		if (window.IN && window.IN.length) {
+		  IN.forEach(function (fieldName) {
+			if (fieldName === "ChangeItemName") {
+			  return;
+			}
+			viewF += '<FieldRef Name="' + fieldName + '" />';
+		  });
+		}
 		viewF += '<FieldRef Name="DeletionStatus" /></ViewFields>';
 		var exportQuery = (PQuery || excelListingQuery).replace('</Query></View>', '</Query>' + viewF + '</View>');
 		Get_ExcelValues.init(excelListingName, exportQuery, function () { ListingData.g.ExportToExcel(); });
@@ -3479,6 +3603,10 @@ var Get_ExcelValues = {
 	  if (excelInternalFieldsNames && excelInternalFieldsNames.length > 0) {
 		for (var i = 0; i < excelInternalFieldsNames.length; i++) {
 		  if (excelInternalFieldsNames[i] = Listing_Info[i].InternalName) {
+			if (isChangeRequestsComputedListingField(excelInternalFieldsNames[i])) {
+			  record[excelInternalFieldsNames[i]] = No_Data;
+			  continue;
+			}
 			if (Listing_Info[i].type == "date") {
 			  // var timezone = String(oListItem.get_item(excelInternalFieldsNames[i])) || null;
 			  // timezone = timezone ? timezone.split(':')[0].split(' ') : null;
@@ -3615,6 +3743,20 @@ var Get_ExcelValues = {
 
 		// onEach(records, record, oListItem, false); //false if having item
 	  }
+	}
+
+	if (listkey === "changerequests" && ExcelRecordsWithID.length) {
+	  var excelRecords = ExcelRecordsWithID.map(function (excelRow) {
+		return excelRow.record;
+	  });
+	  applyChangeRequestsItemNames(excelRecords).then(function () {
+		if (Get_ExcelValues.g._onDone) {
+		  var fn = Get_ExcelValues.g._onDone;
+		  Get_ExcelValues.g._onDone = null;
+		  fn();
+		}
+	  });
+	  return;
 	}
 
 	if (Get_ExcelValues.g._onDone) {

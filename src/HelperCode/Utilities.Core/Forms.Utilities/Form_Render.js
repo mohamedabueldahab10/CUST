@@ -8717,7 +8717,8 @@ debugger;
         break;
 
       case "lookup":
-        if (element.state === "disabled" || element.dontSubmit) {
+        // dontSubmit lookups stay as read-only text; disabled-only (e.g. WFStage) use select below
+        if (element.dontSubmit) {
           if (element.BIlanguage == true) {
             if (
               localStorage.getItem("lng") == null ||
@@ -11312,11 +11313,93 @@ debugger;
       });
     },
 
-    toggleFields: function ($this) {
+    setSelectFieldValue: function ($field, value) {
+      if (!$field || !$field.length || value == null || value === "") {
+        return "";
+      }
+      var normalizedValue = String(value);
+      $field.attr("value", normalizedValue);
+      var $matchedOption = $field.find(
+        'option[value="' + normalizedValue.replace(/"/g, '\\"') + '"]'
+      );
+      if (!$matchedOption.length) {
+        $field.find("option").each(function () {
+          var optionVal = $(this).attr("value");
+          if (
+            optionVal != null &&
+            String(optionVal).toLowerCase() === normalizedValue.toLowerCase()
+          ) {
+            $matchedOption = $(this);
+            normalizedValue = String(optionVal);
+            return false;
+          }
+        });
+      }
+      $field.find("option").prop("selected", false);
+      if ($matchedOption.length) {
+        $matchedOption.prop("selected", true);
+      } else if ($field.is("select")) {
+        $field.append(
+          $("<option>", {
+            value: normalizedValue,
+            text: normalizedValue,
+            selected: true,
+          })
+        );
+      }
+      $field.val(normalizedValue);
+      return normalizedValue;
+    },
+
+    getEffectiveFieldValue: function ($field) {
+      if (!$field || !$field.length) {
+        return "";
+      }
       if (isView) {
-        var myValue = $this.data("viewtogglevalue");
-      } else {
-        var myValue = $this.val();
+        return (
+          $field.data("viewtogglevalue") ||
+          $field.text().trim() ||
+          ""
+        );
+      }
+      var val = $field.val();
+      if (val != null && val !== "") {
+        return val;
+      }
+      var attrVal = $field.attr("value");
+      if (attrVal != null && attrVal !== "") {
+        return attrVal;
+      }
+      var lookupVal = $field.attr("data-lookup-value");
+      if (lookupVal != null && lookupVal !== "") {
+        return lookupVal;
+      }
+      var fieldId = $field.attr("id");
+      if (
+        fieldId === "KPIType" &&
+        typeof kpiTypeValue !== "undefined" &&
+        kpiTypeValue
+      ) {
+        return kpiTypeValue;
+      }
+      if (
+        fieldId === "RelatedStrategyObjective" &&
+        typeof relatedMainGoal !== "undefined" &&
+        relatedMainGoal
+      ) {
+        return relatedMainGoal;
+      }
+      var selectedVal = $field.find("option:selected").val();
+      if (selectedVal != null && selectedVal !== "") {
+        return selectedVal;
+      }
+      return "";
+    },
+
+    toggleFields: function ($this) {
+      var myValue = ListInfo.g.getEffectiveFieldValue($this);
+      if (!isView && myValue && $this.is("select") && !$this.val()) {
+        ListInfo.g.setSelectFieldValue($this, myValue);
       }
 
       // $("#IsStrategicProject").on('change', function (){
@@ -15690,8 +15773,39 @@ window.dynamicAffectSelect = {
       $(`select#${affectedSelectsInfo.affectedFieldName}`).val(selectedVal);
     }
 
+    if (
+      listkey == "mainkpi" &&
+      Get_Related_Sos_Sector.g &&
+      Get_Related_Sos_Sector.g.fromObjective &&
+      affectedSelectsInfo
+    ) {
+      var objectiveFieldName = affectedSelectsInfo.affectedFieldName;
+      if (objectiveFieldName === "SubSector") {
+        Get_Related_Sos_Sector.applyObjectiveField(
+          "SubSector",
+          Get_Related_Sos_Sector.g.pendingSubSector
+        );
+      } else if (objectiveFieldName === "ExternalEntities") {
+        Get_Related_Sos_Sector.applyObjectiveField(
+          "ExternalEntities",
+          Get_Related_Sos_Sector.g.pendingExternalEntities
+        );
+      }
+    }
+
     // to can filter if there is more one item in array like cr
     dynamicAffectSelect.g.affectedSelectsInfo.shift();
+
+    if (
+      listkey == "mainkpi" &&
+      Get_Related_Sos_Sector.g &&
+      Get_Related_Sos_Sector.g.fromObjective &&
+      !dynamicAffectSelect.g.affectedSelectsInfo.length
+    ) {
+      Get_Related_Sos_Sector.g.fromObjective = false;
+      Get_Related_Sos_Sector.g.pendingSubSector = null;
+      Get_Related_Sos_Sector.g.pendingExternalEntities = null;
+    }
 
     if (dynamicAffectSelect.g.affectedSelectsInfo.length) {
       // setTimeout(() => {
@@ -18350,19 +18464,80 @@ $(document).ready(function () {
     (function () {
       if (!(isEdit || isNew)) return;
 
-      var fieldsToCheck = [];
+      var managerUniquenessConfig = null;
       if (listkey === "projects") {
-        fieldsToCheck = [
-          "ProjectOwner",
-          "ProjectManager",
-          "ProjectSponsor",
-          "MawaredProjectManager",
-        ];
+        managerUniquenessConfig = {
+          uniqueField: "ProjectManager",
+          relatedFields: [
+            "ProjectOwner",
+            "ProjectSponsor",
+            "MawaredProjectManager",
+          ],
+        };
       } else if (listkey === "initiatives") {
-        fieldsToCheck = ["InitiativeOwner", "InitiativePM"];
+        managerUniquenessConfig = {
+          uniqueField: "InitiativePM",
+          relatedFields: ["InitiativeOwner"],
+        };
       } else {
-        console.log("Unknown list type, no fields set for duplicate checking.");
         return;
+      }
+
+      var uniqueField = managerUniquenessConfig.uniqueField;
+      var relatedFields = managerUniquenessConfig.relatedFields;
+      var watchedFields = [uniqueField].concat(relatedFields);
+      var uniqueFieldLabel =
+        listkey === "initiatives" ? "مدير المبادرة" : "مدير المشروع";
+      var PLACEHOLDER_EMAIL = "أدخل اسم أو بريد الكتروني...";
+
+      function parseHiddenUsers(fieldId) {
+        var hidVal = $("#" + fieldId + "_TopSpan_HiddenInput").val();
+        if (!hidVal) return [];
+        try {
+          var parsed = JSON.parse(hidVal.replace(/&quot;/g, '"'));
+          if (!Array.isArray(parsed)) return [];
+          return parsed
+            .map(function (u) {
+              var entityEmail =
+                u.EntityData && u.EntityData.Email ? u.EntityData.Email : "";
+              var key = (u.Key || entityEmail || u.DisplayText || "")
+                .toString()
+                .trim()
+                .toLowerCase();
+              var displayName = (u.DisplayText || u.Key || "").toString().trim();
+              return key ? { key: key, displayName: displayName } : null;
+            })
+            .filter(Boolean);
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function getFieldUsers(fieldId) {
+        var fromHidden = parseHiddenUsers(fieldId);
+        if (fromHidden.length) return fromHidden;
+
+        if (!isNew) return [];
+
+        var resolvedEl = $(
+          "#" + fieldId + "_TopSpan_ResolvedList .ms-entity-resolved"
+        ).first();
+        if (resolvedEl.length) {
+          var displayName = $.trim(resolvedEl.text());
+          if (displayName) {
+            return [{ key: displayName.toLowerCase(), displayName: displayName }];
+          }
+        }
+        var dataEmail = $("#" + fieldId).attr("data-email");
+        if (
+          dataEmail &&
+          dataEmail.trim() !== "" &&
+          dataEmail.trim() !== PLACEHOLDER_EMAIL
+        ) {
+          var email = $.trim(dataEmail);
+          return [{ key: email.toLowerCase(), displayName: email }];
+        }
+        return [];
       }
 
       function clearField(fieldId) {
@@ -18378,124 +18553,99 @@ $(document).ready(function () {
         }
       }
 
-      function getResolvedName(fieldId) {
-        var el = $(
-          "#" + fieldId + "_TopSpan_ResolvedList .ms-entity-resolved"
-        ).first();
-        if (el.length) return $.trim(el.text());
-        var parentDiv = $("#" + fieldId);
-        var dataEmail = parentDiv.attr("data-email");
-        if (
-          dataEmail &&
-          dataEmail.trim() !== "" &&
-          dataEmail.trim() !== "أدخل اسم أو بريد الكتروني..."
-        )
-          return $.trim(dataEmail);
-        var hid = $("#" + fieldId + "_TopSpan_HiddenInput").val();
-        if (hid && hid.indexOf("DisplayText") !== -1) {
-          try {
-            var parsed = JSON.parse(hid.replace(/&quot;/g, '"'));
-            if (Array.isArray(parsed) && parsed[0] && parsed[0].DisplayText)
-              return parsed[0].DisplayText;
-          } catch (e) {}
-        }
-        return "";
-      }
+      function checkManagerUniqueness() {
+        var managerUsers = getFieldUsers(uniqueField);
+        if (!managerUsers.length) return false;
 
-      function getNamesFromHidden(fieldId) {
-        var hidVal = $("#" + fieldId + "_TopSpan_HiddenInput").val();
-        if (!hidVal) return [];
-        try {
-          var parsed = JSON.parse(hidVal.replace(/&quot;/g, '"'));
-          return parsed
-            .map((u) => (u.DisplayText ? u.DisplayText.trim() : ""))
-            .filter(Boolean);
-        } catch (e) {
-          return [];
-        }
-      }
+        var managerKeys = {};
+        managerUsers.forEach(function (u) {
+          managerKeys[u.key] = u.displayName;
+        });
 
-      function checkDuplicates(changedField) {
-        var map = {},
-          duplicateFound = null;
-        fieldsToCheck.forEach((fid) => {
-          var names = isNew ? [getResolvedName(fid)] : getNamesFromHidden(fid);
-          names.forEach((name) => {
-            if (name) {
-              if (map[name])
-                duplicateFound = { name, first: map[name], second: fid };
-              else map[name] = fid;
+        var conflictName = null;
+        relatedFields.some(function (fieldId) {
+          return getFieldUsers(fieldId).some(function (user) {
+            if (managerKeys[user.key]) {
+              conflictName = managerKeys[user.key];
+              return true;
             }
+            return false;
           });
         });
-        if (duplicateFound) {
-          var toClear = changedField || duplicateFound.second;
-          clearField(toClear);
-          alert(
-            "تم تفريغ هذا الحقل لأن المستخدم '" +
-              duplicateFound.name +
-              "' مكرر في أكثر من حقل."
-          );
-          return true;
-        }
-        return false;
-      }
 
-      function attachHandlers(fid, picker) {
-        if (picker._duplicateCheckerAttached) return;
-        picker.OnUserResolvedClientScript = () =>
-          setTimeout(() => checkDuplicates(fid), 200);
-        $(document).on(
-          "click",
-          "#" + fid + "_TopSpan_ResolvedList .sp-peoplepicker-delImage",
-          () => setTimeout(() => checkDuplicates(fid), 200)
+        if (!conflictName) return false;
+
+        clearField(uniqueField);
+        alert(
+          "تم تفريغ حقل " +
+            uniqueFieldLabel +
+            " لأن المستخدم '" +
+            conflictName +
+            "' موجود في أحد الحقول الأخرى."
         );
-        if (isEdit) {
-          $("#" + fid + "_TopSpan_EditorInput").on("input blur", () =>
-            setTimeout(() => checkDuplicates(fid), 200)
-          );
-        }
-        picker._duplicateCheckerAttached = true;
+        return true;
       }
 
-      if (isNew) {
+      function scheduleCheck() {
+        setTimeout(checkManagerUniqueness, 200);
+      }
+
+      function attachHandlers(fieldId, picker) {
+        if (picker._managerUniquenessAttached) return;
+
+        var previousOnResolved = picker.OnUserResolvedClientScript;
+        picker.OnUserResolvedClientScript = function () {
+          if (typeof previousOnResolved === "function") {
+            previousOnResolved.apply(this, arguments);
+          }
+          scheduleCheck();
+        };
+
+        $(document).on(
+          "click.managerUniqueness",
+          "#" + fieldId + "_TopSpan_ResolvedList .sp-peoplepicker-delImage",
+          scheduleCheck
+        );
+
+        if (isEdit) {
+          $("#" + fieldId + "_TopSpan_EditorInput").on(
+            "input.managerUniqueness blur.managerUniqueness",
+            scheduleCheck
+          );
+          $("#" + fieldId + "_TopSpan_HiddenInput").on(
+            "input.managerUniqueness change.managerUniqueness",
+            scheduleCheck
+          );
+        }
+
+        picker._managerUniquenessAttached = true;
+      }
+
+      function waitForPickers(onReady) {
         var retryCount = 0;
-        var retryInterval = setInterval(function () {
-          var allReady = true;
-          fieldsToCheck.forEach((fid) => {
-            var picker =
-              SPClientPeoplePicker.SPClientPeoplePickerDict[fid + "_TopSpan"];
-            if (picker) attachHandlers(fid, picker);
-            else allReady = false;
+        var maxRetries = isEdit ? 100 : 50;
+        var timer = setInterval(function () {
+          var allReady = watchedFields.every(function (fieldId) {
+            return !!SPClientPeoplePicker.SPClientPeoplePickerDict[
+              fieldId + "_TopSpan"
+            ];
           });
           retryCount++;
-          if (allReady || retryCount > 50) {
-            clearInterval(retryInterval);
-            console.log(
-              "Duplicate checker ready for:",
-              fieldsToCheck.join(", ")
-            );
+          if (allReady || retryCount > maxRetries) {
+            clearInterval(timer);
+            if (allReady) onReady();
           }
         }, 300);
-      } else if (isEdit) {
-        fieldsToCheck.forEach((fid) => {
-          var waitCount = 0;
-          var timer = setInterval(() => {
-            var picker =
-              SPClientPeoplePicker.SPClientPeoplePickerDict[fid + "_TopSpan"];
-            var hiddenInput = $("#" + fid + "_TopSpan_HiddenInput");
-            if (picker && hiddenInput.length) {
-              clearInterval(timer);
-              attachHandlers(fid, picker);
-              $(hiddenInput).on("input change", () => checkDuplicates(fid));
-            } else if (waitCount++ > 100) clearInterval(timer);
-          }, 300);
-        });
-        console.log(
-          "Duplicate checker initialized for edit mode:",
-          fieldsToCheck.join(", ")
-        );
       }
+
+      waitForPickers(function () {
+        watchedFields.forEach(function (fieldId) {
+          var picker =
+            SPClientPeoplePicker.SPClientPeoplePickerDict[fieldId + "_TopSpan"];
+          if (picker) attachHandlers(fieldId, picker);
+        });
+        checkManagerUniqueness();
+      });
     })();
   }, 3000);
 });
