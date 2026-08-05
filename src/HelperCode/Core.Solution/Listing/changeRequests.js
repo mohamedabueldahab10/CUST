@@ -849,6 +849,13 @@ var checkchangerequestshtml = setInterval(function () {
           </select>
         </div>
 
+        <div class="col-md-6 mb-3" id="SecurityExecGroupNameDiv" style="display: none;">
+          <label id="SecurityExecGroupNameLabel"></label>
+          <select id="SecurityExecGroupName" class="form-control">
+            <option value=""></option>
+          </select>
+        </div>
+
         <div class="col-md-12 mb-3">
           <label data-trans-changedescription class="Resources"></label>
           <textarea id="ChangeDescription" class="form-control" rows="3" required></textarea>
@@ -1840,6 +1847,7 @@ function toggleEditModeFields() {
 
   if (window.isWF) {
     checkAndShowObservationsSection();
+    checkAndShowSecurityExecGroupDropdown();
   }
 
   // Enable attachments in edit mode
@@ -3363,6 +3371,15 @@ function saveAllChangeRequestFields(saveOptions) {
   if (childItemCodeRequired) validationErrors.push("ChildItemCode");
   if (!$("#ChangeItem").val() || $("#ChangeItem").val().trim() === "") validationErrors.push("ChangeItem");
   if (!isNewAddAction && (!$("#ApprovalLevel").val() || $("#ApprovalLevel").val().trim() === "")) validationErrors.push("ApprovalLevel");
+  if (
+    window.isWF &&
+    window.isEdit &&
+    $("#SecurityExecGroupNameDiv").is(":visible") &&
+    (!$("#SecurityExecGroupName").val() ||
+      $("#SecurityExecGroupName").val().trim() === "")
+  ) {
+    validationErrors.push("SecurityExecGroupName");
+  }
   if (!$("#ChangeDescription").val() || $("#ChangeDescription").val().trim() === "") validationErrors.push("ChangeDescription");
   if (!$("#ChangeJustification").val() || $("#ChangeJustification").val().trim() === "") validationErrors.push("ChangeJustification");
   if (!$("#ExpectedPositiveImpact").val() || $("#ExpectedPositiveImpact").val().trim() === "") validationErrors.push("ExpectedPositiveImpact");
@@ -3585,6 +3602,17 @@ function saveAllChangeRequestFields(saveOptions) {
 
         oListItem.set_item("ApprovalPath", currentApprovalPath || "");
         oListItem.set_item("SecurityGroupName", currentSecurityGroupName || "");
+
+        if (
+          window.isWF &&
+          window.isEdit &&
+          $("#SecurityExecGroupNameDiv").is(":visible")
+        ) {
+          oListItem.set_item(
+            "SecurityExecGroupName",
+            $("#SecurityExecGroupName").val() || ""
+          );
+        }
 
         // NOTE: People Picker fields (like InitiativeOwner) are dynamic fields
         // They should NOT be saved directly to NewChangeRequests list
@@ -4531,6 +4559,8 @@ function fillViewFields(item, code) {
   const observations = item.get_item("Observations");
   currentApprovalPath = item.get_item("ApprovalPath") || "";
   currentSecurityGroupName = item.get_item("SecurityGroupName") || "";
+  window.pendingSecurityExecGroupName =
+    item.get_item("SecurityExecGroupName") || "";
 
   // Set simple field values immediately (textareas and simple selects)
   [
@@ -6403,6 +6433,79 @@ function checkAndShowObservationsSection() {
     function (sender, args) {
       // Error loading task, hide Observations section
       $("#CRObservationsBlock").hide();
+    }
+  );
+}
+
+// StrategicCR03 only: FinalApprovalLevels dropdown after ApprovalLevel
+function loadFinalApprovalLevelsOptions(selectedValue) {
+  var isArabic =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+  $("#SecurityExecGroupNameLabel").text(
+    isArabic ? "مجموعة الاعتماد" : "Approval Group"
+  );
+
+  $.ajax({
+    url:
+      _spPageContextInfo.webAbsoluteUrl +
+      "/_api/web/lists/getbytitle('FinalApprovalLevels')/items?$select=SecurityGroupName,SecurityGroupNameAr&$top=5000&$filter=DeletionStatus ne 'Deleted'",
+    method: "GET",
+    headers: { Accept: "application/json; odata=verbose" },
+    success: function (data) {
+      var $select = $("#SecurityExecGroupName");
+      $select.empty().append('<option value=""></option>');
+      (data.d.results || []).forEach(function (item) {
+        var enVal = item.SecurityGroupName || "";
+        if (!enVal) return;
+        var text = isArabic
+          ? item.SecurityGroupNameAr || enVal
+          : enVal;
+        $select.append($("<option></option>").val(enVal).text(text));
+      });
+      if (selectedValue) {
+        setSelectValue("#SecurityExecGroupName", selectedValue);
+      }
+    },
+    error: function () {
+      $("#SecurityExecGroupName").empty().append('<option value=""></option>');
+    },
+  });
+}
+
+function checkAndShowSecurityExecGroupDropdown() {
+  if (!(window.isWF && window.isEdit)) {
+    $("#SecurityExecGroupNameDiv").hide();
+    return;
+  }
+
+  var currentTaskID = taskID || taskId || window.taskID || window.taskid;
+  if (!currentTaskID) {
+    $("#SecurityExecGroupNameDiv").hide();
+    return;
+  }
+
+  var ctx = SP.ClientContext.get_current();
+  var taskList = ctx.get_web().get_lists().getByTitle("Tasks");
+  var taskItem = taskList.getItemById(parseInt(currentTaskID));
+
+  ctx.load(taskItem);
+  ctx.executeQueryAsync(
+    function () {
+      var taskTitle = taskItem.get_item("Title") || "";
+      if (taskTitle === "StrategicCR03") {
+        $("#SecurityExecGroupNameDiv").show();
+        $("#SecurityExecGroupName").prop("disabled", false);
+        $("#SecurityExecGroupName")
+          .closest(".col-md-6")
+          .find("label")
+          .addClass("required-field");
+        loadFinalApprovalLevelsOptions(window.pendingSecurityExecGroupName || "");
+      } else {
+        $("#SecurityExecGroupNameDiv").hide();
+      }
+    },
+    function () {
+      $("#SecurityExecGroupNameDiv").hide();
     }
   );
 }

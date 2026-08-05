@@ -312,10 +312,9 @@ var Information_Form = [
         descPhraseEn: "max length of letters equal 5000",
         maxchar: '5000',                
         validation: 'required',
-        // hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
-        // security: {
-        //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
-        // },
+        security: {
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
     ],
   },

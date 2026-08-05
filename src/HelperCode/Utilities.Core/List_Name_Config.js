@@ -564,9 +564,9 @@ var ListArray = [
 		projectrelated: true,
 	},
 	{
-		benefitsequations: "BenefitsEquations",
-		ListingTitle: "معادلات مقياس المنفعة",
-		FormTitle: "معادلات مقياس المنفعة",
+		benefitsequations: "KPIEquations",
+		ListingTitle: "معادلات المنفعة",
+		FormTitle: "معادلات المنفعة",
 		TitleEn: "Benefits Equations",
 		projnav: "Project Navigation",
 		projectrelated: true,

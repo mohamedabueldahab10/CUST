@@ -274,6 +274,7 @@ var Information_Form = [
           choices: [
             { display: 'main', value: 'main' },
             { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel2a', value: 'sublevel2a' },
             { display: 'sublevel3', value: 'sublevel3' },
             // {
             //   display: 'objl1',
@@ -537,6 +538,7 @@ var Information_Form = [
           choices: [
             { display: 'main', value: 'main' },
             { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel2a', value: 'sublevel2a' },
             { display: 'sublevel3', value: 'sublevel3' },
           ],
         },
@@ -556,6 +558,11 @@ var Information_Form = [
         filterFieldType: 'Text',
         descPhraseAr: 'تظهر الأهداف بناءً على الاستراتيجية المتطلعة ومستوى الهدف المتطلع',
         descPhraseEn: 'Objectives appear based on Related Strategy Read Only and Related Objective Level',
+        additionalFilterField: 'SubSector',
+        additionalFilterFieldType: 'Text',
+        additionalFilterFromField: 'SubSector',
+        additionalFilterRequireWhenTypes: ['lms', 'sod', 'strategically'],
+        additionalFilterTypesFormField: 'Types',
         accessFilter: [
           {
             role: 'VROE',
@@ -1489,7 +1496,8 @@ var Information_Form = [
         type: 'multiline',
         maxchar: '5000',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
-        descPhraseEn: "max length of letters equal 5000",  
+        descPhraseEn: "max length of letters equal 5000",
+        validation: 'required',
       },
       {
         InternalName: 'getfile',

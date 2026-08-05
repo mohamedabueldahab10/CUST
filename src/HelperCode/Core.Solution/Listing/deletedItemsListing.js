@@ -2025,6 +2025,35 @@ function deletedItemsNormalizeAttachmentFileUrl(fileRefOrUrl) {
   return normalizedUrl;
 }
 
+function deletedItemsNormalizeRelatedAttachmentValue(value) {
+  if (value == null || value === "" || value === "null" || value === "undefined") {
+    return "";
+  }
+  return value;
+}
+
+function deletedItemsAttachmentMatchesKpiItemId(fileItemId, kpiItemId) {
+  // Same comparison used by Form_Request ViewAllFiles_Main_Strategy: FileID == IID
+  return fileItemId == kpiItemId;
+}
+
+function deletedItemsKeepAttachmentsMatchingKpiItemId(attachmentFiles, kpiItemId) {
+  if (!attachmentFiles || !attachmentFiles.length || kpiItemId == null || kpiItemId === "") {
+    return [];
+  }
+  var matchedFiles = [];
+  for (var fileIndex = 0; fileIndex < attachmentFiles.length; fileIndex++) {
+    var oneFile = attachmentFiles[fileIndex];
+    if (
+      oneFile &&
+      deletedItemsAttachmentMatchesKpiItemId(oneFile.fileItemId, kpiItemId)
+    ) {
+      matchedFiles.push(oneFile);
+    }
+  }
+  return matchedFiles;
+}
+
 function deletedItemsMapRestItemToAttachmentFile(restItem, isMainKpi) {
   if (!restItem) {
     return null;
@@ -2047,15 +2076,30 @@ function deletedItemsMapRestItemToAttachmentFile(restItem, isMainKpi) {
     id: restItem.Id || restItem.ID,
     title: displayTitle,
     rawTitle: titleValue,
-    fileItemId: restItem.ItemID,
+    fileItemId:
+      restItem.ItemID != null
+        ? restItem.ItemID
+        : restItem.ItemId != null
+          ? restItem.ItemId
+          : "",
     filePurpose: restItem.docPurpose || "",
   };
   if (isMainKpi) {
-    mappedFile.RelatedYear = restItem.RelatedYear || "";
-    mappedFile.RelatedMonth = restItem.RelatedMonth || "";
-    mappedFile.RelatedQuarter = restItem.RelatedQuarter || "";
-    mappedFile.RelatedMid = restItem.RelatedMid || "";
-    mappedFile.RelatedActualY = restItem.RelatedActualY || "";
+    mappedFile.RelatedYear = deletedItemsNormalizeRelatedAttachmentValue(
+      restItem.RelatedYear,
+    );
+    mappedFile.RelatedMonth = deletedItemsNormalizeRelatedAttachmentValue(
+      restItem.RelatedMonth,
+    );
+    mappedFile.RelatedQuarter = deletedItemsNormalizeRelatedAttachmentValue(
+      restItem.RelatedQuarter,
+    );
+    mappedFile.RelatedMid = deletedItemsNormalizeRelatedAttachmentValue(
+      restItem.RelatedMid,
+    );
+    mappedFile.RelatedActualY = deletedItemsNormalizeRelatedAttachmentValue(
+      restItem.RelatedActualY,
+    );
   }
   return mappedFile;
 }
@@ -2450,7 +2494,7 @@ function deletedItemsLoadAttachmentsWithJsom(
             var currentItemId = currentFile.get_item("ItemID");
             if (
               fileObject &&
-              String(currentItemId) === String(itemId)
+              deletedItemsAttachmentMatchesKpiItemId(currentItemId, itemId)
             ) {
               var titleValue = currentFile.get_item("Title") || "";
               var displayTitle =
@@ -2461,16 +2505,28 @@ function deletedItemsLoadAttachmentsWithJsom(
                 url: fileObject.get_serverRelativeUrl(),
                 id: currentFile.get_id(),
                 title: displayTitle,
+                rawTitle: titleValue,
+                fileItemId: currentItemId,
                 filePurpose: currentFile.get_item("docPurpose") || "",
               };
               if (isMainKpi) {
-                mappedFile.RelatedYear = currentFile.get_item("RelatedYear") || "";
-                mappedFile.RelatedMonth = currentFile.get_item("RelatedMonth") || "";
+                mappedFile.RelatedYear = deletedItemsNormalizeRelatedAttachmentValue(
+                  currentFile.get_item("RelatedYear"),
+                );
+                mappedFile.RelatedMonth = deletedItemsNormalizeRelatedAttachmentValue(
+                  currentFile.get_item("RelatedMonth"),
+                );
                 mappedFile.RelatedQuarter =
-                  currentFile.get_item("RelatedQuarter") || "";
-                mappedFile.RelatedMid = currentFile.get_item("RelatedMid") || "";
+                  deletedItemsNormalizeRelatedAttachmentValue(
+                    currentFile.get_item("RelatedQuarter"),
+                  );
+                mappedFile.RelatedMid = deletedItemsNormalizeRelatedAttachmentValue(
+                  currentFile.get_item("RelatedMid"),
+                );
                 mappedFile.RelatedActualY =
-                  currentFile.get_item("RelatedActualY") || "";
+                  deletedItemsNormalizeRelatedAttachmentValue(
+                    currentFile.get_item("RelatedActualY"),
+                  );
               }
               files.push(mappedFile);
             }
@@ -2741,6 +2797,13 @@ function deletedItemsLoadAttachmentsForDetailsPopup(contextKey, sharePointRow, i
   if (!itemId) {
     return Promise.resolve([]);
   }
+
+  // MainKPI: mirror Form_Request ViewAllFiles_Main_Strategy exactly.
+  // Only files where document ItemID == opened KPI Id.
+  if (contextKey === "mainkpis") {
+    return deletedItemsLoadMainKpiAttachmentsForDetails(itemId);
+  }
+
   var queryCandidates = deletedItemsGetAttachmentsQueryCandidates(
     contextKey,
     sharePointRow,
@@ -2769,6 +2832,229 @@ function deletedItemsLoadAttachmentsForDetailsPopup(contextKey, sharePointRow, i
   }
 
   return tryNextCandidate();
+}
+
+function deletedItemsLoadMainKpiAttachmentsWithFormRequestJsom(
+  kpiItemId,
+  includeTitleFilter,
+) {
+  return new Promise(function (resolvePromise) {
+    if (typeof SP === "undefined" || !SP.ClientContext || !kpiItemId) {
+      resolvePromise([]);
+      return;
+    }
+    try {
+      var documentLibraryName = "mainkpi Documents";
+      var context = SP.ClientContext.get_current();
+      var list = context.get_web().get_lists().getByTitle(documentLibraryName);
+      var query = new SP.CamlQuery();
+      var whereXml;
+      if (includeTitleFilter) {
+        whereXml =
+          "<Where><And>" +
+          "<Eq><FieldRef Name='ItemID' /><Value Type='Text'>" +
+          deletedItemsEscapeXmlCamlValue(kpiItemId) +
+          "</Value></Eq>" +
+          "<Eq><FieldRef Name='Title' /><Value Type='Text'>mainkpi</Value></Eq>" +
+          "</And></Where>";
+      } else {
+        whereXml =
+          "<Where><Eq><FieldRef Name='ItemID' /><Value Type='Text'>" +
+          deletedItemsEscapeXmlCamlValue(kpiItemId) +
+          "</Value></Eq></Where>";
+      }
+      query.set_viewXml(
+        '<View Scope="RecursiveAll"><Query>' +
+          whereXml +
+          "</Query><RowLimit>5000</RowLimit></View>",
+      );
+      var allItems = list.getItems(query);
+      context.load(
+        allItems,
+        "Include(ID, Title, ContentType, File, ItemID, RelatedYear, RelatedMonth, RelatedQuarter, RelatedMid, RelatedActualY, docPurpose)",
+      );
+      context.executeQueryAsync(
+        function () {
+          var files = [];
+          var listEnumerator = allItems.getEnumerator();
+          while (listEnumerator.moveNext()) {
+            var currentFile = listEnumerator.get_current();
+            var contentType = currentFile.get_contentType();
+            if (!contentType || contentType.get_name() === "Folder") {
+              continue;
+            }
+            var fileObject = currentFile.get_file();
+            var fileItemId = currentFile.get_item("ItemID");
+            // Exact Form_Request check: File != null && FileID == IID
+            if (fileObject != null && fileItemId == kpiItemId) {
+              var titleValue = currentFile.get_item("Title") || "";
+              var displayTitle =
+                titleValue.indexOf("-") > -1
+                  ? titleValue.split("-")[1]
+                  : titleValue;
+              files.push({
+                url: fileObject.get_serverRelativeUrl(),
+                id: currentFile.get_item("ID"),
+                title: displayTitle,
+                rawTitle: titleValue,
+                fileItemId: fileItemId,
+                RelatedYear: deletedItemsNormalizeRelatedAttachmentValue(
+                  currentFile.get_item("RelatedYear"),
+                ),
+                RelatedMonth: deletedItemsNormalizeRelatedAttachmentValue(
+                  currentFile.get_item("RelatedMonth"),
+                ),
+                RelatedQuarter: deletedItemsNormalizeRelatedAttachmentValue(
+                  currentFile.get_item("RelatedQuarter"),
+                ),
+                RelatedMid: deletedItemsNormalizeRelatedAttachmentValue(
+                  currentFile.get_item("RelatedMid"),
+                ),
+                RelatedActualY: deletedItemsNormalizeRelatedAttachmentValue(
+                  currentFile.get_item("RelatedActualY"),
+                ),
+                filePurpose: currentFile.get_item("docPurpose") || "",
+              });
+            }
+          }
+          resolvePromise(files);
+        },
+        function (_sender, args) {
+          deletedItemsLogError("MainKPI attachments JSOM failed", {
+            message: args && args.get_message ? args.get_message() : "unknown",
+          });
+          resolvePromise([]);
+        },
+      );
+    } catch (jsomError) {
+      deletedItemsLogError("MainKPI attachments JSOM exception", jsomError);
+      resolvePromise([]);
+    }
+  });
+}
+
+function deletedItemsLoadMainKpiAttachmentsWithODataItemIdOnly(
+  documentLibraryName,
+  kpiItemId,
+) {
+  if (!documentLibraryName || !kpiItemId) {
+    return Promise.resolve([]);
+  }
+  var selectFields =
+    "Id,Title,ItemID,FileRef,FileLeafRef,FileDirRef,FSObjType,docPurpose," +
+    "RelatedYear,RelatedMonth,RelatedQuarter,RelatedMid,RelatedActualY";
+
+  function runQuery(itemIdFilter) {
+    var requestUrl =
+      _spPageContextInfo.webAbsoluteUrl +
+      "/_api/web/lists/getbytitle('" +
+      documentLibraryName.replace(/'/g, "''") +
+      "')/items?$select=" +
+      encodeURIComponent(selectFields) +
+      "&$filter=" +
+      encodeURIComponent(itemIdFilter) +
+      "&$top=5000";
+    return new Promise(function (resolveOData) {
+      $.ajax({
+        url: requestUrl,
+        method: "GET",
+        headers: { Accept: "application/json; odata=verbose" },
+        success: function (responseData) {
+          var results =
+            (responseData && responseData.d && responseData.d.results) || [];
+          resolveOData(
+            deletedItemsMapRestResultsToAttachmentFiles(results, true),
+          );
+        },
+        error: function () {
+          resolveOData([]);
+        },
+      });
+    });
+  }
+
+  var numericItemId = parseInt(kpiItemId, 10);
+  var stringFilter =
+    "ItemID eq '" + deletedItemsEscapeQuotesForFilter(String(kpiItemId)) + "'";
+  var numericFilter = isNaN(numericItemId)
+    ? stringFilter
+    : "ItemID eq " + numericItemId;
+
+  return runQuery(stringFilter).then(function (files) {
+    if (files && files.length) {
+      return files;
+    }
+    if (numericFilter === stringFilter) {
+      return files || [];
+    }
+    return runQuery(numericFilter);
+  });
+}
+
+function deletedItemsLoadMainKpiAttachmentsForDetails(kpiItemId) {
+  if (!kpiItemId) {
+    return Promise.resolve([]);
+  }
+  var documentLibraryName = "mainkpi Documents";
+
+  function keepOnlyThisKpi(files) {
+    return deletedItemsKeepAttachmentsMatchingKpiItemId(files || [], kpiItemId);
+  }
+
+  // 1) REST OData filtered by ItemID only (works on the listing page, no JSOM).
+  return deletedItemsLoadMainKpiAttachmentsWithODataItemIdOnly(
+    documentLibraryName,
+    kpiItemId,
+  )
+    .then(function (files) {
+      files = keepOnlyThisKpi(files);
+      if (files.length) {
+        return files;
+      }
+      // 2) REST CAML by ItemID (Text)
+      return deletedItemsExecuteAttachmentCamlQuery(
+        documentLibraryName,
+        deletedItemsBuildAttachmentCamlViewXmlItemIdOnly(kpiItemId, true, "Text"),
+        true,
+      ).then(keepOnlyThisKpi);
+    })
+    .then(function (files) {
+      if (files.length) {
+        return files;
+      }
+      // 3) REST CAML by ItemID (Number)
+      return deletedItemsExecuteAttachmentCamlQuery(
+        documentLibraryName,
+        deletedItemsBuildAttachmentCamlViewXmlItemIdOnly(
+          kpiItemId,
+          true,
+          "Number",
+        ),
+        true,
+      ).then(keepOnlyThisKpi);
+    })
+    .then(function (files) {
+      if (files.length) {
+        return files;
+      }
+      // 4) JSOM (Form_Request style) as last resort if SP JSOM is available.
+      return deletedItemsLoadMainKpiAttachmentsWithFormRequestJsom(
+        kpiItemId,
+        false,
+      ).then(keepOnlyThisKpi);
+    })
+    .then(function (files) {
+      if (typeof console !== "undefined" && console.log) {
+        console.log(
+          "[DeletedItemsListing] MainKPI attachments for ItemID " +
+            kpiItemId +
+            ": " +
+            (files ? files.length : 0),
+          files,
+        );
+      }
+      return files || [];
+    });
 }
 
 function deletedItemsResolveAttachmentHref(fileUrl) {

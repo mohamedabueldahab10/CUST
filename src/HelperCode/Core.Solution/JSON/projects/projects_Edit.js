@@ -374,12 +374,13 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable' ,'LinkingSection'] }, //we can put more than 1  field
+          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable' ,'LinkingSection','MDRelatedInitiativeDeliverable','MDRelatedInitiativeMilestone'] }, //we can put more than 1  field
          /* { value: 'yes', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable' ,'LinkingSection'] }, //we can put more than 1  field*/
        /*   { value: 'no', fields: [''] }, //we can put more than 1  field*/
           { value: 'operationally', fields: [''] }, //we can put more than 1  field
         ],
         requiredValues: [
+          { value: "strategy", fields: ["RelatedInitiativeDeliverable"] },
           { value: "operationally", fields: ["FundingSources","FundingStatus"] }, //we can put more than 1  field
          /* { value: "no", fields: ["FundingSources","FundingStatus"] }, //we can put more than 1  field*/
         ],
@@ -566,7 +567,7 @@ var Information_Form = [
         Dispfieldkey: "Name",
         valfieldkey: "Title",
         grpfieldkey: "Title",
-        //display: 'none',
+        display: 'none',
         // disableOnWfTaskStage : "S05,S09",
         hideOnWfTaskStage  : "S05;S09",
         //state: "disabled",
@@ -2446,10 +2447,10 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        targetfieldrequired: 'getFile', // to make the attache required on yes
+        targetfieldrequired: 'DeliveredDate',
         targetfield: 'Status',
         targetfieldvalue: 'completed',
-        type: 'dropdownValues',
+        type: 'yesnoradio',
         disableOnWfTaskStage : "S05,S09",
         options: {
           choices: [
@@ -2540,30 +2541,22 @@ var Information_Form = [
       //   "Dispfieldkey": "Name",
       //   "valfieldkey": "Title",
       // },
-     /* {
+      {
         //tried
         InternalName: 'RelatedInitiativeDeliverable',
         DisplayName: 'مخرج المبادرة المرتبط',
         DisplayNameEn: 'Related Initiative Deliverable',
         type: 'lookuptoparentchild',
-        validation: "required",
         parentlist: 'Projects', //parent list name
         parentinternalname: 'RelatedInitiative', // internal name in parent list
         source: 'InitiativeDeliverables', // target list
         sourceinternalname: 'InitiativeCode', // column in target list
         Dispfieldkey: 'Name', //display in dropdown
         valfieldkey: 'Title', // value in dropdown
+        RequiredName: 'RelatedInitiativeDeliverable',
+        ToggleName: 'MDRelatedInitiativeDeliverable',
         disableOnWfTaskStage : "S05,S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-      },*/
+      },
       {
         InternalName: 'ShowInProgramReport',
         DisplayName: 'اظهار في التقرير',
@@ -2857,6 +2850,8 @@ var Information_Form = [
         "sourceinternalname": "InitiativeCode", // column in target list
         "Dispfieldkey": 'Name', //display in dropdown
         "valfieldkey": "Title",// value in dropdown
+        ToggleName: 'MDRelatedInitiativeMilestone',
+        display: 'none',
         disableOnWfTaskStage : "S05,S09",
         security: {
           groups: [ ],
@@ -2872,11 +2867,10 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'تم التسليم',
         DisplayNameEn: 'Delivered',
-        targetfieldrequired: 'getFile,ActualDate', // to make the attache required on yes
+        targetfieldrequired: 'ActualDate',
         targetfield: 'Status',
         targetfieldvalue: 'completed',
-        // validation: 'required',
-        type: 'dropdownValues',
+        type: 'yesnoradio',
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo

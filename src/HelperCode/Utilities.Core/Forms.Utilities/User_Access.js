@@ -380,6 +380,8 @@ window.WorkflowTranslate = [
 
   { wfName: "VROActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
   { wfName: "MSActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
+  { wfName: "MSActualBenefit", nameAr: "منفعة", nameEn: "Benefit" },
+  { wfName: "InitiativeBenefits", nameAr: "منفعة", nameEn: "Benefit" },
   { wfName: "LMSActualKPI", nameAr: "مؤشر", nameEn: "KPI" },
   { wfName: "ActualKPIResult", nameAr: "قيم فعلية", nameEn: "KPI Actual" },
 
@@ -1568,6 +1570,7 @@ window.userCalls = {
           "initiativetasks",
           "initiativelessonslearned",
           "benefits",
+          "benefitsequations",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "closureinitiative",
@@ -2117,7 +2120,8 @@ window.userCalls = {
           "initiativesmain.aspx",
           "home.aspx",
           "projecthome.aspx",
-          "delegations"
+          "delegations",
+          "Targets.aspx",
         ];
         Edit_Access = [
           "initiatives",
@@ -2401,7 +2405,7 @@ window.userCalls = {
           "benefits",
           "Targets.aspx",
           "kpiequations",
-          "benefitsequations",
+          // "benefitsequations",
           "developmentrequirements",
           //"changerequest",
           "strategiccalendar",
@@ -2864,7 +2868,7 @@ window.userCalls = {
           "closureinitiative",
           // "benefits",
           "benefitmetrics",
-          "benefitsequations",
+          // "benefitsequations",
           "BenefitMetrics.aspx",
           // "projects",
           // "deliverables",
@@ -2970,7 +2974,7 @@ window.userCalls = {
           "closureinitiative",
           // "benefits",
           "benefitmetrics",
-          "benefitsequations",
+          // "benefitsequations",
           "BenefitMetrics.aspx",
           // "projects",
           // "deliverables",
@@ -3076,7 +3080,7 @@ window.userCalls = {
             "closureinitiative",
             // "benefits",
             "benefitmetrics",
-            "benefitsequations",
+            // "benefitsequations",
             "BenefitMetrics.aspx",
             // "projects",
             // "deliverables",
@@ -3192,7 +3196,7 @@ window.userCalls = {
           "closureinitiative",
           // "benefits",
           "benefitmetrics",
-          "benefitsequations",
+          // "benefitsequations",
           "BenefitMetrics.aspx",
           // "projects",
           // "deliverables",
@@ -3313,7 +3317,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
           "benefitmetrics",
-          "benefitsequations",
+          // "benefitsequations",
           "BenefitMetrics.aspx",
           "projects",
           "deliverables",
@@ -3435,7 +3439,7 @@ window.userCalls = {
           "closureinitiative",
           // "benefits",
           "benefitmetrics",
-          "benefitsequations",
+          // "benefitsequations",
           "BenefitMetrics.aspx",
           // "projects",
           // "deliverables",
@@ -3557,7 +3561,7 @@ window.userCalls = {
             "closureinitiative",
             "benefits",
             "benefitmetrics",
-            "benefitsequations",
+            // "benefitsequations",
             "BenefitMetrics.aspx",
             "projects",
             "deliverables",
@@ -3679,7 +3683,7 @@ window.userCalls = {
             "closureinitiative",
             // "benefits",
             "benefitmetrics",
-            "benefitsequations",
+            // "benefitsequations",
             "BenefitMetrics.aspx",
             // "projects",
             // "deliverables",
@@ -4953,6 +4957,15 @@ window.userCalls = {
     //end CRUD
     if (USERisEdit && USERlistkey == "sos" && !isAdmin) {
       console.log("hide Attachment edit button for not admin user");
+      $("body").append(
+        "<style>" +
+          ".delete-file{opacity: .6;pointer-events: none;display:none}" +
+          "</style>"
+      );
+    }
+    // prevent project manager from deleting uploaded attachments (keep .removeAttchment for not-yet-saved files)
+    if (USERisForm && isPManager) {
+      console.log("hide delete attachment button for project manager");
       $("body").append(
         "<style>" +
           ".delete-file{opacity: .6;pointer-events: none;display:none}" +
@@ -8883,6 +8896,41 @@ window.userCalls = {
           return arr1.some((item) => arr2.includes(item));
         }
 
+        function disableCfieldControls($cfield) {
+          $cfield.find("select, input, textarea, button").each(function () {
+            var $control = $(this);
+            if ($control.is("select")) {
+              var fieldId = $control.attr("id");
+              var stored =
+                $control.attr("data-lookup-value") ||
+                $control.attr("value") ||
+                $control.val() ||
+                (window.editLookupValues &&
+                  fieldId &&
+                  window.editLookupValues[fieldId]) ||
+                "";
+              $control.find('option[value=""]').prop("disabled", true);
+              $control.find("option").not('[value=""]').prop("disabled", false);
+              if (stored) {
+                if (
+                  typeof ListInfo !== "undefined" &&
+                  ListInfo.g &&
+                  ListInfo.g.setSelectFieldValue
+                ) {
+                  ListInfo.g.setSelectFieldValue($control, stored);
+                } else {
+                  $control.val(stored);
+                  $control.attr("value", stored);
+                }
+              }
+              $control.prop("disabled", true);
+              return;
+            }
+            $control.prop("disabled", true);
+          });
+          $cfield.children(".PPField").attr("disabled", true);
+        }
+
         $(".section-container .CFIELD").each(function () {
           $(this).val($(this).attr("data-groups"));
           var dataGroups = $(this).attr("data-groups");
@@ -8895,7 +8943,7 @@ window.userCalls = {
           ) {
             if (!isAdmin) {
               // allow to admin to create and edit all fields in system
-              $(this).find("*").attr("disabled", true);
+              disableCfieldControls($(this));
             }
           }
 
@@ -8910,13 +8958,13 @@ window.userCalls = {
                 if (USERlistkey == "changerequest") {
                   if (el.form.includes("changerequest")) {
                     if (!isAdmin) {
-                      $(this).find("*").attr("disabled", true);
+                      disableCfieldControls($(this));
                     }
                   }
                 } else {
                   if (el.form.includes("origin")) {
                     if (!isAdmin) {
-                      $(this).find("*").attr("disabled", true);
+                      disableCfieldControls($(this));
                     }
                   }
                 }
@@ -8929,6 +8977,13 @@ window.userCalls = {
           //     $(this).find('*').attr('disabled', true);
           // };
         });
+        if (
+          typeof ListInfo !== "undefined" &&
+          ListInfo.g &&
+          ListInfo.g.syncLookupSelectValues
+        ) {
+          ListInfo.g.syncLookupSelectValues();
+        }
       }
     },
   },
@@ -11469,6 +11524,8 @@ var Tasks_Info_Request_User = {
             wfname == "LMSActualKPI" 
           ) {
             keyNameParams = "mainkpi";
+          } else if (wfname == "MSActualBenefit" || wfname == "InitiativeBenefits") {
+            keyNameParams = "benefits";
           } else if (
             wfname == "VROCreateKPI" ||
             wfname == "EPMOCreateKPI" ||

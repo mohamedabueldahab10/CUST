@@ -240,7 +240,7 @@ var Information_Form = [
         InternalName: 'Delivered',
         DisplayName: 'مكتمل',
         DisplayNameEn: 'Completed',
-        targetfieldrequired: 'getFile', // to make the attache required on yes
+        targetfieldrequired: 'getFile,DeliveredDate', // to make the attache required on yes
         targetfield: 'Status',
         targetfieldvalue: 'completed',
         type: 'yesnoradio',

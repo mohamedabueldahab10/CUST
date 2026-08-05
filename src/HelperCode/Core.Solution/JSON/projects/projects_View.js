@@ -226,7 +226,7 @@ var Information_Form = [
         toggleValues: [
         /*  { value: 'yes', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable' , 'LinkingSection'] }, //we can put more than 1  field
           { value: 'no', fields: [''] }, //we can put more than 1  field*/
-          { value: 'strategy', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable' , 'LinkingSection'] }, //we can put more than 1  field
+          { value: 'strategy', fields: ['InitiativeType','RelatedInitiative','RelatedInitiativeDeliverable' , 'LinkingSection','MDRelatedInitiativeDeliverable','MDRelatedInitiativeMilestone'] }, //we can put more than 1  field
           { value: 'operationally', fields: [''] }, //we can put more than 1  field
         ],
       },
@@ -236,6 +236,7 @@ var Information_Form = [
         DisplayName: 'نوع المبادرة',
         ToggleName: "InitiativeType",
         // validation: 'required',
+        display: 'none',
         dynamic: 'parent', // parent to get the child depends on this field value
         type: 'dropdownValues',
         toggleValues: [
@@ -316,6 +317,7 @@ var Information_Form = [
         DisplayName: " المبادرة المرتبطة",
         DisplayNameEn: "Related Initiative",
         ToggleName: "RelatedInitiative",
+        display: 'none',
         // type: 'string',
         type: "lookup",
         //from other list:ma
@@ -337,6 +339,7 @@ var Information_Form = [
         DisplayNameEn: "Related Initiative Deliverable",
         DisplayName: "مخرج المبادرة المرتبط",
         ToggleName: "RelatedInitiativeDeliverable",
+        display: 'none',
         // type: 'string',
         //type: "multiselectstring",
          type: "lookupmultiselect",
@@ -1738,12 +1741,16 @@ var Information_Form = [
       },
       {
         InternalName: 'RelatedInitiativeDeliverable',
+        DisplayName: 'مخرج المبادرة المرتبط',
         DisplayNameEn: 'Related Initiative Deliverable',
-        DisplayName:'مخرج المبادرة المرتبط',
-        type: 'lookup',
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects',
+        parentinternalname: 'RelatedInitiative',
         source: 'InitiativeDeliverables',
+        sourceinternalname: 'InitiativeCode',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        ToggleName: 'MDRelatedInitiativeDeliverable',
       },
       {
         InternalName: 'ShowInProgramReport',
@@ -1866,6 +1873,8 @@ var Information_Form = [
         // source: 'Milestones',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        ToggleName: 'MDRelatedInitiativeMilestone',
+        display: 'none',
       },
       {
         InternalName: 'Delivered',
@@ -1905,4 +1914,3 @@ var Information_Form = [
     ],
   },
 ];
-w

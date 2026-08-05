@@ -15,6 +15,8 @@ var NIssues = 0,
   KPICode = "",
   kpiEquationID,
   kpiEquation,
+  benefitKpiEquationID,
+  benefitKpiEquation,
   sosType;
 
 var KPIYear = "",
@@ -75,6 +77,7 @@ var targetYear = new Date().getFullYear(),
 //
 
 window.kpiEquationsComponents = [];
+window.benefitKpiEquationsComponents = [];
 
 var getMasterFilesArr = [];
 
@@ -328,9 +331,6 @@ window.Edit_Data_Request = {
           }
           var fieldIdForSelect = $(this).attr("id");
           if (
-            listkey == "mainkpi" &&
-            (fieldIdForSelect === "KPIType" ||
-              fieldIdForSelect === "RelatedStrategyObjective") &&
             typeof ListInfo !== "undefined" &&
             ListInfo.g &&
             ListInfo.g.setSelectFieldValue
@@ -339,6 +339,11 @@ window.Edit_Data_Request = {
           } else {
             $(this).val(dropdownFieldValue);
             $(this).attr("value", dropdownFieldValue);
+          }
+          if (dropdownFieldValue) {
+            $(this).attr("data-lookup-value", dropdownFieldValue);
+            window.editLookupValues = window.editLookupValues || {};
+            window.editLookupValues[fieldIdForSelect] = String(dropdownFieldValue);
           }
           if (fieldIdForSelect === "KPIType") {
             kpiTypeValue = dropdownFieldValue || "";
@@ -617,10 +622,17 @@ window.Edit_Data_Request = {
       if (end.val()) start.attr("max", end.val());
     });
     $("input:disabled, select:disabled,textarea:disabled").each(function () {
-      if ($(this).val != "") {
+      if ($(this).val() != "") {
         $(this).addClass("disabledWithValue");
       }
     });
+    if (
+      typeof ListInfo !== "undefined" &&
+      ListInfo.g &&
+      ListInfo.g.syncLookupSelectValues
+    ) {
+      ListInfo.g.syncLookupSelectValues();
+    }
 
     $("input.number").each(function (event) {
       
@@ -994,7 +1006,22 @@ window.Edit_Data_Request = {
       Get_ActualAnnualTotal.init(yearValue);
     }
     if (listkey == "benefits") {
-      benefitCodeResult = oListItem.get_item("Title");
+      benefitCodeResult = equationBenefitKPI.getField(oListItem, "Title", "");
+      benefitCode = benefitCodeResult;
+      equationBenefitKPI.init();
+      equationBenefitKPI.loadBenefitPeriodFields(oListItem);
+
+      $("#Year").html(
+        '<option data-trans-yeartype class="Resources" value="" selected="" disabled=""></option>'
+      );
+
+      if (benefitFromYear && benefitToYear) {
+        for (var i = benefitFromYear; i <= benefitToYear; i++) {
+          $("#Year").append('<option value="' + i + '">' + i + "</option>");
+        }
+      }
+
+      $("#Year").val(benefitYear || "");
     }
 
     if (listkey == "benefitmetrics") {
@@ -1055,6 +1082,37 @@ window.Edit_Data_Request = {
       if (sector) {
         Department_Sector_Info.init(sector); //
       }
+
+      // Hide related-initiative fields (main + Master Details) for operational projects
+      if (
+        (oListItem.get_item("IsStrategicProject") || "").toLowerCase() ===
+        "operationally"
+      ) {
+        var hideProjectRelatedInitiativeFields = function (retries) {
+          var $fields = $(
+            "[id='RelatedInitiativeDeliverable'], [id='RelatedInitiativeMilestone'], [data-togglename='MDRelatedInitiativeDeliverable'], [data-togglename='MDRelatedInitiativeMilestone']"
+          );
+          if (!$fields.length) {
+            if (retries > 0) {
+              setTimeout(function () {
+                hideProjectRelatedInitiativeFields(retries - 1);
+              }, 300);
+            }
+            return;
+          }
+          $fields.each(function () {
+            var $field = $(this);
+            var $cfield = $field.closest(".CFIELD");
+            $cfield.hide().addClass("hide-field");
+            $field.attr("required", false).removeAttr("required");
+            $cfield
+              .find("label")
+              .attr("required", false)
+              .removeAttr("required");
+          });
+        };
+        hideProjectRelatedInitiativeFields(30);
+      }
     }
 
     if (listkey == "milestones" && PCODE) {
@@ -1062,6 +1120,70 @@ window.Edit_Data_Request = {
         ? oListItem.get_item("RelatedInitiativeMilestone")
         : "";
       Get_ProjectData_ByCode.init();
+    }
+    if (
+      (listkey == "deliverables" || listkey == "milestones") &&
+      isEdit
+    ) {
+      var strategicProjectCodeEdit =
+        typeof USERPCODE !== "undefined" && USERPCODE
+          ? USERPCODE
+          : typeof PCODE !== "undefined" && PCODE
+          ? PCODE
+          : "";
+      if (strategicProjectCodeEdit) {
+        $.ajax({
+          url: "/_api/web/lists/getbytitle('Projects')/items",
+          type: "GET",
+          data: {
+            $select: "Title,IsStrategicProject",
+            $filter: "Title eq '" + strategicProjectCodeEdit + "'",
+          },
+          headers: {
+            Accept: "application/json;odata=verbose",
+          },
+          success: function (data) {
+            if (data.d.results.length > 0) {
+              var project = data.d.results[0];
+              var projectType = (
+                project.IsStrategicProject || ""
+              ).toLowerCase();
+              if (projectType !== "operationally") return;
+
+              var relatedInitiativeFieldId =
+                listkey == "deliverables"
+                  ? "RelatedInitiativeDeliverable"
+                  : "RelatedInitiativeMilestone";
+
+              var hideRelatedInitiativeField = function (retries) {
+                var $fields = $("[id='" + relatedInitiativeFieldId + "']");
+                if (!$fields.length) {
+                  if (retries > 0) {
+                    setTimeout(function () {
+                      hideRelatedInitiativeField(retries - 1);
+                    }, 300);
+                  }
+                  return;
+                }
+                $fields.each(function () {
+                  var $field = $(this);
+                  var $cfield = $field.closest(".CFIELD");
+                  $cfield.hide().addClass("hide-field");
+                  $field.attr("required", false).removeAttr("required");
+                  $cfield
+                    .find("label")
+                    .attr("required", false)
+                    .removeAttr("required");
+                });
+              };
+              hideRelatedInitiativeField(20);
+            }
+          },
+          error: function (error) {
+            console.log("Error fetching project IsStrategicProject: ", error);
+          },
+        });
+      }
     }
     if (
       listkey == "deliverables" ||
@@ -1166,6 +1288,13 @@ window.Edit_Data_Request = {
     $("[data-togglevalues]").each(function () {
       ListInfo.g.toggleFields($(this));
     });
+    if (
+      typeof ListInfo !== "undefined" &&
+      ListInfo.g &&
+      ListInfo.g.syncLookupSelectValues
+    ) {
+      ListInfo.g.syncLookupSelectValues();
+    }
 
     // to handle toggle required field in in edit
     $("[data-requiredvalues]").each(function () {
@@ -1178,6 +1307,13 @@ window.Edit_Data_Request = {
     $("[data-toggledisabledvalues]").each(function () {
       ListInfo.g.toggleDisabledFields($(this));
     });
+    if (
+      typeof ListInfo !== "undefined" &&
+      ListInfo.g &&
+      ListInfo.g.syncLookupSelectValues
+    ) {
+      ListInfo.g.syncLookupSelectValues();
+    }
 
     // to get the value of weight in delivrable and milestone correct in edit
 
@@ -1217,6 +1353,24 @@ window.Edit_Data_Request = {
     });
     if (dynamicArrId.length) {
       get_DynamicValues.init(dynamicArrId);
+    } else if (
+      typeof ListInfo !== "undefined" &&
+      ListInfo.g &&
+      ListInfo.g.syncLookupSelectValues
+    ) {
+      window.setTimeout(function () {
+        ListInfo.g.syncLookupSelectValues();
+      }, 300);
+    }
+
+    if (
+      typeof ListInfo !== "undefined" &&
+      ListInfo.g &&
+      ListInfo.g.syncLookupSelectValues
+    ) {
+      window.setTimeout(function () {
+        ListInfo.g.syncLookupSelectValues();
+      }, 2500);
     }
     //
 
@@ -1634,6 +1788,84 @@ window.Edit_Data_Request = {
           }
         });
       }
+      if (isWF && listkey == "benefits" && workflowname == 'MSActualBenefit' ) {
+        var benefitCodeForHistory = $("#Title").val();
+        if (!benefitCodeForHistory) {
+          console.log('no record title to checks in KPIResultsHistory (BenefitCode)');
+          return;
+        }
+
+        $.ajax({
+          url: _spPageContextInfo.webAbsoluteUrl +
+            "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=BenefitCode eq '" + benefitCodeForHistory + "'&$top=1&$orderby=ID desc",
+          method: "GET",
+          headers: { Accept: "application/json;odata=verbose" },
+          success: function (data) {
+            if (!data.d.results || data.d.results.length === 0) {
+              console.log('no record to show in KPIResultsHistory (BenefitCode)');
+              return;
+            }
+
+            var benefitItem = data.d.results[0];
+            console.log("KPIResultsHistory (BenefitCode) found: ", benefitItem);
+            if(isEdit){
+
+              if (benefitItem.Year) $("#Year").val(benefitItem.Year);
+              if (benefitItem.Month) {
+                var benefitMonthVal = parseInt(benefitItem.Month, 10);
+                $("#Months").val("ActualM" + benefitMonthVal);
+
+                var benefitPeriodTypeVal =
+                  $("#PeriodType").val() ||
+                  "";
+
+                if (benefitPeriodTypeVal == "midterm") {
+                  if (benefitMonthVal == 6) $("#Midterms").val("ActualMid1");
+                  else if (benefitMonthVal == 12) $("#Midterms").val("ActualMid2");
+                } else if (benefitPeriodTypeVal == "quarter") {
+                  if (benefitMonthVal == 3) $("#Quarter").val("ActualQ1");
+                  else if (benefitMonthVal == 6) $("#Quarter").val("ActualQ2");
+                  else if (benefitMonthVal == 9) $("#Quarter").val("ActualQ3");
+                  else if (benefitMonthVal == 12) $("#Quarter").val("ActualQ4");
+                }
+              }
+              if (benefitItem.ComponentA) $("#A").val(benefitItem.ComponentA);
+              if (benefitItem.ComponentB) $("#B").val(benefitItem.ComponentB);
+              if (benefitItem.ComponentC) $("#CC").val(benefitItem.ComponentC);
+              if (benefitItem.ComponentD) $("#D").val(benefitItem.ComponentD);
+              if (benefitItem.ComponentE) $("#E").val(benefitItem.ComponentE);
+              if (benefitItem.ComponentF) $("#F").val(benefitItem.ComponentF);
+              if (benefitItem.ComponentG) $("#G").val(benefitItem.ComponentG);
+              if (benefitItem.FinalValue) $("#Equation").val(benefitItem.FinalValue);
+              if (benefitItem.PerformanceAnalysis)
+                $("#PerformanceAnalysis").val(benefitItem.PerformanceAnalysis);
+              if (benefitItem.ActualkpiDate) {
+                var actualBenefitDateInput = new Date(benefitItem.ActualkpiDate);
+                if (!isNaN(actualBenefitDateInput.getTime()))
+                  $("#ActualkpiDate").val(actualBenefitDateInput.toISOString().split("T")[0]);
+                else
+                  $("#ActualkpiDate").val(benefitItem.ActualkpiDate);
+              }
+            }
+          },
+          error: function (err) {
+            console.error("Error getting KPIResultsHistory (BenefitCode)", err);
+          }
+        });
+      }
+      if (isInManager && listkey == "benefits" && $('#WFStage').val() == "approved") {
+        var benefitAllZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
+            return parseFloat($(id).val() || 0) === 0;
+        });
+
+        var benefitFields = "#A, #B, #CC, #D, #E, #F, #G, #Year, #Months, #Midterms, #Quarter";
+
+        if (benefitAllZero) {
+            $(benefitFields).prop("disabled", false);
+        } else {
+            $(benefitFields).prop("disabled", true);
+        }
+      }
       if (isPerformanceLeader && $('#WFStage').val() == "approved") {
         var allZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
             return parseFloat($(id).val() || 0) === 0;
@@ -1711,6 +1943,32 @@ window.Edit_Data_Request = {
           alert(
             "هذا المؤشر يخضع لسير موافقات بالفعل. لا يمكنك التعديل عليه حتى تكتمل !"
           );
+        }
+      }
+      if (listkey == "benefits" && isEdit) {
+        var benefitWfRaw = $("#WFStage").val();
+        var benefitWfStageVal =
+          benefitWfRaw == null || benefitWfRaw === undefined ? "" : String(benefitWfRaw).trim();
+        if (
+          !USERisWF &&
+          currentUserRole == "InitiativeManager" &&
+          benefitWfStageVal !== ""
+        ) {
+          $("body").append(
+            "<style>" +
+              ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+              ".form-control{color: #b1b1b1 !important;" +
+              "border-color: #e1e1e1 !important;" +
+              "background-color: #fdfdfd !important;" +
+              "opacity: .6;pointer-events: none;}" +
+              "</style>"
+          );
+          alert(
+            "هذه المنفعة تخضع لسير موافقات بالفعل. لا يمكنك التعديل عليها حتى تكتمل !"
+          );
+        }
+        if (window.BenefitsActualFieldsRequired) {
+          BenefitsActualFieldsRequired.bind();
         }
       }
       if (listkey == "strategicpartnershipsachievements" && (isEdit || isView)) {
@@ -2627,6 +2885,12 @@ window.RelatedIdeaProject = {
 };
 window.View_Data_Request = {
   onSuccess: function (sender, args) {
+    console.log("[View_Data_Request.onSuccess] ENTER", {
+      listkey: listkey,
+      IID: IID,
+      isView: isView,
+      USERisWF: USERisWF,
+    });
     // Reset retry count
     View_Data_Request.g.retryCount = 0;
     var strategyType = "";
@@ -2813,6 +3077,18 @@ window.View_Data_Request = {
                   $(this).text(Resources.ar[value.toLowerCase()]);
                 } else $(this).text(Resources.en[value.toLowerCase()]);
               }
+            }
+          } else if (listkey == "benefits") {
+            // Year choices are numeric strings (2020..2030) with no Resources key
+            if ($(this).attr("id") == "Year") {
+              $(this).text(value);
+            } else {
+              if (
+                localStorage.getItem("lng") == null ||
+                localStorage.getItem("lng") == "ar"
+              ) {
+                $(this).text(Resources.ar[displayValue.toLowerCase()]);
+              } else $(this).text(Resources.en[displayValue.toLowerCase()]);
             }
           } else {
             if (
@@ -3845,6 +4121,37 @@ window.View_Data_Request = {
 
         // ProjectInitiativeDelevrable.init('InitiativeDeliverables', initiativeCode) // ocomment moved after check if initiative deleted or not
       }
+
+      // Hide related-initiative fields (main + Master Details) for operational projects
+      if (
+        (oListItem.get_item("IsStrategicProject") || "").toLowerCase() ===
+        "operationally"
+      ) {
+        var hideProjectRelatedInitiativeFieldsView = function (retries) {
+          var $fields = $(
+            "[id='RelatedInitiativeDeliverable'], [id='RelatedInitiativeMilestone'], [data-togglename='MDRelatedInitiativeDeliverable'], [data-togglename='MDRelatedInitiativeMilestone']"
+          );
+          if (!$fields.length) {
+            if (retries > 0) {
+              setTimeout(function () {
+                hideProjectRelatedInitiativeFieldsView(retries - 1);
+              }, 300);
+            }
+            return;
+          }
+          $fields.each(function () {
+            var $field = $(this);
+            var $cfield = $field.closest(".CFIELD");
+            $cfield.hide().addClass("hide-field");
+            $field.attr("required", false).removeAttr("required");
+            $cfield
+              .find("label")
+              .attr("required", false)
+              .removeAttr("required");
+          });
+        };
+        hideProjectRelatedInitiativeFieldsView(30);
+      }
     }
 
     if (listkey == "changerequest") {
@@ -4173,19 +4480,32 @@ window.View_Data_Request = {
       equationBenefit.init();
     }
     if (listkey == "benefits") {
-      benefitCode = oListItem.get_item("Title");
+      console.log("[benefits][View_Data_Request] benefits block START", {
+        listkey: listkey,
+        IID: IID,
+        isView: isView,
+        USERisWF: USERisWF,
+        isAdmin: isAdmin,
+        btnactionrow: $(".btnactionrow").length,
+        formBtnsWrapper: $(".btnactionrow .form-btns-wrapper").length,
+      });
+      benefitCode = equationBenefitKPI.getField(oListItem, "Title", "");
+      console.log("[benefits][View_Data_Request] benefitCode", benefitCode);
 
-      if (!USERisWF) {
-        $("#printableArea").prepend(
-          '<a class="linkmsg alert" href="' +
-            _spPageContextInfo.siteAbsoluteUrl +
-            "/sitepages/Targets.aspx?BenefitCode=" +
-            benefitCode +
-            '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-benefitmetricstext class="Resources">' +
-            "</span></a>"
-        );
+      equationBenefitKPI.init();
+      equationBenefitKPI.loadBenefitPeriodFields(oListItem);
+
+      $("#Year,#Months,#Quarter,#Midterms,#Years").removeAttr("required");
+
+      if (PeriodType == "monthly") {
+        $("#Quarter,#Midterms,#Years").parent().hide();
+      } else if (PeriodType == "quarter") {
+        $("#Months,#Midterms,#Years").parent().hide();
+      } else if (PeriodType == "midterm") {
+        $("#Months,#Quarter,#Years").parent().hide();
+      } else if (PeriodType == "year") {
+        $("#Months,#Quarter,#Midterms").parent().hide();
       }
-      // equationBenefit.init();
     }
 
     // if (listkey == "goalstrategy") {
@@ -4386,6 +4706,82 @@ window.View_Data_Request = {
         });
       }
     }
+    if (
+      (listkey == "deliverables" || listkey == "milestones") &&
+      (isEdit || isNew || isView)
+    ) {
+      var strategicProjectCode =
+        typeof USERPCODE !== "undefined" && USERPCODE
+          ? USERPCODE
+          : typeof PCODE !== "undefined" && PCODE
+          ? PCODE
+          : "";
+      if (strategicProjectCode) {
+        $.ajax({
+          url: "/_api/web/lists/getbytitle('Projects')/items",
+          type: "GET",
+          data: {
+            $select: "Title,IsStrategicProject",
+            $filter: "Title eq '" + strategicProjectCode + "'",
+          },
+          headers: {
+            Accept: "application/json;odata=verbose",
+          },
+          success: function (data) {
+            if (data.d.results.length > 0) {
+              var project = data.d.results[0];
+              var projectType = (
+                project.IsStrategicProject || ""
+              ).toLowerCase();
+              var isStrategy = projectType === "strategy";
+              var isOperationally = projectType === "operationally";
+              var relatedInitiativeFieldId =
+                listkey == "deliverables"
+                  ? "RelatedInitiativeDeliverable"
+                  : "RelatedInitiativeMilestone";
+
+              var applyRelatedInitiativeFieldVisibility = function (retries) {
+                var $fields = $("[id='" + relatedInitiativeFieldId + "']");
+                if (!$fields.length) {
+                  if (retries > 0) {
+                    setTimeout(function () {
+                      applyRelatedInitiativeFieldVisibility(retries - 1);
+                    }, 300);
+                  }
+                  return;
+                }
+                $fields.each(function () {
+                  var $field = $(this);
+                  var $cfield = $field.closest(".CFIELD");
+                  if (isOperationally) {
+                    $cfield.hide().addClass("hide-field");
+                    $field.attr("required", false).removeAttr("required");
+                    $cfield
+                      .find("label")
+                      .attr("required", false)
+                      .removeAttr("required");
+                    return;
+                  }
+                  if (listkey == "deliverables" && (isEdit || isNew)) {
+                    if (isStrategy) {
+                      $field.attr("required", true);
+                      $cfield.find("label").attr("required", true);
+                    } else {
+                      $field.attr("required", false);
+                      $cfield.find("label").attr("required", false);
+                    }
+                  }
+                });
+              };
+              applyRelatedInitiativeFieldVisibility(20);
+            }
+          },
+          error: function (error) {
+            console.log("Error fetching project IsStrategicProject: ", error);
+          },
+        });
+      }
+    }
     if (listkey == "initiativedeliverables" || listkey == "initiativemilestones") {
       if (typeof UserICode !== "undefined" && UserICode) {
         $.ajax({
@@ -4439,6 +4835,18 @@ window.View_Data_Request = {
     });
     View_Data_Request.g.clickbait();
     View_Data_Request.g.Cancel();
+    if (listkey == "benefits") {
+      console.log("[benefits][View_Data_Request] before clickbait retries");
+      setTimeout(function () {
+        equationBenefitKPI.g.applyEquationButtonAccess();
+      }, 500);
+      setTimeout(function () {
+        equationBenefitKPI.g.applyEquationButtonAccess();
+      }, 1500);
+      setTimeout(function () {
+        equationBenefitKPI.g.applyEquationButtonAccess();
+      }, 3000);
+    }
     if (MasterDetailsArrayRequest.length > 0) {
       Master_Details_Request.init(MasterDetailsArrayRequest[0]);
       MasterDetailsArrayRequest.shift(); //remove 0 index
@@ -4524,6 +4932,96 @@ window.View_Data_Request = {
             console.error("Error getting KPIResultsHistory", err);
           }
         });
+      }
+      if (isWF && listkey == "benefits" && workflowname == 'MSActualBenefit' ) {
+        var benefitCodeForViewHistory = $("#Title").text();
+        if (!benefitCodeForViewHistory) {
+          console.log('no record title to checks in KPIResultsHistory (BenefitCode)');
+          return;
+        }
+
+        $.ajax({
+          url: _spPageContextInfo.webAbsoluteUrl +
+            "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=BenefitCode eq '" + benefitCodeForViewHistory + "'&$top=1&$orderby=ID desc",
+          method: "GET",
+          headers: { Accept: "application/json;odata=verbose" },
+          success: function (data) {
+            if (!data.d.results || data.d.results.length === 0) {
+              console.log('no record to show in KPIResultsHistory (BenefitCode)');
+              return;
+            }
+
+            var benefitViewItem = data.d.results[0];
+            console.log("KPIResultsHistory (BenefitCode) found: ", benefitViewItem);
+            if(isView){
+              if (benefitViewItem.Year) $("#Year").text(benefitViewItem.Year);
+              if (benefitViewItem.Month) {
+                var benefitViewMonthVal = parseInt(benefitViewItem.Month, 10);
+                $("#Months").text("ActualM" + benefitViewMonthVal);
+
+                var benefitViewPeriodTypeVal =
+                  $("#PeriodType").attr("data-viewtogglevalue") ||
+                  $("#PeriodType").text() ||
+                  "";
+
+                var benefitLang =
+                  localStorage.getItem("lng") == null ||
+                  localStorage.getItem("lng") == "ar"
+                    ? "ar"
+                    : "en";
+
+                if (benefitViewPeriodTypeVal === "midterm") {
+                  if (benefitViewMonthVal === 6)
+                    $("#Midterms").text(Resources[benefitLang]["midterm1"]);
+                  else if (benefitViewMonthVal === 12)
+                    $("#Midterms").text(Resources[benefitLang]["midterm2"]);
+                } else if (benefitViewPeriodTypeVal === "quarter") {
+                  if (benefitViewMonthVal === 3)
+                    $("#Quarter").text(Resources[benefitLang]["quarter1"]);
+                  else if (benefitViewMonthVal === 6)
+                    $("#Quarter").text(Resources[benefitLang]["quarter2"]);
+                  else if (benefitViewMonthVal === 9)
+                    $("#Quarter").text(Resources[benefitLang]["quarter3"]);
+                  else if (benefitViewMonthVal === 12)
+                    $("#Quarter").text(Resources[benefitLang]["quarter4"]);
+                }
+              }
+              if (benefitViewItem.ComponentA) $("#A").text(benefitViewItem.ComponentA);
+              if (benefitViewItem.ComponentB) $("#B").text(benefitViewItem.ComponentB);
+              if (benefitViewItem.ComponentC) $("#CC").text(benefitViewItem.ComponentC);
+              if (benefitViewItem.ComponentD) $("#D").text(benefitViewItem.ComponentD);
+              if (benefitViewItem.ComponentE) $("#E").text(benefitViewItem.ComponentE);
+              if (benefitViewItem.ComponentF) $("#F").text(benefitViewItem.ComponentF);
+              if (benefitViewItem.ComponentG) $("#G").text(benefitViewItem.ComponentG);
+              if (benefitViewItem.FinalValue) $("#Equation").text(benefitViewItem.FinalValue);
+              if (benefitViewItem.PerformanceAnalysis)
+                $("#PerformanceAnalysis").text(benefitViewItem.PerformanceAnalysis);
+              if (benefitViewItem.ActualkpiDate) {
+                var actualBenefitDateText = new Date(benefitViewItem.ActualkpiDate);
+                if (!isNaN(actualBenefitDateText.getTime()))
+                  $("#ActualkpiDate").text(actualBenefitDateText.toLocaleDateString("en-US"));
+                else
+                  $("#ActualkpiDate").text(benefitViewItem.ActualkpiDate);
+              }
+            }
+          },
+          error: function (err) {
+            console.error("Error getting KPIResultsHistory (BenefitCode)", err);
+          }
+        });
+      }
+      if (isInManager && listkey == "benefits" && $('#WFStage').val() == "approved") {
+        var benefitViewAllZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
+            return parseFloat($(id).val() || 0) === 0;
+        });
+
+        var benefitViewFields = "#A, #B, #CC, #D, #E, #F, #G, #Year, #Months, #Midterms, #Quarter";
+
+        if (benefitViewAllZero) {
+            $(benefitViewFields).prop("disabled", false);
+        } else {
+            $(benefitViewFields).prop("disabled", true);
+        }
       }
       if (isPerformanceLeader && $('#WFStage').val() == "approved") {
         var allZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
@@ -4882,8 +5380,8 @@ window.View_Data_Request = {
         window.location = editUrl;
       });
       $("button.btn-delete").on("click", function () {
-        Delete_Item_Submit.g.Delete_Message();
-        // NewLogicDelete_Item_Submit.g.Delete_Message();
+        // Delete_Item_Submit.g.Delete_Message();
+        NewLogicDelete_Item_Submit.g.Delete_Message();
       });
     },
     Cancel: function () {
@@ -5924,27 +6422,39 @@ var Master_Details_Request = {
               break;
 
             case "radio":
+              if ($(this).val() !== "yes") {
+                break;
+              }
               var radioval = oListItem.get_item($(this).attr("id"));
+              var $row = $(this).closest(".Details-Item");
+              var fieldId = $(this).attr("id");
+
+              $row.find('input.yesnolistener[id="' + fieldId + '"]').prop("checked", false);
 
               if (radioval == "Yes" || radioval == "yes") {
-                $('input[id="' + $(this).attr("id") + '"]')
-                  .filter('[value="yes"]')
-                  .attr("checked", true);
+                $row
+                  .find('input.yesnolistener[id="' + fieldId + '"][value="yes"]')
+                  .prop("checked", true);
               } else if (
                 radioval == "No" ||
                 radioval == "no" ||
                 radioval == "undefined" ||
                 radioval == null
               ) {
-                $('input[id="' + $(this).attr("id") + '"]')
-                  .filter('[value="no"]')
-                  .attr("checked", true);
-              } else
-                $('input[id="' + $(this).attr("id") + '"]')
-                  .filter(
-                    '[value="' + oListItem.get_item($(this).attr("id")) + '"]'
+                $row
+                  .find('input.yesnolistener[id="' + fieldId + '"][value="no"]')
+                  .prop("checked", true);
+              } else {
+                $row
+                  .find(
+                    'input.yesnolistener[id="' +
+                      fieldId +
+                      '"][value="' +
+                      oListItem.get_item(fieldId) +
+                      '"]'
                   )
-                  .attr("checked", true);
+                  .prop("checked", true);
+              }
               break;
 
             case "checkbox":
@@ -6075,6 +6585,13 @@ var Master_Details_Request = {
               break;
           }
         });
+        $(
+          '[data-target_list="' +
+            CurrList +
+            '"] [data-ID="' +
+            oListItem.get_id() +
+            '"] input.yesnolistener:checked'
+        ).trigger("change");
       }
     }
 
@@ -6088,6 +6605,9 @@ var Master_Details_Request = {
       Master_Details_Request.init(MasterDetailsArrayRequest[0]);
       MasterDetailsArrayRequest.shift(); //remove 0 index
     } else if (isEdit) {
+      $("[data-target_list] .Details-Item.EditItem input.yesnolistener:checked").trigger(
+        "change"
+      );
       //handle people picker inputs
       $("div[type=picker]").each(function () {
         var mp = new MyPeoplePicker();
@@ -7884,7 +8404,14 @@ window.NewLogicDelete_Service = {
       return;
     }
     if (listkey == "mainkpi") {
-      Delete_Kpi_Results.init();
+      // KPIResults are already soft-deleted by deleteitemandrelatedtasks (RelatedListNames).
+      // Old Delete_Kpi_Results.init() only redirected when it found rows — so after API
+      // soft-delete (count=0) the page stayed stuck. Always go to listing here.
+      window.location =
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Listing.aspx?ListKey=" +
+        listkey +
+        (typeof PCODE_STRING !== "undefined" ? PCODE_STRING : "");
       return;
     }
     var listingUrl =
@@ -7923,14 +8450,17 @@ window.NewLogicDelete_Service = {
       success: function () {
         $("button.btn-delete").removeClass("loader-action");
         $("button.btn-delete").addClass("loader-action-success");
-        if (filesUrls.length) {
-          allFileIndex = 0;
-          for (let i = 0; i < filesUrls.length; i++) {
-            deleteAllFileFromDoc.init(filesUrls[i].url);
-          }
-        } else {
-          NewLogicDelete_Service.redirectAfterDelete();
-        }
+        // Keep attachments on soft-delete so DeletedItemsListing can still show them.
+        // Old logic used to hard-delete files via deleteAllFileFromDoc here.
+        // if (filesUrls.length) {
+        //   allFileIndex = 0;
+        //   for (let i = 0; i < filesUrls.length; i++) {
+        //     deleteAllFileFromDoc.init(filesUrls[i].url);
+        //   }
+        // } else {
+        //   NewLogicDelete_Service.redirectAfterDelete();
+        // }
+        NewLogicDelete_Service.redirectAfterDelete();
       },
       error: function (err) {
         console.log("deleteitemandrelatedtasks call failed", err);
@@ -9324,41 +9854,41 @@ window.equationKPI = {
         $("p#Equation").text(kpiEquation || 0);
       }
     }
-    // access on equation button  
-    if (
-      (isAdmin ||
-        isSPMAdmin ||
-        isVROP ||
-        isLMSP ||
-        isVROE ||
-        isLMSUExecution ||
-        isSODVROExecution ||
-        isEPMO) &&
-      !USERisWF
-    ) {
-      // remove attr disabled for this roles in equation
-      $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
-        '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
-      );
-    }
-    if (isAdmin || isPerformanceLeader || isVROP || isLMSP) {
-      // $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
-      $(
-        "input#B, input#A, input#CC , input#D ,input#E,input#F,input#G"
-      ).removeAttr("disabled");
-    }
+    // access on equation button — mainkpi only
+    if (listkey == "mainkpi") {
+      if (
+        (isAdmin ||
+          isSPMAdmin ||
+          isVROP ||
+          isLMSP ||
+          isVROE ||
+          isLMSUExecution ||
+          isSODVROExecution ||
+          isEPMO) &&
+        !USERisWF
+      ) {
+        $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
+          '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
+        );
+      }
+      if (isAdmin || isPerformanceLeader || isVROP || isLMSP) {
+        $(
+          "input#B, input#A, input#CC , input#D ,input#E,input#F,input#G"
+        ).removeAttr("disabled");
+      }
 
-    $(".btn-edit-equation").on("click", () => {
-      equationKPI.g.editEquation();
-    });
+      $(".btn-edit-equation").on("click", () => {
+        equationKPI.g.editEquation();
+      });
+
+      Update_Kpi_Results.init(kpiEquation);
+    }
 
     // to make the equation fields disabled after render
     $("[data-toggledisabledvalues]").each(function () {
       ListInfo.g.toggleDisabledFields($(this));
     });
     //
-
-    Update_Kpi_Results.init(kpiEquation);
 
     changeResources();
   },
@@ -9402,6 +9932,585 @@ window.equationKPI = {
     },
     array: [],
   },
+};
+
+// Initiative Manager on Edit (non-WF): PerformanceAnalysis + attachments required
+window.BenefitsActualFieldsRequired = {
+  performanceSelector: "#PerformanceAnalysis",
+  fileSelector: "#getFile",
+  isApplicable: function () {
+    if (typeof listkey === "undefined" || listkey != "benefits") return false;
+    if (!(typeof isEdit !== "undefined" && isEdit)) return false;
+    if (typeof USERisWF !== "undefined" && USERisWF) return false;
+    var isInitiativeMgr =
+      (typeof isInManager !== "undefined" && isInManager) ||
+      (typeof currentUserRole !== "undefined" &&
+        currentUserRole == "InitiativeManager");
+    return !!isInitiativeMgr;
+  },
+  setFieldRequired: function ($field, isRequired) {
+    if (!$field || !$field.length) return;
+    var $label = $field.prev("label");
+    if (!$label.length) {
+      $label = $field.closest(".CFIELD").find("label").first();
+    }
+    if (isRequired) {
+      $field.attr("required", true);
+      $label.attr("required", true);
+    } else {
+      $field.removeAttr("required");
+      $label.removeAttr("required");
+    }
+  },
+  bind: function () {
+    if (!BenefitsActualFieldsRequired.isApplicable()) return;
+    BenefitsActualFieldsRequired.setFieldRequired(
+      $(BenefitsActualFieldsRequired.performanceSelector),
+      true
+    );
+    BenefitsActualFieldsRequired.setFieldRequired(
+      $(BenefitsActualFieldsRequired.fileSelector),
+      true
+    );
+  },
+};
+
+// Initiative Manager: A–G required when empty (0 is valid)
+window.BenefitsEquationComponentsRequired = {
+  selector: "#A, #B, #CC, #D, #E, #F, #G",
+  isApplicable: function () {
+    if (typeof listkey === "undefined" || listkey != "benefits") return false;
+    if (!(typeof isNew !== "undefined" && isNew) && !(typeof isEdit !== "undefined" && isEdit)) {
+      return false;
+    }
+    var isInitiativeMgr =
+      (typeof isInManager !== "undefined" && isInManager) ||
+      (typeof currentUserRole !== "undefined" &&
+        currentUserRole == "InitiativeManager");
+    if (!isInitiativeMgr) return false;
+    var $any = $(BenefitsEquationComponentsRequired.selector).filter(":visible").first();
+    if (!$any.length) return false;
+    var $section = $any.closest(".section-container");
+    if ($section.length && !$section.is(":visible")) return false;
+    return true;
+  },
+  isEmptyVal: function (val) {
+    return val === undefined || val === null || String(val).trim() === "";
+  },
+  setFieldRequired: function ($field, isRequired) {
+    if (!$field || !$field.length) return;
+    var $label = $field.prev("label");
+    if (!$label.length) {
+      $label = $field.closest(".CFIELD").find("label").first();
+    }
+    if (isRequired) {
+      $field.attr("required", true);
+      $label.attr("required", true);
+    } else {
+      $field.removeAttr("required");
+      $label.removeAttr("required");
+    }
+  },
+  refreshField: function ($field) {
+    if (!$field || !$field.length) return;
+    if (!BenefitsEquationComponentsRequired.isApplicable()) {
+      BenefitsEquationComponentsRequired.setFieldRequired($field, false);
+      return;
+    }
+    if (!$field.is(":visible") || !$field.closest(".CFIELD").length) {
+      BenefitsEquationComponentsRequired.setFieldRequired($field, false);
+      return;
+    }
+    var empty = BenefitsEquationComponentsRequired.isEmptyVal($field.val());
+    BenefitsEquationComponentsRequired.setFieldRequired($field, empty);
+  },
+  refreshAll: function () {
+    $(BenefitsEquationComponentsRequired.selector).each(function () {
+      BenefitsEquationComponentsRequired.refreshField($(this));
+    });
+  },
+  bind: function () {
+    if (typeof listkey === "undefined" || listkey != "benefits") return;
+    if (!(typeof isNew !== "undefined" && isNew) && !(typeof isEdit !== "undefined" && isEdit)) {
+      return;
+    }
+    $(document)
+      .off(
+        "input.benefitsEqReq change.benefitsEqReq",
+        BenefitsEquationComponentsRequired.selector
+      )
+      .on(
+        "input.benefitsEqReq change.benefitsEqReq",
+        BenefitsEquationComponentsRequired.selector,
+        function () {
+          BenefitsEquationComponentsRequired.refreshField($(this));
+        }
+      );
+    BenefitsEquationComponentsRequired.refreshAll();
+  },
+};
+
+// Benefit KPI equations (KPIEquations list — BenefitCode)
+window.equationBenefitKPI = {
+  getField: function (oListItem, fieldName, defaultValue) {
+    if (defaultValue === undefined) {
+      defaultValue = "";
+    }
+    try {
+      var val = oListItem.get_item(fieldName);
+      return val == null ? defaultValue : val;
+    } catch (e) {
+      console.warn(
+        "[benefits][getField] field not available:",
+        fieldName,
+        e.message
+      );
+      return defaultValue;
+    }
+  },
+  loadBenefitPeriodFields: function (oListItem) {
+    benefitYear = equationBenefitKPI.getField(oListItem, "Year", "");
+    benefitMonth = equationBenefitKPI.getField(oListItem, "Months", "");
+    benefitQuarter = equationBenefitKPI.getField(oListItem, "Quarter", "");
+    benefitMid = equationBenefitKPI.getField(oListItem, "Midterms", "");
+    benefitYearHandler = equationBenefitKPI.getField(oListItem, "Years", "");
+    benefitFromYear = equationBenefitKPI.getField(oListItem, "FromDate", "");
+    benefitToYear = equationBenefitKPI.getField(oListItem, "ToDate", "");
+    PeriodType = equationBenefitKPI.getField(oListItem, "PeriodType", "");
+    if (!PeriodType && isView) {
+      PeriodType =
+        $("#PeriodType").attr("data-viewtogglevalue") ||
+        ($("#PeriodType").text() !== No_Data ? $("#PeriodType").text() : "") ||
+        "";
+    }
+  },
+  onSuccess: function (sender, args) {
+    console.log("[benefits][equationBenefitKPI.onSuccess]", {
+      benefitCode: benefitCode,
+      count: equationBenefitKPI.g.collListItem
+        ? equationBenefitKPI.g.collListItem.get_count()
+        : 0,
+    });
+    equationBenefitKPI.g.array = [];
+    benefitKpiEquation = "";
+    benefitKpiEquationID = null;
+    benefitKpiEquationsComponents = [];
+    var collListItem = equationBenefitKPI.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      benefitKpiEquationID = oListItem.get_id();
+      benefitKpiEquation = oListItem.get_item("KPIInput") || "";
+      benefitKpiEquation = benefitKpiEquation.replaceAll("C", "CC");
+      benefitKpiEquation = benefitKpiEquation.replaceAll(" ", "");
+      benefitKpiEquationsComponents.push({
+        A: oListItem.get_item("A"),
+        B: oListItem.get_item("B"),
+        CC: oListItem.get_item("CC"),
+        D: oListItem.get_item("D"),
+        E: oListItem.get_item("E"),
+        F: oListItem.get_item("F"),
+        G: oListItem.get_item("G"),
+      });
+      $("input#benefitEquation").val(oListItem.get_item("Equation") || "");
+      $("p#benefitEquation").text(oListItem.get_item("Equation") || "");
+    }
+
+    var myCKeys =
+      benefitKpiEquationsComponents.length > 0
+        ? Object.keys(benefitKpiEquationsComponents[0])
+        : [];
+
+    if (!benefitKpiEquation && (isEdit || isView || listkey == "benefits")) {
+      $("#Year,#Months,#Quarter,#Midterms,#Years").removeAttr("required");
+      $("#Year,#Months,#Quarter,#Midterms,#Years")
+        .parent()
+        .removeAttr("required");
+      $("#Year,#Months,#Quarter,#Midterms,#Years")
+        .prev("label")
+        .removeAttr("required");
+
+      // Hide equation section and show note (instead of disable_section)
+      equationBenefitKPI.g.hideEquationSectionNoRecord();
+    }
+
+    if (benefitKpiEquation) {
+      equationBenefitKPI.g.showEquationSection();
+      benefitKpiEquation = benefitKpiEquation.toUpperCase();
+
+      myCKeys.forEach((o) => {
+        benefitKpiEquationsComponents[0][o]
+          ? $(`input#${o},p#${o}`)
+              .parent()
+              .show()
+              .find(">label")
+              .text(benefitKpiEquationsComponents[0][o])
+          : $(`input#${o},p#${o}`).parent().remove();
+
+        if (isView) {
+          var val = $(`p#${o}`).text();
+          if (val != No_Data) {
+            benefitKpiEquation = benefitKpiEquation.replaceAll(
+              o,
+              $(`p#${o}`).text()
+            );
+          } else {
+            benefitKpiEquation = benefitKpiEquation.replaceAll(o, 0);
+          }
+        } else {
+          var elemVal = $(`input#${o}`).val() ? $(`input#${o}`).val() : 0;
+          benefitKpiEquation = benefitKpiEquation.replaceAll(o, elemVal);
+        }
+      });
+
+      benefitKpiEquation = benefitKpiEquation.replaceAll(",", "");
+
+      try {
+        benefitKpiEquation =
+          eval(benefitKpiEquation) % 1 != 0
+            ? eval(benefitKpiEquation).toFixed(2)
+            : eval(benefitKpiEquation);
+      } catch (err) {
+        $("body").append(
+          "<style>" +
+            ".btn.btn-action.btn-cancel{opacity: .6;pointer-events: none;}" +
+            ".btn.btn-action.btn-save{opacity: .6;pointer-events: none;}" +
+            ".btn.btn-action.btn-delete{opacity: .6;pointer-events: none;}" +
+            "</style>"
+        );
+        $(
+          ".form-row.rightBtns.justify-content-end.form-btns-wrapper"
+        ).prepend(
+          `<span data-trans-equationerr class="equationErrMsg redColor Resources"><span/>`
+        );
+      }
+
+      if (benefitKpiEquation === "NaN") {
+        $("input#Equation").val(0);
+        $("p#Equation").text("0");
+      } else {
+        $("input#Equation").val(benefitKpiEquation || 0);
+        $("p#Equation").text(benefitKpiEquation || 0);
+      }
+    }
+    // access on equation button — benefits only
+    if (listkey == "benefits") {
+      equationBenefitKPI.g.ensureBenefitsTargetsLink("equationBenefitKPI.onSuccess");
+
+      $(".btn-edit-equation").remove();
+      if ((isAdmin || isEPMO) && !USERisWF) {
+        $(".savecancelBtns > div, .btnactionrow > .rightBtns, .btnactionrow .form-btns-wrapper").append(
+          '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
+        );
+        if (isAdmin || isEPMO) {
+          $(
+            "input#B, input#A, input#CC , input#D ,input#E,input#F,input#G"
+          ).removeAttr("disabled");
+        }
+        $(".btn-edit-equation")
+          .off("click.benefitEquation")
+          .on("click.benefitEquation", function () {
+            equationBenefitKPI.g.editEquation();
+          });
+        changeResources();
+      }
+
+      Update_BenefitKPI_Results.init(benefitKpiEquation);
+
+      // Initiative Manager: A–G required when empty (0 allowed)
+      if (window.BenefitsEquationComponentsRequired) {
+        BenefitsEquationComponentsRequired.bind();
+      }
+    }
+
+    $("[data-toggledisabledvalues]").each(function () {
+      ListInfo.g.toggleDisabledFields($(this));
+    });
+
+    changeResources();
+  },
+  onError: function (sender, args) {
+    console.error(
+      "[benefits][equationBenefitKPI.onError]",
+      args.get_message(),
+      args.get_stackTrace()
+    );
+    debugger;
+    if (listkey == "benefits" && !equationBenefitKPI.g.usedTitleFallback) {
+      equationBenefitKPI.g.usedTitleFallback = true;
+      equationBenefitKPI.g.initByTitle();
+      return;
+    }
+    if (listkey == "benefits") {
+      equationBenefitKPI.g.ensureBenefitsViewUi("equationBenefitKPI.onError");
+    }
+  },
+  init: function () {
+    console.log("[benefits][equationBenefitKPI.init]", {
+      listkey: listkey,
+      benefitCode: benefitCode,
+    });
+    if (!benefitCode) {
+      console.warn("[benefits][equationBenefitKPI.init] STOP — benefitCode empty");
+      debugger;
+      equationBenefitKPI.g.ensureBenefitsViewUi("equationBenefitKPI.init-no-benefitCode");
+      return;
+    }
+    equationBenefitKPI.g.usedTitleFallback = false;
+    equationBenefitKPI.g.loadByField("BenefitCode", benefitCode);
+  },
+  g: {
+    usedTitleFallback: false,
+    getEquationTitleFromBenefitCode: function () {
+      if (!benefitCode) {
+        return "";
+      }
+      var parts = benefitCode.split("-");
+      if (parts.length < 3) {
+        return "";
+      }
+      return (
+        "kpiequations".substring(0, 2).toUpperCase() +
+        "-" +
+        parts[1] +
+        "-" +
+        parts[2]
+      );
+    },
+    applyEquationButtonAccess: function () {
+      if (listkey != "benefits") {
+        return false;
+      }
+
+      $(".btn-edit-equation").remove();
+
+      // access on equation button — benefits only (مثل mainkpi)
+      if ((isAdmin || isEPMO) && !USERisWF) {
+        var $btnTargets = $(
+          ".savecancelBtns > div, .btnactionrow > .rightBtns, .btnactionrow .form-btns-wrapper"
+        );
+        if (!$btnTargets.length) {
+          $btnTargets = $(".btnactionrow");
+        }
+        $btnTargets.append(
+          '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
+        );
+
+        if (isAdmin || isEPMO) {
+          $(
+            "input#B, input#A, input#CC , input#D ,input#E,input#F,input#G"
+          ).removeAttr("disabled");
+        }
+
+        $(".btn-edit-equation")
+          .off("click.benefitEquation")
+          .on("click.benefitEquation", function () {
+            equationBenefitKPI.g.editEquation();
+          });
+
+        changeResources();
+        return true;
+      }
+
+      return false;
+    },
+    getButtonContainer: function () {
+      var $targets = $(
+        ".btnactionrow .form-btns-wrapper, .btnactionrow > .rightBtns, .savecancelBtns > div, .btnactionrow .rightBtns"
+      );
+      console.log("[benefits][getButtonContainer]", {
+        count: $targets.length,
+        html: $targets.length ? $targets.first().prop("outerHTML") : null,
+      });
+      return $targets.first();
+    },
+    ensureBenefitsTargetsLink: function (source) {
+      console.log("[benefits][ensureBenefitsTargetsLink]", source, {
+        listkey: listkey,
+        USERisWF: USERisWF,
+        benefitCode: benefitCode,
+        existingLink: $("#benefits-targets-link").length,
+      });
+      if (listkey != "benefits" || USERisWF || !benefitCode) {
+        if (listkey == "benefits" && (!benefitCode || USERisWF)) {
+          console.warn("[benefits][ensureBenefitsTargetsLink] skipped", {
+            USERisWF: USERisWF,
+            benefitCode: benefitCode,
+          });
+          debugger;
+        }
+        return;
+      }
+      if ($("#benefits-targets-link").length) {
+        return;
+      }
+      var benefitTargetsLink =
+        '<a id="benefits-targets-link" class="linkmsg alert" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/sitepages/Targets.aspx?BenefitCode=" +
+        encodeURIComponent(benefitCode) +
+        '"><i class="fas fa-info-circle iconfontawesome"></i><span data-trans-benefitmetricstext class="Resources"></span></a>';
+      if ($("#printableArea").length) {
+        $("#printableArea").prepend(benefitTargetsLink);
+        console.log("[benefits][ensureBenefitsTargetsLink] prepended to #printableArea");
+      } else if ($(".container-body").length) {
+        $(".container-body").prepend(benefitTargetsLink);
+        console.log("[benefits][ensureBenefitsTargetsLink] prepended to .container-body");
+      } else {
+        $(".btnactionrow").first().before(benefitTargetsLink);
+        console.log("[benefits][ensureBenefitsTargetsLink] inserted before .btnactionrow");
+      }
+      changeResources();
+    },
+    ensureBenefitsViewUi: function (source) {
+      if (listkey != "benefits") {
+        return;
+      }
+      equationBenefitKPI.g.ensureBenefitsTargetsLink(source);
+      equationBenefitKPI.g.applyEquationButtonAccess();
+      // No equation record available — hide section + show note
+      if (!benefitKpiEquation) {
+        equationBenefitKPI.g.hideEquationSectionNoRecord();
+      }
+    },
+    getEquationSection: function () {
+      var $section = $("#benefitEquation").closest(".section-container");
+      if ($section.length) return $section;
+      return $(".section-container")
+        .filter(function () {
+          return $(this).find("#Year, #A, #Equation, #benefitEquation").length > 0;
+        })
+        .first();
+    },
+    ensureNoEquationMsgStyles: function () {
+      if (window.BenefitsWeightGuard && BenefitsWeightGuard.ensureMsgStyles) {
+        BenefitsWeightGuard.ensureMsgStyles();
+      } else if (!$("#analysis-calendar-msg-styles").length) {
+        $("head").append(
+          '<style id="analysis-calendar-msg-styles">' +
+            ".analysis-calendar-msg-wrapper.d-flex{display:flex;align-items:flex-start;}" +
+            ".analysis-calendar-msg{position:relative;display:flex;align-items:flex-start;gap:12px;width:fit-content;max-width:100%;padding:7px 14px;margin-bottom:14px;border-radius:10px;box-shadow:0 4px 14px rgba(24,58,102,.12),0 2px 6px rgba(0,0,0,.06);background:#fff;border:1px solid rgba(24,58,102,.08);overflow:hidden;}" +
+            ".analysis-calendar-msg__strip{position:absolute;left:0;top:0;bottom:0;width:5px;}" +
+            ".analysis-calendar-msg.analysis-calendar-info .analysis-calendar-msg__strip{background:linear-gradient(180deg,#148287 0%,#183a66 100%);}" +
+            ".analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__strip{background:linear-gradient(180deg,#f7941d 0%,#183a66 100%);}" +
+            ".analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__strip{background:linear-gradient(180deg,#f7941d 0%,#c0392b 100%);}" +
+            ".analysis-calendar-msg__icon{flex-shrink:0;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;}" +
+            ".analysis-calendar-msg.analysis-calendar-info .analysis-calendar-msg__icon{background:rgba(20,130,135,.15);color:#148287;}" +
+            ".analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__icon{background:rgba(247,148,29,.18);color:#183a66;}" +
+            ".analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__icon{background:rgba(247,148,29,.2);color:#c0392b;}" +
+            ".analysis-calendar-msg__text{flex:1;color:#183a66;font-size:14px;line-height:1.5;font-weight:500;padding-top:4px;}" +
+            ".analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__text{color:#183a66;}" +
+            ".analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__text{color:#183a66;}" +
+            "</style>"
+        );
+      }
+      if (!$("#benefits-no-equation-msg-styles").length) {
+        $("head").append(
+          '<style id="benefits-no-equation-msg-styles">' +
+            ".benefits-no-equation-msg .analysis-calendar-msg{" +
+            "width:100%;" +
+            "margin-block:3rem;" +
+            "background:rgba(247,148,29,0.2);" +
+            "}" +
+            "</style>"
+        );
+      }
+    },
+    hideEquationSectionNoRecord: function () {
+      if (listkey != "benefits") return;
+      var $section = equationBenefitKPI.g.getEquationSection();
+      if (!$section.length) return;
+
+      equationBenefitKPI.g.ensureNoEquationMsgStyles();
+      $section.hide().removeClass("disable_section");
+
+      var isAr =
+        localStorage.getItem("lng") == null ||
+        localStorage.getItem("lng") == "ar";
+      var msg = isAr
+        ? "لم يتم ادخال المعادلة بعد"
+        : "The equation has not been entered yet.";
+
+      $(".benefits-no-equation-msg").remove();
+      var noteHtml =
+        '<div class="analysis-calendar-msg-wrapper d-flex benefits-no-equation-msg">' +
+        '<div class="analysis-calendar-msg analysis-calendar-info">' +
+        '<div class="analysis-calendar-msg__strip"></div>' +
+        '<div class="analysis-calendar-msg__icon">&#8505;</div>' +
+        '<div class="analysis-calendar-msg__text">' +
+        msg +
+        "</div>" +
+        "</div>" +
+        "</div>";
+      $section.before(noteHtml);
+      if (window.BenefitsEquationComponentsRequired) {
+        BenefitsEquationComponentsRequired.refreshAll();
+      }
+    },
+    showEquationSection: function () {
+      var $section = equationBenefitKPI.g.getEquationSection();
+      $(".benefits-no-equation-msg").remove();
+      if ($section.length) {
+        $section.show().removeClass("disable_section");
+      }
+      if (window.BenefitsEquationComponentsRequired) {
+        BenefitsEquationComponentsRequired.bind();
+      }
+    },
+    loadByField: function (fieldName, fieldValue) {
+      console.log("[benefits][loadByField]", { fieldName: fieldName, fieldValue: fieldValue });
+      if (!fieldValue) {
+        equationBenefitKPI.g.ensureBenefitsViewUi("loadByField-empty-value");
+        return;
+      }
+      var clientContext = new SP.ClientContext.get_current();
+      var oList = clientContext
+        .get_web()
+        .get_lists()
+        .getByTitle("KPIEquations");
+      var camlQuery = new SP.CamlQuery();
+      camlQuery.set_viewXml(
+        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='" +
+          fieldName +
+          "'/><Value Type='Text'>" +
+          fieldValue +
+          "</Value></Eq></And></Where></Query></View>"
+      );
+
+      equationBenefitKPI.g.collListItem = oList.getItems(camlQuery);
+      clientContext.load(equationBenefitKPI.g.collListItem);
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, equationBenefitKPI.onSuccess),
+        Function.createDelegate(this, equationBenefitKPI.onError)
+      );
+    },
+    initByTitle: function () {
+      var eqTitle = equationBenefitKPI.g.getEquationTitleFromBenefitCode();
+      console.log("[benefits][initByTitle] fallback Title query", eqTitle);
+      equationBenefitKPI.g.loadByField("Title", eqTitle);
+    },
+    editEquation: function () {
+      console.log("[benefits][editEquation]", {
+        benefitKpiEquationID: benefitKpiEquationID,
+        benefitCode: benefitCode,
+      });
+      if (!benefitKpiEquationID) {
+        console.warn("[benefits][editEquation] STOP — no benefitKpiEquationID");
+        debugger;
+        return;
+      }
+      window.location =
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Edit.aspx?ListKey=benefitsequations&IID=" +
+        benefitKpiEquationID +
+        PCODE_STRING;
+    },
+    array: [],
+  },
+};
+window.debugBenefitsUi = function () {
+  equationBenefitKPI.g.ensureBenefitsViewUi("manual-debugBenefitsUi");
 };
 
 // BenefitMetrics equation
@@ -9862,6 +10971,74 @@ window.Update_Kpi_Results = {
   },
 };
 
+// update on benefit KPI results list
+
+window.Update_BenefitKPI_Results = {
+  init: function () {
+    var context = SP.ClientContext.get_current();
+    var dfd = $.Deferred();
+    var programList = context.get_web().get_lists().getByTitle("KPIResults");
+    var camlQuery = new SP.CamlQuery();
+
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='BenefitCode'/><Value Type='Text'>" +
+        benefitCode +
+        "</Value></Eq></And></Where></Query></View>"
+    );
+    var progColl = programList.getItems(camlQuery);
+    context.load(progColl);
+    context.executeQueryAsync(function () {
+      var currentItemArray = [];
+      if (progColl.get_count() > 0) {
+        var progEnum = progColl.getEnumerator();
+        while (progEnum.moveNext()) {
+          var currentItem = progEnum.get_current();
+          var currentId = currentItem.get_item("ID");
+          var yearItem = currentItem.get_item("Year");
+          var items = programList.getItemById(currentId);
+          var yearPicked = benefitYear,
+            monthHandler = benefitMonth,
+            quarterHandler = benefitQuarter,
+            midHandler = benefitMid,
+            yearHandler = benefitYearHandler;
+
+          if (yearItem == yearPicked) {
+            if (!benefitKpiEquation) {
+              benefitKpiEquation = 0;
+            }
+            if (monthHandler) {
+              items.set_item(monthHandler, benefitKpiEquation);
+            } else if (quarterHandler) {
+              items.set_item(quarterHandler, benefitKpiEquation);
+            } else if (midHandler) {
+              items.set_item(midHandler, benefitKpiEquation);
+            } else {
+              yearHandler = "ActualY";
+              items.set_item(yearHandler, benefitKpiEquation);
+            }
+          }
+
+          items.update();
+          currentItemArray.push(items);
+
+          context.load(currentItemArray[currentItemArray.length - 1]);
+        }
+        context.executeQueryAsync(
+          function () {
+            dfd.resolve();
+          },
+          function (sender, args) {
+            console.log(
+              "Request Failed to get benefit kpi results Items :" +
+                args.get_message()
+            );
+          }
+        );
+      }
+    });
+  },
+};
+
 ///////////////////
 
 var deleteAllFileFromDoc = {
@@ -9889,41 +11066,41 @@ var deleteAllFileFromDoc = {
   success: function () {
     if (allFileIndex == filesUrls.length - 1) {
       //OLD REDIRECT BLOCK (legacy behavior) - START
-      if (
-        listkey == "projects" ||
-        listkey == "ideas" ||
-        listkey == "portfolio" ||
-        listkey == "budgetitems"
-      ) {
-        window.location =
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/Listing.aspx?ListKey=" +
-          listkey;
-      } else {
-        if (listkey == "mainkpi") {
-          Delete_Kpi_Results.init(); // to delete the kpi from kpi results
-        } else {
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/Listing.aspx?ListKey=" +
-            listkey +
-            PCODE_STRING;
-        }
-      }
-      //OLD REDIRECT BLOCK (legacy behavior) - END
-
-      // NEW REDIRECT BLOCK (new unified logic) - START
       // if (
-      //   window.NewLogicDelete_Service &&
-      //   NewLogicDelete_Service.redirectAfterDelete
+      //   listkey == "projects" ||
+      //   listkey == "ideas" ||
+      //   listkey == "portfolio" ||
+      //   listkey == "budgetitems"
       // ) {
-      //   NewLogicDelete_Service.redirectAfterDelete();
-      // } else {
       //   window.location =
       //     _spPageContextInfo.webAbsoluteUrl +
       //     "/SitePages/Listing.aspx?ListKey=" +
       //     listkey;
+      // } else {
+      //   if (listkey == "mainkpi") {
+      //     Delete_Kpi_Results.init(); // to delete the kpi from kpi results
+      //   } else {
+      //     window.location =
+      //       _spPageContextInfo.webAbsoluteUrl +
+      //       "/SitePages/Listing.aspx?ListKey=" +
+      //       listkey +
+      //       PCODE_STRING;
+      //   }
       // }
+      //OLD REDIRECT BLOCK (legacy behavior) - END
+
+      // NEW REDIRECT BLOCK (new unified logic) - START
+      if (
+        window.NewLogicDelete_Service &&
+        NewLogicDelete_Service.redirectAfterDelete
+      ) {
+        NewLogicDelete_Service.redirectAfterDelete();
+      } else {
+        window.location =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/Listing.aspx?ListKey=" +
+          listkey;
+      }
       //  NEW REDIRECT BLOCK (new unified logic) - END
     }
     allFileIndex++;
@@ -10416,6 +11593,15 @@ var Check_Item_Deleted = {
             "InitiativeDeliverables",
             globalInitiativeCode
           );
+          if (
+            typeof ListInfo !== "undefined" &&
+            ListInfo.g &&
+            ListInfo.g.fillMasterRelatedInitiativeDeliverable
+          ) {
+            ListInfo.g.fillMasterRelatedInitiativeDeliverable(
+              globalInitiativeCode
+            );
+          }
         } else if (listkey == "mainkpi") {
           Goal_Strategy_Info.init(relatedStrategyKpi);
 
@@ -10883,6 +12069,26 @@ window.Get_AllTaskHistoryRelatedToForm = {
         });
       }
 
+      let author = No_Data;
+      try {
+        var authorField = oListItem.get_item("Author");
+        if (authorField) {
+          author = authorField.get_lookupValue() || No_Data;
+        }
+      } catch (e) {
+        author = No_Data;
+      }
+
+      let editor = No_Data;
+      try {
+        var editorField = oListItem.get_item("Editor");
+        if (editorField) {
+          editor = editorField.get_lookupValue() || No_Data;
+        }
+      } catch (e) {
+        editor = No_Data;
+      }
+
       let workflowName = oListItem.get_item("WorkflowName");
       let wfHistoryLink = "";
       if (workflowName == "Project") {
@@ -10912,11 +12118,11 @@ window.Get_AllTaskHistoryRelatedToForm = {
             <p class="historyValue">${assignedTo.join(",")}</p>
             <p class="Resources historyLabel" data-trans-assignedTo>assignedTo</p>
           </div>
-          <div class="col-2">
+          <div class="col-1">
             <p class="historyValue">${createdDate}</p>
             <p class="Resources historyLabel" data-trans-createddate>createddate</p>
           </div>
-          <div class="col-2">
+          <div class="col-1">
             <p class="historyValue">${modifiedNoteDate}</p>
             <p class="Resources historyLabel" data-trans-modifieddate>modifieddate</p>
           </div>
@@ -10927,6 +12133,14 @@ window.Get_AllTaskHistoryRelatedToForm = {
           <div class="col-1">
             <p class="historyValue">${takenAction}</p>
             <p class="Resources historyLabel" data-trans-takenaction>taken action</p>
+          </div>
+          <div class="col-1">
+            <p class="historyValue">${author}</p>
+            <p class="Resources historyLabel" data-trans-author>Author</p>
+          </div>
+          <div class="col-1">
+            <p class="historyValue">${editor}</p>
+            <p class="Resources historyLabel" data-trans-editor>Editor</p>
           </div>
           <div class="col-1 text-center">
             <a href="${wfHistoryLink}" target="_blank" class="d-inline-flex align-items-center AllTaskHistoryRelatedToForm-HistoryLink">
@@ -12265,6 +13479,14 @@ window.get_DynamicValues = {
       window.setTimeout(function () {
         get_DynamicValues.init(dynamicArrId);
       }, 2000);
+    } else if (
+      typeof ListInfo !== "undefined" &&
+      ListInfo.g &&
+      ListInfo.g.syncLookupSelectValues
+    ) {
+      window.setTimeout(function () {
+        ListInfo.g.syncLookupSelectValues();
+      }, 300);
     }
   },
 };
@@ -12391,3 +13613,148 @@ window.AfterMasterDetailsRequest = {
     }
   }
 }
+
+// Block adding a new Benefit when initiative benefits Weight sum >= 100
+window.BenefitsWeightGuard = {
+  applied: false,
+  ensureMsgStyles: function () {
+    if ($("#analysis-calendar-msg-styles").length) return;
+    $("head").append(
+      '<style id="analysis-calendar-msg-styles">' +
+        ".analysis-calendar-msg-wrapper.d-flex{display:flex;align-items:flex-start;}" +
+        ".analysis-calendar-msg{position:relative;display:flex;align-items:flex-start;gap:12px;width:fit-content;max-width:100%;padding:7px 14px;margin-bottom:14px;border-radius:10px;box-shadow:0 4px 14px rgba(24,58,102,.12),0 2px 6px rgba(0,0,0,.06);background:#fff;border:1px solid rgba(24,58,102,.08);overflow:hidden;}" +
+        ".analysis-calendar-msg__strip{position:absolute;left:0;top:0;bottom:0;width:5px;}" +
+        ".analysis-calendar-msg.analysis-calendar-info .analysis-calendar-msg__strip{background:linear-gradient(180deg,#148287 0%,#183a66 100%);}" +
+        ".analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__strip{background:linear-gradient(180deg,#f7941d 0%,#183a66 100%);}" +
+        ".analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__strip{background:linear-gradient(180deg,#f7941d 0%,#c0392b 100%);}" +
+        ".analysis-calendar-msg__icon{flex-shrink:0;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;}" +
+        ".analysis-calendar-msg.analysis-calendar-info .analysis-calendar-msg__icon{background:rgba(20,130,135,.15);color:#148287;}" +
+        ".analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__icon{background:rgba(247,148,29,.18);color:#183a66;}" +
+        ".analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__icon{background:rgba(247,148,29,.2);color:#c0392b;}" +
+        ".analysis-calendar-msg__text{flex:1;color:#183a66;font-size:14px;line-height:1.5;font-weight:500;padding-top:4px;}" +
+        ".analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__text{color:#183a66;}" +
+        ".analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__text{color:#183a66;}" +
+        "</style>"
+    );
+  },
+  getMessage: function () {
+    var isAr =
+      localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+    return isAr
+      ? "مجموع أوزان المنافع وصل 100%. لا يمكن إضافة منفعة جديدة."
+      : "Total benefits weight reached 100%. Adding a new benefit is not allowed.";
+  },
+  buildNoteHtml: function (msg, msgType) {
+    var cardClass =
+      msgType === "warn"
+        ? "analysis-calendar-msg analysis-calendar-warn"
+        : "analysis-calendar-msg analysis-calendar-info";
+    var icon = msgType === "warn" ? "&#9888;" : "&#8505;";
+    return (
+      '<div class="analysis-calendar-msg-wrapper d-flex benefits-weight-limit-msg">' +
+      '<div class="' +
+      cardClass +
+      '">' +
+      '<div class="analysis-calendar-msg__strip"></div>' +
+      '<div class="analysis-calendar-msg__icon">' +
+      icon +
+      "</div>" +
+      '<div class="analysis-calendar-msg__text">' +
+      msg +
+      "</div>" +
+      "</div>" +
+      "</div>"
+    );
+  },
+  sumWeightFromRecords: function (records) {
+    var totalWeight = 0;
+    if (!records || !records.length) return 0;
+    records.forEach(function (el) {
+      var w = Number(el.Weight);
+      if (!isNaN(w)) totalWeight += w;
+    });
+    return Number(totalWeight.toFixed(1));
+  },
+  getTotalWeight: function (initiativeCode, callback) {
+    if (!initiativeCode) {
+      callback(0);
+      return;
+    }
+    var customQuery =
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='InitiativeCode' /><Value Type='Text'>" +
+      initiativeCode +
+      "</Value></Eq></And></Where></Query></View>";
+    sphttp.get(
+      _spPageContextInfo.siteServerRelativeUrl,
+      "Benefits",
+      customQuery,
+      ["Weight"],
+      function (records, record, listItem, isDone) {
+        if (!isDone) return;
+        callback(BenefitsWeightGuard.sumWeightFromRecords(records));
+      }
+    );
+  },
+  lockNewForm: function () {
+    if (BenefitsWeightGuard.applied) return;
+    BenefitsWeightGuard.applied = true;
+    BenefitsWeightGuard.ensureMsgStyles();
+    var msg = BenefitsWeightGuard.getMessage();
+    $("body").append(
+      "<style id='benefits-weight-limit-lock'>" +
+        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
+        ".form-control{color: #b1b1b1 !important;" +
+        "border-color: #e1e1e1 !important;" +
+        "background-color: #fdfdfd !important;" +
+        "opacity: .6;pointer-events: none;}" +
+        "</style>"
+    );
+    $(".benefits-weight-limit-msg").remove();
+    if ($(".container-body").length) {
+      $(".container-body").prepend(
+        BenefitsWeightGuard.buildNoteHtml(msg, "warn")
+      );
+    } else if ($(".additionalInfo").length) {
+      $(".additionalInfo").html(BenefitsWeightGuard.buildNoteHtml(msg, "warn"));
+    }
+  },
+  checkAndBlockNew: function () {
+    if (
+      !(
+        typeof isNew !== "undefined" &&
+        isNew &&
+        typeof listkey !== "undefined" &&
+        listkey == "benefits" &&
+        typeof ICODE !== "undefined" &&
+        ICODE
+      )
+    ) {
+      return;
+    }
+    SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+      BenefitsWeightGuard.getTotalWeight(ICODE, function (totalWeight) {
+        if (totalWeight >= 100) {
+          BenefitsWeightGuard.lockNewForm();
+        }
+      });
+    });
+  },
+};
+
+// Also enforce from Form_Request on New benefits form
+$(document).ready(function () {
+  if (
+    typeof isNew !== "undefined" &&
+    isNew &&
+    typeof listkey !== "undefined" &&
+    listkey == "benefits" &&
+    typeof ICODE !== "undefined" &&
+    ICODE
+  ) {
+    setTimeout(function () {
+      if (window.BenefitsWeightGuard) {
+        BenefitsWeightGuard.checkAndBlockNew();
+      }
+    }, 800);
+  }
+});

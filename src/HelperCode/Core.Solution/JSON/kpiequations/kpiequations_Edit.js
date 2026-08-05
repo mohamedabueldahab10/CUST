@@ -19,6 +19,7 @@ var Information_Form = [{
             "Dispfieldkey": "Name",
             "valfieldkey": "Title",
             "state": "disabled",
+            "dontSubmit": true,
         },
 
         {

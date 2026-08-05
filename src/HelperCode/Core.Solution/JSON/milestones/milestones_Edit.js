@@ -298,7 +298,6 @@ var Information_Form = [
         ToggleName: 'ActualDate',
         // type: 'datetime',
         type: 'datetimetoparent',
-        validation: "required",
         max: 'today',
         Errmsgkey: 'cancelationdatepattern',
         listname: 'Projects', // list name
@@ -373,9 +372,9 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
         validation: "required",
-        // security: {
-        //   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
-        // },
+        security: {
+          groups: ['EPMO', 'System Admin Group'],
+        },
       },
     ],
   },

@@ -273,8 +273,7 @@ var Information_Form = [
 				enableOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00,SODInitiativeDeliverable00',
 				requireOnWfTaskStage: 'VROInitiativeDeliverable00,EPMOInitiativeDeliverable00,LMSInitiativeDeliverable00,SODInitiativeDeliverable00',
 				type: "yesnoradio",
-				// targetfieldrequired: "ActualCompletedDate",
-				targetfieldrequired: ["ActualCompletedDate","getfile","SupportDocumentsDescription" ], 
+				targetfieldrequired: 'ActualCompletedDate,getfile,SupportDocumentsDescription',
 				options: {
 					choices: [
 						{ display: "yes", value: "yes" },
@@ -401,12 +400,11 @@ var Information_Form = [
 				type: 'multiline',
 				descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
 				descPhraseEn: "max length of letters equal 5000",
-				maxchar: '5000',                
-				// validation: 'required',
-				// hideOnWfTaskStage :'EPMOInitiativeMilestone00,VROInitiativeMilestone00,LMSInitiativeMilestone00',
-				// security: {
-				//   groups: [ 'System Admin Group','EPMO','LMSU-Execution','VRO_E'],
-				// },
+				maxchar: '5000',
+				validation: 'required',
+				security: {
+					groups: ['EPMO', 'System Admin Group'],
+				},
 			  },
 		],
 	},

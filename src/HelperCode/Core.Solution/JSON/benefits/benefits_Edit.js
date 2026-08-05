@@ -4,15 +4,46 @@ var Information_Form = [
     labelEn: " Benefit Data",
     description: "التفاصيل",
     descriptionEn: "Details",
+    // formDefaultValues: [
+    //   { fieldName: 'WFModuleCode', value: 'VROBenefitActual',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+    //   { fieldName: 'WFStage', value: 'VROBenefitActual01',roles: ['VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','VROE'], },
+
+    //   { fieldName: 'WFModuleCode', value: 'MSActualBenefit',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','InitiativeManager'], },
+    //   { fieldName: 'WFStage', value: 'MSActualBenefit01',roles: ['EPMO','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','InitiativeManager'], },
+
+    //   { fieldName: 'WFModuleCode', value: 'LMSBenefitActual',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    //   { fieldName: 'WFStage', value: 'LMSBenefitActual01',roles: ['LMSE','LMSP','LMSUExecution','LMSUPerformance','LMSUControl'], },
+    // ],
+    formValuesBasedOnParent: [
+      {
+        parentList: 'Initiatives',
+        listinerField: 'InitiativeCode',
+        parentFieldName: 'Title',
+        fieldName: 'Types',
+        basedOnCondition: true,
+        basedOnFieldName: 'A',
+        basedOnFieldValue: 'notempty',
+        valueToSet: [
+          {
+            condition: 'strategically',
+            values: [
+              { fieldNameInList: 'WFModuleCode', fieldValueInList: 'MSActualBenefit' },
+              { fieldNameInList: 'WFStage', fieldValueInList: 'MSActualBenefit01' },
+            ],
+          },
+        ],
+      },
+    ],
     subFields: [
-      // {
-      //     "InternalName": "Title",
-      //     "DisplayNameEn": "Title",
-      //     "DisplayName": "رمز المنفعة",
-      //     "type": "string",
-      //     "validation": "required",
-      //     "maxchar": "250"
-      // },
+      {
+        InternalName: 'Title',
+        DisplayNameEn: 'Benefit code',
+        DisplayName: 'رمز المنفعة',
+        type: 'string',
+        maxchar: '250',
+        display: 'none',
+        state: 'disabled',
+      },
       {
         InternalName: "Name",
         DisplayNameEn: "Name",
@@ -24,6 +55,12 @@ var Information_Form = [
         Errmsgkey: "withletterpattern",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       // {
       //   // hol dynamic 3ala l lookup
@@ -42,6 +79,12 @@ var Information_Form = [
         DisplayName: " مالك المنفعة ",
         type: "picker",
         validation: "required",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "Description",
@@ -52,6 +95,12 @@ var Information_Form = [
         validation: "required",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "Weight",
@@ -59,10 +108,17 @@ var Information_Form = [
         DisplayName: "وزن",
         type: "floatpercentagemaxfromparent",
         validation: "required",
+        state: "disabled",
         descPhraseAr: "%يجب ان يكون مجموع أوزان المنافع 100",
         descPhraseAn: "The total weight of benefits must be 100%",
         siblingslistname: "Benefits",
         siblingstargetcode: "InitiativeCode",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
 
       {
@@ -71,6 +127,12 @@ var Information_Form = [
         DisplayName: "جهة القياس",
         maxchar: 200,
         type: "multiline",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "referenceEntity",
@@ -78,6 +140,12 @@ var Information_Form = [
         DisplayName: "جهة المقارنة المعيارية",
         type: "multiline",
         maxchar: 255,
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "bencmarkValue",
@@ -85,14 +153,26 @@ var Information_Form = [
         DisplayName: "قيمة المقارنة الفعلية",
         type: "multiline",
         maxchar: 255,
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
-          {
-        InternalName: "benefitEquation",
-        DisplayNameEn: "benefitEquation",
-        DisplayName: "معادلة المنفعة",
-        type: "multiline",
-        maxchar: 255,
-      },
+      // {
+      //   InternalName: "benefitEquation",
+      //   DisplayNameEn: "benefitEquation",
+      //   DisplayName: "معادلة المنفعة",
+      //   type: "multiline",
+      //   maxchar: 255,
+      //   security: {
+      //     groups: [
+      //       'System Admin Group',
+      //       'EPMO',
+      //     ],
+      //   },
+      // },
       // {
       //   InternalName: 'BenefitScale',
       //   DisplayNameEn: 'Benefit Scale',
@@ -123,20 +203,26 @@ var Information_Form = [
       //   queryFieldType: "Choice",
       //   queryFieldValue: ["sublevel2", "sublevel3"], // to get the data fot these two values
       // },
-      {
-        InternalName: "RelatedSubKpis",
-        DisplayNameEn: "Related Kpis",
-        DisplayName: "المؤشرات المرتبطة",
-        type: "lookupmultiselectfromrelatedparent",
-        source: "MainKPI",
-        Dispfieldkey: "Name",
-        valfieldkey: "Title",
-        grpfieldkey: "Title",
-        Errmsgkey: "multiselecterr",
-        currentlistQueryField:"RelatedStrategyObjective",
-        parentlistQueryField:"RelatedObjective",
-        parentsource:"Initiatives",
-      },
+      // {
+      //   InternalName: "RelatedSubKpis",
+      //   DisplayNameEn: "Related Kpis",
+      //   DisplayName: "المؤشرات المرتبطة",
+      //   type: "lookupmultiselectfromrelatedparent",
+      //   source: "MainKPI",
+      //   Dispfieldkey: "Name",
+      //   valfieldkey: "Title",
+      //   grpfieldkey: "Title",
+      //   Errmsgkey: "multiselecterr",
+      //   currentlistQueryField:"RelatedStrategyObjective",
+      //   parentlistQueryField:"RelatedObjective",
+      //   parentsource:"Initiatives",
+      //   security: {
+      //     groups: [
+      //       'System Admin Group',
+      //       'EPMO',
+      //     ],
+      //   },
+      // },
      // {
        // InternalName: "RelatedBenefit",
         //DisplayNameEn: "Related Benefit",
@@ -163,6 +249,12 @@ var Information_Form = [
           ],
         },
         validation: "required",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "Polarity",
@@ -171,6 +263,12 @@ var Information_Form = [
         type: "dropdown",
         options: {
           choices: ["+", "-"],
+        },
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
         },
       },
       {
@@ -193,6 +291,12 @@ var Information_Form = [
             { display: "year", value: "year" },
           ],
         },
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "ResultType",
@@ -206,6 +310,12 @@ var Information_Form = [
           ],
         },
         validation: "required",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
                 {
         InternalName: "Note",
@@ -213,6 +323,12 @@ var Information_Form = [
         DisplayName: "ملاحظات جهة القياس",
         maxchar: "200",
         type: "multiline",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "FromDate",
@@ -228,9 +344,8 @@ var Information_Form = [
         Errmsgkey: "fromyearpattern",
         security: {
           groups: [
-            "EPMO",
-            "System Admin Group",
-            "Development Unit",
+            'System Admin Group',
+            'EPMO',
           ],
         },
       },
@@ -248,9 +363,8 @@ var Information_Form = [
         Errmsgkey: "toyearpattern",
            security: {
           groups: [
-            "EPMO",
-            "System Admin Group",
-            "Development Unit",
+            'System Admin Group',
+            'EPMO',
           ],
         },
       },
@@ -262,31 +376,36 @@ var Information_Form = [
         maxchar: "255",
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
         descPhraseEn: "max length of letters equal 255",
-      },
-      {
-        InternalName: "BenefitStatus",
-        DisplayNameEn: "Benefit Status",
-        DisplayName: "حالة المنفعة",
-        ToggleName: "Benefit Status",
-        validation: "required",
-        type: "dropdownValues",
-        options: {
-          choices: [
-            { display: "stat15", value: "stat15" },
-            { display: "stat16", value: "stat16" },
-            { display: "stat17", value: "stat17" },
-            { display: "stat18", value: "stat18" },
-            { display: "stat19", value: "stat19" },
-          ],
-        },
         security: {
           groups: [
-            "EPMO",
-            "System Admin Group",
-            "Development Unit",
+            'System Admin Group',
+            'EPMO',
           ],
         },
       },
+      // {
+      //   InternalName: "BenefitStatus",
+      //   DisplayNameEn: "Benefit Status",
+      //   DisplayName: "حالة المنفعة",
+      //   ToggleName: "Benefit Status",
+      //   validation: "required",
+      //   type: "dropdownValues",
+      //   options: {
+      //     choices: [
+      //       { display: "stat15", value: "stat15" },
+      //       { display: "stat16", value: "stat16" },
+      //       { display: "stat17", value: "stat17" },
+      //       { display: "stat18", value: "stat18" },
+      //       { display: "stat19", value: "stat19" },
+      //     ],
+      //   },
+      //   security: {
+      //     groups: [
+      //       'System Admin Group',
+      //       'EPMO',
+      //     ],
+      //   },
+      // },
      // {
        // InternalName: "BenefitTarget",
         //DisplayNameEn: "Benefit Traget",
@@ -299,8 +418,19 @@ var Information_Form = [
         DisplayName: "تاريخ المخطط لتحقيق المنفعة",
         DisplayNameEn: "Planned Achievement Date",
         format: "DateOnly",
-        type: "datetime",
+        // type: "datetime",
+        type: "datetimetoparent",
+        Errmsgkey: "btwndatepattern",
+        listname: "Initiatives",
+        startinternalname: "StartDate",
+        endinternalname: "FinishDate",
         validation: "required",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
         {
         InternalName: "assumptions",
@@ -308,6 +438,12 @@ var Information_Form = [
         DisplayName: " الافتراضات",
         maxchar: "200",
         type: "multiline",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "Notes",
@@ -315,16 +451,28 @@ var Information_Form = [
         DisplayName: "ملاحظات أداء المنفعة",
         maxchar: "200",
         type: "multiline",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "cumulativeBenefit",
         DisplayNameEn: "CumulativeBenefit",
         DisplayName: " تراكمية المنفعة",
-         type: 'yesnoradio',
+        type: "dropdownValues",
         options: {
           choices: [
-            { display: 'yes', value:  'yes' },
-            { display: 'no', value: 'no' },
+            { display: "yes", value: "yes" },
+            { display: "no", value: "no" },
+          ],
+        },
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
           ],
         },
       },
@@ -337,6 +485,12 @@ var Information_Form = [
           choices: [
             { display: 'yes', value:  'yes' },
             { display: 'no', value: 'no' },
+          ],
+        },
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
           ],
         },
       },
@@ -427,6 +581,312 @@ var Information_Form = [
     ],
   },
   {
+    label: 'مكونات المعادلة',
+    labelEn: 'Equation Component',
+    description: 'يمكن ادخال القيم عند ادخال معادلة للمنفعة',
+    descriptionEn: 'you can enter the values when enter the benefit Equation',
+    subFields: [
+      {
+        InternalName: 'benefitEquation',
+        DisplayNameEn: 'Benefit Equation',
+        DisplayName: 'معادلة المنفعة',
+        type: 'string',
+        maxchar: 255,
+        descPhraseAr: 'الحد الاقصى لعدد الحروف هو 255 حرف',
+        descPhraseEn: 'max length of letters equal 255',
+        state: 'disabled',
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'Year',
+        DisplayNameEn: 'Year',
+        DisplayName: 'السنة',
+        type: 'dropdown',
+        options: {
+          choices: [
+            '2020',
+            '2021',
+            '2022',
+            '2023',
+            '2024',
+            '2025',
+            '2026',
+            '2027',
+            '2028',
+            '2029',
+            '2030',
+          ],
+        },
+        validation: 'required',
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'Quarter',
+        DisplayNameEn: 'Quarter',
+        DisplayName: 'الربع',
+        ToggleName: 'Quarter',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'quarter1', value: 'ActualQ1' },
+            { display: 'quarter2', value: 'ActualQ2' },
+            { display: 'quarter3', value: 'ActualQ3' },
+            { display: 'quarter4', value: 'ActualQ4' },
+          ],
+        },
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'Midterms',
+        DisplayNameEn: 'Midterms',
+        DisplayName: 'النصف السنوي',
+        ToggleName: 'Midterms',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'midterm1', value: 'ActualMid1' },
+            { display: 'midterm2', value: 'ActualMid2' },
+          ],
+          display: 'none',
+        },
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'Months',
+        DisplayNameEn: 'Month',
+        DisplayName: 'الشهر',
+        ToggleName: 'Months',
+        type: 'dropdownValues',
+        options: {
+          choices: [
+            { display: 'month1', value: 'ActualM1' },
+            { display: 'month2', value: 'ActualM2' },
+            { display: 'month3', value: 'ActualM3' },
+            { display: 'month4', value: 'ActualM4' },
+            { display: 'month5', value: 'ActualM5' },
+            { display: 'month6', value: 'ActualM6' },
+            { display: 'month7', value: 'ActualM7' },
+            { display: 'month8', value: 'ActualM8' },
+            { display: 'month9', value: 'ActualM9' },
+            { display: 'month10', value: 'ActualM10' },
+            { display: 'month11', value: 'ActualM11' },
+            { display: 'month12', value: 'ActualM12' },
+          ],
+        },
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'A',
+        DisplayName: 'المكون الأول (A)',
+        DisplayNameEn: 'A',
+        type: 'number',
+        numberOfDigits: '12',
+        //editableBy: "InitiativeManager",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'B',
+        DisplayName: 'المكون الثاني (B)',
+        DisplayNameEn: 'B',
+        type: 'number',
+        numberOfDigits: '12',
+        //editableBy: "InitiativeManager",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'CC',
+        DisplayName: 'المكون الثالث (C)',
+        DisplayNameEn: 'C',
+        type: 'number',
+        numberOfDigits: '12',
+        //editableBy: "InitiativeManager",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'D',
+        DisplayName: 'المكون الرابع (D)',
+        DisplayNameEn: 'D',
+        type: 'number',
+        numberOfDigits: '12',
+        //editableBy: "InitiativeManager",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'E',
+        DisplayName: 'المكون الخامس (E)',
+        DisplayNameEn: 'E',
+        type: 'number',
+        numberOfDigits: '12',
+        //editableBy: "InitiativeManager",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'F',
+        DisplayName: 'المكون السادس (F)',
+        DisplayNameEn: 'F',
+        type: 'number',
+        numberOfDigits: '12',
+        //editableBy: "InitiativeManager",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'G',
+        DisplayName: 'المكون السابع (G)',
+        DisplayNameEn: 'G',
+        type: 'number',
+        numberOfDigits: '12',
+        //editableBy: "InitiativeManager",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'Equation',
+        DisplayNameEn: 'Actual value',
+        DisplayName: 'القيمة الفعلية',
+        type: 'float',
+        state: 'disabled',
+        //editableBy: "InitiativeManager",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'ActualkpiDate',
+        DisplayName: 'تاريخ رفع القيمه الفعليه',
+        DisplayNameEn: 'ActualkpiDate',
+        type: 'datetime',
+        min: 'today',
+        max: 'today',
+        state: 'disabled',
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'PerformanceAnalysis',
+        DisplayNameEn: 'Performance Analysis',
+        DisplayName: 'تحليل الأداء',
+        maxchar: '5000',
+        type: 'multiline',
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'Actual',
+        DisplayName: 'الإجمالي الفعلي السنوي',
+        DisplayNameEn: 'Annual Actual Total',
+        ToggleName: 'Actual',
+        type: 'float',
+        numberOfDigits: '12',
+        dontSubmit: true,
+        state: 'disabled',
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
+      },
+      {
+        InternalName: 'WFStage',
+        DisplayName: ' المرحلة',
+        DisplayNameEn: 'Stage',
+        type: 'lookup',
+        source: 'Tasks Configuration',
+        Dispfieldkey: 'TaskNameAr',
+        DispfieldkeyEn: 'TaskNameEn',
+        valfieldkey: 'Title',
+        state: 'disabled',
+        display: 'none',
+      },
+    ],
+  },
+  {
     label: "بيانات المخرجات",
     labelEn: "Benefit Deliverables",
     description: "التفاصيل",
@@ -461,7 +921,13 @@ var Information_Form = [
         valfieldkey: "Title", // value in dropdown
         valsiblingkey: "Description", // internal name on sorce list
         targetsiblingkey: "AcceptanceCriteria", // internal name on current list
-        initiativeCodeInList: true,        
+        initiativeCodeInList: true,
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
       {
         InternalName: "AcceptanceCriteria",
@@ -472,6 +938,12 @@ var Information_Form = [
         maxchar: 5000,
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+          ],
+        },
       },
     ],
   },
@@ -486,6 +958,13 @@ var Information_Form = [
         type: "file",
         fileExtensions: "png,jpeg,svg,msg,rar,pptx,xlsx,docx,pdf",
         withAddBtn: "true",
+        security: {
+          groups: [
+            'System Admin Group',
+            'EPMO',
+            'Initiative Manager',
+          ],
+        },
       },
     ],
   },

@@ -239,7 +239,7 @@ window.FormsConfigurationsForDeletionsRestoring = {
         },
         benefits: {
             DisplayListName: "Benefits",
-            WorkflowNames: "InitiativeBenefits",
+            WorkflowNames: "InitiativeBenefits,MSActualBenefit",
             RelatedListNames: [],
         },
         benefitmetrics: {

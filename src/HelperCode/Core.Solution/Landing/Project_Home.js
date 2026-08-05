@@ -502,27 +502,31 @@ var Project_Home_Info_Request = {
         stageNamestr + 
         "</h4>" + '<span class="initiativeProjHomeInfoValueStyle" id="relatedstage"></span> ' +
         "</div>" +
-        '<div class="d-inline-flex flex-column mx-2">' +
-        '<h3 data-trans-relatedinitiative class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
-        '<span class="des-13 overflow-ellipsis-black" ><span class="initiativeProjHomeInfoValueStyle" id="relatedinit" style="cursor:pointer">' +
-        projectRelatedInitiative +
-        '</span><span class="tooltiptextblack" id="relatedinitchild">' +
-        projectRelatedInitiative +
-        "</span></span>" +
-        "</div>" +
+        (IsStrategicProject != "operationally"
+          ? '<div class="d-inline-flex flex-column mx-2">' +
+            '<h3 data-trans-relatedinitiative class="Resources black initiativeProjHomeInfoTitleStyle"></h3>' +
+            '<span class="des-13 overflow-ellipsis-black" ><span class="initiativeProjHomeInfoValueStyle" id="relatedinit" style="cursor:pointer">' +
+            projectRelatedInitiative +
+            '</span><span class="tooltiptextblack" id="relatedinitchild">' +
+            projectRelatedInitiative +
+            "</span></span>" +
+            "</div>"
+          : "") +
         "</div>" +
 
-        '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
-'<div class="d-inline-flex flex-column mx-2 ' + phase + '">' +
-'<span data-trans-compliancestatus class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
-'<h4 class="acc-title d-inline-flex black">' + `<span class='Resources' data-trans-${compliancestatus}  > </span>`  + "</h4>" +
-'</div>' +
-'<div class="d-inline-flex flex-column mx-2">' +
-'<span data-trans-complaincepercentage class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
-'<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' + complaincePercentage + '</h4>' +
-'<span class="initiativeProjHomeInfoValueStyle" id="relatedstage"></span>' +
-'</div>' +
-'</div>' +
+        (IsStrategicProject != "operationally"
+          ? '<div class="mb-0 py-3 px-4 d-flex justify-content-between align-items-center border-bottom" href="#">' +
+            '<div class="d-inline-flex flex-column mx-2 ' + phase + '">' +
+            '<span data-trans-compliancestatus class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+            '<h4 class="acc-title d-inline-flex black">' + `<span class='Resources' data-trans-${compliancestatus}  > </span>`  + "</h4>" +
+            '</div>' +
+            '<div class="d-inline-flex flex-column mx-2">' +
+            '<span data-trans-complaincepercentage class="Resources des-13 initiativeProjHomeInfoTitleStyle"></span>' +
+            '<h4 class="acc-title d-inline-flex black initiativeProjHomeInfoValueStyle">' + complaincePercentage + '</h4>' +
+            '<span class="initiativeProjHomeInfoValueStyle" id="relatedstage"></span>' +
+            '</div>' +
+            '</div>'
+          : "") +
         //
         '<div class="mb-0 py-3 px-4 d-flex flex-wrap justify-content-between align-items-center scnd-row" href="#">' +
         '<div class="d-inline-flex flex-column mx-2">' +

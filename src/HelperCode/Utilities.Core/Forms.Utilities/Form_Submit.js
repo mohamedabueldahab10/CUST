@@ -1052,6 +1052,21 @@ window.New_Data_Submit = {
       }
       New_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
 
+      // Zero-budget projects hide Funding/Budget sections in UI; persist zeros so reports are not blank
+      var isZeroBudgetNew = $("#IsZeroBudgetProject").val();
+      if (isZeroBudgetNew == "yes") {
+        New_Data_Submit.g.oListItem.set_item("FundingStatus", "zero");
+        New_Data_Submit.g.oListItem.set_item("Amount", 0);
+        New_Data_Submit.g.oListItem.set_item("AssignedBudget", 0);
+        New_Data_Submit.g.oListItem.set_item("ExpectedBudget", 0);
+        New_Data_Submit.g.oListItem.set_item("ActualBudget", 0);
+        New_Data_Submit.g.oListItem.set_item("ContractualEngagements", 0);
+        New_Data_Submit.g.oListItem.set_item("EngagementPercentage", 0);
+        New_Data_Submit.g.oListItem.set_item("ExpensesDate", 0);
+        New_Data_Submit.g.oListItem.set_item("RemainingCost", 0);
+        New_Data_Submit.g.oListItem.set_item("OutOfCash", 0);
+      }
+
       if (isWF) {
         IdeaId = window.location.href.split("IdeaId=")[1].split("&")[0];
         New_Data_Submit.g.oListItem.set_item("RelatedIdeaCode", IdeaId);
@@ -1273,7 +1288,7 @@ window.New_Data_Submit = {
             var Name = $("#Name").val();
             var PeriodType = $("#PeriodType").val();
             var Types = $("#Types").val();
-            var KpiYear = yearFrom + i;
+            var KpiYear = yearFrom;
             var MainGoalRelated = $("#RelatedStrategyObjective").val()
               ? $("#RelatedStrategyObjective").val()
               : "";
@@ -1295,7 +1310,7 @@ window.New_Data_Submit = {
               subGoalRelated
             );
           }
-          newKPIEquation.init();
+          newBenefitKPIEquation.init();
         } else if (listkey == "benefitmetrics") {
           var dateFrom = $("#FromDate").val();
           benefitYearFrom = Number(dateFrom);
@@ -1811,7 +1826,20 @@ var Set_Code_Submit = {
 window.Edit_Data_Submit = {
   
   preinit: function (state) {
+    var isVisibleAndEnabledField = function ($field) {
+      if (!$field || !$field.length) return false;
+      if (!$field.is(":visible")) return false;
+      if ($field.closest(".hide-field").length > 0) return false;
+      if ($field.is(":disabled") || $field.attr("disabled") == "disabled") {
+        return false;
+      }
+      return true;
+    };
+
     window.wfHotFixState = state;
+    window.__msActualBenefitBulkSubmitted = false;
+    Edit_Data_Submit.g._freshItemReady = false;
+    Edit_Data_Submit.g._saveConflictRetry = 0;
 
     $(".errormsg").remove();
     $(".container-body").addClass("was-validated");
@@ -1923,6 +1951,9 @@ window.Edit_Data_Submit = {
     var multiSelectValid = true;
 
     $("[type=picker][required]").each(function () {
+      if (!isVisibleAndEnabledField($(this))) {
+        return true;
+      }
       var isPickerFromParent = $(this).hasClass("picker-from-parent");
       var hasResolvedUser = $(this).find("span.sp-peoplepicker-userSpan").length > 0;
       var hasAutoResolvedValue =
@@ -1948,6 +1979,9 @@ window.Edit_Data_Submit = {
     });
 
     $("[type=picker]").each(function () {
+      if (!isVisibleAndEnabledField($(this))) {
+        return true;
+      }
       var isPickerFromParent = $(this).hasClass("picker-from-parent");
       var hasAutoResolvedValue =
         isPickerFromParent &&
@@ -1975,6 +2009,9 @@ window.Edit_Data_Submit = {
 
     ////////////////////////for multi picker
     $("[type=multipicker][required]").each(function () {
+      if (!isVisibleAndEnabledField($(this))) {
+        return true;
+      }
       if (
         $(this).find("span.sp-peoplepicker-userSpan").length == 0 &&
         $(this).attr("data-email") == enternameemail
@@ -1997,6 +2034,9 @@ window.Edit_Data_Submit = {
     });
 
     $("[type=multipicker]").each(function () {
+      if (!isVisibleAndEnabledField($(this))) {
+        return true;
+      }
       if (
         $(this).find("span.sp-peoplepicker-userSpan").attr("aria-invalid") ==
         "true"
@@ -2105,7 +2145,7 @@ window.Edit_Data_Submit = {
     var fileScrollId = false;
     if ($("#getFile[required]").length) {
       var $file = $("#getFile[required]");
-      if (!$file.val()) {
+      if (isVisibleAndEnabledField($file) && !$file.val()) {
         fileValid = false;
 
         alert(".الوثائق الداعمة حقل إلزامي! يرجى ملأه بما يجب");
@@ -2121,8 +2161,18 @@ window.Edit_Data_Submit = {
         Risk_To_Issue_Submit.preinit();
       }
     }
+    var invalidVisibleCount = $(".was-validated .form-control:visible").filter(
+      function () {
+        if ($(this).is(":disabled")) return false;
+        if (typeof this.checkValidity === "function") {
+          return !this.checkValidity();
+        }
+        return false;
+      }
+    ).length;
+
     if (
-      $(".was-validated .form-control:invalid").length == 0 &&
+      invalidVisibleCount == 0 &&
       pickervalid &&
       !isCheckMember &&
       multiSelectValid &&
@@ -2183,13 +2233,29 @@ window.Edit_Data_Submit = {
           .prop("disabled", true);
       });
     } else {
+      console.warn("[Edit_Data_Submit] blocked by validation", {
+        invalidVisibleCount: invalidVisibleCount,
+        pickervalid: pickervalid,
+        isCheckMember: isCheckMember,
+        multiSelectValid: multiSelectValid,
+        uniqueStringValid: uniqueStringValid,
+        fileValid: fileValid,
+      });
       $(".CSformbuttons").prepend(
         '<p class="errormsg">Please check info above</p>'
       );
       // console.log('check form for errors');
 
       var $container = $("#s4-workspace"),
-        $scrollTo = $(".was-validated .form-control:invalid");
+        $scrollTo = $(".was-validated .form-control:visible").filter(
+          function () {
+            if ($(this).is(":disabled")) return false;
+            if (typeof this.checkValidity === "function") {
+              return !this.checkValidity();
+            }
+            return false;
+          }
+        );
       if ($scrollTo.length == 0) {
         if (listkey == "sos") {
           if (!uniqueStringValid) {
@@ -2204,10 +2270,18 @@ window.Edit_Data_Submit = {
               .get(0)
               .scrollIntoView({ behavior: "smooth", block: "center" });
           } else {
-            $scrollTo = $("[type=multipicker][required]");
+            $scrollTo = $("[type=multipicker][required]:visible").filter(
+              function () {
+                return !$(this).is(":disabled");
+              }
+            );
           }
         } else {
-          $scrollTo = $("[type=picker][required]");
+          $scrollTo = $(
+            "[type=picker].picker-error:visible, [type=multipicker].picker-error:visible"
+          ).filter(function () {
+            return !$(this).is(":disabled");
+          });
         }
       }
 
@@ -2234,7 +2308,7 @@ window.Edit_Data_Submit = {
         $(`#${fileScrollId}`)
           .get(0)
           .scrollIntoView({ behavior: "smooth", block: "center" });
-      } else {
+      } else if ($scrollTo.length && $scrollTo.offset()) {
         $container.animate({
           scrollTop:
             $scrollTo.offset().top -
@@ -2243,9 +2317,7 @@ window.Edit_Data_Submit = {
             120,
         });
       }
-      if (USERisWF) {
-        $(".popupComment").remove();
-      }
+      // keep popup open in WF so user can retry after fixing fields
     }
   },
   init: function () {
@@ -2258,12 +2330,29 @@ window.Edit_Data_Submit = {
     $("#preloader,#formloader").css("display", "block");
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(SP_ListName);
-    Edit_Data_Submit.g.oListItem = oList.getItemById(IID); //declared inside object scope only
 
-    // if (isRListKey){
-    if (listkey == "changerequest") {
-      CrSetChangeBody.init(Edit_Data_Submit.g.oListItem); // for cr set body
+    if (!Edit_Data_Submit.g._freshItemReady) {
+      Edit_Data_Submit.g.oListItem = oList.getItemById(IID);
+      if (listkey == "changerequest") {
+        CrSetChangeBody.init(Edit_Data_Submit.g.oListItem);
+      }
+      clientContext.load(Edit_Data_Submit.g.oListItem);
+      clientContext.executeQueryAsync(
+        Function.createDelegate(this, function () {
+          Edit_Data_Submit.g._freshItemReady = true;
+          Edit_Data_Submit.init();
+        }),
+        Function.createDelegate(this, function (sender, args) {
+          $("#preloader,#formloader").hide();
+          $(".btn-save").attr("disabled", false);
+          console.log(
+            "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+          );
+        })
+      );
+      return;
     }
+    Edit_Data_Submit.g._freshItemReady = false;
 
     $(`.section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=text],
      .section-container:not([data-target_list]) .CFIELD:not(.dont-submit):not(.hide-field)> input[type=number],
@@ -2290,6 +2379,10 @@ window.Edit_Data_Submit = {
         if (listkey == "mainkpi" && isEdit &&!isWF &&( (isPerformanceLeader && ($('#WFStage').val() !== "approved")) || isSPMAdmin)) {
           var skipFieldsForPerfLeader = ["A","B","CC","D","E","F","G","Quarter","Months","Midterms","Year","Equation"];
           if (skipFieldsForPerfLeader.indexOf(fieldIdForUse) !== -1) return;
+        }
+        if (listkey == "benefits" && isEdit && !isWF && ((isInManager && ($('#WFStage').val() !== "approved")) || isEPMO)) {
+          var skipFieldsForBenefitManager = ["A","B","CC","D","E","F","G","Quarter","Months","Midterms","Year","Equation"];
+          if (skipFieldsForBenefitManager.indexOf(fieldIdForUse) !== -1) return;
         }
         if ($(this).attr("type") == "picker") {
           var id = $(this).attr("INppicker");
@@ -2471,7 +2564,6 @@ window.Edit_Data_Submit = {
             Edit_Data_Submit.g.oListItem.set_item(fieldId, true);
           else Edit_Data_Submit.g.oListItem.set_item(fieldId, false);
         } else if ($(this).attr("type") == "dropdown") {
-          
           $(this).find(":disabled").removeAttr("disabled"); // avoid remove the data when the dropdown field is disabled
 
           Edit_Data_Submit.g.oListItem.set_item(
@@ -3018,10 +3110,19 @@ window.Edit_Data_Submit = {
       }
       Edit_Data_Submit.g.oListItem.set_item("DisbursementStatus", Disbstatus);
 
+      // Zero-budget projects hide Funding/Budget sections in UI; persist zeros so reports are not blank
       var isZeroBudget = $("#IsZeroBudgetProject").val();
       if (isZeroBudget == "yes") {
-        Edit_Data_Submit.g.oListItem.set_item("ActualBudget", "");
-        Edit_Data_Submit.g.oListItem.set_item("Amount", "");
+        Edit_Data_Submit.g.oListItem.set_item("FundingStatus", "zero");
+        Edit_Data_Submit.g.oListItem.set_item("Amount", 0);
+        Edit_Data_Submit.g.oListItem.set_item("AssignedBudget", 0);
+        Edit_Data_Submit.g.oListItem.set_item("ExpectedBudget", 0);
+        Edit_Data_Submit.g.oListItem.set_item("ActualBudget", 0);
+        Edit_Data_Submit.g.oListItem.set_item("ContractualEngagements", 0);
+        Edit_Data_Submit.g.oListItem.set_item("EngagementPercentage", 0);
+        Edit_Data_Submit.g.oListItem.set_item("ExpensesDate", 0);
+        Edit_Data_Submit.g.oListItem.set_item("RemainingCost", 0);
+        Edit_Data_Submit.g.oListItem.set_item("OutOfCash", 0);
       }
 
 
@@ -3156,7 +3257,126 @@ window.Edit_Data_Submit = {
         }
     }
 
+    async function handleBenefitResults() {
+        if (listkey == "benefits" && isEdit && isInManager && !isWF && ($('#WFStage').val() !== "approved")) {
+            await saveBenefitResultsHistory("draft");
+        } else if (
+            listkey == "benefits" &&
+            (isEdit || WFisEdit) &&
+            isWF &&
+            typeof workflowname !== "undefined" &&
+            workflowname == "MSActualBenefit" &&
+            (stageid === "MSActualBenefit00" || currentstage === "MSActualBenefit00")
+        ) {
+            // Rejected back to applicant task: update History before WF continues
+            await saveBenefitResultsHistory("draft");
+        } else if (listkey == "benefits" && isEdit && isEPMO && !isWF) {
+            if ($('#WFStage').val() == "approved") {
+                await approveBenefitResultsHistory($('#Title').val());
+            } else {
+                await saveBenefitResultsHistory("approved");
+            }
+        }
+    }
+
+    async function approveBenefitResultsHistory(benefitTitle) {
+        try {
+            const url = `${APIURL}/general/approvebenefitresultshistory/${benefitTitle}`;
+            const res = await $.ajax({
+                url,
+                method: "GET",
+                contentType: "application/json; charset=utf-8"
+            });
+            console.log("BenefitResultsHistory approved:", res);
+        } catch (err) {
+            console.error("Error in approve BenefitResultsHistory:", err);
+        }
+    }
+
+    async function saveBenefitResultsHistory(status) {
+        try {
+            const periodType = $("#PeriodType").val();
+            let year = parseInt($("#Year").val() || 0);
+            let month = null;
+
+            if (periodType === "monthly") {
+                const mVal = $("#Months").val();
+                if (mVal && mVal.indexOf("ActualM") === 0)
+                    month = parseInt(mVal.replace("ActualM", ""));
+            } else if (periodType === "midterm") {
+                const midVal = $("#Midterms").val();
+                month = midVal === "ActualMid1" ? 6 : midVal === "ActualMid2" ? 12 : 0;
+            } else if (periodType === "quarter") {
+                const qVal = $("#Quarter").val();
+                if (qVal === "ActualQ1") month = 3;
+                else if (qVal === "ActualQ2") month = 6;
+                else if (qVal === "ActualQ3") month = 9;
+                else if (qVal === "ActualQ4") month = 12;
+            } else if (periodType === "year") {
+                month = 12;
+            }
+
+            var performanceAnalysis = $("#PerformanceAnalysis").val() || "";
+            var actualKpiDateRaw = $("#ActualkpiDate").val() || "";
+            var actualkpiDate = actualKpiDateRaw
+                ? new Date(actualKpiDateRaw).toISOString().split("T")[0]
+                : "";
+
+            const payload = {
+                mainKPICode: "",
+                benefitCode: $("#Title").val(),
+                year,
+                month,
+                a: parseFloat($("#A").val() || 0),
+                b: parseFloat($("#B").val() || 0),
+                c: parseFloat($("#CC").val() || 0),
+                d: parseFloat($("#D").val() || 0),
+                e: parseFloat($("#E").val() || 0),
+                f: parseFloat($("#F").val() || 0),
+                g: parseFloat($("#G").val() || 0),
+                finalValue: parseFloat($("#Equation").val() || 0),
+                performanceAnalysis: performanceAnalysis,
+                actualkpiDate: actualkpiDate,
+                createdByUserId: 0,
+            };
+
+            const userData = await $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/currentuser",
+                method: "GET",
+                headers: { Accept: "application/json;odata=verbose" },
+            });
+            payload.createdByUserId = userData.d.Id;
+
+            const url = `${APIURL}/general/createorupdatebenefitresultshistory/${status}`;
+            const res = await $.ajax({
+                url,
+                method: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(payload),
+            });
+
+            console.log("BenefitResultsHistory saved:", res);
+        } catch (err) {
+            console.error("Error in BenefitResultsHistory flow:", err);
+        }
+    }
+
     handleKPIResults();
+    if (
+      listkey == "benefits" &&
+      USERisWF &&
+      typeof workflowname !== "undefined" &&
+      workflowname == "MSActualBenefit" &&
+      typeof tasktype !== "undefined" &&
+      tasktype == "Submit"
+    ) {
+      // WF Submit: history is saved in SubmitField_BulkEdit AFTER attachments.
+      window.__benefitHistorySavePromise = null;
+    } else if (listkey == "benefits") {
+      window.__benefitHistorySavePromise = handleBenefitResults();
+    } else {
+      window.__benefitHistorySavePromise = null;
+    }
     Edit_Data_Submit.g.oListItem.update();
     if (listkey == "benefits") {
       // get the data to update the kpi result list
@@ -3184,26 +3404,63 @@ window.Edit_Data_Submit = {
       kpiQuarterPicked = $("#Quarter").val() ? $("#Quarter").val() : "";
       kpiMonthPicked = $("#Months").val() ? $("#Months").val() : "";
       kpiRecurrenceChanged = kpiPeriodTypeUpdate ;
-      Edit_KPI_Results.init(
-        kpiName,
-        kpiType,
-        kpiSector,
-        kpiSubSector,
-        kpiPortfolio,
-        kpiMainGoalRelated,
-        kpiSubGoalRelated,
-        kpiPerformanceAnalysis,
-        kpiRecurrenceChanged,
-        kpicurrentYear,
-        kpiTotalActual
-      );
+      // MSActualBenefit WF Submit: do NOT call Edit_KPI_Results here.
+      // It redirects to View.aspx and kills the in-flight sequence:
+      // attachments upload → history API → Task close.
+      // createbenefitresults after history covers KPIResults refresh.
+      if (
+        !(
+          USERisWF &&
+          typeof workflowname !== "undefined" &&
+          workflowname == "MSActualBenefit" &&
+          typeof tasktype !== "undefined" &&
+          tasktype == "Submit"
+        )
+      ) {
+        Edit_KPI_Results.init(
+          kpiName,
+          kpiType,
+          kpiSector,
+          kpiSubSector,
+          kpiPortfolio,
+          kpiMainGoalRelated,
+          kpiSubGoalRelated,
+          kpiPerformanceAnalysis,
+          kpiRecurrenceChanged,
+          kpicurrentYear,
+          kpiTotalActual
+        );
+      }
      
     }
-    clientContext.load(Edit_Data_Submit.g.oListItem);
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
+        Edit_Data_Submit.g._saveConflictRetry = 0;
         // mainkpi Edit: call createkpiresults AFTER list save and BEFORE showing any success alert
         // We call afterSuccess() only AFTER this API finishes, so alert always comes after createkpiresults.
+        if (
+          listkey == "mainkpi" &&
+          USERisWF &&
+          typeof workflowname !== "undefined" &&
+          workflowname == "MSActualKPI" &&
+          typeof tasktype !== "undefined" &&
+          tasktype == "Submit"
+        ) {
+          Edit_Data_Submit.g.afterSuccess();
+          return;
+        }
+        if (
+          listkey == "benefits" &&
+          USERisWF &&
+          typeof workflowname !== "undefined" &&
+          workflowname == "MSActualBenefit" &&
+          typeof tasktype !== "undefined" &&
+          tasktype == "Submit"
+        ) {
+          // Form saved → afterSuccess (upload if any) → SubmitField_BulkEdit (history → close)
+          Edit_Data_Submit.g.afterSuccess();
+          return;
+        }
         if (listkey == "mainkpi") {
           window.__createKpiResultsCalled = false;
           var kpiCode = $("#Title").val();
@@ -3216,7 +3473,6 @@ window.Edit_Data_Submit = {
             var createUrl =
               APIURL + "/general/createkpiresults/" + encodeURIComponent(kpiCode);
             console.log("[mainkpi edit] calling createkpiresults:", createUrl);
-            debugger;
             $.ajax({
               url: createUrl,
               method: "GET",
@@ -3239,6 +3495,56 @@ window.Edit_Data_Submit = {
               "[mainkpi edit] APIURL missing; skipping createkpiresults"
             );
             proceedAfterCreateKpiResults();
+          }
+          return;
+        }
+
+        if (listkey == "benefits") {
+          window.__createBenefitResultsCalled = false;
+          var benefitCode = $("#Title").val();
+          var proceedAfterCreateBenefitResults = function () {
+            Edit_Data_Submit.g.afterSuccess();
+          };
+          var callCreateBenefitResults = function () {
+            if (typeof APIURL !== "undefined" && APIURL) {
+              window.__createBenefitResultsCalled = true;
+              var createBenefitUrl =
+                APIURL + "/general/createbenefitresults/" + encodeURIComponent(benefitCode);
+              console.log("[benefits edit] calling createbenefitresults:", createBenefitUrl);
+              $.ajax({
+                url: createBenefitUrl,
+                method: "GET",
+                success: function (res) {
+                  console.log("[benefits edit] createbenefitresults success", res);
+                  proceedAfterCreateBenefitResults();
+                },
+                error: function (xhr, status, err) {
+                  console.warn(
+                    "[benefits edit] createbenefitresults error",
+                    status,
+                    err,
+                    xhr
+                  );
+                  proceedAfterCreateBenefitResults();
+                }
+              });
+            } else {
+              console.warn(
+                "[benefits edit] APIURL missing; skipping createbenefitresults"
+              );
+              proceedAfterCreateBenefitResults();
+            }
+          };
+
+          if (
+            window.__benefitHistorySavePromise &&
+            typeof window.__benefitHistorySavePromise.then === "function"
+          ) {
+            window.__benefitHistorySavePromise
+              .catch(function () {})
+              .then(callCreateBenefitResults);
+          } else {
+            callCreateBenefitResults();
           }
           return;
         }
@@ -3338,18 +3644,94 @@ window.Edit_Data_Submit = {
 
       }),
       Function.createDelegate(this, function (sender, args) {
-        console.log(
-          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-        );
-
-        // to save the error in event logging list while submit
         var msg = args.get_message();
         var stack = args.get_stackTrace();
         var url = window.location.href;
+        var isMsActualKpiWorkflowSubmit =
+          USERisWF &&
+          listkey == "mainkpi" &&
+          typeof workflowname !== "undefined" &&
+          workflowname == "MSActualKPI" &&
+          typeof tasktype !== "undefined" &&
+          tasktype == "Submit";
+        var isMsActualBenefitWorkflowSubmit =
+          USERisWF &&
+          listkey == "benefits" &&
+          typeof workflowname !== "undefined" &&
+          workflowname == "MSActualBenefit" &&
+          typeof tasktype !== "undefined" &&
+          tasktype == "Submit";
 
-        // show pop up err msg
+        var isSaveConflict = msg && msg.indexOf("Save Conflict") > -1;
+        if (isSaveConflict) {
+          Edit_Data_Submit.g._saveConflictRetry =
+            Edit_Data_Submit.g._saveConflictRetry || 0;
+
+          var maxRetries = 4; // try 1..4 (total 5 attempts with original)
+          if (Edit_Data_Submit.g._saveConflictRetry < maxRetries) {
+            Edit_Data_Submit.g._saveConflictRetry++;
+
+            var attempt = Edit_Data_Submit.g._saveConflictRetry;
+            var delayMs = 600 * attempt; // backoff: 600,1200,1800,2400...
+
+            console.warn(
+              "[Edit_Data_Submit] Save Conflict, retrying with fresh item after delay",
+              {
+                attempt: attempt,
+                delayMs: delayMs,
+                iid: typeof IID !== "undefined" ? IID : "",
+              }
+            );
+
+            // Prevent rapid re-entry while SharePoint is still busy updating the item
+            window.__wfSaveConflictRetrying = true;
+            setTimeout(function () {
+              window.__wfSaveConflictRetrying = false;
+              Edit_Data_Submit.g._freshItemReady = false;
+              Edit_Data_Submit.init();
+            }, delayMs);
+            return;
+          }
+          // no more retries
+          Edit_Data_Submit.g._saveConflictRetry = 0;
+        }
+
+        console.error("[Edit_Data_Submit] SharePoint save failed", {
+          message: msg,
+          stackTrace: stack,
+          url: url,
+          listkey: listkey,
+          USERisWF: USERisWF,
+          workflowname:
+            typeof workflowname !== "undefined" ? workflowname : "undefined",
+          tasktype: typeof tasktype !== "undefined" ? tasktype : "undefined",
+          stageid: typeof stageid !== "undefined" ? stageid : "undefined",
+          iid: typeof IID !== "undefined" ? IID : "undefined",
+          tid:
+            window.location.href.indexOf("TID=") > -1
+              ? window.location.href.split("TID=")[1].split("&")[0]
+              : "",
+        });
+
+        $(".btn-save,.commentsub").attr("disabled", false);
+        $("#preloader,#formloader").hide();
+        $(".cust-loader,.loader").remove();
+
+        if (isMsActualKpiWorkflowSubmit || isMsActualBenefitWorkflowSubmit) {
+          $(".errormsg").remove();
+          $(".CSformbuttons").prepend(
+            '<p class="errormsg">' +
+              (isSaveConflict
+                ? (listkey == "benefits"
+                    ? "تعذر الحفظ لأن المنفعة عُدّلت من مصدر آخر. حدّث الصفحة وحاول مرة أخرى."
+                    : "تعذر الحفظ لأن المؤشر عُدّل من مصدر آخر. حدّث الصفحة وحاول مرة أخرى.")
+                : "تعذر الإرسال. راجع Console لمعرفة السبب.") +
+              "</p>"
+          );
+          return;
+        }
+
         Error_PopUp.init();
-        //
 
         writeToEventViewer.preinit(
           msg,
@@ -3605,16 +3987,40 @@ window.Edit_Data_Submit = {
         PCODE = Edit_Data_Submit.g.oListItem.get_item("Title");
       }
       //Get File Input Control and read the file name
-      $("input[type=file]").each(function (e) {
-        fileCount += document.querySelector("#" + $(this).attr("id")).files
-          .length;
+      fileCount = 0;
+      $("input[type=file]").each(function () {
+        if (this.files && this.files.length) {
+          fileCount += this.files.length;
+        }
       });
       if (fileCount && USERisWF && workflowname != "Project") {
         window.deferWorkflowContinueUntilUpload = true;
       }
 
       if (fileCount) {
+        isuploaddone = 0;
+        attachments = [];
+        filesPurpose = [];
+        // Prevent any parallel Edit_KPI_Results redirect while upload runs
+        if (
+          listkey == "benefits" &&
+          workflowname == "MSActualBenefit" &&
+          tasktype == "Submit"
+        ) {
+          mainKpiIsUpload = true;
+        }
         _uploadFile();
+      }
+
+      // Benefits WF + attachments: wait for upload, then BulkEdit (no parallel master)
+      // Order must stay: attach → history API → close task (no redirect until done)
+      if (
+        fileCount &&
+        listkey == "benefits" &&
+        workflowname == "MSActualBenefit" &&
+        tasktype == "Submit"
+      ) {
+        return;
       }
       
       // readFiles();
@@ -3629,12 +4035,31 @@ window.Edit_Data_Submit = {
             BulkEdit(true);
           } else if (USERisWF && workflowname != "Project") {
             if (!window.deferWorkflowContinueUntilUpload) {
-              Continue_Submit_Field.init();
+              if (
+                listkey == "mainkpi" &&
+                workflowname == "MSActualKPI" &&
+                tasktype == "Submit"
+              ) {
+                SubmitField_BulkEdit.init(
+                  typeof wfHotFixState !== "undefined" ? wfHotFixState : true
+                );
+              } else if (
+                listkey == "benefits" &&
+                workflowname == "MSActualBenefit" &&
+                tasktype == "Submit"
+              ) {
+                window.__msActualBenefitBulkSubmitted = true;
+                SubmitField_BulkEdit.init(
+                  typeof wfHotFixState !== "undefined" ? wfHotFixState : true
+                );
+              } else {
+                Continue_Submit_Field.init();
+              }
             }
           } else {
             // For delegations and strategiccalendar, don't show alert here - will be shown after API call
             // For mainkpi, we also delay the alert to its own branch
-            if (listkey != "delegations" && listkey != "strategiccalendar" && listkey != "mainkpi") {
+            if (listkey != "delegations" && listkey != "strategiccalendar" && listkey != "mainkpi" && listkey != "benefits") {
               $(".btn-save").addClass("success");
               if ( localStorage.getItem("lng") == null ||
               localStorage.getItem("lng") == "ar") {
@@ -3658,16 +4083,20 @@ window.Edit_Data_Submit = {
                 mainKpiId +
                 PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
             } else if (listkey == "benefitsequations") {
+              var benefitLookupValue =
+                $("#BenefitCode").attr("data-lookup-value") ||
+                $("#BenefitCode").val() ||
+                "";
+              var benefitId = parseInt(
+                benefitLookupValue.split("-").pop(),
+                10
+              );
               window.location =
                 _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/View.aspx?ListKey=benefitmetrics" +
+                "/SitePages/View.aspx?ListKey=benefits" +
                 "&IID=" +
-                $(
-                  '#RelatedBenefit option[value="' +
-                    $("#RelatedBenefit").val() +
-                    '"]'
-                ).attr("option-id") +
-                PCODE_STRING; //_spPageContextInfo.webServerRelativeUrl+
+                benefitId +
+                PCODE_STRING;
             } else if (listkey == "mainkpi") {
               var kpiCode = $("#Title").val();
               var redirectUrl = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey + (typeof PCODE_STRING !== "undefined" ? PCODE_STRING : "");
@@ -3710,20 +4139,44 @@ window.Edit_Data_Submit = {
                 showSuccessAndRedirect();
               }
             }  else if (listkey == "benefits") {
-              Edit_KPI_Results.init(
-                kpiName,
-                kpiType,
-                kpiSector,
-                kpiSubSector,
-                kpiPortfolio,
-                kpiMainGoalRelated,
-                kpiSubGoalRelated,
-                kpiPerformanceAnalysis,
-                kpiRecurrenceChanged,
-                kpicurrentYear,
-                kpiTotalActual
-              );
-             
+              var benefitCodeVal = $("#Title").val();
+              var benefitRedirectUrl = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=" + listkey + (typeof PCODE_STRING !== "undefined" ? PCODE_STRING : "");
+              var showBenefitSuccessAndRedirect = function () {
+                $(".btn-save").addClass("success");
+                if (localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar") {
+                  alert("تم حفظ البيانات بنجاح");
+                } else {
+                  alert("Data saved successfully");
+                }
+                window.location = benefitRedirectUrl;
+              };
+              if (typeof APIURL !== "undefined" && APIURL) {
+                if (!window.__createBenefitResultsCalled) {
+                  $.ajax({
+                    url: APIURL + "/general/createbenefitresults/" + encodeURIComponent(benefitCodeVal),
+                    method: "GET",
+                    success: showBenefitSuccessAndRedirect,
+                    error: showBenefitSuccessAndRedirect
+                  });
+                } else {
+                  showBenefitSuccessAndRedirect();
+                }
+              } else {
+                Edit_KPI_Results.init(
+                  kpiName,
+                  kpiType,
+                  kpiSector,
+                  kpiSubSector,
+                  kpiPortfolio,
+                  kpiMainGoalRelated,
+                  kpiSubGoalRelated,
+                  kpiPerformanceAnalysis,
+                  kpiRecurrenceChanged,
+                  kpicurrentYear,
+                  kpiTotalActual
+                );
+                showBenefitSuccessAndRedirect();
+              }
             } else if (listkey == "projects" && PCODE) {
               getProjectInfoToUpdateEPM();
             } else {
@@ -4376,13 +4829,26 @@ var Edit_KPI_Results = {
         context.executeQueryAsync(
           function () {
            if (!mainKpiIsUpload) {
-             window.location =
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/View.aspx?ListKey=" +
-                listkey +
-                "&IID=" +
-                IID +
-                PCODE_STRING;
+             // Guard: never redirect during MSActualBenefit WF Submit while
+             // attachments / history / task-close are still in progress.
+             var skipRedirectForMsActualBenefitWf =
+               typeof USERisWF !== "undefined" &&
+               USERisWF &&
+               typeof listkey !== "undefined" &&
+               listkey == "benefits" &&
+               typeof workflowname !== "undefined" &&
+               workflowname == "MSActualBenefit" &&
+               typeof tasktype !== "undefined" &&
+               tasktype == "Submit";
+             if (!skipRedirectForMsActualBenefitWf) {
+               window.location =
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/SitePages/View.aspx?ListKey=" +
+                  listkey +
+                  "&IID=" +
+                  IID +
+                  PCODE_STRING;
+             }
             }
 
             dfd.resolve();
@@ -4434,6 +4900,52 @@ var newKPIEquation = {
         // show pop up err msg
         // Error_PopUp.init()
         //
+        writeToEventViewer.preinit(
+          msg,
+          "JS Api Error",
+          "High",
+          url,
+          "580",
+          "14",
+          stack
+        );
+      })
+    );
+  },
+  g: {},
+};
+
+// New Benefit KPI Equation (KPIEquations list — BenefitCode instead of KPI)
+var newBenefitKPIEquation = {
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("KPIEquations");
+    var itemCreateInfo = new SP.ListItemCreationInformation();
+    newBenefitKPIEquation.g.oListItem = oList.addItem(itemCreateInfo);
+
+    var prt1 = listkey.substring(0, 2).toUpperCase(),
+      prt2 = String(new Date().getFullYear()).slice(4 - 2),
+      prt3 = IID.toString().padStart(4, "0");
+    var benefitTitle = prt1 + "-" + prt2 + "-" + prt3;
+    var eqTitle =
+      "kpiequations".substring(0, 2).toUpperCase() + "-" + prt2 + "-" + prt3;
+    newBenefitKPIEquation.g.oListItem.set_item("BenefitCode", benefitTitle);
+    newBenefitKPIEquation.g.oListItem.set_item("Title", eqTitle);
+
+    newBenefitKPIEquation.g.oListItem.update();
+    clientContext.load(newBenefitKPIEquation.g.oListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, function () {
+        console.log("benefit equation added to KPIEquations");
+        Set_Code_Submit.init();
+      }),
+      Function.createDelegate(this, function (sender, args) {
+        console.log(
+          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+        );
+        var msg = args.get_message();
+        var stack = args.get_stackTrace();
+        var url = window.location.href;
         writeToEventViewer.preinit(
           msg,
           "JS Api Error",
@@ -4792,7 +5304,24 @@ var New_Master_Details_Submit = {
           if (USERisWF && workflowname == "Project") {
             BulkEdit(true);
           } else if (USERisWF && workflowname != "Project") {
-            Continue_Submit_Field.init();
+            if (window.deferWorkflowContinueUntilUpload) {
+              return;
+            }
+            if (
+              listkey == "benefits" &&
+              workflowname == "MSActualBenefit" &&
+              tasktype == "Submit"
+            ) {
+              if (window.__msActualBenefitBulkSubmitted) {
+                return;
+              }
+              window.__msActualBenefitBulkSubmitted = true;
+              SubmitField_BulkEdit.init(
+                typeof wfHotFixState !== "undefined" ? wfHotFixState : true
+              );
+            } else {
+              Continue_Submit_Field.init();
+            }
           } else {
             $(".errormsg").hide();
             $(".successmsg").show();
@@ -5064,7 +5593,26 @@ var Edit_Master_Details_Submit = {
         if (USERisWF && workflowname == "Project") {
           BulkEdit(true);
         } else if (USERisWF && workflowname != "Project") {
-          Continue_Submit_Field.init();
+          // wait for attachments upload to finish first
+          if (window.deferWorkflowContinueUntilUpload) {
+            return;
+          }
+          if (
+            listkey == "benefits" &&
+            workflowname == "MSActualBenefit" &&
+            tasktype == "Submit"
+          ) {
+            // Upload already started BulkEdit — do not Continue/close early
+            if (window.__msActualBenefitBulkSubmitted) {
+              return;
+            }
+            window.__msActualBenefitBulkSubmitted = true;
+            SubmitField_BulkEdit.init(
+              typeof wfHotFixState !== "undefined" ? wfHotFixState : true
+            );
+          } else {
+            Continue_Submit_Field.init();
+          }
         } else {
           $(".errormsg").hide();
           $(".successmsg").show();
@@ -5392,9 +5940,34 @@ function UploadQuerySuccess() {
   isuploaddone++;
   // console.log('File Uploaded Successfully.');
   if (fileCount == isuploaddone) {
+    // Benefits WF Submit: after attach → BulkEdit (history + close task)
+    if (
+      USERisWF &&
+      listkey === "benefits" &&
+      typeof workflowname !== "undefined" &&
+      workflowname === "MSActualBenefit" &&
+      typeof tasktype !== "undefined" &&
+      tasktype === "Submit"
+    ) {
+      continueMsActualBenefitAfterUpload();
+      return;
+    }
     if (window.deferWorkflowContinueUntilUpload) {
       window.deferWorkflowContinueUntilUpload = false;
-      Continue_Submit_Field.init();
+      if (
+        USERisWF &&
+        listkey === "mainkpi" &&
+        typeof workflowname !== "undefined" &&
+        workflowname === "MSActualKPI" &&
+        typeof tasktype !== "undefined" &&
+        tasktype === "Submit" &&
+        typeof wfHotFixState !== "undefined"
+      ) {
+        // For MSActualKPI submit in WF, continue via SubmitField_BulkEdit
+        SubmitField_BulkEdit.init(wfHotFixState);
+      } else {
+        Continue_Submit_Field.init();
+      }
       return;
     }
     if (isEdit) {
@@ -5600,6 +6173,20 @@ window.attachments = [];
 
 window.filesPurpose = [];
 
+function continueMsActualBenefitAfterUpload() {
+  window.deferWorkflowContinueUntilUpload = false;
+  mainKpiIsUpload = false;
+  if (window.__msActualBenefitBulkSubmitted) {
+    return;
+  }
+  // Same path as submit without attachments: history + close task
+  // Must run AFTER attachments finish — no redirect before this.
+  window.__msActualBenefitBulkSubmitted = true;
+  SubmitField_BulkEdit.init(
+    typeof wfHotFixState !== "undefined" ? wfHotFixState : true
+  );
+}
+
 function _uploadFile() {
   //
 
@@ -5662,8 +6249,13 @@ function _uploadFile() {
     } else {
       alert("ERROR: Select a file");
     }
+    // stop — do not continue WF / redirect
+    $(".CSformbuttons button").attr("disabled", false);
+    $(".loading-wait").hide();
     return;
   }
+  // use accepted files count only (not rejected extensions)
+  fileCount = files.length;
   files = Array.prototype.slice.call(files);
   // read the files
   Promise.all(
@@ -5777,6 +6369,15 @@ function _uploadFile() {
                       function (file) {
                         isuploaddone++;
                         if (fileCount == isuploaddone) {
+                          // Benefits WF Submit: after attach → BulkEdit (history + close task)
+                          if (
+                            listkey == "benefits" &&
+                            workflowname == "MSActualBenefit" &&
+                            tasktype == "Submit"
+                          ) {
+                            continueMsActualBenefitAfterUpload();
+                            return;
+                          }
                           if (window.deferWorkflowContinueUntilUpload) {
                             window.deferWorkflowContinueUntilUpload = false;
                             Continue_Submit_Field.init();
@@ -5903,54 +6504,11 @@ function _uploadFile() {
               };
             }
           } else if (isEdit && listkey == "benefits") {
-            var kpiPeriodType = $("#PeriodType").val();
-            mainKpiIsUpload = true;
-            Edit_KPI_Results.init(
-              kpiName,
-              kpiType,
-              kpiSector,
-              kpiSubSector,
-              kpiPortfolio,
-              kpiMainGoalRelated,
-              kpiSubGoalRelated,
-              kpiPerformanceAnalysis,
-              kpiRecurrenceChanged,
-              kpicurrentYear,
-              kpiTotalActual
-            );
-            if (kpiPeriodType == "monthly") {
-              fieldsObj = {
-                Title: Doc_Title,
-                ItemID: IID,
-                RelatedMonth: $("#Months").val(),
-                RelatedYear: $("#Year").val(),
-                docPurpose: purpose,
-              };
-            } else if (kpiPeriodType == "quarter") {
-              fieldsObj = {
-                Title: Doc_Title,
-                ItemID: IID,
-                RelatedQuarter: $("#Quarter").val(),
-                RelatedYear: $("#Year").val(),
-                docPurpose: purpose,
-              };
-            } else if (kpiPeriodType == "midterm") {
-              fieldsObj = {
-                Title: Doc_Title,
-                ItemID: IID,
-                RelatedMid: $("#Midterms").val(),
-                RelatedYear: $("#Year").val(),
-                docPurpose: purpose,
-              };
-            } else if (kpiPeriodType == "year") {
-              fieldsObj = {
-                Title: Doc_Title,
-                ItemID: IID,
-                RelatedActualY: ActualY,
-                RelatedYear: $("#Year").val(),
-                docPurpose: purpose,
-              };
-            }
+            fieldsObj = {
+              Title: Doc_Title,
+              ItemID: IID,
+              docPurpose: purpose,
+            };
           } else {
             fieldsObj = {
               Title: Doc_Title,
@@ -5980,9 +6538,27 @@ function _uploadFile() {
               function (file) {
                 isuploaddone++;
                 if (fileCount == isuploaddone) {
+                  // Benefits WF Submit: after attach → BulkEdit (history + close task)
+                  if (
+                    listkey == "benefits" &&
+                    workflowname == "MSActualBenefit" &&
+                    tasktype == "Submit"
+                  ) {
+                    continueMsActualBenefitAfterUpload();
+                    return;
+                  }
                   if (window.deferWorkflowContinueUntilUpload) {
                     window.deferWorkflowContinueUntilUpload = false;
-                    Continue_Submit_Field.init();
+                    if (
+                      listkey == "benefits" &&
+                      workflowname == "MSActualBenefit" &&
+                      tasktype == "Submit" &&
+                      !window.__msActualBenefitBulkSubmitted
+                    ) {
+                      continueMsActualBenefitAfterUpload();
+                    } else {
+                      Continue_Submit_Field.init();
+                    }
                     return;
                   }
 
@@ -6038,7 +6614,8 @@ function _uploadFile() {
                             kpiPortfolio,
                             kpiMainGoalRelated,
                             kpiSubGoalRelated,
-                            kpiPerformanceAnalysis.kpiRecurrenceChanged,
+                            kpiPerformanceAnalysis,
+                            kpiRecurrenceChanged,
                             kpicurrentYear,
                             kpiTotalActual
                           );
@@ -6053,7 +6630,8 @@ function _uploadFile() {
                             kpiPortfolio,
                             kpiMainGoalRelated,
                             kpiSubGoalRelated,
-                            kpiPerformanceAnalysis.kpiRecurrenceChanged,
+                            kpiPerformanceAnalysis,
+                            kpiRecurrenceChanged,
                             kpicurrentYear,
                             kpiTotalActual
                           );
@@ -6164,12 +6742,30 @@ function _uploadFile() {
                   '<p style="color:red"> Faild saving the Attachements</p>'
                 );
                 console.log("Error Uploading: ", error);
+                // Benefits WF: still continue history + close after upload attempt
+                if (
+                  listkey == "benefits" &&
+                  workflowname == "MSActualBenefit" &&
+                  tasktype == "Submit"
+                ) {
+                  isuploaddone++;
+                  if (fileCount == isuploaddone) {
+                    continueMsActualBenefitAfterUpload();
+                  }
+                  return;
+                }
+                $(".CSformbuttons button").attr("disabled", false);
+                $(".loading-wait").hide();
               }
             );
         }
       })
     );
-  }).catch(function (error) {  console.error("Error in file processing:", error); });
+  }).catch(function (error) {
+    console.error("Error in file processing:", error);
+    $(".CSformbuttons button").attr("disabled", false);
+    $(".loading-wait").hide();
+  });
 }
 //end file upload
 //file delete

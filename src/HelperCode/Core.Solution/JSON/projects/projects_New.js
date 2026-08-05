@@ -244,15 +244,6 @@ var Information_Form = [
         options: {
           choices: [
             { display: "strategy", value: "strategy" }, //, roles: ['EPMO','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],roles: ['VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],},
-           {
-              display: "operationally", value: "operationally",
-              roles: ['Administrator', 'EPMO', 'LMSUExecution', 'VROE',],
-              otherFields: [
-                { fieldName: 'Phase', value: 'P0' },
-                { fieldName: 'Stage', value: 'S00.1' },
-                { fieldName: 'InitiativeType', value: 'strategically' },
-              ],
-            },
             {//allroles
               // display: "no", value: "no", roles: ['allRoles'],
               display: "operationally", value: "operationally",// roles: ['EPMO','FSSBCommiette','DeptOrgCommiette','VROHead', 'VROPHead', 'VROP', 'ProjectManager', 'InitiativeOwner', 'InitiativeManager', 'ProjectOwner', 'VPlanningUnitHead', 'VPlanningUnit', 'VROEHead', 'SPMOHead', 'SPMO', 'DU', 'SPMAdmin', 'SPMTeam', 'StrategyTeam', 'CRCommittee', 'LMSE', 'LMSP', 'LMSUPerformance', 'LMSUControl'],
@@ -271,10 +262,13 @@ var Information_Form = [
           ],
         },
         toggleValues: [
-          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable' ,'LinkingSection','RelatedInitiativeDate'] }, //we can put more than 1  field
+          { value: 'strategy', fields: ['InitiativeType', 'RelatedInitiative', 'RelatedInitiativeDeliverable' ,'LinkingSection','RelatedInitiativeDate','MDRelatedInitiativeDeliverable','MDRelatedInitiativeMilestone'] }, //we can put more than 1  field
         ],
         toggleDisabledValues: [
           { value: 'strategy', fields: ['RelatedInitiativeDate'] },
+        ],
+        requiredValues: [
+          { value: "strategy", fields: ["RelatedInitiativeDeliverable"] },
         ],
         validation: "required",
       },
@@ -1682,28 +1676,21 @@ var Information_Form = [
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 500 حرف",
         descPhraseEn: "max length of letters equal 500",
       },
-      // {
-      //   //tried
-      //   InternalName: 'RelatedInitiativeDeliverable',
-      //   DisplayName: 'مخرج المبادرة المرتبط',
-      //   DisplayNameEn: 'Related Initiative Deliverable',
-      //   type: 'lookuptoparentchild',
-      //   parentlist: 'Projects', //parent list name
-      //   parentinternalname: 'RelatedInitiative', // internal name in parent list
-      //   source: 'InitiativeDeliverables', // target list
-      //   sourceinternalname: 'InitiativeCode', // column in target list
-      //   Dispfieldkey: 'Name', //display in dropdown
-      //   valfieldkey: 'Title', // value in dropdown
-      // },
-      // {
-      //   InternalName: 'RelatedInitiativeDeliverable',
-      //   DisplayNameEn: 'Related Initiative Deliverable',
-      //   DisplayName:'مخرج المبادرة المرتبط',
-      //   type: 'lookup',
-      //   source: 'InitiativeDeliverables',
-      //   Dispfieldkey: 'Name',
-      //   valfieldkey: 'Title',
-      // },
+      {
+        //tried
+        InternalName: 'RelatedInitiativeDeliverable',
+        DisplayName: 'مخرج المبادرة المرتبط',
+        DisplayNameEn: 'Related Initiative Deliverable',
+        type: 'lookuptoparentchild',
+        parentlist: 'Projects', //parent list name
+        parentinternalname: 'RelatedInitiative', // internal name in parent list
+        source: 'InitiativeDeliverables', // target list
+        sourceinternalname: 'InitiativeCode', // column in target list
+        Dispfieldkey: 'Name', //display in dropdown
+        valfieldkey: 'Title', // value in dropdown
+        RequiredName: 'RelatedInitiativeDeliverable',
+        ToggleName: 'MDRelatedInitiativeDeliverable',
+      },
 
       {
         InternalName: 'ShowInProgramReport',

@@ -625,8 +625,16 @@ window.ListInfo = {
           // this affectes on lookup selects
           $("select[dynamic=parent]").on("change", function () {
             let parentFieldName = $(this).attr("id");
-            let parentFieldValue = $(this).val();
-            let isDisabled = $(this).attr("disabled");
+            let parentFieldValue =
+              typeof ListInfo !== "undefined" &&
+              ListInfo.g &&
+              ListInfo.g.getEffectiveFieldValue
+                ? ListInfo.g.getEffectiveFieldValue($(this))
+                : $(this).val() ||
+                  $(this).attr("value") ||
+                  $(this).attr("data-lookup-value") ||
+                  "";
+            let isDisabled = $(this).prop("disabled");
             let customFilterValue = $(this)
               .find("option[value=" + parentFieldValue + "]")
               .data("customfiltervalue");
@@ -640,7 +648,7 @@ window.ListInfo = {
             );
             let notInvokeListiner = $(this).data("notinvokelistiner");
             let forceCascadeObjectives = $(this).data("forcecascadeobjectives");
-            if(isDisabled !="disabled"){
+            if(!isDisabled){
             $("[dynamic=" + parentFieldName + "]").each(function () {
               let affectedFieldName = $(this).attr("id");
               let listName = $(this).data("listname");
@@ -746,7 +754,7 @@ window.ListInfo = {
 
           $(document)
             .off("change.formAdditionalFilterChain", "select")
-            .on("change.formAdditionalFilterChain", "select", function () {
+            .on("change.formAdditionalFilterChain", "select", function (event) {
               var fid = $(this).attr("id");
               if (!fid) {
                 return;
@@ -790,7 +798,18 @@ window.ListInfo = {
                       .prop("checked", false);
                     $depCtrl.find("ul.dropdown-menu").html("");
                   } else if ($depCtrl.length && $depCtrl.is("select")) {
-                    $depCtrl.val("");
+                    // User changed SubSector (etc.): wipe persisted lookup value too.
+                    // Programmatic triggers keep data-lookup-value so edit load can restore.
+                    if (
+                      event.originalEvent &&
+                      typeof ListInfo !== "undefined" &&
+                      ListInfo.g &&
+                      ListInfo.g.clearSelectFieldValue
+                    ) {
+                      ListInfo.g.clearSelectFieldValue($depCtrl);
+                    } else {
+                      $depCtrl.val("");
+                    }
                   }
                 }
                 var parentDyn = $(this).attr("dynamic");
@@ -1364,8 +1383,15 @@ window.ListInfo = {
 
           //////////////////////////////// make attachement required when change on radio yes
           var previuosTargetVal = "";
-          $("input.yesnolistener").on("change", function (event) {
+          $("body").off("change.yesnolistener").on("change.yesnolistener", "input.yesnolistener", function (event) {
             var value = event.target.value;
+            var $row = $(this).closest(".Details-Item");
+            var findTargetField = function (fieldId) {
+              if ($row.length) {
+                return $row.find('[id="' + fieldId + '"]').filter("input,select,textarea").first();
+              }
+              return $("#" + fieldId);
+            };
 
             var targetElementRequired = $(this).data("targetfieldrequired");
 
@@ -1380,9 +1406,9 @@ window.ListInfo = {
               targetElementValue &&
               targetElementValue != "undefined"
             ) {
-              previuosTargetVal = $(`#${targetElement}`).val();
-              $(`#${targetElement}`).val(targetElementValue);
-              $(`#${targetElement}`).attr("disabled", true);
+              previuosTargetVal = findTargetField(targetElement).val();
+              findTargetField(targetElement).val(targetElementValue);
+              findTargetField(targetElement).attr("disabled", true);
             } else if (
               value == "no" &&
               targetElement &&
@@ -1391,8 +1417,8 @@ window.ListInfo = {
               targetElementValue != "undefined"
             ) {
               console.log(previuosTargetVal, "previuosTargetVal in else");
-              $(`#${targetElement}`).val(previuosTargetVal);
-              $(`#${targetElement}`).attr("disabled", false);
+              findTargetField(targetElement).val(previuosTargetVal);
+              findTargetField(targetElement).attr("disabled", false);
             }
 
             // to handle required on attachement
@@ -1404,21 +1430,27 @@ window.ListInfo = {
               targetElementRequired = targetElementRequired.split(",");
 
               targetElementRequired.forEach((el) => {
-                $(`#${el}`).attr("required", true);
+                var $targetField = findTargetField(el);
+                $targetField.attr("required", true);
+                if ($row.length) {
+                  $row.find('label[for="' + el + '"]').attr("required", true);
+                } else {
+                  $('label[for="' + el + '"]').attr("required", true);
+                }
 
-                var checkAttach = $(`#${el}`)
+                var checkAttach = $targetField
                   .parent()
                   .find(">*")
                   .closest(".attlabel");
 
                 if (checkAttach.length > 0) {
-                  $(`#${el}`)
+                  $targetField
                     .parent()
                     .find(">*")
                     .closest(".attlabel")
                     .attr("required", true);
                 } else {
-                  $(`#${el}`).parent().find(">*").attr("required", true);
+                  $targetField.parent().find(">*").attr("required", true);
                 }
               });
 
@@ -1446,21 +1478,27 @@ window.ListInfo = {
               targetElementRequired = targetElementRequired.split(",");
 
               targetElementRequired.forEach((el) => {
-                $(`#${el}`).attr("required", false);
+                var $targetField = findTargetField(el);
+                $targetField.attr("required", false);
+                if ($row.length) {
+                  $row.find('label[for="' + el + '"]').removeAttr("required");
+                } else {
+                  $('label[for="' + el + '"]').removeAttr("required");
+                }
 
-                var checkAttach = $(`#${el}`)
+                var checkAttach = $targetField
                   .parent()
                   .find(">*")
                   .closest(".attlabel");
 
                 if (checkAttach.length > 0) {
-                  $(`#${el}`)
+                  $targetField
                     .parent()
                     .find(">*")
                     .closest(".attlabel")
                     .attr("required", false);
                 } else {
-                  $(`#${el}`).parent().find(">*").attr("required", false);
+                  $targetField.parent().find(">*").attr("required", false);
                 }
               });
 
@@ -1603,6 +1641,24 @@ window.ListInfo = {
             var childFieldIdSource = $(this).data("childfieldidsource");
 
             var elementValue = event.target.value;
+            var $childField = childId ? $("#" + childId) : $();
+            var isUserChange = !!(event && event.originalEvent);
+
+            // User changed RelatedObjectiveLevel (etc.): clear child so we never keep a stale SO.
+            // Programmatic .trigger("change") on edit load must NOT clear — restore needs data-lookup-value.
+            if (isUserChange && $childField.length) {
+              if (
+                typeof ListInfo !== "undefined" &&
+                ListInfo.g &&
+                ListInfo.g.clearSelectFieldValue
+              ) {
+                ListInfo.g.clearSelectFieldValue($childField);
+              } else {
+                $childField.val("");
+                $childField.removeAttr("value");
+                $childField.removeAttr("data-lookup-value");
+              }
+            }
 
             if (grandId && elementValue && childId && childFieldIdSource) {
               var customFilterValue = $(this)
@@ -2338,6 +2394,10 @@ window.ListInfo = {
                 });
               }
             }
+            // Prevent New Benefit when initiative Weight sum >= 100
+            if (isNew && listkey == "benefits" && ICODE && window.BenefitsWeightGuard) {
+              BenefitsWeightGuard.checkAndBlockNew();
+            }
             if (
               isNew &&
               typeof Edit_Data_Request !== "undefined" &&
@@ -2413,6 +2473,26 @@ window.ListInfo = {
               //hide Initiative field if we are in the Initiative
               $("#InitiativeCode").parent().css("display", "none");
             }
+            // Initiative Manager: A–G required when empty on New/Edit
+            if (
+              listkey == "benefits" &&
+              (isNew || isEdit) &&
+              window.BenefitsEquationComponentsRequired
+            ) {
+              setTimeout(function () {
+                BenefitsEquationComponentsRequired.bind();
+              }, 500);
+            }
+            // Initiative Manager + Edit + not WF: PerformanceAnalysis + attachments required
+            if (
+              listkey == "benefits" &&
+              isEdit &&
+              window.BenefitsActualFieldsRequired
+            ) {
+              setTimeout(function () {
+                BenefitsActualFieldsRequired.bind();
+              }, 500);
+            }
 
             if (listkey == "projects") {
               SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
@@ -2440,10 +2520,11 @@ window.ListInfo = {
                   initiativeCode
                 );
                 // ProjectInitiativeMilestone.init('InitiativeMilestones', initiativeCode) //to get related initiativeMilestone
+                // lookuptoparentchild uses PCODE (missing on New) — refill master Deliverables dropdown from form value
+                ListInfo.g.fillMasterRelatedInitiativeDeliverable(initiativeCode);
               });
               //end of related initiative delevrable
-debugger;
-             $("#IsStrategicProject").on("change", function () {
+              $("#IsStrategicProject").on("change", function () {
                 var isStrategicProject = $(this).val();
                 Stages_Data_Request.init(isStrategicProject);
               });
@@ -2832,6 +2913,79 @@ debugger;
                     }
                 });
             });
+          }
+          if (listkey == "benefits" && isEdit) {
+            $("#Year").on("change", function () {
+              var yearValue = $(this).val();
+              Get_BenefitActualAnnualTotal.init(yearValue);
+            });
+            $("#A, #B, #CC, #D, #E, #F, #G").on("input change", function () {
+              if (window.BenefitsEquationComponentsRequired) {
+                BenefitsEquationComponentsRequired.refreshField($(this));
+              }
+              // set date to be today
+              var today = new Date();
+              var yyyy = today.getFullYear();
+              var mm = String(today.getMonth() + 1).padStart(2, "0");
+              var dd = String(today.getDate()).padStart(2, "0");
+              var formattedDate = yyyy + "-" + mm + "-" + dd;
+
+              $("#ActualkpiDate").val(formattedDate);
+
+              var benefitTitle = $("#Title").val(); // Current Benefit title
+
+              // Get the Benefit equation from KPIEquations list (BenefitCode)
+              $.ajax({
+                url:
+                  _spPageContextInfo.webAbsoluteUrl +
+                  "/_api/web/lists/getbytitle('KPIEquations')/items?$filter=DeletionStatus ne 'Deleted' and BenefitCode eq '" +
+                  benefitTitle +
+                  "'",
+                method: "GET",
+                headers: { Accept: "application/json;odata=verbose" },
+                success: function (data) {
+                  if (data.d.results.length > 0) {
+                    var benefitInput = data.d.results[0].KPIInput;
+                    var varsMap = {
+                      A: parseFloat($("#A").val()) || 0,
+                      B: parseFloat($("#B").val()) || 0,
+                      C: parseFloat($("#CC").val()) || 0,
+                      D: parseFloat($("#D").val()) || 0,
+                      E: parseFloat($("#E").val()) || 0,
+                      F: parseFloat($("#F").val()) || 0,
+                      G: parseFloat($("#G").val()) || 0,
+                    };
+
+                    var safeEquation = benefitInput.replace(
+                      /\b[A-G]\b/g,
+                      function (match) {
+                        return varsMap[match];
+                      }
+                    );
+
+                    try {
+                      var result = Function(
+                        '"use strict";return (' + safeEquation + ")"
+                      )();
+                      if (isNaN(result) || !isFinite(result)) result = 0;
+                      $("#Equation").val(result);
+                    } catch (err) {
+                      $("#Equation").val(0);
+                      console.error(
+                        "Error calculating Benefit equation:",
+                        err
+                      );
+                    }
+                  }
+                },
+                error: function (err) {
+                  console.error("Error fetching Benefit equation:", err);
+                },
+              });
+            });
+            if (window.BenefitsEquationComponentsRequired) {
+              BenefitsEquationComponentsRequired.bind();
+            }
           }
           if (listkey == "initiatives") {
             function recalcBenefits(benefitsSection) {
@@ -8796,9 +8950,11 @@ debugger;
 
         if (
           element.hasOwnProperty("useAccessPolicy") &&
-          element.useAccessPolicy
+          element.useAccessPolicy &&
+          myRoleConfig &&
+          myRoleConfig[0] &&
+          myRoleConfig[0].hasOwnProperty("dataFilter")
         ) {
-          if (myRoleConfig[0].hasOwnProperty("dataFilter")) {
             isRoleDataLevelAccess = true;
 
             await get_hierarchies.init(element.source);
@@ -8826,10 +8982,13 @@ debugger;
             });
 
             // }
-          }
         }
         // filter data based on role access
-        else if (element.hasOwnProperty("accessFilter")) {
+        else if (
+          element.hasOwnProperty("accessFilter") &&
+          myRoleConfig &&
+          myRoleConfig[0]
+        ) {
           roleAccess = element.accessFilter.filter((el) => {
             return el.role == myRoleConfig[0].Role;
           });
@@ -10226,44 +10385,76 @@ debugger;
       }
       $("#Impact, #Probability").on("change", calculateRiskRating);
     }
-    if (listkey == "deliverables" && (isEdit || isNew)) {
-      if (typeof USERPCODE !== "undefined" && USERPCODE) {
+    if (
+      (listkey == "deliverables" || listkey == "milestones") &&
+      (isEdit || isNew || isView)
+    ) {
+      var strategicProjectCode =
+        typeof USERPCODE !== "undefined" && USERPCODE
+          ? USERPCODE
+          : typeof PCODE !== "undefined" && PCODE
+          ? PCODE
+          : "";
+      if (strategicProjectCode) {
         $.ajax({
           url: "/_api/web/lists/getbytitle('Projects')/items",
-    
           type: "GET",
-    
           data: {
             $select: "Title,IsStrategicProject",
-            $filter: "Title eq '" + USERPCODE + "'",
+            $filter: "Title eq '" + strategicProjectCode + "'",
           },
-    
           headers: {
             Accept: "application/json;odata=verbose",
           },
-    
           success: function (data) {
             if (data.d.results.length > 0) {
               var project = data.d.results[0];
-              if (
-                project.IsStrategicProject &&
-                project.IsStrategicProject.toLowerCase() === "strategy"
-              ) {
-                $("#RelatedInitiativeDeliverable").attr("required", true);
-                $("#RelatedInitiativeDeliverable")
-                  .closest(".col-md-6")
-                  .find("label")
-                  .attr("required", true);
-              } else {
-                $("#RelatedInitiativeDeliverable").attr("required", false);
-                $("#RelatedInitiativeDeliverable")
-                  .closest(".col-md-6")
-                  .find("label")
-                  .attr("required", false);
-              }
+              var projectType = (
+                project.IsStrategicProject || ""
+              ).toLowerCase();
+              var isStrategy = projectType === "strategy";
+              var isOperationally = projectType === "operationally";
+              var relatedInitiativeFieldId =
+                listkey == "deliverables"
+                  ? "RelatedInitiativeDeliverable"
+                  : "RelatedInitiativeMilestone";
+
+              var applyRelatedInitiativeFieldVisibility = function (retries) {
+                var $fields = $("[id='" + relatedInitiativeFieldId + "']");
+                if (!$fields.length) {
+                  if (retries > 0) {
+                    setTimeout(function () {
+                      applyRelatedInitiativeFieldVisibility(retries - 1);
+                    }, 300);
+                  }
+                  return;
+                }
+                $fields.each(function () {
+                  var $field = $(this);
+                  var $cfield = $field.closest(".CFIELD");
+                  if (isOperationally) {
+                    $cfield.hide().addClass("hide-field");
+                    $field.attr("required", false).removeAttr("required");
+                    $cfield
+                      .find("label")
+                      .attr("required", false)
+                      .removeAttr("required");
+                    return;
+                  }
+                  if (listkey == "deliverables" && (isEdit || isNew)) {
+                    if (isStrategy) {
+                      $field.attr("required", true);
+                      $cfield.find("label").attr("required", true);
+                    } else {
+                      $field.attr("required", false);
+                      $cfield.find("label").attr("required", false);
+                    }
+                  }
+                });
+              };
+              applyRelatedInitiativeFieldVisibility(20);
             }
           },
-    
           error: function (error) {
             console.log("Error fetching project data: ", error);
           },
@@ -10388,6 +10579,47 @@ debugger;
   g: {
     htmlText: "",
     htmlElement: "",
+    // Fill master-details RelatedInitiativeDeliverable from RelatedInitiative (needed on New — no PCODE yet)
+    fillMasterRelatedInitiativeDeliverable: function (initiativeCode) {
+      var $fields = $(
+        '[data-target_list="Deliverables"] select#RelatedInitiativeDeliverable'
+      );
+      if (!$fields.length) return;
+      var placeholder =
+        $fields.first().attr("placeholder") ||
+        $fields.first().find("option:first").text() ||
+        "";
+      if (!initiativeCode) {
+        $fields.html(
+          '<option value="" selected disabled>' + placeholder + "</option>"
+        );
+        return;
+      }
+      var customQuery =
+        "<View><Query><Where><Eq><FieldRef Name='InitiativeCode' /><Value Type='Text'>" +
+        initiativeCode +
+        "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+      sphttp.get(
+        _spPageContextInfo.siteServerRelativeUrl,
+        "InitiativeDeliverables",
+        customQuery,
+        ["Title", "Name"],
+        function (records, record, listItem, isDone) {
+          if (!isDone) return;
+          var html =
+            '<option value="" selected disabled>' + placeholder + "</option>";
+          (records || []).forEach(function (el) {
+            html +=
+              '<option value="' + el.Title + '">' + el.Name + "</option>";
+          });
+          $fields.each(function () {
+            var currentVal = $(this).val();
+            $(this).html(html);
+            if (currentVal) $(this).val(currentVal);
+          });
+        }
+      );
+    },
     pcodeval: function () {
       // not allow spaces and special characters
       $("input.NoSpChar").on("input", function () {
@@ -10420,7 +10652,7 @@ debugger;
           .children(".Details-Item")
           .each(function () {
             var requiredArr = $(this).find(
-              "input[required],div[type=picker],textarea[required]"
+              "input[required],div[type=picker],textarea[required],select[required]"
             );
 
             requiredArr.each(function () {
@@ -11313,12 +11545,57 @@ debugger;
       });
     },
 
-    setSelectFieldValue: function ($field, value) {
+    clearSelectFieldValue: function ($field) {
+      if (!$field || !$field.length) {
+        return;
+      }
+      var fieldId = $field.attr("id");
+      if ($field.is("select")) {
+        $field.find("option").prop("selected", false);
+        $field.find('option[value=""]').prop("selected", true);
+      }
+      $field.val("");
+      $field.removeAttr("value");
+      $field.removeAttr("data-lookup-value");
+      if (window.editLookupValues && fieldId) {
+        delete window.editLookupValues[fieldId];
+      }
+    },
+
+    selectHasOptionValue: function ($field, value) {
+      if (!$field || !$field.length || value == null || value === "") {
+        return false;
+      }
+      var normalizedValue = String(value).toLowerCase();
+      var found = false;
+      $field.find("option").each(function () {
+        var optionVal = $(this).attr("value");
+        if (
+          optionVal != null &&
+          optionVal !== "" &&
+          String(optionVal).toLowerCase() === normalizedValue
+        ) {
+          found = true;
+          return false;
+        }
+      });
+      return found;
+    },
+
+    setSelectFieldValue: function ($field, value, options) {
       if (!$field || !$field.length || value == null || value === "") {
         return "";
       }
+      options = options || {};
+      // Default true: edit load / disabled security fields may need a temporary option.
+      // Cascaded lookup refresh must pass { createIfMissing: false }.
+      var createIfMissing = options.createIfMissing !== false;
       var normalizedValue = String(value);
       $field.attr("value", normalizedValue);
+      if ($field.is("select")) {
+        $field.find('option[value=""]').prop("disabled", true);
+        $field.find("option").not('[value=""]').prop("disabled", false);
+      }
       var $matchedOption = $field.find(
         'option[value="' + normalizedValue.replace(/"/g, '\\"') + '"]'
       );
@@ -11338,7 +11615,7 @@ debugger;
       $field.find("option").prop("selected", false);
       if ($matchedOption.length) {
         $matchedOption.prop("selected", true);
-      } else if ($field.is("select")) {
+      } else if ($field.is("select") && createIfMissing) {
         $field.append(
           $("<option>", {
             value: normalizedValue,
@@ -11346,9 +11623,57 @@ debugger;
             selected: true,
           })
         );
+      } else {
+        ListInfo.g.clearSelectFieldValue($field);
+        return "";
       }
       $field.val(normalizedValue);
+      $field.attr("data-lookup-value", normalizedValue);
       return normalizedValue;
+    },
+
+    syncLookupSelectValues: function ($scope) {
+      var $fields = $scope
+        ? $scope.filter("select[type=dropdown]")
+        : $("select[type=dropdown]");
+      $fields.each(function () {
+        var $field = $(this);
+        var fieldId = $field.attr("id");
+        var stored =
+          $field.attr("data-lookup-value") ||
+          $field.attr("value") ||
+          (window.editLookupValues && window.editLookupValues[fieldId]) ||
+          "";
+        if (!stored) {
+          var currentVal = $field.val();
+          if (currentVal) {
+            $field.attr("value", currentVal);
+            $field.attr("data-lookup-value", currentVal);
+          }
+          return;
+        }
+        if ($field.is("select")) {
+          $field.find('option[value=""]').prop("disabled", true);
+          $field.find("option").not('[value=""]').prop("disabled", false);
+        }
+        if (!$field.val()) {
+          var optionExists = ListInfo.g.selectHasOptionValue($field, stored);
+          if (optionExists) {
+            ListInfo.g.setSelectFieldValue($field, stored, {
+              createIfMissing: false,
+            });
+          } else if ($field.prop("disabled")) {
+            // Keep disabled security lookups selectable for .val()/submit.
+            ListInfo.g.setSelectFieldValue($field, stored, {
+              createIfMissing: true,
+            });
+          }
+          // Enabled + missing option: do nothing — cascade handles restore/clear.
+        } else if (!$field.attr("data-lookup-value")) {
+          $field.attr("data-lookup-value", $field.val());
+          $field.attr("value", $field.val());
+        }
+      });
     },
 
     getEffectiveFieldValue: function ($field) {
@@ -11446,44 +11771,12 @@ debugger;
 
       if (isShowVal) {
         allToggleFields.forEach((item, i, arr) => {
-          if (
-            listkey == "projects" &&
-            (item == "InitiativeType" ||
-              item == "RelatedInitiative" ||
-              item == "RelatedInitiativeDeliverable")
-          ) {
-            if (listkey == "projects") {
-              $("#InitiativeType").parent().show();
-              $("#InitiativeType").parent().css("display", "unset");
-              $("#RelatedInitiative").parent().show();
-              $("#RelatedInitiative").parent().css("display", "unset");
-              $("#RelatedInitiativeDeliverable").parent().show();
-              $("#RelatedInitiativeDeliverable").closest(".CFIELD").removeClass("hide-field");
-              $("#RelatedInitiativeDeliverable").parent().css("display", "unset");
-            }
-            $('[data-togglename="' + item + '"]').prop("disabled", true);
-            $("#IsStrategicProject").on("change", function () {
-              if (listkey == "projects") {
-                if ($(this).val() == "no") {
-                  $("#InitiativeType").val("");
-                  $("#InitiativeType option:selected").removeAttr("selected");
-                  $("#RelatedInitiative").val("");
-                  $("#RelatedInitiative option:selected").removeAttr("selected");
-                  $("#RelatedInitiativeDeliverable").val("");
-                  $("#RelatedInitiativeDeliverable option:selected").removeAttr(
-                    "selected"
-                  );
-                }
-              }
-            });
-          } else {
-            var $el = $('[data-togglename="' + item + '"]');
-            var $parent = $el.parent();
-            var $cfield = $el.closest(".CFIELD");
+          var $el = $('[data-togglename="' + item + '"]');
+          var $parent = $el.parent();
+          var $cfield = $el.closest(".CFIELD");
 
-            $parent.addClass("hide-field").hide();
-            $cfield.addClass("hide-field").hide();
-          }
+          $parent.addClass("hide-field").hide();
+          $cfield.addClass("hide-field").hide();
       
           // .parent().prop('disabled', true);
           // .addClass("hide-field");
@@ -11528,28 +11821,13 @@ debugger;
           });
         });
         toggleFields.forEach(function (item, i, arr) {
-          if (
-            listkey == "projects" &&
-            (item == "InitiativeType" ||
-              item == "RelatedInitiative" ||
-              item == "RelatedInitiativeDeliverable")
-          ) {
-            var isHidden = $('[data-togglename="' + item + '"]').is(":disabled");
-          } else {
-            var isHidden = $('[data-togglename="' + item + '"]').is(":hidden");
+          if (!item) {
+            return;
           }
+          var isHidden = $('[data-togglename="' + item + '"]').is(":hidden");
           var myFieldParent = $('[data-togglename="' + item + '"]').parent();
           myFieldParentofParent = $('[data-togglename="' + item + '"]');         
           if (isHidden) {
-            if (listkey == "projects" && (item == "InitiativeType" || item == "RelatedInitiative" || item == "RelatedInitiativeDeliverable")) {
-                var $el = $('[data-togglename="' + item + '"]');
-                var $parent = $el.parent();
-                var $cfield = $el.closest(".CFIELD");
-                $el.prop("disabled", false);
-                $el.show().removeClass("hide-field");
-                $parent.show().removeClass("hide-field"); 
-                $cfield.show().removeClass("hide-field"); 
-            }
             myFieldParent.show().removeClass("hide-field");
             myFieldParentofParent.show().removeClass("hide-field");
             myFieldParent.closest(".CFIELD").removeClass("hide-field");
@@ -11557,6 +11835,19 @@ debugger;
             myFieldParent.parent().addClass("py-5").addClass("border-bottom");
             myFieldParentofParent.show().removeClass("hide-field");
             myFieldParent.closest(".CFIELD").removeClass("hide-field");
+
+            var $toggleLookupField = $('[data-togglename="' + item + '"]');
+            if ($toggleLookupField.is("select")) {
+              var storedLookupVal =
+                $toggleLookupField.attr("data-lookup-value") ||
+                $toggleLookupField.attr("value");
+              if (storedLookupVal) {
+                ListInfo.g.setSelectFieldValue(
+                  $toggleLookupField,
+                  storedLookupVal
+                );
+              }
+            }
       
             if (!isView) {
               myFieldParent.find(">*").attr("required", true);
@@ -11650,7 +11941,11 @@ debugger;
             $parent.addClass("hide-field").hide();
             $cfield.addClass("hide-field").hide();            
       
-          $('[data-togglename="' + item + '"]').val("");
+          $('[data-togglename="' + item + '"]').each(function () {
+            $(this).val("");
+            $(this).removeAttr("value");
+            $(this).removeAttr("data-lookup-value");
+          });
           $('[data-togglename="' + item + '"]')
             .parent()
             .find("*")
@@ -14781,7 +15076,7 @@ window.View_ListInfo = {
             element.InternalName +
             '" ' +
             ToggleName +
-            'data-parentrelatedkeylvl1="' +
+            ' data-parentrelatedkeylvl1="' +
             element.fieldsinformlvl1 +
             '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
             element.sourcefieldlvl1 +
@@ -15630,17 +15925,24 @@ window.dynamicAffectSelect = {
       // selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr("value"); // get selected val to use it in edit
 
       // to filter the value in cr
+      var $affectedSelect = $(`select#${affectedSelectsInfo.affectedFieldName}`);
       if (listkey == "changerequest") {
-        selectedVal = $(
-          `select#${affectedSelectsInfo.affectedFieldName}`
-        ).val(); // get selected val to use it in edit
+        selectedVal = $affectedSelect.val(); // get selected val to use it in edit
+      } else if (
+        typeof ListInfo !== "undefined" &&
+        ListInfo.g &&
+        ListInfo.g.getEffectiveFieldValue
+      ) {
+        selectedVal = ListInfo.g.getEffectiveFieldValue($affectedSelect);
       } else {
-        selectedVal = $(`select#${affectedSelectsInfo.affectedFieldName}`).attr(
-          "value"
-        ); // get selected val to use it in edit
+        selectedVal =
+          $affectedSelect.attr("value") ||
+          $affectedSelect.val() ||
+          $affectedSelect.attr("data-lookup-value") ||
+          "";
       }
 
-      $(`select#${affectedSelectsInfo.affectedFieldName}`).html("");
+      $affectedSelect.html("");
 
       optionsBody =
         '<option class="Resources" value="" selected="" disabled=""></option>'; // to not choose the first value in dropdown
@@ -15768,9 +16070,51 @@ window.dynamicAffectSelect = {
         }
       );
     } else {
-      $(`select#${affectedSelectsInfo.affectedFieldName}`).html(optionsBody);
+      var $affectedSelectRestore = $(
+        `select#${affectedSelectsInfo.affectedFieldName}`
+      );
+      $affectedSelectRestore.html(optionsBody);
 
-      $(`select#${affectedSelectsInfo.affectedFieldName}`).val(selectedVal);
+      var valueExistsInOptions =
+        !!selectedVal &&
+        optionsArray.some(function (option) {
+          return (
+            option &&
+            option.value != null &&
+            String(option.value).toLowerCase() ===
+              String(selectedVal).toLowerCase()
+          );
+        });
+
+      if (
+        valueExistsInOptions &&
+        typeof ListInfo !== "undefined" &&
+        ListInfo.g &&
+        ListInfo.g.setSelectFieldValue
+      ) {
+        // Restore only when SO is still valid for the new filter (real Name option).
+        ListInfo.g.setSelectFieldValue($affectedSelectRestore, selectedVal, {
+          createIfMissing: false,
+        });
+      } else if (
+        !selectedVal &&
+        typeof ListInfo !== "undefined" &&
+        ListInfo.g &&
+        ListInfo.g.clearSelectFieldValue
+      ) {
+        ListInfo.g.clearSelectFieldValue($affectedSelectRestore);
+      } else {
+        // Value not in refreshed options (or still loading): show empty, never invent Title text.
+        // Keep data-lookup-value / editLookupValues when selectedVal was captured so edit-load
+        // races can restore later; user-driven level change already cleared those attrs.
+        $affectedSelectRestore.find("option").prop("selected", false);
+        $affectedSelectRestore.find('option[value=""]').prop("selected", true);
+        $affectedSelectRestore.val("");
+        $affectedSelectRestore.removeAttr("value");
+        if (!selectedVal) {
+          $affectedSelectRestore.removeAttr("data-lookup-value");
+        }
+      }
     }
 
     if (
@@ -18455,6 +18799,53 @@ window.Get_ActualAnnualTotal = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, Get_ActualAnnualTotal.onSuccess),
       Function.createDelegate(this, Get_ActualAnnualTotal.onError)
+    );
+  },
+  g: {},
+};
+
+window.Get_BenefitActualAnnualTotal = {
+  onSuccess: function (sender, args) {
+    var collListItem = Get_BenefitActualAnnualTotal.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      var totalAllActual =
+        oListItem.get_item("Actual") == null ? 0 : oListItem.get_item("Actual");
+      if (isEdit) {
+        $("#Actual").val(totalAllActual);
+      }
+      if (isView) {
+        $("#Actual").html(totalAllActual);
+      }
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  init: function (year) {
+    var benefitTitle =
+      (typeof benefitCode !== "undefined" && benefitCode) ||
+      $("#Title").val() ||
+      "";
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle("KPIResults");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='BenefitCode'/><Value Type='Text'>" +
+        benefitTitle +
+        "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
+        year +
+        "</Value></Eq></And></And></Where></Query></View>"
+    );
+
+    Get_BenefitActualAnnualTotal.g.collListItem = oList.getItems(camlQuery);
+    clientContext.load(Get_BenefitActualAnnualTotal.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, Get_BenefitActualAnnualTotal.onSuccess),
+      Function.createDelegate(this, Get_BenefitActualAnnualTotal.onError)
     );
   },
   g: {},

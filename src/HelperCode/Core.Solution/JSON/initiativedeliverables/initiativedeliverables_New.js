@@ -237,6 +237,16 @@ var Information_Form = [
         descPhraseAr: "ملفات مطلوبة عند الاغلاق",
         descPhraseEn: "File required after closing",
       },
+      {
+        InternalName: 'SupportDocumentsDescription',
+        DisplayNameEn: 'Support Documents Description',
+        DisplayName: 'وصف الوثائق الداعمة',
+        type: 'multiline',
+        maxchar: '5000',
+        descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
+        descPhraseEn: "max length of letters equal 5000",
+        validation: 'required',
+      },
     ],
   },
   {

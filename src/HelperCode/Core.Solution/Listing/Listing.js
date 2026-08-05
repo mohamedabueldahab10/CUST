@@ -1530,6 +1530,93 @@ window.ListingData = {
 			      }
 			    });
 			  }
+
+			  // Hide Add when benefits Weight sum for current initiative >= 100
+			  // Dedicated SP query (do NOT use Listing sphttp.get — it resets window.records)
+			  if (listkey === "benefits" && ICODE) {
+			    if (!$("#analysis-calendar-msg-styles").length) {
+			      $("head").append(
+			        '<style id="analysis-calendar-msg-styles">' +
+			        '.analysis-calendar-msg-wrapper.d-flex{display:flex;align-items:flex-start;}' +
+			        '.analysis-calendar-msg{position:relative;display:flex;align-items:flex-start;gap:12px;width:fit-content;max-width:100%;padding:7px 14px;margin-bottom:14px;border-radius:10px;box-shadow:0 4px 14px rgba(24,58,102,.12),0 2px 6px rgba(0,0,0,.06);background:#fff;border:1px solid rgba(24,58,102,.08);overflow:hidden;}' +
+			        '.analysis-calendar-msg__strip{position:absolute;left:0;top:0;bottom:0;width:5px;}' +
+			        '.analysis-calendar-msg.analysis-calendar-info .analysis-calendar-msg__strip{background:linear-gradient(180deg,#148287 0%,#183a66 100%);}' +
+			        '.analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__strip{background:linear-gradient(180deg,#f7941d 0%,#183a66 100%);}' +
+			        '.analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__strip{background:linear-gradient(180deg,#f7941d 0%,#c0392b 100%);}' +
+			        '.analysis-calendar-msg__icon{flex-shrink:0;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;}' +
+			        '.analysis-calendar-msg.analysis-calendar-info .analysis-calendar-msg__icon{background:rgba(20,130,135,.15);color:#148287;}' +
+			        '.analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__icon{background:rgba(247,148,29,.18);color:#183a66;}' +
+			        '.analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__icon{background:rgba(247,148,29,.2);color:#c0392b;}' +
+			        '.analysis-calendar-msg__text{flex:1;color:#183a66;font-size:14px;line-height:1.5;font-weight:500;padding-top:4px;}' +
+			        '.analysis-calendar-msg.analysis-calendar-warn .analysis-calendar-msg__text{color:#183a66;}' +
+			        '.analysis-calendar-msg.analysis-calendar-error .analysis-calendar-msg__text{color:#183a66;}' +
+			        '</style>'
+			      );
+			    }
+			    SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+			      var benefitsWeightCtx = new SP.ClientContext(ListURL);
+			      var benefitsWeightList = benefitsWeightCtx
+			        .get_web()
+			        .get_lists()
+			        .getByTitle(SP_ListName || "Benefits");
+			      var benefitsWeightCaml = new SP.CamlQuery();
+			      benefitsWeightCaml.set_viewXml(
+			        "<View><Query><Where><And>" +
+			          "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+			          "<Eq><FieldRef Name='InitiativeCode' /><Value Type='Text'>" +
+			          ICODE +
+			          "</Value></Eq>" +
+			          "</And></Where></Query>" +
+			          "<ViewFields><FieldRef Name='Weight' /></ViewFields>" +
+			          "</View>"
+			      );
+			      var benefitsWeightItems = benefitsWeightList.getItems(benefitsWeightCaml);
+			      benefitsWeightCtx.load(benefitsWeightItems);
+			      benefitsWeightCtx.executeQueryAsync(
+			        function () {
+			          var totalBenefitsWeight = 0;
+			          var benefitsWeightEnum = benefitsWeightItems.getEnumerator();
+			          while (benefitsWeightEnum.moveNext()) {
+			            var w = Number(
+			              benefitsWeightEnum.get_current().get_item("Weight")
+			            );
+			            if (!isNaN(w)) totalBenefitsWeight += w;
+			          }
+			          totalBenefitsWeight = Number(totalBenefitsWeight.toFixed(1));
+			          if (totalBenefitsWeight >= 100) {
+			            var isArBenefitsWeight =
+			              localStorage.getItem("lng") == null ||
+			              localStorage.getItem("lng") == "ar";
+			            var benefitsWeightMsg = isArBenefitsWeight
+			              ? "مجموع أوزان المنافع وصل 100%. لا يمكن إضافة منفعة جديدة."
+			              : "Total benefits weight reached 100%. Adding a new benefit is not allowed.";
+			            $(".btn-add").css({
+			              opacity: 0.6,
+			              "pointer-events": "none",
+			              display: "none",
+			            });
+			            $(".additionalInfo").html(
+			              '<div class="analysis-calendar-msg-wrapper d-flex">' +
+			                '<div class="analysis-calendar-msg analysis-calendar-warn">' +
+			                  '<div class="analysis-calendar-msg__strip"></div>' +
+			                  '<div class="analysis-calendar-msg__icon">&#9888;</div>' +
+			                  '<div class="analysis-calendar-msg__text">' +
+			                  benefitsWeightMsg +
+			                  "</div>" +
+			                "</div>" +
+			              "</div>"
+			            );
+			          }
+			        },
+			        function (sender, args) {
+			          console.error(
+			            "[benefits][Listing] Weight sum query failed",
+			            args.get_message()
+			          );
+			        }
+			      );
+			    });
+			  }
 			  
 			  // if (PCODE && (listkey == 'deliverables' || listkey == 'milestones') && !projectActualBudget) {
 			  //   var HtmlStartNoProjBudgetMsg = '<div data-trans-addActualBudget class="actualBudget d-flex w-100 mx-3 mb-3 ErrorMsg Resources"></div>';
@@ -2239,6 +2326,8 @@ window.ListingData = {
 			keyNameParams = 'sos'
 		  } else if (wfname == 'VROActualKPI' || wfname == 'MSActualKPI' || wfname == 'LMSActualKPI') {
 			keyNameParams = 'mainkpi'
+		  } else if (wfname == 'MSActualBenefit') {
+			keyNameParams = 'benefits'
 		  } else if (wfname == 'VROCreateKPI' || wfname == 'EPMOCreateKPI' || wfname == 'LMSCreateKPI') {
 			keyNameParams = 'mainkpi'
 		  } else if (wfname == 'VROCreateKPI' || wfname == 'MSCRKPI' || wfname == 'LMSCRKPI') {

@@ -27,7 +27,8 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},           
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -41,6 +42,9 @@ var Information_Form = [
         stopinvokeparent: 'yes', // to not invoke dynamic in edit cause الاستراتيجية المرتبطة don't submit so the value will disaber
 
         dynamic: 'parent', // parent to get the child depends on this field value
+        toggleValues: [
+          { value: 'vision', fields: ['RelatedProgram'] }, //we can put more than 1  field
+        ],
         type: 'dropdownValues',
         options: {
           choices: [
@@ -65,12 +69,6 @@ var Information_Form = [
                 'LMSE','EPMO','LMSP','LMSUExecution','LMSUPerformance','LMSUControl','VROHead','VROPHead','VROP','VPlanningUnitHead','VPlanningUnit','VROEHead','InitiativeManager','InitiativeOwner','SPMOHead','SPMO','DU','SPMAdmin','SPMTeam','StrategyTeam','CRCommittee','Administrator'
               ],
             },
-              {
-              display: 'sod',
-              value: 'sod',
-              roles: ['Administrator','SODVROExecution','SODVROPerformance','SODVROE','InitiativeManager','InitiativeOwner']
-              
-            },
             // { display: 'others', value: 'others' },
           ],
         },
@@ -78,23 +76,22 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
-          requiredValues: [
-          { value: 'vision', fields: ['Portfolio'] },
-          { value: 'lms', fields: ['SubSector'] },
-          { value: 'sod', fields: ['SubSector'] },
-          { value: 'strategically', fields: ['SubSector'] },
-      ],
           toggleValues: [
           { value: 'vision', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective','RelatedProgram','ExternalEntityRepresentative'] },
           { value: 'lms', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
-          { value: 'sod', fields: ['RelatedStrategyReadonly','RelatedReadOnlyObjectiveLevel','RelatedReadonlyObjective'] },
           { value: 'strategically', fields: [''] },
         ],
+        requiredValues: [
+          { value: 'vision', fields: ['Portfolio'] },
+          { value: 'lms', fields: ['SubSector'] },
+          { value: 'strategically', fields: ['SubSector'] },
+      ],
       },
       {
         InternalName: 'StrategySource',
@@ -104,6 +101,17 @@ var Information_Form = [
         source: 'GoalStrategy',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
+        validation: "required", 
+         security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},             
+            {group:"Initiative Manager",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
         // dontSubmit: true,
         // showlink:true,
         // linkedto: "goalstrategy"
@@ -121,7 +129,17 @@ var Information_Form = [
         source: 'SPillars',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
-          "display": "none"
+          "display": "none",
+            security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},             
+            {group:"Initiative Manager",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
         // isRelatedToParent: true, // to show parent value depends on child like sector and subsector
         // to get the seblings value
         // valsiblingkey: 'Description', // internal name on sorce list
@@ -142,11 +160,72 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},            
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
+      },
+   {
+        InternalName: "Sector",
+        DisplayName: "القطاع",
+        DisplayNameEn: "Sector",
+        type: "lookup",
+        validation: "required",
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Sector",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        disableOnWfTaskStage : "S05,S09",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},        
+            {group:"Initiative Manager",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
+        // ToggleDisabledName:"Sector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", ],
+        // },
+      },
+      {
+        InternalName: "SubSector",
+        DisplayName: "الوكالة",
+        DisplayNameEn: "DeputyShip",
+        type: "lookup",
+        // validation: 'required',
+        RequiredName: 'SubSector',
+        //from other list:
+        source: "Internal Entities",
+        isSector: "True",
+        EntityType: "Department",
+        Dispfieldkey: "Name",
+        DispfieldkeyEn: "NameEn",
+        valfieldkey: "Title",
+        // disableOnWfTaskStage : "S05,S09",
+        // hideOnWfTaskStage  : "S05;S09",
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},       
+            {group:"Initiative Manager",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
+        // ToggleDisabledName:"SubSector"
+        // security: {
+        //   groups: ["VRO_E", "LMS_E", ],
+        // },
       },
       // {
       //   InternalName: 'RelatedKPI',
@@ -212,7 +291,7 @@ var Information_Form = [
       //     groups: [ ],
       //     // groups: [], // should be empty array if will use notAllowTo
       //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-      //       {group:"Development Unit",form:["origin"]},
+      //       {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
       //       // {group:"EPMO",form:["origin" ]}
 
       //     ]
@@ -227,7 +306,8 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},           
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -254,7 +334,8 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},            
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -302,27 +383,16 @@ var Information_Form = [
               },
             ],
           },
-           {
-            role: 'SODVROE',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Text',
-                values: ['sod'],
-              },
-            ],
-          },
         ],
-      },
-       
-      {
+        },
+         {
         InternalName: 'RelatedObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
         DisplayName: 'مستوى الهدف المرتبط',        
         "validation": "required",
         // dontSubmit: true,        
-        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة والوكالة المختارة",
-        descPhraseEn: "The Objectives appear based on selected Level related to the selected Strategy and selected Deputyship", 
+        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة",
+        descPhraseEn: "The Objectives appear based on selected Level that related to selected Strategy", 
         grandFieldId: 'RelatedStrategy', // we add this field to handle the two field filtration(parent Id in current form)
         childFieldId: 'RelatedObjective', // we add this field to handle the two field filtration (child Id in current form)
         childFieldIdSource: 'Types', // we add this field to handle the two field filtration (child internal name in destination list)
@@ -339,6 +409,10 @@ var Information_Form = [
               value: 'sublevel2',
             },
             {
+              display: 'sublevel2a',
+              value: 'sublevel2a',
+            },
+            {
               display: 'sublevel3',
               value: 'sublevel3',
             },
@@ -347,87 +421,33 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},            
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
         // validation: 'required',
-      },
-      {
-        InternalName: "Sector",
-        DisplayName: "القطاع",
-        DisplayNameEn: "Sector",
-        type: "lookup",
-        validation: "required",
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        EntityType: "Sector",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-        disableOnWfTaskStage : "S05,S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-        // ToggleDisabledName:"Sector"
-        // security: {
-        //   groups: ["VRO_E", "LMS_E", ],
-        // },
-      },
-      {
-        InternalName: "SubSector",
-        DisplayName: "الوكالة",
-        DisplayNameEn: "DeputyShip",
-        type: "lookup",
-        // validation: 'required',
-        RequiredName: 'SubSector',
-        //from other list:
-        source: "Internal Entities",
-        isSector: "True",
-        EntityType: "Department",
-        Dispfieldkey: "Name",
-        DispfieldkeyEn: "NameEn",
-        valfieldkey: "Title",
-        // disableOnWfTaskStage : "S05,S09",
-        // hideOnWfTaskStage  : "S05;S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-        // ToggleDisabledName:"SubSector"
-        // security: {
-        //   groups: ["VRO_E", "LMS_E", ],
-        // },
       },
       {
         InternalName: 'RelatedObjective',
         DisplayNameEn: 'Related Objective',
         DisplayName: 'الهدف المرتبط',
-        type: 'lookup',
+        //type: 'lookupmultiselect',
+         type: 'lookup',
         source: 'SOs',
         Dispfieldkey: 'Name',
         valfieldkey: 'Title',
         grpfieldkey: 'Title',        
         "validation": "required",
-        descPhraseAr: "تظهر الاهداف بناء على نوع  مستوى الهدف المرتبط بالاستراتيجية المختارة والوكالة المختارة",
-        descPhraseEn: "The Objectives appear based on selected Level related to the selected Strategy and selected Deputyship", 
-        //
         dynamic: 'RelatedStrategy',
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
+        isRelatedToParent: true, // to show parent value depends on child like sector and subsector
+        fieldsinformlvl1: 'RelatedStrategy', // fields in look up list
+        sourcefieldlvl1: 'RelatedStrategy',
+        fieldsinformlvl2: 'RelatedObjectiveLevel', // fields in look up list
+        sourcefieldlvl2: 'Types',
         additionalFilterField: 'SubSector',
         additionalFilterFieldType: 'Text',
         additionalFilterFromField: 'SubSector',
@@ -474,22 +494,13 @@ var Information_Form = [
               },
             ],
           },
-           {
-            role: 'SODVROE',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Text',
-                values: ['sod'],
-              },
-            ],
-          },
         ], 
           security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},          
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -498,7 +509,7 @@ var Information_Form = [
         // queryFieldType: 'dropdownValues', //ex: "Choice"// if i need to make the field with filter should add this
         // queryFieldValue: 'sublevel2,sublevel3', // if i need to make the field with filter should add this
       },
-    {
+         {
         InternalName: 'RelatedStrategyReadonly',
         DisplayNameEn: 'Related Strategy Read Only',
         DisplayName: 'الاستراتيجية المطلعه',
@@ -539,44 +550,47 @@ var Information_Form = [
               },
             ],
           },
-           {
-            role: 'SODVROE',
-            conditions: [
-              {
-                field: 'Types',
-                type: 'Text',
-                values: ['sod'],
-              },
-            ],
-          },
         ],
+         security: {
+          groups: [
+            "EPMO",
+            "System Admin Group",
+          ],
+        },
         "display": "none"
       },
        
       {
         InternalName: 'RelatedReadOnlyObjectiveLevel',
         DisplayNameEn: 'Related Objective Level',
-        DisplayName: 'مستوى الهدف المتطلع',
+        DisplayName: 'مستوى الهدف المطلع',
         grandFieldId: 'RelatedStrategyReadonly',
         childFieldId: 'RelatedReadonlyObjective',
         childFieldIdSource: 'Types',
         type: 'dropdownValues',
         ToggleName: 'RelatedReadOnlyObjectiveLevel',
-        descPhraseAr: 'تظهر الأهداف بناءً على مستوى الهدف المتطلع والاستراتيجية المختارة',
+        descPhraseAr: 'تظهر الأهداف بناءً على مستوى الهدف المطلع والاستراتيجية المختارة',
         descPhraseEn: 'Objectives appear based on selected Level and Related Strategy Read Only',
         options: {
           choices: [
             { display: 'main', value: 'main' },
             { display: 'sublevel2', value: 'sublevel2' },
+            { display: 'sublevel2a', value: 'sublevel2a' },
             { display: 'sublevel3', value: 'sublevel3' },
           ],
         },
-      "display": "none"
+          security: {
+          groups: [
+            "EPMO",
+            "System Admin Group",
+          ],
+        },
+        "display": "none"
       },
       {
         InternalName: 'RelatedReadonlyObjective',
         DisplayNameEn: 'Related Readonly Objective',
-        DisplayName: 'الهدف المتطلع',
+        DisplayName: 'الهدف المطلع',
         type: 'lookup',
         ToggleName: 'RelatedReadonlyObjective',
         source: 'SOs',
@@ -585,8 +599,13 @@ var Information_Form = [
         dynamic: 'RelatedStrategyReadonly',
         filterField: 'RelatedStrategy',
         filterFieldType: 'Text',
-        descPhraseAr: 'تظهر الأهداف بناءً على الاستراتيجية المتطلعة ومستوى الهدف المتطلع',
+        descPhraseAr: 'تظهر الأهداف بناءً على الاستراتيجية المطلعة ومستوى الهدف المطلع',
         descPhraseEn: 'Objectives appear based on Related Strategy Read Only and Related Objective Level',
+        additionalFilterField: 'SubSector',
+        additionalFilterFieldType: 'Text',
+        additionalFilterFromField: 'SubSector',
+        additionalFilterRequireWhenTypes: ['lms', 'sod', 'strategically'],
+        additionalFilterTypesFormField: 'Types',
         accessFilter: [
           {
             role: 'VROE',
@@ -628,19 +647,59 @@ var Information_Form = [
               },
             ],
           },
-           {
-            role: 'SODVROE',
+        ],
+          security: {
+          groups: [
+            "EPMO",
+            "System Admin Group",
+          ],
+        },
+        "display": "none"
+      },
+      /*   {
+        InternalName: 'RelatedStrategyReadonly',
+        DisplayNameEn: 'Related Strategy Read Only',
+        DisplayName: 'الاستراتيجية المطلعه',
+        type: 'lookup',
+        // dontSubmit: true,
+        source: 'GoalStrategy',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',        
+        "validation": "required",
+        // dynamic: 'parent',
+        // dynamic: 'Types',
+        // dynamic:'parent',
+        seconeddynamic: 'Types',
+        dynamic: 'parent', //main field that affect on other chiled field
+        filterField: 'Types',
+        filterFieldType: 'Text',
+        notInvokeListiner: true, // to not invoke the lookup when change on parent > the filteration depends on other field also
+        //in case not parent add below attrs
+        //role access
+        accessFilter: [
+          {
+            role: 'VROE',
             conditions: [
               {
                 field: 'Types',
-                type: 'Text',
-                values: ['sod'],
+                type: 'Choice',
+                values: ['vision'],
+              },
+            ],
+          },
+          {
+            role: 'LMSUExecution',
+            conditions: [
+              {
+                field: 'Types',
+                type: 'Choice',
+                values: ['lms'],
               },
             ],
           },
         ],
-        "display": "none"
-      },
+      },*/
+     
       // {
       //   InternalName: 'RelatedObjective',
       //   DisplayNameEn: 'Related Objective',
@@ -858,7 +917,8 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},          
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -877,7 +937,8 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},           
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -895,24 +956,22 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},           
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
       },
-            {
+          {
         InternalName: 'ExternalEntityRepresentative',
         DisplayNameEn: 'External Entity Representative',
         DisplayName: 'ممثل الجهة الخارجية',
         ToggleName: 'ExternalEntityRepresentative',
         type: 'string',
-        maxchar: 255,
         display: 'none',
-      // validation: 'required',
-      //  descPhraseAr: "الحد الاقصى لعدد الحروف هو 255 حرف",
-      //  descPhraseEn: "max length of letters equal 255",  
       },
+    
       {
         InternalName: 'ExternalEntities',
         DisplayName: 'الجهات الشقيقة',
@@ -928,7 +987,8 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},         
+            {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -970,7 +1030,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1006,7 +1066,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1050,7 +1110,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1078,13 +1138,13 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
       },
-      {
+        {
         InternalName: "IsZeroBudgetInitiative",
         DisplayName: "هل هي مبادرة صفرية؟",
         DisplayNameEn: "Is Zero Budget Intiative ?",
@@ -1106,8 +1166,19 @@ var Information_Form = [
           { value: 'yes', fields: [] },
           
         ],
+          security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},             
+            {group:"Initiative Manager",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
       },
-    
+     
+     
       // {
       //     "InternalName": "InitiativeStatus",
       //     "DisplayName": "حالة توثيق المبادرة",
@@ -1166,11 +1237,9 @@ var Information_Form = [
     labelEn: 'Financial Data',
     description: 'التفاصيل',
     descriptionEn: 'Details',
+    enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+    requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
     toggleName: 'BudgetSection',
-    // display:'none',
-
-    enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-    requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
     subFields: [
       // {
       //   InternalName: 'RelatedBudgetItem',
@@ -1183,8 +1252,8 @@ var Information_Form = [
       //   Dispfieldkey: 'Name',
       //   valfieldkey: 'Title',
       //   // "display":"none"
-      //   enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-      //   requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+      //   enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+      //   requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
       // },
       {
         InternalName: 'RelatedBudgetItem',
@@ -1195,7 +1264,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1205,8 +1274,8 @@ var Information_Form = [
         // Dispfieldkey: 'Name',
         // valfieldkey: 'Title',
         // grpfieldkey: 'Title',
-        // enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        // requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        // enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        // requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
         // Errmsgkey: 'multiselecterr',
       },
       {
@@ -1215,13 +1284,13 @@ var Information_Form = [
         DisplayNameEn: 'Estimated Cost',
         type: 'number',
         numberOfDigits: '15',
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1232,11 +1301,10 @@ var Information_Form = [
         DisplayName: 'التكاليف الكلية حسب سقف البرنامج ',
         DisplayNameEn: 'Program Total Cost',
         type: 'float',
-        RequiredName: "ProgramTotalCost",
         numberOfDigits: '15',
         targetelement: 'ActualCost',
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
         sum1Element: 'ProgramTotalCost',
         sum2Element: 'ActualCost',
         totalElement: 'InitiativeBudget',
@@ -1244,7 +1312,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1260,8 +1328,8 @@ var Information_Form = [
         numberOfDigits: '15',
         targetelement: 'ActualCost',
         seconedtarget: 'ProgramTotalCost',
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
         max: 'ProgramTotalCost', // max value will be smaller than or equal ProgramTotalCost
         descPhraseAr:
           'القيمة يجب ان تكون اقل او يساوي التكاليف الكلية حسب سقف البرنامج',
@@ -1273,23 +1341,13 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
       },
-        {
-        InternalName: 'NoActualCost',
-        DisplayName: 'التكاليف الكلية غير المعتمدة ',
-        DisplayNameEn: 'No Actual Cost',
-        type: 'float',
-        numberOfDigits:"15",
-         security: {
-      groups: ["VRO_E", "LMS_E", "EPMO", "System Admin Group"],
-       },
-       },
-      {
+ {
         InternalName: "FundingStatus",
         DisplayName: "حالة التمويل",
         DisplayNameEn: "Funding Status",        
@@ -1298,17 +1356,14 @@ var Information_Form = [
         options: {
           choices: [
             { display: "funded", value: "funded" },
-            { display: "unfunded", value: "unfunded" },
-           /* { display: "partiallyfunded", value: "partiallyfunded" },
-            { display: "zero", value: "zero" },*/
+            { display: "unfunded", value: "unfunded" }
           ],
         },
          security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
 
           ]
         },
@@ -1323,8 +1378,8 @@ var Information_Form = [
         security: {
           groups: ['EPMO', 'System Admin Group'],
         },
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
         state: 'disabled',
         descPhraseAr:
           'مجموع التكاليف الكلية حسب سقف البرنامج و التكاليف الكلية المعتمدة',
@@ -1334,7 +1389,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1348,8 +1403,8 @@ var Information_Form = [
         "state": "disabled",
         type: 'number',
         numberOfDigits: '15',
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
         max: 'InitiativeBudget',
         descPhraseAr: 'يجب ان تكون اقل من او يساوي ميزانية المبادرة',
         descPhraseEn: 'should be less than or equal the initiative budget',
@@ -1357,7 +1412,29 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
+            // {group:"EPMO",form:["origin" ]}
+
+          ]
+        },
+      },
+       {
+        InternalName: 'ExpenseStartDate',
+        DisplayName: 'تاريخ بداية الصرف',
+        DisplayNameEn: 'Expense Start Date',
+        // type: 'datetime',
+        type: 'datetimetoparent',
+        listname: 'Initiatives',
+        startinternalname: 'StartDate',
+        endinternalname: 'FinishDate',
+        enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        Errmsgkey:'btwndatepattern',
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1371,8 +1448,8 @@ var Information_Form = [
         
         "state": "disabled",
         numberOfDigits: '15',
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
         max: 'InitiativeBudget',
         descPhraseAr: 'يجب ان تكون اقل من او يساوي ميزانية المبادرة',
         descPhraseEn: 'should be less than or equal the initiative budget',
@@ -1380,7 +1457,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1394,8 +1471,8 @@ var Information_Form = [
         
         "state": "disabled",
         numberOfDigits: '15',
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
+        enableOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
+        requireOnWfTaskStage: 'VInStage12,SInStage10,LInStage09',
         max: 'InitiativeBudget',
         descPhraseAr: 'يجب ان تكون اقل من او يساوي ميزانية المبادرة',
         descPhraseEn: 'should be less than or equal the initiative budget',
@@ -1403,46 +1480,23 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
       },
-        {
-        InternalName: 'ExpenseStartDate',
-        DisplayName: 'تاريخ بداية الصرف',
-        DisplayNameEn: 'Expense Start Date',
-        // type: 'datetime',
-        type: 'datetimetoparent',
-        listname: 'Initiatives',
-        startinternalname: 'StartDate',
-        endinternalname: 'FinishDate',
-        enableOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        requireOnWfTaskStage: 'VInStage01,SInStage01,LInStage01',
-        Errmsgkey:'btwndatepattern',
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-      },
-      {
+       {
         InternalName: 'DependencyCost',
         DisplayName: 'حجم الارتباط (منصة اعتماد) ',
         DisplayNameEn: 'Dependency Cost',
         // type: 'float',
         type: 'floatpercentage',
-         ToggleName: 'FundingSection',
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1484,7 +1538,7 @@ var Information_Form = [
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeDeliverables',
-    ToggleName: "Delivrables",
+    toggleName: "Delivrables",
     subFields: [
       {
         InternalName: 'Name',
@@ -1501,7 +1555,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1539,7 +1593,7 @@ var Information_Form = [
           groups: [],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1557,7 +1611,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1576,7 +1630,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1592,7 +1646,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1634,7 +1688,6 @@ var Information_Form = [
             },
           ],
         },
-      
       },
     
       // {
@@ -1647,7 +1700,7 @@ var Information_Form = [
       //     groups: [ ],
       //     // groups: [], // should be empty array if will use notAllowTo
       //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-      //       {group:"Development Unit",form:["origin"]},
+      //       {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
       //       // {group:"EPMO",form:["origin" ]}
 
       //     ]
@@ -1669,7 +1722,6 @@ var Information_Form = [
         DisplayName: 'الوزن(%)',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
-        ToggleName: 'Weight',
         listname: 'InitiativeDeliverables',
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
@@ -1682,12 +1734,11 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
-        display:'none'
       },
       {
         InternalName: 'Amount',
@@ -1696,7 +1747,6 @@ var Information_Form = [
         dontSubmit: true,
         	"state":"disabled",
         type: 'percentbyrelatedparent',
-        ToggleName: 'Amount',
         listname: 'Initiatives',
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
@@ -1707,7 +1757,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1724,48 +1774,39 @@ var Information_Form = [
       //     groups: ['VRO_E', 'LMS_E', 'EPMO', 'System Admin Group'],
       //   },
       // },
-      // {
-      //   InternalName: 'Delivered',
-      //   DisplayName: 'تم التسليم',
-      //   DisplayNameEn: 'Delivered',
-      //   type: 'dropdownValues',
-      //   targetfieldrequired: 'ActualCompletedDate',
-      //   options: {
-      //     choices: [
-      //       { display: 'yes', value: 'yes' },
-      //       { display: 'no', value: 'no' },
-      //     ],
-      //   },  security: {
-      //     groups: [ ],
-      //     // groups: [], // should be empty array if will use notAllowTo
-      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-      //       {group:"Development Unit",form:["origin"]},
-      //       // {group:"EPMO",form:["origin" ]}
-
-      //     ]
-      //   },
-      // },
-      // {
-      //   InternalName: 'ActualCompletedDate',
-      //   DisplayNameEn: 'Actual Completed Date',
-      //   DisplayName: 'تاريخ الاكتمال الفعلي',
-      //   type: 'datetime',
-      //   // type: 'datetimetoparent',
-      //   // listname: 'Initiatives',
-      //   // startinternalname: 'StartDate',
-      //   // endinternalname: 'FinishDate',
-      //   // max: 'today',
-      //   // Errmsgkey:'btwndatepattern',
-      //   security: {
-      //     groups: [ ],
-      //     // groups: [], // should be empty array if will use notAllowTo
-      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-      //       {group:"Development Unit",form:["origin"]},
-      //       // {group:"EPMO",form:["origin" ]}
-
-      //     ]
-      //   },
-      // },
+      {
+        InternalName: 'Delivered',
+        DisplayName: 'تم التسليم',
+        DisplayNameEn: 'Delivered',
+        targetfieldrequired: 'ActualCompletedDate',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+        security: {
+          groups: [ ],
+          notAllowTo:[
+            {group:"Development Unit",form:["origin"]},
+            {group:"Initiative Manager",form:["origin"]},
+          ]
+        },
+      },
+      {
+        InternalName: 'ActualCompletedDate',
+        DisplayNameEn: 'Actual Completed Date',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        type: 'datetime',
+        security: {
+          groups: [ ],
+          notAllowTo:[
+            {group:"Development Unit",form:["origin"]},
+            {group:"Initiative Manager",form:["origin"]},
+          ]
+        },
+      },
       //   {
       //     InternalName: 'Completed',
       //     DisplayNameEn: 'Completed',
@@ -1812,7 +1853,7 @@ var Information_Form = [
     sectiontype: 'master',
     // className: "disable_section", // to make the section disabled on form render
     targetlist: 'InitiativeMilestones',
-    ToggleName: 'Milestones',
+    toggleName: 'Milestones',
     subFields: [
       // {
       //     "InternalName": "Title",
@@ -1836,7 +1877,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1860,7 +1901,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -1879,7 +1920,6 @@ var Information_Form = [
         DisplayName: 'الوزن المكافئ للإنجاز %',
         DisplayNameEn: 'Weight (%)',
         type: 'weightfloatpercentage',
-        ToggleName: 'Weight',
         listname: 'InitiativeMilestones',
         targetcode: 'InitiativeCode',
         targetelement: 'Weight',
@@ -1891,13 +1931,11 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
-        display:'none'
-       
       },
       {
         InternalName: 'Amount',
@@ -1906,23 +1944,22 @@ var Information_Form = [
         dontSubmit: true,
         	"state":"disabled",
         type: 'percentbyrelatedparent',
-        ToggleName: 'Amount',
         listname: 'Initiatives',
         parentinternalname: 'InitiativeBudget',
         targetelement: 'Weight',
-        validation: 'required',
+       // validation: 'required',
         descPhraseAr: "من ميزانية المبادرة",
         descPhraseEn: " From Initiative Budget", 
         security: {
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
-        },
-         display:'none'
+        }, 
+        display:'none'
       },
       //   {
       //     InternalName: 'Weight',
@@ -1956,67 +1993,59 @@ var Information_Form = [
       //         ]
       //     },
       // },
-      // {
-      //   InternalName: 'Delivered',
-      //   DisplayName: 'تم التسليم',
-      //   DisplayNameEn: 'Delivered',
-      //   type: 'dropdownValues',
-      //   targetfieldrequired: 'ActualCompletedDate',
-      //   options: {
-      //     choices: [
-      //       { display: 'yes', value: 'yes' },
-      //       { display: 'no', value: 'no' },
-      //     ],
-      //   },  security: {
-      //     groups: [ ],
-      //     // groups: [], // should be empty array if will use notAllowTo
-      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-      //       {group:"Development Unit",form:["origin"]},
-      //       // {group:"EPMO",form:["origin" ]}
+      {
+        InternalName: 'Delivered',
+        DisplayName: 'تم التسليم',
+        DisplayNameEn: 'Delivered',
+        targetfieldrequired: 'ActualCompletedDate',
+        type: 'yesnoradio',
+        options: {
+          choices: [
+            { display: 'yes', value: 'yes' },
+            { display: 'no', value: 'no' },
+          ],
+        },
+        security: {
+          groups: [ ],
+          notAllowTo:[
+            {group:"Development Unit",form:["origin"]},
+            {group:"Initiative Manager",form:["origin"]},
+          ]
+        },
+      },
+      {
+        InternalName: 'ActualCompletedDate',
+        DisplayNameEn: 'Actual Completed Date',
+        DisplayName: 'تاريخ الاكتمال الفعلي',
+        type: 'datetime',
+        security: {
+          groups: [ ],
+          notAllowTo:[
+            {group:"Development Unit",form:["origin"]},
+            {group:"Initiative Manager",form:["origin"]},
+          ]
+        },
+      },
+       {
+        InternalName: 'RelatedInitiativeDeliverable',
+        DisplayNameEn: 'Related Initiative Deliverable',
+       DisplayName: 'مخرج المبادرة المرتبط',
+        type: 'lookup',
+       source: 'InitiativeDeliverables',
+        Dispfieldkey: 'Name',
+        valfieldkey: 'Title',
+        initiativeCodeInList: true, //value in look up drop down should be related to current project
+        validation: 'required',
+        security: {
+          groups: [ ],
+          // groups: [], // should be empty array if will use notAllowTo
+           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+             {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
+             // {group:"EPMO",form:["origin" ]}
 
-      //     ]
-      //   },
-      // },
-      // {
-      //   InternalName: 'ActualCompletedDate',
-      //   DisplayNameEn: 'Actual Completed Date',
-      //   DisplayName: 'تاريخ الاكتمال الفعلي',
-      //   type: 'datetime',
-      //   // type: 'datetimetoparent',
-      //   // listname: 'Initiatives',
-      //   // startinternalname: 'StartDate',
-      //   // endinternalname: 'FinishDate',
-      //   // max: 'today',
-      //   // Errmsgkey:'btwndatepattern',
-      //   security: {
-      //     groups: [ ],
-      //     // groups: [], // should be empty array if will use notAllowTo
-      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-      //       {group:"Development Unit",form:["origin"]},
-      //       // {group:"EPMO",form:["origin" ]}
-
-      //     ]
-      //   },
-      // },
-      // {
-      //   InternalName: 'RelatedInitiativeDeliverable',
-      //   DisplayNameEn: 'Related Initiative Deliverable',
-      //   DisplayName: 'مخرج المبادرة المرتبط',
-      //   type: 'lookup',
-      //   source: 'InitiativeDeliverables',
-      //   Dispfieldkey: 'Name',
-      //   valfieldkey: 'Title',
-      //   initiativeCodeInList: true, //value in look up drop down should be related to current project
-      //   security: {
-      //     groups: [ ],
-      //     // groups: [], // should be empty array if will use notAllowTo
-      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-      //       {group:"Development Unit",form:["origin"]},
-      //       // {group:"EPMO",form:["origin" ]}
-
-      //     ]
-      //   },
-      // },
+          ]
+         },
+       },
       {
         InternalName: 'SupportDocumentsDescription',
         DisplayNameEn: 'Support Documents Description',
@@ -2025,19 +2054,14 @@ var Information_Form = [
         maxchar: '5000',
         descPhraseAr: "الحد الاقصى لعدد الحروف هو 5000 حرف",
         descPhraseEn: "max length of letters equal 5000",
+        validation: 'required',
         security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
+          groups: ['EPMO', 'System Admin Group'],
         },
       },
     ],
   },
-  {
+  /*{
     label: 'بيانات المنفعة',
     labelEn: 'Benefit Data',
     description: '',
@@ -2061,7 +2085,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2077,7 +2101,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2097,13 +2121,13 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
       },
-      {
+       {
         InternalName: "Weight",
         DisplayNameEn: "Weight",
         DisplayName: "وزن",
@@ -2117,11 +2141,13 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
+        // "state": "disabled",
+        // dynamic: "Initiative"
       },
       {
         InternalName: 'RelatedSubKpis',
@@ -2139,7 +2165,7 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
@@ -2167,14 +2193,14 @@ var Information_Form = [
           groups: [ ],
           // groups: [], // should be empty array if will use notAllowTo
           notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Development Unit",form:["origin"]},
+            {group:"Development Unit",form:["origin"]},             {group:"Initiative Manager",form:["origin"]},
             // {group:"EPMO",form:["origin" ]}
 
           ]
         },
       },
     ],
-  },
+  },*/
 
   {
     label: 'الوثائق الداعمة',

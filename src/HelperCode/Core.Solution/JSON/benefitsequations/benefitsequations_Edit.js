@@ -1,199 +1,144 @@
-var Information_Form = [{
-    label: 'معادلات مقياس المنفعة',
-    labelEn: 'KPI Equation',
-    description: "التفاصيل",
-    descriptionEn: "Details",
-    subFields: [
-        // {
-        //     "InternalName": "Title",
-        //     "DisplayName":"رمز التحدي",
-        //     "type":"string",
-        //     "validation": "required"
-        // },
-        {
-            InternalName: 'RelatedBenefit', 
-            DisplayNameEn: 'Related Benefit Metrics',
-            DisplayName: 'مقياس المنفعة المرتبط',
-            "type": "lookup",
-            "source": "BenefitMetrics",
-            "Dispfieldkey": "Name",
-            "valfieldkey": "Title",
-            "state": "disabled",
-        }, 
-
-        {
-            "InternalName": "Equation",
-            "DisplayName": "معادلة مقياس المنفعة",
-            "DisplayNameEn": "Equation",
-            "type": "string",
-            "validation": "required",
-            descPhraseAr: "مثال: عدد العاملين + عدد العاطلين عن العمل",
-            descPhraseEn: "The number of workers + the number of unemployed",  
-        },
-        {
-            "InternalName": "BenefitInput", 
-            "DisplayName": "المعادلة المدخلة",
-            "DisplayNameEn": "Benefit Input",
-            "type": "formula",
-            "validation": "required",
-            descPhraseAr: "مثال: (A+B)",
-            descPhraseEn: "Example: (A+B)", 
-        },
-        // {
-        //     "InternalName": "Quarter",
-        //     "DisplayNameEn": "Quarter",
-        //     "DisplayName": "الربع",
-        //       "type": "dropdown",
-        //     //   "state": "disabled",
-        //     //   dynamic: "Initiative",
-        //     options: {
-        //       choices: [
-        //         '1', '2','3','4'
-        //       ]
-        //     }
-        //   },
-        // {
-        //     "InternalName": "Year",
-        //     "DisplayNameEn": "Year",
-        //     "DisplayName": "السنة",
-        //       "type": "dropdown",
-        //     //   "state": "disabled",
-        //     //   dynamic: "Initiative",
-        //     options: {
-        //       choices: [
-        //         '2020',
-        //          '2021',
-        //          '2022',
-        //          '2023',
-        //          '2024',
-        //          '2025',
-        //          '2026',
-        //          '2027',
-        //          '2028',
-        //          '2029',
-        //          '2030',
-        //       ]
-        //     }
-        //   },
-
-        //   {
-        //     "InternalName": "MesureStatus",
-        //     "DisplayNameEn": "MesureStatus",
-        //     "DisplayName": "حالة القياس",
-        //       "type": "dropdownValues",
-        //     //   "state": "disabled",
-        //     //   dynamic: "Initiative",
-        //     options: {
-        //       choices: [
-        //         {
-        //             display: 'mersurable',
-        //             value: 'mersurable'
-        //         },
-        //         {
-        //             display: 'unmersurable',
-        //             value: 'unmersurable'
-        //         },
-        //         {
-        //             display: 'unspecific',
-        //             value: 'unspecific'
-        //         },
-        //       ]
-        //     }
-        //   },
-    ]
-},
-{
-    label: 'مكونات المعادلة',
-    labelEn: 'Equation components',
-    description: "",
-    descriptionEn: "",
-    subFields: [
-        {
-            "InternalName": "A",
-            "DisplayName": "المكون الأول (A)",
-            "DisplayNameEn": "A",
-            "type": "string",
-            "validation": "required",
-            descPhraseAr: " مثال: عدد العاملين",
-            descPhraseEn: "The number of workers", 
-        },
-        {
-            "InternalName": "B",
-            "DisplayName": "المكون الثاني (B)",
-            "DisplayNameEn": "B",
-            "type": "string",
-            "validation": "required",
-            descPhraseAr: " مثال: عدد العاطلين عن العمل",
-            descPhraseEn: "The number of unemployed", 
-        },
-        {
-            "InternalName": "CC",
-            "DisplayName": "المكون الثالث (C)",
-            "DisplayNameEn": "C",
-            "type": "string"
-        },
-        {
-            "InternalName": "D",
-            "DisplayName": "المكون الرابع (D)",
-            "DisplayNameEn": "D",
-            "type": "string"
-        },
-        {
-            "InternalName": "E",
-            "DisplayName": "المكون الخامس (E)",
-            "DisplayNameEn": "E",
-            "type": "string"
-        },
-        {
-            "InternalName": "F",
-            "DisplayName": "المكون السادس (F)",
-            "DisplayNameEn": "F",
-            "type": "string"
-        },
-        {
-            "InternalName": "G",
-            "DisplayName": "المكون السابع (G)",
-            "DisplayNameEn": "G",
-            "type": "string"
-        },
-        
-    ]
-},
-{
-    label: '',
-    labelEn: '',
-    description: "",
-    descriptionEn: "",
-    subFields: [
+var Information_Form = [
     {
-        "InternalName": "Author",
-        "DisplayName": "تم الانشاء بواسطة",
-        "DisplayNameEn": "Author",
-        "type": "picker",
-        "state": "disabled",
+      label: "معادلات المنفعة",
+      labelEn: "Benefit Equation",
+      description: "التفاصيل",
+      descriptionEn: "Details",
+      subFields: [
+        {
+          InternalName: "BenefitCode",
+          DisplayNameEn: "Benefit",
+          DisplayName: "المنفعة",
+          type: "lookup",
+          source: "Benefits",
+          Dispfieldkey: "Name",
+          valfieldkey: "Title",
+          state: "disabled",
+          dontSubmit: true,
+        },
+  
+        {
+          InternalName: "Equation",
+          DisplayName: "معادلة المنفعة في البطاقة",
+          DisplayNameEn: "Equation",
+          type: "string",
+          validation: "required",
+          descPhraseAr: "مثال: عدد العاملين + عدد العاطلين عن العمل",
+          descPhraseEn: "The number of workers + the number of unemployed",
+        },
+  
+        {
+          InternalName: "KPIInput",
+          DisplayName: "المعادلة المدخلة",
+          DisplayNameEn: "Benefit Input",
+          type: "formula",
+          validation: "required",
+          descPhraseAr: "مثال: (A+B)",
+          descPhraseEn: "Example: (A+B)",
+        },
+      ],
     },
   
     {
-        "InternalName": "Created",
-        "DisplayName": "تاريخ الانشاء ",
-        "DisplayNameEn": "Created",
-        "type": "datetime",
-        "state": "disabled",
+      label: "مكونات المعادلة",
+      labelEn: "Equation components",
+      description: "",
+      descriptionEn: "",
+      subFields: [
+        {
+          InternalName: "A",
+          DisplayName: "المكون الأول (A)",
+          DisplayNameEn: "A",
+          type: "string",
+          descPhraseAr: " مثال: عدد العاملين",
+          descPhraseEn: "The number of workers",
+        },
+  
+        {
+          InternalName: "B",
+          DisplayName: "المكون الثاني (B)",
+          DisplayNameEn: "B",
+          type: "string",
+          descPhraseAr: " مثال: عدد العاطلين عن العمل",
+          descPhraseEn: "The number of unemployed",
+        },
+  
+        {
+          InternalName: "CC",
+          DisplayName: "المكون الثالث (C)",
+          DisplayNameEn: "C",
+          type: "string",
+        },
+  
+        {
+          InternalName: "D",
+          DisplayName: "المكون الرابع (D)",
+          DisplayNameEn: "D",
+          type: "string",
+        },
+  
+        {
+          InternalName: "E",
+          DisplayName: "المكون الخامس (E)",
+          DisplayNameEn: "E",
+          type: "string",
+        },
+  
+        {
+          InternalName: "F",
+          DisplayName: "المكون السادس (F)",
+          DisplayNameEn: "F",
+          type: "string",
+        },
+  
+        {
+          InternalName: "G",
+          DisplayName: "المكون السابع (G)",
+          DisplayNameEn: "G",
+          type: "string",
+        },
+      ],
     },
+  
     {
-        "InternalName": "Editor",
-        "DisplayName": "تم التعديل بواسطة",
-        "DisplayNameEn": "Editor",
-        "type": "picker",
-        "state": "disabled",
+      label: "",
+      labelEn: "",
+      description: "",
+      descriptionEn: "",
+  
+      subFields: [
+        {
+          InternalName: "Author",
+          DisplayName: "تم الانشاء بواسطة",
+          DisplayNameEn: "Author",
+          type: "picker",
+          state: "disabled",
+        },
+  
+        {
+          InternalName: "Created",
+          DisplayName: "تاريخ الانشاء ",
+          DisplayNameEn: "Created",
+          type: "datetime",
+          state: "disabled",
+        },
+  
+        {
+          InternalName: "Editor",
+          DisplayName: "تم التعديل بواسطة",
+          DisplayNameEn: "Editor",
+          type: "picker",
+          state: "disabled",
+        },
+  
+        {
+          InternalName: "Modified",
+          DisplayName: "تاريخ اخر تعديل",
+          DisplayNameEn: "Modified",
+          type: "datetime",
+          state: "disabled",
+        },
+      ],
     },
-    {
-        "InternalName": "Modified",
-        "DisplayName": "تاريخ اخر تعديل",
-        "DisplayNameEn": "Modified",
-        "type": "datetime",
-        "state": "disabled",
-    },
-]
-}
-];
+  ];
+  
