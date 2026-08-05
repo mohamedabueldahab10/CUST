@@ -929,6 +929,18 @@ var PageArray = [
         listName: "GoalStrategy",
 	},
 	{
+		pagename: "strategymain.aspx",
+		Title: "الاستراتيجيات",
+		TitleEn: "Strategies",
+		listName: "GoalStrategy",
+	},
+	{
+		pagename: "strategyHome.aspx",
+		Title: "الصفحة الرئيسية للاستراتيجية",
+		TitleEn: "Strategy Home",
+		listName: "GoalStrategy",
+	},
+	{
 		pagename: "Programs.aspx",
 		Title: "المؤشرات البرامج",
 		TitleEn: "Programs",
@@ -999,6 +1011,11 @@ var PageArray = [
 		Title: "مركز المعرفة",
 		TitleEn: "Knowledge Base",
 	},
+	{
+		pagename: "AccessPolicyReport.aspx",
+		Title: "تقرير سياسة الوصول",
+		TitleEn: "Access Policy Report",
+	},
 ];
 // research enumerator
 // research query url index
@@ -1014,3 +1031,7 @@ var FilesExtensions = [
 	"rar",
 	"msg",
 ];
+
+if (typeof window !== 'undefined') { window.ListArray = ListArray; window.PageArray = PageArray; window.FilesExtensions = FilesExtensions; }
+if (typeof module !== 'undefined' && module.exports) { module.exports = ListArray; }
+

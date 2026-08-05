@@ -1,0 +1,231 @@
+<div class="navbar page-nav px-5 py-0">
+  <ul class="navbar-nav bd-navbar-nav flex-row">
+    <!--<li class="nav-item active"><a href="#">Home</a></li>
+                    <li class="nav-item"><a href="#">About</a></li>
+                    <li class="nav-item"><a href="#">Contact</a></li>-->
+  </ul>
+  <!--added by oday to add extra items on toggle menu-->
+  <nav role="navigation" class="extra-nav-items">
+    <div class="menuToggleBurgMenu">
+      <input type="checkbox" id="navcheckboxId" />
+      <span></span>
+      <span></span>
+      <span></span>
+      <ul class="menuBurg"></ul>
+    </div>
+  </nav>
+</div>
+
+<div class="strategyHome-new wrapper container-fluid container-body">
+  <div class="row mb-5">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="icon-content d-flex align-items-center mb-3">
+            <i class="fa fa-eye card-icon"></i>
+            <p
+              class="Resources fon card-title mx-3"
+              data-trans-strategyhomevision
+            ></p>
+          </div>
+          <p class="card-text visionDesc"></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="icon-content d-flex align-items-center mb-3">
+            <i class="far fa-paper-plane card-icon"></i>
+            <h5 class="Resources card-title mx-3" data-trans-message></h5>
+          </div>
+          <p class="card-text messageDesc"></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="icon-content d-flex align-items-center mb-3">
+            <i class="fas fa-shield-alt card-icon"></i>
+            <h5 class="Resources card-title mx-3" data-trans-values></h5>
+          </div>
+          <p class="card-text valuesDesc"></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="icon-content d-flex align-items-center mb-3">
+            <i class="fas fa-bullseye card-icon"></i>
+            <h5 class="Resources card-title mx-3" data-trans-objectives></h5>
+          </div>
+          <p class="card-text objectivesDesc"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row second-section m-1">
+    <ul
+      class="nav nav-tabs"
+      id="myTab"
+      role="tablist"
+    >
+
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link active-tab d-flex justify-content-between align-items-center active"
+          id="strpillar-tab"
+          data-toggle="tab"
+          data-target="#strpillar"
+          type="button"
+          role="tab"
+          aria-controls="strpillar"
+          aria-selected="true"
+        >
+          <span data-trans-strpillar class="Resources tab-head"> </span>
+          <span></span>
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link active-tab d-flex justify-content-between align-items-center"
+          id="objectives-tab"
+          data-toggle="tab"
+          data-target="#objectives"
+          type="button"
+          role="tab"
+          aria-controls="objectives"
+          aria-selected="false"
+        >
+          <span data-trans-objectives class="Resources tab-head"> </span>
+          <span></span>
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link active-tab d-flex justify-content-between align-items-center"
+          id="kpis-tab"
+          data-toggle="tab"
+          data-target="#kpis"
+          type="button"
+          role="tab"
+          aria-controls="kpis"
+          aria-selected="false"
+        >
+          <span data-trans-kpis class="Resources tab-head"> </span>
+          <span></span>
+        </button>
+      </li>
+
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link active-tab d-flex justify-content-between align-items-center"
+          id="initiatives-tab"
+          data-toggle="tab"
+          data-target="#initiatives"
+          type="button"
+          role="tab"
+          aria-controls="initiatives"
+          aria-selected="false"
+        >
+          <span data-trans-initiatives class="Resources tab-head"> </span>
+          <span></span>
+        </button>
+      </li>
+      <li class="nav-item " role="presentation">
+        <button
+          class="nav-link active-tab d-flex justify-content-between align-items-center"
+          id="projects-tab"
+          data-toggle="tab"
+          data-target="#projects"
+          type="button"
+          role="tab"
+          aria-controls="projects"
+          aria-selected="false"
+        >
+          <span data-trans-title3 class="Resources tab-head"> </span>
+          <span></span>
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content p-0 col-12" id="myTabContent">
+      <div
+        class="tab-pane fade show active"
+        id="strpillar"
+        role="tabpanel"
+        aria-labelledby="strpillar-tab"
+      ></div>
+      <div
+        class="tab-pane fade"
+        id="objectives"
+        role="tabpanel"
+        aria-labelledby="objectives-tab"
+      ></div>
+      <div
+        class="tab-pane fade"
+        id="kpis"
+        role="tabpanel"
+        aria-labelledby="kpis-tab"
+      ></div>
+      <div
+        class="tab-pane fade"
+        id="initiatives"
+        role="tabpanel"
+        aria-labelledby="initiatives-tab"
+      ></div>
+      <div
+        class="tab-pane fade"
+        id="projects"
+        role="tabpanel"
+        aria-labelledby="projects-tab"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Modal Dialog HTML -->
+
+  <div
+    class="modal fade"
+    id="cardModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="cardModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cardModalLabel"></h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="cardModalBody"></p>
+        </div>
+        <div class="modal-footer">
+          <button
+            id="navigate"
+            type="button"
+            data-trans-showdetails
+            class="Resources btn btn-action"
+          ></button>
+          <button
+            type="button"
+            data-dismiss="modal"
+            data-trans-close
+            class="Resources btn btn-cancel"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

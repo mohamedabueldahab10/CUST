@@ -12,6 +12,72 @@ var Resources = {
     filter4: "استراتيجي",
     filter5: "الوكالة",
     filter6: "القطاع",
+    filter7: "القسم",
+    strategies: "الاستراتيجيات",
+    mainstrategy: "الاستراتيجيات الرئيسية",
+    choosestrategy: "اختر الاستراتيجية ثم قم باختيار الاهداف الباقية لرؤية المؤشرات الصحيحة",
+    strategymainfilter: "تصفية",
+    pillars: "الركائز",
+    nostrategies: "لا توجد استراتيجيات متاحة",
+    nopillars: "لا توجد ركائز متاحة",
+    "kpi-novalue": "لا توجد قيمة",
+    "stg-draft": "قيد الموافقة",
+    "stg-ontrack": "على المسار",
+    "stg-late": "متأخر",
+    "stg-toolate": "متأخر جداً",
+    "stg-nomeasures": "لا توجد مقاييس",
+    "stg-abovetarget": "تم تجاوز المستهدف",
+    "plr-draft": "قيد الموافقة",
+    "plr-ontrack": "على المسار",
+    "plr-late": "متأخر",
+    "plr-toolate": "متأخر جداً",
+    "obj-draft": "قيد الموافقة",
+    "obj-completed": "مكتمل",
+    "obj-targetachieved": "تم تحقيق المستهدف",
+    "obj-partiallyachieved": "تم التحقيق جزئياً",
+    "kpi-draft": "قيد الموافقة",
+    "kpi-notapplicable": "غير منطبق",
+    "kpi-targetachieved": "تم تحقيق المستهدف",
+    "kpi-partiallyachieved": "تم التحقيق جزئياً",
+    "kpi-notachieved": "لم يتم التحقيق",
+    strpillar: "الركائز",
+    substr: "الاستراتيجيات الفرعية",
+    strategyhomevision: "الرؤية",
+    strvalue:"القيم الاستراتيجية",
+    // Strategy Home modal labels
+    objectivename: "اسم الهدف",
+    objectivedetails: "تفاصيل الهدف",
+    kpidetails: "تفاصيل المؤشر",
+    initiativedetails: "تفاصيل المبادرة",
+    strategymodaltitle: "العنوان",
+    strategymodalprogresspercentage: "نسبة الإنجاز",
+    strategymodalplannedstartdate: "تاريخ البداية المخطط",
+    strategymodalplannedfinishdate: "تاريخ الانتهاء المخطط",
+    strategymodalpreviousmilestonesprogressstatus: "حالة الإنجاز السابقة",
+    strategymodalphase: "المرحلة",
+    strategymodalstage: "الخطوة",
+    strategymodalbaselineduration: "مدة الخط الأساس",
+    strategymodalactualschedulepercentagecomplete: "نسبة اكتمال الجدول الفعلي",
+    strategymodalcategory: "التصنيف",
+    strategymodalprojectscope: "نطاق المشروع",
+    strategymodalmilestonesactualprogress: "الإنجاز الفعلي للمعالم",
+    strategymodalmilestonesplannedprogress: "الإنجاز المخطط للمعالم",
+    strategymodaldeliverablesactualprogress: "الإنجاز الفعلي للمخرجات",
+    strategymodaldeliverablesplannedprogress: "الإنجاز المخطط للمخرجات",
+    strategymodaldeliverablesprogressstatus: "حالة إنجاز المخرجات",
+    maingoals: "الأهداف الرئيسية",
+    secondgoals: "الأهداف الفرعية - مستوى ثاني",
+    thirdgoals: "الأهداف الفرعية - مستوى ثالث",
+    maingoal: "الهدف الرئيسي",
+    secondgoal: "الهدف الفرعي - مستوى ثاني",
+    thirdgoal: "الهدف الفرعي - مستوى ثالث",
+    nogoals: "لا توجد أهداف متاحة",
+    strategyname: "اسم الاستراتيجية",
+    strategydescription: "وصف الاستراتيجية",
+    objectives: "الأهداف",
+    kpis: "المؤشرات",
+    showdetails: "عرض التفاصيل",
+    close: "إغلاق",
     filterkpisname: "الهدف",
     filterkpissector: "القطاع",
     filterkpisdepartment: "الوكالة",
@@ -169,7 +235,7 @@ var Resources = {
     open: "مفتوح",
     //budget item
     support: "الدعم",
-    operational: "التشغيل",
+    operational: "تشغيلي",
     implementation: "التنفيذ",
     //Request Status
     submitted: "مقدم",
@@ -186,7 +252,7 @@ var Resources = {
 
     //lesson learned source
     sector: "القطاع",
-    department: "الوكالات",
+    department: "الوكالة",
     externalentity:"الجهات الشقيقه",
     subsector: "الوكالة",
     unit: "وحدة",
@@ -780,6 +846,7 @@ var Resources = {
     cumulative: "تراكمي",
     complition: "الإمتثال",
     strategic: "الاستراتيجية",
+    kpititle: "رمز المؤشر",
     targeted: "المستهدف",
     ownername: "اسم المالك",
     baseline: "خط الأساس",
@@ -869,6 +936,11 @@ var Resources = {
     canceled: "ملغية",
     closureinitiative: "الإغلاق",
     relatedstrategy: "الاستراتيجية المرتبطة",
+    type: "النوع",
+    secondowner: "مالك ثاني",
+    progressstatus: "حالة الإنجاز",
+    main: "رئيسي",
+    description: "الوصف",
     pillersname: "اسم المحور / البرنامج",
     relatedobjective: "الهدف المرتبط",
     relatedstrategyobjictave: "الهدف الاستراتيجي المرتبط",
@@ -1401,6 +1473,7 @@ var Resources = {
     croperationally: "مسار تشغيلي",
     operation:"مسار تشغيلي",
     observations: "المرئيات",
+    securityexecgroupname: "جهة الاعتماد النهائية",
 
 
     "urgent":"عاجل",
@@ -1423,8 +1496,8 @@ var Resources = {
     groupname: "الصلاحية للمفوض منه",
     delegateto: "المفوض اليه",
     delegationstatus: "حالة التفويض",
-    fromdate: "تاريخ بداية التفويض",
-    todate: "تاريخ نهاية التفويض",
+    fromdate: "من سنة",
+    todate: "إلى سنة",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1439,6 +1512,73 @@ var Resources = {
     filter4: "Strategic Project",
     filter5: "Department",
     filter6: "Sector",
+    filter7: "Section",
+    strategies: "Strategies",
+    mainstrategy: "Main Strategies",
+    choosestrategy: "Choose the strategy and then choose the remaining targets to see the correct indicators.",
+    strategymainfilter: "Filter",
+    pillars: "Pillars",
+    nostrategies: "No Strategies Available",
+    nopillars: "No Pillars Available",
+    "kpi-novalue": "No Value",
+    "stg-draft": "Under Approval",
+    "stg-ontrack": "On Track",
+    "stg-late": "Late",
+    "stg-toolate": "Very Late",
+    "stg-nomeasures": "No Measured",
+    "stg-abovetarget": "Above Target",
+    "plr-draft": "Under Approval",
+    "plr-ontrack": "On Track",
+    "plr-late": "Late",
+    "plr-toolate": "Very Late",
+    "obj-draft": "Under Approval",
+    "obj-completed": "Completed",
+    "obj-targetachieved": "Target Achieved",
+    "obj-partiallyachieved": "Partially Achieved",
+    "kpi-draft": "Under Approval",
+    "kpi-notapplicable": "Currently Not Applicable",
+    "kpi-targetachieved": "Target Achieved",
+    "kpi-partiallyachieved": "Partially Achieved",
+    "kpi-notachieved": "Not Achieved",
+    strpillar: "Pillars",
+    substr: "Related Strategies",
+    strategyhomevision: "Vision",
+    strvalue: "Strategic Values",
+    // Strategy Home modal labels
+    objectivename: "Objective Name",
+    objectivedetails: "Objective Details",
+    kpidetails: "KPI Details",
+    initiativedetails: "Initiative Details",
+    strategymodaltitle: "Title",
+    strategymodalprogresspercentage: "Progress Percentage",
+    strategymodalplannedstartdate: "Planned Start Date",
+    strategymodalplannedfinishdate: "Planned Finish Date",
+    strategymodalpreviousmilestonesprogressstatus: "Previous Progress Status",
+    strategymodalphase: "Phase",
+    strategymodalstage: "Stage",
+    strategymodalbaselineduration: "Baseline Duration",
+    strategymodalactualschedulepercentagecomplete:
+      "Actual Schedule % Complete",
+    strategymodalcategory: "Category",
+    strategymodalprojectscope: "Project Scope",
+    strategymodalmilestonesactualprogress: "Milestones Actual Progress",
+    strategymodalmilestonesplannedprogress: "Milestones Planned Progress",
+    strategymodaldeliverablesactualprogress: "Deliverables Actual Progress",
+    strategymodaldeliverablesplannedprogress: "Deliverables Planned Progress",
+    strategymodaldeliverablesprogressstatus: "Deliverables Progress Status",
+    maingoals: "Main Objectives",
+    secondgoals: "Sub Objectives - Second level",
+    thirdgoals: "Sub Objectives - Third level",
+    maingoal: "Main Objective",
+    secondgoal: "Sub Objective - Second level",
+    thirdgoal: "Sub Objective - Third level",
+    nogoals: "No Objectives Available",
+    strategyname: "Strategy Name",
+    strategydescription: "Strategy Description",
+    objectives: "Objectives",
+    kpis: "KPIs",
+    showdetails: "Show Details",
+    close: "Close",
     filterkpisname: "Goal",
     filterkpissector: "Sector",
     filterkpisdepartment: "Department",
@@ -2214,6 +2354,7 @@ restoration:"restoration",
     cumulative: "Cumulative",
     complition: "Complition",
     strategic: "Strategic",
+    kpititle: "KPI Title",
     targeted: "Targeted",
     ownername: "Owner Name",
     jobmarket: "Job market",
@@ -2305,6 +2446,11 @@ restoration:"restoration",
     canceled: "Canceled",
     closureinitiative: "Closure",
     relatedstrategy: "Related Strategy",
+    type: "Type",
+    secondowner: "Second Owner",
+    progressstatus: "Progress Status",
+    main: "Main",
+    description: "Description",
     pillersname: "Piller / Program Name",
     relatedobjective: "Related Objective",
     relatedstrategyobjictave: "Related Strategy Objective",
@@ -2830,6 +2976,7 @@ restoration:"restoration",
     croperationally: "Operational",
     operation:"Operational",
     observations: "Observations",
+    securityexecgroupname: "Final Approval Authority",
 
 
 
@@ -3171,6 +3318,17 @@ window.Dynamo_Values = {
       });
     }
 
+    // Empty SP list must still be cached with a timeset marker, otherwise
+    // onSuccess removes [] and re-inits forever (infinite LSArray loop).
+    if (!Dynamo_Array.length) {
+      Dynamo_Array.push({
+        name: "",
+        nameEn: "",
+        code: "",
+        timeset: new Date().getTime(),
+        _empty: true,
+      });
+    }
     setLocalStorage(
       "Dynamo_" + Dynamo_Values.g.LN,
       JSON.stringify(Dynamo_Array)
@@ -3183,16 +3341,25 @@ window.Dynamo_Values = {
         var LSArray = $.parseJSON(
           getLocalStorage("Dynamo_" + Dynamo_Data[y].ListName)
         );
-        // get how many days since ls is set
-        var days_Set = Math.trunc(
-          (new Date().getTime() - LSArray[0].timeset) / (1000 * 60 * 60 * 24)
-        );
-        console.log("LSArray console after")
-        if (days_Set > 0) {
+        // Corrupt / missing timeset → reload. Empty-with-marker is valid.
+        if (
+          !Array.isArray(LSArray) ||
+          !LSArray.length ||
+          !LSArray[0] ||
+          !LSArray[0].timeset
+        ) {
           localStorage.removeItem("Dynamo_" + Dynamo_Data[y].ListName);
         } else {
-          //declare global var with values from ls
-          window["Dynamo_Src_" + ListName_Nospace] = LSArray;
+          // get how many days since ls is set
+          var days_Set = Math.trunc(
+            (new Date().getTime() - LSArray[0].timeset) / (1000 * 60 * 60 * 24)
+          );
+          if (days_Set > 0) {
+            localStorage.removeItem("Dynamo_" + Dynamo_Data[y].ListName);
+          } else {
+            //declare global var with values from ls
+            window["Dynamo_Src_" + ListName_Nospace] = LSArray;
+          }
         }
       }
       if (getLocalStorage("Dynamo_" + Dynamo_Data[y].ListName) == null) {
@@ -3236,14 +3403,25 @@ for (var y = 0; y < Dynamo_Data.length; y++) {
     var LSArray = $.parseJSON(
       getLocalStorage("Dynamo_" + Dynamo_Data[y].ListName)
     );
-    // get how many days since ls is set
-    var days_Set = Math.trunc(
-      (new Date().getTime() - LSArray[0].timeset) / (1000 * 60 * 60 * 24)
-    );
-    if (days_Set > 0) {
+    // Corrupt / missing timeset → reload. Do NOT treat empty-with-marker as invalid
+    // (that caused infinite Dynamo_Values.init on empty SP lists).
+    if (
+      !Array.isArray(LSArray) ||
+      !LSArray.length ||
+      !LSArray[0] ||
+      !LSArray[0].timeset
+    ) {
       localStorage.removeItem("Dynamo_" + Dynamo_Data[y].ListName);
     } else {
-      window["Dynamo_Src_" + Dynamo_Data[y].ListName] = LSArray;
+      // get how many days since ls is set
+      var days_Set = Math.trunc(
+        (new Date().getTime() - LSArray[0].timeset) / (1000 * 60 * 60 * 24)
+      );
+      if (days_Set > 0) {
+        localStorage.removeItem("Dynamo_" + Dynamo_Data[y].ListName);
+      } else {
+        window["Dynamo_Src_" + Dynamo_Data[y].ListName] = LSArray;
+      }
     }
   }
   //initiate call if not found

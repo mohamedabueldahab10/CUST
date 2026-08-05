@@ -1,0 +1,473 @@
+/* StrategyHome - hide SharePoint page / web part title */
+div#s4-titlerow,
+div#s4-titlerow #pageTitle,
+h1#pageTitle,
+h1#pageTitle span,
+.ms-core-pageTitle,
+#DeltaPlaceHolderPageTitleInTitleArea,
+.ms-webpart-chrome-title,
+.ms-webpart-titleText {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tab-head {
+  font-weight: bold !important;
+}
+.modal-dialog {
+  margin: auto !important;
+}
+.modal-header {
+  align-items: center !important;
+  padding: 0rem 1rem !important;
+  border-bottom: none !important;
+}
+.modal-header .modal-title {
+  font-weight: bold !important;
+  font-size: medium !important;
+}
+.modal-header .modal-title,
+.modal-header .close {
+  margin: 0px !important;
+  opacity: 1 !important;
+}
+.modal-footer {
+  border-top: none !important;
+}
+.modal-footer .btn {
+  text-align: center !important;
+  font-size: medium !important;
+  border-radius: 40px !important;
+}
+
+/* ===== Tanmiah Strategy Home UI ===== */
+.strategyHome-new.wrapper {
+  padding-top: 12px;
+  padding-bottom: 24px;
+}
+
+.strategyHome-new > .row.mb-5 {
+  margin-left: -12px;
+  margin-right: -12px;
+}
+
+.strategyHome-new > .row.mb-5 > [class*='col-'] {
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-bottom: 16px;
+}
+
+.strategyHome-new .card {
+  border: 1px solid #0000000f;
+  background: #ffffff;
+  gap: 16px;
+  border-radius: 8px;
+  border-width: 1px;
+  height: 320px;
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.strategyHome-new .card .card-body {
+  height: 100%;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.strategyHome-new .card:hover {
+  box-shadow: -1px 1px 11px 0px #00000012;
+}
+
+.strategyHome-new .card .icon-content {
+  gap: 0;
+  margin-bottom: 16px !important;
+}
+
+.strategyHome-new .card-icon {
+  width: 50px !important;
+  height: 50px !important;
+  min-width: 50px;
+  min-height: 50px;
+  background-color: #caefff !important;
+  border-radius: 50px;
+  display: inline-flex !important;
+  justify-content: center;
+  align-items: center;
+  color: #44809f !important;
+  font-size: 20px;
+  line-height: 1;
+  transition: transform 0.5s ease-in-out, background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+.strategyHome-new .card:hover .card-icon {
+  transform: rotate(45deg);
+  background-color: #b7e6fb !important;
+  color: #2f6f8d !important;
+}
+
+.strategyHome-new .card .card-title {
+  font-weight: 400;
+  font-size: 24px;
+  color: #323232;
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+
+.strategyHome-new .card .card-text {
+  overflow-y: auto;
+  max-height: 200px;
+  scrollbar-width: thin;
+  scrollbar-color: #f9e7e8 transparent;
+  scroll-behavior: smooth;
+  transition: all 0.3s ease;
+  color: #4a4a4a;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.strategyHome-new .card .card-text::-webkit-scrollbar {
+  width: 8px;
+}
+
+.strategyHome-new .card .card-text::-webkit-scrollbar-thumb {
+  background-color: #f9e7e8;
+  border-radius: 10px;
+}
+
+.strategyHome-new .card .card-text::-webkit-scrollbar-track {
+  background-color: #f9e7e8;
+}
+
+/* Tabs — equal-width tabs with gap, full row */
+.strategyHome-new .second-section {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.strategyHome-new .second-section > .nav-tabs {
+  flex: 0 0 auto;
+  max-width: 100%;
+  padding-block: 5px !important;
+}
+
+.strategyHome-new .nav-tabs {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  justify-content: stretch !important;
+  align-items: stretch;
+  gap: 8px;
+  box-shadow: 0px 0px 20px 0px #0000001c;
+  padding: 10px 12px !important;
+  border-radius: 10px;
+  background-color: white !important;
+  border-bottom: none !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+.strategyHome-new .nav-tabs .nav-item {
+  border-bottom: 2px solid #00573b26;
+  min-width: 0;
+  width: auto !important;
+  flex: 1 1 0 !important;
+  margin-bottom: 0;
+}
+
+.strategyHome-new .nav-tabs .nav-link,
+.strategyHome-new .nav-tabs .nav-link.w-100 {
+  width: 100% !important;
+  max-width: none;
+  min-width: 0;
+  flex: 1 1 auto !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 8px;
+  padding: 10px 14px !important;
+  white-space: nowrap;
+  color: #495057 !important;
+  margin-bottom: 5px;
+}
+
+.strategyHome-new .nav-tabs .nav-link.active {
+  border-radius: 8px !important;
+  background: #00573b1f !important;
+}
+
+.strategyHome-new .nav-tabs .nav-link:hover {
+  border-radius: 8px;
+  background: #00573b14 !important;
+}
+
+.strategyHome-new .nav-link span {
+  color: #5f5f5f !important;
+}
+
+.strategyHome-new .nav-link.active span {
+  color: #00573b !important;
+}
+
+.strategyHome-new .tab-content {
+  margin-top: 20px;
+  padding: 8px 4px 16px;
+}
+
+/* Main cards — same hover fill as Strategies */
+.strategyHome-new .mainCard {
+  height: 95px !important;
+  overflow: visible;
+  position: relative;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out;
+  box-shadow: -1px 1px 11px 0px #00000012;
+  background-color: #fff;
+  border-radius: 10px;
+  --status-color: #a9a9a9;
+}
+
+.strategyHome-new .link-item {
+  background-color: #f8f9fb;
+  box-shadow: 0 0 8px 3px hsla(210, 1%, 66%, 0.08);
+  border-radius: 10px;
+}
+
+/* Arabic / default ribbon on the right */
+.strategyHome-new .mainCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: unset;
+  bottom: 0;
+  width: 6px;
+  background-color: var(--status-color, #a9a9a9);
+  transition: all 0.9s ease-in-out;
+  z-index: 1;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.ar .strategyHome-new .mainCard::before {
+  right: 0;
+  left: unset;
+}
+
+.en .strategyHome-new .mainCard::before {
+  right: unset !important;
+  left: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.strategyHome-new .mainCard:hover::before {
+  left: auto !important;
+  right: 0 !important;
+  width: 100%;
+}
+
+.ar .strategyHome-new .mainCard:hover::before {
+  left: auto !important;
+  right: 0 !important;
+  width: 100%;
+}
+
+.en .strategyHome-new .mainCard:hover::before {
+  right: auto !important;
+  left: 0 !important;
+  width: 100%;
+}
+
+.strategyHome-new .mainCard .main-title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.36px;
+  color: #0e0e0e;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  transition: color 0.4s;
+  transition-delay: 0.45s;
+}
+
+.strategyHome-new .mainCard .sub-title {
+  font-size: 12px;
+  font-weight: 400;
+  color: #686868;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  margin-bottom: 0;
+  transition: color 0.4s;
+  transition-delay: 0.45s;
+}
+
+.strategyHome-new .mainCard:hover .main-title,
+.strategyHome-new .mainCard:hover .show-more,
+.strategyHome-new .mainCard:hover .sub-title {
+  color: white !important;
+}
+
+.strategyHome-new .mainCard > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* View more + arrow — Arabic-first (same as Strategies) */
+.strategyHome-new .show-more {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #d21721;
+  cursor: pointer;
+  transition-delay: 0.4s;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  white-space: nowrap;
+  transition: all 0.4s ease;
+  width: fit-content;
+  align-self: flex-end;
+  gap: 4px;
+  margin-bottom: 0;
+}
+
+.strategyHome-new .show-more:hover {
+  color: black;
+  font-weight: bold;
+}
+
+.strategyHome-new .show-more span {
+  display: inline-block;
+  transition: all 0.6s ease;
+  margin-right: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.strategyHome-new .show-more .content {
+  display: inline-block;
+  transition: all 0.4s ease;
+  margin-left: 5px;
+  white-space: nowrap;
+}
+
+.strategyHome-new .show-more .arrow {
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.4s ease;
+  flex-shrink: 0;
+}
+
+.strategyHome-new .show-more:hover .content {
+  transform: translateX(5px);
+}
+.ar .strategyHome-new .show-more:hover .content {
+  transform: translateX(5px);
+}
+.en .strategyHome-new .show-more:hover .content {
+  transform: translateX(-5px);
+}
+
+.strategyHome-new .show-more:hover .arrow {
+  transform: translateX(-5px);
+}
+.ar .strategyHome-new .show-more:hover .arrow {
+  transform: translateX(-5px);
+}
+.en .strategyHome-new .show-more .arrow {
+  transform: rotate(180deg);
+}
+.en .strategyHome-new .show-more:hover .arrow {
+  transform: rotate(180deg) translateX(-5px);
+}
+
+.strategyHome-new .carousel-indicators {
+  position: relative !important;
+  display: flex;
+  justify-content: center;
+  padding-left: 0;
+  margin-left: 0;
+  list-style: none;
+}
+
+.strategyHome-new .carousel-indicators li {
+  box-sizing: content-box;
+  flex: 0 1 auto;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px;
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: gray;
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: opacity 0.6s ease, background-color 0.6s ease;
+}
+
+.strategyHome-new .carousel-indicators .active {
+  opacity: 1;
+}
+
+.strategyHome-new .status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  font-size: 14px;
+  gap: 4px 0;
+}
+
+.strategyHome-new .status span {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 15px;
+  flex-direction: row-reverse;
+  flex-shrink: 0;
+}
+
+.strategyHome-new .status span .dot {
+  height: 13px !important;
+  width: 13px !important;
+  min-width: 13px;
+  min-height: 13px;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-right: 10px;
+  flex: 0 0 13px;
+}
+
+.strategyHome-new .dot-gray {
+  background-color: #696969;
+}
+.strategyHome-new .dot-green {
+  background-color: #5ab74c;
+}
+.strategyHome-new .dot-yellow {
+  background-color: #ffff00;
+}
+.strategyHome-new .dot-aqua {
+  background-color: #c00000;
+}
+.strategyHome-new .dot-blue {
+  background-color: #a9a9a9;
+}
+.strategyHome-new .dot-purple {
+  background-color: #0c553c;
+}

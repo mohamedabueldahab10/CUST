@@ -273,6 +273,22 @@
           "manifest": "./src/webparts/changeRequests/ChangeRequestsWebPart.manifest.json"
         }
       ]
+    },
+    "strategy-home-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/strategyHome/StrategyHomeWebPart.js",
+          "manifest": "./src/webparts/strategyHome/StrategyHomeWebPart.manifest.json"
+        }
+      ]
+    },
+    "strategy-main-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/strategyMain/StrategyMainWebPart.js",
+          "manifest": "./src/webparts/strategyMain/StrategyMainWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -500,6 +516,8 @@
     "InitiativecomplianceWebPartStrings": "lib/webparts/initiativecompliance/loc/{locale}.js",
     "SearchDocumentsWebPartStrings": "lib/webparts/searchDocuments/loc/{locale}.js",
     "DeletedItemsListingWebPartStrings": "lib/webparts/deletedItemsListing/loc/{locale}.js",
-    "ChangeRequestsWebPartStrings": "lib/webparts/changeRequests/loc/{locale}.js"
+    "ChangeRequestsWebPartStrings": "lib/webparts/changeRequests/loc/{locale}.js",
+    "StrategyHomeWebPartStrings": "lib/webparts/strategyHome/loc/{locale}.js",
+    "StrategyMainWebPartStrings": "lib/webparts/strategyMain/loc/{locale}.js"
   }
 }

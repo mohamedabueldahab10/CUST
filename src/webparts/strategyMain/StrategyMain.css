@@ -1,0 +1,1158 @@
+﻿/* StrategyMain - ported from Tanmiah theme.css (strategyMain section) */
+/* Hide SharePoint page / web part title (egyMain / StrategyMain) */
+div#s4-titlerow,
+div#s4-titlerow #pageTitle,
+h1#pageTitle,
+h1#pageTitle span,
+.ms-core-pageTitle,
+#DeltaPlaceHolderPageTitleInTitleArea,
+.ms-webpart-chrome-title,
+.ms-webpart-titleText,
+span#DeltaPlaceHolderPageTitleInTitleArea {
+  display: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 0 !important;
+}
+/* styles for strategy Main */
+
+.strategyMain #strategies-container {
+  background-color: #0000000d;
+  padding: 20px;
+  padding-top: 0;
+  border-radius: 10px;
+}
+.strategyMain .filter-container .form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #ccc;
+  outline: 0;
+  box-shadow: none;
+}
+.strategyMain .Section-Main-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.2px;
+}
+.strategyMain h1 {
+  font-family: AR One Sans;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.2px;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+.strategyMain .mainCard {
+  height: 95px !important;
+  /* border-right: 6px solid #d21721 !important; */
+  overflow: visible;
+  position: relative;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out;
+  box-shadow: -1px 1px 11px 0px #00000012;
+  border-radius: 10px;
+  --status-color: #a9a9a9;
+}
+.ar .strategyMain .mainCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: unset;
+  bottom: 0;
+  width: 6px;
+  background-color: var(--status-color, #a9a9a9);
+  transition: all 0.9s ease-in-out;
+  z-index: 1;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+/* HRSD default (Arabic) when body.ar is missing */
+.strategyMain .mainCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: unset;
+  bottom: 0;
+  width: 6px;
+  background-color: var(--status-color, #a9a9a9);
+  transition: all 0.9s ease-in-out;
+  z-index: 1;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.en .strategyMain .mainCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: unset;
+  bottom: 0;
+  width: 6px;
+  background-color: var(--status-color, #a9a9a9);
+  transition: all 0.9s ease-in-out;
+  z-index: 1;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.ar .strategyMain .mainCard:hover::before {
+  left: auto !important;
+  right: 0 !important;
+  width: 100%;
+}
+.strategyMain .mainCard:hover::before {
+  left: auto !important;
+  right: 0 !important;
+  width: 100%;
+}
+.en .strategyMain .mainCard:hover::before {
+  right: auto !important;
+  left: 0 !important;
+  width: 100%;
+}
+.strategyMain .mainCard:hover .main-title,
+.strategyMain .mainCard:hover .show-more,
+.strategyMain .mainCard:hover .sub-title {
+  color: white;
+}
+.strategyMain .link-item {
+  background-color: #f8f9fb;
+  box-shadow: 0 0 8px 3px hsla(210, 1%, 66%, 0.08);
+}
+.strategyMain .link-item {
+  border-radius: 10px;
+}
+
+.strategyMain .main-title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.36px;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #0e0e0e;
+  transition: color 0.4s;
+  transition-delay: 0.45s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.strategyMain .kpi-title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 21.5px;
+  color: #363636;
+  transition: color 0.4s;
+  transition-delay: 0.45s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.strategyMain .fa-info {
+  background: blue;
+  color: white;
+  padding: 6px;
+  border-radius: 25px;
+  width: 27px;
+  height: 27px;
+  text-align: center !important;
+}
+.strategyMain .sub-title {
+  font-size: 12px;
+  font-weight: 400;
+  /* line-height: 14.52px; */
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #686868;
+  transition: color 0.4s;
+  transition-delay: 0.45s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  margin-bottom: 0;
+}
+/* Ensure title/description ellipsis works even without body.ar/en */
+.strategyMain .mainCard .main-title,
+.strategyMain .mainCard .sub-title {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100%;
+}
+.strategyMain .mainCard > * {
+  position: relative;
+  z-index: 2;
+}
+.strategyMain .show-more {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #d21721;
+  cursor: pointer;
+  transition-delay: 0.4s;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  white-space: nowrap;
+  transition: all 0.4s ease;
+  width: fit-content;
+  align-self: flex-end;
+  gap: 4px;
+}
+.strategyMain .show-more:hover {
+  color: black;
+  font-weight: bold;
+}
+
+.strategyMain .show-more span {
+  display: inline-block;
+  transition: all 0.6s ease;
+  margin-right: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.strategyMain .show-more .content {
+  display: inline-block;
+  transition: all 0.4s ease;
+  margin-left: 5px;
+  white-space: nowrap;
+}
+
+.strategyMain .show-more .arrow {
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.4s ease;
+  flex-shrink: 0;
+}
+
+/* Arabic-first defaults (Tanmiah .ar) when body.ar is missing */
+.strategyMain .show-more:hover .content {
+  transform: translateX(5px);
+}
+.ar .strategyMain .show-more:hover .content {
+  transform: translateX(5px);
+}
+.en .strategyMain .show-more:hover .content {
+  transform: translateX(-5px);
+}
+
+.strategyMain .show-more:hover .arrow {
+  transform: translateX(-5px);
+}
+.ar .strategyMain .show-more:hover .arrow {
+  transform: translateX(-5px);
+}
+.en .strategyMain .show-more .arrow {
+  transform: rotate(180deg);
+}
+.en .strategyMain .show-more:hover .arrow {
+  transform: rotate(180deg) translateX(-5px);
+}
+/* Circle with checkmark styling */
+.strategyMain .checkmark-container {
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  background-color: #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1) rotate(90deg);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+  z-index: 3;
+}
+
+.strategyMain .checkmark-container.show {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(0.8) rotate(0deg);
+}
+
+.strategyMain .checkmark {
+  color: white;
+  font-size: 16px;
+}
+
+/*collapse */
+.strategyMain #pillar-container,
+.strategyMain #mainGoal-container,
+.strategyMain #Goal2-container,
+.strategyMain #Goal3-container {
+  margin-top: 20px;
+}
+.strategyMain #pillar-container .btn.focus,
+.strategyMain #mainGoal-container .btn.focus,
+.strategyMain #Goal2-container .btn.focus,
+.strategyMain #Goal3-container .btn.focus,
+.strategyMain .btn:focus {
+  outline: 0;
+  box-shadow: none;
+}
+.strategyMain #pillar-container #pillar .card,
+.strategyMain #mainGoal-container #mainGoal .card,
+.strategyMain #Goal2-container #Goal2 .card,
+.strategyMain #Goal3-container #Goal3 .card {
+  margin-bottom: 30px;
+  border: 0;
+  border-radius: 10px;
+}
+.strategyMain #pillar-container #pillar .card .card-header,
+.strategyMain #mainGoal-container #mainGoal .card .card-header,
+.strategyMain #Goal2-container #Goal2 .card .card-header,
+.strategyMain #Goal3-container #Goal3 .card .card-header {
+  border: none !important;
+  border-radius: 2px;
+  padding: 0;
+  background-color: unset !important;
+}
+.strategyMain #pillar-container #pillar .card .card-header .btn-header-link,
+.strategyMain #mainGoal-container #mainGoal .card .card-header .btn-header-link,
+.strategyMain #Goal2-container #Goal2 .card .card-header .btn-header-link,
+.strategyMain #Goal3-container #Goal3 .card .card-header .btn-header-link {
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background: white;
+  color: #222;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.strategyMain
+  #pillar-container
+  #pillar
+  .card
+  .card-header
+  .btn-header-link:after,
+.strategyMain
+  #mainGoal-container
+  #mainGoal
+  .card
+  .card-header
+  .btn-header-link:after,
+.strategyMain #Goal2-container #Goal2 .card .card-header .btn-header-link:after,
+.strategyMain
+  #Goal3-container
+  #Goal3
+  .card
+  .card-header
+  .btn-header-link:after {
+  content: '\f107'; /* Use the same arrow icon */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  float: right;
+  transition: transform 0.9s ease-in-out; /* Smooth rotation animation */
+}
+
+.strategyMain
+  #pillar-container
+  #pillar
+  .card
+  .card-header
+  .btn-header-link.collapsed:after,
+.strategyMain
+  #mainGoal-container
+  #mainGoal
+  .card
+  .card-header
+  .btn-header-link.collapsed:after,
+.strategyMain
+  #Goal2-container
+  #Goal2
+  .card
+  .card-header
+  .btn-header-link.collapsed:after,
+.strategyMain
+  #Goal3-container
+  #Goal3
+  .card
+  .card-header
+  .btn-header-link.collapsed:after {
+  transform: rotate(180deg);
+}
+.strategyMain #pillar-container #pillar .collapsing,
+.strategyMain #mainGoal-container #mainGoal .collapsing,
+.strategyMain #Goal2-container #Goal2 .collapsing,
+.strategyMain #Goal3-container #Goal3 .collapsing {
+  line-height: 30px;
+  transition: height 0.9s ease;
+}
+.strategyMain #pillar-container #pillar .collapse,
+.strategyMain #mainGoal-container #mainGoal .collapse,
+.strategyMain #Goal2-container #Goal2 .collapse,
+.strategyMain #Goal3-container #Goal3 .collapse {
+  border: 0;
+  transition: height 0.9s ease;
+}
+/* Define the keyframes for collapsing animation */
+@keyframes collapseAnimation {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0); /* Normal size and position */
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.6) translate3d(0, 0, -100px); /* Shrink and move back */
+  }
+}
+
+/* Define the keyframes for expanding animation */
+@keyframes expandAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translate3d(0, 0, -100px); /* Start from small and back */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0); /* End at normal size and position */
+  }
+}
+
+/* Apply the collapsing keyframe animation to collapsing elements */
+.strategyMain #pillar .collapsing,
+.strategyMain #mainGoal .collapsing,
+.strategyMain #Goal2 .collapsing,
+.strategyMain #Goal3 .collapsing {
+  animation: collapseAnimation 0.9s ease-out forwards; /* Apply the collapse animation */
+}
+
+/* Apply the expanding keyframe animation to expanding elements */
+.strategyMain #pillar .collapse.show,
+.strategyMain #mainGoal .collapse.show,
+.strategyMain #Goal2 .collapse.show,
+.strategyMain #Goal3 .collapse.show {
+  animation: expandAnimation 0.9s ease-in forwards; /* Apply the expand animation */
+}
+
+/* pagination and style */
+.strategyMain .pagination .page-item.active .page-link {
+  background-color: #fff;
+  color: #d21721;
+  border: none;
+  font-size: 16px;
+  margin: 0px 10px;
+}
+.strategyMain .pagination .page-item .page-link {
+  color: #333;
+  font-size: 16px;
+  margin: 0px 10px;
+  border: none;
+  cursor: pointer;
+}
+.strategyMain .pagination .page-item.previous .page-link {
+  background: linear-gradient(119.34deg, #820006 6.21%, #d21721 64.02%);
+  padding: 8px 12px 8px 12px;
+  border-radius: 8px;
+}
+.strategyMain .pagination .page-item.next .page-link {
+  border: 1px solid #0000001a;
+  padding: 8px 12px 8px 12px;
+  border-radius: 8px;
+  background-color: white !important;
+}
+.strategyMain .pagination .page-item.next .page-link i {
+  color: #d21721 !important;
+}
+.ar .strategyMain .pagination .page-item.previous .page-link .fa-chevron-left {
+  color: #ffffff;
+  transform: rotate(180deg);
+}
+.ar .strategyMain .pagination .page-item.next .page-link .fa-chevron-right {
+  color: #d21721;
+  transform: rotate(180deg);
+}
+.strategyMain .pagination .page-item:first-child .page-link,
+.strategyMain .pagination .page-item:last-child .page-link {
+  background-color: #d9534f;
+  color: #fff;
+  font-size: 16px;
+  margin: 0px 10px;
+}
+
+/* Pagination + status on one row; only overflowing status items wrap */
+.strategyMain .pagination-status-bar,
+.strategyMain .col-12 > .d-flex.justify-content-between.align-items-center {
+  display: flex !important;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+}
+.strategyMain .pagination-status-bar > nav,
+.strategyMain .col-12 > .d-flex.justify-content-between.align-items-center > nav {
+  flex: 0 0 auto;
+  min-width: auto;
+  max-width: none;
+}
+.strategyMain .pagination {
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+.strategyMain .status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px 0;
+  font-size: 14px;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: none;
+}
+.strategyMain .status > span {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 15px;
+  flex-direction: row-reverse;
+  flex-shrink: 0;
+  max-width: none;
+}
+.strategyMain .status > span .Resources {
+  line-height: 1.3;
+  text-align: end;
+  white-space: normal;
+}
+/* Keep status dots perfect circles (never oval when label wraps) */
+.strategyMain .status span .dot {
+  height: 13px !important;
+  width: 13px !important;
+  min-height: 13px !important;
+  min-width: 13px !important;
+  max-height: 13px !important;
+  max-width: 13px !important;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 13px !important;
+  align-self: center !important;
+  display: block !important;
+  box-sizing: border-box;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+/* filter style section — match Tanmiah single-row compact filters */
+.strategyMain .filter-container {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding-bottom: 10px;
+  border-radius: 8px;
+  column-gap: 12px;
+  row-gap: 0;
+  width: 100%;
+  min-height: 42px;
+}
+
+.strategyMain .filter-container .btn,
+.strategyMain .filter-container .dropdown .btn {
+  font-size: 14px;
+}
+
+.strategyMain .filter-btn {
+  border: 1px solid #b52b27;
+  color: #b52b27;
+  background-color: #fff;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 5px;
+  height: 38px;
+  line-height: 1.2;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.strategyMain .filter-btn i {
+  margin-left: 5px;
+}
+
+.strategyMain .filter-btn:hover {
+  background-color: #b52b27;
+  color: #fff;
+}
+
+.strategyMain .reset-btn {
+  cursor: pointer;
+  border: 1px solid #ffff00;
+  color: #ffff00;
+  background-color: #fff;
+  font-size: 14px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.strategyMain .reset-btn:hover {
+  color: #fff;
+  background-color: #ffff00;
+}
+
+.strategyMain .strategy-filter-option {
+  width: 140px;
+  max-width: 140px;
+  min-width: 140px;
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  padding-top: 15px;
+}
+
+.strategyMain .strategy-filter-option .select2-container {
+  width: 140px !important;
+  max-width: 140px !important;
+}
+
+.strategyMain .strategy-filter-option select {
+  width: 100%;
+  height: 38px;
+  padding: 6px 10px;
+  padding-inline-end: 28px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  box-sizing: border-box;
+  line-height: 1.2;
+}
+
+/* Select2 — compact like Tanmiah */
+.strategyMain .select2-container .select2-selection--single {
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 8px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 8px !important;
+  background-color: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box;
+}
+
+.strategyMain
+  .select2-container
+  .select2-selection--single
+  .select2-selection__rendered {
+  padding-right: 4px !important;
+  padding-left: 22px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 36px !important;
+  font-size: 14px;
+  color: #495057;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.strategyMain
+  .select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  height: 36px !important;
+  top: 1px !important;
+  width: 20px;
+  right: auto !important;
+  left: 2px !important;
+}
+
+.en
+  .strategyMain
+  .select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  left: auto !important;
+  right: 2px !important;
+}
+
+.en
+  .strategyMain
+  .select2-container
+  .select2-selection--single
+  .select2-selection__rendered {
+  padding-left: 4px !important;
+  padding-right: 22px !important;
+}
+
+.select2-container--open .select2-dropdown {
+  left: 0;
+  border-color: #ccc;
+  border-radius: 8px;
+}
+
+.select2-container--default
+  .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: #e8d6d6 !important;
+  color: #000;
+}
+
+.select2-search--dropdown {
+  padding: 8px;
+  background-color: #fff;
+}
+
+.select2-container--default .select2-results > .select2-results__options {
+  background-color: #fff;
+  max-height: 220px;
+}
+
+.select2-container--default
+  .select2-results
+  > .select2-results__options
+  .select2-results__option:hover {
+  background: #e8d6d6 !important;
+}
+
+.strategyMain .dropdown .btn {
+  background-color: white;
+  border: 1px solid #ced4da;
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border-radius: 5px;
+}
+
+.strategyMain .dropdown-menu {
+  text-align: right;
+}
+
+.strategyMain .dropdown + .dropdown {
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .strategyMain .filter-container {
+    flex-wrap: wrap !important;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
+
+#pillar .mainCard,
+#mainGoal .mainCard,
+#Goal2 .mainCard,
+#Goal3 .mainCard {
+  max-width: 340px;
+}
+
+/* Define the keyframes for the top-right border drawing animation */
+@keyframes draw-border-top-right {
+  0% {
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+  }
+  50% {
+    border-top: 2px solid #d21721;
+    border-right: 2px solid #d21721;
+  }
+  100% {
+    border-top: 2px solid #d21721;
+    border-right: 2px solid #d21721;
+  }
+}
+
+/* Define the keyframes for the bottom-left border drawing animation */
+@keyframes draw-border-bottom-left {
+  0% {
+    border-bottom: 2px solid transparent;
+    border-left: 2px solid transparent;
+  }
+  50% {
+    border-bottom: 2px solid #d21721;
+    border-left: 2px solid #d21721;
+  }
+  100% {
+    border-bottom: 2px solid #d21721;
+    border-left: 2px solid #d21721;
+  }
+}
+
+/* Apply the animations to the mainCard when it has the active class */
+.mainCard.active {
+  animation: draw-border-top-right 3s forwards,
+    draw-border-bottom-left 3s forwards;
+  border-radius: 4px;
+}
+/* KPI Progress Bar Container (semi-circular) */
+.progress-semi {
+  width: 120px;
+  height: 60px;
+  background-color: #f8f9fa;
+  border-radius: 60px 60px 0 0; /* Half circle */
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+}
+
+.progress-semi .barOverflow {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+.progress-semi .bar {
+  transform: rotate(45deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  text-align: left;
+  direction: ltr !important;
+  border: 23px solid #ccc;
+  border-bottom-color: #ccc;
+  border-right-color: #ccc;
+}
+
+.progress-semi span {
+  position: absolute;
+  font-weight: 700;
+  font-size: 1.7rem;
+  left: 0;
+  bottom: 4px;
+  right: 0;
+  text-align: center;
+  color: #333;
+}
+
+.kpis-semiProgress {
+  position: relative;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.kpis-semiProgress .overFlow-progressBar {
+  position: relative;
+  overflow: hidden;
+  width: 120px;
+  height: 60px;
+}
+
+.kpis-semiProgress .overFlow-progressBar .active-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 20px solid #eee;
+  border-bottom-color: #1e31ad;
+  border-right-color: #1e31ad;
+  transform-origin: center;
+}
+
+.strategyMain #kpis {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.strategyMain #kpis .label {
+  color: #686868;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16.32px;
+  letter-spacing: 0%;
+  text-align: start;
+}
+.strategyMain #kpis .value {
+  color: #9a9a9a;
+  font-size: 14px;
+  line-height: 19.04px;
+  letter-spacing: 0%;
+}
+.strategyMain #kpis .info-block {
+  margin-top: 1rem;
+}
+
+.strategyMain #kpis .divider {
+  width: 100%;
+  border: 1px solid #00000012;
+  margin-top: 2rem;
+}
+
+.strategyMain #kpis .active-status {
+  background-color: #e1f4d8;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #378214;
+}
+
+.strategyMain #kpis .total-stats {
+  background-color: #f9f9ff;
+  padding: 8px;
+}
+.strategyMain #kpis .stat-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 5px;
+}
+.strategyMain #kpis .border-custom {
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+}
+.strategyMain #kpis .toggle-section .btn {
+  padding: 8px 16px 8px 16px;
+  border-radius: 8px;
+  background: #caefff;
+  color: #80bcdb !important;
+  text-align: center;
+  border: 1px solid #80bcdb;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19.04px;
+  text-align: center;
+  min-width: 150px;
+}
+.strategyMain #kpis .toggle-section .btn.active {
+  padding: 8px 16px 8px 16px;
+  border-radius: 8px;
+  background: #caefff;
+  color: #44809f !important;
+  text-align: center;
+  border: 1px solid #44809f;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19.04px;
+  text-align: center;
+  min-width: 150px;
+}
+.strategyMain #kpis .main-section-title {
+  color: #222;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.strategyMain-modal .modal-dialog {
+  width: 65%;
+  max-width: 720px;
+  margin: 1.75rem auto;
+}
+.strategyMain-modal .modal-content {
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+.strategyMain-modal .modal-body {
+  border: 1px solid #0000001a;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-top: 4px;
+}
+
+.strategyMain-modal .border-light-gray {
+  border: 1px solid #eeeeee;
+}
+
+.strategyMain-modal .status-approved {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  gap: 6px;
+}
+
+.strategyMain-modal .btn-red {
+  background: linear-gradient(85.22deg, #163128 -14.98%, #00573b 104.46%) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  min-width: 220px;
+  width: 50%;
+}
+
+.strategyMain-modal .btn-red:hover,
+.strategyMain-modal .btn-red:focus {
+  background: linear-gradient(85.22deg, #0f241d -14.98%, #004530 104.46%) !important;
+  color: #fff !important;
+}
+
+.strategyMain-modal .user-circle {
+  border: 1px solid #eeeeee;
+  border-radius: 50%;
+  padding: 10px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: bold;
+  background-color: #dee0ff;
+  color: #3841ce;
+}
+
+.strategyMain-modal .align-div-label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.strategyMain-modal .align-div-label p,
+.strategyMain-modal .align-div-label > span:not(.label):not(.Resources) {
+  margin: 0;
+  color: #0e0e0e;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.strategyMain-modal .label {
+  color: #686868 !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 16.32px;
+  letter-spacing: 0%;
+  text-align: start;
+  margin-bottom: 2px;
+}
+
+.strategyMain-modal .section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0e0e0e;
+  margin: 0;
+  text-align: center;
+}
+
+.strategyMain-modal .modal-body > .section-title.align-div-label {
+  text-align: start;
+  align-items: flex-start;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.strategyMain-modal .subtitle {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.strategyMain-modal .close {
+  opacity: 1;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  color: #333;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+}
+
+.strategyMain-modal .close:hover {
+  color: #000;
+  opacity: 0.75;
+}
+
+.strategyMain-modal .modal-header {
+  display: flex !important;
+  width: 100%;
+  align-items: center !important;
+  justify-content: space-between !important;
+  align-self: stretch;
+  padding: 0 0 12px 0;
+  border-bottom: 0;
+  direction: rtl;
+}
+
+.strategyMain-modal .modal-header .section-title {
+  flex: 1;
+  text-align: center;
+}
+
+.strategyMain-modal .modal-footer {
+  padding: 16px 0 0 0;
+  border-top: 0;
+}
+
+.strategyMain-modal.show {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  overflow-y: hidden !important;
+}
+
+.strategyMain-modal.show .modal-dialog,
+.ar .strategyMain-modal.show .modal-dialog {
+  direction: rtl;
+  text-align: right;
+}
+
+.strategyMain-modal .modal-body .d-flex {
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.strategyMain-modal .modal-body .d-flex > .align-div-label {
+  flex: 1 1 140px;
+  min-width: 120px;
+}
+
+.strategyMain .card-body {
+  padding: 10px 20px;
+}
+
+.strategyMain .tab-pane.active {
+  display: flex;
+}
+
+/* status dots + select2 */
+.strategyMain .dot-gray { background-color: #696969; }
+.strategyMain .dot-green { background-color: #5ab74c; }
+.strategyMain .dot-yellow { background-color: #FFFF00; }
+.strategyMain .dot-aqua { background-color: #C00000; }
+.strategyMain .dot-blue { background-color: #a9a9a9; }
+.strategyMain .dot-purple { background-color: #0C553C; }
+.strategyMain .select2 button {
+  padding: unset !important;
+  min-width: unset !important;
+}

@@ -20,6 +20,15 @@ window.initiativeDiscrepancyPercentage = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
 window.APIURL = "";
+function normalizeApiUrl(url) {
+  if (!url) return url;
+  url = String(url).replace(/\/$/, "");
+  if (!/\/api(\/|$)/i.test(url)) {
+    url += "/api";
+  }
+  return url;
+}
+window.normalizeApiUrl = normalizeApiUrl;
 window.relatedProjectId = "";
 window.relatedInitiativeId = "";
 window.isOnLoad2 = true; //turned false in form request
@@ -130,6 +139,8 @@ var UserRole,
   currPageArray = [],
   SP_Page_Name = [
     "mainstrategy.aspx",
+    "strategymain.aspx",
+    "strategyhome.aspx",
     "stratigicinformation.aspx",
     "InitiativesMain.aspx",
     "Targets.aspx",
@@ -542,6 +553,7 @@ window.userCalls = {
       success: function (data) {
         console.timeEnd();
         UserN = data.d;
+        window.UserN = data.d;
         userCalls.get_CurrentUserGroupColl(data.d.Id);
       },
       error: function (data) {},
@@ -695,7 +707,7 @@ window.userCalls = {
             : "";
           // localStorage.setItem('userGroup', '${T.groupsName}');
           myRolesHtml += `<li class="list-group-item">
-            <a href="javascript:" class="d-flex justify-content-between align-items-center" onclick="localStorage.setItem('userRole', '${T.Role}');localStorage.setItem('userGroup', '${T.groupsName}');window.location=('/');" title="${T.Role}">
+            <a href="javascript:" class="d-flex justify-content-between align-items-center" onclick="localStorage.setItem('userRole', '${T.Role}');localStorage.setItem('userGroup', '${T.groupsName}');window.location.reload();" title="${T.Role}">
               <h3 data-trans-${T.Role} class="title-13 Resources m-0">${T.Role}</h3>
               <div class="circle-radio d-flex justify-content-center align-items-center">
                 <div class="dot-radio ${isActiveRole}" data-role="${T.Role}"></div>
@@ -9883,7 +9895,20 @@ var Access_Project_Info_Request = {
       if (!$role.length) {
         $role = $('<h2 id="UserRole" class="pageTitleUserRole"></h2>');
       }
-    
+
+      // Strategy Home breadcrumb stays in .navbar-wrapper (Tanmiah layout).
+      // Strategy_Home.js owns the title content — do not relocate/overwrite it.
+      var isStrategyHomePage =
+        window.location.href.toLowerCase().indexOf("strategyhome.aspx") > -1;
+      if (isStrategyHomePage) {
+        var $navbarWrapper = $(".navbar-wrapper").first();
+        if ($navbarWrapper.length && !$role.closest(".navbar-wrapper").length) {
+          $role.detach();
+          $navbarWrapper.append($role);
+        }
+        return;
+      }
+
       if (!localStorage.getItem("lng") || localStorage.getItem("lng") == "ar") {
         $role.html(ar_UserRole);
       } else {
@@ -13272,7 +13297,8 @@ var Get_Configure_Api = {
     var listItemEnum = collListItem.getEnumerator();
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-      APIURL = oListItem.get_item("Value");
+      APIURL = normalizeApiUrl(oListItem.get_item("Value"));
+      window.APIURL = APIURL;
     }
   },
   onError: function (sender, args) {

@@ -1,0 +1,294 @@
+<div class="navbar page-nav px-5 py-0">
+  <ul class="navbar-nav bd-navbar-nav flex-row">
+    <!--<li class="nav-item active"><a href="#">Home</a></li>
+                    <li class="nav-item"><a href="#">About</a></li>
+                    <li class="nav-item"><a href="#">Contact</a></li>-->
+  </ul>
+  <!--added by oday to add extra items on toggle menu-->
+  <nav role="navigation" class="extra-nav-items">
+    <div class="menuToggleBurgMenu">
+      <input type="checkbox" id="navcheckboxId" />
+      <span></span>
+      <span></span>
+      <span></span>
+      <ul class="menuBurg"></ul>
+    </div>
+  </nav>
+</div>
+
+<div class="container-fluid container-body strategyMain">
+  <div class="row">
+    <div class="col-12">
+      <div
+        class="d-flex flex-nowrap align-items-center justify-content-start filter-container"
+      >
+        <div class="strategy-filter-option">
+          <select class="form-control px-2" id="Sector">
+            <option
+              class="Resources"
+              data-trans-filter6
+              value=""
+              selected
+            ></option>
+          </select>
+        </div>
+
+        <div class="strategy-filter-option">
+          <select class="form-control px-2" id="Department">
+            <option
+              class="Resources"
+              data-trans-filter5
+              value=""
+              selected
+            ></option>
+          </select>
+        </div>
+
+        <!-- Filter Button -->
+        <button class="btn filter-btn" type="button">
+          <i class="fas fa-sliders-h mx-2"></i>
+          <span class="Resources" data-trans-strategymainfilter></span>
+        </button>
+
+        <div class="reset-btn" title="Reset">
+          <i class="fas fa-undo mx-2"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12" id="strategies-container">
+    <div class="row mx-2 py-2 Section-Main-title Resources">
+      <span class="Resources" data-trans-strategies> </span>
+    </div>
+    <div class="row py-2">
+      <span><i class="fas fa-info ml-1"></i></span>
+      <span class="Resources mx-2" data-trans-choosestrategy> </span>
+    </div>
+    <div>
+      <div
+        class="row justify-content-start"
+        id="strategies-cards-container"
+      ></div>
+    </div>
+  </div>
+  <div class="row mt-5" id="pillar-container">
+    <div class="col-12">
+      <div class="accordion" id="pillar">
+        <div class="card">
+          <div class="card-header" id="pillarhead">
+            <a
+              href="#"
+              class="btn btn-header-link"
+              data-toggle="collapse"
+              data-target="#pillars"
+              aria-expanded="true"
+              aria-controls="pillars"
+            >
+              <span class="Resources" data-trans-pillars></span>
+            </a>
+          </div>
+          <div
+            id="pillars"
+            aria-labelledby="pillarhead"
+            data-parent="#pillar"
+            class="collapse show"
+          >
+            <!-- <div class="card-body"> -->
+            <div class="col-12">
+              <div class="row" id="pillar-cards-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="mainGoal-container">
+    <div class="col-12">
+      <div class="accordion" id="mainGoal">
+        <div class="card">
+          <div class="card-header" id="mainGoalhead">
+            <a
+              href="#"
+              class="btn btn-header-link"
+              data-toggle="collapse"
+              data-target="#mainGoal1"
+              aria-expanded="true"
+              aria-controls="mainGoal1"
+            >
+              <span class="Resources" data-trans-maingoals></span>
+            </a>
+          </div>
+          <div
+            id="mainGoal1"
+            aria-labelledby="mainGoalhead"
+            data-parent="#mainGoal"
+            class="collapse show"
+          >
+            <div class="card-body">
+              <div class="row" id="mainGoal-cards-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="Goal2-container">
+    <div class="col-12">
+      <div class="accordion" id="Goal2">
+        <div class="card">
+          <div class="card-header" id="Goal2head">
+            <a
+              href="#"
+              class="btn btn-header-link"
+              data-toggle="collapse"
+              data-target="#Goals2"
+              aria-expanded="true"
+              aria-controls="Goals2"
+            >
+              <span class="Resources" data-trans-secondgoals></span>
+            </a>
+          </div>
+          <div
+            id="Goals2"
+            aria-labelledby="Goal2head"
+            data-parent="#Goal2"
+            class="collapse show"
+          >
+            <div class="card-body">
+              <div class="row" id="Goal2-cards-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="Goal3-container">
+    <div class="col-12">
+      <div class="accordion" id="Goal3">
+        <div class="card">
+          <div class="card-header" id="Goal3head">
+            <a
+              href="#"
+              class="btn btn-header-link"
+              data-toggle="collapse"
+              data-target="#Goals3"
+              aria-expanded="true"
+              aria-controls="Goal31"
+            >
+              <span class="Resources" data-trans-thirdgoals></span>
+            </a>
+          </div>
+          <div
+            id="Goals3"
+            aria-labelledby="Goal3head"
+            data-parent="#Goal3"
+            class="collapse show"
+          >
+            <div class="card-body">
+              <div class="row" id="Goal3-cards-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-1" id="kpis">
+    <div class="col-6 my-5">
+      <p class="Resources main-section-title" data-trans-kpis></p>
+    </div>
+    <div class="col-6 my-5 toggle-section d-flex justify-content-end">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="btn nav-link active w-25 mx-2"
+            id="strategyproject-tab"
+            data-toggle="tab"
+            data-target="#strategyproject"
+            type="button"
+            role="tab"
+            aria-controls="strategyproject"
+            aria-selected="true"
+          >
+            <span class="Resources" data-trans-strategyproject></span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="btn nav-link w-25 mx-2"
+            id="operational-tab"
+            data-toggle="tab"
+            data-target="#operational"
+            type="button"
+            role="tab"
+            aria-controls="operational"
+            aria-selected="false"
+          >
+            <span class="Resources" data-trans-operational></span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="tab-content col-12">
+      <div
+        class="tab-pane row fade show active"
+        id="strategyproject"
+        role="tabpanel"
+        aria-labelledby="strategyproject-tab"
+      >
+        <div class="row w-100" id="kpis-strategic-container"></div>
+      </div>
+
+      <div
+        class="tab-pane row fade"
+        id="operational"
+        role="tabpanel"
+        aria-labelledby="operational-tab"
+      >
+        <div class="row w-100" id="kpis-operational-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade strategyMain-modal"
+  id="goalModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="goalModalTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content border-light-gray">
+      <div
+        class="modal-header border-0 w-100 pt-0 d-flex justify-content-between align-items-center"
+      >
+        <div class="modal-header-spacer" style="width: 28px"></div>
+        <div class="flex-grow-1 text-center">
+          <h5 class="section-title Resources mb-0"></h5>
+        </div>
+        <div>
+          <button
+            type="button"
+            class="close d-flex justify-content-end fnt-24"
+            data-dismiss="modal"
+            aria-label="Close"
+            aria-hidden="true"
+          >
+            &times;
+          </button>
+        </div>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer d-flex justify-content-center border-0">
+        <button
+          type="button"
+          class="btn btn-red btn-block text-center w-50 fnt-13"
+        >
+          <span class="Resources" data-trans-showdetails> </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
