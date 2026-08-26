@@ -122,6 +122,14 @@ span#DeltaPlaceHolderPageTitleInTitleArea {
 .strategyMain .mainCard:hover .sub-title {
   color: white;
 }
+.strategyMain .mainCard.status-yellow:hover .main-title,
+.strategyMain .mainCard.status-yellow:hover .show-more,
+.strategyMain .mainCard.status-yellow:hover .sub-title,
+.strategyMain .mainCard.status-yellow:hover .show-more .content,
+.strategyMain .mainCard.status-yellow:hover .show-more .arrow,
+.strategyMain .mainCard.status-yellow:hover .show-more i {
+  color: #000;
+}
 .strategyMain .link-item {
   background-color: #f8f9fb;
   box-shadow: 0 0 8px 3px hsla(210, 1%, 66%, 0.08);
@@ -455,6 +463,11 @@ span#DeltaPlaceHolderPageTitleInTitleArea {
   margin: 0px 10px;
   border: none;
   cursor: pointer;
+}
+.strategyMain .pagination .page-item.pagination-ellipsis .page-link {
+  cursor: pointer;
+  color: #333;
+  letter-spacing: 1px;
 }
 .strategyMain .pagination .page-item.previous .page-link {
   background: linear-gradient(119.34deg, #820006 6.21%, #d21721 64.02%);

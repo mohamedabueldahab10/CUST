@@ -2662,6 +2662,19 @@ var Task_PCODE_Data_Request_WFs = {
           }, 100);
           break;
       }
+
+      if (workflowname == "MSActualBenefit") {
+        if ($("#btnEndWorkflow").length == 0) {
+          var endWorkflowBtn = End_Workflow.buildButton({
+            id: "btnEndWorkflow",
+            dataTrans: "endworkflow",
+            onClick:
+              "End_Workflow.init({ listTitle: 'Benefits', listingKey: 'benefits' })",
+          });
+          End_Workflow.appendButton(endWorkflowBtn);
+        }
+      }
+
       dialogBoxHtml = `
 <div id="myModal">
 <div class="modal-dialog">
@@ -3233,6 +3246,7 @@ var SubmitField_BulkEdit = {
       (WFisEdit || (isEdit && USERisWF)) &&
       (workflowname == "MSActualKPI" ||
         workflowname == "MSActualBenefit" ||
+        workflowname == "InitiativeBenefits" ||
         workflowname == "EPMOCreateProject" ||
         workflowname == "VROCreateProject" ||
         workflowname == "VROCRProject" ||
@@ -3242,13 +3256,19 @@ var SubmitField_BulkEdit = {
         workflowname == "DevelopmentRequirement") &&
       tasktype == "Submit"
     ) {
-      // MSActualKPI submit: temporarily delay the workflow close action.
-      // This gives Edit_Data_Submit time to finish async work (e.g. attachments upload)
-      // before Task_Edit_Data closes the task and redirects.
+      // Delay workflow close until Edit_Data_Submit finishes async work
+      // (e.g. attachments upload) before Task_Edit_Data closes + redirects.
       window.deferWorkflowContinueUntilEditSubmit = true;
-      setTimeout(function () {
-        window.deferWorkflowContinueUntilEditSubmit = false;
-      }, 3000);
+      // Benefit WFs: do NOT auto-clear after 3s — attachments can take longer.
+      // Flag is cleared in continueWorkflowAfterBulkEdit after history is saved.
+      if (
+        workflowname != "MSActualBenefit" &&
+        workflowname != "InitiativeBenefits"
+      ) {
+        setTimeout(function () {
+          window.deferWorkflowContinueUntilEditSubmit = false;
+        }, 3000);
+      }
       Edit_Data_Submit.preinit(state);
       return;
     }
@@ -3765,8 +3785,10 @@ var SubmitField_BulkEdit = {
                 (isEdit || WFisEdit) &&
                 listkey === "benefits" &&
                 isWF &&
+                workflowname === "MSActualBenefit" &&
               ( ( (stageid === "MSActualBenefit01" || currentstage === "MSActualBenefit01") && currentUserRole === "EPMO" ) ||
-               (stageid === "MSActualBenefit00" || currentstage === "MSActualBenefit00") )) {
+               (stageid === "MSActualBenefit00" || currentstage === "MSActualBenefit00") ||
+               (tasktype === "Submit") )) {
                 try {
                   const periodType = $("#PeriodType").val();
                   let year = parseInt($("#Year").val() || 0);
@@ -3958,7 +3980,16 @@ var SubmitField_BulkEdit = {
                 Task_Edit_Data.init();
               }
             } else {
-              if (window.deferWorkflowContinueUntilEditSubmit) {
+              // MSActualBenefit Submit: history already awaited above — close now.
+              // No extra 3s delay / no redirect until this point.
+              if (
+                listkey == "benefits" &&
+                workflowname == "MSActualBenefit" &&
+                tasktype == "Submit"
+              ) {
+                window.deferWorkflowContinueUntilEditSubmit = false;
+                Task_Edit_Data.init();
+              } else if (window.deferWorkflowContinueUntilEditSubmit) {
                 setTimeout(function () {
                   window.deferWorkflowContinueUntilEditSubmit = false;
                   Task_Edit_Data.init();
@@ -3991,7 +4022,7 @@ var SubmitField_BulkEdit = {
 
               if (deferredMsActualBenefitHistory && msActualBenefitHistorySaver) {
                 msActualBenefitHistorySaver()
-                  .then(function () {
+                  .finally(function () {
                     var benefitCode = $("#Title").val();
                     if (typeof APIURL !== "undefined" && APIURL && benefitCode) {
                       $.ajax({
@@ -4000,24 +4031,11 @@ var SubmitField_BulkEdit = {
                           "/general/createbenefitresults/" +
                           encodeURIComponent(benefitCode),
                         method: "GET",
-                        success: function () {
-                          continueWorkflowAfterBulkEdit();
-                        },
-                        error: function (xhr, status, err) {
-                          console.log(
-                            "createbenefitresults failed:",
-                            status,
-                            err,
-                            xhr
-                          );
-                        },
+                        complete: continueWorkflowAfterBulkEdit,
                       });
                     } else {
                       continueWorkflowAfterBulkEdit();
                     }
-                  })
-                  .catch(function (err) {
-                    console.log("Benefit history save failed:", err);
                   });
                 return;
               }
@@ -4032,6 +4050,73 @@ var SubmitField_BulkEdit = {
             }
           );
         } else {
+          if (
+            listkey === "benefits" &&
+            workflowname === "MSActualBenefit" &&
+            state == true
+          ) {
+            (async function () {
+              try {
+                const periodType = $("#PeriodType").val();
+                let year = parseInt($("#Year").val() || 0);
+                let month = 0;
+                if (periodType === "monthly") {
+                  const mVal = $("#Months").val();
+                  if (mVal && mVal.indexOf("ActualM") === 0)
+                    month = parseInt(mVal.replace("ActualM", ""));
+                } else if (periodType === "midterm") {
+                  const midVal = $("#Midterms").val();
+                  month =
+                    midVal === "ActualMid1" ? 6 : midVal === "ActualMid2" ? 12 : 0;
+                } else if (periodType === "quarter") {
+                  const qVal = $("#Quarter").val();
+                  if (qVal === "ActualQ1") month = 3;
+                  else if (qVal === "ActualQ2") month = 6;
+                  else if (qVal === "ActualQ3") month = 9;
+                  else if (qVal === "ActualQ4") month = 12;
+                } else if (periodType === "year") {
+                  month = 12;
+                }
+                var performanceAnalysis = $("#PerformanceAnalysis").val() || "";
+                var actualKpiDateRaw = $("#ActualkpiDate").val() || "";
+                var actualkpiDate = actualKpiDateRaw
+                  ? new Date(actualKpiDateRaw).toISOString().split("T")[0]
+                  : "";
+                const payload = {
+                  mainKPICode: "",
+                  benefitCode: $("#Title").val(),
+                  year: year,
+                  month: month,
+                  a: parseFloat($("#A").val() || 0),
+                  b: parseFloat($("#B").val() || 0),
+                  c: parseFloat($("#CC").val() || 0),
+                  d: parseFloat($("#D").val() || 0),
+                  e: parseFloat($("#E").val() || 0),
+                  f: parseFloat($("#F").val() || 0),
+                  g: parseFloat($("#G").val() || 0),
+                  finalValue: parseFloat($("#Equation").val() || 0),
+                  performanceAnalysis: performanceAnalysis,
+                  actualkpiDate: actualkpiDate,
+                  createdByUserId: 0,
+                };
+                const userData = await $.ajax({
+                  url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/currentuser",
+                  method: "GET",
+                  headers: { Accept: "application/json;odata=verbose" },
+                });
+                payload.createdByUserId = userData.d.Id;
+                await $.ajax({
+                  url: APIURL + "/general/createorupdatebenefitresultshistory/draft",
+                  method: "POST",
+                  contentType: "application/json; charset=utf-8",
+                  data: JSON.stringify(payload),
+                });
+              } catch (err) {
+                console.error("Error in BenefitResultsHistory flow:", err);
+              }
+              Task_Edit_Data.init();
+            })();
+          }
           dfd.resolve();
         }
       },
@@ -4050,8 +4135,7 @@ window.Continue_Submit_Field = {
     if (window.deferWorkflowContinueUntilUpload) {
       return;
     }
-    // Benefits MSActualBenefit Submit: master-details/upload call Continue and were
-    // skipping SubmitField_BulkEdit (where BenefitResultsHistory is saved).
+    // Benefits: history is inside SubmitField_BulkEdit — don't skip it
     if (
       listkey == "benefits" &&
       typeof workflowname !== "undefined" &&
@@ -4060,14 +4144,12 @@ window.Continue_Submit_Field = {
       tasktype == "Submit"
     ) {
       if (window.__msActualBenefitBulkSubmitted) {
-        // Second continuation call: ensure current task is closed.
-        Task_Edit_Data.init();
         return;
       }
       window.__msActualBenefitBulkSubmitted = true;
-      var submitState =
-        typeof wfHotFixState !== "undefined" ? wfHotFixState : true;
-      SubmitField_BulkEdit.init(submitState);
+      SubmitField_BulkEdit.init(
+        typeof wfHotFixState !== "undefined" ? wfHotFixState : true
+      );
       return;
     }
     Task_Edit_Data.init();
@@ -5134,8 +5216,7 @@ var Task_Edit_Data = {
         );
       } catch (e) {}
     }
-    var taskIdToClose =
-      taskIdFromUrl && !isNaN(taskIdFromUrl) ? taskIdFromUrl : taskid;
+    var taskIdToClose = Number(taskID) || Number(taskIdFromUrl) || Number(taskid);
     Task_Edit_Data.g.oListItem = oList.getItemById(taskIdToClose);
     var stageAction = ""; //added to handle WF Notes
     if (tasktype != "Approval" && tasktype != "TriApproval") {
@@ -5152,11 +5233,12 @@ var Task_Edit_Data = {
 
     function doCloseTask() {
       Task_Edit_Data.g.oListItem.set_item("Status", "Closed");
-      Task_Edit_Data.g.oListItem.set_item("WFInstanceID", null);
-      Task_Edit_Data.g.oListItem.set_item(
-        "Body",
-        $("textarea#commenttext").val()
-      );
+      if ($("textarea#commenttext").length) {
+        Task_Edit_Data.g.oListItem.set_item(
+          "Body",
+          $("textarea#commenttext").val()
+        );
+      }
       Task_Edit_Data.g.oListItem.set_item("TakenAction", stageAction);
       Task_Edit_Data.g.oListItem.update();
       clientContext.load(Task_Edit_Data.g.oListItem);
@@ -5318,6 +5400,7 @@ var Task_Edit_Data = {
       var relationshipField = (first.relationshipfield || first.parentKeyField || "").toString();
       var fieldToRead = (first.field || "").toString();
       var parentKeyVal = (typeof window.PCODE !== "undefined" && window.PCODE != null && window.PCODE !== "") ? window.PCODE : peojectC;
+
       if (parentList && relationshipField && fieldToRead) {
         getParentFieldValue(parentList, relationshipField, parentKeyVal, fieldToRead, function (parentValue) {
           var targetStage = resolveTargetStageFromTaskCondition(parentValue, taskCondition);
@@ -6039,6 +6122,112 @@ var Cancel_Project = {
   },
 };
 
+var End_Workflow = {
+  buildButton: function (options) {
+    options = options || {};
+    var btnId = options.id || "btnEndWorkflow";
+    var dataTrans = options.dataTrans || "endworkflow";
+    var onClick =
+      options.onClick ||
+      "End_Workflow.init({ listTitle: 'Benefits', listingKey: 'benefits' })";
+    return (
+      '<button type="button" id="' +
+      btnId +
+      '" class="btn pop-green Resources" data-trans-' +
+      dataTrans +
+      ' onclick="' +
+      onClick +
+      '"></button>'
+    );
+  },
+  appendButton: function (btnHtml) {
+    if (!btnHtml) {
+      return;
+    }
+    if ($(".btnactionrow .wf-btn-wrapper-new").length) {
+      $(".btnactionrow .wf-btn-wrapper-new").append(btnHtml);
+    } else if ($(".btnactionrow .form-btns-wrapper .WF-btn").length) {
+      $(".btnactionrow .form-btns-wrapper .WF-btn").append(btnHtml);
+    } else if ($(".btnactionrow .form-btns-wrapper").length) {
+      $(".btnactionrow .form-btns-wrapper").append(btnHtml);
+    }
+  },
+  init: function (options) {
+    options = options || {};
+    var listTitle = options.listTitle || "Benefits";
+    var listingKey = options.listingKey || "benefits";
+    var btnId = options.btnId || "btnEndWorkflow";
+
+    $("#" + btnId).attr("disabled", true);
+    $("h2.DahsFormTitle").append(
+      '<div class="cust-loader" id="endWorkflowLoader"></div>'
+    );
+
+    var itemId = null;
+    if (window.location.href.indexOf("IID=") > -1) {
+      itemId = window.location.href.split("IID=")[1].split("&")[0];
+    } else if (typeof IID2 !== "undefined" && IID2) {
+      itemId = IID2;
+    } else if (typeof relateditemid !== "undefined" && relateditemid) {
+      itemId = relateditemid;
+    }
+    itemId = parseInt(itemId, 10);
+
+    var currentTaskId = null;
+    if (window.location.href.indexOf("TID=") > -1) {
+      currentTaskId = window.location.href.split("TID=")[1].split("&")[0];
+    } else if (typeof taskid !== "undefined" && taskid) {
+      currentTaskId = taskid;
+    }
+    currentTaskId = parseInt(currentTaskId, 10);
+
+    if (!itemId || !currentTaskId) {
+      console.error("End_Workflow: missing item or task id");
+      $("#" + btnId).attr("disabled", false);
+      $("#endWorkflowLoader").remove();
+      return;
+    }
+
+    var clientContext = new SP.ClientContext.get_current();
+    var targetList = clientContext.get_web().get_lists().getByTitle(listTitle);
+    var tasksList = clientContext.get_web().get_lists().getByTitle("Tasks");
+
+    End_Workflow.g.listItem = targetList.getItemById(itemId);
+    End_Workflow.g.listItem.set_item("WFStage", "");
+    End_Workflow.g.listItem.set_item("WFModuleCode", "");
+    End_Workflow.g.listItem.update();
+    clientContext.load(End_Workflow.g.listItem);
+
+    End_Workflow.g.taskItem = tasksList.getItemById(currentTaskId);
+    End_Workflow.g.taskItem.set_item("Status", "Closed");
+    End_Workflow.g.taskItem.update();
+    clientContext.load(End_Workflow.g.taskItem);
+
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, function () {
+        $("#endWorkflowLoader").remove();
+        var icodeFromItem = "";
+        try {
+          icodeFromItem =
+            End_Workflow.g.listItem.get_item("InitiativeCode") || "";
+        } catch (e) {
+          icodeFromItem = "";
+        }
+        window.location = wfBuildListingUrlWithContext(
+          listingKey,
+          icodeFromItem ? "&ICODE=" + encodeURIComponent(icodeFromItem) : ""
+        );
+      }),
+      Function.createDelegate(this, function (sender, args) {
+        console.error("End_Workflow failed: " + args.get_message());
+        $("#" + btnId).attr("disabled", false);
+        $("#endWorkflowLoader").remove();
+      })
+    );
+  },
+  g: {},
+};
+
 /////////////
 
 var Edit_Project = {
@@ -6603,7 +6792,6 @@ var update_actualcompleted_date = {
           var items = programList.getItemById(currentId);
           items.set_item("Delivered", "yes");
           var todayDate = new Date();
-debugger;
          if (isVROInitiativeMilestone ||
             isEPMOInitiativeMilestone ||
             isLMSInitiativeMilestone ||

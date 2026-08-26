@@ -19,6 +19,207 @@ function sanitizeSharePointHTML(input) {
         .trim();
 }
 
+function normalizeRole(role) {
+    return ((role || "") + "").trim().toLowerCase();
+}
+
+function isCurrentRole(roleName) {
+    var target = normalizeRole(roleName);
+    var candidates = [
+        typeof currentUserRole !== "undefined" ? currentUserRole : "",
+        typeof UserRole !== "undefined" ? UserRole : "",
+        localStorage.getItem("userRole") || ""
+    ];
+    var expanded = [];
+    candidates.forEach(function (r) {
+        if (!r) return;
+        expanded.push(r);
+    });
+    return expanded.some(function (r) { return normalizeRole(r) === target; });
+}
+
+function userHasAssignedRole(roleName) {
+    var target = normalizeRole(roleName);
+    if (!target) return false;
+
+    var roles = [];
+    function addRole(role) {
+        var normalized = normalizeRole(role);
+        if (normalized && roles.indexOf(normalized) === -1) {
+            roles.push(normalized);
+        }
+    }
+
+    addRole(typeof currentUserRole !== "undefined" ? currentUserRole : "");
+    addRole(typeof UserRole !== "undefined" ? UserRole : "");
+    addRole(localStorage.getItem("userRole") || "");
+
+    if (typeof GroupItem !== "undefined" && GroupItem && GroupItem.length) {
+        for (var i = 0; i < GroupItem.length; i++) {
+            if (GroupItem[i] && GroupItem[i].Role) {
+                addRole(GroupItem[i].Role);
+            }
+        }
+    }
+
+    if (typeof Groups !== "undefined" && Groups && Groups.length) {
+        if (Groups.indexOf("Initiative Manager") > -1) {
+            addRole("InitiativeManager");
+        }
+        if (Groups.indexOf("Project Managers for Project Web App") > -1) {
+            addRole("ProjectManager");
+        }
+    }
+
+    if (typeof isInManager !== "undefined" && isInManager) {
+        addRole("InitiativeManager");
+    }
+    if (typeof isPManager !== "undefined" && isPManager) {
+        addRole("ProjectManager");
+    }
+
+    return roles.indexOf(target) > -1;
+}
+
+function extractCurrentPhaseFinishDate(additionalInfo) {
+    if (!additionalInfo) return "";
+
+    var info = String(additionalInfo)
+        .replace(/\\r\\n/g, "\n")
+        .replace(/\\n/g, "\n")
+        .replace(/\r\n/g, "\n");
+
+    var match = info.match(
+        /Current\s*Phase\s*Finish\s*Date\s*=\s*([0-9]{4}-[0-9]{2}-[0-9]{2})/i
+    );
+    return match && match[1] ? match[1] : "";
+}
+
+function normalizeAdditionalInfoText(additionalInfo) {
+    return String(additionalInfo || "")
+        .replace(/\\r\\n/g, "\n")
+        .replace(/\\n/g, "\n")
+        .replace(/\r\n/g, "\n")
+        .trim();
+}
+
+function buildComplianceBlockMessage(data, lang) {
+    var detailsAr = normalizeAdditionalInfoText(data && data.additionalInfoAr ? data.additionalInfoAr : "");
+    var detailsEn = normalizeAdditionalInfoText(data && data.additionalInfo ? data.additionalInfo : "");
+    var details = lang === "ar" ? (detailsAr || detailsEn) : (detailsEn || detailsAr);
+
+    if (lang === "ar") {
+        return details
+            ? "لا يمكن الانتقال الى المرحلة التالية بسبب:\n\n" + details
+            : "لا يمكن الانتقال الى المرحلة التالية";
+    }
+
+    return details
+        ? "Cannot move to the next stage because:\n\n" + details
+        : "Cannot move to the next stage";
+}
+
+function buildComplianceSystemErrorMessage(data, lang) {
+    var errAr = data && (data.errorMessageAr || "");
+    var errEn = data && (data.errorMessageEn || data.errorMessage || "");
+    var details = (lang === "ar" && errAr ? errAr : errEn) || errEn || errAr;
+
+    if (lang === "ar") {
+        return details
+            ? "لا يمكن الانتقال إلى المرحلة التالية بسبب:\n" + details
+            : "لا يمكن الانتقال إلى المرحلة التالية";
+    }
+
+    return details
+        ? "Cannot move to the next stage because:\n" + details
+        : "Cannot move to the next stage";
+}
+
+async function checkCanMoveProjectToNextStage(projectCode) {
+    var lang = localStorage.getItem("lng") || "ar";
+    try {
+        if (typeof APIURL === "undefined" || !APIURL || !projectCode) {
+            return {
+                allowed: false,
+                message:
+                    lang === "ar"
+                        ? "تعذر التحقق من إمكانية الانتقال للمرحلة التالية"
+                        : "Unable to validate moving to the next stage",
+            };
+        }
+
+        var url =
+            APIURL +
+            "/general/CheckIfWeCanMoveProjectToNextStage?projectCode=" +
+            encodeURIComponent(projectCode);
+
+        var data = await $.ajax({
+            url: url,
+            method: "GET",
+            headers: { Accept: "application/json" },
+        });
+
+        // isSuccess = false -> stop and show system/error message
+        if (!data || data.isSuccess === false) {
+            return {
+                allowed: false,
+                message: buildComplianceSystemErrorMessage(data, lang),
+            };
+        }
+
+        // isSuccess = true, result = true -> allow
+        if (data.result === true) {
+            return { allowed: true, message: "" };
+        }
+
+        // isSuccess = true, result = false -> block and show message/date from additionalInfo
+        return {
+            allowed: false,
+            message: buildComplianceBlockMessage(data, lang),
+        };
+    } catch (e) {
+        console.error("[ProjectCompliance] checkCanMoveProjectToNextStage failed:", e);
+        var fallback =
+            (e &&
+                e.responseJSON &&
+                (e.responseJSON.errorMessageEn ||
+                    e.responseJSON.errorMessageAr ||
+                    e.responseJSON.errorMessage)) ||
+            (lang === "ar"
+                ? "تعذر التحقق من إمكانية الانتقال للمرحلة التالية"
+                : "Unable to validate moving to the next stage");
+        return { allowed: false, message: fallback };
+    }
+}
+
+function applyEPMOReadOnlyMode() {
+    if (!isCurrentRole("EPMO")) return;
+    // Project / Initiative Manager can edit even when the same user also has EPMO.
+    if (
+        userHasAssignedRole("ProjectManager") ||
+        userHasAssignedRole("InitiativeManager")
+    ) {
+        return;
+    }
+
+    document
+        .querySelectorAll(
+            ".btn-Save, .btn-details, .btn-move-next-stage, button.btn-action"
+        )
+        .forEach(function (btn) {
+            btn.style.display = "none";
+            btn.disabled = true;
+        });
+
+    document
+        .querySelectorAll(
+            ".phase-section select, .phase-section textarea, .phase-section input"
+        )
+        .forEach(function (el) {
+            el.disabled = true;
+        });
+}
+
 var pcode = new URLSearchParams(window.location.search).get('PCODE');
 var phaseItemMap = {};
 window.phaseItemMap = phaseItemMap;
@@ -732,6 +933,7 @@ function applyComplianceData() {
     
             // Apply compliance data after building items
             applyComplianceData();
+            applyEPMOReadOnlyMode();
 
           
         },
@@ -1757,22 +1959,35 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
         }
 
            // Update Project List with compliance data ONLY if saving current phase
-           if (isCurrentProjectPhase(phaseCode) &&
+           var stageBlockedByDeadline = false;
+           if ((isCurrentProjectPhase(phaseCode) || (options && options.action === "moveToNextStage")) &&
                options.progressStage &&
                currentProjectData) {
-        
-                // Progress stage only if saving current phase and project data is available
+
                 try {
-                    const stageResult = await progressProjectStage(projectCode, currentProjectData);
-                    console.log("Stage progressed to:", stageResult.nextStage);
+                    var moveGate = await checkCanMoveProjectToNextStage(projectCode);
+                    if (!moveGate.allowed) {
+                        stageBlockedByDeadline = true;
+                        alert(moveGate.message);
+                    } else {
+                        const stageResult = await progressProjectStage(projectCode, currentProjectData);
+                        console.log("Stage progressed to:", stageResult.nextStage);
+                    }
                 } catch (stageError) {
                     console.error("Failed to progress stage:", stageError);
-                    // Don't throw error - stage progression failure shouldn't stop the save
+                    stageBlockedByDeadline = true;
+                    alert(
+                        (lang === "ar")
+                            ? "حدث خطأ أثناء الانتقال للمرحلة التالية: " + stageError.message
+                            : "An error occurred while moving to the next stage: " + stageError.message
+                    );
                 }
            }
         await updateProjectListCompliance(projectCode, compliantCount, nonCompliantCount, phaseStatus);
 
-        if (options && options.action === "moveToNextStage") {
+        if (stageBlockedByDeadline) {
+            if (options) options.redirect = false;
+        } else if (options && options.action === "moveToNextStage") {
             alert((lang === 'ar') ? "تم الانتقال للمرحلة التالية بنجاح" : "Moved to next stage successfully");
         } else {
             alert((lang === 'ar') ? "تم الحفظ بنجاح" : "Saved successfully");
@@ -1831,7 +2046,7 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
         }
 
         // After Move To Next Stage and before redirection, refresh overall compliance status.
-        if (options && options.action === "moveToNextStage") {
+        if (options && options.action === "moveToNextStage" && !stageBlockedByDeadline) {
             await callUpdateProjectOverallComplianceStatus(projectCode);
         }
 
@@ -1851,7 +2066,11 @@ async function savePhaseCompliance(phaseCode, results, buttonElement, compliantC
         // Always re-enable the button
         if (buttonElement) {
             buttonElement.disabled = false;
-            buttonElement.textContent = (lang === 'ar') ? 'حفظ' : 'Save';
+            if (options && options.action === "moveToNextStage") {
+                buttonElement.textContent = (lang === 'ar') ? 'الانتقال للمرحلة التالية' : 'Move to Next Stage';
+            } else {
+                buttonElement.textContent = (lang === 'ar') ? 'حفظ' : 'Save';
+            }
         }
     }
 }

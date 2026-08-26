@@ -664,6 +664,7 @@ function getAllowedParentItemTypes() {
     currentRole === "Administrator" ||
     currentRole === "DU" ||
     currentRole === "EPMO" ||
+    currentRole === "GDST" ||
     currentRole === "HeadCommitte"
   ) {
     return ["SOs", "MainKpi", "Initiatives", "Projects"];
@@ -1595,15 +1596,19 @@ function handleParentChildFieldsVisibility() {
     $approvalLevelLabel.removeClass("required-field");
     $approvalLevel.removeClass("is-invalid");
     
-    // Clear hidden values in New mode add action
-    $parentItemType.val("");
-    $parentItemCode.val("");
-    $childItemType.val("");
-    $childItemCode.val("");
-    $classification.val("");
-    $sector.val("");
-    $subSector.val("");
-    $approvalLevel.val("");
+    // Clear hidden values ONLY in New mode add action.
+    // In Edit/View/WF keep saved values — clearing them causes false
+    // "fill all required fields" validation failures on approve.
+    if (window.isNew) {
+      $parentItemType.val("");
+      $parentItemCode.val("");
+      $childItemType.val("");
+      $childItemCode.val("");
+      $classification.val("");
+      $sector.val("");
+      $subSector.val("");
+      $approvalLevel.val("");
+    }
   } else {
     // Restore visible state when user switches from add to other actions
     $parentItemTypeDiv.show();
@@ -2010,9 +2015,9 @@ $(document).on("click", "#CRSubmitButton", function (e) {
     $("#ChangeItem").removeClass("is-invalid");
   }
 
-  // Validate ApprovalLevel (skip in New+add where field is hidden)
+  // Validate ApprovalLevel (skip when actionType is add — field is hidden)
   var approvalLevelVal = $("#ApprovalLevel").val();
-  if (!isNewAddAction) {
+  if (!isAddAction && !isNewAddAction) {
     if (!approvalLevelVal || approvalLevelVal.trim() === "") {
       $("#ApprovalLevel").addClass("is-invalid");
       if (!firstInvalid) firstInvalid = $("#ApprovalLevel");
@@ -3370,7 +3375,8 @@ function saveAllChangeRequestFields(saveOptions) {
   if (!isAddAction && !isNewAddAction && (!$("#ParentItemCode").val() || $("#ParentItemCode").val().trim() === "")) validationErrors.push("ParentItemCode");
   if (childItemCodeRequired) validationErrors.push("ChildItemCode");
   if (!$("#ChangeItem").val() || $("#ChangeItem").val().trim() === "") validationErrors.push("ChangeItem");
-  if (!isNewAddAction && (!$("#ApprovalLevel").val() || $("#ApprovalLevel").val().trim() === "")) validationErrors.push("ApprovalLevel");
+  // ApprovalLevel is hidden for add actions — skip in New and Edit/WF
+  if (!isAddAction && (!$("#ApprovalLevel").val() || $("#ApprovalLevel").val().trim() === "")) validationErrors.push("ApprovalLevel");
   if (
     window.isWF &&
     window.isEdit &&
@@ -4607,6 +4613,16 @@ function fillViewFields(item, code) {
       }
       
       $("#WFStage").val(translatedStage);
+      if (isCrStageWithConcernedDept(wfStageVal)) {
+        resolveCrConcernedDeptLabel(
+          window.pendingSecurityExecGroupName || "",
+          function (entityLabel) {
+            $("#WFStage").val(
+              formatCrStageWithConcernedDept(translatedStage, entityLabel)
+            );
+          }
+        );
+      }
     }
     $("#WFStageDiv").show();
   }
@@ -6417,9 +6433,17 @@ function checkAndShowObservationsSection() {
   ctx.executeQueryAsync(
     function () {
       var stageIDApprove = taskItem.get_item("StageIDApprove") || "";
+      var taskTitle = taskItem.get_item("Title") || "";
       
-      // If stageIDApprove == "approved", show Observations section
-      if (stageIDApprove && stageIDApprove.toLowerCase() === "approved") {
+      // Show Observations section when:
+      // 1) stageIDApprove == "approved"
+      // 2) OR current workflow stage == "StrategicCR08" or "StrategicCR09"
+      var taskTitleLower = taskTitle ? String(taskTitle).toLowerCase() : "";
+      if (
+        (stageIDApprove && stageIDApprove.toLowerCase() === "approved") ||
+        taskTitleLower === "strategiccr08" ||
+        taskTitleLower === "strategiccr09"
+      ) {
         $("#CRObservationsBlock").show();
         // Enable Observations field in edit mode (workflow edit)
         if (window.isEdit) {
@@ -6437,18 +6461,75 @@ function checkAndShowObservationsSection() {
   );
 }
 
+// StrategicCR08 stage field: append concerned department like notifications
+function isCrStageWithConcernedDept(stageCode) {
+  return stageCode === "StrategicCR08";
+}
+
+function formatCrStageWithConcernedDept(stageName, entityLabel) {
+  if (!entityLabel) {
+    return stageName || "";
+  }
+  return ((stageName || "") + " / " + entityLabel).trim();
+}
+
+function resolveCrConcernedDeptLabel(groupCode, done) {
+  var code = (groupCode || "").toString().trim();
+  if (typeof done !== "function") {
+    return;
+  }
+  if (!code) {
+    done("");
+    return;
+  }
+
+  var isArabic =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+
+  try {
+    var cached = JSON.parse(
+      localStorage.getItem("Dynamo_CR_FinalApprovalLevels") || "null"
+    );
+    if (cached && cached[code]) {
+      done(isArabic ? cached[code].ar || code : cached[code].en || code);
+      return;
+    }
+  } catch (e) {}
+
+  $.ajax({
+    url:
+      _spPageContextInfo.webAbsoluteUrl +
+      "/_api/web/lists/getbytitle('FinalApprovalLevels')/items?$select=SecurityGroupName,SecurityGroupNameAr&$top=1&$filter=DeletionStatus ne 'Deleted' and SecurityGroupName eq '" +
+      String(code).replace(/'/g, "''") +
+      "'",
+    method: "GET",
+    headers: { Accept: "application/json; odata=verbose" },
+    success: function (data) {
+      var item = ((data.d && data.d.results) || [])[0];
+      if (!item) {
+        done(code);
+        return;
+      }
+      done(isArabic ? item.SecurityGroupNameAr || code : code);
+    },
+    error: function () {
+      done(code);
+    },
+  });
+}
+
 // StrategicCR03 only: FinalApprovalLevels dropdown after ApprovalLevel
 function loadFinalApprovalLevelsOptions(selectedValue) {
   var isArabic =
     localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
   $("#SecurityExecGroupNameLabel").text(
-    isArabic ? "مجموعة الاعتماد" : "Approval Group"
+    isArabic ? "الإدارة المعنية" : "Approval Group"
   );
 
   $.ajax({
     url:
       _spPageContextInfo.webAbsoluteUrl +
-      "/_api/web/lists/getbytitle('FinalApprovalLevels')/items?$select=SecurityGroupName,SecurityGroupNameAr&$top=5000&$filter=DeletionStatus ne 'Deleted'",
+      "/_api/web/lists/getbytitle('FinalApprovalLevels')/items?$select=SecurityGroupName,SecurityGroupNameAr&$top=5000&$filter=DeletionStatus ne 'Deleted' and (SecurityGroupName eq 'EPMO' or SecurityGroupName eq 'GDSP' or SecurityGroupName eq 'GDST')",
     method: "GET",
     headers: { Accept: "application/json; odata=verbose" },
     success: function (data) {
@@ -6744,8 +6825,7 @@ window.handleWorkflowApproval = function (
 
               if (
                 isApproved &&
-                stageIDApprove &&
-                stageIDApprove.toLowerCase() === "approved"
+                $("#CRObservationsBlock").is(":visible")
               ) {
                 var observations = $("#Observations").val() || "";
                 item.set_item("Observations", observations);
@@ -6757,47 +6837,51 @@ window.handleWorkflowApproval = function (
                 function () {
                   $(".popupComment").remove();
 
-                  if (
-                    isApproved &&
-                    stageIDApprove &&
-                    stageIDApprove.toLowerCase() === "approved" &&
-                    crItemCode
-                  ) {
-                    $.ajax({
-                      url: `${APIURL}/general/applychangerequestchanges/${crItemCode}`,
-                      method: "GET",
-                      headers: { Accept: "application/json" },
-                      success: function () {
-                        alert(
-                          localStorage.getItem("lng") == "en"
-                            ? "Submitted successfully"
-                            : "تم الإرسال بنجاح"
-                        );
-                        window.location.href =
-                          _spPageContextInfo.webAbsoluteUrl +
-                          "/SitePages/Listing.aspx?ListKey=changerequests";
-                      },
-                      error: function () {
-                        alert(
-                          localStorage.getItem("lng") == "en"
-                            ? "Submitted successfully, but error applying changes"
-                            : "تم الإرسال بنجاح، لكن حدث خطأ في تطبيق التغييرات"
-                        );
-                        window.location.href =
-                          _spPageContextInfo.webAbsoluteUrl +
-                          "/SitePages/Listing.aspx?ListKey=changerequests";
-                      },
-                    });
-                  } else {
-                    alert(
-                      localStorage.getItem("lng") == "en"
-                        ? "Submitted successfully"
-                        : "تم الإرسال بنجاح"
-                    );
-                    window.location.href =
-                      _spPageContextInfo.webAbsoluteUrl +
-                      "/SitePages/Listing.aspx?ListKey=changerequests";
+                  function afterCrSubmitSuccess() {
+                    if (
+                      isApproved &&
+                      stageIDApprove &&
+                      stageIDApprove.toLowerCase() === "approved" &&
+                      crItemCode
+                    ) {
+                      $.ajax({
+                        url: `${APIURL}/general/applychangerequestchanges/${crItemCode}`,
+                        method: "GET",
+                        headers: { Accept: "application/json" },
+                        success: function () {
+                          alert(
+                            localStorage.getItem("lng") == "en"
+                              ? "Submitted successfully"
+                              : "تم الإرسال بنجاح"
+                          );
+                          window.location.href =
+                            _spPageContextInfo.webAbsoluteUrl +
+                            "/SitePages/Listing.aspx?ListKey=changerequests";
+                        },
+                        error: function () {
+                          alert(
+                            localStorage.getItem("lng") == "en"
+                              ? "Submitted successfully, but error applying changes"
+                              : "تم الإرسال بنجاح، لكن حدث خطأ في تطبيق التغييرات"
+                          );
+                          window.location.href =
+                            _spPageContextInfo.webAbsoluteUrl +
+                            "/SitePages/Listing.aspx?ListKey=changerequests";
+                        },
+                      });
+                    } else {
+                      alert(
+                        localStorage.getItem("lng") == "en"
+                          ? "Submitted successfully"
+                          : "تم الإرسال بنجاح"
+                      );
+                      window.location.href =
+                        _spPageContextInfo.webAbsoluteUrl +
+                        "/SitePages/Listing.aspx?ListKey=changerequests";
+                    }
                   }
+
+                  afterCrSubmitSuccess();
                 },
                 function () {
                   alert(
@@ -6834,9 +6918,135 @@ window.handleWorkflowApproval = function (
     );
   }
 
+  // Static CR auto-approval check for StrategicCR09 only
+  // If UpdateType == "auto" in ChangeItems → skip remaining workflow, approve directly
+  function checkCRAutoApprovalThenExecute(afterSaveCallback) {
+    if (!isApproved || !crItemCode) {
+      afterSaveCallback();
+      return;
+    }
+
+    var ctx1 = SP.ClientContext.get_current();
+    var taskList1 = ctx1.get_web().get_lists().getByTitle("Tasks");
+    var taskItem1 = taskList1.getItemById(parseInt(currentTaskID));
+    ctx1.load(taskItem1);
+    ctx1.executeQueryAsync(
+      function () {
+        var taskTitle = (taskItem1.get_item("Title") || "").toString();
+        if (taskTitle !== "StrategicCR09") {
+          afterSaveCallback();
+          return;
+        }
+
+        // Get ChangeItem from NewChangeRequests
+        var ctx2 = SP.ClientContext.get_current();
+        var crList = ctx2.get_web().get_lists().getByTitle("NewChangeRequests");
+        var crCaml = new SP.CamlQuery();
+        crCaml.set_viewXml(
+          "<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+          crItemCode + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+        );
+        var crItems = crList.getItems(crCaml);
+        ctx2.load(crItems);
+        ctx2.executeQueryAsync(
+          function () {
+            if (crItems.get_count() === 0) { afterSaveCallback(); return; }
+            var changeItemCode = crItems.getItemAtIndex(0).get_item("ChangeItem") || "";
+            if (!changeItemCode) { afterSaveCallback(); return; }
+
+            // Get UpdateType from ChangeItems
+            var ctx3 = SP.ClientContext.get_current();
+            var ciList = ctx3.get_web().get_lists().getByTitle("ChangeItems");
+            var ciCaml = new SP.CamlQuery();
+            ciCaml.set_viewXml(
+              "<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+              changeItemCode + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+            );
+            var ciItems = ciList.getItems(ciCaml);
+            ctx3.load(ciItems);
+            ctx3.executeQueryAsync(
+              function () {
+                var updateType = "";
+                if (ciItems.get_count() > 0) {
+                  updateType = (ciItems.getItemAtIndex(0).get_item("UpdateType") || "").toString().toLowerCase();
+                }
+                if (updateType !== "auto") {
+                  afterSaveCallback();
+                  return;
+                }
+
+                // Auto approval: update Task + NewChangeRequests directly
+                var ctx4 = SP.ClientContext.get_current();
+                var tList = ctx4.get_web().get_lists().getByTitle("Tasks");
+                var tItem = tList.getItemById(parseInt(currentTaskID));
+                tItem.set_item("StageIDApprove", "approved");
+                tItem.set_item("Status", "Closed");
+                tItem.set_item("TakenAction", "approve");
+                tItem.set_item("WFInstanceID", null);
+                tItem.set_item("Body", comment || "");
+                tItem.update();
+
+                var crList2 = ctx4.get_web().get_lists().getByTitle("NewChangeRequests");
+                var crCaml2 = new SP.CamlQuery();
+                crCaml2.set_viewXml(
+                  "<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
+                  crItemCode + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+                );
+                var crItems2 = crList2.getItems(crCaml2);
+                ctx4.load(tItem);
+                ctx4.load(crItems2);
+                ctx4.executeQueryAsync(
+                  function () {
+                    if (crItems2.get_count() > 0) {
+                      var crToUpdate = crItems2.getItemAtIndex(0);
+                      crToUpdate.set_item("WFStage", "approved");
+                      if ($("#CRObservationsBlock").is(":visible")) {
+                        crToUpdate.set_item("Observations", $("#Observations").val() || "");
+                      }
+                      crToUpdate.update();
+                      ctx4.executeQueryAsync(
+                        function () {
+                          // Apply changes via API
+                          $.ajax({
+                            url: APIURL + "/general/applychangerequestchanges/" + crItemCode,
+                            method: "GET",
+                            headers: { Accept: "application/json" },
+                            complete: function () {
+                              alert(localStorage.getItem("lng") == "en" ? "Approved successfully" : "تمت الموافقة بنجاح");
+                              window.location.href = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=changerequests";
+                            }
+                          });
+                        },
+                        function () {
+                          alert(localStorage.getItem("lng") == "en" ? "Approved successfully" : "تمت الموافقة بنجاح");
+                          window.location.href = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=changerequests";
+                        }
+                      );
+                    } else {
+                      alert(localStorage.getItem("lng") == "en" ? "Approved successfully" : "تمت الموافقة بنجاح");
+                      window.location.href = _spPageContextInfo.webAbsoluteUrl + "/SitePages/Listing.aspx?ListKey=changerequests";
+                    }
+                  },
+                  function () {
+                    alert(localStorage.getItem("lng") == "en" ? "Error during auto-approval" : "خطأ أثناء الموافقة التلقائية");
+                  }
+                );
+              },
+              function () { afterSaveCallback(); }
+            );
+          },
+          function () { afterSaveCallback(); }
+        );
+      },
+      function () { afterSaveCallback(); }
+    );
+  }
+
   if (window.isWF && window.isEdit) {
     saveAllChangeRequestFields({
-      onSuccess: executeWorkflowTaskUpdate,
+      onSuccess: function () {
+        checkCRAutoApprovalThenExecute(executeWorkflowTaskUpdate);
+      },
       onValidationFail: function () {
         $(".popupComment").remove();
       },
@@ -6847,6 +7057,6 @@ window.handleWorkflowApproval = function (
     return;
   }
 
-  executeWorkflowTaskUpdate();
+  checkCRAutoApprovalThenExecute(executeWorkflowTaskUpdate);
 };
 

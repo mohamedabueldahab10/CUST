@@ -1022,6 +1022,35 @@ window.Edit_Data_Request = {
       }
 
       $("#Year").val(benefitYear || "");
+
+      var parsingDataBasedOnParentSetValues = "";
+      $(`[data-basedonparentsetvalues]`).each(function (index) {
+        parsingDataBasedOnParentSetValues = eval(
+          $(this).data("basedonparentsetvalues")
+        );
+      });
+      if (
+        parsingDataBasedOnParentSetValues &&
+        parsingDataBasedOnParentSetValues.length
+      ) {
+        parsingDataBasedOnParentSetValues.forEach((el) => {
+          var listinerField = el.listinerField;
+          var code =
+            (listinerField && $(`#${listinerField}`).val()) ||
+            (typeof ICODE !== "undefined" ? ICODE : "") ||
+            oListItem.get_item("InitiativeCode") ||
+            "";
+          if (code) {
+            get_parent_data.init(
+              el.parentList,
+              code,
+              el.parentFieldName,
+              el.fieldName,
+              el.getGrandParent
+            );
+          }
+        });
+      }
     }
 
     if (listkey == "benefitmetrics") {
@@ -1081,37 +1110,6 @@ window.Edit_Data_Request = {
         : "";
       if (sector) {
         Department_Sector_Info.init(sector); //
-      }
-
-      // Hide related-initiative fields (main + Master Details) for operational projects
-      if (
-        (oListItem.get_item("IsStrategicProject") || "").toLowerCase() ===
-        "operationally"
-      ) {
-        var hideProjectRelatedInitiativeFields = function (retries) {
-          var $fields = $(
-            "[id='RelatedInitiativeDeliverable'], [id='RelatedInitiativeMilestone'], [data-togglename='MDRelatedInitiativeDeliverable'], [data-togglename='MDRelatedInitiativeMilestone']"
-          );
-          if (!$fields.length) {
-            if (retries > 0) {
-              setTimeout(function () {
-                hideProjectRelatedInitiativeFields(retries - 1);
-              }, 300);
-            }
-            return;
-          }
-          $fields.each(function () {
-            var $field = $(this);
-            var $cfield = $field.closest(".CFIELD");
-            $cfield.hide().addClass("hide-field");
-            $field.attr("required", false).removeAttr("required");
-            $cfield
-              .find("label")
-              .attr("required", false)
-              .removeAttr("required");
-          });
-        };
-        hideProjectRelatedInitiativeFields(30);
       }
     }
 
@@ -1380,6 +1378,14 @@ window.Edit_Data_Request = {
       ? ""
       : _spPageContextInfo.webServerRelativeUrl);
 
+    if (listkey == "benefits" && !ICODE) {
+      ICODE = $("#InitiativeCode").val() || "";
+      try {
+        if (!ICODE && typeof oListItem !== "undefined" && oListItem) {
+          ICODE = oListItem.get_item("InitiativeCode") || "";
+        }
+      } catch (e) {}
+    }
     if (PCODE || ICODE) {
       getfolderurl =
         host + "/" + ListArray[2].documents + "/" + PCODE + "/" + listkey;
@@ -1764,14 +1770,14 @@ window.Edit_Data_Request = {
                   else if (monthVal == 12) $("#Quarter").val("ActualQ4");
                 }
               }
-              if (item.ComponentA) $("#A").val(item.ComponentA);
-              if (item.ComponentB) $("#B").val(item.ComponentB);
-              if (item.ComponentC) $("#CC").val(item.ComponentC);
-              if (item.ComponentD) $("#D").val(item.ComponentD);
-              if (item.ComponentE) $("#E").val(item.ComponentE);
-              if (item.ComponentF) $("#F").val(item.ComponentF);
-              if (item.ComponentG) $("#G").val(item.ComponentG);
-              if (item.FinalValue) $("#Equation").val(item.FinalValue);
+              if (item.ComponentA != null) $("#A").val(item.ComponentA);
+              if (item.ComponentB != null) $("#B").val(item.ComponentB);
+              if (item.ComponentC != null) $("#CC").val(item.ComponentC);
+              if (item.ComponentD != null) $("#D").val(item.ComponentD);
+              if (item.ComponentE != null) $("#E").val(item.ComponentE);
+              if (item.ComponentF != null) $("#F").val(item.ComponentF);
+              if (item.ComponentG != null) $("#G").val(item.ComponentG);
+              if (item.FinalValue != null) $("#Equation").val(item.FinalValue);
               if (item.PerformanceAnalysis)
                 $("#PerformanceAnalysis").val(item.PerformanceAnalysis);
               if (item.ActualkpiDate) {
@@ -1789,9 +1795,15 @@ window.Edit_Data_Request = {
         });
       }
       if (isWF && listkey == "benefits" && workflowname == 'MSActualBenefit' ) {
-        var benefitCodeForHistory = $("#Title").val();
+        var benefitCodeForHistory = $("#Title").val() || $("#Title").text() || (typeof benefitCodeResult !== "undefined" ? benefitCodeResult : "");
+        console.log("[BenefitHistory] Form_Request EDIT load from KPIResultsHistory", {
+          benefitCodeForHistory: benefitCodeForHistory,
+          isEdit: isEdit,
+          isWF: isWF,
+          workflowname: workflowname
+        });
         if (!benefitCodeForHistory) {
-          console.log('no record title to checks in KPIResultsHistory (BenefitCode)');
+          console.log('[BenefitHistory] no record title to checks in KPIResultsHistory (BenefitCode)');
           return;
         }
 
@@ -1802,12 +1814,12 @@ window.Edit_Data_Request = {
           headers: { Accept: "application/json;odata=verbose" },
           success: function (data) {
             if (!data.d.results || data.d.results.length === 0) {
-              console.log('no record to show in KPIResultsHistory (BenefitCode)');
+              console.log('[BenefitHistory] no record to show in KPIResultsHistory (BenefitCode)');
               return;
             }
 
             var benefitItem = data.d.results[0];
-            console.log("KPIResultsHistory (BenefitCode) found: ", benefitItem);
+            console.log("[BenefitHistory] KPIResultsHistory (BenefitCode) found: ", benefitItem);
             if(isEdit){
 
               if (benefitItem.Year) $("#Year").val(benefitItem.Year);
@@ -1829,14 +1841,14 @@ window.Edit_Data_Request = {
                   else if (benefitMonthVal == 12) $("#Quarter").val("ActualQ4");
                 }
               }
-              if (benefitItem.ComponentA) $("#A").val(benefitItem.ComponentA);
-              if (benefitItem.ComponentB) $("#B").val(benefitItem.ComponentB);
-              if (benefitItem.ComponentC) $("#CC").val(benefitItem.ComponentC);
-              if (benefitItem.ComponentD) $("#D").val(benefitItem.ComponentD);
-              if (benefitItem.ComponentE) $("#E").val(benefitItem.ComponentE);
-              if (benefitItem.ComponentF) $("#F").val(benefitItem.ComponentF);
-              if (benefitItem.ComponentG) $("#G").val(benefitItem.ComponentG);
-              if (benefitItem.FinalValue) $("#Equation").val(benefitItem.FinalValue);
+              if (benefitItem.ComponentA != null) $("#A").val(benefitItem.ComponentA);
+              if (benefitItem.ComponentB != null) $("#B").val(benefitItem.ComponentB);
+              if (benefitItem.ComponentC != null) $("#CC").val(benefitItem.ComponentC);
+              if (benefitItem.ComponentD != null) $("#D").val(benefitItem.ComponentD);
+              if (benefitItem.ComponentE != null) $("#E").val(benefitItem.ComponentE);
+              if (benefitItem.ComponentF != null) $("#F").val(benefitItem.ComponentF);
+              if (benefitItem.ComponentG != null) $("#G").val(benefitItem.ComponentG);
+              if (benefitItem.FinalValue != null) $("#Equation").val(benefitItem.FinalValue);
               if (benefitItem.PerformanceAnalysis)
                 $("#PerformanceAnalysis").val(benefitItem.PerformanceAnalysis);
               if (benefitItem.ActualkpiDate) {
@@ -1969,6 +1981,9 @@ window.Edit_Data_Request = {
         }
         if (window.BenefitsActualFieldsRequired) {
           BenefitsActualFieldsRequired.bind();
+        }
+        if (window.BenefitsEpmoEquationSectionRequired) {
+          BenefitsEpmoEquationSectionRequired.bind();
         }
       }
       if (listkey == "strategicpartnershipsachievements" && (isEdit || isView)) {
@@ -4121,37 +4136,6 @@ window.View_Data_Request = {
 
         // ProjectInitiativeDelevrable.init('InitiativeDeliverables', initiativeCode) // ocomment moved after check if initiative deleted or not
       }
-
-      // Hide related-initiative fields (main + Master Details) for operational projects
-      if (
-        (oListItem.get_item("IsStrategicProject") || "").toLowerCase() ===
-        "operationally"
-      ) {
-        var hideProjectRelatedInitiativeFieldsView = function (retries) {
-          var $fields = $(
-            "[id='RelatedInitiativeDeliverable'], [id='RelatedInitiativeMilestone'], [data-togglename='MDRelatedInitiativeDeliverable'], [data-togglename='MDRelatedInitiativeMilestone']"
-          );
-          if (!$fields.length) {
-            if (retries > 0) {
-              setTimeout(function () {
-                hideProjectRelatedInitiativeFieldsView(retries - 1);
-              }, 300);
-            }
-            return;
-          }
-          $fields.each(function () {
-            var $field = $(this);
-            var $cfield = $field.closest(".CFIELD");
-            $cfield.hide().addClass("hide-field");
-            $field.attr("required", false).removeAttr("required");
-            $cfield
-              .find("label")
-              .attr("required", false)
-              .removeAttr("required");
-          });
-        };
-        hideProjectRelatedInitiativeFieldsView(30);
-      }
     }
 
     if (listkey == "changerequest") {
@@ -4554,6 +4538,14 @@ window.View_Data_Request = {
     // }
 
     var host = _spPageContextInfo.webAbsoluteUrl;
+    if (listkey == "benefits" && !ICODE) {
+      ICODE = $("#InitiativeCode").val() || "";
+      try {
+        if (!ICODE && typeof oListItem !== "undefined" && oListItem) {
+          ICODE = oListItem.get_item("InitiativeCode") || "";
+        }
+      } catch (e) {}
+    }
     if (PCODE || ICODE) {
       getfolderurl =
         host + "/" + ListArray[2].documents + "/" + PCODE + "/" + listkey;
@@ -4909,14 +4901,14 @@ window.View_Data_Request = {
                     $("#Quarter").text(Resources[lang]["quarter4"]);
                 }
               }
-              if (item.ComponentA) $("#A").text(item.ComponentA);
-              if (item.ComponentB) $("#B").text(item.ComponentB);
-              if (item.ComponentC) $("#CC").text(item.ComponentC);
-              if (item.ComponentD) $("#D").text(item.ComponentD);
-              if (item.ComponentE) $("#E").text(item.ComponentE);
-              if (item.ComponentF) $("#F").text(item.ComponentF);
-              if (item.ComponentG) $("#G").text(item.ComponentG);
-              if (item.FinalValue) $("#Equation").text(item.FinalValue);
+              if (item.ComponentA != null) $("#A").text(item.ComponentA);
+              if (item.ComponentB != null) $("#B").text(item.ComponentB);
+              if (item.ComponentC != null) $("#CC").text(item.ComponentC);
+              if (item.ComponentD != null) $("#D").text(item.ComponentD);
+              if (item.ComponentE != null) $("#E").text(item.ComponentE);
+              if (item.ComponentF != null) $("#F").text(item.ComponentF);
+              if (item.ComponentG != null) $("#G").text(item.ComponentG);
+              if (item.FinalValue != null) $("#Equation").text(item.FinalValue);
               if (item.PerformanceAnalysis)
                 $("#PerformanceAnalysis").text(item.PerformanceAnalysis);
               if (item.ActualkpiDate) {
@@ -4934,9 +4926,14 @@ window.View_Data_Request = {
         });
       }
       if (isWF && listkey == "benefits" && workflowname == 'MSActualBenefit' ) {
-        var benefitCodeForViewHistory = $("#Title").text();
+        var benefitCodeForViewHistory = $("#Title").text() || $("#Title").val() || (typeof benefitCodeResult !== "undefined" ? benefitCodeResult : "");
+        console.log("[BenefitHistory] Form_Request VIEW load from KPIResultsHistory", {
+          benefitCodeForViewHistory: benefitCodeForViewHistory,
+          isWF: isWF,
+          workflowname: workflowname
+        });
         if (!benefitCodeForViewHistory) {
-          console.log('no record title to checks in KPIResultsHistory (BenefitCode)');
+          console.log('[BenefitHistory] no record title to checks in KPIResultsHistory (BenefitCode)');
           return;
         }
 
@@ -4947,12 +4944,12 @@ window.View_Data_Request = {
           headers: { Accept: "application/json;odata=verbose" },
           success: function (data) {
             if (!data.d.results || data.d.results.length === 0) {
-              console.log('no record to show in KPIResultsHistory (BenefitCode)');
+              console.log('[BenefitHistory] no record to show in KPIResultsHistory (BenefitCode)');
               return;
             }
 
             var benefitViewItem = data.d.results[0];
-            console.log("KPIResultsHistory (BenefitCode) found: ", benefitViewItem);
+            console.log("[BenefitHistory] KPIResultsHistory (BenefitCode) found: ", benefitViewItem);
             if(isView){
               if (benefitViewItem.Year) $("#Year").text(benefitViewItem.Year);
               if (benefitViewItem.Month) {
@@ -4986,14 +4983,14 @@ window.View_Data_Request = {
                     $("#Quarter").text(Resources[benefitLang]["quarter4"]);
                 }
               }
-              if (benefitViewItem.ComponentA) $("#A").text(benefitViewItem.ComponentA);
-              if (benefitViewItem.ComponentB) $("#B").text(benefitViewItem.ComponentB);
-              if (benefitViewItem.ComponentC) $("#CC").text(benefitViewItem.ComponentC);
-              if (benefitViewItem.ComponentD) $("#D").text(benefitViewItem.ComponentD);
-              if (benefitViewItem.ComponentE) $("#E").text(benefitViewItem.ComponentE);
-              if (benefitViewItem.ComponentF) $("#F").text(benefitViewItem.ComponentF);
-              if (benefitViewItem.ComponentG) $("#G").text(benefitViewItem.ComponentG);
-              if (benefitViewItem.FinalValue) $("#Equation").text(benefitViewItem.FinalValue);
+              if (benefitViewItem.ComponentA != null) $("#A").text(benefitViewItem.ComponentA);
+              if (benefitViewItem.ComponentB != null) $("#B").text(benefitViewItem.ComponentB);
+              if (benefitViewItem.ComponentC != null) $("#CC").text(benefitViewItem.ComponentC);
+              if (benefitViewItem.ComponentD != null) $("#D").text(benefitViewItem.ComponentD);
+              if (benefitViewItem.ComponentE != null) $("#E").text(benefitViewItem.ComponentE);
+              if (benefitViewItem.ComponentF != null) $("#F").text(benefitViewItem.ComponentF);
+              if (benefitViewItem.ComponentG != null) $("#G").text(benefitViewItem.ComponentG);
+              if (benefitViewItem.FinalValue != null) $("#Equation").text(benefitViewItem.FinalValue);
               if (benefitViewItem.PerformanceAnalysis)
                 $("#PerformanceAnalysis").text(benefitViewItem.PerformanceAnalysis);
               if (benefitViewItem.ActualkpiDate) {
@@ -8833,7 +8830,7 @@ window.ViewAllFiles_Main_Strategy = {
     }
 
     ViewAllFiles_Main_Strategy.g.allItems = list.getItems(query);
-    if (listkey == "mainkpi") {
+    if (listkey == "mainkpi" || listkey == "benefits") {
       context.load(
         ViewAllFiles_Main_Strategy.g.allItems,
         "Include(ID, Title, ContentType, File, ItemID, RelatedYear, RelatedMonth, RelatedQuarter, RelatedMid, RelatedActualY,docPurpose)"
@@ -8869,7 +8866,7 @@ window.ViewAllFiles_Main_Strategy = {
             title = currentFile.get_item("Title");
           }
 
-          if (listkey == "mainkpi") {
+          if (listkey == "mainkpi" || listkey == "benefits") {
             filesUrls.push({
               url: File.get_serverRelativeUrl(),
               id: currentFile.get_item("ID"),
@@ -8915,8 +8912,10 @@ window.ViewAllFiles_Main_Strategy = {
         '<div class="form-row"><div class="col-lg-3 col-md-4 mb-4"><h3 data-trans-documents class="Resources"></h3><span class="font-14"></span></div>' +
         '<div class="col-lg-9 col-md-8 white-box p-4 fieldset-container"><div class="col-md-6 multiline"><label data-trans-document class="Resources">مرفقات: </label>';
 
-      if (listkey == "mainkpi") {
+      if (listkey == "mainkpi" || listkey == "benefits") {
         var collapseContent = "";
+        var attachFromYear = listkey == "benefits" ? benefitFromYear : kpiFromYear;
+        var attachToYear = listkey == "benefits" ? benefitToYear : kpiToYear;
 
         if (PeriodType == "monthly") {
           collapseContent = `
@@ -8990,7 +8989,7 @@ window.ViewAllFiles_Main_Strategy = {
         </div>
           `;
 
-        for (var i = kpiFromYear; i <= kpiToYear; i++) {
+        for (var i = attachFromYear; i <= attachToYear; i++) {
           FilesLink += `
           <div class="card" id="year${i}">
             <div class="card-header bg-white" id="heading${i}">
@@ -9015,7 +9014,7 @@ window.ViewAllFiles_Main_Strategy = {
         filename = filename.includes("_-_sut_-_")
           ? filename.split("_-_sut_-_")[1]
           : filename;
-        if (listkey != "mainkpi") {
+        if (listkey != "mainkpi" && listkey != "benefits") {
           if (isEdit) {
             FilesLink +=
               '<div class="file-container"><a class="File-Link" file-id="' +
@@ -9071,17 +9070,19 @@ window.ViewAllFiles_Main_Strategy = {
         );
       }
 
-      if (listkey == "mainkpi") {
+      if (listkey == "mainkpi" || listkey == "benefits") {
         var yearsArr = [],
           lstTabCLicked = "",
           lstYearClicked = "",
           typeArr = [],
           relatedType = "";
 
-        var numberOfResults = kpiToYear - kpiFromYear;
+        var attachFromYear = listkey == "benefits" ? benefitFromYear : kpiFromYear;
+        var attachToYear = listkey == "benefits" ? benefitToYear : kpiToYear;
+        var numberOfResults = attachToYear - attachFromYear;
 
         for (var i = 0; i <= numberOfResults; i++) {
-          yearsArr.push(Number(kpiFromYear) + i);
+          yearsArr.push(Number(attachFromYear) + i);
         }
 
         if (PeriodType == "monthly") {
@@ -9267,7 +9268,7 @@ window.ViewAllFiles_Main_Strategy = {
           );
         }
 
-        if (isView) {
+        if (listkey == "mainkpi" && isView) {
           View_Current_Kpi.init(); // show the kpi result for current time (extra section of view) before the attachment container
         }
       }
@@ -9975,6 +9976,170 @@ window.BenefitsActualFieldsRequired = {
   },
 };
 
+// EPMO on Edit: equation section NOT required until any field in the section changes;
+// once dirty, all normally-required equation fields become required again (for KPIResults)
+window.BenefitsEpmoEquationSectionRequired = {
+  dirty: false,
+  fieldSelector:
+    "#Year, #Months, #Quarter, #Midterms, #Years, #A, #B, #CC, #D, #E, #F, #G, #PerformanceAnalysis",
+  isApplicable: function () {
+    if (typeof listkey === "undefined" || listkey != "benefits") return false;
+    if (!(typeof isEdit !== "undefined" && isEdit)) return false;
+    if (typeof USERisWF !== "undefined" && USERisWF) return false;
+    var isEpmoUser =
+      (typeof isEPMO !== "undefined" && isEPMO) ||
+      (typeof currentUserRole !== "undefined" && currentUserRole == "EPMO");
+    if (!isEpmoUser) return false;
+    var $section = BenefitsEpmoEquationSectionRequired.getSection();
+    return $section.length && $section.is(":visible");
+  },
+  getSection: function () {
+    if (
+      window.equationBenefitKPI &&
+      equationBenefitKPI.g &&
+      equationBenefitKPI.g.getEquationSection
+    ) {
+      return equationBenefitKPI.g.getEquationSection();
+    }
+    var $section = $("#benefitEquation").closest(".section-container");
+    if ($section.length) return $section;
+    return $(".section-container")
+      .filter(function () {
+        return $(this).find("#Year, #A, #Equation, #benefitEquation").length > 0;
+      })
+      .first();
+  },
+  isEmptyVal: function (val) {
+    return val === undefined || val === null || String(val).trim() === "";
+  },
+  setFieldRequired: function ($field, isRequired) {
+    if (!$field || !$field.length) return;
+    var $label = $field.prev("label");
+    if (!$label.length) {
+      $label = $field.closest(".CFIELD").find("label").first();
+    }
+    if (isRequired) {
+      $field.attr("required", true);
+      $label.attr("required", true);
+    } else {
+      $field.removeAttr("required");
+      $label.removeAttr("required");
+    }
+  },
+  clearAllRequired: function () {
+    var $section = BenefitsEpmoEquationSectionRequired.getSection();
+    if (!$section.length) return;
+    $section
+      .find(BenefitsEpmoEquationSectionRequired.fieldSelector)
+      .each(function () {
+        BenefitsEpmoEquationSectionRequired.setFieldRequired($(this), false);
+      });
+  },
+  applyAllRequired: function () {
+    var $section = BenefitsEpmoEquationSectionRequired.getSection();
+    if (!$section.length) return;
+
+    // Year always required when dirty
+    var $year = $section.find("#Year");
+    if ($year.length && $year.is(":visible")) {
+      BenefitsEpmoEquationSectionRequired.setFieldRequired($year, true);
+    }
+
+    // Visible period field based on PeriodType
+    var periodType = $("#PeriodType").val() || "";
+    var periodMap = {
+      monthly: "#Months",
+      quarter: "#Quarter",
+      midterm: "#Midterms",
+      year: "#Years",
+    };
+    Object.keys(periodMap).forEach(function (key) {
+      var $periodField = $section.find(periodMap[key]);
+      if (!$periodField.length) return;
+      var shouldRequire =
+        periodType === key &&
+        $periodField.is(":visible") &&
+        $periodField.closest(".CFIELD").is(":visible");
+      BenefitsEpmoEquationSectionRequired.setFieldRequired(
+        $periodField,
+        shouldRequire
+      );
+    });
+
+    // A–G: required when empty (0 is valid), only if visible in equation
+    $section.find("#A, #B, #CC, #D, #E, #F, #G").each(function () {
+      var $field = $(this);
+      if (!$field.is(":visible") || !$field.closest(".CFIELD").is(":visible")) {
+        BenefitsEpmoEquationSectionRequired.setFieldRequired($field, false);
+        return;
+      }
+      var empty = BenefitsEpmoEquationSectionRequired.isEmptyVal($field.val());
+      BenefitsEpmoEquationSectionRequired.setFieldRequired($field, empty);
+    });
+
+    // PerformanceAnalysis required when dirty (same as IM actual update path)
+    var $perf = $section.find("#PerformanceAnalysis");
+    if ($perf.length && $perf.is(":visible")) {
+      BenefitsEpmoEquationSectionRequired.setFieldRequired($perf, true);
+    }
+  },
+  refresh: function () {
+    if (!BenefitsEpmoEquationSectionRequired.isApplicable()) {
+      BenefitsEpmoEquationSectionRequired.clearAllRequired();
+      return;
+    }
+    if (BenefitsEpmoEquationSectionRequired.dirty) {
+      BenefitsEpmoEquationSectionRequired.applyAllRequired();
+    } else {
+      BenefitsEpmoEquationSectionRequired.clearAllRequired();
+    }
+  },
+  markDirty: function () {
+    BenefitsEpmoEquationSectionRequired.dirty = true;
+    BenefitsEpmoEquationSectionRequired.refresh();
+  },
+  bind: function () {
+    if (typeof listkey === "undefined" || listkey != "benefits") return;
+    if (!(typeof isEdit !== "undefined" && isEdit)) return;
+    if (typeof USERisWF !== "undefined" && USERisWF) return;
+    var isEpmoUser =
+      (typeof isEPMO !== "undefined" && isEPMO) ||
+      (typeof currentUserRole !== "undefined" && currentUserRole == "EPMO");
+    if (!isEpmoUser) return;
+
+    BenefitsEpmoEquationSectionRequired.dirty = false;
+    var $section = BenefitsEpmoEquationSectionRequired.getSection();
+    if (!$section.length) return;
+
+    // Strip JSON/runtime required on load for EPMO until they change something
+    BenefitsEpmoEquationSectionRequired.clearAllRequired();
+
+    $section
+      .off(
+        "input.benefitsEpmoEqReq change.benefitsEpmoEqReq",
+        BenefitsEpmoEquationSectionRequired.fieldSelector
+      )
+      .on(
+        "input.benefitsEpmoEqReq change.benefitsEpmoEqReq",
+        BenefitsEpmoEquationSectionRequired.fieldSelector,
+        function () {
+          BenefitsEpmoEquationSectionRequired.markDirty();
+        }
+      );
+
+    // PeriodType lives outside equation section but drives which period field is required
+    $(document)
+      .off("change.benefitsEpmoEqReqPeriod", "#PeriodType")
+      .on("change.benefitsEpmoEqReqPeriod", "#PeriodType", function () {
+        if (BenefitsEpmoEquationSectionRequired.dirty) {
+          BenefitsEpmoEquationSectionRequired.refresh();
+        }
+      });
+
+    BenefitsEpmoEquationSectionRequired.refresh();
+  },
+};
+
 // Initiative Manager: A–G required when empty (0 is valid)
 window.BenefitsEquationComponentsRequired = {
   selector: "#A, #B, #CC, #D, #E, #F, #G",
@@ -10222,6 +10387,10 @@ window.equationBenefitKPI = {
       if (window.BenefitsEquationComponentsRequired) {
         BenefitsEquationComponentsRequired.bind();
       }
+      // EPMO Edit: strip equation required until section is dirty
+      if (window.BenefitsEpmoEquationSectionRequired) {
+        BenefitsEpmoEquationSectionRequired.bind();
+      }
     }
 
     $("[data-toggledisabledvalues]").each(function () {
@@ -10456,6 +10625,9 @@ window.equationBenefitKPI = {
       }
       if (window.BenefitsEquationComponentsRequired) {
         BenefitsEquationComponentsRequired.bind();
+      }
+      if (window.BenefitsEpmoEquationSectionRequired) {
+        BenefitsEpmoEquationSectionRequired.bind();
       }
     },
     loadByField: function (fieldName, fieldValue) {

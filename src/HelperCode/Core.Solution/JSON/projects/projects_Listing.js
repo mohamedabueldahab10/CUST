@@ -172,4 +172,12 @@ var Listing_Info = [
     inlisting: false,
     infilter: true,
   },
+  {
+    InternalName: "PONumber",
+    DisplayName: "رقم أمر الشراء",
+    DisplayNameEn: "PO Number",
+    type: "text",
+    inlisting: true,
+    infilter: true,
+  },
 ];

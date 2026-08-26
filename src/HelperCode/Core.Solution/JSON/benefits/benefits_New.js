@@ -9,8 +9,6 @@ var Information_Form = [
         fieldName: "WFModuleCode",
         value: "InitiativeBenefits",
         roles: [
-          "System Admin Group",
-          "EPMO",
           "HeadCommitte",
           "Initiative Manager",
           "SPM Admin",
@@ -22,8 +20,6 @@ var Information_Form = [
         fieldName: "WFInitiatedBy",
         value: "LoggedInUser",
         roles: [
-          "System Admin Group",
-          "EPMO",
           "HeadCommitte",
           "Initiative Manager",
           "SPM Admin",
@@ -35,14 +31,27 @@ var Information_Form = [
         fieldName: "WFStage",
         value: "InitiativeBenefits01",
         roles: [
-          "System Admin Group",
-          "EPMO",
           "HeadCommitte",
           "Initiative Manager",
           "SPM Admin",
           "LMSU-Execution",
           "VRO_E",
         ],
+      },
+      {
+        fieldName: "WFModuleCode",
+        value: "",
+        roles: ["System Admin Group", "EPMO", "Administrator"],
+      },
+      {
+        fieldName: "WFInitiatedBy",
+        value: "",
+        roles: ["System Admin Group", "EPMO", "Administrator"],
+      },
+      {
+        fieldName: "WFStage",
+        value: "",
+        roles: ["System Admin Group", "EPMO", "Administrator"],
       },
     ],
     // formDefaultValues: [
@@ -130,10 +139,9 @@ var Information_Form = [
         format: "DateOnly",
         // type: "datetime",
         type: "datetimetoparent",
-        Errmsgkey: "btwndatepattern",
+        // Errmsgkey: "todatepattern",
         listname: "Initiatives",
         startinternalname: "StartDate",
-        endinternalname: "FinishDate",
         validation: "required",
       },
            {

@@ -1016,6 +1016,11 @@ var PageArray = [
 		Title: "تقرير سياسة الوصول",
 		TitleEn: "Access Policy Report",
 	},
+	{
+		pagename: "PowerBI_Reports.aspx",
+		Title: "تقارير Power BI",
+		TitleEn: "Power BI Reports",
+	},
 ];
 // research enumerator
 // research query url index

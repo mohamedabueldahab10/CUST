@@ -2473,6 +2473,23 @@ window.ListInfo = {
               //hide Initiative field if we are in the Initiative
               $("#InitiativeCode").parent().css("display", "none");
             }
+            // Initiative Manager: MesureStatus disabled; default unmersurable on New
+            // Skip disable during InitiativeBenefits workflow edit so IM can change it
+            if (listkey == "benefits" && isInManager && (isNew || isEdit)) {
+              var isInitiativeBenefitsWfEdit =
+                typeof USERisWF !== "undefined" &&
+                USERisWF &&
+                isEdit &&
+                ((typeof workflowname !== "undefined" &&
+                  String(workflowname) == "InitiativeBenefits") ||
+                  window.location.href.indexOf("benefits&InitiativeBenefits") > -1);
+              if (isNew) {
+                $("#MesureStatus").val("unmersurable");
+              }
+              if (!isInitiativeBenefitsWfEdit) {
+                $("#MesureStatus").prop("disabled", true);
+              }
+            }
             // Initiative Manager: A–G required when empty on New/Edit
             if (
               listkey == "benefits" &&
@@ -2492,6 +2509,16 @@ window.ListInfo = {
               setTimeout(function () {
                 BenefitsActualFieldsRequired.bind();
               }, 500);
+            }
+            // EPMO + Edit: equation section required only after any change in the section
+            if (
+              listkey == "benefits" &&
+              isEdit &&
+              window.BenefitsEpmoEquationSectionRequired
+            ) {
+              setTimeout(function () {
+                BenefitsEpmoEquationSectionRequired.bind();
+              }, 800);
             }
 
             if (listkey == "projects") {
@@ -5449,7 +5476,7 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
-      case "datetimetoparent": // handle date from parent
+      case "datetimetoparent": // handle date from parent (start/end optional: only fetch & apply if present)
         var code = activeCode;
 
         //activecode
@@ -5458,112 +5485,137 @@ window.ListInfo = {
           code +
           "</Value></Eq></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query><RowLimit>1</RowLimit></View>";
 
-          var startDate = "",
+        var startDate = "",
           finishDate = "";
-            sphttp.get(
-              _spPageContextInfo.siteServerRelativeUrl,
-              element.listname,
-              customQuery,
-              [element.startinternalname, element.endinternalname],
-              function (records, record, listItem, isDone) {
-                // if (listItem) itemsID.push(listItem.get_id());
-                if (isDone) {
-                  records.forEach(function (el, index) {
+        var parentDateFields = [];
+        if (element.startinternalname) {
+          parentDateFields.push(element.startinternalname);
+        }
+        if (element.endinternalname) {
+          parentDateFields.push(element.endinternalname);
+        }
+
+        var buildDateToParentHtml = function (minDateVal, maxDateVal) {
+          var minAttr = minDateVal ? ' min="' + minDateVal + '"' : "";
+          var maxAttr = maxDateVal ? ' max="' + maxDateVal + '"' : "";
+
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
+            " " +
+            element.className +
+            " " +
+            hideField +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            editableBy +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            "</label>" +
+            "<input " +
+            ToggleName +
+            " " +
+            toggleDisabledName +
+            " " +
+            RequiredName +
+            ' type="date" onkeydown="return false" placeholder="' +
+            displayName +
+            '" ' +
+            dynamic +
+            ' class="form-control SPIField" id="' +
+            element.InternalName +
+            '" ' +
+            element.state +
+            " " +
+            element.validation +
+            ' minimumdate="' +
+            element.min +
+            '" maximumdate="' +
+            element.max +
+            '"' +
+            maxAttr +
+            minAttr +
+            ">" +
+            "<span data-trans-" +
+            Errmsgkey +
+            ' class="errMsgField Resources"></span>' +
+            '<div class="inputInfo ' +
+            isexist +
+            '">' +
+            descPhrase +
+            "</div>" +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+        };
+
+        if (parentDateFields.length && element.listname) {
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            element.listname,
+            customQuery,
+            parentDateFields,
+            function (records, record, listItem, isDone) {
+              // if (listItem) itemsID.push(listItem.get_id());
+              if (isDone) {
+                records.forEach(function (el, index) {
+                  if (element.startinternalname) {
                     startDate = el[element.startinternalname];
+                  }
+                  if (element.endinternalname) {
                     finishDate = el[element.endinternalname];
-                  });
+                  }
+                });
 
-                  minDate = Dynamic_Data_Request.g.convertdate(startDate);
-                  maxDate = Dynamic_Data_Request.g.convertdate(finishDate);
-
-                  htmlBody =
-                    '<div class="col-md-6 CFIELD ' +
-                    dontSubmit +
-                    " " +
-                    dontRequest +
-                    " " +
-                    dontSubmitRequired +
-                    " " +
-                    " " +
-                    element.className +
-                    " " +
-                    hideField +
-                    ' " ' +
-                    thistip +
-                    " " +
-                    hidestagesIDs +
-                    " " +
-                    editableBy +
-                    " " +
-                    showstagesIDs +
-                    "  " +
-                    disablestagesIDs +
-                    "  " +
-                    enablestagesIDs +
-                    "   " +
-                    isWfhidestagesIDs +
-                    " " +
-                    requireOnWfTaskstagesIDs +
-                    " " +
-                    isWfshowstagesIDs +
-                    "  " +
-                    isWfdisablestagesIDs +
-                    "  " +
-                    isWfenablestagesIDs +
-                    '        data-groups="' +
-                    groups +
-                    '" ' +
-                    notAllowForGroups +
-                    ' style="display:' +
-                    element.display +
-                    '">' +
-                    '<label for="' +
-                    element.InternalName +
-                    '" ' +
-                    element.validation +
-                    ">" +
-                    displayName +
-                    "</label>" +
-                    "<input " +
-                    ToggleName +
-                    " " +
-                    toggleDisabledName +
-                    " " +
-                    RequiredName +
-                    ' type="date" onkeydown="return false" placeholder="' +
-                    displayName +
-                    '" ' +
-                    dynamic +
-                    ' class="form-control SPIField" id="' +
-                    element.InternalName +
-                    '" ' +
-                    element.state +
-                    " " +
-                    element.validation +
-                    ' minimumdate="' +
-                    element.min +
-                    '" maximumdate="' +
-                    element.max +
-                    '"  max="' +
-                    maxDate +
-                    '" min=' +
-                    minDate +
-                    ">" +
-                    "<span data-trans-" +
-                    Errmsgkey +
-                    ' class="errMsgField Resources"></span>' +
-                    '<div class="inputInfo ' +
-                    isexist +
-                    '">' +
-                    descPhrase +
-                    "</div>" +
-                    "</div>";
-                  OnSuccess(flag, htmlBody);
-
-                  // OnSuccess(flag, htmlBody);
-                }
+                var minDateVal =
+                  element.startinternalname && startDate
+                    ? Dynamic_Data_Request.g.convertdate(startDate)
+                    : "";
+                var maxDateVal =
+                  element.endinternalname && finishDate
+                    ? Dynamic_Data_Request.g.convertdate(finishDate)
+                    : "";
+                buildDateToParentHtml(minDateVal, maxDateVal);
               }
-            );
+            }
+          );
+        } else {
+          buildDateToParentHtml("", "");
+        }
         break;
 
       case "datewithtimetoparent":
@@ -18376,7 +18428,7 @@ async function waitUntil(condition, time = 500) {
 //working on parent type
 
 window.get_parent_data = {
-  init: function (listName, code, parentFieldName, fieldName, getGrandParent) {
+  init: function (listName, code, parentFieldName, fieldName, getGrandParent, onDone) {
     var clientContext = new SP.ClientContext.get_current();
     var oList = clientContext.get_web().get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
@@ -18394,6 +18446,7 @@ window.get_parent_data = {
     get_parent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     get_parent_data.g.fieldName = fieldName;
     get_parent_data.g.getGrandParent = getGrandParent;
+    get_parent_data.g.onDone = onDone;
 
     clientContext.load(get_parent_data.g.collListItem);
     clientContext.executeQueryAsync(
@@ -18425,11 +18478,21 @@ window.get_parent_data = {
         valueBasedOnParent.push(dynamicVal);
       }
     }
+    if (typeof get_parent_data.g.onDone === "function") {
+      var parentDone = get_parent_data.g.onDone;
+      get_parent_data.g.onDone = null;
+      parentDone();
+    }
   },
   onError: function (sender, args) {
     console.log(
       "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
     );
+    if (typeof get_parent_data.g.onDone === "function") {
+      var parentDone = get_parent_data.g.onDone;
+      get_parent_data.g.onDone = null;
+      parentDone();
+    }
   },
   // Global variables
   g: {},

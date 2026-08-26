@@ -420,10 +420,9 @@ var Information_Form = [
         format: "DateOnly",
         // type: "datetime",
         type: "datetimetoparent",
-        Errmsgkey: "btwndatepattern",
+        // Errmsgkey: "todatepattern",
         listname: "Initiatives",
         startinternalname: "StartDate",
-        endinternalname: "FinishDate",
         validation: "required",
         security: {
           groups: [

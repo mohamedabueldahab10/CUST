@@ -1436,52 +1436,52 @@ var Information_Form = [
       //   maxchar: "255",
       //   // "validation": "required"
       // },
-      {
-        InternalName: "BudgetItem",
-        DisplayName: "البند المرتبط",
-        "state": "disabled",
-        DisplayNameEn: "Budget Item",
-        type: "string", 
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-        // dynamic: "mainfield", //controls others data
-        // //from other list:
-        // source: "Budget Items",
-        // Dispfieldkey: "Name",
-        // valfieldkey: "Title",
-        // disableOnWfTaskStage : "S05,S09",
-        // "validation": "required",
-        // "state": "disabled"
-      },
-      {
-        InternalName: "Amount",
-        DisplayName: "التكلفة",
-        DisplayNameEn: "Amount",
-        type: "float",
-        disableOnWfTaskStage : "S05,S09",        
-        descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
-        descPhraseEn: "Filed is required to add milestones and Deliverables",
-        "state": "disabled",
-        dynamic: "BudgetItem", //being controlled by main field
-        numberOfDigits: "15",
-        resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"],
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-      },
+      // {
+      //   InternalName: "BudgetItem",
+      //   DisplayName: "البند المرتبط",
+      //   "state": "disabled",
+      //   DisplayNameEn: "Budget Item",
+      //   type: "string", 
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Project Managers for Project Web App",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
+      //
+      //     ]
+      //   },
+      //   // dynamic: "mainfield", //controls others data
+      //   // //from other list:
+      //   // source: "Budget Items",
+      //   // Dispfieldkey: "Name",
+      //   // valfieldkey: "Title",
+      //   // disableOnWfTaskStage : "S05,S09",
+      //   // "validation": "required",
+      //   // "state": "disabled"
+      // },
+      // {
+      //   InternalName: "Amount",
+      //   DisplayName: "التكلفة",
+      //   DisplayNameEn: "Amount",
+      //   type: "float",
+      //   disableOnWfTaskStage : "S05,S09",        
+      //   descPhraseAr: "الحقل مطلوب لادخال المخرجات والمعالم",
+      //   descPhraseEn: "Filed is required to add milestones and Deliverables",
+      //   "state": "disabled",
+      //   dynamic: "BudgetItem", //being controlled by main field
+      //   numberOfDigits: "15",
+      //   resetElement:["ContractualEngagements","ExpensesDate","RemainingCost"],
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Project Managers for Project Web App",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
+      //
+      //     ]
+      //   },
+      // },
 
       // {
       //   InternalName: "Cost1",
@@ -1507,15 +1507,15 @@ var Information_Form = [
       //   state: "disabled",
       //   dynamic: "BudgetItem",
       // },
-      {
-        InternalName: "AssignedBudget",
-        DisplayName: "الميزانية المعتمدة",
-        DisplayNameEn: "Assigned Budget",
-        type: "float",
-        numberOfDigits:"15",
-        "state": "disabled"
-        // "showonstage":"1"
-      },
+      // {
+      //   InternalName: "AssignedBudget",
+      //   DisplayName: "الميزانية المعتمدة",
+      //   DisplayNameEn: "Assigned Budget",
+      //   type: "float",
+      //   numberOfDigits:"15",
+      //   "state": "disabled"
+      //   // "showonstage":"1"
+      // },
       {
         InternalName: "ExpectedBudget",
         DisplayName: "الموازنة المتوقعة",
@@ -1653,28 +1653,28 @@ var Information_Form = [
         },
         // "state": "disabled"
       },
-      {
-        InternalName: "RemainingCost",
-        DisplayName: "التكلفة المتبقية",
-        DisplayNameEn: "Remaining Cost",
-        type: "float",
-        disableOnWfTaskStage : "S05,S09",
-        numberOfDigits: "15",
-        max:"ActualBudget",
-        descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
-        descPhraseEn: "should be less than or equal Actual Budget or Amount",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-
-        "state": "disabled"
-      },
+      // {
+      //   InternalName: "RemainingCost",
+      //   DisplayName: "التكلفة المتبقية",
+      //   DisplayNameEn: "Remaining Cost",
+      //   type: "float",
+      //   disableOnWfTaskStage : "S05,S09",
+      //   numberOfDigits: "15",
+      //   max:"ActualBudget",
+      //   descPhraseAr: "يجب ان تكون اقل من او يساوي التكلفة الفعلية او التكلفة",
+      //   descPhraseEn: "should be less than or equal Actual Budget or Amount",
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Project Managers for Project Web App",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
+      //
+      //     ]
+      //   },
+      //
+      //   "state": "disabled"
+      // },
       {
         InternalName: "OutOfCash",
         DisplayName: "نسبة المنصرف من السيولة ",
@@ -1794,31 +1794,31 @@ var Information_Form = [
           ]
         },
       },
-      {
-        InternalName: 'ActualOfferingDate',
-        DisplayName: 'تاريخ  الطرح الفعلى',
-        DisplayNameEn: 'Actual Offering Date',
-        // type: "datetime",
-        type: 'datetimetoparent',
-        "state": "disabled",
-        listname: 'Projects',
-        startinternalname: 'BaselineStartDate',
-        endinternalname: 'BaselineFinishDate',
-        max: 'today',
-        Errmsgkey: 'cancelationdatepattern',
-        enableOnWfTaskStage: "S05",
-        requireOnWfTaskStage: "S05",
-        disableOnWfTaskStage : "S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-      },
+      // {
+      //   InternalName: 'ActualOfferingDate',
+      //   DisplayName: 'تاريخ  الطرح الفعلى',
+      //   DisplayNameEn: 'Actual Offering Date',
+      //   // type: "datetime",
+      //   type: 'datetimetoparent',
+      //   "state": "disabled",
+      //   listname: 'Projects',
+      //   startinternalname: 'BaselineStartDate',
+      //   endinternalname: 'BaselineFinishDate',
+      //   max: 'today',
+      //   Errmsgkey: 'cancelationdatepattern',
+      //   enableOnWfTaskStage: "S05",
+      //   requireOnWfTaskStage: "S05",
+      //   disableOnWfTaskStage : "S09",
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Project Managers for Project Web App",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
+      //
+      //     ]
+      //   },
+      // },
       {
         InternalName: "AwardDate",
         DisplayName: "تاريخ  الترسية",
@@ -1842,39 +1842,39 @@ var Information_Form = [
           ]
         },
       },
-      {
-        InternalName: "ContractualDate",
-        DisplayName: "تاريخ التعاقد",
-        DisplayNameEn: "Contractual Date",
-        // type: "datetime",
-        type: 'datetimetoparent',
-        listname: 'Projects',
-        startinternalname: 'BaselineStartDate',
-        endinternalname: 'BaselineFinishDate',
-        Errmsgkey:'btwndatepattern',
-        enableOnWfTaskStage: "S05",
-        "state": "disabled",
-        requireOnWfTaskStage: "S05",
-        disableOnWfTaskStage : "S09",
-        security: {
-          groups: [ ],
-          // groups: [], // should be empty array if will use notAllowTo
-          notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
-            {group:"Project Managers for Project Web App",form:["origin"]},
-            // {group:"EPMO",form:["origin" ]}
-
-          ]
-        },
-      },
-      {
-        InternalName: "POApprovalDate",
-        DisplayName: "تاريخ اعتماد التعاقد",
-        DisplayNameEn: "PO Approval Date",
-        type: "datetime",
-  
-        "state": "disabled",
-  
-      },
+      // {
+      //   InternalName: "ContractualDate",
+      //   DisplayName: "تاريخ التعاقد",
+      //   DisplayNameEn: "Contractual Date",
+      //   // type: "datetime",
+      //   type: 'datetimetoparent',
+      //   listname: 'Projects',
+      //   startinternalname: 'BaselineStartDate',
+      //   endinternalname: 'BaselineFinishDate',
+      //   Errmsgkey:'btwndatepattern',
+      //   enableOnWfTaskStage: "S05",
+      //   "state": "disabled",
+      //   requireOnWfTaskStage: "S05",
+      //   disableOnWfTaskStage : "S09",
+      //   security: {
+      //     groups: [ ],
+      //     // groups: [], // should be empty array if will use notAllowTo
+      //     notAllowTo:[ // notAllowTo group and on form (origin = normal form , changerequest = change request form)
+      //       {group:"Project Managers for Project Web App",form:["origin"]},
+      //       // {group:"EPMO",form:["origin" ]}
+      //
+      //     ]
+      //   },
+      // },
+      // {
+      //   InternalName: "POApprovalDate",
+      //   DisplayName: "تاريخ اعتماد التعاقد",
+      //   DisplayNameEn: "PO Approval Date",
+      //   type: "datetime",
+      //
+      //   "state": "disabled",
+      //
+      // },
       {
         InternalName: 'ApprovedBrochure',
         DisplayName: 'الكراسة المعتمدة',

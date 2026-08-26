@@ -838,6 +838,32 @@ $(document).ready(function () {
         });
       }
 
+      function buildPaginationPageItemHtml(pageNumber, currentPage) {
+        return (
+          '<li class="page-handle page-item ' +
+          (pageNumber === currentPage ? 'active' : '') +
+          '">' +
+          '<a class="page-link" href="#" data-page="' +
+          pageNumber +
+          '">' +
+          pageNumber +
+          '</a></li>'
+        );
+      }
+
+      function getPaginationWindow(currentPage, totalPages, maxVisiblePages) {
+        var size = maxVisiblePages || 6;
+        var current = currentPage && currentPage > 0 ? currentPage : 1;
+        if (current > totalPages) current = totalPages;
+        var startPage = Math.floor((current - 1) / size) * size + 1;
+        var endPage = Math.min(startPage + size - 1, totalPages);
+        return {
+          startPage: startPage,
+          endPage: endPage,
+          nextChunkPage: endPage < totalPages ? endPage + 1 : null,
+        };
+      }
+
       function buildPaginationNavHtml(pagedData) {
         var totalPages = Math.ceil(
           (pagedData.CountTotalItem || 0) / (pagedData.PageSize || CARD_PAGE_SIZE)
@@ -846,27 +872,31 @@ $(document).ready(function () {
         if (!totalPages || totalPages <= 1) {
           return '';
         }
+        var currentPage = pagedData.PageIndex || 1;
+        var windowPages = getPaginationWindow(currentPage, totalPages, 6);
         var html =
           '<nav><ul class="pagination p-0">' +
           '<li data-action="prev" class="page-handle page-item previous ' +
-          (pagedData.PageIndex === 1 ? 'disabled' : '') +
+          (currentPage === 1 ? 'disabled' : '') +
           '">' +
           '<a class="page-link" href="#" aria-label="Previous">' +
           '<i class="fas fa-chevron-left d-flex"></i></a></li>';
-        for (var i = 1; i <= totalPages; i++) {
+        for (var i = windowPages.startPage; i <= windowPages.endPage; i++) {
+          html += buildPaginationPageItemHtml(i, currentPage);
+        }
+        if (windowPages.nextChunkPage) {
           html +=
-            '<li class="page-handle page-item ' +
-            (i === pagedData.PageIndex ? 'active' : '') +
-            '">' +
+            '<li data-action="ellipsis" data-page="' +
+            windowPages.nextChunkPage +
+            '" class="page-handle page-item pagination-ellipsis">' +
             '<a class="page-link" href="#" data-page="' +
-            i +
-            '">' +
-            i +
-            '</a></li>';
+            windowPages.nextChunkPage +
+            '">.....</a></li>';
+          html += buildPaginationPageItemHtml(totalPages, currentPage);
         }
         html +=
           '<li data-action="next" class="page-handle page-item next ' +
-          (pagedData.PageIndex === totalPages ? 'disabled' : '') +
+          (currentPage === totalPages ? 'disabled' : '') +
           '">' +
           '<a class="page-link" href="#" aria-label="Next">' +
           '<i class="fas fa-chevron-right d-flex"></i></a></li>' +
@@ -974,6 +1004,14 @@ $(document).ready(function () {
         var color = setStatusColorBasedOnStatus(sectionHead, progressStatus);
         mainCard.style.setProperty('--status-color', color || '#a9a9a9');
         mainCard.setAttribute('data-progressstatus', progressStatus || '');
+        var normalizedColor = String(color || '')
+          .replace(/\s/g, '')
+          .toUpperCase();
+        if (normalizedColor === '#FFFF00' || normalizedColor === '#FF0') {
+          mainCard.classList.add('status-yellow');
+        } else {
+          mainCard.classList.remove('status-yellow');
+        }
         return color;
       }
 
@@ -2009,9 +2047,6 @@ $(document).ready(function () {
         }
         // checkMarkActive();
 
-        const totalPages = Math.ceil(
-          pillarsData.CountTotalItem / pillarsData.PageSize
-        );
         const paginationContainer = document.createElement('div');
         paginationContainer.classList.add(
           'w-100',
@@ -2021,40 +2056,10 @@ $(document).ready(function () {
           'mt-4'
         );
 
-        let paginationNav = '';
-        if (totalPages > 1) {
-          paginationNav = `
-          <nav>
-            <ul class="pagination p-0">
-              <li data-action="prev" class="page-handle page-item previous ${
-                pillarsData.PageIndex === 1 ? 'disabled' : ''
-              }">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <i class="fas fa-chevron-left d-flex"></i>
-                </a>
-              </li>`;
-          for (let i = 1; i <= totalPages; i++) {
-            paginationNav += `<li class="page-handle page-item ${
-              i === pillarsData.PageIndex ? 'active' : ''
-            }">
-                  <div class="page-link" data-page="${i}">${i}</div>
-                </li>`;
-          }
-          paginationNav += `<li data-action="next" class="page-handle page-item next ${
-            pillarsData.PageIndex === totalPages ? 'disabled' : ''
-          }">
-                <a class="page-link" href="#" aria-label="Next" >
-                  <i class="fas fa-chevron-right d-flex"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>`;
-        }
-
         let paginationHTML = `
       <div class="col-12 p-0">
         <div class="d-flex justify-content-between align-items-center pagination-status-bar">
-          ${paginationNav}
+          ${buildPaginationNavHtml(pillarsData)}
 
            <div class="status">
         <span> <span class="Resources" data-trans-kpi-novalue> </span>  <span class="dot dot-blue"></span></span>
@@ -2074,7 +2079,11 @@ $(document).ready(function () {
           link.addEventListener('click', (event) => {
             event.preventDefault();
             const action = event.currentTarget.getAttribute('data-action');
-            const pageIndex = parseInt(event.target.getAttribute('data-page'));
+            const pageIndex = parseInt(
+              event.currentTarget.getAttribute('data-page') ||
+                event.target.getAttribute('data-page'),
+              10
+            );
             const lastItemId =
               pillarsData.Result[pillarsData.Result.length - 1].Id;
             if (action === 'next') {
@@ -2661,9 +2670,6 @@ $(document).ready(function () {
           goal2Container.innerHTML = `<div class="m-auto"><p class="Resources" data-trans-nogoals>  </p></div>`;
         }
         // checkMarkActive();
-        const totalPages = Math.ceil(
-          goal2Data.CountTotalItem / goal2Data.PageSize
-        );
         const paginationContainer = document.createElement('div');
         paginationContainer.classList.add(
           'w-100',
@@ -2673,40 +2679,10 @@ $(document).ready(function () {
           'mt-4'
         );
 
-        let paginationNav = '';
-        if (totalPages > 1) {
-          paginationNav = `
-          <nav>
-            <ul class="pagination p-0">
-              <li data-action="prev" class="page-handle page-item previous  ${
-                goal2Data.PageIndex === 0 ? 'disabled' : ''
-              }">
-                <a class="page-link" href="#" aria-label="Previous" >
-                  <i class="fas fa-chevron-left d-flex"></i>
-                </a>
-              </li>`;
-          for (let i = 1; i <= totalPages; i++) {
-            paginationNav += `<li class="page-handle page-item ${
-              i === goal2Data.PageIndex ? 'active' : ''
-            }">
-                  <a class="page-link" href="#" data-page="${i}">${i}</a>
-                </li>`;
-          }
-          paginationNav += `<li data-action="next" class="page-handle page-item next  ${
-            goal2Data.PageIndex === totalPages ? 'disabled' : ''
-          }">
-                <a class="page-link" href="#" aria-label="Next" >
-                  <i class="fas fa-chevron-right d-flex"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>`;
-        }
-
         let paginationHTML = `
       <div class="col-12 p-0">
         <div class="d-flex justify-content-between align-items-center pagination-status-bar">
-          ${paginationNav}
+          ${buildPaginationNavHtml(goal2Data)}
 
        <div class="status">
             <span> <span class="Resources" data-trans-stat43> </span>  <span class="dot dot-blue"></span></span>
@@ -2910,7 +2886,7 @@ $(document).ready(function () {
           console.error('Error: `Goal3-cards-container` not found.');
           return;
         }
-        goal3Data.innerHTML = '';
+        goal3Container.innerHTML = '';
         // Loop through the GoalArray and create cards
         if (goal3Data.Result.length > 0) {
           goal3Data.Result.forEach((goal, index) => {
@@ -2989,9 +2965,6 @@ $(document).ready(function () {
           goal3Container.innerHTML = `<div class="m-auto"><p class="Resources" data-trans-nogoals>  </p></div>`;
         }
         // checkMarkActive();
-        const totalPages = Math.ceil(
-          goal3Data.CountTotalItem / goal3Data.PageSize
-        );
         const paginationContainer = document.createElement('div');
         paginationContainer.classList.add(
           'w-100',
@@ -3001,40 +2974,10 @@ $(document).ready(function () {
           'mt-4'
         );
 
-        let paginationNav = '';
-        if (totalPages > 1) {
-          paginationNav = `
-          <nav>
-            <ul class="pagination p-0">
-              <li data-action="prev" class="page-handle page-item previous ${
-                goal3Data.PageIndex === 0 ? 'disabled' : ''
-              }">
-                <a class="page-link" href="#" aria-label="Previous" >
-                  <i class="fas fa-chevron-left d-flex"></i>
-                </a>
-              </li>`;
-          for (let i = 1; i <= totalPages; i++) {
-            paginationNav += `<li class="page-handle page-item ${
-              i === goal3Data.PageIndex ? 'active' : ''
-            }">
-                  <a class="page-link" href="#" data-page="${i}">${i}</a>
-                </li>`;
-          }
-          paginationNav += `<li data-action="next" class="page-handle page-item next  ${
-            goal3Data.PageIndex === totalPages ? 'disabled' : ''
-          }">
-                <a class="page-link" href="#" aria-label="Next" >
-                  <i class="fas fa-chevron-right d-flex"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>`;
-        }
-
         let paginationHTML = `
       <div class="col-12 p-0">
         <div class="d-flex justify-content-between align-items-center pagination-status-bar">
-          ${paginationNav}
+          ${buildPaginationNavHtml(goal3Data)}
 
          <div class="status">
             <span> <span class="Resources" data-trans-stat43> </span>  <span class="dot dot-blue"></span></span>
@@ -3250,7 +3193,7 @@ $(document).ready(function () {
           console.error('Error: `KPIs-cards-container` not found.');
           return;
         }
-        KpiStrategicData.innerHTML = '';
+        kpiStrategicContainer.innerHTML = '';
 
         // Loop through the GoalArray and create cards
         if (KpiStrategicData.Result.length) {
@@ -3447,9 +3390,6 @@ $(document).ready(function () {
             }
           );
         });
-        const totalPages = Math.ceil(
-          KpiStrategicData.CountTotalItem / KpiStrategicData.PageSize
-        );
         const paginationContainer = document.createElement('div');
         paginationContainer.classList.add(
           'w-100',
@@ -3459,40 +3399,10 @@ $(document).ready(function () {
           'mt-4'
         );
 
-        let paginationNav = '';
-        if (totalPages > 1) {
-          paginationNav = `
-          <nav>
-            <ul class="pagination p-0">
-              <li data-action="prev" class="page-handle page-item previous ${
-                KpiStrategicData.PageIndex === 0 ? 'disabled' : ''
-              }">
-                <a class="page-link" href="#" aria-label="Previous" >
-                  <i class="fas fa-chevron-left d-flex"></i>
-                </a>
-              </li>`;
-          for (let i = 1; i <= totalPages; i++) {
-            paginationNav += `<li class="page-handle page-item ${
-              i === KpiStrategicData.PageIndex ? 'active' : ''
-            }">
-                  <a class="page-link" href="#" data-page="${i}">${i}</a>
-                </li>`;
-          }
-          paginationNav += `<li data-action="next" class="page-handle page-item next ${
-            KpiStrategicData.PageIndex === totalPages ? 'disabled' : ''
-          }">
-                <a class="page-link" href="#" aria-label="Next" >
-                  <i class="fas fa-chevron-right d-flex"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>`;
-        }
-
         let paginationHTML = `
       <div class="col-12 p-0">
         <div class="d-flex justify-content-between align-items-center pagination-status-bar">
-          ${paginationNav}
+          ${buildPaginationNavHtml(KpiStrategicData)}
 
          <div class="status">
             <span> <span class="Resources" data-trans-stat19> </span>  <span class="dot dot-blue"></span></span>
@@ -3629,7 +3539,7 @@ $(document).ready(function () {
           console.error('Error: `operational-cards-container` not found.');
           return;
         }
-        KpiOperationalData.innerHTML = '';
+        kpiOperationalContainer.innerHTML = '';
 
         // Loop through the GoalArray and create cards
         if (KpiOperationalData.Result.length) {
@@ -3828,9 +3738,6 @@ $(document).ready(function () {
           );
         });
 
-        const totalPages = Math.ceil(
-          KpiOperationalData.CountTotalItem / KpiOperationalData.PageSize
-        );
         const paginationContainer = document.createElement('div');
         paginationContainer.classList.add(
           'w-100',
@@ -3840,40 +3747,10 @@ $(document).ready(function () {
           'mt-4'
         );
 
-        let paginationNav = '';
-        if (totalPages > 1) {
-          paginationNav = `
-          <nav>
-            <ul class="pagination p-0">
-              <li data-action="prev" class="page-handle page-item previous ${
-                KpiOperationalData.PageIndex === 0 ? 'disabled' : ''
-              }">
-                <a class="page-link" href="#" aria-label="Previous" >
-                  <i class="fas fa-chevron-left d-flex"></i>
-                </a>
-              </li>`;
-          for (let i = 1; i <= totalPages; i++) {
-            paginationNav += `<li class="page-handle page-item ${
-              i === KpiOperationalData.PageIndex ? 'active' : ''
-            }">
-                  <a class="page-link" href="#" data-page="${i}">${i}</a>
-                </li>`;
-          }
-          paginationNav += `<li data-action="next"  class="page-handle page-item next ${
-            KpiOperationalData.PageIndex === totalPages ? 'disabled' : ''
-          }">
-                <a class="page-link" href="#" aria-label="Next" >
-                  <i class="fas fa-chevron-right d-flex"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>`;
-        }
-
         let paginationHTML = `
       <div class="col-12 p-0">
         <div class="d-flex justify-content-between align-items-center pagination-status-bar">
-          ${paginationNav}
+          ${buildPaginationNavHtml(KpiOperationalData)}
 
           <div class="status">
             <span> <span class="Resources" data-trans-stat19> </span>  <span class="dot dot-blue"></span></span>

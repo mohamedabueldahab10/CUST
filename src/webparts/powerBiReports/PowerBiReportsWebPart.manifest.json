@@ -1,0 +1,24 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "7d4e8b2a-1c9f-4e53-a6b8-0f3d5c7e9a12",
+  "alias": "PowerBIReportsWebPart",
+  "componentType": "WebPart",
+  "version": "*",
+  "manifestVersion": 2,
+  "requiresCustomScript": false,
+  "preconfiguredEntries": [
+    {
+      "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+      "group": { "default": "HRSD Apps - SPFx" },
+      "title": { "default": "PowerBI_Reports" },
+      "description": {
+        "default": "HRSD Power BI reports embed",
+        "ar-sa": "تقارير Power BI للموارد البشرية والتنمية الاجتماعية"
+      },
+      "officeFabricIconFontName": "BarChart4",
+      "properties": {
+        "description": "PowerBI_Reports"
+      }
+    }
+  ]
+}

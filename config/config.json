@@ -289,6 +289,14 @@
           "manifest": "./src/webparts/strategyMain/StrategyMainWebPart.manifest.json"
         }
       ]
+    },
+    "power-bi-reports-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/powerBiReports/PowerBiReportsWebPart.js",
+          "manifest": "./src/webparts/powerBiReports/PowerBiReportsWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -518,6 +526,7 @@
     "DeletedItemsListingWebPartStrings": "lib/webparts/deletedItemsListing/loc/{locale}.js",
     "ChangeRequestsWebPartStrings": "lib/webparts/changeRequests/loc/{locale}.js",
     "StrategyHomeWebPartStrings": "lib/webparts/strategyHome/loc/{locale}.js",
-    "StrategyMainWebPartStrings": "lib/webparts/strategyMain/loc/{locale}.js"
+    "StrategyMainWebPartStrings": "lib/webparts/strategyMain/loc/{locale}.js",
+    "PowerBiReportsWebPartStrings": "lib/webparts/powerBiReports/loc/{locale}.js"
   }
 }

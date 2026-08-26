@@ -1123,27 +1123,27 @@ var Information_Form = [
       //   maxchar: "250",
       //   // "validation": "required"
       // },
-      {
-        InternalName: "BudgetItem",
-        DisplayName: "البند المرتبط",
-        DisplayNameEn: "Budget Item",
-        type: "string",
-        // dynamic: "mainfield", //controls others data
-        // //from other list:
-        // source: "Budget Items",
-        // Dispfieldkey: "Name",
-        // valfieldkey: "Title",
-        // "validation": "required",
-        // "state": "disabled"
-      },
-      {
-        InternalName: "Amount",
-        DisplayName: "التكلفة",
-        DisplayNameEn: "Amount",
-        type: "float",
-        // "state": "disabled",
-        dynamic: "BudgetItem", //being controlled by main field
-      },
+      // {
+      //   InternalName: "BudgetItem",
+      //   DisplayName: "البند المرتبط",
+      //   DisplayNameEn: "Budget Item",
+      //   type: "string",
+      //   // dynamic: "mainfield", //controls others data
+      //   // //from other list:
+      //   // source: "Budget Items",
+      //   // Dispfieldkey: "Name",
+      //   // valfieldkey: "Title",
+      //   // "validation": "required",
+      //   // "state": "disabled"
+      // },
+      // {
+      //   InternalName: "Amount",
+      //   DisplayName: "التكلفة",
+      //   DisplayNameEn: "Amount",
+      //   type: "float",
+      //   // "state": "disabled",
+      //   dynamic: "BudgetItem", //being controlled by main field
+      // },
 
       // {
       //   InternalName: "Cost1",
@@ -1193,15 +1193,15 @@ var Information_Form = [
       //   //"state": "disabled"
       //   // "showonstage":"1"
       // },
-      {
-        InternalName: "AssignedBudget",
-        DisplayName: "الميزانية المعتمدة",
-        DisplayNameEn: "Assigned Budget",
-        type: "float",
-        // numberOfDigits:"15",
-        // "state": "disabled"
-        // "showonstage":"1"
-      },
+      // {
+      //   InternalName: "AssignedBudget",
+      //   DisplayName: "الميزانية المعتمدة",
+      //   DisplayNameEn: "Assigned Budget",
+      //   type: "float",
+      //   // numberOfDigits:"15",
+      //   // "state": "disabled"
+      //   // "showonstage":"1"
+      // },
       {
         InternalName: "ExpectedBudget",
         DisplayName: "الموازنة المتوقعة",
@@ -1247,13 +1247,13 @@ var Information_Form = [
         type: "float",
         // "state": "disabled"
       },
-      {
-        InternalName: "RemainingCost",
-        DisplayName: "التكلفة المتبقية",
-        DisplayNameEn: "Remaining Cost",
-        type: "float",
-        // "state": "disabled"
-      },
+      // {
+      //   InternalName: "RemainingCost",
+      //   DisplayName: "التكلفة المتبقية",
+      //   DisplayNameEn: "Remaining Cost",
+      //   type: "float",
+      //   // "state": "disabled"
+      // },
       {
         InternalName: "OutOfCash",
         DisplayName: "نسبة المنصرف من السيولة ",
@@ -1317,6 +1317,188 @@ var Information_Form = [
     ],
    },
   {
+    label: "بيانات نظام ERP",
+    labelEn: "ERP Data",
+    description: "",
+    descriptionEn: "",
+    subFields: [
+      {
+        InternalName: "BudgetItem",
+        DisplayName: "بند نظام ERP",
+        DisplayNameEn: "ERP Band",
+        type: "string",
+      },
+      {
+        InternalName: "Amount",
+        DisplayName: "تكلفة ERP",
+        DisplayNameEn: "ERP Cost",
+        type: "float",
+      },
+      {
+        InternalName: "AssignedBudget",
+        DisplayName: "الميزانية الحالية في نظام ERP",
+        DisplayNameEn: "ERP Current Budget",
+        type: "float",
+      },
+      {
+        InternalName: "ERPActual",
+        DisplayName: "التكلفة الفعلية في نظام ERP",
+        DisplayNameEn: "ERP Actual",
+        type: "float",
+      },
+      {
+        InternalName: "RemainingCost",
+        DisplayName: "التكلفة المتبقية في نظام ERP",
+        DisplayNameEn: "ERP Remain Cost",
+        type: "float",
+      },
+      {
+        InternalName: "ActualOfferingDate",
+        DisplayName: "تاريخ إنشاء طلب الشراء",
+        DisplayNameEn: "ERP PR Creation Date",
+        type: "datetime",
+      },
+      {
+        InternalName: "ContractualDate",
+        DisplayName: "تاريخ أمر الشراء",
+        DisplayNameEn: "ERP PO Date",
+        type: "datetime",
+      },
+      {
+        InternalName: "POApprovalDate",
+        DisplayName: "تاريخ اعتماد أمر الشراء",
+        DisplayNameEn: "ERP PO Approved Date",
+        type: "datetime",
+      },
+      {
+        InternalName: "PONumber",
+        DisplayName: "رقم أمر الشراء",
+        DisplayNameEn: "PO Number",
+        type: "string",
+      },
+      {
+        InternalName: "Supplier",
+        DisplayName: "اسم المورد",
+        DisplayNameEn: "Supplier Name",
+        type: "string",
+      },
+      {
+        InternalName: "SupplierID",
+        DisplayName: "معرف المورد",
+        DisplayNameEn: "Supplier Id",
+        type: "float",
+      },
+      {
+        InternalName: "ERPCurrency",
+        DisplayName: "العملة",
+        DisplayNameEn: "Currency",
+        type: "string",
+      },
+      {
+        InternalName: "Quantity",
+        DisplayName: "الكمية",
+        DisplayNameEn: "Quantity",
+        type: "float",
+      },
+      {
+        InternalName: "UnitPrice",
+        DisplayName: "سعر الوحدة",
+        DisplayNameEn: "Unit Price",
+        type: "float",
+      },
+      {
+        InternalName: "UnitMeasLookupCode",
+        DisplayName: "رمز وحدة القياس",
+        DisplayNameEn: "Unit Meas Lookup Code",
+        type: "string",
+      },
+      {
+        InternalName: "ExpectedDeliveryDate",
+        DisplayName: "تاريخ التسليم المتوقع",
+        DisplayNameEn: "Expected Delivery Date",
+        type: "datetime",
+      },
+      {
+        InternalName: "ActualDeliveryDate",
+        DisplayName: "تاريخ التسليم الفعلي",
+        DisplayNameEn: "Actual Delivery Date",
+        type: "datetime",
+      },
+      {
+        InternalName: "POStatus",
+        DisplayName: "حالة أمر الشراء",
+        DisplayNameEn: "PO Status",
+        type: "string",
+      },
+      {
+        InternalName: "TotalPoAmount",
+        DisplayName: "إجمالي مبلغ أمر الشراء",
+        DisplayNameEn: "Total PO Amount",
+        type: "float",
+      },
+      {
+        InternalName: "TotalPoReceived",
+        DisplayName: "إجمالي المبلغ المستلم",
+        DisplayNameEn: "Total PO Received",
+        type: "float",
+      },
+      {
+        InternalName: "TotalPoReceivedAndInvoiced",
+        DisplayName: "إجمالي المبلغ المستلم والمفوتر",
+        DisplayNameEn: "Total PO Received And Invoiced",
+        type: "float",
+      },
+      {
+        InternalName: "TotalUnpaidAmount",
+        DisplayName: "إجمالي المبلغ غير المدفوع",
+        DisplayNameEn: "Total Unpaid Amount",
+        type: "float",
+      },
+      {
+        InternalName: "TotalPoPaid",
+        DisplayName: "إجمالي المبلغ المدفوع",
+        DisplayNameEn: "Total PO Paid",
+        type: "float",
+      },
+      {
+        InternalName: "InvoiceNumeber",
+        DisplayName: "رقم الفاتورة",
+        DisplayNameEn: "Invoice Number",
+        type: "string",
+      },
+      {
+        InternalName: "InvoiceDate",
+        DisplayName: "تاريخ الفاتورة",
+        DisplayNameEn: "Invoice Date",
+        type: "datetime",
+      },
+      {
+        InternalName: "InvoiceStatus",
+        DisplayName: "حالة الفاتورة",
+        DisplayNameEn: "Invoice Status",
+        type: "string",
+      },
+      {
+        InternalName: "PaymentNumber",
+        DisplayName: "رقم الدفعة",
+        DisplayNameEn: "Payment Number",
+        type: "float",
+      },
+      {
+        InternalName: "PaymentDate",
+        DisplayName: "تاريخ الدفعة",
+        DisplayNameEn: "Payment Date",
+        type: "datetime",
+      },
+      {
+        InternalName: "PaymentStatus",
+        DisplayName: "حالة الدفعة",
+        DisplayNameEn: "Payment Status",
+        type: "string",
+      },
+    ],
+  },
+  {
     label: "الطرح والتعاقد",
     labelEn: "Tendering and Contracting",
     description: "",
@@ -1329,33 +1511,33 @@ var Information_Form = [
         DisplayNameEn: "Planned Date of Offering",
         type: "datetime",
       },
-      {
-        InternalName: "ActualOfferingDate",
-        DisplayName: "تاريخ  الطرح الفعلى",
-        DisplayNameEn: "Actual Offering Date",
-        type: "datetime",
-      },
+      // {
+      //   InternalName: "ActualOfferingDate",
+      //   DisplayName: "تاريخ  الطرح الفعلى",
+      //   DisplayNameEn: "Actual Offering Date",
+      //   type: "datetime",
+      // },
       {
         InternalName: "AwardDate",
         DisplayName: "تاريخ  الترسية",
         DisplayNameEn: "Award Date",
         type: "datetime",
       },
-      {
-        InternalName: "ContractualDate",
-        DisplayName: "تاريخ التعاقد",
-        DisplayNameEn: "Contractual Date",
-        type: "datetime",
-      },
-      {
-        InternalName: "POApprovalDate",
-        DisplayName: "تاريخ اعتماد التعاقد",
-        DisplayNameEn: "PO Approval Date",
-        type: "datetime",
-  
-        "state": "disabled",
-  
-      },
+      // {
+      //   InternalName: "ContractualDate",
+      //   DisplayName: "تاريخ التعاقد",
+      //   DisplayNameEn: "Contractual Date",
+      //   type: "datetime",
+      // },
+      // {
+      //   InternalName: "POApprovalDate",
+      //   DisplayName: "تاريخ اعتماد التعاقد",
+      //   DisplayNameEn: "PO Approval Date",
+      //   type: "datetime",
+      //
+      //   "state": "disabled",
+      //
+      // },
       {
         InternalName: 'ApprovedBrochure',
         DisplayName: 'الكراسة المعتمدة',
