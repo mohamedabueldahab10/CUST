@@ -119,6 +119,13 @@ var Information_Form = [{
             descPhraseEn: "The number of workers", 
         },
         {
+            "InternalName": "URLA",
+            "DisplayName": "الرابط المكون الأول (A)",
+            "DisplayNameEn": "URLA",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
+        },
+        {
             "InternalName": "B",
             "DisplayName": "المكون الثاني (B)",
             "DisplayNameEn": "B",
@@ -128,34 +135,76 @@ var Information_Form = [{
             descPhraseEn: "The number of unemployed", 
         },
         {
+            "InternalName": "URLB",
+            "DisplayName": "الرابط المكون الثاني (B)",
+            "DisplayNameEn": "URLB",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
+        },
+        {
             "InternalName": "CC",
             "DisplayName": "المكون الثالث (C)",
             "DisplayNameEn": "C",
-            "type": "string"
+            "type": "string",
+        },
+        {
+            "InternalName": "URLC",
+            "DisplayName": "الرابط المكون الثالث (C)",
+            "DisplayNameEn": "URLC",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
         },
         {
             "InternalName": "D",
             "DisplayName": "المكون الرابع (D)",
             "DisplayNameEn": "D",
-            "type": "string"
+            "type": "string",
+        },
+        {
+            "InternalName": "URLD",
+            "DisplayName": "الرابط المكون الرابع (D)",
+            "DisplayNameEn": "URLD",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
         },
         {
             "InternalName": "E",
             "DisplayName": "المكون الخامس (E)",
             "DisplayNameEn": "E",
-            "type": "string"
+            "type": "string",
+        },
+        {
+            "InternalName": "URLE",
+            "DisplayName": "الرابط المكون الخامس (E)",
+            "DisplayNameEn": "URLE",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
         },
         {
             "InternalName": "F",
             "DisplayName": "المكون السادس (F)",
             "DisplayNameEn": "F",
-            "type": "string"
+            "type": "string",
+        },
+        {
+            "InternalName": "URLF",
+            "DisplayName": "الرابط المكون السادس (F)",
+            "DisplayNameEn": "URLF",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
         },
         {
             "InternalName": "G",
             "DisplayName": "المكون السابع (G)",
             "DisplayNameEn": "G",
-            "type": "string"
+            "type": "string",
+        },
+        {
+            "InternalName": "URLG",
+            "DisplayName": "الرابط المكون السابع (G)",
+            "DisplayNameEn": "URLG",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
         },
         
     ]

@@ -25,6 +25,8 @@ var stageId = "";
 
 // Flag to prevent automatic dynamic fields loading during initial data load in edit/view mode
 window.isLoadingChangeRequestData = false;
+window.currentChangeItemActionType = "";
+window.currentChangeItemListName = "";
 
 var LoggedInUser = null;
 var LoggedInUserTitle = null;
@@ -97,13 +99,48 @@ function getCRAttachmentsFolderServerRelativeUrl() {
 function getSelectedChangeItemMeta() {
   var $opt = $("#ChangeItem option:selected");
   return {
-    actionType: ($opt.data("actiontype") || $opt.attr("data-actiontype") || "")
+    actionType: (
+      $opt.data("actiontype") ||
+      $opt.attr("data-actiontype") ||
+      window.currentChangeItemActionType ||
+      ""
+    )
       .toString()
       .toLowerCase(),
-    listName: ($opt.data("listname") || $opt.attr("data-listname") || "")
+    listName: (
+      $opt.data("listname") ||
+      $opt.attr("data-listname") ||
+      window.currentChangeItemListName ||
+      ""
+    )
       .toString()
       .toLowerCase(),
   };
+}
+
+function isBlankCrValue(val) {
+  return !val || String(val).trim() === "";
+}
+
+function shouldSkipCrRequiredField(selector) {
+  if (!window.isWF) {
+    return false;
+  }
+  var $field = $(selector);
+  if (!$field.length) {
+    return true;
+  }
+  if ($field.is(":disabled")) {
+    return true;
+  }
+  if (!$field.is(":visible")) {
+    return true;
+  }
+  var $container = $field.closest(".col-md-6, .col-md-12");
+  if ($container.length && !$container.is(":visible")) {
+    return true;
+  }
+  return false;
 }
 
 function isMergeSplitDeleteAction(actionType) {
@@ -668,6 +705,8 @@ function getAllowedParentItemTypes() {
     currentRole === "HeadCommitte"
   ) {
     return ["SOs", "MainKpi", "Initiatives", "Projects"];
+  } else if (currentRole === "GDSP" || currentRole === "SPMAdmin") {
+    return ["SOs", "MainKpi"];
   } else if (currentRole === "ObjectiveOwner") {
     return ["SOs"];
   } else if (currentRole === "PerformanceLeader") {
@@ -682,13 +721,21 @@ function getAllowedParentItemTypes() {
 }
 
 function filterParentItemTypeOptions() {
-  var allowedTypes = getAllowedParentItemTypes();
   var $parentSelect = $("#ParentItemType");
 
   if (!$parentSelect.length) {
     setTimeout(filterParentItemTypeOptions, 500);
     return;
   }
+
+  // Keep the saved parent type selectable in view/edit/workflow.
+  // Filtering by role is only for creating a new change request.
+  if (!window.isNew) {
+    $parentSelect.find("option").prop("disabled", false).show();
+    return;
+  }
+
+  var allowedTypes = getAllowedParentItemTypes();
 
   if (allowedTypes.length === 0) {
     $parentSelect.find("option").not(":first").prop("disabled", true).hide();
@@ -959,6 +1006,11 @@ var checkchangerequestshtml = setInterval(function () {
     changeResources();
     initCRAttachmentsUI();
     loadCRExistingAttachments();
+
+    // PDF export on normal CR View only (not WF / edit / new)
+    if (window.isView && !window.isWF) {
+      Export_CR_PDF.initButton();
+    }
 
     // Add required-field class to labels for required inputs
     setTimeout(function () {
@@ -3368,28 +3420,85 @@ function saveAllChangeRequestFields(saveOptions) {
     (!childItemCodeVal || childItemCodeVal.trim() === "");
   
   var validationErrors = [];
-  if (!isAddAction && !isNewAddAction && (!$("#Sector").val() || $("#Sector").val().trim() === "")) validationErrors.push("Sector");
-  if (!isAddAction && !isNewAddAction && (!$("#SubSector").val() || $("#SubSector").val().trim() === "")) validationErrors.push("SubSector");
-  if (!$("#RelatedStrategy").val() || $("#RelatedStrategy").val().trim() === "") validationErrors.push("RelatedStrategy");
-  if (!isAddAction && !isNewAddAction && (!$("#ParentItemType").val() || $("#ParentItemType").val().trim() === "")) validationErrors.push("ParentItemType");
-  if (!isAddAction && !isNewAddAction && (!$("#ParentItemCode").val() || $("#ParentItemCode").val().trim() === "")) validationErrors.push("ParentItemCode");
-  if (childItemCodeRequired) validationErrors.push("ChildItemCode");
-  if (!$("#ChangeItem").val() || $("#ChangeItem").val().trim() === "") validationErrors.push("ChangeItem");
+  if (
+    !shouldSkipCrRequiredField("#Sector") &&
+    !isAddAction &&
+    !isNewAddAction &&
+    isBlankCrValue($("#Sector").val())
+  )
+    validationErrors.push("Sector");
+  if (
+    !shouldSkipCrRequiredField("#SubSector") &&
+    !isAddAction &&
+    !isNewAddAction &&
+    isBlankCrValue($("#SubSector").val())
+  )
+    validationErrors.push("SubSector");
+  if (
+    !shouldSkipCrRequiredField("#RelatedStrategy") &&
+    isBlankCrValue($("#RelatedStrategy").val())
+  )
+    validationErrors.push("RelatedStrategy");
+  if (
+    !shouldSkipCrRequiredField("#ParentItemType") &&
+    !isAddAction &&
+    !isNewAddAction &&
+    isBlankCrValue($("#ParentItemType").val())
+  )
+    validationErrors.push("ParentItemType");
+  if (
+    !shouldSkipCrRequiredField("#ParentItemCode") &&
+    !isAddAction &&
+    !isNewAddAction &&
+    isBlankCrValue($("#ParentItemCode").val())
+  )
+    validationErrors.push("ParentItemCode");
+  if (
+    childItemCodeRequired &&
+    !shouldSkipCrRequiredField("#ChildItemCode")
+  )
+    validationErrors.push("ChildItemCode");
+  if (
+    !shouldSkipCrRequiredField("#ChangeItem") &&
+    isBlankCrValue($("#ChangeItem").val())
+  )
+    validationErrors.push("ChangeItem");
   // ApprovalLevel is hidden for add actions — skip in New and Edit/WF
-  if (!isAddAction && (!$("#ApprovalLevel").val() || $("#ApprovalLevel").val().trim() === "")) validationErrors.push("ApprovalLevel");
+  if (
+    !shouldSkipCrRequiredField("#ApprovalLevel") &&
+    !isAddAction &&
+    isBlankCrValue($("#ApprovalLevel").val())
+  )
+    validationErrors.push("ApprovalLevel");
   if (
     window.isWF &&
     window.isEdit &&
     $("#SecurityExecGroupNameDiv").is(":visible") &&
-    (!$("#SecurityExecGroupName").val() ||
-      $("#SecurityExecGroupName").val().trim() === "")
+    !shouldSkipCrRequiredField("#SecurityExecGroupName") &&
+    isBlankCrValue($("#SecurityExecGroupName").val())
   ) {
     validationErrors.push("SecurityExecGroupName");
   }
-  if (!$("#ChangeDescription").val() || $("#ChangeDescription").val().trim() === "") validationErrors.push("ChangeDescription");
-  if (!$("#ChangeJustification").val() || $("#ChangeJustification").val().trim() === "") validationErrors.push("ChangeJustification");
-  if (!$("#ExpectedPositiveImpact").val() || $("#ExpectedPositiveImpact").val().trim() === "") validationErrors.push("ExpectedPositiveImpact");
-  if (!$("#ImpactType").val() || $("#ImpactType").val().trim() === "") validationErrors.push("ImpactType");
+  if (
+    !shouldSkipCrRequiredField("#ChangeDescription") &&
+    isBlankCrValue($("#ChangeDescription").val())
+  )
+    validationErrors.push("ChangeDescription");
+  if (
+    !shouldSkipCrRequiredField("#ChangeJustification") &&
+    isBlankCrValue($("#ChangeJustification").val())
+  )
+    validationErrors.push("ChangeJustification");
+  if (
+    !shouldSkipCrRequiredField("#ExpectedPositiveImpact") &&
+    isBlankCrValue($("#ExpectedPositiveImpact").val())
+  )
+    validationErrors.push("ExpectedPositiveImpact");
+  if (
+    !shouldSkipCrRequiredField("#ImpactType") &&
+    isBlankCrValue($("#ImpactType").val())
+  )
+    validationErrors.push("ImpactType");
   
   if (validationErrors.length > 0) {
     alert(
@@ -3603,7 +3712,13 @@ function saveAllChangeRequestFields(saveOptions) {
           "ExpectedPositiveImpact",
           "ImpactType",
         ].forEach((f) => {
-          oListItem.set_item(f, $("#" + f).val() || "");
+          var $el = $("#" + f);
+          var val = $el.val() || "";
+          // Workflow approvers cannot edit disabled fields; do not wipe saved values.
+          if (window.isWF && $el.is(":disabled") && isBlankCrValue(val)) {
+            return;
+          }
+          oListItem.set_item(f, val);
         });
 
         oListItem.set_item("ApprovalPath", currentApprovalPath || "");
@@ -4754,6 +4869,10 @@ function fillViewFields(item, code) {
         toggleFormEditable(false);
       }
 
+      if (window.isView && !window.isWF) {
+        Export_CR_PDF.initButton();
+      }
+
       if (window.isWF) {
         loadWorkflowTaskNotesSection();
       }
@@ -4832,7 +4951,25 @@ function loadChangeItemsForView(changeItemCode, newCRCode) {
             if (item.ColumnInternalName) {
               changeItemColumnInternalName = item.ColumnInternalName;
             }
+            if (item.ActionType) {
+              existingOption.attr("data-actiontype", item.ActionType);
+              existingOption.data("actiontype", String(item.ActionType).toLowerCase());
+            }
+            if (item.ListName) {
+              existingOption.attr("data-listname", item.ListName);
+              existingOption.data("listname", String(item.ListName).toLowerCase());
+            }
           });
+        }
+
+        var loadedItem = (data.d.results && data.d.results[0]) || null;
+        if (loadedItem) {
+          window.currentChangeItemActionType = (loadedItem.ActionType || "")
+            .toString()
+            .toLowerCase();
+          window.currentChangeItemListName = (loadedItem.ListName || "")
+            .toString()
+            .toLowerCase();
         }
         
         setSelectValue("#ChangeItem", changeItemCode);
@@ -6518,7 +6655,10 @@ function resolveCrConcernedDeptLabel(groupCode, done) {
   });
 }
 
-// StrategicCR03 only: FinalApprovalLevels dropdown after ApprovalLevel
+function isCrStageWithApprovalGroupDropdown(stageCode) {
+  return stageCode === "StrategicCR03" || stageCode === "ExecutionCR03";
+}
+
 function loadFinalApprovalLevelsOptions(selectedValue) {
   var isArabic =
     localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
@@ -6573,7 +6713,7 @@ function checkAndShowSecurityExecGroupDropdown() {
   ctx.executeQueryAsync(
     function () {
       var taskTitle = taskItem.get_item("Title") || "";
-      if (taskTitle === "StrategicCR03") {
+      if (isCrStageWithApprovalGroupDropdown(taskTitle)) {
         $("#SecurityExecGroupNameDiv").show();
         $("#SecurityExecGroupName").prop("disabled", false);
         $("#SecurityExecGroupName")
@@ -7058,5 +7198,717 @@ window.handleWorkflowApproval = function (
   }
 
   checkCRAutoApprovalThenExecute(executeWorkflowTaskUpdate);
+};
+
+// ─── Change Request View PDF (form layout + company brand) ───
+window.Export_CR_PDF = {
+  initButton: function () {
+    if (!window.isView || window.isWF) {
+      $(".changeRequests-container .exportPdfBtnContainer").remove();
+      return;
+    }
+    if (!$(".changeRequests-container").length) {
+      return;
+    }
+    $(".changeRequests-container .exportPdfBtnContainer").remove();
+    $(".changeRequests-container").prepend(
+      '<div class="exportPdfBtnContainer cr-export-pdf">' +
+        '<button type="button" class="btn exportPdfBtn Resources" data-trans-excelpdf onclick="Export_CR_PDF.export()"></button>' +
+        "</div>"
+    );
+    if (typeof changeResources === "function") {
+      changeResources();
+    }
+  },
+
+  canvasToPdfWithFirstPageFlush: function (canvas, opts) {
+    if (
+      window.Export_PDF &&
+      typeof Export_PDF.canvasToPdfWithFirstPageFlush === "function"
+    ) {
+      return Export_PDF.canvasToPdfWithFirstPageFlush(canvas, opts);
+    }
+    // Fallback if Form_Render Export_PDF is not loaded
+    opts = opts || {};
+    var topFirst = opts.topMarginFirst != null ? opts.topMarginFirst : 0;
+    var topRest = opts.topMarginRest != null ? opts.topMarginRest : 18;
+    var bottom = opts.bottomMargin != null ? opts.bottomMargin : 28;
+    var quality = opts.imageQuality != null ? opts.imageQuality : 1;
+
+    var probe = document.createElement("div");
+    probe.style.cssText =
+      "position:fixed;left:0;top:0;width:2px;height:2px;opacity:0;pointer-events:none;";
+    document.body.appendChild(probe);
+    return html2pdf()
+      .set({
+        margin: 0,
+        html2canvas: { scale: 1, logging: false },
+        jsPDF: { unit: "pt", format: "a4", orientation: "portrait" },
+      })
+      .from(probe)
+      .toPdf()
+      .get("pdf")
+      .then(function (pdf) {
+        if (probe.parentNode) {
+          probe.parentNode.removeChild(probe);
+        }
+        var ps = pdf.internal.pageSize;
+        var pageW =
+          typeof ps.getWidth === "function" ? ps.getWidth() : ps.width;
+        var pageH =
+          typeof ps.getHeight === "function" ? ps.getHeight() : ps.height;
+        var pxPerPt = canvas.width / pageW;
+        var srcY = 0;
+        var pageNum = 0;
+        while (srcY < canvas.height) {
+          pageNum += 1;
+          var topM = pageNum === 1 ? topFirst : topRest;
+          var availPt = pageH - topM - bottom;
+          var availPx = Math.max(1, Math.floor(availPt * pxPerPt));
+          var slicePx = Math.min(availPx, canvas.height - srcY);
+          if (slicePx < 1) {
+            break;
+          }
+          var pageCanvas = document.createElement("canvas");
+          pageCanvas.width = canvas.width;
+          pageCanvas.height = slicePx;
+          var ctx = pageCanvas.getContext("2d");
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+          ctx.drawImage(
+            canvas,
+            0,
+            srcY,
+            canvas.width,
+            slicePx,
+            0,
+            0,
+            canvas.width,
+            slicePx
+          );
+          var imgData = pageCanvas.toDataURL("image/jpeg", quality);
+          if (pageNum > 1) {
+            pdf.addPage();
+          } else {
+            pdf.setPage(1);
+          }
+          pdf.addImage(imgData, "JPEG", 0, topM, pageW, slicePx / pxPerPt);
+          srcY += slicePx;
+        }
+        return pdf;
+      })
+      .catch(function (err) {
+        if (probe.parentNode) {
+          probe.parentNode.removeChild(probe);
+        }
+        throw err;
+      });
+  },
+
+  escapeHtml: function (text) {
+    return String(text == null ? "" : text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  },
+
+  formatPdfText: function (text) {
+    var s = String(text == null ? "" : text);
+    s = s.replace(
+      /([\u0600-\u06FF])\s*-\s*([\u0600-\u06FF])/g,
+      "$1 \u200F-\u200F $2"
+    );
+    s = s.replace(
+      /([\u0600-\u06FF])\s*\/\s*([\u0600-\u06FF])/g,
+      "$1 \u200F/\u200F $2"
+    );
+    s = s.replace(/\(\s*([\u0600-\u06FF])/g, "\u200F(\u200F$1");
+    s = s.replace(/([\u0600-\u06FF])\s*\)/g, "$1\u200F)\u200F");
+
+    var gap =
+      '<span class="pdf-sp" style="display:inline-block;width:0.28em;min-width:0.28em;max-width:0.28em;"></span>';
+    var escaped = Export_CR_PDF.escapeHtml(s);
+    return escaped
+      .split(/\r?\n/)
+      .map(function (line) {
+        return line
+          .split(/[ \u00A0\u200B]+/)
+          .filter(function (w) {
+            return w.length > 0;
+          })
+          .join(gap);
+      })
+      .join("<br>");
+  },
+
+  readVisibleText: function ($el) {
+    if (!$el || !$el.length) {
+      return "";
+    }
+    var el = $el[0];
+    var raw = el.innerText != null ? el.innerText : $el.text();
+    return String(raw == null ? "" : raw)
+      .replace(/\u00A0/g, " ")
+      .replace(/[ \t\f\v]+/g, " ")
+      .replace(/\s*\n\s*/g, "\n")
+      .trim();
+  },
+
+  getStyleLibraryBase: function () {
+    var base =
+      (typeof _spPageContextInfo !== "undefined" &&
+        (_spPageContextInfo.siteAbsoluteUrl ||
+          _spPageContextInfo.webAbsoluteUrl)) ||
+      window.location.origin;
+    return String(base).replace(/\/$/, "") + "/Style%20Library/spm/images/";
+  },
+
+  getLogoUrl: function (isAr) {
+    var $img = $(".main-logo img").first();
+    if ($img.length) {
+      var src = $img.attr("src") || $img.prop("src") || "";
+      if (src) {
+        return src;
+      }
+    }
+    return (
+      Export_CR_PDF.getStyleLibraryBase() +
+      (isAr ? "main-logo.png" : "main-logo-en.png")
+    );
+  },
+
+  getHeaderBannerUrl: function () {
+    return Export_CR_PDF.getStyleLibraryBase() + "pdf-header-banner.png";
+  },
+
+  getHeaderBannerCandidates: function () {
+    var base =
+      (typeof _spPageContextInfo !== "undefined" &&
+        (_spPageContextInfo.siteAbsoluteUrl ||
+          _spPageContextInfo.webAbsoluteUrl)) ||
+      window.location.origin;
+    base = String(base).replace(/\/$/, "");
+    var cacheBust = "?v=" + Date.now();
+    return [
+      base + "/Style%20Library/spm/images/pdf-header-banner.png" + cacheBust,
+      base + "/Style%20Library/Images/pdf-header-banner.png" + cacheBust,
+      base + "/Style Library/spm/images/pdf-header-banner.png" + cacheBust,
+      base + "/Style Library/Images/pdf-header-banner.png" + cacheBust,
+    ];
+  },
+
+  loadImageAsDataUrl: function (url) {
+    return fetch(url, { credentials: "include", cache: "no-cache" })
+      .then(function (res) {
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status);
+        }
+        return res.blob();
+      })
+      .then(function (blob) {
+        return new Promise(function (resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            resolve(reader.result);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      });
+  },
+
+  resolveHeaderBannerDataUrl: function () {
+    var urls = Export_CR_PDF.getHeaderBannerCandidates();
+    var tryNext = function (i) {
+      if (i >= urls.length) {
+        return Promise.resolve("");
+      }
+      return Export_CR_PDF.loadImageAsDataUrl(urls[i]).catch(function () {
+        return tryNext(i + 1);
+      });
+    };
+    return tryNext(0);
+  },
+
+  getFieldValue: function ($col) {
+    var $picker = $col.find(".sp-peoplepicker-topLevel").first();
+    if ($picker.length) {
+      var names = [];
+      $picker.find(".ms-entity-resolved, .sp-peoplepicker-userSpan").each(function () {
+        var t = ($(this).text() || "").trim();
+        if (t) {
+          names.push(t);
+        }
+      });
+      if (names.length) {
+        return names.join(", ");
+      }
+    }
+
+    var $radios = $col.find('input[type="radio"]');
+    if ($radios.length) {
+      var $checked = $radios.filter(":checked");
+      if ($checked.length) {
+        var id = $checked.attr("id");
+        var $lab = id ? $col.find('label[for="' + id + '"]') : $();
+        return $lab.length
+          ? Export_CR_PDF.readVisibleText($lab)
+          : ($checked.val() || "").toString();
+      }
+      return "-";
+    }
+
+    var $select = $col.find("select").first();
+    if ($select.length) {
+      var txt = ($select.find("option:selected").text() || "").trim();
+      return txt || "-";
+    }
+
+    var $ta = $col.find("textarea").first();
+    if ($ta.length) {
+      return ($ta.val() || "").toString().trim() || "-";
+    }
+
+    var $input = $col
+      .find("input")
+      .not('[type="file"],[type="hidden"],[type="radio"],[type="checkbox"],[type="button"],[type="submit"]')
+      .first();
+    if ($input.length) {
+      return ($input.val() || "").toString().trim() || "-";
+    }
+
+    return "-";
+  },
+
+  gatherFormFields: function () {
+    var fields = [];
+    var $cols = $(
+      ".changeRequests-container .ItemPseudoFields > [class*='col-'], .changeRequests-container .changeItemsRow .dynamicField, .changeRequests-container #CRObservationsBlock > [class*='col-']"
+    );
+
+    $cols.each(function () {
+      var $col = $(this);
+      if (!$col.is(":visible") || $col.css("display") === "none") {
+        return;
+      }
+      if ($col.find("input[type=file]").length && !$col.find("select, textarea, input:not([type=file])").length) {
+        return;
+      }
+
+      var $label = $col.find("label").first();
+      var label = Export_CR_PDF.readVisibleText($label);
+      if (!label) {
+        return;
+      }
+
+      // Drop trailing required asterisk marker from label text if present alone
+      label = label.replace(/\s*\*\s*$/, "").trim();
+
+      var value = Export_CR_PDF.getFieldValue($col);
+      var isFull =
+        $col.hasClass("col-md-12") ||
+        $col.hasClass("col-12") ||
+        $col.find("textarea").length > 0;
+
+      fields.push({
+        label: label,
+        value: value,
+        full: isFull,
+      });
+    });
+
+    return fields;
+  },
+
+  ensureLibrary: function () {
+    return new Promise(function (resolve, reject) {
+      if (typeof window.html2pdf === "function") {
+        resolve();
+        return;
+      }
+      var existing = document.getElementById("spm-html2pdf-script");
+      if (existing) {
+        existing.parentNode.removeChild(existing);
+      }
+      var baseUrl =
+        (typeof _spPageContextInfo !== "undefined" &&
+          (_spPageContextInfo.siteAbsoluteUrl ||
+            _spPageContextInfo.webAbsoluteUrl)) ||
+        window.location.origin;
+
+      var originalDefine = window.define;
+      var restoreDefine = function () {
+        if (typeof originalDefine !== "undefined") {
+          window.define = originalDefine;
+        } else {
+          try {
+            delete window.define;
+          } catch (e) {
+            window.define = originalDefine;
+          }
+        }
+      };
+      if (typeof window.define === "function") {
+        window.define = undefined;
+      }
+
+      var script = document.createElement("script");
+      script.id = "spm-html2pdf-script";
+      script.type = "text/javascript";
+      script.src =
+        String(baseUrl).replace(/\/$/, "") +
+        "/Style%20Library/spm/js/html2pdf.js";
+      script.onload = function () {
+        restoreDefine();
+        if (typeof window.html2pdf === "function") {
+          resolve();
+        } else {
+          reject(new Error("html2pdf not available after load"));
+        }
+      };
+      script.onerror = function () {
+        restoreDefine();
+        reject(new Error("Failed to load html2pdf.js"));
+      };
+      document.head.appendChild(script);
+    });
+  },
+
+  buildTableHtml: function (fields, opts) {
+    var isAr = opts.isAr;
+    var pdfFont = opts.pdfFont;
+    var brandTeal = opts.brandTeal;
+    var brandNavy = opts.brandNavy;
+    var brandLabelBg = opts.brandLabelBg;
+    var brandBorder = opts.brandBorder || "#000000";
+    var textAlign = isAr ? "right" : "left";
+    var borderSide = isAr ? "border-left" : "border-right";
+    var sectionTitle =
+      (typeof Resources !== "undefined" &&
+        Resources[opts.lang] &&
+        Resources[opts.lang].changerequest) ||
+      (isAr ? "طلب التغيير" : "Change Request");
+
+    var sectionBarHtml =
+      '<div class="html2pdf headname pdf-section-bar" style="width:100%;box-sizing:border-box;background:' +
+      brandTeal +
+      ";color:#ffffff;font-weight:700;font-size:24px;padding:10px 12px;text-align:center;border-bottom:1px solid " +
+      brandBorder +
+      ";direction:" +
+      (isAr ? "rtl" : "ltr") +
+      ';white-space:pre-wrap;page-break-inside:avoid;break-inside:avoid;"><bdi>' +
+      Export_CR_PDF.formatPdfText(sectionTitle) +
+      "</bdi></div>";
+
+    var rowHtmlList = [];
+    fields.forEach(function (item, rowIndex) {
+      var label = Export_CR_PDF.formatPdfText(item.label || "");
+      var value = Export_CR_PDF.formatPdfText(item.value || "");
+      var rowBorder =
+        rowIndex === fields.length - 1
+          ? ""
+          : "border-bottom:1px solid " + brandBorder + ";";
+
+      rowHtmlList.push(
+        '<div class="pdf-row" style="display:flex;width:100%;box-sizing:border-box;page-break-inside:avoid;break-inside:avoid;' +
+          rowBorder +
+          '">' +
+          '<div style="width:35%;min-width:0;max-width:35%;box-sizing:border-box;padding:8px 10px;font-weight:700;font-size:15px;line-height:1.45;text-align:' +
+          textAlign +
+          ";background:" +
+          brandLabelBg +
+          ";" +
+          borderSide +
+          ":1px solid " +
+          brandBorder +
+          ";color:" +
+          brandNavy +
+          ";font-family:" +
+          pdfFont +
+          ';overflow-wrap:anywhere;word-break:break-word;overflow:hidden;white-space:normal;"><bdi>' +
+          label +
+          "</bdi></div>" +
+          '<div style="width:65%;min-width:0;max-width:65%;box-sizing:border-box;padding:8px 10px;font-size:15px;line-height:1.45;text-align:' +
+          textAlign +
+          ";background:#ffffff;color:#222;font-family:" +
+          pdfFont +
+          ';overflow-wrap:anywhere;word-break:break-word;overflow:hidden;white-space:normal;"><bdi>' +
+          value +
+          "</bdi></div>" +
+          "</div>"
+      );
+    });
+
+    var keepCount = Math.min(2, rowHtmlList.length);
+    var hasRest = rowHtmlList.length > keepCount;
+    var keepHtml = sectionBarHtml;
+    for (var k = 0; k < keepCount; k++) {
+      keepHtml += rowHtmlList[k];
+    }
+    var keepBorderStyle = hasRest
+      ? "border-top:1px solid " +
+        brandBorder +
+        ";border-left:1px solid " +
+        brandBorder +
+        ";border-right:1px solid " +
+        brandBorder +
+        ";"
+      : "border:1px solid " + brandBorder + ";";
+
+    var html =
+      '<div class="pdf-section" style="margin:0;">' +
+      '<div class="pdf-section-keep" style="width:100%;box-sizing:border-box;page-break-inside:avoid;break-inside:avoid;' +
+      keepBorderStyle +
+      '">' +
+      keepHtml +
+      "</div>";
+
+    if (hasRest) {
+      html +=
+        '<div class="pdf-grid-rest" style="width:100%;box-sizing:border-box;border-left:1px solid ' +
+        brandBorder +
+        ";border-right:1px solid " +
+        brandBorder +
+        ";border-bottom:1px solid " +
+        brandBorder +
+        ';">';
+      for (var r = keepCount; r < rowHtmlList.length; r++) {
+        html += rowHtmlList[r];
+      }
+      html += "</div>";
+    }
+
+    html += "</div>";
+    return html;
+  },
+
+  handleExport: function (fields, headerBannerDataUrl) {
+    var lang = localStorage.getItem("lng") === "en" ? "en" : "ar";
+    var isAr = lang === "ar";
+    var brandTeal = "#1a9a9a";
+    var brandNavy = "#14415a";
+    var brandLabelBg = "#f2f2f2";
+    var brandBorder = "#000000";
+    var pdfFont = "'HRSD-FONT', 'LTBukra', 'Effra', Tahoma, sans-serif";
+    var headerBannerUrl =
+      headerBannerDataUrl || Export_CR_PDF.getHeaderBannerUrl();
+    var pdfFileName = (window.crItemCode || "Full-Data")
+      .toString()
+      .replace(/[\\/:*?"<>|]+/g, "-")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+    pdfFileName = (pdfFileName || "Full-Data") + ".pdf";
+    var pageTitle =
+      (typeof Resources !== "undefined" &&
+        Resources[lang] &&
+        Resources[lang].changerequest) ||
+      (isAr ? "طلب التغيير" : "Change Request");
+    if (window.crItemCode) {
+      pageTitle = pageTitle + " - " + window.crItemCode;
+    }
+
+    var brandHeaderHtml = "";
+    if (headerBannerUrl) {
+      brandHeaderHtml +=
+        '<div style="width:100%;box-sizing:border-box;background:#ffffff;line-height:0;">' +
+        '<img src="' +
+        Export_CR_PDF.escapeHtml(headerBannerUrl) +
+        '" alt="header" style="width:100%;max-width:794px;height:auto;display:block;"/>' +
+        "</div>";
+    }
+    brandHeaderHtml +=
+      '<div style="padding:12px 40px 18px 40px;text-align:center;color:' +
+      brandNavy +
+      ";font-weight:700;font-size:28px;direction:" +
+      (isAr ? "rtl" : "ltr") +
+      ';line-height:1.35;"><bdi>' +
+      Export_CR_PDF.formatPdfText(pageTitle) +
+      "</bdi></div>";
+
+    var tableBody = Export_CR_PDF.buildTableHtml(fields, {
+      isAr: isAr,
+      lang: lang,
+      pdfFont: pdfFont,
+      brandTeal: brandTeal,
+      brandNavy: brandNavy,
+      brandLabelBg: brandLabelBg,
+      brandBorder: brandBorder,
+    });
+
+    var contentHTML =
+      '<div class="page" style="width:794px;box-sizing:border-box;background:#fff;font-family:' +
+      pdfFont +
+      ';">' +
+      brandHeaderHtml +
+      '<div style="padding:0 40px 12px 40px;box-sizing:border-box;">' +
+      tableBody +
+      "</div></div>";
+
+    var hiddenContainer = document.createElement("div");
+    hiddenContainer.style.cssText =
+      "position:fixed;left:0;top:0;width:794px;z-index:-1;opacity:0.01;pointer-events:none;background:#fff;";
+
+    var tempElement = document.createElement("div");
+    tempElement.setAttribute("dir", isAr ? "rtl" : "ltr");
+    tempElement.setAttribute("lang", lang);
+    tempElement.className = (isAr ? "ar" : "en") + " export-pdf-root";
+    tempElement.style.cssText =
+      "width:794px;box-sizing:border-box;background:#ffffff;font-family:" +
+      pdfFont +
+      ";direction:" +
+      (isAr ? "rtl" : "ltr") +
+      ";";
+    tempElement.innerHTML = contentHTML;
+    hiddenContainer.appendChild(tempElement);
+    document.body.appendChild(hiddenContainer);
+
+    var avoidRangesCss = [];
+    var captureCssHeight = 0;
+    var crCanvasScale = 2;
+
+    html2pdf()
+      .from(tempElement)
+      .set({
+        // Top 18 for pagebreak sizing (pages 2+); page 1 flush via canvasToPdfWithFirstPageFlush
+        margin: [18, 0, 28, 0],
+        filename: pdfFileName,
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: {
+          scale: crCanvasScale,
+          letterRendering: false,
+          useCORS: true,
+          allowTaint: false,
+          scrollY: 0,
+          windowWidth: 794,
+          backgroundColor: "#ffffff",
+          onclone: function (clonedDoc) {
+            var root = clonedDoc.body.querySelector(".export-pdf-root");
+            if (root) {
+              root.style.fontFamily = pdfFont;
+              root.setAttribute("dir", isAr ? "rtl" : "ltr");
+            }
+            var nodes = clonedDoc.querySelectorAll("bdi, div, label");
+            for (var n = 0; n < nodes.length; n++) {
+              nodes[n].style.fontFamily = pdfFont;
+            }
+            var cells = clonedDoc.querySelectorAll(".pdf-row > div");
+            for (var c = 0; c < cells.length; c++) {
+              cells[c].style.minWidth = "0";
+              cells[c].style.overflowWrap = "anywhere";
+              cells[c].style.wordBreak = "break-word";
+              cells[c].style.overflow = "hidden";
+              cells[c].style.whiteSpace = "normal";
+            }
+            var gaps = clonedDoc.querySelectorAll(".pdf-sp");
+            for (var g = 0; g < gaps.length; g++) {
+              gaps[g].style.display = "inline-block";
+              gaps[g].style.width = "0.28em";
+              gaps[g].style.minWidth = "0.28em";
+              gaps[g].style.maxWidth = "0.28em";
+            }
+            if (
+              window.Export_PDF &&
+              typeof Export_PDF.collectAvoidRangesFromClone === "function"
+            ) {
+              avoidRangesCss = Export_PDF.collectAvoidRangesFromClone(clonedDoc);
+            }
+            if (root) {
+              captureCssHeight = Math.max(
+                root.scrollHeight,
+                root.offsetHeight,
+                1
+              );
+            }
+          },
+        },
+        jsPDF: { unit: "pt", format: "a4", orientation: "portrait" },
+        pagebreak: {
+          mode: [],
+          avoid: [],
+        },
+      })
+      .toCanvas()
+      .get("canvas")
+      .then(function (canvas) {
+        var scaleY =
+          captureCssHeight > 0
+            ? canvas.height / captureCssHeight
+            : crCanvasScale;
+        return Export_CR_PDF.canvasToPdfWithFirstPageFlush(canvas, {
+          topMarginFirst: 0,
+          topMarginRest: 18,
+          bottomMargin: 28,
+          imageQuality: 1,
+          html2canvasScale: scaleY,
+          avoidRangesCss: avoidRangesCss,
+        }).then(function (pdf) {
+          var totalPages = pdf.internal.getNumberOfPages();
+          var pageW = pdf.internal.pageSize.getWidth();
+          var pageH = pdf.internal.pageSize.getHeight();
+          var footerH = 18;
+          var footerFontSize = 9;
+          for (var p = 1; p <= totalPages; p++) {
+            pdf.setPage(p);
+            pdf.setFillColor(230, 230, 230);
+            pdf.rect(0, pageH - footerH, pageW, footerH, "F");
+            pdf.setTextColor(90, 90, 90);
+            pdf.setFontSize(footerFontSize);
+            var textY = pageH - footerH / 2 + footerFontSize * 0.35;
+            pdf.text(String(p), pageW / 2, textY, { align: "center" });
+          }
+          pdf.save(pdfFileName);
+        });
+      })
+      .then(function () {
+        if (hiddenContainer.parentNode) {
+          document.body.removeChild(hiddenContainer);
+        }
+      })
+      .catch(function (error) {
+        console.error("CR PDF export error:", error);
+        if (hiddenContainer.parentNode) {
+          document.body.removeChild(hiddenContainer);
+        }
+      });
+  },
+
+  export: function () {
+    var lang = localStorage.getItem("lng") === "en" ? "en" : "ar";
+    if (!window.isView || window.isWF) {
+      return;
+    }
+    Export_CR_PDF.ensureLibrary()
+      .then(function () {
+        return Export_CR_PDF.resolveHeaderBannerDataUrl();
+      })
+      .then(function (bannerDataUrl) {
+        var fields = Export_CR_PDF.gatherFormFields();
+        if (!fields.length) {
+          alert(
+            lang === "ar"
+              ? "لا توجد بيانات للتصدير."
+              : "No data available to export."
+          );
+          return;
+        }
+        if (!bannerDataUrl) {
+          console.warn(
+            "CR PDF header banner not found. Expected pdf-header-banner.png under Style Library/spm/images or Style Library/Images (checked in/published)."
+          );
+        }
+        Export_CR_PDF.handleExport(fields, bannerDataUrl);
+      })
+      .catch(function (error) {
+        console.error("CR PDF library error:", error);
+        alert(
+          lang === "ar"
+            ? "تعذر تحميل مكتبة تصدير PDF. تأكد من رفع html2pdf.js في Style Library/spm/js."
+            : "PDF export library is not loaded. Ensure html2pdf.js is in Style Library/spm/js."
+        );
+      });
+  },
 };
 

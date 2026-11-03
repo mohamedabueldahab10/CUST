@@ -29,7 +29,32 @@ var EngineeringProjectCode = null;
 var LastProjectHistory = [];
 var ManHoursHistory = [];
 var requiredFieldsSections = []; // return required field when show hide toggle for master like deliv and miles in proj when change on zero proj
-
+if (typeof window.getMasterDetailCodeIndex !== "function") {
+  window.getMasterDetailCodeIndex = function (title, fallbackId) {
+    var lastPart = String(title || "").split("-").pop();
+    var idx = parseInt(lastPart, 10);
+    if (!isNaN(idx) && idx > 0) {
+      return idx;
+    }
+    var idNum = parseInt(fallbackId, 10);
+    return !isNaN(idNum) && idNum > 0 ? idNum : 0;
+  };
+}
+if (typeof window.getNextMasterDetailIndex !== "function") {
+  window.getNextMasterDetailIndex = function ($section) {
+    var maxIndex = 0;
+    if (!$section || !$section.length) {
+      return 1;
+    }
+    $section.find(".Details-Item").each(function () {
+      var idx = parseInt($(this).attr("data-index"), 10);
+      if (!isNaN(idx) && idx > maxIndex) {
+        maxIndex = idx;
+      }
+    });
+    return maxIndex + 1;
+  };
+}
 if (
   localStorage.getItem("lng") == null ||
   localStorage.getItem("lng") == "ar"
@@ -126,6 +151,63 @@ var checkStatusHtml = setInterval(function () {
     ListInfo.preinit();
   }
 }, 1000);
+
+window.extractYearFromDateValue = function (dateVal) {
+  if (!dateVal) return "";
+  var s = String(dateVal).trim();
+  var iso = s.match(/^(\d{4})[-/]/);
+  if (iso) return iso[1];
+  var parts = s.split(/[\/\-\.]/);
+  for (var i = 0; i < parts.length; i++) {
+    if (/^\d{4}$/.test(parts[i])) return parts[i];
+  }
+  var parsed = new Date(s);
+  if (!isNaN(parsed.getTime())) {
+    var y = parsed.getFullYear();
+    if (y >= 1900 && y <= 2099) return String(y);
+  }
+  return "";
+};
+
+window.syncYearFromDateField = function (el) {
+  var $el = $(el);
+  var targetId = $el.attr("data-setyeartofield") || "ToDate";
+  var year = window.extractYearFromDateValue($el.val());
+  if (!year) return;
+  var $target = $("#" + targetId);
+  if ($target.length) {
+    $target.val(year).trigger("change");
+  }
+};
+
+window.bindBenefitPlannedDateToYear = function () {
+  if (typeof listkey === "undefined" || listkey != "benefits") return;
+  if (typeof isNew === "undefined" || !isNew) return;
+  $(document)
+    .off("change.benefitToYear input.benefitToYear")
+    .on(
+      "change.benefitToYear input.benefitToYear",
+      "#PlannedAchievementDate",
+      function () {
+        window.syncYearFromDateField(this);
+      }
+    );
+  var $planned = $("#PlannedAchievementDate");
+  if ($planned.length && $planned.val()) {
+    window.syncYearFromDateField($planned[0]);
+  }
+};
+
+$(document).on(
+  "change.benefitToYear input.benefitToYear",
+  "#PlannedAchievementDate",
+  function () {
+    if (typeof listkey === "undefined" || listkey != "benefits") return;
+    if (typeof isNew === "undefined" || !isNew) return;
+    window.syncYearFromDateField(this);
+  }
+);
+
 //for edit and new forms
 window.ListInfo = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
@@ -493,6 +575,9 @@ window.ListInfo = {
             if (isNew) {
               ListInfo.g.newDetail();
             }
+          }
+          if (ListInfo.g.uniqueMasterDetailRadioNames) {
+            ListInfo.g.uniqueMasterDetailRadioNames();
           }
           //handle people picker inputs
           $("div[type=picker]").each(function () {
@@ -920,6 +1005,10 @@ window.ListInfo = {
           //new validation listiner
 
           //////////////////////////////// get siblings value like AcceptanceCriteria in benefits when change on delivrable
+
+          if (typeof window.bindBenefitPlannedDateToYear === "function") {
+            window.bindBenefitPlannedDateToYear();
+          }
 
           $("body").on("change", ".getsiblingdata", function (event) {
             // get sibling value based on oter value
@@ -1522,6 +1611,7 @@ window.ListInfo = {
             //
           });
           if (listkey == "deliverables" && isEdit) {
+            console.log("mutasem 1");
             $(document).on("change", "#Exchangetype", function () {
               var selectedValue = $(this).val();
           
@@ -2173,6 +2263,18 @@ window.ListInfo = {
           $("[data-togglevalues]").on("change", function () {
             ListInfo.g.toggleFields($(this));
           });
+          $("body")
+            .off("change.masterLookupKeep")
+            .on(
+              "change.masterLookupKeep",
+              "[data-target_list] select[type=dropdown]",
+              function () {
+                var v = $(this).val() || "";
+                $(this).attr("data-saved-value", v);
+                $(this).attr("data-lookup-value", v);
+                $(this).attr("value", v);
+              }
+            );
           // #add validation on amount field to be like weight
           $(".percentbyparent[data-targetelem]").each(function () {
             let percentField = $(`#${$(this).attr("data-targetelem")}`);
@@ -2196,6 +2298,9 @@ window.ListInfo = {
             });
             Edit_Data_Submit.g.clickbait();
             Edit_Data_Submit.g.Cancel();
+            if (listkey == "kpiequations") {
+              bindKPIComponentLinkApi();
+            }
 
             // if (listkey == "invoices") {
             //   ListInfo.g.InvoicesTotal();
@@ -2398,6 +2503,9 @@ window.ListInfo = {
             if (isNew && listkey == "benefits" && ICODE && window.BenefitsWeightGuard) {
               BenefitsWeightGuard.checkAndBlockNew();
             }
+            if (isNew && listkey == "benefits" && window.bindBenefitPlannedDateToYear) {
+              window.bindBenefitPlannedDateToYear();
+            }
             if (
               isNew &&
               typeof Edit_Data_Request !== "undefined" &&
@@ -2490,6 +2598,91 @@ window.ListInfo = {
                 $("#MesureStatus").prop("disabled", true);
               }
             }
+            // EPMO at InitiativeBenefits00: MesureStatus + CompletionStatus read-only
+            if (listkey == "benefits" && isEdit) {
+              var applyEpmoInitiativeBenefits00ReadOnly = function () {
+                var isWfNow =
+                  (typeof USERisWF !== "undefined" && USERisWF) ||
+                  (typeof isWF !== "undefined" && isWF);
+                var isEpmoUser =
+                  (typeof isEPMO !== "undefined" && isEPMO) ||
+                  (typeof currentUserRole !== "undefined" &&
+                    currentUserRole == "EPMO");
+                if (!isWfNow || !isEpmoUser) return false;
+                var wfStageVal =
+                  $("#WFStage").val() || $("#WFStage").attr("value") || "";
+                var sid =
+                  typeof stageid !== "undefined" ? String(stageid) : "";
+                var cstage =
+                  typeof currentstage !== "undefined"
+                    ? String(currentstage)
+                    : "";
+                var isStage00 =
+                  sid === "InitiativeBenefits00" ||
+                  cstage === "InitiativeBenefits00" ||
+                  wfStageVal === "InitiativeBenefits00";
+                if (!isStage00) return false;
+                $("#MesureStatus").prop("disabled", true);
+                $("input#CompletionStatus").prop("disabled", true);
+                return true;
+              };
+              if (!applyEpmoInitiativeBenefits00ReadOnly()) {
+                setTimeout(applyEpmoInitiativeBenefits00ReadOnly, 800);
+                setTimeout(applyEpmoInitiativeBenefits00ReadOnly, 2000);
+              }
+            }
+            // PeriodType: same access as Weight (EPMO 01/02/03, IM 00)
+            if (listkey == "benefits" && isEdit) {
+              var applyBenefitPeriodTypeEditable = function () {
+                var canEdit = false;
+                if (
+                  window.BenefitsWeightGuard &&
+                  BenefitsWeightGuard.canCurrentUserEditWeight
+                ) {
+                  canEdit = BenefitsWeightGuard.canCurrentUserEditWeight();
+                } else if (
+                  typeof End_Workflow !== "undefined" &&
+                  End_Workflow.canEditBenefitPeriodType
+                ) {
+                  canEdit = End_Workflow.canEditBenefitPeriodType();
+                }
+                var $period = $("#PeriodType");
+                if (!$period.length) return false;
+                if (canEdit) {
+                  if (!$period.attr("data-original-periodtype") && $period.val()) {
+                    $period.attr("data-original-periodtype", $period.val());
+                  }
+                  $period.prop("disabled", false).removeAttr("disabled");
+                  $period.find("option").not('[value=""]').prop("disabled", false);
+                  $period
+                    .off("change.epmoPeriodReplace")
+                    .on("change.epmoPeriodReplace", function () {
+                      var selectedPeriod = String($(this).val() || "").trim();
+                      if (
+                        typeof End_Workflow !== "undefined" &&
+                        End_Workflow.clearMismatchedBenefitPeriodFields
+                      ) {
+                        End_Workflow.clearMismatchedBenefitPeriodFields(
+                          selectedPeriod
+                        );
+                      }
+                      if (
+                        typeof ListInfo !== "undefined" &&
+                        ListInfo.g &&
+                        ListInfo.g.toggleFields
+                      ) {
+                        ListInfo.g.toggleFields($(this));
+                      }
+                    });
+                  return true;
+                }
+                $period.prop("disabled", true);
+                return false;
+              };
+              applyBenefitPeriodTypeEditable();
+              setTimeout(applyBenefitPeriodTypeEditable, 800);
+              setTimeout(applyBenefitPeriodTypeEditable, 2000);
+            }
             // Initiative Manager: A–G required when empty on New/Edit
             if (
               listkey == "benefits" &&
@@ -2519,6 +2712,21 @@ window.ListInfo = {
               setTimeout(function () {
                 BenefitsEpmoEquationSectionRequired.bind();
               }, 800);
+            }
+            // Weight: EPMO at InitiativeBenefits01/02/03; Initiative Manager at InitiativeBenefits00
+            if (
+              listkey == "benefits" &&
+              (isNew || isEdit) &&
+              window.BenefitsWeightGuard
+            ) {
+              setTimeout(function () {
+                BenefitsWeightGuard.applyWeightEditAccess();
+                BenefitsWeightGuard.applyRemainingMax();
+                BenefitsWeightGuard.bindClamp();
+              }, 800);
+              setTimeout(function () {
+                BenefitsWeightGuard.applyWeightEditAccess();
+              }, 2000);
             }
 
             if (listkey == "projects") {
@@ -3302,6 +3510,7 @@ window.ListInfo = {
     } else {
       thistip = 'data-tip="' + element.tooltip + '"';
     }
+    var infoIconHtml = getFieldInfoIconHtml(element);
 
     var min;
     if (element.min == "today") {
@@ -3421,6 +3630,7 @@ window.ListInfo = {
           element.validation +
           ">" +
           displayName +
+          infoIconHtml +
           "</label>" +
           "<input " +
           ToggleName +
@@ -4721,13 +4931,23 @@ window.ListInfo = {
             _spPageContextInfo.siteServerRelativeUrl,
             element.siblingslistname,
             customQuery,
-            [element.InternalName],
+            [element.InternalName, "ID"],
             function (records, record, listItem, isDone) {
               if (isDone) {
                 var totalWeight = 0;
+                var currentItemId =
+                  typeof isEdit !== "undefined" &&
+                  isEdit &&
+                  typeof listkey !== "undefined" &&
+                  listkey == "benefits" &&
+                  typeof IID !== "undefined" &&
+                  IID
+                    ? String(IID)
+                    : "";
         
-                // Sum all sibling weights
+                // Sum sibling weights (exclude current benefit on Edit so remaining = 100 - others)
                 records.forEach(function (el) {
+                  if (currentItemId && String(el.ID) === currentItemId) return;
                   totalWeight += el[element.InternalName] ? el[element.InternalName] : 0;
                 });
         
@@ -4795,7 +5015,7 @@ window.ListInfo = {
                   toggleDisabledName +
                   " " +
                   RequiredName +
-                  ' type="number" max="' +
+                  ' type="number" min="0" max="' +
                   Remaining +
                   '" title="Please enter value between 0 and ' +
                   Remaining +
@@ -4809,7 +5029,7 @@ window.ListInfo = {
                   element.state +
                   " " +
                   element.validation +
-                  ` oninput="this.value = (this.value && Math.abs(this.value) >= 0) && (this.value && Math.abs(this.value) <= ${Remaining}) ? Math.abs(this.value) : null">` +
+                  ' oninput="var m=parseFloat(this.getAttribute(\'max\'));var n=Math.abs(parseFloat(this.value));if(this.value===\'\'||isNaN(n)){this.value=\'\';return;}if(!isNaN(m)&&n>m){this.value=m;}else{this.value=n;}">' +
                   '<span data-trans-' +
                   Errmsgkey +
                   ' class="errMsgField Resources"></span>' +
@@ -5498,6 +5718,18 @@ window.ListInfo = {
         var buildDateToParentHtml = function (minDateVal, maxDateVal) {
           var minAttr = minDateVal ? ' min="' + minDateVal + '"' : "";
           var maxAttr = maxDateVal ? ' max="' + maxDateVal + '"' : "";
+          var setYearToFieldName =
+            element.setYearToField ||
+            (listkey == "benefits" &&
+            isNew &&
+            element.InternalName == "PlannedAchievementDate"
+              ? "ToDate"
+              : "");
+          var setYearToFieldAttr = setYearToFieldName
+            ? ' data-setyeartofield="' +
+              setYearToFieldName +
+              '" oninput="if(window.syncYearFromDateField){window.syncYearFromDateField(this);}" onchange="if(window.syncYearFromDateField){window.syncYearFromDateField(this);}"'
+            : "";
 
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
@@ -5570,6 +5802,7 @@ window.ListInfo = {
             '"' +
             maxAttr +
             minAttr +
+            setYearToFieldAttr +
             ">" +
             "<span data-trans-" +
             Errmsgkey +
@@ -10631,10 +10864,38 @@ window.ListInfo = {
   g: {
     htmlText: "",
     htmlElement: "",
+    uniqueMasterDetailRadioNames: function ($scope) {
+      var $rows;
+      if ($scope && $scope.length) {
+        $rows = $scope.hasClass("Details-Item")
+          ? $scope
+          : $scope.find(".Details-Item");
+        if (!$rows.length) {
+          $rows = $scope.closest(".Details-Item");
+        }
+      } else {
+        $rows = $("[data-target_list] .Details-Item");
+      }
+      $rows.each(function (rowIndex) {
+        var $row = $(this);
+        var listName =
+          $row.closest("[data-target_list]").attr("data-target_list") ||
+          "master";
+        var rowKey =
+          $row.attr("data-id") ||
+          $row.data("id") ||
+          $row.attr("data-index") ||
+          String(rowIndex);
+        $row.find("input[type=radio]").each(function () {
+          var fieldId = $(this).attr("id") || "radio";
+          $(this).attr("name", listName + "_" + fieldId + "_" + rowKey);
+        });
+      });
+    },
     // Fill master-details RelatedInitiativeDeliverable from RelatedInitiative (needed on New — no PCODE yet)
     fillMasterRelatedInitiativeDeliverable: function (initiativeCode) {
       var $fields = $(
-        '[data-target_list="Deliverables"] select#RelatedInitiativeDeliverable'
+        '[data-target_list="Deliverables"] select[id="RelatedInitiativeDeliverable"]'
       );
       if (!$fields.length) return;
       var placeholder =
@@ -10642,9 +10903,20 @@ window.ListInfo = {
         $fields.first().find("option:first").text() ||
         "";
       if (!initiativeCode) {
-        $fields.html(
-          '<option value="" selected disabled>' + placeholder + "</option>"
-        );
+        $fields.each(function () {
+          var currentVal =
+            $(this).val() ||
+            $(this).attr("data-saved-value") ||
+            $(this).attr("data-lookup-value") ||
+            "";
+          $(this).html(
+            '<option value="" selected disabled>' + placeholder + "</option>"
+          );
+          if (currentVal) {
+            $(this).attr("data-saved-value", currentVal);
+            $(this).attr("data-lookup-value", currentVal);
+          }
+        });
         return;
       }
       var customQuery =
@@ -10659,15 +10931,25 @@ window.ListInfo = {
         function (records, record, listItem, isDone) {
           if (!isDone) return;
           var html =
-            '<option value="" selected disabled>' + placeholder + "</option>";
+          '<option value="">' + placeholder + "</option>";
           (records || []).forEach(function (el) {
             html +=
               '<option value="' + el.Title + '">' + el.Name + "</option>";
           });
           $fields.each(function () {
-            var currentVal = $(this).val();
-            $(this).html(html);
-            if (currentVal) $(this).val(currentVal);
+            var $select = $(this);
+            var currentVal =
+              $select.val() ||
+              $select.attr("data-saved-value") ||
+              $select.attr("data-lookup-value") ||
+              "";
+            $select.html(html);
+            if (currentVal) {
+              $select.val(currentVal);
+              $select.attr("data-saved-value", currentVal);
+              $select.attr("data-lookup-value", currentVal);
+              $select.attr("value", currentVal);
+            }
           });
         }
       );
@@ -10809,42 +11091,24 @@ window.ListInfo = {
           }
 
           // to handle the index on master details
-          var getMasterIndex = $(this)
-            .closest("[data-target_list]")
-            .find(".Details-Item.NewItem")
-            .last()
-            .attr("data-index");
+          var $masterSection = $(this).closest("[data-target_list]");
+          var getMasterIndex = window.getNextMasterDetailIndex
+            ? window.getNextMasterDetailIndex($masterSection)
+            : 1;
 
           // add class to hide first master details if there is no data like benefits
-          var firstMasterClass = $(this)
-            .closest("[data-target_list]")
+          var firstMasterClass = $masterSection
             .find(".Details-Item.NewItem")
             .last()
             .hasClass("firstMasterEmpty");
 
-          if (isNew && listkey != "changerequest") {
-            getMasterIndex = getMasterIndex ? Number(getMasterIndex) : "";
-            getMasterIndex = getMasterIndex + 1;
-          } else if (isEdit || listkey == "changerequest") {
-            var checkEditMasterCount = $(this)
-              .closest("[data-target_list]")
-              .find(".Details-Item.EditItem");
-            var checkNewMasterCount = $(this)
-              .closest("[data-target_list]")
-              .find(".Details-Item.NewItem");
-            checkEditMasterCount = checkEditMasterCount
-              ? checkEditMasterCount.length
-              : 0;
-            checkEditMasterCount = Number(checkEditMasterCount);
-            checkNewMasterCount = checkNewMasterCount
-              ? checkNewMasterCount.length
-              : 0;
-            checkNewMasterCount = Number(checkNewMasterCount);
-            getMasterIndex = checkEditMasterCount + checkNewMasterCount + 1;
-
-            if (firstMasterClass) {
+            if (
+              firstMasterClass &&
+              $masterSection.find(".Details-Item.EditItem").length === 0 &&
+              $masterSection.find(".Details-Item.NewItem:not(.firstMasterEmpty)")
+                .length === 0
+            ) {
               getMasterIndex = 1;
-            }
           }
 
           if ((listkey == "projects" || listkey == "initiatives") && isNew) {
@@ -10924,6 +11188,14 @@ window.ListInfo = {
               toappend +
               "</div>"
           ).insertBefore($(this).parent());
+          if (ListInfo.g.uniqueMasterDetailRadioNames) {
+            ListInfo.g.uniqueMasterDetailRadioNames(
+              $(this)
+                .closest("[data-target_list]")
+                .find(".Details-Item.NewItem")
+                .last()
+            );
+          }
 
           // to handle attachement in master details for proj and initiative like deliv and milst
 
@@ -11545,6 +11817,7 @@ window.ListInfo = {
     //   });
     // },
     DeliverablesDelivered: function () {
+    
       var Delivered = $("#Delivered:checked").val();
       if (Delivered == "yes") {
         $("#DeliveredDate").attr("required", "required");
@@ -12624,7 +12897,7 @@ window.View_ListInfo = {
             '<div class="py-5 btnactionrow">' +
             actionTaskHeader +
             '<div class="leftBtns">' +
-            '<button data-trans-toissue class="btn btn-action btn-to-issue Resources" type="button"></button>' +
+            // '<button data-trans-toissue class="btn btn-action btn-to-issue Resources" type="button"></button>' +
             '<button class="btn btn-action btn-delete" style="margin:unset" type="button">' +
             btnDeleteLabel +
             "</button>" +
@@ -12738,12 +13011,25 @@ window.View_ListInfo = {
             $(".btnactionrow").hide();
           }
 
-          // print
-          var printPtn = "";
+          // PDF export: normal View pages only (exclude WF + Change Request)
+          if (
+            isView &&
+            !isWF &&
+            !USERisWF &&
+            typeof listkey !== "undefined" &&
+            listkey !== "changerequest"
+          ) {
+            $(".FormContainer .exportPdfBtnContainer").remove();
+            $(".FormContainer").prepend(
+              '<div class="exportPdfBtnContainer">' +
+                '<button type="button" class="btn exportPdfBtn Resources" data-trans-excelpdf onclick="Export_PDF.export()"></button>' +
+                "</div>"
+            );
+          }
           if (isPrint) {
-            printPtn +=
-              '<div class = "printBtnContainer">' +
-              '<a data-trans-printscreen class="btn-add  Resources" type="button" onclick="Print_Data.print()"></a>' +
+            var printPtn =
+              '<div class="printBtnContainer">' +
+              '<a data-trans-printscreen class="btn-add Resources" type="button" onclick="Print_Data.print()"></a>' +
               "</div>";
             $(".btnactionrow").after(printPtn);
           }
@@ -12862,6 +13148,7 @@ window.View_ListInfo = {
     } else {
       thistip = 'data-tip="' + element.tooltip + '"';
     }
+    var infoIconHtml = getFieldInfoIconHtml(element);
 
     var descPhrase;
     if (
@@ -12931,6 +13218,7 @@ window.View_ListInfo = {
             element.validation +
             ">" +
             displayName +
+            infoIconHtml +
             "</label>" +
             '<p type="text" ' +
             translateFrom +
@@ -17825,6 +18113,1155 @@ window.Print_Data = {
   },
 };
 
+window.Export_PDF = {
+  // html2pdf bundles jsPDF and may not expose window.jsPDF — get a live instance instead.
+  createEmptyPdf: function () {
+    var tryDirect = function () {
+      var Ctor =
+        (typeof window.jsPDF === "function" && window.jsPDF) ||
+        (window.jspdf &&
+          typeof window.jspdf.jsPDF === "function" &&
+          window.jspdf.jsPDF) ||
+        null;
+      if (!Ctor) {
+        return null;
+      }
+      var pdf = null;
+      try {
+        pdf = new Ctor({
+          unit: "pt",
+          format: "a4",
+          orientation: "portrait",
+        });
+      } catch (e1) {
+        try {
+          pdf = new Ctor("portrait", "pt", "a4");
+        } catch (e2) {
+          pdf = null;
+        }
+      }
+      if (pdf && pdf.internal && pdf.internal.pageSize) {
+        return pdf;
+      }
+      return null;
+    };
+
+    var direct = tryDirect();
+    if (direct) {
+      return Promise.resolve(direct);
+    }
+    if (typeof window.html2pdf !== "function") {
+      return Promise.reject(new Error("html2pdf is not available"));
+    }
+
+    var probe = document.createElement("div");
+    probe.style.cssText =
+      "position:fixed;left:0;top:0;width:2px;height:2px;opacity:0;pointer-events:none;";
+    document.body.appendChild(probe);
+    return html2pdf()
+      .set({
+        margin: 0,
+        html2canvas: { scale: 1, logging: false },
+        jsPDF: { unit: "pt", format: "a4", orientation: "portrait" },
+      })
+      .from(probe)
+      .toPdf()
+      .get("pdf")
+      .then(function (pdf) {
+        if (probe.parentNode) {
+          probe.parentNode.removeChild(probe);
+        }
+        return pdf;
+      })
+      .catch(function (err) {
+        if (probe.parentNode) {
+          probe.parentNode.removeChild(probe);
+        }
+        throw err;
+      });
+  },
+
+  getPdfPageSize: function (pdf) {
+    var ps = pdf.internal.pageSize;
+    var w = typeof ps.getWidth === "function" ? ps.getWidth() : ps.width;
+    var h = typeof ps.getHeight === "function" ? ps.getHeight() : ps.height;
+    return { width: w, height: h };
+  },
+
+  // Collect avoid ranges (CSS px, relative to capture root) from the html2canvas clone.
+  collectAvoidRangesFromClone: function (clonedDoc) {
+    var ranges = [];
+    var root =
+      clonedDoc.querySelector(".export-pdf-root") ||
+      clonedDoc.querySelector("[lang]") ||
+      clonedDoc.body;
+    if (!root) {
+      return ranges;
+    }
+    var rootRect = root.getBoundingClientRect();
+    var nodes = root.querySelectorAll(
+      ".pdf-row, .pdf-section-keep, .pdf-section-bar, .html2pdf.headname"
+    );
+    for (var i = 0; i < nodes.length; i++) {
+      var r = nodes[i].getBoundingClientRect();
+      var top = r.top - rootRect.top;
+      var bottom = r.bottom - rootRect.top;
+      if (bottom > top && bottom > 0) {
+        ranges.push({ top: top, bottom: bottom });
+      }
+    }
+    ranges.sort(function (a, b) {
+      return a.top - b.top;
+    });
+    return ranges;
+  },
+
+  // Convert CSS-px ranges to canvas-px using html2canvas scale.
+  toCanvasAvoidRanges: function (cssRanges, scaleY, canvasH) {
+    var out = [];
+    var s = scaleY || 1;
+    for (var i = 0; i < (cssRanges || []).length; i++) {
+      var top = Math.round(cssRanges[i].top * s);
+      var bottom = Math.round(cssRanges[i].bottom * s);
+      top = Math.max(0, Math.min(top, canvasH));
+      bottom = Math.max(0, Math.min(bottom, canvasH));
+      if (bottom > top) {
+        out.push({ top: top, bottom: bottom });
+      }
+    }
+    return out;
+  },
+
+  // If the natural page end would split a row/section, end before it (leave empty space).
+  // Otherwise end after the last fully visible row.
+  findSafePageCut: function (srcY, limitY, ranges, canvasH) {
+    var limit = Math.min(limitY, canvasH);
+    if (limit >= canvasH) {
+      return canvasH;
+    }
+    var fudge = 2;
+
+    // Would limit split a block that starts AFTER current page content?
+    // Snap to the earliest such block top (move whole block to next page).
+    var snapTop = null;
+    for (var i = 0; i < ranges.length; i++) {
+      var t = ranges[i].top;
+      var b = ranges[i].bottom;
+      if (limit > t + fudge && limit < b - fudge && t > srcY + fudge) {
+        if (snapTop === null || t < snapTop) {
+          snapTop = t;
+        }
+      }
+    }
+    if (snapTop !== null) {
+      return snapTop;
+    }
+
+    // End after the last block that fully fits in this page window
+    var cut = srcY;
+    for (var j = 0; j < ranges.length; j++) {
+      var bottom = ranges[j].bottom;
+      if (bottom > srcY + fudge && bottom <= limit + fudge && bottom > cut) {
+        cut = bottom;
+      }
+    }
+    if (cut > srcY) {
+      return Math.min(cut, canvasH);
+    }
+
+    // Oversized single block (taller than one page) — must slice
+    return limit;
+  },
+
+  // Build PDF from html2canvas output: page 1 flush top, later pages keep top margin.
+  // Cuts only on safe boundaries so rows/section bars are not split across pages.
+  canvasToPdfWithFirstPageFlush: function (canvas, opts) {
+    opts = opts || {};
+    var topFirst = opts.topMarginFirst != null ? opts.topMarginFirst : 0;
+    var topRest = opts.topMarginRest != null ? opts.topMarginRest : 18;
+    var bottom = opts.bottomMargin != null ? opts.bottomMargin : 28;
+    var quality = opts.imageQuality != null ? opts.imageQuality : 1;
+    var scaleY = opts.html2canvasScale || 1;
+    var ranges = Export_PDF.toCanvasAvoidRanges(
+      opts.avoidRangesCss || [],
+      scaleY,
+      canvas.height
+    );
+
+    return Export_PDF.createEmptyPdf().then(function (pdf) {
+      var size = Export_PDF.getPdfPageSize(pdf);
+      var pageW = size.width;
+      var pageH = size.height;
+      var pxPerPt = canvas.width / pageW;
+      var srcY = 0;
+      var pageNum = 0;
+      while (srcY < canvas.height) {
+        pageNum += 1;
+        var topM = pageNum === 1 ? topFirst : topRest;
+        var availPt = pageH - topM - bottom;
+        var availPx = Math.max(1, Math.floor(availPt * pxPerPt));
+        var limitY = srcY + availPx;
+        var cutY = Export_PDF.findSafePageCut(
+          srcY,
+          limitY,
+          ranges,
+          canvas.height
+        );
+        var slicePx = cutY - srcY;
+        if (slicePx < 1) {
+          // Safety: never stall (should only happen for zero-height quirks)
+          cutY = Math.min(srcY + availPx, canvas.height);
+          slicePx = cutY - srcY;
+        }
+        if (slicePx < 1) {
+          break;
+        }
+        var pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = slicePx;
+        var ctx = pageCanvas.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.drawImage(
+          canvas,
+          0,
+          srcY,
+          canvas.width,
+          slicePx,
+          0,
+          0,
+          canvas.width,
+          slicePx
+        );
+        var imgData = pageCanvas.toDataURL("image/jpeg", quality);
+        if (pageNum > 1) {
+          pdf.addPage();
+        } else {
+          pdf.setPage(1);
+        }
+        pdf.addImage(imgData, "JPEG", 0, topM, pageW, slicePx / pxPerPt);
+        srcY = cutY;
+      }
+      return pdf;
+    });
+  },
+
+  // Match visible form text (keeps word spacing as shown on page)
+  readVisibleText: function ($el) {
+    if (!$el || !$el.length) {
+      return "";
+    }
+    var el = $el[0];
+    var raw = el.innerText != null ? el.innerText : $el.text();
+    return String(raw == null ? "" : raw)
+      .replace(/\u00A0/g, " ")
+      .replace(/[ \t\f\v]+/g, " ")
+      .replace(/\s*\n\s*/g, "\n")
+      .trim();
+  },
+
+  // html2canvas often collapses Arabic font spaces to ~0 width.
+  // Keep bidi-safe punctuation, then insert fixed-width spacers between words.
+  formatPdfText: function (text) {
+    var s = String(text == null ? "" : text);
+    s = s.replace(
+      /([\u0600-\u06FF])\s*-\s*([\u0600-\u06FF])/g,
+      "$1 \u200F-\u200F $2"
+    );
+    s = s.replace(
+      /([\u0600-\u06FF])\s*\/\s*([\u0600-\u06FF])/g,
+      "$1 \u200F/\u200F $2"
+    );
+    s = s.replace(/\(\s*([\u0600-\u06FF])/g, "\u200F(\u200F$1");
+    s = s.replace(/([\u0600-\u06FF])\s*\)/g, "$1\u200F)\u200F");
+
+    var gap =
+      '<span class="pdf-sp" style="display:inline-block;width:0.28em;min-width:0.28em;max-width:0.28em;"></span>';
+    var escaped = Export_PDF.escapeHtml(s);
+    return escaped
+      .split(/\r?\n/)
+      .map(function (line) {
+        return line
+          .split(/[ \u00A0\u200B]+/)
+          .filter(function (w) {
+            return w.length > 0;
+          })
+          .join(gap);
+      })
+      .join("<br>");
+  },
+
+  getPDFStyleLibraryBase: function () {
+    var base =
+      (typeof _spPageContextInfo !== "undefined" &&
+        (_spPageContextInfo.siteAbsoluteUrl ||
+          _spPageContextInfo.webAbsoluteUrl)) ||
+      window.location.origin;
+    return String(base).replace(/\/$/, "") + "/Style%20Library/spm/images/";
+  },
+
+  // Company logo URL — prefer live sidebar logo, then Style Library fallbacks
+  getPDFLogoUrl: function (isAr) {
+    var $img = $(".main-logo img").first();
+    if ($img.length) {
+      var src = $img.attr("src") || $img.prop("src") || "";
+      if (src) {
+        return src;
+      }
+    }
+    var file = isAr ? "main-logo.png" : "main-logo-en.png";
+    return Export_PDF.getPDFStyleLibraryBase() + file;
+  },
+
+  // Full PDF header banner (curves + logo). Upload pdf-header-banner.png to Style Library/spm/images
+  getPDFHeaderBannerUrl: function () {
+    return Export_PDF.getPDFStyleLibraryBase() + "pdf-header-banner.png";
+  },
+
+  // PDF download name = page item code (PCODE / ICODE / sosCode / Title...)
+  getPDFFileName: function () {
+    var code = "";
+    try {
+      if (typeof PCODE !== "undefined" && PCODE) {
+        code = PCODE;
+      } else if (typeof ICODE !== "undefined" && ICODE) {
+        code = ICODE;
+      } else if (typeof STCODE !== "undefined" && STCODE) {
+        code = STCODE;
+      } else if (typeof sosCode !== "undefined" && sosCode) {
+        code = sosCode;
+      } else if (typeof window.crItemCode !== "undefined" && window.crItemCode) {
+        code = window.crItemCode;
+      }
+    } catch (e) {}
+
+    if (!code) {
+      var $codeEl = $(
+        ".container-body #Title.viewmode-value, .container-body #Title.print-field, .container-body #Code.viewmode-value, .container-body #ProjectCode.viewmode-value, .container-body #InitiativeCode.viewmode-value"
+      ).first();
+      code = Export_PDF.readVisibleText($codeEl);
+    }
+
+    if (!code && typeof PageTitle !== "undefined" && PageTitle) {
+      code = PageTitle;
+    }
+
+    try {
+      code = decodeURIComponent(String(code || ""));
+    } catch (e2) {
+      code = String(code || "");
+    }
+
+    code = code
+      .replace(/[\\/:*?"<>|]+/g, "-")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "")
+      .trim();
+
+    return (code || "Full-Data") + ".pdf";
+  },
+
+  // Candidate URLs — file may live under spm/images or Style Library/Images
+  getPDFHeaderBannerCandidates: function () {
+    var base =
+      (typeof _spPageContextInfo !== "undefined" &&
+        (_spPageContextInfo.siteAbsoluteUrl ||
+          _spPageContextInfo.webAbsoluteUrl)) ||
+      window.location.origin;
+    base = String(base).replace(/\/$/, "");
+    var cacheBust = "?v=" + Date.now();
+    return [
+      base + "/Style%20Library/spm/images/pdf-header-banner.png" + cacheBust,
+      base + "/Style%20Library/Images/pdf-header-banner.png" + cacheBust,
+      base + "/Style Library/spm/images/pdf-header-banner.png" + cacheBust,
+      base + "/Style Library/Images/pdf-header-banner.png" + cacheBust,
+    ];
+  },
+
+  // SharePoint images often fail html2canvas CORS — preload as data URL first
+  loadImageAsDataUrl: function (url) {
+    return fetch(url, { credentials: "include", cache: "no-cache" })
+      .then(function (res) {
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status);
+        }
+        return res.blob();
+      })
+      .then(function (blob) {
+        return new Promise(function (resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            resolve(reader.result);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      });
+  },
+
+  resolveHeaderBannerDataUrl: function () {
+    var urls = Export_PDF.getPDFHeaderBannerCandidates();
+    var tryNext = function (i) {
+      if (i >= urls.length) {
+        return Promise.resolve("");
+      }
+      return Export_PDF.loadImageAsDataUrl(urls[i]).catch(function () {
+        return tryNext(i + 1);
+      });
+    };
+    return tryNext(0);
+  },
+
+  // Item / task names from WF teal bar (or Name field on non-WF views)
+  getPDFContextMeta: function () {
+    var itemName = Export_PDF.readVisibleText($(".wf-project-name").first());
+    var taskName = Export_PDF.readVisibleText($(".wf-task-name").first());
+
+    if (!itemName) {
+      var $name = $(
+        ".container-body .section-container:not([data-target_list]) #Name.viewmode-value, .container-body .ViewPrint_Form #Name.print-field"
+      ).first();
+      itemName = Export_PDF.readVisibleText($name);
+    }
+
+    if (
+      !itemName &&
+      typeof listkey !== "undefined" &&
+      listkey === "changerequest"
+    ) {
+      var $crTitle = $(
+        ".container-body .section-container:not([data-target_list]) #Title.viewmode-value"
+      ).first();
+      itemName = Export_PDF.readVisibleText($crTitle);
+    }
+
+    return { itemName: itemName, taskName: taskName };
+  },
+
+  // Previous operations (task history) — horizontal table for PDF (columns + one row per task).
+  gatherTaskHistoryForPDF: function () {
+    var $ctx = $(".task-history-ctx").first();
+    if (!$ctx.length) {
+      return null;
+    }
+
+    var lang = localStorage.getItem("lng") === "en" ? "en" : "ar";
+    var R = function (key, fallback) {
+      try {
+        if (
+          typeof Resources !== "undefined" &&
+          Resources[lang] &&
+          Resources[lang][key]
+        ) {
+          return Resources[lang][key];
+        }
+      } catch (e) {}
+      return fallback;
+    };
+
+    var headname = Export_PDF.readVisibleText(
+      $ctx.find("[data-trans-taskHistory], .approvalHeader h2").first()
+    );
+    headname =
+      headname ||
+      R("taskhistory", lang === "ar" ? "العمليات السابقة" : "Task History");
+
+    var columns = [
+      R("taskname", lang === "ar" ? "إسم المهمة" : "Task Name"),
+      R("assignedto", lang === "ar" ? "المكلف" : "Assigned To"),
+      R("createddate", lang === "ar" ? "تاريخ الإنشاء" : "Created"),
+      R("modifieddate", lang === "ar" ? "تاريخ الإجراء" : "Action date"),
+      R("taskcomment", lang === "ar" ? "ملاحظات" : "Comments"),
+      R("takenaction", lang === "ar" ? "الإجراء المتخذ" : "Action Taken"),
+      R("author", lang === "ar" ? "المنشئ" : "Author"),
+      R("editor", lang === "ar" ? "المحرر" : "Editor"),
+    ];
+
+    var rows = [];
+    $ctx.find(".history-row-ctx").each(function () {
+      var $row = $(this);
+      var stage = "";
+      var valuesByKey = {
+        assignedto: "-",
+        createddate: "-",
+        modifieddate: "-",
+        taskcomment: "-",
+        takenaction: "-",
+        author: "-",
+        editor: "-",
+      };
+
+      $row.children().each(function () {
+        var $col = $(this);
+        // Skip "Task History" / سجل المهام link column
+        if (
+          $col.find("a").length &&
+          !$col.find(".historyLabel, .historyValue").length
+        ) {
+          return;
+        }
+
+        var $labelEl = $col.find(".historyLabel").first();
+        var value = Export_PDF.readVisibleText(
+          $col.find(".historyValue").first()
+        );
+        if ($labelEl.length) {
+          var key = (
+            $labelEl.attr("data-trans") ||
+            ""
+          ).toLowerCase();
+          if (!key) {
+            // data-trans-assignedTo → assignedto
+            var attrs = $labelEl[0] && $labelEl[0].attributes;
+            if (attrs) {
+              for (var a = 0; a < attrs.length; a++) {
+                var an = attrs[a].name || "";
+                if (an.indexOf("data-trans-") === 0) {
+                  key = an.substring("data-trans-".length).toLowerCase();
+                  break;
+                }
+              }
+            }
+          }
+          if (key && Object.prototype.hasOwnProperty.call(valuesByKey, key)) {
+            valuesByKey[key] = value || "-";
+          }
+          return;
+        }
+
+        var $plain = $col
+          .find("p")
+          .not(".historyLabel, .historyValue")
+          .first();
+        if ($plain.length) {
+          var t = Export_PDF.readVisibleText($plain);
+          if (t) {
+            stage = t;
+          }
+        }
+      });
+
+      if (
+        !stage &&
+        valuesByKey.assignedto === "-" &&
+        valuesByKey.createddate === "-" &&
+        valuesByKey.takenaction === "-"
+      ) {
+        return;
+      }
+
+      rows.push([
+        stage || "-",
+        valuesByKey.assignedto,
+        valuesByKey.createddate,
+        valuesByKey.modifieddate,
+        valuesByKey.taskcomment,
+        valuesByKey.takenaction,
+        valuesByKey.author,
+        valuesByKey.editor,
+      ]);
+    });
+
+    if (!rows.length) {
+      return null;
+    }
+    return {
+      headname: headname,
+      type: "table",
+      columns: columns,
+      rows: rows,
+    };
+  },
+
+  gatherPDFData: function () {
+    var finalArr = [];
+    var $sections = $(".container-body .ViewPrint_Form");
+    if ($sections.length === 0) {
+      $sections = $(".container-body .section-container.View_Form").not(
+        ".hide-section"
+      );
+    }
+
+    $sections.each(function () {
+      var $section = $(this);
+      if ($section.hasClass("hide-section")) {
+        return;
+      }
+      if (
+        $section.hasClass("View_Form") &&
+        ($section.css("display") === "none" || !$section.is(":visible"))
+      ) {
+        return;
+      }
+
+      var headname = Export_PDF.readVisibleText(
+        $section.find(".printDescription").first()
+      );
+      if (!headname) {
+        headname = Export_PDF.readVisibleText(
+          $section.find("h3.sideTitle").first()
+        );
+      }
+      if (!headname) {
+        return;
+      }
+
+      var data = [];
+      $section.find(".CFIELD").each(function () {
+        var $field = $(this);
+        if (
+          $field.hasClass("hide-field") ||
+          $field.hasClass("d-none") ||
+          $field.hasClass("dont-submit")
+        ) {
+          return;
+        }
+        if ($field.is(":hidden") && !$section.hasClass("ViewPrint_Form")) {
+          return;
+        }
+
+        var label = Export_PDF.readVisibleText($field.find("label").first());
+        if (!label) {
+          return;
+        }
+
+        var $valueEl = $field.find(".print-field, .viewmode-value").first();
+        var value = Export_PDF.readVisibleText($valueEl);
+        data.push({ label: label, value: value || "-" });
+      });
+
+      if (data.length) {
+        finalArr.push({ headname: headname, data: data });
+      }
+    });
+
+    // Append previous operations (task history) at the end when present on View
+    var historySection = Export_PDF.gatherTaskHistoryForPDF();
+    if (historySection) {
+      finalArr.push(historySection);
+    }
+
+    return finalArr;
+  },
+
+  handleExportPDF: function (finalArr, headerBannerDataUrl) {
+    var lang =
+      localStorage.getItem("lng") === "en" ? "en" : "ar";
+    var isAr = lang === "ar";
+    var isChangeRequest =
+      typeof listkey !== "undefined" && listkey === "changerequest";
+    var contextMeta = isChangeRequest
+      ? Export_PDF.getPDFContextMeta()
+      : { itemName: "", taskName: "" };
+    var concatPDFHead =
+      typeof PageTitle !== "undefined" && PageTitle
+        ? PageTitle
+        : isAr
+        ? "تفاصيل"
+        : "Details";
+    // CR only: append item/CR name + task name (other lists already show name in the table)
+    if (isChangeRequest && contextMeta.itemName) {
+      concatPDFHead = concatPDFHead + " - " + contextMeta.itemName;
+    }
+    var taskNameLabel = isAr ? "إسم المهمة" : "Task Name";
+    try {
+      if (
+        typeof Resources !== "undefined" &&
+        Resources[lang] &&
+        Resources[lang].taskname
+      ) {
+        taskNameLabel = Resources[lang].taskname;
+      }
+    } catch (e) {}
+    var scale = finalArr.length < 25 ? 2 : 1;
+    var pdfFileName = Export_PDF.getPDFFileName();
+    var pdfFontSizePageTitle = 30;
+    var pdfFontSizeSectionTitle = 24;
+    var pdfFontSizeData = 15;
+    // Mockup brand colors
+    var brandTeal = "#1a9a9a";
+    var brandNavy = "#14415a";
+    var brandLabelBg = "#f2f2f2";
+    var brandBorder = "#000000";
+    var headerBannerUrl =
+      headerBannerDataUrl || Export_PDF.getPDFHeaderBannerUrl();
+    // Same project font stack as Change Request PDF
+    var pdfFont = "'HRSD-FONT', 'LTBukra', 'Effra', 'Segoe UI', Tahoma, sans-serif";
+
+    var hiddenContainer = document.createElement("div");
+    // Keep in viewport — left:-9999px breaks Arabic glyph shaping in html2canvas
+    hiddenContainer.style.cssText =
+      "position:fixed;left:0;top:0;width:794px;z-index:-1;opacity:0.01;pointer-events:none;background:#fff;";
+
+    var tempElement = document.createElement("div");
+    tempElement.setAttribute("dir", isAr ? "rtl" : "ltr");
+    tempElement.setAttribute("lang", lang);
+    tempElement.className =
+      (isAr ? "ar" : "en") + " export-pdf-root";
+    tempElement.style.cssText =
+      "width:794px;box-sizing:border-box;background:#ffffff;font-family:" +
+      pdfFont +
+      ";direction:" +
+      (isAr ? "rtl" : "ltr") +
+      ";";
+    hiddenContainer.appendChild(tempElement);
+
+    var contentHTML = "";
+    var textAlign = isAr ? "right" : "left";
+    var borderSide = isAr ? "border-left" : "border-right";
+
+    // Full-width branded header image (logo + curves). Page title stays dynamic below.
+    var brandHeaderHtml = "";
+    if (headerBannerUrl) {
+      brandHeaderHtml +=
+        '<div style="width:100%;box-sizing:border-box;background:#ffffff;line-height:0;">' +
+        '<img src="' +
+        Export_PDF.escapeHtml(headerBannerUrl) +
+        '" alt="header" style="width:100%;max-width:794px;height:auto;display:block;"/>' +
+        "</div>";
+    }
+    brandHeaderHtml +=
+      '<div style="padding:12px 40px 18px 40px;text-align:center;color:' +
+      brandNavy +
+      ";font-weight:700;font-size:" +
+      pdfFontSizePageTitle +
+      "px;direction:" +
+      (isAr ? "rtl" : "ltr") +
+      ';line-height:1.35;"><bdi>' +
+      Export_PDF.formatPdfText(concatPDFHead) +
+      "</bdi></div>";
+
+    contentHTML +=
+      '<div class="page" style="width:794px;box-sizing:border-box;background:#fff;font-family:' +
+      pdfFont +
+      ';">' +
+      brandHeaderHtml +
+      '<div style="padding:0 40px 12px 40px;box-sizing:border-box;">';
+
+    // CR only: optional task name under page title
+    if (isChangeRequest && contextMeta.taskName) {
+      contentHTML +=
+        '<div style="margin:0 0 12px 0;padding:6px 10px;border:1px solid ' +
+        brandBorder +
+        ";font-size:" +
+        pdfFontSizeData +
+        "px;font-weight:600;color:" +
+        brandNavy +
+        ";text-align:" +
+        textAlign +
+        ";direction:" +
+        (isAr ? "rtl" : "ltr") +
+        ';white-space:pre-wrap;"><bdi>' +
+        Export_PDF.formatPdfText(taskNameLabel + " " + contextMeta.taskName) +
+        "</bdi></div>";
+    }
+
+    finalArr.forEach(function (section, index) {
+      var sectionBarHtml =
+        '<div class="html2pdf headname pdf-section-bar" style="width:100%;box-sizing:border-box;background:' +
+        brandTeal +
+        ";color:#ffffff;font-weight:700;font-size:" +
+        pdfFontSizeSectionTitle +
+        "px;padding:10px 12px;text-align:center;border-bottom:1px solid " +
+        brandBorder +
+        ";direction:" +
+        (isAr ? "rtl" : "ltr") +
+        ';white-space:pre-wrap;page-break-inside:avoid;break-inside:avoid;"><bdi>' +
+        Export_PDF.formatPdfText(section.headname) +
+        "</bdi></div>";
+
+      var rowHtmlList = [];
+
+      // Task history: horizontal table (column headers + one row per operation)
+      if (section.type === "table" && section.columns && section.rows) {
+        var colCount = section.columns.length;
+        var colW = (100 / colCount).toFixed(4) + "%";
+        var tableFontSize = Math.max(10, pdfFontSizeData - 4);
+        var cellBase =
+          "min-width:0;box-sizing:border-box;padding:6px 4px;font-size:" +
+          tableFontSize +
+          "px;line-height:1.35;text-align:center;font-family:" +
+          pdfFont +
+          ";overflow-wrap:anywhere;word-break:break-word;overflow:hidden;white-space:normal;";
+
+        var headerCells = "";
+        for (var hc = 0; hc < colCount; hc++) {
+          headerCells +=
+            '<div style="width:' +
+            colW +
+            ";" +
+            cellBase +
+            "font-weight:700;background:" +
+            brandLabelBg +
+            ";color:" +
+            brandNavy +
+            ";" +
+            (hc < colCount - 1
+              ? (isAr ? "border-left" : "border-right") +
+                ":1px solid " +
+                brandBorder +
+                ";"
+              : "") +
+            '"><bdi>' +
+            Export_PDF.formatPdfText(section.columns[hc] || "") +
+            "</bdi></div>";
+        }
+        rowHtmlList.push(
+          '<div class="pdf-row pdf-table-header" style="display:flex;width:100%;box-sizing:border-box;page-break-inside:avoid;break-inside:avoid;border-bottom:1px solid ' +
+            brandBorder +
+            ';">' +
+            headerCells +
+            "</div>"
+        );
+
+        for (var tr = 0; tr < section.rows.length; tr++) {
+          var cells = section.rows[tr] || [];
+          var bodyCells = "";
+          for (var tc = 0; tc < colCount; tc++) {
+            bodyCells +=
+              '<div style="width:' +
+              colW +
+              ";" +
+              cellBase +
+              "background:#ffffff;color:#222;" +
+              (tc < colCount - 1
+                ? (isAr ? "border-left" : "border-right") +
+                  ":1px solid " +
+                  brandBorder +
+                  ";"
+                : "") +
+              '"><bdi>' +
+              Export_PDF.formatPdfText(cells[tc] || "-") +
+              "</bdi></div>";
+          }
+          var rowBorder =
+            tr === section.rows.length - 1
+              ? ""
+              : "border-bottom:1px solid " + brandBorder + ";";
+          rowHtmlList.push(
+            '<div class="pdf-row pdf-table-data" style="display:flex;width:100%;box-sizing:border-box;page-break-inside:avoid;break-inside:avoid;' +
+              rowBorder +
+              '">' +
+              bodyCells +
+              "</div>"
+          );
+        }
+      } else {
+        (section.data || []).forEach(function (item, rowIndex) {
+          var label = Export_PDF.formatPdfText(item.label || "");
+          var value = Export_PDF.formatPdfText(item.value || "");
+          var rowBorder =
+            rowIndex === section.data.length - 1
+              ? ""
+              : "border-bottom:1px solid " + brandBorder + ";";
+
+          rowHtmlList.push(
+            '<div class="pdf-row" style="display:flex;width:100%;box-sizing:border-box;page-break-inside:avoid;break-inside:avoid;' +
+              rowBorder +
+              '">' +
+              '<div style="width:35%;min-width:0;max-width:35%;box-sizing:border-box;padding:8px 10px;font-weight:700;font-size:' +
+              pdfFontSizeData +
+              "px;line-height:1.45;text-align:" +
+              textAlign +
+              ";background:" +
+              brandLabelBg +
+              ";" +
+              borderSide +
+              ":1px solid " +
+              brandBorder +
+              ";color:" +
+              brandNavy +
+              ";font-family:" +
+              pdfFont +
+              ';overflow-wrap:anywhere;word-break:break-word;overflow:hidden;white-space:normal;"><bdi>' +
+              label +
+              "</bdi></div>" +
+              '<div style="width:65%;min-width:0;max-width:65%;box-sizing:border-box;padding:8px 10px;font-size:' +
+              pdfFontSizeData +
+              "px;line-height:1.45;text-align:" +
+              textAlign +
+              ";background:#ffffff;color:#222;font-family:" +
+              pdfFont +
+              ';overflow-wrap:anywhere;word-break:break-word;overflow:hidden;white-space:normal;"><bdi>' +
+              value +
+              "</bdi></div>" +
+              "</div>"
+          );
+        });
+      }
+
+      // Keep header + first rows in their own bordered box (avoids empty border remnant on previous page)
+      var keepCount = Math.min(2, rowHtmlList.length);
+      var hasRest = rowHtmlList.length > keepCount;
+      var keepHtml = sectionBarHtml;
+      for (var k = 0; k < keepCount; k++) {
+        keepHtml += rowHtmlList[k];
+      }
+      var keepBorderStyle = hasRest
+        ? "border-top:1px solid " +
+          brandBorder +
+          ";border-left:1px solid " +
+          brandBorder +
+          ";border-right:1px solid " +
+          brandBorder +
+          ";"
+        : "border:1px solid " + brandBorder + ";";
+
+      contentHTML +=
+        '<div class="pdf-section" style="margin:0 0 ' +
+        (index < finalArr.length - 1 ? "18" : "0") +
+        'px 0;">' +
+        '<div class="pdf-section-keep" style="width:100%;box-sizing:border-box;page-break-inside:avoid;break-inside:avoid;' +
+        keepBorderStyle +
+        '">' +
+        keepHtml +
+        "</div>";
+
+      if (hasRest) {
+        contentHTML +=
+          '<div class="pdf-grid-rest" style="width:100%;box-sizing:border-box;border-left:1px solid ' +
+          brandBorder +
+          ";border-right:1px solid " +
+          brandBorder +
+          ";border-bottom:1px solid " +
+          brandBorder +
+          ';">';
+        for (var r = keepCount; r < rowHtmlList.length; r++) {
+          contentHTML += rowHtmlList[r];
+        }
+        contentHTML += "</div>";
+      }
+
+      contentHTML += "</div>";
+    });
+
+    contentHTML += "</div></div>";
+
+    tempElement.innerHTML = contentHTML;
+    document.body.appendChild(hiddenContainer);
+
+    // Filled in onclone from the real html2canvas DOM (matches canvas pixels).
+    var avoidRangesCss = [];
+    var captureCssHeight = 0;
+
+    html2pdf()
+      .from(tempElement)
+      .set({
+        // Top 18 for pagebreak sizing (pages 2+); page 1 flush via canvasToPdfWithFirstPageFlush
+        margin: [18, 0, 28, 0],
+        filename: pdfFileName,
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: {
+          scale: scale,
+          letterRendering: false,
+          useCORS: true,
+          allowTaint: false,
+          scrollY: 0,
+          windowWidth: 794,
+          backgroundColor: "#ffffff",
+          onclone: function (clonedDoc) {
+            var root = clonedDoc.body.querySelector(".export-pdf-root");
+            if (root) {
+              root.style.fontFamily = pdfFont;
+              root.setAttribute("dir", isAr ? "rtl" : "ltr");
+              root.style.wordSpacing = "normal";
+            }
+            var nodes = clonedDoc.querySelectorAll("bdi, div");
+            for (var n = 0; n < nodes.length; n++) {
+              nodes[n].style.fontFamily = pdfFont;
+              nodes[n].style.wordSpacing = "normal";
+            }
+            // Force wrap inside label/value cells (flex children need min-width:0)
+            var cells = clonedDoc.querySelectorAll(".pdf-row > div");
+            for (var c = 0; c < cells.length; c++) {
+              cells[c].style.minWidth = "0";
+              cells[c].style.overflowWrap = "anywhere";
+              cells[c].style.wordBreak = "break-word";
+              cells[c].style.overflow = "hidden";
+              cells[c].style.whiteSpace = "normal";
+            }
+            var gaps = clonedDoc.querySelectorAll(".pdf-sp");
+            for (var g = 0; g < gaps.length; g++) {
+              gaps[g].style.display = "inline-block";
+              gaps[g].style.width = "0.28em";
+              gaps[g].style.minWidth = "0.28em";
+              gaps[g].style.maxWidth = "0.28em";
+            }
+            var imgs = clonedDoc.querySelectorAll("img");
+            for (var i = 0; i < imgs.length; i++) {
+              imgs[i].setAttribute("crossorigin", "anonymous");
+            }
+            // Measure after style tweaks so ranges match the painted clone
+            avoidRangesCss = Export_PDF.collectAvoidRangesFromClone(clonedDoc);
+            if (root) {
+              captureCssHeight = Math.max(
+                root.scrollHeight,
+                root.offsetHeight,
+                1
+              );
+            }
+          },
+        },
+        jsPDF: {
+          unit: "pt",
+          format: "a4",
+          orientation: "portrait",
+        },
+        pagebreak: {
+          // Custom canvas slicer handles row/section avoid; disable html2pdf pagebreaks
+          mode: [],
+          avoid: [],
+        },
+      })
+      .toCanvas()
+      .get("canvas")
+      .then(function (canvas) {
+        var scaleY =
+          captureCssHeight > 0 ? canvas.height / captureCssHeight : scale;
+        return Export_PDF.canvasToPdfWithFirstPageFlush(canvas, {
+          topMarginFirst: 0,
+          topMarginRest: 18,
+          bottomMargin: 28,
+          imageQuality: 1,
+          html2canvasScale: scaleY,
+          avoidRangesCss: avoidRangesCss,
+        }).then(function (pdf) {
+          var totalPages = pdf.internal.getNumberOfPages();
+          var pageW = pdf.internal.pageSize.getWidth();
+          var pageH = pdf.internal.pageSize.getHeight();
+          var footerH = 18;
+          var footerFontSize = 9;
+          for (var i = 1; i <= totalPages; i++) {
+            pdf.setPage(i);
+            // Slim light-gray footer; page number centered
+            pdf.setFillColor(230, 230, 230);
+            pdf.rect(0, pageH - footerH, pageW, footerH, "F");
+            pdf.setTextColor(90, 90, 90);
+            pdf.setFontSize(footerFontSize);
+            var textY = pageH - footerH / 2 + footerFontSize * 0.35;
+            pdf.text(String(i), pageW / 2, textY, { align: "center" });
+          }
+          pdf.save(pdfFileName);
+        });
+      })
+      .then(function () {
+        if (hiddenContainer.parentNode) {
+          document.body.removeChild(hiddenContainer);
+        }
+      })
+      .catch(function (error) {
+        console.error("Error generating PDF:", error);
+        if (hiddenContainer.parentNode) {
+          document.body.removeChild(hiddenContainer);
+        }
+      });
+  },
+
+  escapeHtml: function (text) {
+    return String(text == null ? "" : text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  },
+
+  ensureLibrary: function () {
+    return new Promise(function (resolve, reject) {
+      if (typeof window.html2pdf === "function") {
+        resolve();
+        return;
+      }
+
+      var existing = document.getElementById("spm-html2pdf-script");
+      if (existing) {
+        existing.parentNode.removeChild(existing);
+      }
+
+      var baseUrl =
+        (typeof _spPageContextInfo !== "undefined" &&
+          _spPageContextInfo.siteAbsoluteUrl) ||
+        (typeof _spPageContextInfo !== "undefined" &&
+          _spPageContextInfo.webAbsoluteUrl) ||
+        window.location.origin;
+
+      // SharePoint's AMD loader rejects html2pdf's anonymous define().
+      // Temporarily disable AMD so the UMD build attaches to window.html2pdf.
+      var originalDefine = window.define;
+      var restoreDefine = function () {
+        if (typeof originalDefine !== "undefined") {
+          window.define = originalDefine;
+        } else {
+          try {
+            delete window.define;
+          } catch (e) {
+            window.define = originalDefine;
+          }
+        }
+      };
+
+      if (typeof window.define === "function") {
+        window.define = undefined;
+      }
+
+      var script = document.createElement("script");
+      script.id = "spm-html2pdf-script";
+      script.type = "text/javascript";
+      script.src =
+        baseUrl.replace(/\/$/, "") + "/Style%20Library/spm/js/html2pdf.js";
+      script.onload = function () {
+        restoreDefine();
+        if (typeof window.html2pdf === "function") {
+          resolve();
+        } else {
+          reject(new Error("html2pdf not available after load"));
+        }
+      };
+      script.onerror = function () {
+        restoreDefine();
+        reject(new Error("Failed to load html2pdf.js"));
+      };
+      document.head.appendChild(script);
+    });
+  },
+
+  export: function () {
+    var lang =
+      localStorage.getItem("lng") === "en" ? "en" : "ar";
+
+    Export_PDF.ensureLibrary()
+      .then(function () {
+        return Export_PDF.resolveHeaderBannerDataUrl();
+      })
+      .then(function (bannerDataUrl) {
+        var finalArr = Export_PDF.gatherPDFData();
+        if (!finalArr.length) {
+          alert(
+            lang === "ar"
+              ? "لا توجد بيانات للتصدير."
+              : "No data available to export."
+          );
+          return;
+        }
+        if (!bannerDataUrl) {
+          console.warn(
+            "PDF header banner not found. Expected pdf-header-banner.png under Style Library/spm/images or Style Library/Images (checked in/published)."
+          );
+        }
+        Export_PDF.handleExportPDF(finalArr, bannerDataUrl);
+      })
+      .catch(function (error) {
+        console.error("PDF export library error:", error);
+        alert(
+          lang === "ar"
+            ? "تعذر تحميل مكتبة تصدير PDF. تأكد من رفع html2pdf.js في Style Library/spm/js."
+            : "PDF export library is not loaded. Ensure html2pdf.js is in Style Library/spm/js."
+        );
+      });
+  },
+};
+
 // working on integration btn
 var base64 = "";
 
@@ -18174,6 +19611,329 @@ var Integration_Handler = {
     });
   },
 };
+
+function getFieldInfoIconHtml(element) {
+  if (!element) {
+    return "";
+  }
+  var lng =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
+      ? "ar"
+      : "en";
+  var tipText = "";
+  if (
+    element.tooltipKey &&
+    typeof Resources !== "undefined" &&
+    Resources[lng] &&
+    Resources[lng][element.tooltipKey]
+  ) {
+    tipText = Resources[lng][element.tooltipKey];
+  } else if (lng == "ar") {
+    tipText = element.tooltipAr || element.tooltip || "";
+  } else {
+    tipText = element.tooltipEn || element.tooltip || "";
+  }
+  if (!tipText) {
+    return "";
+  }
+  return (
+    '<span class="field-api-info" tabindex="0">' +
+    '<i class="fas fa-info-circle"></i>' +
+    '<span class="field-api-info-box">' +
+    tipText +
+    "</span></span>"
+  );
+}
+
+function parseKPIComponentApiLink(raw) {
+  var rawValue = (raw || "").trim();
+  if (!rawValue) {
+    return null;
+  }
+  var userName = "";
+  var password = "";
+  var userMatch = rawValue.match(/[?&](?:userName|username)[=:]([^&]*)/i);
+  var passMatch = rawValue.match(/[?&]password[=:]([^&]*)/i);
+  if (userMatch) {
+    try {
+      userName = decodeURIComponent(userMatch[1] || "");
+    } catch (e) {
+      userName = userMatch[1] || "";
+    }
+  }
+  if (passMatch) {
+    try {
+      password = decodeURIComponent(passMatch[1] || "");
+    } catch (e2) {
+      password = passMatch[1] || "";
+    }
+  }
+  var url = rawValue
+    .replace(/[?&](?:userName|username|password)[=:][^&]*/gi, "")
+    .replace(/[?&]$/, "")
+    .replace(/\?&+/, "?")
+    .replace(/\?$/, "");
+  return {
+    url: url,
+    userName: userName,
+    password: password,
+  };
+}
+
+function extractIntegrationTunnelValue(data) {
+  if (data == null) {
+    return "";
+  }
+  if (typeof data === "string" || typeof data === "number") {
+    return String(data).trim();
+  }
+  var result = data.result != null ? data.result : data.Result;
+  if (result == null) {
+    return "";
+  }
+  if (typeof result === "string" || typeof result === "number") {
+    return String(result).trim();
+  }
+  if (typeof result === "object") {
+    var keys = [
+      "value",
+      "Value",
+      "data",
+      "Data",
+      "componentValue",
+      "ComponentValue",
+    ];
+    for (var i = 0; i < keys.length; i++) {
+      if (result[keys[i]] != null && String(result[keys[i]]).trim() !== "") {
+        return String(result[keys[i]]).trim();
+      }
+    }
+  }
+  return "";
+}
+
+function getKPIComponentApiResultMessage(value) {
+  if (value) {
+    return value;
+  }
+  var lng =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
+      ? "ar"
+      : "en";
+  if (typeof Resources !== "undefined" && Resources[lng] && Resources[lng].noApiResults) {
+    return Resources[lng].noApiResults;
+  }
+  return lng == "ar" ? "لا توجد نتائج" : "No results";
+}
+
+function setKPIComponentApiResult($input, text, isEmpty) {
+  var $field = $input.closest(".CFIELD");
+  var $result = $field.children(".api-link-result");
+  if (!$result.length) {
+    $result = $('<span class="api-link-result"></span>');
+    $field.append($result);
+  }
+  $result.text(text || "");
+  $result.toggleClass("is-empty", !!isEmpty);
+}
+
+function getKPIFetchButtonLabel() {
+  var lng =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
+      ? "ar"
+      : "en";
+  if (
+    typeof Resources !== "undefined" &&
+    Resources[lng] &&
+    Resources[lng].fetchComponentValue
+  ) {
+    return Resources[lng].fetchComponentValue;
+  }
+  return lng == "ar" ? "سحب البيانات" : "Pull data";
+}
+
+function getKPIComponentLinkMap() {
+  return {
+    URLA: "A",
+    URLB: "B",
+    URLC: "CC",
+    URLD: "D",
+    URLE: "E",
+    URLF: "F",
+    URLG: "G",
+  };
+}
+
+function callKPIComponentIntegrationTunnel(parsed, $feedbackInput, componentId, $button, writeToComponent) {
+  if (!parsed || !parsed.url) {
+    setKPIComponentApiResult($feedbackInput, "", false);
+    return;
+  }
+  var apiBase =
+    (typeof APIURL !== "undefined" && APIURL) || window.APIURL || "";
+  if (!apiBase) {
+    setKPIComponentApiResult(
+      $feedbackInput,
+      getKPIComponentApiResultMessage(""),
+      true
+    );
+    return;
+  }
+  var languageHeader =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar"
+      ? "ar"
+      : "en";
+  var headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Language: languageHeader,
+  };
+  if (window.XApiSubscriptionKey) {
+    headers["X-Api-Subscription-Key"] = window.XApiSubscriptionKey;
+  }
+  if ($button) {
+    $button.prop("disabled", true);
+  }
+  $.ajax({
+    url: apiBase.replace(/\/$/, "") + "/general/integration_tunnel",
+    method: "POST",
+    contentType: "application/json; charset=utf-8",
+    headers: headers,
+    data: JSON.stringify({
+      url: parsed.url,
+      userName: parsed.userName,
+      password: parsed.password,
+    }),
+    success: function (data) {
+      var value = extractIntegrationTunnelValue(data);
+      var isEmpty = !value;
+      var isComponentFeedback =
+        $feedbackInput && $feedbackInput.attr("id") === componentId;
+      setKPIComponentApiResult(
+        $feedbackInput,
+        isComponentFeedback && !isEmpty
+          ? ""
+          : getKPIComponentApiResultMessage(value),
+        isEmpty
+      );
+      if (writeToComponent && componentId && $("#" + componentId).length) {
+        $("#" + componentId).val(isEmpty ? "" : value);
+      }
+    },
+    error: function () {
+      setKPIComponentApiResult(
+        $feedbackInput,
+        getKPIComponentApiResultMessage(""),
+        true
+      );
+      if (writeToComponent && componentId && $("#" + componentId).length) {
+        $("#" + componentId).val("");
+      }
+    },
+    complete: function () {
+      if ($button) {
+        $button.prop("disabled", false);
+      }
+    },
+  });
+}
+
+function getKPIComponentStoredApiLink(linkId) {
+  var raw = "";
+  if (window.kpiEquationApiLinks && window.kpiEquationApiLinks[linkId] != null) {
+    raw = window.kpiEquationApiLinks[linkId];
+  } else if ($("#" + linkId).length) {
+    raw = $("#" + linkId).val();
+  }
+  if (raw == null) {
+    return "";
+  }
+  raw = String(raw)
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .trim();
+  return raw;
+}
+
+function hasKPIComponentApiLink(linkId) {
+  var parsed = parseKPIComponentApiLink(getKPIComponentStoredApiLink(linkId));
+  return !!(parsed && parsed.url);
+}
+
+function refreshKPIComponentApiButtons() {
+  if (typeof bindMainKpiComponentApiButtons === "function") {
+    bindMainKpiComponentApiButtons();
+  }
+}
+window.refreshKPIComponentApiButtons = refreshKPIComponentApiButtons;
+
+function bindMainKpiComponentApiButtons() {
+  if (typeof isEdit === "undefined" || !isEdit || listkey != "mainkpi") {
+    return;
+  }
+  var linkMap = getKPIComponentLinkMap();
+  Object.keys(linkMap).forEach(function (linkId) {
+    var componentId = linkMap[linkId];
+    var $comp = $("#" + componentId);
+    if (!$comp.length) {
+      return;
+    }
+    var $field = $comp.closest(".CFIELD");
+    var $existing = $field.children(
+      '.kpi-fetch-api-btn[data-link-field="' + linkId + '"]'
+    );
+    if (!hasKPIComponentApiLink(linkId)) {
+      $existing.remove();
+      $field.removeClass("has-kpi-pull-btn");
+      return;
+    }
+    $field.addClass("has-kpi-pull-btn");
+    if (!$existing.length) {
+      var $btn = $(
+        '<button type="button" class="kpi-fetch-api-btn" data-link-field="' +
+          linkId +
+          '"></button>'
+      );
+      $btn.text(getKPIFetchButtonLabel());
+      $comp.after($btn);
+    }
+  });
+  $(".kpi-fetch-api-btn")
+    .off("click.kpiComponentApi")
+    .on("click.kpiComponentApi", function (e) {
+      e.preventDefault();
+      var $btn = $(this);
+      var linkId = $btn.attr("data-link-field");
+      var componentId = linkMap[linkId];
+      var $comp = $("#" + componentId);
+      var parsed = parseKPIComponentApiLink(getKPIComponentStoredApiLink(linkId));
+      callKPIComponentIntegrationTunnel(parsed, $comp, componentId, $btn, true);
+    });
+}
+window.bindMainKpiComponentApiButtons = bindMainKpiComponentApiButtons;
+
+function bindKPIComponentLinkApi() {
+  if (typeof listkey === "undefined" || listkey != "kpiequations") {
+    return;
+  }
+  var linkMap = getKPIComponentLinkMap();
+  var selector = Object.keys(linkMap)
+    .map(function (id) {
+      return "#" + id;
+    })
+    .join(",");
+  $(selector)
+    .off("blur.kpiComponentApi")
+    .on("blur.kpiComponentApi", function () {
+      var $input = $(this);
+      var parsed = parseKPIComponentApiLink($input.val());
+      if (!parsed || !parsed.url) {
+        setKPIComponentApiResult($input, "", false);
+        return;
+      }
+      callKPIComponentIntegrationTunnel(parsed, $input, null, null, false);
+    });
+}
 
 function getBase64(file) {
   var reader = new FileReader();

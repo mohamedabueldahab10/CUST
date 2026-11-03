@@ -163,9 +163,9 @@ window.MyPeoplePicker = function() {
                 window.setTimeout(function() {
                     $('.sp-peoplepicker-initialHelpText').text(enternameemail);
                     $('.sp-peoplepicker-initialHelpText').fadeIn();
-                    if (listkey == 'projects')
+                    if (typeof listkey !== 'undefined' && listkey == 'projects')
                         $('#ProjectOwner .sp-peoplepicker-initialHelpText').text(UserN.Title);
-                    else if (listkey == 'risks')
+                    else if (typeof listkey !== 'undefined' && listkey == 'risks')
                         $('#MitigationOwner .sp-peoplepicker-initialHelpText').text(UserN.Title);
                 }, 777);
             }

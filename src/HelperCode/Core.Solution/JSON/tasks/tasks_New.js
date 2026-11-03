@@ -7,39 +7,31 @@ var Information_Form  = [
         subFields: [
             {
                 "InternalName": "Name",
-                "DisplayName":"اسم المهمة",
-                "DisplayNameEn": "Task Name",
-                "type":"string"
-                
-                
+                "DisplayName":"عنوان المهمة",
+                "DisplayNameEn": "Task Title",
+                "type":"string",
+                "validation": "required",
+                "maxchar": 255
             },
             {
                 "InternalName": "AssignedTo",
-                "DisplayName":"نقل الى",
+                "DisplayName":"مسندة إلى",
                 "DisplayNameEn": "Assigned To",
                 "type":"picker" ,
                 "validation": "required"
-            
             },
             {
                 "InternalName": "Body",
-                "DisplayName":"الوصف ",
-                "DisplayNameEn": "Body",
+                "DisplayName":"الوصف",
+                "DisplayNameEn": "Description",
                 "type":"multiline"
-            
-            },
-            {
-                "InternalName": "PercentComplete",
-                "DisplayName":"نسبة الإنجاز",
-                "DisplayNameEn": "Percent Complete",
-                "type":"float"
-            
             },
             {
                 "InternalName": "Priority",
                 "DisplayName":"الأولوية",
                 "DisplayNameEn": "Priority",
                 "type":"dropdownValues",
+                "validation": "required",
                 options:{
                     choices:[
                         { display: 'hight', value: 'hight' },
@@ -48,90 +40,20 @@ var Information_Form  = [
                     ]
                 }
             },
-            // {
-            //     "InternalName": "PlannedStartDate",
-            //     "DisplayName":"تاريخ بدء المخطط",
-            //     "DisplayNameEn": "Planned Start Date",
-            //     "type":"datetime"
-           
-            // },
-            // {
-            //     "InternalName": "PlannedFinishDate",
-            //     "DisplayName":"تاريخ انتهاء المخطط",
-            //     "DisplayNameEn": "Planned Finish Date",
-            //     "type":"datetime"
-           
-            // },
-            // {
-            //     "InternalName": "ActualStartDate",
-            //     "DisplayName":"تاريخ البدء الفعلي",
-            //     "DisplayNameEn": "Actual Start Date",
-            //     "type":"datetime"
-           
-            // },
-            // {
-            //     "InternalName": "ActualFinishDate",
-            //     "DisplayName":"تاريخ الانتهاء الفعلي",
-            //     "DisplayNameEn": "Actual Finish Date",
-            //     "type":"datetime"
-           
-            // },
             {
-                "InternalName": "Status",
-                "DisplayName":"الحالة",
-                "DisplayNameEn": "Status",
-                "type":"dropdownValues",
-                options:{
-                    choices:[
-                        { display: 'cancelled3', value: 'cancelled3' },
-                        { display: 'pending3', value: 'pending3' },
-                        { display: 'inprogress', value: 'inprogress' },
-                        { display: 'notstarted1', value: 'notstarted1' },
-                        { display: 'completed3', value: 'completed3' }
-                    ]
-                }
+                "InternalName": "DueDate",
+                "DisplayName":"تاريخ الاستحقاق",
+                "DisplayNameEn": "Due Date",
+                "type":"datetime",
+                "validation": "required"
             },
-         
-            // {
-            //     "InternalName": "Title",
-            //     "DisplayName":"العنوان",
-            //     "DisplayNameEn": "Title",
-            //     "type":"string"
-                
-                
-            // },
             {
-                "InternalName": "TaskOwner",
-                "DisplayName":"صاحب المهمة",
-                "DisplayNameEn": "Task Owner",
-                "type":"picker"
-                
-                
-            },
-            // {
-            //     "InternalName": "Portfolio",
-            //     "DisplayName":"المحفظة",
-            //     "DisplayNameEn": "Portfolio",
-            //     "type":"string"
-                
-                
-            // },
-            // {
-            //     "InternalName": "ProgressAchived",
-            //     "DisplayName":"التقدم المحقق",
-            //     "DisplayNameEn": "Progress Achived",
-            //     "type":"string"
-                
-                
-            // },
-            // {
-            //     "InternalName": "PendingActions",
-            //     "DisplayName":"الإجراءات المعلقة",
-            //     "DisplayNameEn": "Pending Actions",
-            //     "type":"multiline"
-                
-                
-            // }
+                "InternalName": "getfile",
+                "DisplayName":"المرفقات",
+                "DisplayNameEn": "Attachments",
+                "type":"file",
+                "withAddBtn": "true"
+            }
         ]
     },
 ];

@@ -1,5 +1,13 @@
 var Listing_Info = [
   {
+    InternalName: "Name",
+    DisplayName: "عنوان المهمة",
+    DisplayNameEn: "Task Title",
+    type: "text",
+    inlisting: true,
+    infilter: false,
+  },
+  {
     InternalName: "Title",
     DisplayName: "رمز المهمة",
     DisplayNameEn: "Task Code",
@@ -23,7 +31,7 @@ var Listing_Info = [
     DisplayNameEn: "Related Item",
     type: "text",
     inlisting: true,
-    infilter: false,
+    infilter: true,
   },
   {
     InternalName: "Created",
@@ -31,7 +39,7 @@ var Listing_Info = [
     DisplayNameEn: "Created Date",
     type: "date",
     inlisting: true,
-    infilter: true,
+    infilter: false,
   },
   {
     InternalName: "RelatedItemName",
@@ -40,7 +48,7 @@ var Listing_Info = [
     type: "text",
     // needTrans: true,
     inlisting: true,
-    infilter: false,
+    infilter: true,
   },
   {
     InternalName: "Author",
@@ -51,13 +59,30 @@ var Listing_Info = [
     infilter: false,
   },
   {
+    InternalName: "DueDate",
+    DisplayName: "تاريخ الاستحقاق",
+    DisplayNameEn: "Due Date",
+    type: "date",
+    inlisting: true,
+    infilter: true,
+  },
+  {
+    InternalName: "Priority",
+    DisplayName: "الأولوية",
+    DisplayNameEn: "Priority",
+    type: "text",
+    inlisting: true,
+    infilter: true,
+    needTrans: true,
+  },
+  {
     InternalName: "Status",
     DisplayName: "الحالة",
     DisplayNameEn: "Status",
     type: "text",
-    inlisting: false,
-    infilter: false,
-    // needTrans: true,
+    inlisting: true,
+    infilter: true,
+    needTrans: true,
   },
   {
     InternalName: "TaskType",
@@ -142,10 +167,10 @@ var Listing_Info = [
   {
     InternalName: "AssignedTo",
     DisplayName: "مسندة الى",
-    DisplayNameEn: "assign to",
-    type: "text",
-    inlisting: false,
-    infilter: false,
+    DisplayNameEn: "Assigned To",
+    type: "multipicker",
+    inlisting: true,
+    infilter: true,
   },
   {
     InternalName: "RelatedURL",

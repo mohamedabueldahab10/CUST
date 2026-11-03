@@ -756,8 +756,8 @@ var ListArray = [
 	},
 	{
 		initiativeissues: "Issues",
-		ListingTitle: "عوائق المبادرة",
-		FormTitle: "عوائق المبادرة",
+		ListingTitle: "تحديات المبادرة",
+		FormTitle: "تحديات المبادرة",
 		TitleEn: "Initiative Issues",
 		projnav: "Project Navigation",
 		subfolder: true,
@@ -903,7 +903,24 @@ var ListArray = [
 		projectrelated: false,
 		subfolder: true,
 	},
-	
+	{
+        referencecosts: "Reference Costs",
+        ListingTitle: "التكاليف المرجعية",
+        FormTitle: "التكاليف المرجعية",
+        TitleEn: "Reference Costs",
+        projnav: "Project Navigation",
+        projectrelated: false,
+        subfolder: true,
+    },
+	{
+        RCMeasurementUnit: "RCMeasurementUnit",
+        ListingTitle: "وحدة القياس التكاليف المرجعية",
+        FormTitle: "وحدة القياس التكاليف المرجعية",
+        TitleEn: "RC Measurement Unit",
+        projnav: "Project Navigation",
+        projectrelated: false,
+        subfolder: true,
+    },
 ];
 var PageArray = [
     {

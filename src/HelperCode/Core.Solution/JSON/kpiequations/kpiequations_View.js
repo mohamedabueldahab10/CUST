@@ -51,10 +51,24 @@ var Information_Form = [{
             "type": "string"
         },
         {
+            "InternalName": "URLA",
+            "DisplayName": "الرابط المكون الأول (A)",
+            "DisplayNameEn": "URLA",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
+        },
+        {
             "InternalName": "B",
             "DisplayName": "المكون الثاني (B)",
             "DisplayNameEn": "B",
             "type": "string"
+        },
+        {
+            "InternalName": "URLB",
+            "DisplayName": "الرابط المكون الثاني (B)",
+            "DisplayNameEn": "URLB",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
         },
         {
             "InternalName": "CC",
@@ -63,10 +77,24 @@ var Information_Form = [{
             "type": "string"
         },
         {
+            "InternalName": "URLC",
+            "DisplayName": "الرابط المكون الثالث (C)",
+            "DisplayNameEn": "URLC",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
+        },
+        {
             "InternalName": "D",
             "DisplayName": "المكون الرابع (D)",
             "DisplayNameEn": "D",
             "type": "string"
+        },
+        {
+            "InternalName": "URLD",
+            "DisplayName": "الرابط المكون الرابع (D)",
+            "DisplayNameEn": "URLD",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
         },
         {
             "InternalName": "E",
@@ -75,16 +103,37 @@ var Information_Form = [{
             "type": "string"
         },
         {
+            "InternalName": "URLE",
+            "DisplayName": "الرابط المكون الخامس (E)",
+            "DisplayNameEn": "URLE",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
+        },
+        {
             "InternalName": "F",
             "DisplayName": "المكون السادس (F)",
             "DisplayNameEn": "F",
             "type": "string"
         },
         {
+            "InternalName": "URLF",
+            "DisplayName": "الرابط المكون السادس (F)",
+            "DisplayNameEn": "URLF",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
+        },
+        {
             "InternalName": "G",
             "DisplayName": "المكون السابع (G)",
             "DisplayNameEn": "G",
             "type": "string"
+        },
+        {
+            "InternalName": "URLG",
+            "DisplayName": "الرابط المكون السابع (G)",
+            "DisplayNameEn": "URLG",
+            "type": "string",
+            tooltipKey: "componentApiLinkTooltip"
         },
         
     ]

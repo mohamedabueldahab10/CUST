@@ -1,5 +1,17 @@
 window.kpiCodeResult = "";
 window.benefitCodeResult = "";
+
+if (typeof window.getMasterDetailCodeIndex !== "function") {
+  window.getMasterDetailCodeIndex = function (title, fallbackId) {
+    var lastPart = String(title || "").split("-").pop();
+    var idx = parseInt(lastPart, 10);
+    if (!isNaN(idx) && idx > 0) {
+      return idx;
+    }
+    var idNum = parseInt(fallbackId, 10);
+    return !isNaN(idNum) && idNum > 0 ? idNum : 0;
+  };
+}
 ////////////
 var allFileIndex = 0;
 var relatedObjInit = "";
@@ -161,6 +173,124 @@ window.CheckActiveCalendarQuarterForAnalysis = function (callback) {
   });
 };
 
+function isCurrentUserAssignedToTask(item) {
+  try {
+    var assigned = item.get_item("AssignedTo");
+    if (!assigned) return false;
+    if (typeof assigned.get_lookupId === "function") {
+      return assigned.get_lookupId() == UserN.Id;
+    }
+    if (assigned.length) {
+      for (var i = 0; i < assigned.length; i++) {
+        if (assigned[i] && assigned[i].get_lookupId() == UserN.Id) return true;
+      }
+    }
+  } catch (e) {}
+  return false;
+}
+
+function isCurrentUserTaskAuthor(item) {
+  try {
+    var author = item.get_item("Author");
+    return author && typeof author.get_lookupId === "function" && author.get_lookupId() == UserN.Id;
+  } catch (e) {}
+  return false;
+}
+
+function applyStandaloneTaskFormAccess(item) {
+  var wfName = "";
+  try {
+    wfName = item.get_item("WorkflowName") || "";
+  } catch (e) {
+    wfName = "";
+  }
+  var isStandaloneTask = !wfName;
+  window.isStandaloneTask = isStandaloneTask;
+
+  if (!isStandaloneTask) {
+    if (isEdit) {
+      $(".btn-save").remove();
+      $(".form-control.SPIField, select.SPIField, textarea.SPIField").attr("disabled", true);
+    }
+    return;
+  }
+
+  var canCloseStandaloneTask =
+    isCurrentUserAssignedToTask(item) ||
+    isCurrentUserTaskAuthor(item) ||
+    isAdmin ||
+    isSectorHead ||
+    isSubSectorHead ||
+    isGeneralManager;
+
+  if (isEdit && !canCloseStandaloneTask) {
+    $(".btn-save").remove();
+    $("#Status").attr("disabled", true);
+    return;
+  }
+
+  if (isEdit && canCloseStandaloneTask) {
+    $("body").append(
+      "<style>.btn-save{opacity:1!important;pointer-events:auto!important;display:inline-block!important}</style>"
+    );
+    var closeLbl =
+      localStorage.getItem("lng") == "en"
+        ? Resources.en.closetask || "Close Task"
+        : Resources.ar.closetask || "إغلاق المهمة";
+    if (!$("#closeStandaloneTaskBtn").length) {
+      var closeBtnHtml =
+        '<button id="closeStandaloneTaskBtn" class="btn btn-action" type="button">' +
+        closeLbl +
+        "</button>";
+      if ($(".form-btns-wrapper").length) {
+        $(".form-btns-wrapper").append(closeBtnHtml);
+      } else {
+        $(".btn-save").first().after(closeBtnHtml);
+      }
+      $("#closeStandaloneTaskBtn").on("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $("#Status").prop("disabled", false);
+        if (!$("#Status option[value='Closed']").length) {
+          $("#Status").append('<option value="Closed">Closed</option>');
+        }
+        $("#Status").val("Closed").trigger("change");
+        if (typeof Edit_Data_Submit !== "undefined") {
+          Edit_Data_Submit.preinit();
+        }
+      });
+    }
+  }
+
+  if (isView && isStandaloneTask) {
+    $("body").append(
+      "<style>.btn-save{opacity:1!important;pointer-events:auto!important;display:inline-block!important}</style>"
+    );
+  }
+
+  if (isView && canCloseStandaloneTask && item.get_item("Status") == "Open") {
+    var closeLblView =
+      localStorage.getItem("lng") == "en"
+        ? Resources.en.closetask || "Close Task"
+        : Resources.ar.closetask || "إغلاق المهمة";
+    if (!$("#closeStandaloneTaskBtn").length) {
+      var closeBtnViewHtml =
+        '<a id="closeStandaloneTaskBtn" class="btn btn-action" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/Edit.aspx?ListKey=tasks&IID=" +
+        IID +
+        '">' +
+        closeLblView +
+        "</a>";
+      if ($(".form-btns-wrapper").length) {
+        $(".form-btns-wrapper").append(closeBtnViewHtml);
+      } else {
+        $(".btn-save").first().after(closeBtnViewHtml);
+      }
+    }
+  }
+}
+
 window.Edit_Data_Request = {
   onSuccess: async function (sender, args) {
     // Reset retry count
@@ -207,6 +337,26 @@ window.Edit_Data_Request = {
     // }
     $("h2.DahsFormTitle").text(PageTitle);
 
+    if (listkey == "tasks" && (isEdit || isView) && !USERisWF) {
+      setTimeout(function () {
+        applyStandaloneTaskFormAccess(oListItem);
+      }, 800);
+    }
+
+    if (typeof listkey !== "undefined" && listkey == "benefits" && typeof oListItem !== "undefined" && oListItem) {
+      try {
+        var itemStage = oListItem.get_item("WFStage");
+        if (itemStage && typeof itemStage.get_lookupValue === "function") {
+          itemStage = itemStage.get_lookupValue();
+        }
+        window.benefitItemWfStage = itemStage ? String(itemStage) : "";
+        var itemModule = oListItem.get_item("WFModuleCode");
+        window.benefitItemWfModule = itemModule ? String(itemModule) : "";
+      } catch (e) {
+        window.benefitItemWfStage = window.benefitItemWfStage || "";
+      }
+    }
+
     //window.pemail;
     // $('h2.DahsFormTitle').append(' - " '+oListItem.get_item('Project_Name')+' "');
 
@@ -252,13 +402,17 @@ window.Edit_Data_Request = {
             $(this).val(datetouse2);
 
           }
-   // Injected condition to handle missing date
-   else if (d == "empty" && minValue) {
-    $(this).val(minValue ? minValue : datetouse2);
-  }      else {
-                $(this).val(datetouse2);
-
-  } 
+          else if (d == "empty") {
+            var isActualCompletionDate =
+              fieldId == "ActualCompletedDate" ||
+              fieldId == "DeliveredDate" ||
+              fieldId == "ActualDate";
+            if (!isActualCompletionDate && minValue) {
+              $(this).val(minValue);
+            } else if (isActualCompletionDate) {
+              $(this).val("");
+            }
+          }
     break;
 
         case "datetime-local":
@@ -585,7 +739,12 @@ window.Edit_Data_Request = {
             );
           }
           var defaultFieldId = $(this).attr("id");
-          var defaultFieldValue = oListItem.get_item("" + defaultFieldId + "");
+          var defaultFieldValue = null;
+          try {
+            defaultFieldValue = oListItem.get_item("" + defaultFieldId + "");
+          } catch (e) {
+            break;
+          }
           $(this).val(defaultFieldValue);
           if ($(this).data("field-type") === "lookup" && defaultFieldValue) {
             $(this).attr("data-lookup-value", defaultFieldValue);
@@ -593,6 +752,13 @@ window.Edit_Data_Request = {
           break;
       }
     });
+
+    if (
+      listkey == "kpiequations" &&
+      typeof refreshKPIComponentApiButtons === "function"
+    ) {
+      refreshKPIComponentApiButtons();
+    }
 
     if (listkey == "sos") {
       // add this after loop to apply don't submit feature to not change on value when submit edit
@@ -1794,6 +1960,111 @@ window.Edit_Data_Request = {
           }
         });
       }
+      if (!window.BenefitActualHistory) {
+        window.BenefitActualHistory = {
+          monthFromForm: function () {
+            var periodType = ($("#PeriodType").val() || "").toLowerCase();
+            if (periodType === "monthly") {
+              var mVal = $("#Months").val() || "";
+              if (mVal.indexOf("ActualM") === 0)
+                return parseInt(mVal.replace("ActualM", ""), 10) || 0;
+            } else if (periodType === "midterm") {
+              var midVal = $("#Midterms").val() || "";
+              if (midVal === "ActualMid1") return 6;
+              if (midVal === "ActualMid2") return 12;
+            } else if (periodType === "quarter") {
+              var qVal = $("#Quarter").val() || "";
+              if (qVal === "ActualQ1") return 3;
+              if (qVal === "ActualQ2") return 6;
+              if (qVal === "ActualQ3") return 9;
+              if (qVal === "ActualQ4") return 12;
+            } else if (periodType === "year") {
+              return 12;
+            }
+            return 0;
+          },
+          clearEdit: function () {
+            $("#A, #B, #CC, #D, #E, #F, #G, #PerformanceAnalysis").val("");
+            $("#Equation").val(0);
+          },
+          fillEdit: function (item) {
+            if (!item) return;
+            if (item.ComponentA != null) $("#A").val(item.ComponentA);
+            if (item.ComponentB != null) $("#B").val(item.ComponentB);
+            if (item.ComponentC != null) $("#CC").val(item.ComponentC);
+            if (item.ComponentD != null) $("#D").val(item.ComponentD);
+            if (item.ComponentE != null) $("#E").val(item.ComponentE);
+            if (item.ComponentF != null) $("#F").val(item.ComponentF);
+            if (item.ComponentG != null) $("#G").val(item.ComponentG);
+            if (item.FinalValue != null) $("#Equation").val(item.FinalValue);
+            if (item.PerformanceAnalysis)
+              $("#PerformanceAnalysis").val(item.PerformanceAnalysis);
+            if (item.ActualkpiDate) {
+              var actualBenefitDateInput = new Date(item.ActualkpiDate);
+              if (!isNaN(actualBenefitDateInput.getTime()))
+                $("#ActualkpiDate").val(
+                  actualBenefitDateInput.toISOString().split("T")[0]
+                );
+              else $("#ActualkpiDate").val(item.ActualkpiDate);
+            }
+          },
+          loadForSelectedPeriod: function (clearIfMissing) {
+            var code =
+              $("#Title").val() ||
+              $("#Title").text() ||
+              (typeof benefitCodeResult !== "undefined"
+                ? benefitCodeResult
+                : "") ||
+              "";
+            if (!code) {
+              if (clearIfMissing) BenefitActualHistory.clearEdit();
+              return;
+            }
+            var year = parseInt($("#Year").val() || 0, 10) || 0;
+            var month = BenefitActualHistory.monthFromForm();
+            $.ajax({
+              url:
+                _spPageContextInfo.webAbsoluteUrl +
+                "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=BenefitCode eq '" +
+                code +
+                "' and DeletionStatus ne 'Deleted'&$top=50&$orderby=ID desc",
+              method: "GET",
+              headers: { Accept: "application/json;odata=verbose" },
+              success: function (data) {
+                var items = (data.d.results || []).filter(function (it) {
+                  return it.DeletionStatus !== "Deleted";
+                });
+                var match = items.filter(function (it) {
+                  if (year && parseInt(it.Year, 10) !== year) return false;
+                  if (month && parseInt(it.Month, 10) !== month) return false;
+                  return true;
+                })[0];
+                if (match) {
+                  BenefitActualHistory.fillEdit(match);
+                } else if (clearIfMissing) {
+                  BenefitActualHistory.clearEdit();
+                }
+              },
+              error: function (err) {
+                console.error(
+                  "Error getting KPIResultsHistory (BenefitCode)",
+                  err
+                );
+                if (clearIfMissing) BenefitActualHistory.clearEdit();
+              },
+            });
+          },
+        };
+        $(document).on(
+          "change.benefitActualPeriod",
+          "#Quarter, #Months, #Midterms, #Year",
+          function () {
+            if (typeof listkey === "undefined" || listkey != "benefits") return;
+            if (!(typeof isEdit !== "undefined" && isEdit)) return;
+            BenefitActualHistory.loadForSelectedPeriod(true);
+          }
+        );
+      }
       if (isWF && listkey == "benefits" && workflowname == 'MSActualBenefit' ) {
         var benefitCodeForHistory = $("#Title").val() || $("#Title").text() || (typeof benefitCodeResult !== "undefined" ? benefitCodeResult : "");
         console.log("[BenefitHistory] Form_Request EDIT load from KPIResultsHistory", {
@@ -1806,66 +2077,9 @@ window.Edit_Data_Request = {
           console.log('[BenefitHistory] no record title to checks in KPIResultsHistory (BenefitCode)');
           return;
         }
-
-        $.ajax({
-          url: _spPageContextInfo.webAbsoluteUrl +
-            "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=BenefitCode eq '" + benefitCodeForHistory + "'&$top=1&$orderby=ID desc",
-          method: "GET",
-          headers: { Accept: "application/json;odata=verbose" },
-          success: function (data) {
-            if (!data.d.results || data.d.results.length === 0) {
-              console.log('[BenefitHistory] no record to show in KPIResultsHistory (BenefitCode)');
-              return;
-            }
-
-            var benefitItem = data.d.results[0];
-            console.log("[BenefitHistory] KPIResultsHistory (BenefitCode) found: ", benefitItem);
-            if(isEdit){
-
-              if (benefitItem.Year) $("#Year").val(benefitItem.Year);
-              if (benefitItem.Month) {
-                var benefitMonthVal = parseInt(benefitItem.Month, 10);
-                $("#Months").val("ActualM" + benefitMonthVal);
-
-                var benefitPeriodTypeVal =
-                  $("#PeriodType").val() ||
-                  "";
-
-                if (benefitPeriodTypeVal == "midterm") {
-                  if (benefitMonthVal == 6) $("#Midterms").val("ActualMid1");
-                  else if (benefitMonthVal == 12) $("#Midterms").val("ActualMid2");
-                } else if (benefitPeriodTypeVal == "quarter") {
-                  if (benefitMonthVal == 3) $("#Quarter").val("ActualQ1");
-                  else if (benefitMonthVal == 6) $("#Quarter").val("ActualQ2");
-                  else if (benefitMonthVal == 9) $("#Quarter").val("ActualQ3");
-                  else if (benefitMonthVal == 12) $("#Quarter").val("ActualQ4");
-                }
-              }
-              if (benefitItem.ComponentA != null) $("#A").val(benefitItem.ComponentA);
-              if (benefitItem.ComponentB != null) $("#B").val(benefitItem.ComponentB);
-              if (benefitItem.ComponentC != null) $("#CC").val(benefitItem.ComponentC);
-              if (benefitItem.ComponentD != null) $("#D").val(benefitItem.ComponentD);
-              if (benefitItem.ComponentE != null) $("#E").val(benefitItem.ComponentE);
-              if (benefitItem.ComponentF != null) $("#F").val(benefitItem.ComponentF);
-              if (benefitItem.ComponentG != null) $("#G").val(benefitItem.ComponentG);
-              if (benefitItem.FinalValue != null) $("#Equation").val(benefitItem.FinalValue);
-              if (benefitItem.PerformanceAnalysis)
-                $("#PerformanceAnalysis").val(benefitItem.PerformanceAnalysis);
-              if (benefitItem.ActualkpiDate) {
-                var actualBenefitDateInput = new Date(benefitItem.ActualkpiDate);
-                if (!isNaN(actualBenefitDateInput.getTime()))
-                  $("#ActualkpiDate").val(actualBenefitDateInput.toISOString().split("T")[0]);
-                else
-                  $("#ActualkpiDate").val(benefitItem.ActualkpiDate);
-              }
-            }
-          },
-          error: function (err) {
-            console.error("Error getting KPIResultsHistory (BenefitCode)", err);
-          }
-        });
+        BenefitActualHistory.loadForSelectedPeriod(false);
       }
-      if (isInManager && listkey == "benefits" && $('#WFStage').val() == "approved") {
+      if ((isInManager || isBenefitOwner) && listkey == "benefits" && $('#WFStage').val() == "approved") {
         var benefitAllZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
             return parseFloat($(id).val() || 0) === 0;
         });
@@ -1963,7 +2177,8 @@ window.Edit_Data_Request = {
           benefitWfRaw == null || benefitWfRaw === undefined ? "" : String(benefitWfRaw).trim();
         if (
           !USERisWF &&
-          currentUserRole == "InitiativeManager" &&
+          (currentUserRole == "InitiativeManager" ||
+            currentUserRole == "BenefitOwner") &&
           benefitWfStageVal !== ""
         ) {
           $("body").append(
@@ -1984,6 +2199,17 @@ window.Edit_Data_Request = {
         }
         if (window.BenefitsEpmoEquationSectionRequired) {
           BenefitsEpmoEquationSectionRequired.bind();
+        }
+        if (window.BenefitsWeightGuard) {
+          BenefitsWeightGuard.applyWeightEditAccess();
+          BenefitsWeightGuard.applyRemainingMax();
+          BenefitsWeightGuard.bindClamp();
+          setTimeout(function () {
+            BenefitsWeightGuard.applyWeightEditAccess();
+          }, 300);
+          setTimeout(function () {
+            BenefitsWeightGuard.applyWeightEditAccess();
+          }, 1500);
         }
       }
       if (listkey == "strategicpartnershipsachievements" && (isEdit || isView)) {
@@ -4483,6 +4709,14 @@ window.View_Data_Request = {
 
       if (PeriodType == "monthly") {
         $("#Quarter,#Midterms,#Years").parent().hide();
+        var monthsShown = ($("#Months").val() || $("#Months").text() || "") + "";
+        if (
+          monthsShown.indexOf("ActualQ") === 0 ||
+          monthsShown.indexOf("ربع") > -1
+        ) {
+          $("#Months").val("");
+          if (isView) $("#Months").text("");
+        }
       } else if (PeriodType == "quarter") {
         $("#Months,#Midterms,#Years").parent().hide();
       } else if (PeriodType == "midterm") {
@@ -4939,7 +5173,7 @@ window.View_Data_Request = {
 
         $.ajax({
           url: _spPageContextInfo.webAbsoluteUrl +
-            "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=BenefitCode eq '" + benefitCodeForViewHistory + "'&$top=1&$orderby=ID desc",
+            "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=BenefitCode eq '" + benefitCodeForViewHistory + "' and DeletionStatus ne 'Deleted'&$top=1&$orderby=ID desc",
           method: "GET",
           headers: { Accept: "application/json;odata=verbose" },
           success: function (data) {
@@ -4954,12 +5188,23 @@ window.View_Data_Request = {
               if (benefitViewItem.Year) $("#Year").text(benefitViewItem.Year);
               if (benefitViewItem.Month) {
                 var benefitViewMonthVal = parseInt(benefitViewItem.Month, 10);
-                $("#Months").text("ActualM" + benefitViewMonthVal);
-
-                var benefitViewPeriodTypeVal =
+                var benefitViewPeriodTypeVal = String(
                   $("#PeriodType").attr("data-viewtogglevalue") ||
-                  $("#PeriodType").text() ||
-                  "";
+                    (typeof PeriodType !== "undefined" ? PeriodType : "") ||
+                    $("#PeriodType").text() ||
+                    ""
+                ).toLowerCase();
+                if (
+                  benefitViewPeriodTypeVal.indexOf("شهر") > -1 ||
+                  benefitViewPeriodTypeVal.indexOf("month") > -1
+                ) {
+                  benefitViewPeriodTypeVal = "monthly";
+                } else if (
+                  benefitViewPeriodTypeVal.indexOf("ربع") > -1 ||
+                  benefitViewPeriodTypeVal.indexOf("quarter") > -1
+                ) {
+                  benefitViewPeriodTypeVal = "quarter";
+                }
 
                 var benefitLang =
                   localStorage.getItem("lng") == null ||
@@ -4967,12 +5212,21 @@ window.View_Data_Request = {
                     ? "ar"
                     : "en";
 
-                if (benefitViewPeriodTypeVal === "midterm") {
+                if (benefitViewPeriodTypeVal === "monthly") {
+                  $("#Months").text(
+                    (Resources[benefitLang] &&
+                      Resources[benefitLang]["month" + benefitViewMonthVal]) ||
+                      ""
+                  );
+                  $("#Quarter").text("");
+                } else if (benefitViewPeriodTypeVal === "midterm") {
+                  $("#Months").text("");
                   if (benefitViewMonthVal === 6)
                     $("#Midterms").text(Resources[benefitLang]["midterm1"]);
                   else if (benefitViewMonthVal === 12)
                     $("#Midterms").text(Resources[benefitLang]["midterm2"]);
                 } else if (benefitViewPeriodTypeVal === "quarter") {
+                  $("#Months").text("");
                   if (benefitViewMonthVal === 3)
                     $("#Quarter").text(Resources[benefitLang]["quarter1"]);
                   else if (benefitViewMonthVal === 6)
@@ -5007,7 +5261,7 @@ window.View_Data_Request = {
           }
         });
       }
-      if (isInManager && listkey == "benefits" && $('#WFStage').val() == "approved") {
+      if ((isInManager || isBenefitOwner) && listkey == "benefits" && $('#WFStage').val() == "approved") {
         var benefitViewAllZero = ["#A", "#B", "#CC", "#D", "#E", "#F", "#G"].every(function (id) {
             return parseFloat($(id).val() || 0) === 0;
         });
@@ -5922,10 +6176,23 @@ var Master_Details_Request = {
     }
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
+      var masterItemTitle = "";
+      try {
+        masterItemTitle = oListItem.get_item("Title") || "";
+      } catch (e) {
+        masterItemTitle = "";
+      }
+      var masterItemIndex = window.getMasterDetailCodeIndex
+        ? window.getMasterDetailCodeIndex(masterItemTitle, oListItem.get_id())
+        : oListItem.get_id();
       HTMLtoAppend = "";
       HTMLtoAppend +=
         '<div class="Details-Item EditItem" data-ID="' +
         oListItem.get_id() +
+        '" data-index="' +
+        masterItemIndex +
+        '" data-code="' +
+        String(masterItemTitle).replace(/"/g, "&quot;") +
         '" data-masterkey="' +
         oListItem.get_item("MasterKey") +
         '">';
@@ -5936,6 +6203,21 @@ var Master_Details_Request = {
         $('[data-target_list="' + CurrList + '"] .fieldset-container').append(
           HTMLtoAppend
         );
+        if (
+          typeof ListInfo !== "undefined" &&
+          ListInfo.g &&
+          ListInfo.g.uniqueMasterDetailRadioNames
+        ) {
+          ListInfo.g.uniqueMasterDetailRadioNames(
+            $(
+              '[data-target_list="' +
+                CurrList +
+                '"] [data-ID="' +
+                oListItem.get_id() +
+                '"]'
+            )
+          );
+        }
       //show data
       if (isView) {
         $(
@@ -6313,6 +6595,12 @@ var Master_Details_Request = {
               oListItem.get_item("" + $(this).attr("id") + "") == null
               ? "empty"
               : oListItem.get_item("" + $(this).attr("id") + "");
+
+              var dateFieldId = $(this).attr("id");
+              var isActualCompletionDate =
+                dateFieldId == "ActualCompletedDate" ||
+                dateFieldId == "DeliveredDate" ||
+                dateFieldId == "ActualDate";
               
               if ($(this).hasClass("withTime")) {
                 console.log("asd", d);
@@ -6360,12 +6648,15 @@ var Master_Details_Request = {
     }
     // Injected condition to handle missing date
     else if (d == "empty") {
-      var minValue = $(this).attr("min");
-      $(this).val(minValue ? minValue : datetouse2);
-    } else {
-                $(this).val(datetouse2);
-
-  } 
+      if (!isActualCompletionDate) {
+        var minValue = $(this).attr("min");
+        if (minValue) {
+          $(this).val(minValue);
+        }
+      } else {
+        $(this).val("");
+      }
+    }
   }
   break;
 
@@ -6415,7 +6706,12 @@ var Master_Details_Request = {
               mp.init($(this).attr("id"), { AllowMultipleValues: false });
               break;
             case "dropdown":
-              $(this).val(oListItem.get_item("" + $(this).attr("id") + ""));
+              var ddVal = oListItem.get_item("" + $(this).attr("id") + "");
+              ddVal = ddVal == null ? "" : ddVal;
+              $(this).attr("data-saved-value", ddVal);
+              $(this).attr("data-lookup-value", ddVal);
+              $(this).attr("value", ddVal);
+              $(this).val(ddVal);
               break;
 
             case "radio":
@@ -6602,6 +6898,24 @@ var Master_Details_Request = {
       Master_Details_Request.init(MasterDetailsArrayRequest[0]);
       MasterDetailsArrayRequest.shift(); //remove 0 index
     } else if (isEdit) {
+      if (
+        typeof ListInfo !== "undefined" &&
+        ListInfo.g &&
+        ListInfo.g.uniqueMasterDetailRadioNames
+      ) {
+        ListInfo.g.uniqueMasterDetailRadioNames();
+      }
+      $("[data-target_list] .Details-Item.EditItem select[type=dropdown]").each(
+        function () {
+          var saved =
+            $(this).attr("data-saved-value") ||
+            $(this).attr("data-lookup-value") ||
+            "";
+          if (saved && !$(this).val()) {
+            $(this).val(saved);
+          }
+        }
+      );
       $("[data-target_list] .Details-Item.EditItem input.yesnolistener:checked").trigger(
         "change"
       );
@@ -7781,7 +8095,9 @@ window.ProjectInitiativeDelevrable = {
 
       multiSelectHtml += "</li></ul>";
 
-      $("#RelatedInitiativeDeliverable").html(multiSelectHtml);
+      $(".section-container:not([data-target_list]) [id='RelatedInitiativeDeliverable']")
+        .first()
+        .html(multiSelectHtml);
     }
 
     if (isView) {
@@ -7796,7 +8112,8 @@ window.ProjectInitiativeDelevrable = {
     } else if (isEdit || listkey == "changerequest") {
       // checked the value from list on multi select
       for (var i = 0; i < initiativeDelevrableArr.length; i++) {
-        $("#RelatedInitiativeDeliverable")
+        $(".section-container:not([data-target_list]) [id='RelatedInitiativeDeliverable']")
+          .first()
           .find("input:checkbox[value='" + initiativeDelevrableArr[i] + "']")
           .prop("checked", true);
       }
@@ -9756,6 +10073,17 @@ window.equationKPI = {
         F: oListItem.get_item("F"),
         G: oListItem.get_item("G"),
       });
+      window.kpiEquationApiLinks = {};
+      ["URLA", "URLB", "URLC", "URLD", "URLE", "URLF", "URLG"].forEach(function (
+        urlField
+      ) {
+        try {
+          window.kpiEquationApiLinks[urlField] =
+            oListItem.get_item(urlField) || "";
+        } catch (e) {
+          window.kpiEquationApiLinks[urlField] = "";
+        }
+      });
       $("input#KPIEquation").val(oListItem.get_item("Equation") || "");
       $("p#KPIEquation").text(oListItem.get_item("Equation") || "");
     }
@@ -9882,6 +10210,14 @@ window.equationKPI = {
         equationKPI.g.editEquation();
       });
 
+      if (
+        typeof isEdit !== "undefined" &&
+        isEdit &&
+        typeof bindMainKpiComponentApiButtons === "function"
+      ) {
+        bindMainKpiComponentApiButtons();
+      }
+
       Update_Kpi_Results.init(kpiEquation);
     }
 
@@ -9947,7 +10283,11 @@ window.BenefitsActualFieldsRequired = {
       (typeof isInManager !== "undefined" && isInManager) ||
       (typeof currentUserRole !== "undefined" &&
         currentUserRole == "InitiativeManager");
-    return !!isInitiativeMgr;
+    var isBenefitOwnerUser =
+      (typeof isBenefitOwner !== "undefined" && isBenefitOwner) ||
+      (typeof currentUserRole !== "undefined" &&
+        currentUserRole == "BenefitOwner");
+    return !!isInitiativeMgr || !!isBenefitOwnerUser;
   },
   setFieldRequired: function ($field, isRequired) {
     if (!$field || !$field.length) return;
@@ -10152,7 +10492,11 @@ window.BenefitsEquationComponentsRequired = {
       (typeof isInManager !== "undefined" && isInManager) ||
       (typeof currentUserRole !== "undefined" &&
         currentUserRole == "InitiativeManager");
-    if (!isInitiativeMgr) return false;
+    var isBenefitOwnerUser =
+      (typeof isBenefitOwner !== "undefined" && isBenefitOwner) ||
+      (typeof currentUserRole !== "undefined" &&
+        currentUserRole == "BenefitOwner");
+    if (!isInitiativeMgr && !isBenefitOwnerUser) return false;
     var $any = $(BenefitsEquationComponentsRequired.selector).filter(":visible").first();
     if (!$any.length) return false;
     var $section = $any.closest(".section-container");
@@ -10238,7 +10582,10 @@ window.equationBenefitKPI = {
     benefitMonth = equationBenefitKPI.getField(oListItem, "Months", "");
     benefitQuarter = equationBenefitKPI.getField(oListItem, "Quarter", "");
     benefitMid = equationBenefitKPI.getField(oListItem, "Midterms", "");
-    benefitYearHandler = equationBenefitKPI.getField(oListItem, "Years", "");
+    benefitYearHandler =
+      typeof listkey !== "undefined" && String(listkey).toLowerCase() === "benefits"
+        ? ""
+        : equationBenefitKPI.getField(oListItem, "Years", "");
     benefitFromYear = equationBenefitKPI.getField(oListItem, "FromDate", "");
     benefitToYear = equationBenefitKPI.getField(oListItem, "ToDate", "");
     PeriodType = equationBenefitKPI.getField(oListItem, "PeriodType", "");
@@ -10247,6 +10594,15 @@ window.equationBenefitKPI = {
         $("#PeriodType").attr("data-viewtogglevalue") ||
         ($("#PeriodType").text() !== No_Data ? $("#PeriodType").text() : "") ||
         "";
+    }
+    if ($("#PeriodType").length && PeriodType) {
+      if (!window.benefitOriginalPeriodType) {
+        window.benefitOriginalPeriodType = PeriodType;
+      }
+      $("#PeriodType").attr(
+        "data-original-periodtype",
+        window.benefitOriginalPeriodType
+      );
     }
   },
   onSuccess: function (sender, args) {
@@ -10380,6 +10736,9 @@ window.equationBenefitKPI = {
           });
         changeResources();
       }
+      if (window.BenefitsWeightGuard) {
+        BenefitsWeightGuard.enableWeightForEpmo();
+      }
 
       Update_BenefitKPI_Results.init(benefitKpiEquation);
 
@@ -10479,9 +10838,15 @@ window.equationBenefitKPI = {
           });
 
         changeResources();
+        if (window.BenefitsWeightGuard) {
+          BenefitsWeightGuard.enableWeightForEpmo();
+        }
         return true;
       }
 
+      if (window.BenefitsWeightGuard) {
+        BenefitsWeightGuard.enableWeightForEpmo();
+      }
       return false;
     },
     getButtonContainer: function () {
@@ -11714,7 +12079,9 @@ var Check_Item_Deleted = {
       } else if (isEdit) {
         // to remove the child from view
         if (listkey == "projects") {
-          $("#RelatedInitiativeDeliverable").html("");
+          $(".section-container:not([data-target_list]) [id='RelatedInitiativeDeliverable']")
+            .first()
+            .html("");
         } else if (listkey == "mainkpi") {
           $("#RelatedStrategyType").val("");
           if (indexTypekpi == "main") {
@@ -13911,22 +14278,188 @@ window.BenefitsWeightGuard = {
       });
     });
   },
+  isEpmoOrAdmin: function () {
+    var isEpmoUser =
+      (typeof isEPMO !== "undefined" && isEPMO) ||
+      (typeof currentUserRole !== "undefined" && currentUserRole == "EPMO");
+    var isAdminUser = typeof isAdmin !== "undefined" && isAdmin;
+    return !!isEpmoUser || !!isAdminUser;
+  },
+  canCurrentUserEditWeight: function () {
+    if (typeof isAdmin !== "undefined" && isAdmin) return true;
+    if (
+      typeof End_Workflow !== "undefined" &&
+      End_Workflow.canEditBenefitWeight
+    ) {
+      return End_Workflow.canEditBenefitWeight();
+    }
+    var sid =
+      typeof stageid !== "undefined" ? String(stageid || "").trim() : "";
+    var cstage =
+      typeof currentstage !== "undefined"
+        ? String(currentstage || "").trim()
+        : "";
+    var wfStageVal = String(
+      (typeof window.benefitItemWfStage !== "undefined" &&
+        window.benefitItemWfStage) ||
+        ($("#WFStage").val && $("#WFStage").val()) ||
+        $("#WFStage").attr("value") ||
+        $("#WFStage").attr("data-lookup-value") ||
+        ""
+    ).trim();
+    var epmoStages = [
+      "InitiativeBenefits01",
+      "InitiativeBenefits02",
+      "InitiativeBenefits03",
+    ];
+    var isEpmoUser =
+      (typeof isEPMO !== "undefined" && isEPMO) ||
+      (typeof currentUserRole !== "undefined" && currentUserRole == "EPMO");
+    var isInitiativeMgr =
+      (typeof isInManager !== "undefined" && isInManager) ||
+      (typeof currentUserRole !== "undefined" &&
+        currentUserRole == "InitiativeManager");
+    if (
+      isEpmoUser &&
+      (epmoStages.indexOf(sid) > -1 ||
+        epmoStages.indexOf(cstage) > -1 ||
+        epmoStages.indexOf(wfStageVal) > -1)
+    ) {
+      return true;
+    }
+    if (
+      isInitiativeMgr &&
+      (sid === "InitiativeBenefits00" ||
+        cstage === "InitiativeBenefits00" ||
+        wfStageVal === "InitiativeBenefits00")
+    ) {
+      return true;
+    }
+    return false;
+  },
+  applyWeightEditAccess: function () {
+    if (typeof listkey === "undefined" || listkey != "benefits") return;
+    if (
+      !(typeof isEdit !== "undefined" && isEdit) &&
+      !(typeof isNew !== "undefined" && isNew)
+    ) {
+      return;
+    }
+    var $weight = $("input#Weight");
+    var canEdit = BenefitsWeightGuard.canCurrentUserEditWeight();
+    if ($weight.length) {
+      if (canEdit) {
+        $weight.prop("disabled", false).removeAttr("disabled").prop("readonly", false);
+        $weight.css("pointer-events", "auto");
+      } else if (typeof isEdit !== "undefined" && isEdit) {
+        $weight.prop("disabled", true);
+      }
+    }
+    BenefitsWeightGuard.applyPeriodTypeEditAccess();
+  },
+  applyPeriodTypeEditAccess: function () {
+    if (typeof listkey === "undefined" || listkey != "benefits") return;
+    if (
+      !(typeof isEdit !== "undefined" && isEdit) &&
+      !(typeof isNew !== "undefined" && isNew)
+    ) {
+      return;
+    }
+    var $period = $("#PeriodType");
+    if (!$period.length) return;
+    var canEdit = BenefitsWeightGuard.canCurrentUserEditWeight();
+    if (canEdit) {
+      $period.prop("disabled", false).removeAttr("disabled");
+      $period.find("option").not('[value=""]').prop("disabled", false);
+      if (!$period.attr("data-original-periodtype") && $period.val()) {
+        $period.attr("data-original-periodtype", $period.val());
+      }
+    } else if (typeof isEdit !== "undefined" && isEdit) {
+      $period.prop("disabled", true);
+    }
+  },
+  enableWeightForEpmo: function () {
+    BenefitsWeightGuard.applyWeightEditAccess();
+  },
+  applyRemainingMax: function () {
+    if (typeof listkey === "undefined" || listkey != "benefits") return;
+    var $weight = $("input#Weight.floatpercentagemaxfromparent");
+    if (!$weight.length) $weight = $("input#Weight");
+    if (!$weight.length) return;
+    var initiativeCode =
+      (typeof ICODE !== "undefined" && ICODE) ||
+      $("#InitiativeCode").val() ||
+      $("#InitiativeCode").attr("value") ||
+      "";
+    if (!initiativeCode) return;
+    var applyMax = function (totalWeight) {
+      var currentVal = parseFloat($weight.val());
+      if (isNaN(currentVal)) currentVal = 0;
+      var remaining = 100 - totalWeight;
+      if (typeof isEdit !== "undefined" && isEdit) {
+        remaining = remaining + currentVal;
+      }
+      remaining = Number(remaining.toFixed(1));
+      if (remaining < 0) remaining = 0;
+      if (remaining > 100) remaining = 100;
+      $weight.attr("max", remaining);
+      $weight.attr("title", "Please enter value between 0 and " + remaining);
+      var $remainLabel = $weight
+        .closest(".CFIELD")
+        .find(".remainPercentageVal");
+      if ($remainLabel.length) {
+        $remainLabel.text(remaining + "]");
+      }
+      if (currentVal > remaining) {
+        $weight.val(remaining);
+      }
+    };
+    if (typeof SP !== "undefined" && SP.SOD) {
+      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+        BenefitsWeightGuard.getTotalWeight(initiativeCode, applyMax);
+      });
+    } else {
+      BenefitsWeightGuard.getTotalWeight(initiativeCode, applyMax);
+    }
+  },
+  bindClamp: function () {
+    $(document)
+      .off("input.benefitsWeightClamp change.benefitsWeightClamp", "input#Weight")
+      .on(
+        "input.benefitsWeightClamp change.benefitsWeightClamp",
+        "input#Weight",
+        function () {
+          if (typeof listkey === "undefined" || listkey != "benefits") return;
+          var max = parseFloat($(this).attr("max"));
+          var n = Math.abs(parseFloat($(this).val()));
+          if ($(this).val() === "" || isNaN(n)) return;
+          if (!isNaN(max) && n > max) {
+            $(this).val(max);
+          }
+        }
+      );
+  },
 };
 
 // Also enforce from Form_Request on New benefits form
 $(document).ready(function () {
-  if (
-    typeof isNew !== "undefined" &&
-    isNew &&
-    typeof listkey !== "undefined" &&
-    listkey == "benefits" &&
-    typeof ICODE !== "undefined" &&
-    ICODE
-  ) {
+  if (typeof listkey === "undefined" || listkey != "benefits") return;
+  if (typeof isNew !== "undefined" && isNew && typeof ICODE !== "undefined" && ICODE) {
     setTimeout(function () {
       if (window.BenefitsWeightGuard) {
         BenefitsWeightGuard.checkAndBlockNew();
+        BenefitsWeightGuard.enableWeightForEpmo();
+        BenefitsWeightGuard.applyRemainingMax();
+        BenefitsWeightGuard.bindClamp();
       }
     }, 800);
+  } else if (typeof isEdit !== "undefined" && isEdit) {
+    setTimeout(function () {
+      if (window.BenefitsWeightGuard) {
+        BenefitsWeightGuard.enableWeightForEpmo();
+        BenefitsWeightGuard.applyRemainingMax();
+        BenefitsWeightGuard.bindClamp();
+      }
+    }, 1000);
   }
 });

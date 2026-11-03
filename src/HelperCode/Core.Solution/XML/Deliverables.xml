@@ -271,4 +271,11 @@
 				<CHOICE>DVStage03</CHOICE>
 			</CHOICES>
 		</Field>	
+		<Field 
+           Group="SPM Fields" 
+           Required="FALSE" 
+          Type="Number" 
+         DisplayName="Reference Cost Item Id"
+         StaticName="ReferenceCostItemId" 
+         Name="ReferenceCostItemId"/>
 </Fields>

@@ -292,6 +292,10 @@ var workflowname,
     window.location.href.indexOf("deliverables&SODProjDeliverable") > -1,
   isLMSProjDeliverable =
     window.location.href.indexOf("deliverables&LMSProjDeliverable") > -1,
+    isReferenceCosts =
+    window.location.href.toLowerCase().indexOf("listkey=referencecosts") > -1 &&
+    (window.location.href.indexOf("WF") > -1 ||
+      window.location.href.toLowerCase().indexOf("&wfs") > -1),
   isVROCreateObjective =
     window.location.href.indexOf("sos&VROCreateObjective") > -1,
   isMSCreateObjective =
@@ -1142,6 +1146,20 @@ else if (isSODProjMilestone) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+} else if (isReferenceCosts) {
+  workflowname = "ReferenceCosts";
+  bulkeditlist = "Reference Costs";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isVROProjDeliverable) {
   workflowname = "VROProjDeliverable";
   bulkeditlist = "Deliverables";
@@ -1805,6 +1823,7 @@ if (
   !isLMSProjNDeliverable &&
   !isLMSProjMilestone &&
   !isSODProjDeliverable &&
+  !isReferenceCosts &&
   // !isSODProjNDeliverable &&
   !isSODProjMilestone 
 ) {
@@ -2413,6 +2432,31 @@ var Task_PCODE_Data_Request_WFs = {
         }
       }
           break;
+          case "ApprovalSaveEdit":
+            $(".navbar.page-nav.px-5").after(
+              '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+                taskid +
+                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
+                actionbuttonTitle +
+                '</span><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovalSaveEdit\')" class="btn pop-green" type="button"><span  class="beencompletedpadd Resources" data-trans-wfsubmitfield>' +
+                actionbuttonTitle +
+                '</span></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'ApprovalSaveEdit\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
+            );
+            $(".btnactionrow > h2.approvalHeader").append(
+              '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+                taskid +
+                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+            );
+            $(".btnactionrow .form-btns-wrapper").append(
+              '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
+                actionbuttonTitle +
+                '</span><div class="wf-btn-wrapper-new d-flex"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovalSaveEdit\')" class="btn pop-green" type="button"><span  class="beencompletedpadd Resources" data-trans-wfsubmitfield>' +
+                actionbuttonTitle +
+                '</span></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'ApprovalSaveEdit\')" class="btn pop-green rejection Resources"  type="button"></button></div></div></div>'
+            );
+            $("div.Container").fadeIn();
+            $("div.cust-loader").fadeOut();
+            break;
         case "ApprovedWithAssigned":
           if (
             localStorage.getItem("lng") == null ||
@@ -2672,6 +2716,20 @@ var Task_PCODE_Data_Request_WFs = {
               "End_Workflow.init({ listTitle: 'Benefits', listingKey: 'benefits' })",
           });
           End_Workflow.appendButton(endWorkflowBtn);
+        }
+      } else if (
+        workflowname == "InitiativeBenefits" &&
+        End_Workflow.isEpmoUser() &&
+        End_Workflow.isInitiativeBenefitsDeleteStage()
+      ) {
+        if ($("#btnEndWorkflow").length == 0) {
+          var endInitiativeBenefitWfBtn = End_Workflow.buildButton({
+            id: "btnEndWorkflow",
+            dataTrans: "endworkflow",
+            onClick:
+              "End_Workflow.init({ listTitle: 'Benefits', listingKey: 'benefits', deleteItem: true })",
+          });
+          End_Workflow.appendButton(endInitiativeBenefitWfBtn);
         }
       }
 
@@ -3289,7 +3347,7 @@ var SubmitField_BulkEdit = {
       }
     } else if (
       workflowname != "Project" &&
-      tasktype == "SubmitField"
+      (tasktype == "SubmitField" || tasktype == "ApprovalSaveEdit")
       // && $(".was-validated .form-control:invalid").length == 0
     ) {
       Edit_Data_Submit.preinit(state); // edit from main function for all gwf that have submitfield type
@@ -3299,6 +3357,7 @@ var SubmitField_BulkEdit = {
       // will invoke if the wf not project and not submitfield type
       workflowname != "Project" &&
       tasktype != "SubmitField" &&
+      tasktype != "ApprovalSaveEdit" &&
       $(".was-validated .form-control:invalid").length == 0
     ) {
       SubmitField_BulkEdit.init(state);
@@ -3879,6 +3938,24 @@ var SubmitField_BulkEdit = {
                 console.error("Error in approve BenefitResultsHistory:", err);
               }
             }
+            if (
+              typeof End_Workflow !== "undefined" &&
+              End_Workflow.canEditBenefitWeight &&
+              End_Workflow.canEditBenefitWeight()
+            ) {
+              var weightVal = $("#Weight").val();
+              if (
+                weightVal !== undefined &&
+                weightVal !== null &&
+                String(weightVal).trim() !== ""
+              ) {
+                var parsedWeight = parseFloat(weightVal);
+                if (!isNaN(parsedWeight)) {
+                  items.set_item("Weight", parsedWeight);
+                }
+              }
+            }
+
             //Update the item
             items.update();           
             //Push item on the array
@@ -4024,6 +4101,20 @@ var SubmitField_BulkEdit = {
                 msActualBenefitHistorySaver()
                   .finally(function () {
                     var benefitCode = $("#Title").val();
+                    var afterCreateBenefitResults = function () {
+                      if (
+                        typeof End_Workflow !== "undefined" &&
+                        typeof End_Workflow.reapplyEndedActuals === "function"
+                      ) {
+                        End_Workflow.reapplyEndedActuals(
+                          benefitCode,
+                          continueWorkflowAfterBulkEdit,
+                          1000
+                        );
+                      } else {
+                        continueWorkflowAfterBulkEdit();
+                      }
+                    };
                     if (typeof APIURL !== "undefined" && APIURL && benefitCode) {
                       $.ajax({
                         url:
@@ -4031,10 +4122,10 @@ var SubmitField_BulkEdit = {
                           "/general/createbenefitresults/" +
                           encodeURIComponent(benefitCode),
                         method: "GET",
-                        complete: continueWorkflowAfterBulkEdit,
+                        complete: afterCreateBenefitResults,
                       });
                     } else {
-                      continueWorkflowAfterBulkEdit();
+                      afterCreateBenefitResults();
                     }
                   });
                 return;
@@ -4047,6 +4138,9 @@ var SubmitField_BulkEdit = {
               console.log(
                 "Request Failed to get  Items :" + args.get_message()
               );
+              $("div.cust-loader, .cust-loader, .loader").fadeOut();
+              $("#preloader, #formloader").hide();
+              $(".commentsub").attr("disabled", false);
             }
           );
         } else {
@@ -5219,9 +5313,17 @@ var Task_Edit_Data = {
     var taskIdToClose = Number(taskID) || Number(taskIdFromUrl) || Number(taskid);
     Task_Edit_Data.g.oListItem = oList.getItemById(taskIdToClose);
     var stageAction = ""; //added to handle WF Notes
-    if (tasktype != "Approval" && tasktype != "TriApproval") {
+    if (
+      tasktype != "Approval" &&
+      tasktype != "TriApproval" &&
+      tasktype != "ApprovalSaveEdit"
+    ){
       stageAction = "submit";
-    } else if (tasktype == "Approval" || tasktype == "TriApproval") {
+    } else if (
+      tasktype == "Approval" ||
+      tasktype == "TriApproval" ||
+      tasktype == "ApprovalSaveEdit"
+    ) {
       if (stageState == true) {
         stageAction = "approve";
       } else if (stageState == 2 || stageState == 3) {
@@ -5247,6 +5349,7 @@ var Task_Edit_Data = {
         // console.log('successful');
         $(".errormsg").hide();
         // Keep redirect behavior immediate (no artificial delay).
+   
         var _wfDelayRedirectTo = function (url) {
           window.location = url;
         };
@@ -5380,6 +5483,16 @@ var Task_Edit_Data = {
               _spPageContextInfo.siteAbsoluteUrl +
                 "/SitePages/ChangeRequests.aspx?isview=true&critemcode=" +
                 CRITEMCODE
+            );
+          } else if (
+            isProjectClosure ||
+            isInitiativeClosure ||
+            listkey === "closureform" ||
+            listkey === "closureinitiative"
+          ) {
+            _wfDelayRedirectTo(
+              _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=tasks"
             );
           } else {
             _wfDelayRedirectTo(wfBuildListingUrlWithContext(listkey));
@@ -6123,6 +6236,396 @@ var Cancel_Project = {
 };
 
 var End_Workflow = {
+  INITIATIVE_BENEFITS_DELETE_STAGES: [
+    "InitiativeBenefits01",
+    "InitiativeBenefits02",
+    "InitiativeBenefits03",
+  ],
+  isEpmoUser: function () {
+    if (typeof isEPMO !== "undefined" && isEPMO) return true;
+    if (typeof currentUserRole !== "undefined" && currentUserRole === "EPMO")
+      return true;
+    if (
+      typeof System_Groups !== "undefined" &&
+      System_Groups &&
+      System_Groups.indexOf("EPMO") > -1
+    )
+      return true;
+    if (
+      typeof WFuserCalls !== "undefined" &&
+      WFuserCalls.g &&
+      WFuserCalls.g.Groups &&
+      WFuserCalls.g.Groups.indexOf("EPMO") > -1
+    )
+      return true;
+    return false;
+  },
+  isInitiativeBenefitsWf: function () {
+    var wfName =
+      typeof workflowname !== "undefined" ? String(workflowname) : "";
+    var moduleCode = String(
+      (typeof window.benefitItemWfModule !== "undefined" &&
+        window.benefitItemWfModule) ||
+        ($("#WFModuleCode").val && $("#WFModuleCode").val()) ||
+        $("#WFModuleCode").attr("value") ||
+        ""
+    ).trim();
+    return (
+      wfName == "InitiativeBenefits" ||
+      moduleCode == "InitiativeBenefits" ||
+      window.location.href.indexOf("benefits&InitiativeBenefits") > -1
+    );
+  },
+  getBenefitWfStageValues: function () {
+    var values = [];
+    var pushVal = function (val) {
+      if (val === undefined || val === null) return;
+      var s = String(val).trim();
+      if (s && values.indexOf(s) === -1) values.push(s);
+    };
+    pushVal(typeof stageid !== "undefined" ? stageid : "");
+    pushVal(typeof currentstage !== "undefined" ? currentstage : "");
+    pushVal(
+      typeof window.benefitItemWfStage !== "undefined"
+        ? window.benefitItemWfStage
+        : ""
+    );
+    var $wf = $("#WFStage");
+    if ($wf.length) {
+      pushVal($wf.val && $wf.val());
+      pushVal($wf.attr("value"));
+      pushVal($wf.attr("data-lookup-value"));
+      pushVal($wf.find("option:selected").val());
+      pushVal($wf.find("option:selected").attr("value"));
+    }
+    return values;
+  },
+  isInitiativeBenefitsDeleteStage: function () {
+    var stages = End_Workflow.INITIATIVE_BENEFITS_DELETE_STAGES;
+    var values = End_Workflow.getBenefitWfStageValues();
+    for (var i = 0; i < values.length; i++) {
+      if (stages.indexOf(values[i]) > -1) return true;
+    }
+    return false;
+  },
+  isInitiativeBenefits00Stage: function () {
+    return End_Workflow.getBenefitWfStageValues().indexOf("InitiativeBenefits00") > -1;
+  },
+  isBenefitsWorkflowPage: function () {
+    return (
+      (typeof USERisWF !== "undefined" && USERisWF) ||
+      (typeof isWF !== "undefined" && isWF)
+    );
+  },
+  shouldInitiativeManagerEditBenefitPeriodType: function () {
+    return End_Workflow.shouldInitiativeManagerEditBenefitWeight();
+  },
+  shouldEpmoEditBenefitPeriodTypeOnEditPage: function () {
+    return End_Workflow.shouldEpmoEditBenefitWeight();
+  },
+  shouldSyncBenefitKpiResultsOnSave: function () {
+    return End_Workflow.canEditBenefitPeriodType();
+  },
+  shouldReplaceBenefitPeriodType: function () {
+    return End_Workflow.canEditBenefitPeriodType();
+  },
+  canEditBenefitPeriodType: function () {
+    return End_Workflow.canEditBenefitWeight();
+  },
+  shouldEpmoEditBenefitPeriodType: function () {
+    return End_Workflow.canEditBenefitPeriodType();
+  },
+  runBenefitPeriodTypeSyncIfChanged: function (onDone) {
+    onDone = onDone || function () {};
+    if (!End_Workflow.shouldSyncBenefitKpiResultsOnSave()) {
+      onDone();
+      return;
+    }
+    End_Workflow.syncBenefitKpiResults(
+      End_Workflow.getBenefitCodeFromForm
+        ? End_Workflow.getBenefitCodeFromForm()
+        : $("#Title").val(),
+      onDone
+    );
+  },
+  isInitiativeManagerUser: function () {
+    if (typeof isInManager !== "undefined" && isInManager) return true;
+    if (
+      typeof currentUserRole !== "undefined" &&
+      currentUserRole == "InitiativeManager"
+    )
+      return true;
+    if (
+      typeof Groups !== "undefined" &&
+      Groups &&
+      Groups.indexOf("Initiative Manager") > -1
+    )
+      return true;
+    return false;
+  },
+  shouldEpmoEditBenefitWeight: function () {
+    if (!End_Workflow.isEpmoUser()) return false;
+    if (typeof listkey !== "undefined" && listkey != "benefits") return false;
+    return End_Workflow.isInitiativeBenefitsDeleteStage();
+  },
+  shouldInitiativeManagerEditBenefitWeight: function () {
+    if (!End_Workflow.isInitiativeManagerUser()) return false;
+    if (typeof listkey !== "undefined" && listkey != "benefits") return false;
+    return End_Workflow.isInitiativeBenefits00Stage();
+  },
+  canEditBenefitWeight: function () {
+    if (typeof isAdmin !== "undefined" && isAdmin) return true;
+    return (
+      End_Workflow.shouldEpmoEditBenefitWeight() ||
+      End_Workflow.shouldInitiativeManagerEditBenefitWeight()
+    );
+  },
+  benefitPeriodTypeChanged: function () {
+    var current = End_Workflow.getBenefitPeriodTypeFromForm();
+    var original = String(
+      window.benefitOriginalPeriodType ||
+        $("#PeriodType").attr("data-original-periodtype") ||
+        ""
+    ).trim();
+    if (!current) return false;
+    if (!original) return true;
+    return current !== original;
+  },
+  getBenefitPeriodTypeFromForm: function () {
+    var $period = $("#PeriodType");
+    if (!$period.length) return "";
+    return String(
+      $period.val() ||
+        $period.attr("value") ||
+        $period.find("option:selected").val() ||
+        $period.attr("data-viewtogglevalue") ||
+        ""
+    ).trim();
+  },
+  getBenefitCodeFromForm: function () {
+    var fromItem = "";
+    try {
+      if (
+        typeof Edit_Data_Submit !== "undefined" &&
+        Edit_Data_Submit.g &&
+        Edit_Data_Submit.g.oListItem
+      ) {
+        fromItem = Edit_Data_Submit.g.oListItem.get_item("Title") || "";
+      }
+    } catch (e) {}
+    return String(
+      $("#Title").val() ||
+        $("#Title").attr("value") ||
+        $("#Title").text() ||
+        fromItem ||
+        (typeof benefitCodeResult !== "undefined" ? benefitCodeResult : "") ||
+        ""
+    ).trim();
+  },
+  parseBenefitYearValue: function (val) {
+    if (val == null || val === "") return 0;
+    if (val instanceof Date && !isNaN(val.getTime())) return val.getFullYear();
+    var s = String(val);
+    var m = s.match(/(?:19|20)\d{2}/);
+    if (m) return Number(m[0]);
+    var n = Number(s);
+    return n > 1900 ? n : 0;
+  },
+  clearMismatchedBenefitPeriodFields: function (periodType, listItem) {
+    var months = $("#Months").val() || "";
+    var quarter = $("#Quarter").val() || "";
+    var midterms = $("#Midterms").val() || "";
+    var years = $("#Years").val() || "";
+    if (periodType !== "monthly") {
+      months = "";
+      $("#Months").val("");
+    } else if (months.indexOf("ActualQ") === 0 || months.indexOf("ActualMid") === 0) {
+      months = "";
+      $("#Months").val("");
+    }
+    if (periodType !== "quarter") {
+      quarter = "";
+      $("#Quarter").val("");
+    }
+    if (periodType !== "midterm") {
+      midterms = "";
+      $("#Midterms").val("");
+    }
+    if (periodType !== "year") {
+      years = "";
+      $("#Years").val("");
+    }
+    if (listItem) {
+      try {
+        // Benefits schema has PeriodType / Quarter / Year only.
+        // Months, Midterms, and Years are form-only (and Years exists on
+        // MainKPI / BenefitMetrics). Writing them here fails BulkEdit with:
+        // Column 'Years' does not exist ... /Lists/Benefits
+        listItem.set_item("Quarter", quarter);
+      } catch (e) {}
+    }
+  },
+  syncBenefitKpiResults: function (benefitCode, onDone) {
+    onDone = onDone || function () {};
+    benefitCode = String(
+      benefitCode || End_Workflow.getBenefitCodeFromForm() || ""
+    ).trim();
+    var newPeriod = End_Workflow.getBenefitPeriodTypeFromForm();
+    console.log("[InitiativeBenefits] KPIResults sync start", {
+      benefitCode: benefitCode,
+      newPeriod: newPeriod,
+    });
+    if (!benefitCode || !newPeriod) {
+      console.warn("[InitiativeBenefits] skip KPIResults replace", {
+        benefitCode: benefitCode,
+        newPeriod: newPeriod,
+      });
+      onDone();
+      return;
+    }
+
+    var ctx = SP.ClientContext.get_current();
+    var list = ctx.get_web().get_lists().getByTitle("KPIResults");
+    var caml = new SP.CamlQuery();
+    caml.set_viewXml(
+      "<View><Query><Where><Eq><FieldRef Name='BenefitCode'/><Value Type='Text'>" +
+        End_Workflow.xmlEscape(benefitCode) +
+        "</Value></Eq></Where></Query></View>"
+    );
+    var kpiItems = list.getItems(caml);
+    ctx.load(kpiItems);
+
+    ctx.executeQueryAsync(
+      function () {
+        var rows = End_Workflow.enumToArray(kpiItems);
+        console.log("[InitiativeBenefits] KPIResults loaded", {
+          benefitCode: benefitCode,
+          newPeriod: newPeriod,
+          count: rows.length,
+        });
+        var years = [];
+        var yearsSeen = {};
+        var existingNewPeriodYears = {};
+        var benefitName = $("#Name").val() || $("#Name").text() || "";
+        var hasOldRows = false;
+
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          var deletionStatus = "";
+          try {
+            deletionStatus = String(row.get_item("DeletionStatus") || "").trim();
+          } catch (e) {}
+          var rowPeriod = "";
+          try {
+            rowPeriod = String(row.get_item("PeriodType") || "").trim();
+          } catch (e2) {}
+          var rowYear = null;
+          try {
+            rowYear = row.get_item("Year");
+          } catch (e3) {}
+          var yearKey = rowYear == null ? "" : String(rowYear);
+          if (!benefitName) {
+            try {
+              benefitName = row.get_item("Name") || benefitName;
+            } catch (e4) {}
+          }
+          if (deletionStatus === "Deleted") continue;
+          if (rowPeriod === newPeriod) {
+            existingNewPeriodYears[yearKey] = true;
+            continue;
+          }
+          hasOldRows = true;
+          row.set_item("DeletionStatus", "Deleted");
+          row.update();
+          if (yearKey && !yearsSeen[yearKey]) {
+            yearsSeen[yearKey] = true;
+            years.push(rowYear);
+          }
+        }
+
+        if (!hasOldRows && !years.length && Object.keys(existingNewPeriodYears).length) {
+          console.log(
+            "[InitiativeBenefits] KPIResults already match period",
+            newPeriod
+          );
+          onDone();
+          return;
+        }
+
+        if (!years.length) {
+          var fromYear = End_Workflow.parseBenefitYearValue(
+            $("#FromDate").val() || $("#FromDate").attr("value")
+          );
+          var toYear = End_Workflow.parseBenefitYearValue(
+            $("#ToDate").val() || $("#ToDate").attr("value") || fromYear
+          );
+          if (!fromYear && rows.length) {
+            try {
+              fromYear = End_Workflow.parseBenefitYearValue(
+                rows[0].get_item("Year")
+              );
+            } catch (e5) {}
+          }
+          if (fromYear) {
+            if (!toYear) toYear = fromYear;
+            for (var y = fromYear; y <= toYear; y++) {
+              years.push(y);
+            }
+          }
+        }
+
+        var yearSuffix = String(new Date().getFullYear()).slice(-2);
+        var benefitIdPart =
+          typeof IID !== "undefined" && IID
+            ? String(IID).padStart(4, "0")
+            : "0000";
+
+        for (var j = 0; j < years.length; j++) {
+          var kpiYear = years[j];
+          var newYearKey = kpiYear == null ? "" : String(kpiYear);
+          if (existingNewPeriodYears[newYearKey]) continue;
+          var newItem = list.addItem(new SP.ListItemCreationInformation());
+          newItem.set_item("BenefitCode", benefitCode);
+          newItem.set_item(
+            "Title",
+            "KR-" + yearSuffix + "-" + benefitIdPart + "-" + String(kpiYear)
+          );
+          newItem.set_item("Name", benefitName);
+          newItem.set_item("PeriodType", newPeriod);
+          newItem.set_item("Year", kpiYear);
+          newItem.update();
+        }
+
+        ctx.executeQueryAsync(
+          function () {
+            console.log(
+              "[InitiativeBenefits] KPIResults replaced on period change",
+              {
+                benefitCode: benefitCode,
+                newPeriod: newPeriod,
+                years: years,
+                deletedOld: hasOldRows,
+              }
+            );
+            onDone();
+          },
+          function (sender, args) {
+            console.error(
+              "[InitiativeBenefits] KPIResults replace failed: " +
+                args.get_message()
+            );
+            onDone();
+          }
+        );
+      },
+      function (sender, args) {
+        console.error(
+          "[InitiativeBenefits] KPIResults load failed: " + args.get_message()
+        );
+        onDone();
+      }
+    );
+  },
   buildButton: function (options) {
     options = options || {};
     var btnId = options.id || "btnEndWorkflow";
@@ -6152,11 +6655,710 @@ var End_Workflow = {
       $(".btnactionrow .form-btns-wrapper").append(btnHtml);
     }
   },
+  STORE_KEY: "spmEndedBenefitActuals",
+  itemField: function (listItem, name) {
+    try {
+      var v = listItem ? listItem.get_item(name) : "";
+      return v == null ? "" : String(v);
+    } catch (e) {
+      return "";
+    }
+  },
+  xmlEscape: function (value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  },
+  enumToArray: function (collection) {
+    var rows = [];
+    var en = collection.getEnumerator();
+    while (en.moveNext()) {
+      rows.push(en.get_current());
+    }
+    return rows;
+  },
+  yearsMatch: function (itemYear, periodYear) {
+    if (!periodYear) return true;
+    var a = parseInt(itemYear, 10);
+    var b = parseInt(periodYear, 10);
+    if (!a || isNaN(a)) return true;
+    return a === b;
+  },
+  parseQuarterValue: function (qVal) {
+    qVal = String(qVal || "").trim();
+    if (!qVal) return { month: 0, actualField: "" };
+    var m = qVal.match(/ActualQ([1-4])/i) || qVal.match(/^Q([1-4])$/i);
+    if (m) {
+      var n = parseInt(m[1], 10);
+      return { month: n * 3, actualField: "ActualQ" + n };
+    }
+    if (/^[1-4]$/.test(qVal)) {
+      var n2 = parseInt(qVal, 10);
+      return { month: n2 * 3, actualField: "ActualQ" + n2 };
+    }
+    return { month: 0, actualField: "" };
+  },
+  monthToActualField: function (periodType, month) {
+    periodType = String(periodType || "").toLowerCase();
+    month = parseInt(month, 10) || 0;
+    if (periodType === "monthly") return month ? "ActualM" + month : "";
+    if (periodType === "midterm") {
+      if (month === 6) return "ActualMid1";
+      if (month === 12) return "ActualMid2";
+      return "";
+    }
+    if (periodType === "year") return "ActualY";
+    if (month === 3) return "ActualQ1";
+    if (month === 6) return "ActualQ2";
+    if (month === 9) return "ActualQ3";
+    if (month === 12) return "ActualQ4";
+    return "";
+  },
+  currentPeriod: function (listItem) {
+    var periodType = (
+      $("#PeriodType").val() ||
+      End_Workflow.itemField(listItem, "PeriodType") ||
+      ""
+    ).toLowerCase();
+    if (!periodType) {
+      if ($("#Quarter").val() || End_Workflow.itemField(listItem, "Quarter"))
+        periodType = "quarter";
+      else if ($("#Months").val() || End_Workflow.itemField(listItem, "Months"))
+        periodType = "monthly";
+      else if (
+        $("#Midterms").val() ||
+        End_Workflow.itemField(listItem, "Midterms")
+      )
+        periodType = "midterm";
+    }
+    var year =
+      parseInt(
+        $("#Year").val() || End_Workflow.itemField(listItem, "Year") || 0,
+        10
+      ) || 0;
+    var month = 0;
+    var actualField = "";
+    if (periodType === "monthly") {
+      var mVal =
+        $("#Months").val() || End_Workflow.itemField(listItem, "Months") || "";
+      if (mVal.indexOf("ActualM") === 0) {
+        month = parseInt(mVal.replace("ActualM", ""), 10) || 0;
+        actualField = mVal;
+      } else if (/^\d+$/.test(String(mVal))) {
+        month = parseInt(mVal, 10) || 0;
+        actualField = month ? "ActualM" + month : "";
+      }
+    } else if (periodType === "midterm") {
+      var midVal =
+        $("#Midterms").val() ||
+        End_Workflow.itemField(listItem, "Midterms") ||
+        "";
+      if (midVal === "ActualMid1" || midVal === "1") {
+        month = 6;
+        actualField = "ActualMid1";
+      } else if (midVal === "ActualMid2" || midVal === "2") {
+        month = 12;
+        actualField = "ActualMid2";
+      }
+    } else if (periodType === "quarter") {
+      var parsed = End_Workflow.parseQuarterValue(
+        $("#Quarter").val() || End_Workflow.itemField(listItem, "Quarter") || ""
+      );
+      month = parsed.month;
+      actualField = parsed.actualField;
+    } else if (periodType === "year") {
+      month = 12;
+      actualField = "ActualY";
+    }
+    return { year: year, month: month, actualField: actualField, periodType: periodType };
+  },
+  resolvePeriod: function (listItem, histRows) {
+    var period = End_Workflow.currentPeriod(listItem);
+    if (period.actualField) return period;
+    var periodType = period.periodType || "";
+    var i;
+    for (i = 0; i < (histRows || []).length; i++) {
+      var status = "";
+      try {
+        status = String(histRows[i].get_item("DeletionStatus") || "");
+      } catch (e1) {
+        status = "";
+      }
+      if (status.toLowerCase() === "deleted") continue;
+      var year =
+        parseInt(histRows[i].get_item("Year"), 10) || period.year || 0;
+      var month = parseInt(histRows[i].get_item("Month"), 10) || 0;
+      return {
+        year: year,
+        month: month,
+        actualField: End_Workflow.monthToActualField(periodType, month),
+        periodType: periodType,
+      };
+    }
+    return period;
+  },
+  rememberEnded: function (benefitCode, period) {
+    if (!benefitCode || !period || !period.actualField) return;
+    var store = {};
+    try {
+      store = JSON.parse(localStorage.getItem(End_Workflow.STORE_KEY) || "{}");
+    } catch (e) {
+      store = {};
+    }
+    if (!store[benefitCode]) store[benefitCode] = [];
+    var exists = false;
+    for (var i = 0; i < store[benefitCode].length; i++) {
+      var p = store[benefitCode][i];
+      if (
+        p.actualField === period.actualField &&
+        parseInt(p.year, 10) === parseInt(period.year, 10) &&
+        parseInt(p.month, 10) === parseInt(period.month, 10)
+      ) {
+        exists = true;
+        break;
+      }
+    }
+    if (!exists) {
+      store[benefitCode].push({
+        year: period.year,
+        month: period.month,
+        actualField: period.actualField,
+      });
+    }
+    try {
+      localStorage.setItem(End_Workflow.STORE_KEY, JSON.stringify(store));
+    } catch (e2) {}
+  },
+  getEnded: function (benefitCode) {
+    try {
+      var store = JSON.parse(
+        localStorage.getItem(End_Workflow.STORE_KEY) || "{}"
+      );
+      return store[benefitCode] || [];
+    } catch (e) {
+      return [];
+    }
+  },
+  histMonthCandidates: function (period) {
+    var months = [];
+    if (period && period.month) months.push(parseInt(period.month, 10));
+    var q = period && period.actualField
+      ? String(period.actualField).match(/ActualQ([1-4])/i)
+      : null;
+    if (q) {
+      var n = parseInt(q[1], 10);
+      months.push(n);
+      months.push(n * 3);
+    }
+    return months;
+  },
+  restHistMatchesPeriod: function (item, period) {
+    if (!item) return false;
+    if (String(item.DeletionStatus || "").toLowerCase() === "deleted") return false;
+    if (period && period.year && item.Year != null && item.Year !== "" &&
+        !End_Workflow.yearsMatch(item.Year, period.year)) {
+      return false;
+    }
+    if (!period || (!period.month && !period.actualField)) return true;
+    var itemMonth = parseInt(item.Month, 10);
+    if (!itemMonth || isNaN(itemMonth)) return true;
+    var candidates = End_Workflow.histMonthCandidates(period);
+    if (!candidates.length) return true;
+    return candidates.indexOf(itemMonth) !== -1;
+  },
+  getDigest: function (cb) {
+    var digest = $("#__REQUESTDIGEST").val();
+    if (digest) {
+      cb(digest);
+      return;
+    }
+    $.ajax({
+      url: _spPageContextInfo.webAbsoluteUrl + "/_api/contextinfo",
+      method: "POST",
+      headers: { Accept: "application/json;odata=verbose" },
+      success: function (res) {
+        cb(
+          res &&
+            res.d &&
+            res.d.GetContextWebInformation &&
+            res.d.GetContextWebInformation.FormDigestValue
+        );
+      },
+      error: function () {
+        cb("");
+      },
+    });
+  },
+  fetchBenefitHistory: function (benefitCode, onDone) {
+    var code = String(benefitCode || "").replace(/'/g, "''");
+    var listUrl =
+      _spPageContextInfo.webAbsoluteUrl +
+      "/_api/web/lists/getbytitle('KPIResultsHistory')/items";
+    var tryUrl = function (filter, next) {
+      $.ajax({
+        url:
+          listUrl +
+          "?$filter=" +
+          filter +
+          "&$top=500&$orderby=ID desc",
+        method: "GET",
+        headers: { Accept: "application/json;odata=verbose" },
+        success: function (data) {
+          var results = (data && data.d && data.d.results) || [];
+          if (!results.length && next) next();
+          else onDone(results);
+        },
+        error: function () {
+          if (next) next();
+          else onDone([]);
+        },
+      });
+    };
+    tryUrl("BenefitCode eq '" + code + "'", function () {
+      tryUrl("Title eq '" + code + "'", function () {
+        onDone([]);
+      });
+    });
+  },
+  pickHistoryToEnd: function (items, period) {
+    var list = items || [];
+    var matchedDrafts = [];
+    var allDrafts = [];
+    var i;
+    for (i = 0; i < list.length; i++) {
+      var it = list[i];
+      if (String(it.DeletionStatus || "").toLowerCase() === "deleted") continue;
+      var status = String(it.Status || "").toLowerCase();
+      if (status && status !== "draft") continue;
+      allDrafts.push(it);
+      if (End_Workflow.restHistMatchesPeriod(it, period)) matchedDrafts.push(it);
+    }
+    if (matchedDrafts.length) return matchedDrafts;
+    return allDrafts;
+  },
+  patchHistoryDeleted: function (items, onDone) {
+    onDone = onDone || function () {};
+    if (!items || !items.length) {
+      console.warn("End_Workflow: no KPIResultsHistory rows to mark Deleted");
+      onDone();
+      return;
+    }
+    End_Workflow.getDigest(function (digest) {
+      if (!digest) {
+        console.error("End_Workflow: missing request digest");
+        onDone();
+        return;
+      }
+      var pending = items.length;
+      var finishOne = function () {
+        pending--;
+        if (pending <= 0) onDone();
+      };
+      var mergeItem = function (it, includeStatus) {
+        var body = {
+          __metadata: { type: (it.__metadata && it.__metadata.type) || "SP.Data.KPIResultsHistoryListItem" },
+          DeletionStatus: "Deleted",
+          FinalValue: 0,
+        };
+        if (includeStatus) body.Status = "deleted";
+        $.ajax({
+          url:
+            _spPageContextInfo.webAbsoluteUrl +
+            "/_api/web/lists/getbytitle('KPIResultsHistory')/items(" +
+            (it.ID || it.Id) +
+            ")",
+          method: "POST",
+          headers: {
+            Accept: "application/json;odata=verbose",
+            "Content-Type": "application/json;odata=verbose",
+            "X-RequestDigest": digest,
+            "IF-MATCH": "*",
+            "X-HTTP-Method": "MERGE",
+          },
+          data: JSON.stringify(body),
+          success: function () {
+            console.log("End_Workflow: marked history Deleted", it.ID || it.Id);
+            finishOne();
+          },
+          error: function (xhr) {
+            if (includeStatus) {
+              mergeItem(it, false);
+              return;
+            }
+            console.error(
+              "End_Workflow: history MERGE failed",
+              it.ID || it.Id,
+              xhr && xhr.responseText
+            );
+            finishOne();
+          },
+        });
+      };
+      for (var i = 0; i < items.length; i++) {
+        mergeItem(items[i], true);
+      }
+    });
+  },
+  clearKpiResultsByPeriods: function (benefitCode, periods, onDone) {
+    onDone = onDone || function () {};
+    if (!benefitCode || !periods || !periods.length) {
+      onDone();
+      return;
+    }
+    var ctx = SP.ClientContext.get_current();
+    var web = ctx.get_web();
+    var filter =
+      "<Eq><FieldRef Name='BenefitCode'/><Value Type='Text'>" +
+      End_Workflow.xmlEscape(benefitCode) +
+      "</Value></Eq>";
+    var kpiQuery = new SP.CamlQuery();
+    kpiQuery.set_viewXml(
+      "<View><Query><Where>" + filter + "</Where></Query></View>"
+    );
+    var kpiItems = web.get_lists().getByTitle("KPIResults").getItems(kpiQuery);
+    ctx.load(kpiItems);
+    ctx.executeQueryAsync(
+      function () {
+        var kpiRows = End_Workflow.enumToArray(kpiItems);
+        if (End_Workflow.clearKpiActuals(kpiRows, periods)) {
+          ctx.executeQueryAsync(onDone, function (sender, args) {
+            console.error(
+              "End_Workflow KPIResults clear failed: " + args.get_message()
+            );
+            onDone();
+          });
+        } else {
+          onDone();
+        }
+      },
+      function (sender, args) {
+        console.error(
+          "End_Workflow KPIResults load failed: " + args.get_message()
+        );
+        onDone();
+      }
+    );
+  },
+  clearKpiActuals: function (kpiRows, periods) {
+    var dirty = false;
+    for (var p = 0; p < periods.length; p++) {
+      var period = periods[p];
+      if (!period || !period.actualField) continue;
+      for (var k = 0; k < kpiRows.length; k++) {
+        var kpiRow = kpiRows[k];
+        if (
+          period.year &&
+          !End_Workflow.yearsMatch(kpiRow.get_item("Year"), period.year)
+        ) {
+          continue;
+        }
+        try {
+          kpiRow.set_item(period.actualField, null);
+          kpiRow.update();
+          dirty = true;
+        } catch (e) {
+          console.error(
+            "End_Workflow: failed to clear " + period.actualField,
+            e
+          );
+        }
+      }
+    }
+    return dirty;
+  },
+  reapplyEndedActuals: function (benefitCode, onDone, delayMs) {
+    onDone = onDone || function () {};
+    if (delayMs) {
+      setTimeout(function () {
+        End_Workflow.reapplyEndedActuals(benefitCode, onDone, 0);
+      }, delayMs);
+      return;
+    }
+    if (!benefitCode) {
+      onDone();
+      return;
+    }
+    var ended = End_Workflow.getEnded(benefitCode).slice();
+    var ctx = SP.ClientContext.get_current();
+    var web = ctx.get_web();
+    var filter =
+      "<Eq><FieldRef Name='BenefitCode'/><Value Type='Text'>" +
+      End_Workflow.xmlEscape(benefitCode) +
+      "</Value></Eq>";
+    var kpiQuery = new SP.CamlQuery();
+    kpiQuery.set_viewXml(
+      "<View><Query><Where>" + filter + "</Where></Query></View>"
+    );
+    var histQuery = new SP.CamlQuery();
+    histQuery.set_viewXml(
+      "<View><Query><Where>" + filter + "</Where></Query></View>"
+    );
+    var kpiItems = web.get_lists().getByTitle("KPIResults").getItems(kpiQuery);
+    var histItems = web
+      .get_lists()
+      .getByTitle("KPIResultsHistory")
+      .getItems(histQuery);
+    ctx.load(kpiItems);
+    ctx.load(histItems);
+    ctx.executeQueryAsync(
+      function () {
+        var kpiRows = End_Workflow.enumToArray(kpiItems);
+        var histRows = End_Workflow.enumToArray(histItems);
+        var periodType = (
+          $("#PeriodType").val() ||
+          End_Workflow.itemField(End_Workflow.g.listItem, "PeriodType") ||
+          ""
+        ).toLowerCase();
+        for (var h = 0; h < histRows.length; h++) {
+          var status = "";
+          try {
+            status = String(histRows[h].get_item("DeletionStatus") || "");
+          } catch (e1) {
+            status = "";
+          }
+          if (status.toLowerCase() !== "deleted") continue;
+          var year = parseInt(histRows[h].get_item("Year"), 10) || 0;
+          var month = parseInt(histRows[h].get_item("Month"), 10) || 0;
+          var actualField = End_Workflow.monthToActualField(periodType, month);
+          if (!actualField) continue;
+          ended.push({ year: year, month: month, actualField: actualField });
+        }
+        if (!ended.length) {
+          onDone();
+          return;
+        }
+        if (End_Workflow.clearKpiActuals(kpiRows, ended)) {
+          ctx.executeQueryAsync(onDone, function (sender, args) {
+            console.error(
+              "End_Workflow.reapplyEndedActuals failed: " +
+                args.get_message()
+            );
+            onDone();
+          });
+        } else {
+          onDone();
+        }
+      },
+      function (sender, args) {
+        console.error(
+          "End_Workflow.reapplyEndedActuals load failed: " +
+            args.get_message()
+        );
+        onDone();
+      }
+    );
+  },
+  clearEndedPeriod: function (benefitCode, onDone) {
+    onDone = onDone || function () {};
+    if (!benefitCode) {
+      onDone();
+      return;
+    }
+    var period = End_Workflow.currentPeriod(End_Workflow.g.listItem);
+    End_Workflow.fetchBenefitHistory(benefitCode, function (items) {
+      if ((!period.actualField || !period.month) && items && items.length) {
+        period = End_Workflow.resolvePeriod(End_Workflow.g.listItem, []);
+        var latest = items[0];
+        var year = parseInt(latest.Year, 10) || period.year || 0;
+        var month = parseInt(latest.Month, 10) || 0;
+        var actualField =
+          period.actualField ||
+          End_Workflow.monthToActualField(period.periodType, month);
+        period = {
+          year: year,
+          month: month || period.month,
+          actualField: actualField,
+          periodType: period.periodType,
+        };
+      }
+      var drafts = End_Workflow.pickHistoryToEnd(items, period);
+      var periodsToClear = [];
+      if (period && period.actualField) {
+        periodsToClear.push(period);
+        End_Workflow.rememberEnded(benefitCode, period);
+      }
+      for (var i = 0; i < drafts.length; i++) {
+        var year = parseInt(drafts[i].Year, 10) || (period && period.year) || 0;
+        var month = parseInt(drafts[i].Month, 10) || 0;
+        var actualField = End_Workflow.monthToActualField(
+          (period && period.periodType) || "",
+          month
+        );
+        if (!actualField) {
+          actualField = End_Workflow.monthToActualField("quarter", month);
+        }
+        if (actualField) {
+          var p = { year: year, month: month, actualField: actualField };
+          periodsToClear.push(p);
+          End_Workflow.rememberEnded(benefitCode, p);
+        }
+      }
+      console.log("End_Workflow: marking history Deleted", {
+        benefitCode: benefitCode,
+        count: drafts.length,
+        ids: drafts.map(function (d) {
+          return d.ID || d.Id;
+        }),
+        period: period,
+      });
+      End_Workflow.patchHistoryDeleted(drafts, function () {
+        End_Workflow.clearKpiResultsByPeriods(
+          benefitCode,
+          periodsToClear,
+          onDone
+        );
+      });
+    });
+  },
+  closeRelatedOpenTasks: function (itemId, excludeTaskId, onDone) {
+    onDone = onDone || function () {};
+    if (!itemId) {
+      onDone();
+      return;
+    }
+    var ctx = SP.ClientContext.get_current();
+    var tasksList = ctx.get_web().get_lists().getByTitle("Tasks");
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Eq><FieldRef Name='RelatedItemID' /><Value Type='Text'>" +
+        End_Workflow.xmlEscape(itemId) +
+        "</Value></Eq><Eq><FieldRef Name='Status' /><Value Type='Choice'>Open</Value></Eq></And></Where></Query></View>"
+    );
+    var taskItems = tasksList.getItems(camlQuery);
+    ctx.load(taskItems);
+    ctx.executeQueryAsync(
+      function () {
+        var rows = End_Workflow.enumToArray(taskItems);
+        var dirty = false;
+        for (var i = 0; i < rows.length; i++) {
+          var tid = rows[i].get_item("ID");
+          if (excludeTaskId && parseInt(tid, 10) === parseInt(excludeTaskId, 10))
+            continue;
+          var taskToClose = tasksList.getItemById(tid);
+          taskToClose.set_item("Status", "Closed");
+          taskToClose.update();
+          dirty = true;
+        }
+        if (dirty) {
+          ctx.executeQueryAsync(onDone, function (sender, args) {
+            console.error(
+              "End_Workflow closeRelatedOpenTasks failed: " + args.get_message()
+            );
+            onDone();
+          });
+        } else {
+          onDone();
+        }
+      },
+      function (sender, args) {
+        console.error(
+          "End_Workflow closeRelatedOpenTasks load failed: " +
+            args.get_message()
+        );
+        onDone();
+      }
+    );
+  },
+  softDeleteRelatedByField: function (listTitle, fieldName, fieldValue, onDone) {
+    onDone = onDone || function () {};
+    if (!listTitle || !fieldName || !fieldValue) {
+      onDone();
+      return;
+    }
+    var ctx = SP.ClientContext.get_current();
+    var list;
+    try {
+      list = ctx.get_web().get_lists().getByTitle(listTitle);
+    } catch (e) {
+      onDone();
+      return;
+    }
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='" +
+        fieldName +
+        "' /><Value Type='Text'>" +
+        End_Workflow.xmlEscape(fieldValue) +
+        "</Value></Eq></And></Where></Query></View>"
+    );
+    var items = list.getItems(camlQuery);
+    ctx.load(items);
+    ctx.executeQueryAsync(
+      function () {
+        var rows = End_Workflow.enumToArray(items);
+        if (!rows.length) {
+          onDone();
+          return;
+        }
+        for (var i = 0; i < rows.length; i++) {
+          var row = list.getItemById(rows[i].get_item("ID"));
+          row.set_item("DeletionStatus", "Deleted");
+          row.update();
+        }
+        ctx.executeQueryAsync(onDone, function (sender, args) {
+          console.error(
+            "End_Workflow softDeleteRelatedByField update failed (" +
+              listTitle +
+              "): " +
+              args.get_message()
+          );
+          onDone();
+        });
+      },
+      function (sender, args) {
+        console.error(
+          "End_Workflow softDeleteRelatedByField load failed (" +
+            listTitle +
+            "): " +
+            args.get_message()
+        );
+        onDone();
+      }
+    );
+  },
+  deleteEntireBenefit: function (benefitCode, itemId, currentTaskId, onDone) {
+    onDone = onDone || function () {};
+    var historyItems = [];
+    End_Workflow.closeRelatedOpenTasks(itemId, currentTaskId, function () {
+      End_Workflow.softDeleteRelatedByField(
+        "KPIResults",
+        "BenefitCode",
+        benefitCode,
+        function () {
+          End_Workflow.softDeleteRelatedByField(
+            "KPIEquations",
+            "BenefitCode",
+            benefitCode,
+            function () {
+              End_Workflow.softDeleteRelatedByField(
+                "BenefitsEquations",
+                "RelatedBenefit",
+                benefitCode,
+                function () {
+                  End_Workflow.fetchBenefitHistory(benefitCode, function (items) {
+                    historyItems = (items || []).filter(function (it) {
+                      return (
+                        String(it.DeletionStatus || "").toLowerCase() !==
+                        "deleted"
+                      );
+                    });
+                    End_Workflow.patchHistoryDeleted(historyItems, onDone);
+                  });
+                }
+              );
+            }
+          );
+        }
+      );
+    });
+  },
   init: function (options) {
     options = options || {};
     var listTitle = options.listTitle || "Benefits";
     var listingKey = options.listingKey || "benefits";
     var btnId = options.btnId || "btnEndWorkflow";
+    var deleteItem = !!options.deleteItem;
 
     $("#" + btnId).attr("disabled", true);
     $("h2.DahsFormTitle").append(
@@ -6195,6 +7397,17 @@ var End_Workflow = {
     End_Workflow.g.listItem = targetList.getItemById(itemId);
     End_Workflow.g.listItem.set_item("WFStage", "");
     End_Workflow.g.listItem.set_item("WFModuleCode", "");
+    End_Workflow.g.listItem.set_item("Equation", "0");
+    End_Workflow.g.listItem.set_item("A", 0);
+    End_Workflow.g.listItem.set_item("B", 0);
+    End_Workflow.g.listItem.set_item("CC", 0);
+    End_Workflow.g.listItem.set_item("D", 0);
+    End_Workflow.g.listItem.set_item("E", 0);
+    End_Workflow.g.listItem.set_item("F", 0);
+    End_Workflow.g.listItem.set_item("G", 0);
+    if (deleteItem) {
+      End_Workflow.g.listItem.set_item("DeletionStatus", "Deleted");
+    }
     End_Workflow.g.listItem.update();
     clientContext.load(End_Workflow.g.listItem);
 
@@ -6205,18 +7418,36 @@ var End_Workflow = {
 
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
-        $("#endWorkflowLoader").remove();
-        var icodeFromItem = "";
-        try {
-          icodeFromItem =
-            End_Workflow.g.listItem.get_item("InitiativeCode") || "";
-        } catch (e) {
-          icodeFromItem = "";
+        var finish = function () {
+          $("#endWorkflowLoader").remove();
+          var icodeFromItem = "";
+          try {
+            icodeFromItem =
+              End_Workflow.g.listItem.get_item("InitiativeCode") || "";
+          } catch (e) {
+            icodeFromItem = "";
+          }
+          window.location = wfBuildListingUrlWithContext(
+            listingKey,
+            icodeFromItem ? "&ICODE=" + encodeURIComponent(icodeFromItem) : ""
+          );
+        };
+        var benefitCode =
+          $("#Title").val() ||
+          $("#Title").text() ||
+          (typeof benefitCodeResult !== "undefined" ? benefitCodeResult : "") ||
+          End_Workflow.g.listItem.get_item("Title") ||
+          "";
+        if (deleteItem) {
+          End_Workflow.deleteEntireBenefit(
+            benefitCode,
+            itemId,
+            currentTaskId,
+            finish
+          );
+        } else {
+          End_Workflow.clearEndedPeriod(benefitCode, finish);
         }
-        window.location = wfBuildListingUrlWithContext(
-          listingKey,
-          icodeFromItem ? "&ICODE=" + encodeURIComponent(icodeFromItem) : ""
-        );
       }),
       Function.createDelegate(this, function (sender, args) {
         console.error("End_Workflow failed: " + args.get_message());

@@ -1,6 +1,17 @@
 let crlabel, crlabelEn, crdescription, crdescriptionEn, crsubField;
 let isCRChangeTrigered = false;
 window.crMasterDetailsArrayRequest = [];
+if (typeof window.getMasterDetailCodeIndex !== "function") {
+  window.getMasterDetailCodeIndex = function (title, fallbackId) {
+    var lastPart = String(title || "").split("-").pop();
+    var idx = parseInt(lastPart, 10);
+    if (!isNaN(idx) && idx > 0) {
+      return idx;
+    }
+    var idNum = parseInt(fallbackId, 10);
+    return !isNaN(idNum) && idNum > 0 ? idNum : 0;
+  };
+}
 var crMasterDetailsArrayNew = [];
 var crMasterDetailsArrayEdit = [];
 var crRelatedItemCode = "";
@@ -3173,10 +3184,23 @@ var CR_Master_Details_Request = {
       onLoadDataInMaster = true
 
       var oListItem = listItemEnum.get_current();
+      var masterItemTitle = "";
+      try {
+        masterItemTitle = oListItem.get_item("Title") || "";
+      } catch (e) {
+        masterItemTitle = "";
+      }
+      var masterItemIndex = window.getMasterDetailCodeIndex
+        ? window.getMasterDetailCodeIndex(masterItemTitle, oListItem.get_id())
+        : oListItem.get_id();
       HTMLtoAppend = "";
       HTMLtoAppend +=
         '<div class="Details-Item EditItem" data-ID="' +
         oListItem.get_id() +
+        '" data-index="' +
+        masterItemIndex +
+        '" data-code="' +
+        String(masterItemTitle).replace(/"/g, "&quot;") +
         '" data-masterkey="' +
         oListItem.get_item("MasterKey") +
         '">';
@@ -4040,7 +4064,7 @@ window.new_Cr_MasterDetails = {
       ;
 
       var Code = prt1 + "-" + prt2 + "-" + prt3 + "-" + prt4;
-
+      new_Cr_MasterDetails.g.tempCode = Code;
       new_Cr_MasterDetails.g.oListItem.set_item("Title", Code);
 
 
@@ -4062,7 +4086,7 @@ window.new_Cr_MasterDetails = {
     clientContext.executeQueryAsync(
       Function.createDelegate(this, function () {
 
-
+        var continueCrMasterCreate = function () {
         var masterDataFormatedArr = new_Cr_MasterDetails.g.masterDataFormated
         // to get the master id when add new benifit in master details to use it when create benefitdelivrables
         if (RListKey == "initiatives" && masterDataFormatedArr[0].listName == "Benefits") {
@@ -4099,8 +4123,41 @@ window.new_Cr_MasterDetails = {
             Task_Edit_Data.init();
           }
         }
-
-
+      };
+      var createdCrItem = new_Cr_MasterDetails.g.oListItem;
+        var createdCrId = 0;
+        var crTempCode = new_Cr_MasterDetails.g.tempCode || "";
+        try {
+          createdCrId = createdCrItem.get_id();
+        } catch (e) {
+          createdCrId = 0;
+        }
+        if (createdCrId && crTempCode) {
+          var uniqueCrCodeParts = String(crTempCode).split("-");
+          uniqueCrCodeParts[uniqueCrCodeParts.length - 1] = createdCrId
+            .toString()
+            .padStart(4, "0");
+          var uniqueCrCode = uniqueCrCodeParts.join("-");
+          var crListName =
+            new_Cr_MasterDetails.g.masterDataFormated &&
+            new_Cr_MasterDetails.g.masterDataFormated[0]
+              ? new_Cr_MasterDetails.g.masterDataFormated[0].listName
+              : "";
+          if (uniqueCrCode !== crTempCode && crListName) {
+            var uniqueCodeCtx = new SP.ClientContext.get_current();
+            var crList = uniqueCodeCtx.get_web().get_lists().getByTitle(crListName);
+            var crItemToUpdate = crList.getItemById(createdCrId);
+            crItemToUpdate.set_item("Title", uniqueCrCode);
+            crItemToUpdate.update();
+            uniqueCodeCtx.load(crItemToUpdate);
+            uniqueCodeCtx.executeQueryAsync(
+              continueCrMasterCreate,
+              continueCrMasterCreate
+            );
+            return;
+          }
+        }
+        continueCrMasterCreate();
       }),
       Function.createDelegate(this, function (sender, args) {
         console.log(

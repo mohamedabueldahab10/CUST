@@ -146,6 +146,10 @@ var Resources = {
     pattr56: "نسبة التنفيذ الفعلية (الجدول الزمني)",
     pattr66: "نسبة التنفيذ الفعلية (المعالم)",
     pattr76: "نسبة التنفيذ الفعلية (المخرجات)",
+    openissuescount: "عدد التحديات المفتوحة",
+    openriskscount: "عدد المخاطر المفتوحة",
+    openmilestonescount: "عدد المعالم المفتوحة",
+    opendeliverablescount: "عدد المخرجات المفتوحة",
     // "pattr66": "نسبة التنفيذ الفعلية (الجدول الزمني)",
     schedsystem: "المخرجات",
     schedepm: "الجدول الزمني",
@@ -260,6 +264,8 @@ var Resources = {
     pmo: "مكتب تحكم إدارة المشاريع",
     epmo: "مكتب ادارة المشاريع المؤسسي ",
     headcommitte: "أمين لجنة طلبات التغيير",
+    ProcExDeptManager: "مدير إدارة تميز المشتريات",
+    ProcExDept: "فريق إدارة تميز المشتريات",
     nodata: "لا يوجد",
     //Contract Type
     main: "مستوى أول",
@@ -323,7 +329,7 @@ var Resources = {
     move: "النقل",
     avoid: "التجنب",
     assumption: "الافتراض",
-    monitor: "المراقبة",
+    monitor: "تقبل الخطأ",
     leave: "الترك",
 
     //Probability (risk)
@@ -597,6 +603,7 @@ var Resources = {
     postponement: "تأجيل",
     //Forms
     printscreen: "طباعة",
+    excelpdf: "تصدير إلى PDF",
     editbutton: "التعديل",
     backbutton: "العودة",
     savebutton: "حفظ",
@@ -659,7 +666,7 @@ var Resources = {
     enternameemail: "أدخل اسم أو بريد الكتروني...",
     weight: "الوزن / القيمة",
     sorrynoaccess: "عذرا، ليس لديك صلاحية لرؤية البيانات",
-    contactsystmadmin: "الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات",
+    contactsystmadmin: "يرجى التكرم برفع طلب صلاحية عبر منصة خدماتي لمنحكم صلاحية الوصول إلى هذه الشاشة. وفي حال توفر الصلاحية مسبقًا، يرجى رفع بلاغ دعم فني عبر منصة خدماتي لمعالجة المشكلة",
     homepage: "الصفحة الرئيسية",
     fileuploading: "يتم تحميل الملف..",
     signout: "تسجيل الخروج",
@@ -984,6 +991,9 @@ var Resources = {
     performanceanalysis: "تحليل الأداء",
     mytasks: "مهامي",
     othertasks: "المهام الأخرى",
+    taskscreatedbyme: "المهام التنفيذية المنشئة بواسطتي",
+    executivetasks: "مهام تنفيذية",
+    closetask: "إغلاق المهمة",
     launchstraightvital: "إطلاق المبادرات الحيوية",
     launchesconferencesworkshopselectronicplatforms:
       "تدشين المرافق, مؤتمرات, ورش عمل أو المنصات والخدمات الإلكترونية",
@@ -1114,6 +1124,10 @@ var Resources = {
     importantlinks: "روابط مهمة",
     strategicpartnershiptooltip:
       "هذا الحقل يبين حالة الشراكة (سارية - سارية-مجددة - غير سارية)",
+      componentApiLinkTooltip:
+      "برجاء إضافة الرابط بالصيغة التالية:<br>[رابط الواجهة] + &amp;username=[اسم المستخدم] + &amp;password=[كلمة المرور]<br>مثال:<br><span class=\"api-example\">https://portal-dns-name.com/api/endpoint-name?username=اسم_المستخدم&amp;password=كلمة_المرور</span>",
+    noApiResults: "لا توجد نتائج",
+    fetchComponentValue: "سحب البيانات",
     allgroups: "كل المجموعات",
     administratorsforprojectwebapp: "المسؤولون عن تطبيق موقع المشروع",
     itsteeringcommittee: "اللجنة التوجيهية لتكنولوجيا المعلومات",
@@ -1146,6 +1160,7 @@ var Resources = {
     projectowner: "مالك المشروع",
     initiativemanager: "مدير المبادرة",
     initiativeowner: "مالك المبادرة",
+    benefitowner: "مالك المنفعة",
     spmadmin: "مسؤول الأداء الإستراتيجي",
     gdsp: "الإدارة العامة للأداء الإستراتيجي",
     gdst: "الإدارة العامة للإستراتيجية والتحول",
@@ -1421,6 +1436,12 @@ var Resources = {
     placeholdersearchtext: "أدخل نص البحث",
     selectsector: "اختر القطاع",
     selectsubsector: "اختر الوكالة",
+    //
+    referencecosts: "التكاليف المرجعية",
+    choice1: "choice1",
+    choice2: "choice2",
+    choice3: "choice3",
+    //
     from: "من",
     to: "إلى",
     btnsearch: "بحث",
@@ -1501,6 +1522,10 @@ var Resources = {
     delegationstatus: "حالة التفويض",
     fromdate: "من سنة",
     todate: "إلى سنة",
+
+     //Reference costs 
+     procexdept: "فريق إدارة تميز المشتريات",
+     procexdeptmanager :"مدير إدارة تميز المشتريات",
   },
   en: {
     clearfilter: "Clear Filter",
@@ -1676,6 +1701,14 @@ var Resources = {
     transformativeproject: "Transformative",
     operationalproject: "Operational",
 
+//
+referencecosts: "Reference Costs",
+    choice1: "choice1",
+    choice2: "choice2",
+    choice3: "choice3",
+//
+
+
     //IsStrategicProject
     strategy: "Strategic Project",
     nonstrategy: "Non Strategic Project",
@@ -1825,7 +1858,8 @@ var Resources = {
     pmo: "PMO",
     epmo: "EPMO",
     headcommitte: "Head Committee",
-
+    ProcExDeptManager: "Procurement Excellence Department Manager",
+    ProcExDept: "Procurement Excellence Department",
     // "nodata": "Not Found",
     nodata: "No Data",
 
@@ -2136,6 +2170,7 @@ restoration:"restoration",
     postponement: "Postponement",
     //Forms
     printscreen: "Print",
+    excelpdf: "Export to PDF",
     editbutton: "Edit",
     backbutton: "Back",
     savebutton: "Save",
@@ -2383,6 +2418,10 @@ restoration:"restoration",
     pattr56: "% of actual implementation (Schedule)",
     pattr66: "% of actual implementation (Landmarks)",
     pattr76: "% of actual implementation (Output)",
+    openissuescount: "Open Issues Count",
+    openriskscount: "Open Risks Count",
+    opendeliverablescount: "Open Deliverables Count",
+    openmilestonescount: "Open Milestones Count",
     //lesson leanrd types
     strongpoint: "Proven strong point",
     improvementopportunity: "Improvement opportunity discovered",
@@ -2498,6 +2537,9 @@ restoration:"restoration",
     performanceanalysis: "Performance Analysis",
     mytasks: "My Tasks",
     othertasks: "Other Tasks",
+    taskscreatedbyme: "Executive Tasks Created By Me",
+    executivetasks: "Executive Tasks",
+    closetask: "Close Task",
     launchstraightvital: "Launch Straight Vital",
     launchesconferencesworkshopselectronicplatforms:
       "launchesconferencesworkshopselectronicplatforms",
@@ -2638,6 +2680,10 @@ restoration:"restoration",
     initiativestatustooltip: "This Field show the type of this initiative",
     strategicpartnershiptooltip:
       "This Field show the Status of this Strategic Partnership (Standard or Repeated-Standard or Not Standard",
+    componentApiLinkTooltip:
+      "Please add the link in the following format:<br>[Interface URL] + &amp;username=[username] + &amp;password=[password]<br>Example:<br><span class=\"api-example\">https://portal-dns-name.com/api/endpoint-name?username=username&amp;password=password</span>",
+    noApiResults: "No results",
+    fetchComponentValue: "Get Data",
     allgroups: "All Groups",
     administratorsforprojectwebapp: "Administrators for Project Web App",
     itsteeringcommittee: "IT Steering Committee",
@@ -2670,6 +2716,7 @@ restoration:"restoration",
     projectowner: "Project Owner",
     initiativemanager: "Initiative Manager",
     initiativeowner: "Initiative Owner",
+    benefitowner: "Benefit Owner",
     spmadmin: "Strategy Performance Administrator",
     gdsp: "GDSP",
     gdst: "GDST",
@@ -3008,6 +3055,10 @@ restoration:"restoration",
     delegationstatus: "Delegation Status",
     fromdate: "From Date",
     todate: "To Date",
+
+    //Reference costs 
+    procexdept: "Reference costs Team",
+    procexdeptmanager :"Reference costs Manager"
   },
 };
 

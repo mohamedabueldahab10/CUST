@@ -194,6 +194,15 @@ var Information_Form = [
           ]
       },
       },
+      //ReferenceCostItemId
+      {
+        InternalName: 'ReferenceCostItemId',
+        DisplayName: 'بند التكلفة المرجعية',
+        DisplayNameEn: 'Reference Cost Item Id',
+        type: 'number',
+        state: 'disabled',
+        display: 'none',
+       },
       // {
       //     "InternalName": "SupplyDate",
       //     "DisplayName": "تاريخ التوريد",

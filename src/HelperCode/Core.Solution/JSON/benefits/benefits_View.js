@@ -212,7 +212,7 @@ var Information_Form = [
           { value: "monthly", fields: ["Months"] },
           { value: "quarter", fields: ["Quarter"] },
           { value: "midterm", fields: ["Midterms"] },
-          { value: "year", fields: ["Years"] },
+          { value: "year", fields: [] },
         ],
         state: "disabled",
         options: {

@@ -6103,6 +6103,108 @@ div#MainKPIsList {
 
 }
 
+.printBtnContainer .exportPdfBtn {
+    margin-inline-start: 12px;
+}
+
+.exportPdfBtnContainer {
+    display: flex;
+    width: 100%;
+    padding-left: 3.6rem;
+    padding-right: 6.2rem;
+    padding-top: 1rem;
+    margin: 0;
+}
+
+/* Keep button on the physical left (matches Tanmiah) */
+.ar .exportPdfBtnContainer {
+    justify-content: flex-end;
+}
+
+.en .exportPdfBtnContainer {
+    justify-content: flex-start;
+}
+
+.exportPdfBtn {
+    background-color: #f2f2f2 !important;
+    color: #666666 !important;
+    border: 1px solid #d1d1d1 !important;
+    border-radius: 50px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    padding: 8px 28px !important;
+    min-width: auto !important;
+    margin: 0 !important;
+    line-height: 1.5;
+    box-shadow: none !important;
+    white-space: nowrap;
+}
+
+.exportPdfBtn:hover,
+.exportPdfBtn:focus {
+    color: #555555 !important;
+    background-color: #eaeaea !important;
+    border-color: #c8c8c8 !important;
+}
+
+.html2pdf.table-bordered {
+    border: 1px solid black !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+}
+
+.html2pdf.table-bordered th,
+.html2pdf.table-bordered td {
+    border: 1px solid black !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+.html2pdf.table-bordered tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+.ar .html2pdf.table {
+    direction: rtl;
+    text-align: right;
+}
+
+.ar .html2pdf.table th,
+.ar .html2pdf.table td {
+    text-align: right;
+}
+
+.html2pdf.headname {
+    margin: 0;
+    padding: 10px 12px;
+    font-size: 1.5rem !important;
+    text-align: center;
+}
+
+.html2pdf.headname.pdf-section-bar {
+    color: #ffffff !important;
+    background: #1a9a9a;
+    font-size: 1.5rem !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+}
+
+.pdf-section-keep {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+.ar .html2pdf.headname {
+    text-align: center;
+}
+
+.en .breadcrumb-date-section {
+    flex-direction: row-reverse;
+}
+
 .page-avoid {
     break-inside: avoid-page;
     page-break-inside: avoid-page;
@@ -6704,7 +6806,20 @@ a.a-important-link:hover>* {
     font-size: 1.3rem !important;
     margin-inline: 0 !important;
 }
+.project-details-ctx .fifth-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
 
+
+.project-details-ctx .fifth-row .open-count-item {
+    flex: 1 1 0;
+    min-width: 0;
+    align-items: flex-start;
+    text-align: start;
+}
 .inlineMargin0 {
     margin-inline: 0 !important
 }
@@ -6864,17 +6979,18 @@ p.task-name {
 .FormContainer.wf-mode .form-btns-wrapper button,
 .btnactionrow .WF-btn button,
 .btnactionrow .delegate-btn {
-    border-radius: 13.5px;
+    border-radius: 20px;
     background-color: #148282 !important;
     color: #FFFFFF !important;
-    font-size: 13px;
+    font-size: 20px;
     font-weight: bold;
     letter-spacing: 0;
-    line-height: 16px;
-    padding: 4px 13px 6px 13px !important;
+    line-height: 24px;
+    padding: 6px 20px 9px 20px !important;
     cursor: pointer;
     border: 0;
-    height: 28px;
+    height: 42px;
+    min-width: 18rem;
 }
 
 .btnactionrow .delegate-btn {
@@ -7380,4 +7496,161 @@ span.statuscolorstat28 {
     font-weight: 700;
     color: #148282;
     text-decoration: underline;
+}
+
+.CFIELD.api-link-field {
+    overflow: visible;
+}
+
+.CFIELD.api-link-field > label {
+    position: relative;
+}
+
+.CFIELD.api-link-field input.form-control,
+.CFIELD.api-link-field .viewmode-value,
+#URLA, #URLB, #URLC, #URLD, #URLE, #URLF, #URLG {
+    direction: ltr;
+    text-align: left;
+    word-break: break-all;
+}
+
+.field-api-info {
+    position: relative;
+    display: inline-block;
+    margin-inline-start: 6px;
+    cursor: pointer;
+    color: #989898;
+    font-size: 14px;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+.field-api-info > .fa-info-circle {
+    color: #989898;
+}
+
+.field-api-info .field-api-info-box {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 50%;
+    transform: translateX(50%);
+    background: #148282;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    z-index: 30000;
+    width: 360px;
+    max-width: 80vw;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.7;
+    text-align: right;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    white-space: normal;
+    word-break: break-word;
+}
+
+.en .field-api-info .field-api-info-box {
+    text-align: left;
+}
+
+.field-api-info:hover .field-api-info-box,
+.field-api-info:focus .field-api-info-box,
+.field-api-info:focus-within .field-api-info-box {
+    display: block;
+}
+
+.field-api-info .field-api-info-box:after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -7px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent transparent #148282 transparent;
+}
+
+.field-api-info .field-api-info-box .api-example {
+    direction: ltr;
+    display: inline-block;
+    text-align: left;
+    word-break: break-all;
+}
+
+.api-link-result {
+    display: block;
+    color: #f00;
+    font-size: 12px;
+    margin-top: 4px;
+    text-align: right;
+    direction: rtl;
+}
+
+.en .api-link-result {
+    text-align: left;
+    direction: ltr;
+}
+
+.CFIELD.kpi-link-action-col {
+    position: relative;
+}
+
+.CFIELD.kpi-link-action-col > label {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.CFIELD.kpi-link-action-col > input.SPIField {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.CFIELD.kpi-link-action-col > .errMsgField,
+.CFIELD.kpi-link-action-col > .inputInfo,
+.CFIELD.kpi-link-action-col > .field-api-info {
+    display: none !important;
+}
+
+.kpi-fetch-api-btn {
+    background: #148282;
+    color: #fff;
+    border: 0;
+    border-radius: 6px;
+    padding: 8px 18px;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-bottom: 1.8rem;
+    height: calc(2em + .75rem + 2px);
+}
+
+.kpi-fetch-api-btn:hover {
+    opacity: 0.9;
+}
+
+.kpi-fetch-api-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.CFIELD.has-kpi-pull-btn > input.form-control {
+    display: inline-block;
+    width: calc(100% - 150px);
+    vertical-align: top;
+}
+
+.CFIELD.has-kpi-pull-btn > .kpi-fetch-api-btn {
+    display: inline-block;
+    vertical-align: top;
+    margin-inline-start: 8px;
+}
+
+.CFIELD.has-kpi-pull-btn > .api-link-result {
+    width: 100%;
 }

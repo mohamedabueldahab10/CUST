@@ -60,7 +60,23 @@ var projectProgressStatusDeliverable,
   projectActualImplementationMilestone,
   projectPlannedImplementationMilestone,
   projectActualImplementationSchedule,
-  projectPlannedImplementationSchedule;
+  projectPlannedImplementationSchedule,
+  projectOpenIssuesCount = 0,
+  projectOpenRisksCount = 0,
+  projectOpenDeliverablesCount = 0;
+
+function getProjectOpenCount(oListItem, fieldName) {
+  try {
+    var val = oListItem.get_item(fieldName);
+    if (val == null || val === "") {
+      return 0;
+    }
+    var num = Number(val);
+    return isNaN(num) ? 0 : num;
+  } catch (e) {
+    return 0;
+  }
+}
 
 var years,
   months,
@@ -360,6 +376,16 @@ var Project_Home_Info_Request = {
         oListItem.get_item("PlannedImplementationSchedule") || 0;
       projectProgressStatusSchedule =
         oListItem.get_item("ProgressStatusSchedule") || No_Data;
+      projectOpenIssuesCount = getProjectOpenCount(oListItem, "OpenIssuesCount");
+      projectOpenRisksCount = getProjectOpenCount(oListItem, "OpenRisksCount");
+      projectOpenDeliverablesCount = getProjectOpenCount(
+        oListItem,
+        "OpenDeliverablesCount"
+      );
+      projectOpenMilestonesCount = getProjectOpenCount(
+        oListItem,
+        "OpenMilestonesCount"
+      );
       //
 
       // to deploy status of projects depends on form field baseline
@@ -598,6 +624,32 @@ var Project_Home_Info_Request = {
         ' class="black Resources myCompletionStatusDelivrables statuscolor' +
         projectProgressStatusDeliverable +
         '"></h4>' + //
+        "</div>" +
+        "</div>" +
+        '<div class="mb-0 py-3 px-4 d-flex fifth-row" href="#">' +
+        '<div class="d-flex flex-column open-count-item">' +
+        '<span class="des-13"><span data-trans-openissuescount class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle open-issues-count">' +
+        projectOpenIssuesCount +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-flex flex-column open-count-item">' +
+        '<span class="des-13"><span data-trans-openriskscount class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle open-risks-count">' +
+        projectOpenRisksCount +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-flex flex-column open-count-item">' +
+        '<span class="des-13"><span data-trans-openmilestonescount class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle open-milestones-count">' +
+        projectOpenMilestonesCount +
+        "</h4>" +
+        "</div>" +
+        '<div class="d-flex flex-column open-count-item">' +
+        '<span class="des-13"><span data-trans-opendeliverablescount class="Resources state-val initiativeProjHomeInfoTitleStyle"></span></span>' +
+        '<h4 class="black initiativeProjHomeInfoValueStyle open-deliverables-count">' +
+        projectOpenDeliverablesCount +
+        "</h4>" +
         "</div>" +
         "</div>"
       );
@@ -3989,7 +4041,10 @@ var Get_ProjectStatus_Info = {
       ProgressStatusMilestone,
       ActualImplementationSchedule,
       PlannedImplementationSchedule,
-      ProgressStatusSchedule;
+      ProgressStatusSchedule,
+      OpenIssuesCount = 0,
+      OpenRisksCount = 0,
+      OpenDeliverablesCount = 0;
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
       itemID = oListItem.get_id();
@@ -4011,6 +4066,12 @@ var Get_ProjectStatus_Info = {
         oListItem.get_item("PlannedImplementationSchedule") || 0;
       ProgressStatusSchedule =
         oListItem.get_item("ProgressStatusSchedule") || No_Data;
+      OpenIssuesCount = getProjectOpenCount(oListItem, "OpenIssuesCount");
+      OpenRisksCount = getProjectOpenCount(oListItem, "OpenRisksCount");
+      OpenDeliverablesCount = getProjectOpenCount(
+        oListItem,
+        "OpenDeliverablesCount"
+      );
     }
 
     ActualImplementationDeliverable = Number(ActualImplementationDeliverable);
@@ -4060,6 +4121,16 @@ var Get_ProjectStatus_Info = {
     $(
       ".project-details-ctx .card.h-100 > .fourth-row > div:nth-child(3) > h4.black"
     ).text(ProgressStatusDeliverable);
+
+    $(".project-details-ctx .card.h-100 > .fifth-row .open-issues-count").text(
+      OpenIssuesCount
+    );
+    $(".project-details-ctx .card.h-100 > .fifth-row .open-risks-count").text(
+      OpenRisksCount
+    );
+    $(
+      ".project-details-ctx .card.h-100 > .fifth-row .open-deliverables-count"
+    ).text(OpenDeliverablesCount);
 
     // $(".project-details-ctx .card.h-100 > .scnd-row > div:nth-child(2) > h4.black").text(ActualImplementationDeliverable + "%");
 

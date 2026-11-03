@@ -249,6 +249,7 @@ var Information_Form = [
           ],
         },
         validation: "required",
+        disableOnWfTaskStage: "InitiativeBenefits00",
         security: {
           groups: [
             'System Admin Group',
@@ -486,6 +487,7 @@ var Information_Form = [
             { display: 'no', value: 'no' },
           ],
         },
+        disableOnWfTaskStage: "InitiativeBenefits00",
         security: {
           groups: [
             'System Admin Group',

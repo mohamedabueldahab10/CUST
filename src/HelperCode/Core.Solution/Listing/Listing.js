@@ -39,7 +39,67 @@ var projectTypeFilterQuery = '', typeClicked = 'Internal';
 window.indexofListing = 0;
 window.indexoflistinginternalproject = 0;
 window.indexoflistingexternalproject = 0;
-var taskClicked = 'relatedTasks', allTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false;
+var taskClicked = 'relatedTasks', allTasksClicked = false, executiveTasksClicked = false, getNewFilterTask = false, isViewMoreClicked = false, isTaskTabSwitch = false;
+
+function getStandaloneTasksCreatedByMeQuery() {
+  return '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><And><Eq><FieldRef Name="Author" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><IsNull><FieldRef Name="WorkflowName" /></IsNull></And><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
+}
+
+function getStandaloneTasksCreatedByMeFilter() {
+  return '<And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><And><Eq><FieldRef Name="Author" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><IsNull><FieldRef Name="WorkflowName" /></IsNull></And><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And>';
+}
+
+function isStandaloneWorkflowName(wfname) {
+  return !wfname || wfname === 'null' || wfname === 'undefined' || wfname === No_Data;
+}
+
+function getListingUserDisplayValue(value) {
+  if (value == null) return No_Data;
+  if (typeof value.get_lookupValue === "function") {
+    return value.get_lookupValue() || No_Data;
+  }
+  if (typeof value.forEach === "function") {
+    var names = [];
+    value.forEach(function (element) {
+      if (element && typeof element.get_lookupValue === "function") {
+        names.push(element.get_lookupValue());
+      }
+    });
+    return names.length ? names.join(", ") : No_Data;
+  }
+  return value;
+}
+
+function resetTasksPageFilter() {
+	FilterChoices = [];
+	isEmptyFilter = true;
+	filterValue = false;
+	$('.page-filter').removeClass('noItemsFilter');
+	$('.filtersSection').removeClass('noItemsFilter');
+	$('.page-filter .dropdown-menu input:checkbox').prop({
+	  checked: false,
+	  disabled: false
+	});
+	$('.page-filter .filterSearch').val('');
+	$('#clearAllFilter').prop('disabled', true);
+  }
+  
+  function switchTasksListingTab() {
+	isTaskTabSwitch = true;
+	getNewFilterTask = true;
+	isViewMoreClicked = false;
+	resetTasksPageFilter();
+	reloadTasksListing();
+  }
+  
+
+function reloadTasksListing() {
+  window._listingPreinitLoadStarted = false;
+  isOnload = true;
+  originalstate = true;
+  isLoadMore = false;
+  ListingData.preinit();
+}
 
 var emptyData = require('../../../HelperRessources/img/empty-data.png');
 var exportExcel = require('../../../HelperRessources/img/exportExcel.png');
@@ -346,17 +406,8 @@ window.sphttp = {
 						}
 						record[internalFieldNames[i]] = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : datetouse2;
 					  }
-					  else if (Listing_Info[i].type == "picker") {
-						var pemail = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : oListItem.get_item(internalFieldNames[i]).get_lookupValue();
-						record[internalFieldNames[i]] = pemail;
-					  }
-					  else if (Listing_Info[i].type == "multipicker") {
-						var pemail = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : oListItem.get_item(internalFieldNames[i]);
-						var userItems = [];
-						pemail.forEach(function (element) {
-						  userItems.push(element.get_lookupValue());
-						})
-						record[internalFieldNames[i]] = userItems.join(", ");
+					  else if (Listing_Info[i].type == "picker" || Listing_Info[i].type == "multipicker") {
+						record[internalFieldNames[i]] = getListingUserDisplayValue(oListItem.get_item(internalFieldNames[i]));
 					  }
 					  else if (Listing_Info[i].type == "checkbox") {
 						var value = oListItem.get_item(internalFieldNames[i]) ? 'نعم' : 'لا';
@@ -422,23 +473,8 @@ window.sphttp = {
 						// datetouse2 = datetouse[1] + '/' + datetouse[0] + '/' + datetouse[2] + '<span style=\'display:none\'>:::' + timezone + ':::</span>';
 					  }
 					  record[internalFieldNames[i]] = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : datetouse2;
-					} else if (Listing_Info[i].type == "picker") {
-					  var pemail = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : oListItem.get_item(internalFieldNames[i]).get_lookupValue();
-					  record[internalFieldNames[i]] = pemail;
-					}
-					else if (Listing_Info[i].type == "multipicker") {
-
-					  var pemail = (oListItem.get_item(internalFieldNames[i]) == null) ? No_Data : oListItem.get_item(internalFieldNames[i]);
-					  var userItems = [];
-					  if (pemail != No_Data) {
-						pemail.forEach(function (element) {
-						  userItems.push(element.get_lookupValue());
-						})
-						record[internalFieldNames[i]] = userItems.join(", ");
-					  }
-					  else {
-						record[internalFieldNames[i]] = No_Data;
-					  }
+					} else if (Listing_Info[i].type == "picker" || Listing_Info[i].type == "multipicker") {
+					  record[internalFieldNames[i]] = getListingUserDisplayValue(oListItem.get_item(internalFieldNames[i]));
 					}
 					else if (Listing_Info[i].type == "checkbox") {
 					  var value = oListItem.get_item(internalFieldNames[i]) ? 'نعم' : 'لا';
@@ -669,18 +705,19 @@ window.ListingData = {
 	  $('.user-name').text(UserN.Title.match(/(?<!\p{L}\p{M}*)\p{L}\p{M}*/gu).join(''));
 	  $('.user-name-full').text(UserN.Title);
 
-	  if (isAdmin || isEPMO) {
-		if (isTasks && allTasksClicked) {
+	  if (isTasks && allTasksClicked) {
 
 		  PQuery = '<View><Query><Where><And><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>'
 
-		} else if (isTasks && !allTasksClicked) {
+		} else if (isTasks && executiveTasksClicked) {
+		  PQuery = getStandaloneTasksCreatedByMeQuery();
+		  PQueryFilteration = getStandaloneTasksCreatedByMeFilter();
+		} else if (isTasks) {
 
 		  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>';
 
 		  PQueryFilteration = '<And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And></And>';
 		}
-	  }
 
 	  //call function by get JSON confugration files from style Library
 	  $.getScript(_spPageContextInfo.webAbsoluteUrl + "/Style%20Library/spm/JSON/" + listkey + "/" + JSON_File_Name).done(function (script, textStatus) {
@@ -946,7 +983,9 @@ window.ListingData = {
 
 				var taskcode = records[i].Title;
 				var tasktitlearr, taskname;
-				if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
+				if (isStandaloneWorkflowName(RecordsWithID[i].wfname)) {
+				  taskname = records[i].Name || records[i].RelatedItemName || taskcode;
+				} else if (localStorage.getItem('Dynamo_Tasks Configuration') != null) {
 				  tasktitlearr = JSON.parse(localStorage.getItem("Dynamo_Tasks Configuration") || "[]");
 				  tasktitlearr = tasktitlearr.filter(function (item) {
 					return item.code == taskcode
@@ -1297,23 +1336,24 @@ window.ListingData = {
 
 			//// for tasks
 			var tasksListing = ''
-			// if (isAdmin || isEPMO) {
-			if (originalstate || (!isLoadMore)) { // fix project list tabs to show
-			  if (taskClicked == 'relatedTasks') {
-				$('.task_action_btn').css('display', 'block')
-				tasksListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-mytasks class="nav-link active Resources" id="relatedTasks" data-toggle="tab" href="#relatedTasks" role="tab" aria-controls="relatedTasks" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-othertasks class="nav-link Resources" id="allTasks" data-toggle="tab" href="#allTasks" role="tab" aria-controls="allTasks" aria-selected="false"></a></li></ul>'
-
-			  } else if (taskClicked == 'allTasks') {
-				tasksListing = '<ul class="nav nav-tabs" id="projectType" role="tablist"><li class="nav-item"><a data-trans-mytasks class="nav-link Resources" id="relatedTasks" data-toggle="tab" href="#relatedTasks" role="tab" aria-controls="relatedTasks" aria-selected="true"></a></li ><li class="nav-item"><a data-trans-othertasks class="nav-link active Resources" id="allTasks" data-toggle="tab" href="#allTasks" role="tab" aria-controls="allTasks" aria-selected="false"></a></li></ul>'
-			  }
+			var otherTasksTab = (isAdmin || isEPMO)
+			  ? '<li class="nav-item"><a data-trans-othertasks class="nav-link Resources' + (taskClicked == 'allTasks' ? ' active' : '') + '" id="allTasks" data-toggle="tab" href="#allTasks" role="tab" aria-controls="allTasks" aria-selected="' + (taskClicked == 'allTasks' ? 'true' : 'false') + '"></a></li>'
+			  : '';
+			if (originalstate || (!isLoadMore)) {
+			  tasksListing = '<ul class="nav nav-tabs" id="projectType" role="tablist">' +
+				'<li class="nav-item"><a data-trans-mytasks class="nav-link Resources' + (taskClicked == 'relatedTasks' ? ' active' : '') + '" id="relatedTasks" data-toggle="tab" href="#relatedTasks" role="tab" aria-controls="relatedTasks" aria-selected="' + (taskClicked == 'relatedTasks' ? 'true' : 'false') + '"></a></li>' +
+				'<li class="nav-item"><a data-trans-taskscreatedbyme class="nav-link Resources' + (taskClicked == 'executivetasks' ? ' active' : '') + '" id="executivetasks" data-toggle="tab" href="#executivetasks" role="tab" aria-controls="executivetasks" aria-selected="' + (taskClicked == 'executivetasks' ? 'true' : 'false') + '"></a></li>' +
+				otherTasksTab +
+				'</ul>';
+			  $('.task_action_btn').css('display', 'block');
 			}
 
-
-
 			if (taskClicked == 'relatedTasks') {
-			  tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade show active" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks">' + html + '</div><div class="tab-pane fade" id="allTasks" role="tabpanel" aria-labelledby="allTasks">' + '' + '</div></div>'
+			  tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade show active" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks">' + html + '</div><div class="tab-pane fade" id="executivetasks" role="tabpanel" aria-labelledby="executivetasks"></div><div class="tab-pane fade" id="allTasks" role="tabpanel" aria-labelledby="allTasks"></div></div>'
+			} else if (taskClicked == 'executivetasks') {
+			  tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks"></div><div class="tab-pane fade show active" id="executivetasks" role="tabpanel" aria-labelledby="executivetasks">' + html + '</div><div class="tab-pane fade" id="allTasks" role="tabpanel" aria-labelledby="allTasks"></div></div>'
 			} else if (taskClicked == 'allTasks') {
-			  tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks">' + '' + '</div><div class="tab-pane fade show active" id="allTasks" role="tabpanel" aria-labelledby="allTasks">' + html + '</div></div>'
+			  tasksListing += '<div class="tab-content" id="taskTypeContent"><div class="tab-pane fade" id="relatedTasks" role="tabpanel" aria-labelledby="relatedTasks"></div><div class="tab-pane fade" id="executivetasks" role="tabpanel" aria-labelledby="executivetasks"></div><div class="tab-pane fade show active" id="allTasks" role="tabpanel" aria-labelledby="allTasks">' + html + '</div></div>'
 			}
 
 			// }
@@ -1324,29 +1364,25 @@ window.ListingData = {
 			if (records.length == 0 && originalstate && !isTasks) {
 			  $('ul.list-group.w-100').html('<p data-trans-noitems class="Resources noItems"></p>');
 			  $('ul.list-group.w-100').addClass('noItemsDiv');
-			  $('.page-filter').addClass('noItemsFilter');
+			 // $('.page-filter').addClass('noItemsFilter');
+			 $('.page-filter').removeClass('noItemsFilter');
 
 			}
 			else if (records.length == 0 && originalstate && isTasks) {
-			  if (isAdmin || isEPMO) {
-				$('ul.list-group.w-100').html(tasksListing);
-			  } else {
-				$('ul.list-group.w-100').html('<p data-trans-noitems class="Resources noItems"></p>');
-				$('ul.list-group.w-100').addClass('noItemsDiv');
-				$('.page-filter').addClass('noItemsFilter');
-
-			  }
+			  $('ul.list-group.w-100').html(tasksListing);
+			  $('ul.list-group.w-100').append(`<div style="text-align:center;background:#fff"><img css="w-100" src="${emptyData}" style="height:40vh;width:40vh;"/><p data-trans-nofilterdata class="Resources" style="text-align:center;font-size:13px;padding-bottom:13px"></p></div>`);
+			  $('ul.list-group.w-100').addClass('noItemsDiv');
+			 // $('.page-filter').addClass('noItemsFilter');
+			 $('.page-filter').removeClass('noItemsFilter');
 			}
 			else {
 			  if ((!isLoadMore || isOnload) && listkey == 'projects') {
 				$('ul.list-group.w-100').html(projectsListing);
 			  }
 			  if ((!isLoadMore || isOnload) && isTasks) {
-				if (isAdmin || isEPMO) {
-				  $('ul.list-group.w-100').html(tasksListing);
-				} else {
-				  $('ul.list-group.w-100').html(html);
-				}
+				$('ul.list-group.w-100').removeClass('noItemsDiv');
+				$('.page-filter').removeClass('noItemsFilter');
+				$('ul.list-group.w-100').html(tasksListing);
 			  }
 
 			  if ((!isLoadMore || isOnload) && listkey != 'projects' && listkey != 'tasks') {
@@ -1355,44 +1391,58 @@ window.ListingData = {
 				$('ul.list-group.w-100 #InternalProjects').append(InternalProjectsHtml)
 				$('ul.list-group.w-100 #ExternalProjects').append(ExternalProjectsHtml)
 				// $('ul.list-group.w-100').append(projectsListing); // comment to avoid the issue that when click on show more the data internal shown in external also
-			  } else if ((isLoadMore && !isOnload) && listkey == 'tasks' && (isAdmin || isEPMO)) {
-				$('ul.list-group.w-100').append(tasksListing);
+			  } else if ((isLoadMore && !isOnload) && listkey == 'tasks') {
+				$('ul.list-group.w-100').append(html);
 			  } else if ((isLoadMore && !isOnload) && listkey != 'projects') {
 				$('ul.list-group.w-100').append(html);
 			  }
 			}
 
 			// for tasks
-			if (isTasks && (isAdmin || isEPMO)) {
-			  // to handle my tasks and other tasks in tasks list
-			  $('#relatedTasks').on("click", function (e) {
-				// if (isAdmin || isPortManager) {
-				// $('.task_action_btn').css('display', 'block')
-
+			if (isTasks) {
+				$('a#relatedTasks').off('click.standaloneTasks').on("click.standaloneTasks", function (e) {
+					taskClicked = 'relatedTasks'
+					allTasksClicked = false
+					executiveTasksClicked = false
+					switchTasksListingTab()
+				  });
+				  $('a#executivetasks').off('click.standaloneTasks').on("click.standaloneTasks", function (e) {
+					taskClicked = 'executivetasks'
+					allTasksClicked = false
+					executiveTasksClicked = true
+					switchTasksListingTab()
+				  });
+				  $('a#allTasks').off('click.standaloneTasks').on("click.standaloneTasks", function (e) {
+					taskClicked = 'allTasks'
+					allTasksClicked = true
+					executiveTasksClicked = false
+					switchTasksListingTab()
+				  });
+				  
+			/*  $('a#relatedTasks').off('click.standaloneTasks').on("click.standaloneTasks", function (e) {
 				taskClicked = 'relatedTasks'
 				getNewFilterTask = true
 				allTasksClicked = false
+				executiveTasksClicked = false
 				isViewMoreClicked = false
-				ListingData.preinit()
-				// ListingData.Get_DDL.init();
-
-				// } else {
-				//   $('#ExternalProjects').html('<p style="text-align:center">' + No_Data + '</p>');
-				// }
+				reloadTasksListing()
 			  });
-			  // to handle my tasks and other tasks in tasks list
-			  $('#allTasks').on("click", function (e) {
-
+			  $('a#executivetasks').off('click.standaloneTasks').on("click.standaloneTasks", function (e) {
+				taskClicked = 'executivetasks'
+				getNewFilterTask = true
+				allTasksClicked = false
+				executiveTasksClicked = true
+				isViewMoreClicked = false
+				reloadTasksListing()
+			  });
+			  $('a#allTasks').off('click.standaloneTasks').on("click.standaloneTasks", function (e) {
 				taskClicked = 'allTasks'
 				getNewFilterTask = true
 				allTasksClicked = true
+				executiveTasksClicked = false
 				isViewMoreClicked = false
-				ListingData.preinit()
-
-			  });
-			  // if (!allTasksClicked) {
-			  //   $('#internalProjectCount').html(records.length);
-			  // }
+				reloadTasksListing()
+			  });*/
 			}
 
 			//
@@ -1434,8 +1484,9 @@ window.ListingData = {
 				: (listkey == 'sosanalysis' && sosCode)
 					? '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + '&sosCode=' + encodeURIComponent(sosCode) + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
 				: (USERProjRelated.indexOf(listkey) > -1 && PCODE) 
-					|| (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && !STCODE && listkey != 'tasks') 
-					|| (listkey == 'changerequest') 
+					|| (USERProjRelated.indexOf(listkey) == -1 && !PCODE && !ICODE && !STCODE) 
+					|| (listkey == 'changerequest')
+					|| (listkey == 'tasks') 
 					? '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + PCODE_STRING + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
 					: ICODE 
 					? '<a class="btn-add" href="' + _spPageContextInfo.webAbsoluteUrl + '/SitePages/new.aspx?ListKey=' + listkey + "&ICODE=" + ICODE + '"><span data-trans-create class="Resources"></span><i class="icon-plus"></i></a><button class="btn btn-excel" type="button" onclick="setTimeout(function(){ ListingData.g.ExportToExcel(); }, 2000)""><img src="' + exportExcel + '" /><span data-trans-excelExport class="Resources"></span></button>'
@@ -1634,12 +1685,10 @@ window.ListingData = {
 			changeResources();
 
 			if (isTasks) {
-			  if (taskClicked == 'relatedTasks') {
-				$('.task_action_btn').css('display', 'block')
-
-			  } else if (taskClicked == 'allTasks') {
+			  if (taskClicked == 'allTasks') {
 				$('.task_action_btn').css('display', 'none')
-
+			  } else {
+				$('.task_action_btn').css('display', 'block')
 			  }
 			}
 
@@ -1660,10 +1709,8 @@ window.ListingData = {
 			}
 
 			//
-			if (isAdmin || isEPMO) {
-			  if (isTasks && getNewFilterTask) { // to get relate tasks for every tab
-				ListingData.Get_DDL.init();
-			  }
+			if (isTasks && getNewFilterTask) {
+			  ListingData.Get_DDL.init();
 			  getNewFilterTask = false
 			}
 			//
@@ -1686,7 +1733,8 @@ window.ListingData = {
 
 			isOnload = false;
 			isLoadMore = false;
-			if (originalstate || isLoadMore) // isLoadMore
+			//if (originalstate || isLoadMore) // isLoadMore
+			if (originalstate && !(isTasks && isTaskTabSwitch))
 			  ListingData.Get_DDL.init();
 			$('a.view-more.text-center.py-2').removeClass('loader-action');
 			if (sphttp.g.position == null) {
@@ -1859,6 +1907,8 @@ window.ListingData = {
 
 		if (allTasksClicked) {
 		  PQueryFilteration = '<And><Neq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Neq><In><FieldRef Name="Status" /><Values><Value Type="Choice">Open</Value></Values></In></And>';
+		} else if (executiveTasksClicked) {
+		  PQueryFilteration = getStandaloneTasksCreatedByMeFilter();
 		} else {
 		  PQueryFilteration = '<And><Or><Eq><FieldRef Name="AssignedTo" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Membership Type="CurrentUserGroups"><FieldRef Name="AssignedTo" /></Membership></Or><Eq><FieldRef Name="Status" /><Value Type="Choice">Open</Value></Eq></And>';
 		}
@@ -2258,6 +2308,13 @@ window.ListingData = {
 	//for tasks functions
 	handleids: function (pcode, icode, taskid, tasktype, stageid, ritemid, sourceitemid, wfname, puid, rurl) //rurl,
 	{
+	  if (isStandaloneWorkflowName(wfname)) {
+		window.open(
+		  _spPageContextInfo.webAbsoluteUrl + "/SitePages/View.aspx?ListKey=tasks&IID=" + taskid,
+		  "_self"
+		);
+		return;
+	  }
 
 	  if (wfname == 'Project') {
 		curstage_org = User_Stages_Data_Request.g.StagesArray.filter(function (obj) {
@@ -2326,7 +2383,7 @@ window.ListingData = {
 			keyNameParams = 'sos'
 		  } else if (wfname == 'VROActualKPI' || wfname == 'MSActualKPI' || wfname == 'LMSActualKPI') {
 			keyNameParams = 'mainkpi'
-		  } else if (wfname == 'MSActualBenefit') {
+		  } else if (wfname == 'MSActualBenefit' || wfname == 'InitiativeBenefits') {
 			keyNameParams = 'benefits'
 		  } else if (wfname == 'VROCreateKPI' || wfname == 'EPMOCreateKPI' || wfname == 'LMSCreateKPI') {
 			keyNameParams = 'mainkpi'
@@ -3069,6 +3126,8 @@ window.ListingData = {
 		if (!isRoleDataLevelAccess) {
 		  $('.btn-toolbar.mb-2.mb-md-0.mx-2.page-filter').append(forfilterQuery);
 		}
+
+		if (!isTaskTabSwitch) {
 		//End of filters when click in clear button inside ddls
 		$("body").on('click', 'button.clear-filter', function (e) {
 		  e.stopPropagation();
@@ -3362,9 +3421,16 @@ window.ListingData = {
 			$('#clearAllFilter').prop('disabled', true);
 		  }
 		});
+	}
+
+	if ($('.page-filter .dropdown-menu').find('input:checkbox:checked').length == 0) {
+		$('#clearAllFilter').prop('disabled', true);
+	  }
+	  
 
 		$('.dropdown-menu label input[type="checkbox"][value="' + No_Data + '"]').parent().remove();
 		originalstate = false; //not in original state anymore
+		isTaskTabSwitch = false;
 	  }
 
 	}
@@ -3717,23 +3783,8 @@ var Get_ExcelValues = {
 				// datetouse2 = datetouse[1] + '/' + datetouse[0] + '/' + datetouse[2] + '<span style=\'display:none\'>:::' + timezone + ':::</span>';
 			  }
 			  record[excelInternalFieldsNames[i]] = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? No_Data : datetouse2;
-			} else if (Listing_Info[i].type == "picker") {
-			  var pemail = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? No_Data : oListItem.get_item(excelInternalFieldsNames[i]).get_lookupValue();
-			  record[excelInternalFieldsNames[i]] = pemail;
-			}
-			else if (Listing_Info[i].type == "multipicker") {
-
-			  var pemail = (oListItem.get_item(excelInternalFieldsNames[i]) == null) ? No_Data : oListItem.get_item(excelInternalFieldsNames[i]);
-			  var userItems = [];
-			  if (pemail != No_Data) {
-				pemail.forEach(function (element) {
-				  userItems.push(element.get_lookupValue());
-				})
-				record[excelInternalFieldsNames[i]] = userItems.join(", ");
-			  }
-			  else {
-				record[excelInternalFieldsNames[i]] = No_Data;
-			  }
+			} else if (Listing_Info[i].type == "picker" || Listing_Info[i].type == "multipicker") {
+			  record[excelInternalFieldsNames[i]] = getListingUserDisplayValue(oListItem.get_item(excelInternalFieldsNames[i]));
 			}
 			else if (Listing_Info[i].type == "checkbox") {
 			  var value = oListItem.get_item(excelInternalFieldsNames[i]) ? 'نعم' : 'لا';

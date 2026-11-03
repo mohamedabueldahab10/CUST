@@ -74,6 +74,7 @@ var UserRole,
   isPManager = false,
   isInManager = false,
   isInOwner = false,
+  isBenefitOwner = false,
   isBusinessOwner = false,
   isSectionHead = false,
   isSectorHead = false,
@@ -108,6 +109,8 @@ var UserRole,
   isMinisterAssistant = false,
   isViceMinister = false,
   isEPMO = false,
+  isProcExDeptManager = false,
+  isProcExDept = false,
   isDeptOrgCommiette = false,
   isDeptOrgCommiettePH1 = false,
   isDeptOrgCommiettePH2 = false,
@@ -276,6 +279,7 @@ var UserRole,
   Edit_Access = [],
   Delete_Access = [];
 
+  window.OpenAccessLists = ["referencecosts"];
 var RequestorTeam = "Requestor Team";
 var NIssues = 0,
   NTasks = 0,
@@ -425,6 +429,8 @@ window.WorkflowTranslate = [
   { wfName: "VROCRInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "EPMOCRInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "LMSCRInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
+  
+  { wfName: "ReferenceCosts", nameAr: "بند التكلفة المرجعية", nameEn: "Reference Costs" },
 ];
 //
 
@@ -1917,6 +1923,7 @@ window.userCalls = {
           "strategiccalendar",
           "measurementcyclesupport",
           "changerequests",
+          "changeitems",
           "changeitemapprovalcontrol",
           "cryearlycalendar"
         ];
@@ -1964,7 +1971,78 @@ window.userCalls = {
         // Delete_Access = AllListKeys;
         // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;
-      
+        case "ProcExDept":
+          USER_HomePage = "Listing.aspx?ListKey=referencecosts";
+          $("body").append(
+            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+          );
+          isProcExDept = true;
+          ChartHide =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+          ChartHideForInitiatives =
+            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+  
+          ar_UserRole = "فريق إدارة تميز المشتريات";
+          en_UserRole = "Procurement Excellence Department Team";
+  
+          Create_Access = ["referencecosts"];
+          Read_Access = [
+            "referencecosts",
+            "projects",
+            "deliverables",
+            "milestones",
+            "issues",
+            "risks",
+            "mom",
+            "closureform",
+            "lessonslearned",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "contracts",
+           "projecthome.aspx"
+          ] ;
+          Read_Access = Read_Access.concat(SP_Page_Name);
+          Edit_Access = ["referencecosts"];
+          Delete_Access = ["referencecosts"];
+          break;
+        case "ProcExDeptManager":
+            USER_HomePage = "Listing.aspx?ListKey=referencecosts";
+            $("body").append(
+              "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+            );
+            isProcExDeptManager = true;
+            ChartHide =
+              ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+            ChartHideForInitiatives =
+              ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+              
+              ar_UserRole = "مدير إدارة تميز المشتريات";
+              en_UserRole = "Procurement Excellence Department Manager";
+    
+          Create_Access = ["referencecosts"];
+          Read_Access = [
+            "referencecosts",
+            "projects",
+            "deliverables",
+            "milestones",
+            "issues",
+            "risks",
+            "mom",
+            "closureform",
+            "lessonslearned",
+            "coc",
+            "stakeholders",
+            "exchangeschema",
+            "communicationplans",
+            "contracts",
+             "projecthome.aspx"
+          ];
+          Read_Access = Read_Access.concat(SP_Page_Name);
+          Edit_Access = ["referencecosts"];
+          Delete_Access = ["referencecosts"];
+            break;
         case "Minister":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
@@ -1997,10 +2075,10 @@ window.userCalls = {
         en_UserRole = "Sector Head of ";
 
         //CRUD
-        Create_Access = [];
+        Create_Access = ["tasks"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        Edit_Access = [];
+        Edit_Access = ["tasks"];
         break;
         case "EngineerPMO":
           USER_HomePage = "Listing.aspx?ListKey=engineeringprojects";
@@ -2112,7 +2190,8 @@ window.userCalls = {
           "nesteddeliverables",
           "changeRequests.aspx",
           "changerequests",
-          "delegations"
+          "delegations",
+          "referencecosts"
         ];
         Edit_Access = [
           "projects",
@@ -2187,7 +2266,18 @@ window.userCalls = {
           "home.aspx",
           "tasks",
           "projecthome.aspx",
-          "delegations"
+          "delegations",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "initiativeobjectives",
+          "initiativestakeholders",
+          "initiativetasks",
+          "closureinitiative",
+          "benefits",
         ];
         Edit_Access = ["projecthome.aspx","delegations"];
         Delete_Access = [];
@@ -2480,6 +2570,44 @@ window.userCalls = {
 
         // Delete_Access = AllListKeys;
         // Delete_Access = Delete_Access.concat(SP_Page_Name);
+        break;
+
+      case "BenefitOwner":
+        USER_HomePage = "InitiativesMain.aspx";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isBenefitOwner = true;
+        $("div#s4-ribbonrow, div#O365_MainLink_Settings_container").remove();
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "مالك المنفعة";
+        en_UserRole = "Benefit Owner";
+        Create_Access = ["delegations"];
+        Read_Access = [
+          "benefits",
+          "benefitmatrix",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "initiatives",
+          "InitiativeHome.aspx",
+          "initiativesmain.aspx",
+          "tasks",
+          "TaskHistory.aspx",
+          "documents",
+          "delegations",
+        ];
+        Edit_Access = [
+          "benefits",
+          "benefitmatrix",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "delegations",
+        ];
+        Delete_Access = [];
         break;
 
       case "GDSP":
@@ -4484,10 +4612,10 @@ window.userCalls = {
         en_UserRole = "SubSector Head of ";
 
         //CRUD
-        Create_Access = [];
+        Create_Access = ["tasks"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        Edit_Access = [];
+        Edit_Access = ["tasks"];
         break;
       case "GeneralManager":
         isGeneralManager = true;
@@ -4500,10 +4628,10 @@ window.userCalls = {
         en_UserRole = "General Manager of ";
         USER_HomePage = "InitiativesMain.aspx";
         //CRUD
-        Create_Access = [];
+        Create_Access = ["tasks"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        Edit_Access = [];
+        Edit_Access = ["tasks"];
         break;
 
       case "BITeam":
@@ -5062,7 +5190,25 @@ window.userCalls = {
         return name !== "mainkpiissues";
       });
     }
-
+    
+    (window.OpenAccessLists || []).forEach(function (name) {
+      name = String(name).toLowerCase();
+      if (Create_Access.indexOf(name) === -1) Create_Access.push(name);
+      if (Read_Access.indexOf(name) === -1) Read_Access.push(name);
+      if (Edit_Access.indexOf(name) === -1) Edit_Access.push(name);
+      if (Delete_Access.indexOf(name) === -1) Delete_Access.push(name);
+      });
+      if (currentUserRole != "EPMO" && currentUserRole != "SPMO") {
+        Delete_Access = Delete_Access.filter(function (name) {
+          return name !== "risks" && name !== "issues";
+        });
+      }
+      if (currentUserRole != "EPMO") {
+        Delete_Access = Delete_Access.filter(function (name) {
+          return name !== "initiativerisks" && name !== "initiativeissues";
+        });
+      }
+      
     switch (
       true //Create Access
     ) {
@@ -5149,6 +5295,7 @@ window.userCalls = {
     ) {
       case (USERisEdit || USERisView) &&
         Edit_Access.indexOf(USERlistkey.toLowerCase()) == -1 &&
+        USERlistkey.toLowerCase() != "tasks" &&
         !USERisWF:
         if (USERisEdit) {
           //on edit
@@ -5576,7 +5723,8 @@ window.userCalls = {
             },
           ],
         },
-      }, {
+      },
+       {
         Role: "EngineerDesignManagers",
         groupsName: ["EngineerDesignManagers"],
         dataFilter: {
@@ -5610,6 +5758,33 @@ window.userCalls = {
               listName: "localholidays",
             
             },
+          ],
+        },
+      },
+      {
+        Role: "ProcExDept",
+        groupsName: ["ProcExDept"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "referencecosts",
+            
+            }
+          ],
+        },
+      },
+      {
+        Role: "ProcExDeptManager",
+        groupsName: ["ProcExDeptManager"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "referencecosts",
+            
+            },
+           
           ],
         },
       },
@@ -5910,6 +6085,80 @@ window.userCalls = {
                   // parentRelationField: "Title",
                   // RelationField: "InitiativeCode",
                   // RelationFieldType: "Text",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Delegations",
+              accessConditions: [
+                {
+                  field: "Author",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        Role: "BenefitOwner",
+        groupsName: ["Benefit Owners"],
+        dataFilter: {
+          hierarchies: [
+            {
+              level: 1,
+              listName: "Benefits",
+              accessConditions: [
+                {
+                  field: "Owner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "Initiatives",
+                parentRelationField: "InitiativeCode",
+                RelationField: "Title",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
+                },
+              },
+            },
+            {
+              level: 1,
+              listName: "Benefits",
+              accessConditions: [
+                {
+                  field: "Owner",
+                  type: "LoggedInUser",
+                  values: [""],
+                  targetPages: [],
+                },
+              ],
+              subRelation: {
+                level: 2,
+                listName: "BenefitMetrics",
+                parentRelationField: "Title",
+                RelationField: "RelatedBenefit",
+                RelationFieldType: "Text",
+                subRelation: {
+                  level: 3,
+                  listName: "",
                 },
               },
             },
@@ -9287,11 +9536,64 @@ window.userCalls = {
         var allowInitiativeBenefitsWfEdit =
           shouldAllowInitiativeBenefitsWfFieldEdit();
 
+        function shouldAllowPeriodTypeWfEdit($cfield) {
+          if (!$cfield || !$cfield.find("#PeriodType").length) return false;
+          if (
+            window.BenefitsWeightGuard &&
+            BenefitsWeightGuard.canCurrentUserEditWeight
+          ) {
+            return BenefitsWeightGuard.canCurrentUserEditWeight();
+          }
+          if (
+            typeof End_Workflow !== "undefined" &&
+            End_Workflow.canEditBenefitPeriodType
+          ) {
+            return End_Workflow.canEditBenefitPeriodType();
+          }
+          return false;
+        }
+
+        function shouldAllowWeightWfEdit($cfield) {
+          if (!$cfield || !$cfield.find("#Weight").length) return false;
+          if (
+            window.BenefitsWeightGuard &&
+            BenefitsWeightGuard.canCurrentUserEditWeight
+          ) {
+            return BenefitsWeightGuard.canCurrentUserEditWeight();
+          }
+          if (typeof End_Workflow !== "undefined" && End_Workflow.canEditBenefitWeight) {
+            return End_Workflow.canEditBenefitWeight();
+          }
+          return false;
+        }
+
         $(".section-container .CFIELD").each(function () {
           $(this).val($(this).attr("data-groups"));
           var dataGroups = $(this).attr("data-groups");
           var dataGroupsArray = dataGroups ? dataGroups.split(",") : []; // to avoid the error in console
           //change Groups with currentUserGroupArr to render the fields based on  role group not all groups
+
+          if ($(this).find("#PeriodType").length) {
+            if (shouldAllowPeriodTypeWfEdit($(this))) {
+              var $period = $(this).find("#PeriodType");
+              $period.prop("disabled", false).removeAttr("disabled");
+              $period.find("option").not('[value=""]').prop("disabled", false);
+              return;
+            }
+            if (
+              typeof isEdit !== "undefined" &&
+              isEdit &&
+              !isAdmin
+            ) {
+              $(this).find("#PeriodType").prop("disabled", true);
+              return;
+            }
+          }
+
+          if (shouldAllowWeightWfEdit($(this))) {
+            $(this).find("#Weight").prop("disabled", false).removeAttr("disabled");
+            return;
+          }
 
           if (
             !allowInitiativeBenefitsWfEdit &&
@@ -9334,6 +9636,11 @@ window.userCalls = {
           //     $(this).find('*').attr('disabled', true);
           // };
         });
+        if (window.BenefitsWeightGuard) {
+          BenefitsWeightGuard.applyWeightEditAccess();
+          BenefitsWeightGuard.applyRemainingMax();
+          BenefitsWeightGuard.bindClamp();
+        }
         if (
           typeof ListInfo !== "undefined" &&
           ListInfo.g &&
@@ -11426,21 +11733,31 @@ var Tasks_Info_Request_User = {
       var tasktitlearr = [];
       tasksID = oListItem.get_item("ID") || No_Data;
       delegateMessage = oListItem.get_item("DelegationReason");
+      var isStandaloneTask =
+        !wfname || wfname === "null" || wfname === "undefined";
+      var standaloneTaskName = "";
+      try {
+        standaloneTaskName = oListItem.get_item("Name") || "";
+      } catch (e) {
+        standaloneTaskName = "";
+      }
      // GetSector_Info.init();
       
       var WfRelatedTask = "";
-      WorkflowTranslate.forEach((el) => {
-        if (el.wfName.toLowerCase() == wfname.toLowerCase()) {
-          if (
-            localStorage.getItem("lng") == null ||
-            localStorage.getItem("lng") == "ar"
-          ) {
-            WfRelatedTask = el.nameAr;
-          } else {
-            WfRelatedTask = el.nameEn;
+      if (!isStandaloneTask) {
+        WorkflowTranslate.forEach((el) => {
+          if (el.wfName && wfname && el.wfName.toLowerCase() == wfname.toLowerCase()) {
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              WfRelatedTask = el.nameAr;
+            } else {
+              WfRelatedTask = el.nameEn;
+            }
           }
-        }
-      });
+        });
+      }
 
       // console.log(RelatedItemName, "RelatedItemName ");
 
@@ -11452,7 +11769,16 @@ var Tasks_Info_Request_User = {
         delegateMessage = stripTags(delegateMessage);
       }
 
-      if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
+      if (isStandaloneTask) {
+        tasktitle = standaloneTaskName || RelatedItemName || tasktitle;
+        RelatedItemName = RelatedItemName || standaloneTaskName || tasktitle;
+        if (!taskname || taskname === No_Data) {
+          taskname = standaloneTaskName || RelatedItemName || tasktitle;
+        }
+        if (!ritemid) {
+          ritemid = tasksID;
+        }
+      } else if (localStorage.getItem("Dynamo_Tasks Configuration") != null) {
         //
         tasktitlearr = JSON.parse(
           localStorage.getItem("Dynamo_Tasks Configuration") || "[]"
@@ -11897,6 +12223,16 @@ var Tasks_Info_Request_User = {
       puid,
       rurl //rurl,
     ) {
+      if (!wfname || wfname === "null" || wfname === "undefined") {
+        window.open(
+          _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/View.aspx?ListKey=tasks&IID=" +
+            taskid,
+          "_self"
+        );
+        return;
+      }
+
       // Handle Change Requests workflows directly without needing rurl
       if (
         wfname == "StrategicCR" ||
@@ -12241,6 +12577,9 @@ var Tasks_Info_Request_User = {
             wfname == "OperationCR"
           ) {
             keyNameParams = "changerequest";
+          }
+          else if (wfname == "ReferenceCosts") {
+            keyNameParams = "referencecosts";
           }
           switch (tasktype) {
             case "SubmitProject":

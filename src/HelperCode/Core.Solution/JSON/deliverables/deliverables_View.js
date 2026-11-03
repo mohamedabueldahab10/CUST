@@ -100,6 +100,15 @@ var Information_Form = [
         DisplayNameEn: 'Invoice Date',
         type: 'datetime',
       },
+      //ReferenceCostItemId
+      {
+        InternalName: 'ReferenceCostItemId',
+        DisplayName: 'بند التكلفة المرجعية',
+        DisplayNameEn: 'Reference Cost Item Id',
+        type: 'number',
+        state: 'disabled',
+        display: 'none',
+      },
       // {
       //   InternalName: 'Status',
       //   DisplayName: 'الحالة',

@@ -284,6 +284,15 @@ var Information_Form = [
         valfieldkey: 'Title', // value in dropdown        
         //validation: "required",
       },
+      // ReferenceCostId
+      {
+        InternalName: 'ReferenceCostItemId',
+        DisplayName: 'بند التكلفة المرجعية',
+        DisplayNameEn: 'Reference Cost Item Id',
+        type: 'number',
+        state: 'disabled',
+        display: 'none',
+      },
       // {
       //   InternalName: 'RelatedInitiativeDeliverable',
       //   DisplayNameEn: 'Related Initiative Deliverable',

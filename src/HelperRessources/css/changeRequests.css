@@ -6,7 +6,23 @@
     border-radius: 12px;
     padding: 1rem 1.5rem;
     box-shadow: 0 2px 12px 0 #B9C4DBA8;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "HRSD-FONT", "LTBukra", "Effra", "Segoe UI", Tahoma, sans-serif;
+}
+
+.changeRequests-container .exportPdfBtnContainer.cr-export-pdf {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 1rem;
+    width: 100%;
+}
+
+.ar .changeRequests-container .exportPdfBtnContainer.cr-export-pdf {
+    justify-content: flex-end;
+}
+
+.en .changeRequests-container .exportPdfBtnContainer.cr-export-pdf {
+    justify-content: flex-start;
 }
 
 .changeRequests-container .row {
