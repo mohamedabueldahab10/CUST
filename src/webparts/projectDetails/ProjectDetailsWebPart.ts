@@ -23,7 +23,7 @@ export interface IProjectDetailsWebPartProps {
   description: string;
 }
 const isArabic = (localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar");
-const logo = isArabic ? require('../../HelperRessources/img/main-logo.png') : require('../../HelperRessources/img/main-logo-en.png');
+const logo = isArabic ? require('../../HelperRessources/img/main-logo.svg') : require('../../HelperRessources/img/main-logo-en.svg');
 const home: any = require('../../HelperRessources/img/nav-home.png');
 const sections: any = require('../../HelperRessources/img/nav-sections.png');
 const initiatives: any = require('../../HelperRessources/img/nav-initiatives.png');

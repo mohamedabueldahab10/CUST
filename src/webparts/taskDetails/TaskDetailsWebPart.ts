@@ -25,7 +25,7 @@ export interface ITaskDetailsWebPartProps {
   description: string;
 }
 const isArabic = (localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar");
-const logo = isArabic ? require('../../HelperRessources/img/main-logo.png') : require('../../HelperRessources/img/main-logo-en.png');
+const logo = isArabic ? require('../../HelperRessources/img/main-logo.svg') : require('../../HelperRessources/img/main-logo-en.svg');
 const navHome: any = require('../../HelperRessources/img/nav-home.png');
 const navSection: any = require('../../HelperRessources/img/nav-sections.png');
 const navInitiatives: any = require('../../HelperRessources/img/nav-initiatives.png');

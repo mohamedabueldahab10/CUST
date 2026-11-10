@@ -14,7 +14,7 @@ export interface IOperationalKpisWebPartProps {
 }
 const bell: any = require('../../HelperRessources/img/icon-bell.svg');
 const isArabic = (localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar");
-const logo = isArabic ? require('../../HelperRessources/img/main-logo.png') : require('../../HelperRessources/img/main-logo-en.png');
+const logo = isArabic ? require('../../HelperRessources/img/main-logo.svg') : require('../../HelperRessources/img/main-logo-en.svg');
 export default class OperationalKpisWebPart extends BaseClientSideWebPart<IOperationalKpisWebPartProps> {
 
   public render(): void {

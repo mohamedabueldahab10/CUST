@@ -21,7 +21,7 @@ export interface IProjectcomplianceWebPartProps {
 }
 
 const isArabic = (localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar");
-const logo = isArabic ? require('../../HelperRessources/img/main-logo.png') : require('../../HelperRessources/img/main-logo-en.png');
+const logo = isArabic ? require('../../HelperRessources/img/main-logo.svg') : require('../../HelperRessources/img/main-logo-en.svg');
 const bell: any = require('../../HelperRessources/img/icon-bell.svg');
 const clearfilter: any = require('../../HelperRessources/img/funnel_remove.png');
 

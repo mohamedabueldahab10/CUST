@@ -25,7 +25,7 @@ var UI_Ready =
     },
     init: function()
     {
-        const logo = require('../../../HelperRessources/img/main-logo.png');
+        const logo = require('../../../HelperRessources/img/main-logo.svg');
 
         $('div#leftRegion').html('<div class="Logo"><a href="/sites/SPM"><img class="img-Logo" src="'+logo+'"></a></div>');
         $('div#leftRegion').show();

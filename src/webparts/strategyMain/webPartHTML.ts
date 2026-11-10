@@ -1,8 +1,8 @@
 const isArabic =
   localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
 const logo: any = isArabic
-  ? require("../../HelperRessources/img/main-logo.png")
-  : require("../../HelperRessources/img/main-logo-en.png");
+  ? require("../../HelperRessources/img/main-logo.svg")
+  : require("../../HelperRessources/img/main-logo-en.svg");
 const bell: any = require("../../HelperRessources/img/icon-bell.svg");
 
 const pageBody: string = `<div class="navbar page-nav px-5 py-0">
