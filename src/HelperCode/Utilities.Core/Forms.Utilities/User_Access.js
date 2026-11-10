@@ -991,10 +991,10 @@ window.userCalls = {
         ar_UserRole = "إدارة الجودة والتقارير";
         en_UserRole = "PerformanceReportsQA";
         //CRUD
-        Create_Access = ["sosanalysis", "initiativesanalysis"];
+        Create_Access = ["sosanalysis"];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        Edit_Access = ["sosanalysis", "initiativesanalysis"];
+        Edit_Access = ["sosanalysis"];
         Delete_Access = [];
         break;
       case "SAAP":
@@ -1806,7 +1806,8 @@ window.userCalls = {
           "contracts",
           "sos",
           "mainkpi",
-          "monthlyreport"
+          "monthlyreport",
+          "initiativesanalysis",
         ];
         CreateChangeRequest_Access = [
           "initiatives",
@@ -2333,7 +2334,8 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "changerequests"  ,
-          "delegations"
+          "delegations",
+          "initiativesanalysis",
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = [
@@ -2378,6 +2380,7 @@ window.userCalls = {
           "projecthome.aspx",
           "delegations",
           "Targets.aspx",
+          "initiativesanalysis",
         ];
         Edit_Access = [
           "initiatives",
@@ -2408,7 +2411,8 @@ window.userCalls = {
           "exchangeschema",
           "communicationplans",
           "contracts",
-          "delegations"
+          "delegations",
+          "initiativesanalysis",
           //"changerequest",
         ];
         Delete_Access = [
@@ -2841,7 +2845,6 @@ window.userCalls = {
         Create_Access = [
           "mainkpianalysis",
           "sosanalysis",
-          "initiativesanalysis",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "changerequest",
@@ -2877,7 +2880,6 @@ window.userCalls = {
           "mainkpianalysis",
           "mainkpiissues",
           "sosanalysis",
-          "initiativesanalysis",
           "benefitmetrics",
           "BenefitMetrics.aspx",
           // "changerequest",
@@ -2887,7 +2889,6 @@ window.userCalls = {
           "mainkpianalysis",
           "mainkpiissues",
           "sosanalysis",
-          "initiativesanalysis"
         ];
         break;
 
