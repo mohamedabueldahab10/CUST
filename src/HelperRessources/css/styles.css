@@ -7719,6 +7719,11 @@ span.statuscolorstat28 {
     padding: 8px 12px 4px;
 }
 
+.sidebar .main-logo a img {
+    opacity: 1;
+    filter: none;
+}
+
 .sidebar .nav > .nav-leaf,
 .sidebar .nav > .nav-group {
     background: #ffffff;

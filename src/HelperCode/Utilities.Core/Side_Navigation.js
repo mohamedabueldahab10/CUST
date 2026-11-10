@@ -127,6 +127,7 @@ var Custom_Nav_Request_Root = {
 
                     LinkItem += '</ul></li>';
                 } else {
+                    // Leaf headers (no children): no chevron — should not look like a dropdown
                     LinkItem +=
                         '<li class="nav-item nav-leaf">' +
                         '<a class="nav-link ' + a.active + '" href="' + a.link + '">' +
@@ -135,7 +136,6 @@ var Custom_Nav_Request_Root = {
                         '<i class="' + a.icon + '"></i>' +
                         '</div>' +
                         '<span class="nav-link-text px-2">' + a.title + '</span>' +
-                        '<i class="' + chevronIcon + '"></i>' +
                         '</div>' +
                         '</a>' +
                         '</li>';
