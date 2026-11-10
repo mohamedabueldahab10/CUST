@@ -7375,7 +7375,7 @@ window.Export_CR_PDF = {
     }
     return (
       Export_CR_PDF.getStyleLibraryBase() +
-      (isAr ? "main-logo.svg" : "main-logo-en.svg")
+      (isAr ? "main-logo.png" : "main-logo-en.png")
     );
   },
 

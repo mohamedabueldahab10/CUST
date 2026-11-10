@@ -18409,7 +18409,7 @@ window.Export_PDF = {
         return src;
       }
     }
-    var file = isAr ? "main-logo.svg" : "main-logo-en.svg";
+    var file = isAr ? "main-logo.png" : "main-logo-en.png";
     return Export_PDF.getPDFStyleLibraryBase() + file;
   },
 

@@ -2833,7 +2833,7 @@ window.Edit_Data_Request = {
   g: {
     retryCount: 0,
     append: function () {
-      const logo = require("../../../HelperRessources/img/main-logo.svg");
+      const logo = require("../../../HelperRessources/img/main-logo.png");
       $(".o365cs-nav-header16 .o365cs-nav-o365Branding").html(
         '<div class="Logo"><a href=""><img class="img-Logo" src="' +
           logo +
@@ -5630,7 +5630,7 @@ window.View_Data_Request = {
   g: {
     retryCount: 0,
     append: function () {
-      const logo = require("../../../HelperRessources/img/main-logo.svg");
+      const logo = require("../../../HelperRessources/img/main-logo.png");
 
       $(".o365cs-nav-header16 .o365cs-nav-o365Branding").html(
         '<div class="Logo"><a href=""><img class="img-Logo" src="' +
