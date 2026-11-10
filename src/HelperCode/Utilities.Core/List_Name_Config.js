@@ -904,6 +904,15 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
+		initiativesanalysis: "InitiativesAnalysis",
+		ListingTitle: "تحليل أداء المبادرات",
+		FormTitle: "تحليل أداء المبادرة",
+		TitleEn: "Initiative Performance Analysis",
+		projnav: "Project Navigation",
+		projectrelated: false,
+		subfolder: true,
+	},
+	{
         referencecosts: "Reference Costs",
         ListingTitle: "التكاليف المرجعية",
         FormTitle: "التكاليف المرجعية",
