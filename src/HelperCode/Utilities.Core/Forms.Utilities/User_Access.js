@@ -192,8 +192,13 @@ var UserRole,
     window.location.href.toLowerCase().indexOf("taskdetails") > -1,
   USERlistkey =
     window.location.href.toLowerCase().indexOf("listkey=") > -1
-      ? window.location.href.split("ListKey=")[1].split("&")[0]
+      ? window.location.href.split(/ListKey=/i)[1].split("&")[0]
       : "",
+  // Normalize common typo/alias so access checks match List_Name_Config key
+  USERlistkey =
+    String(USERlistkey || "").toLowerCase() === "initiativeanalysis"
+      ? "initiativesanalysis"
+      : String(USERlistkey || "").toLowerCase(),
   // USERisProjectHome =
   //   window.location.href.toLowerCase().indexOf("/projecthome.aspx") > -1,
   // USERisInitiativeHome =

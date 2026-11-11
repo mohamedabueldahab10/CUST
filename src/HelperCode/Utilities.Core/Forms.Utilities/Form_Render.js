@@ -97,13 +97,17 @@ if (window.location.href.indexOf("IID=") > -1) {
   IID = window.location.href.split("IID=")[1].split("&")[0];
 }
 if (window.location.href.indexOf("ListKey") > -1) {
-  listkey = window.location.href.split("ListKey=")[1].split("&")[0];
+  listkey = window.location.href.split(/ListKey=/i)[1].split("&")[0];
+  listkey =
+    String(listkey || "").toLowerCase() === "initiativeanalysis"
+      ? "initiativesanalysis"
+      : String(listkey || "").toLowerCase();
   isPrjRelated = USERProjRelated.indexOf(listkey) > -1 ? true : false;
   for (var i = 0; i < ListArray.length; i++) {
     var obj = ListArray[i];
     if (obj.subfolder) KeysFolders.push(Object.keys(obj)[0]);
     for (var key in obj) {
-      if (key == window.location.href.split("ListKey=")[1].split("&")[0]) {
+      if (key == listkey) {
         SP_ListName = obj[key];
         if (
           localStorage.getItem("lng") == null ||
@@ -135,14 +139,11 @@ if (window.location.href.indexOf("PCODE=") > -1) {
 }
 //determinig json file name
 if (isNew) {
-  JSON_File_Name =
-    window.location.href.split("ListKey=")[1].split("&")[0] + "_New.js";
+  JSON_File_Name = listkey + "_New.js";
 } else if (isEdit) {
-  JSON_File_Name =
-    window.location.href.split("ListKey=")[1].split("&")[0] + "_Edit.js";
+  JSON_File_Name = listkey + "_Edit.js";
 } else if (isView) {
-  JSON_File_Name =
-    window.location.href.split("ListKey=")[1].split("&")[0] + "_View.js";
+  JSON_File_Name = listkey + "_View.js";
 }
 //calling relevant function
 var checkStatusHtml = setInterval(function () {
