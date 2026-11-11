@@ -268,7 +268,7 @@ window.FormsConfigurationsForDeletionsRestoring = {
             WorkflowNames: "",
             RelatedListNames: [],
         },
-        initiativeanalysis: {
+        initiativesanalysis: {
             DisplayListName: "InitiativesAnalysis",
             WorkflowNames: "",
             RelatedListNames: [],

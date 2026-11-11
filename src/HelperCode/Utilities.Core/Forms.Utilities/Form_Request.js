@@ -4672,10 +4672,10 @@ window.View_Data_Request = {
             '<div class="initiative-links-wrapper" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;">' +
               '<a class="linkmsg alert initiative-link-item" href="' +
                 _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/Listing.aspx?ListKey=initiativeanalysis&ICODE=" +
+                "/SitePages/Listing.aspx?ListKey=initiativesanalysis&ICODE=" +
                 encodeURIComponent(initiativeCodeForLinks) +
                 '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(20,130,130,0.18);color:#148282;border:1px solid rgba(20,130,130,0.4);">' +
-                '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-initiativeanalysislinktext class="Resources"></span></a>' +
+                '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-initiativesanalysislinktext class="Resources"></span></a>' +
             "</div>"
           );
         }
