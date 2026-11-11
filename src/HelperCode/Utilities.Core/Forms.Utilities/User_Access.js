@@ -1807,7 +1807,7 @@ window.userCalls = {
           "sos",
           "mainkpi",
           "monthlyreport",
-          "initiativesanalysis",
+          "initiativeanalysis",
         ];
         CreateChangeRequest_Access = [
           "initiatives",
@@ -2335,7 +2335,7 @@ window.userCalls = {
           "changerequest",
           "changerequests"  ,
           "delegations",
-          "initiativesanalysis",
+          "initiativeanalysis",
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = [
@@ -2380,7 +2380,7 @@ window.userCalls = {
           "projecthome.aspx",
           "delegations",
           "Targets.aspx",
-          "initiativesanalysis",
+          "initiativeanalysis",
         ];
         Edit_Access = [
           "initiatives",
@@ -2412,7 +2412,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "delegations",
-          "initiativesanalysis",
+          "initiativeanalysis",
           //"changerequest",
         ];
         Delete_Access = [
@@ -2655,7 +2655,7 @@ window.userCalls = {
           "mainkpianalysis",
           "mainkpiissues",
           "sosanalysis",
-          "initiativesanalysis",
+          "initiativeanalysis",
           "sos",
           "tasks",
           "initiatives",
@@ -2758,7 +2758,7 @@ window.userCalls = {
           "mainkpianalysis",
           "mainkpiissues",
           "sosanalysis",
-          "initiativesanalysis",
+          "initiativeanalysis",
           "sos",
           "tasks",
           "initiatives",
@@ -2858,7 +2858,7 @@ window.userCalls = {
           "goalstrategy",
           "sos",
           "sosanalysis",
-          "initiativesanalysis",
+          "initiativeanalysis",
           "tasks",
           "mainkpi",
           "mainkpianalysis",
@@ -4826,7 +4826,7 @@ window.userCalls = {
           "mainkpianalysis",
           "mainkpiissues",
           "sosanalysis",
-          "initiativesanalysis",
+          "initiativeanalysis",
           "sos",
           "goalstrategy",
           "tasks",
