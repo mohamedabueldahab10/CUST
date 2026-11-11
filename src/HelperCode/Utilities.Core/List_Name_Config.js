@@ -904,7 +904,7 @@ var ListArray = [
 		subfolder: true,
 	},
 	{
-		initiativeanalysis: "InitiativesAnalysis",
+		initiativesanalysis: "InitiativesAnalysis",
 		ListingTitle: "تحليل أداء المبادرات",
 		FormTitle: "تحليل أداء المبادرة",
 		TitleEn: "Initiative Performance Analysis",
