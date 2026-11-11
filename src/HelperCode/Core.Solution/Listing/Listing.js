@@ -116,8 +116,11 @@ var excelListingQuery = "", excelListingName = "", excelInternalFieldsNames = ""
 
 //get ListKey and PCODE from URL
 var isWFs = window.location.href.indexOf('&WFs') > -1 ? '&WFs' : '',
-  listkey = window.location.href.split('ListKey=')[1].split('&')[0],
+  listkey = window.location.href.split(/ListKey=/i)[1].split('&')[0],
   isTasks = listkey == 'tasks' ? true : false;
+listkey = String(listkey || '').toLowerCase() === 'initiativeanalysis'
+  ? 'initiativesanalysis'
+  : String(listkey || '').toLowerCase();
 if (window.location.href.includes("PCODE")) {
   PCODE = window.location.href.split('PCODE=')[1].split('&')[0];
   PCODE_STRING = '&PCODE=' + PCODE;
@@ -141,7 +144,7 @@ if (window.location.href.includes("sosCode")) {
 for (var i = 0; i < ListArray.length; i++) {
   var obj = ListArray[i];
   for (var key in obj) {
-	if (key == window.location.href.split('ListKey=')[1].split('&')[0]) {
+	if (key == listkey) {
 	  SP_ListName = obj[key];
 	  PageTitle = obj['ListingTitle'];
 	}
@@ -149,7 +152,7 @@ for (var i = 0; i < ListArray.length; i++) {
 }
 
 //create query depend on PCODE
-JSON_File_Name = window.location.href.split('ListKey=')[1].split('&')[0] + '_Listing.js';
+JSON_File_Name = listkey + '_Listing.js';
 
 if (listkey == 'projects' && PCODE != null && PCODE != '') {
   // PCODE_STRING = '&PCODE='+PCODE;
