@@ -83,23 +83,33 @@ var Custom_Nav_Request_Root = {
             }
         });
         var headNavItems = NavItems.filter((v) => (v.type === "Header"));
+        var chevronIcon = isArabicNav ? "fas fa-chevron-left nav-chevron" : "fas fa-chevron-right nav-chevron";
 
         headNavItems.forEach(function (a, i, z) {
             if (a.type == "Header") {
                 var headID = a.id;
                 var newNavItems = NavItems.filter((v) => (v.header === headID)); //get related children
                 if (newNavItems.length) {
+                    var hasActiveChild = newNavItems.some(function (s) {
+                        return s.active === "active";
+                    });
+                    var openClass = hasActiveChild ? " open" : "";
                     LinkItem +=
-                        '<li class="nav-item header">' +
-                        '<span class="nav-link ' + a.active + '">' +
-                        '<div class="d-flex align-items-center">' +
+                        '<li class="nav-group' + openClass + '">' +
+                        '<div class="nav-item header">' +
+                        '<button type="button" class="nav-link nav-parent' +
+                        (a.active ? " " + a.active : "") +
+                        '" aria-expanded="' + (hasActiveChild ? "true" : "false") + '">' +
+                        '<div class="d-flex align-items-center w-100">' +
                         '<div class="nav-icon">' +
                         '<i class="' + a.icon + '"></i>' +
                         '</div>' +
                         '<span class="nav-link-text px-2">' + a.title + '</span>' +
+                        '<i class="' + chevronIcon + '"></i>' +
                         '</div>' +
-                        '</span>' +
-                        '</li>';
+                        '</button>' +
+                        '</div>' +
+                        '<ul class="nav-children list-unstyled mb-0">';
 
                     newNavItems.forEach(function (s, o, x) {
                         LinkItem +=
@@ -114,9 +124,12 @@ var Custom_Nav_Request_Root = {
                             '</a>' +
                             '</li>';
                     });
+
+                    LinkItem += '</ul></li>';
                 } else {
+                    // Leaf headers (no children): no chevron — should not look like a dropdown
                     LinkItem +=
-                        '<li class="nav-item">' +
+                        '<li class="nav-item nav-leaf">' +
                         '<a class="nav-link ' + a.active + '" href="' + a.link + '">' +
                         '<div class="d-flex align-items-center">' +
                         '<div class="nav-icon">' +
@@ -130,6 +143,7 @@ var Custom_Nav_Request_Root = {
             }
             if (i == headNavItems.length - 1) {
                 $(".sidebar-sticky ul.nav.flex-column").html(LinkItem);
+                Custom_Nav_Request_Root.g.bindAccordion();
             }
         });
         //do stuff after iterating through items is done
@@ -167,6 +181,17 @@ var Custom_Nav_Request_Root = {
         menu: function () {
             $('#menuToggle, .burgerc').on("click", function () {
                 $('.customnav-SPCLASS, .CustomMenu ').toggleClass('shownav');
+            });
+        },
+        bindAccordion: function () {
+            var $nav = $(".sidebar-sticky ul.nav.flex-column");
+            $nav.off("click.spmNavAccordion", ".nav-parent");
+            $nav.on("click.spmNavAccordion", ".nav-parent", function (e) {
+                e.preventDefault();
+                var $group = $(this).closest(".nav-group");
+                var willOpen = !$group.hasClass("open");
+                $group.toggleClass("open", willOpen);
+                $(this).attr("aria-expanded", willOpen ? "true" : "false");
             });
         },
         append: function () {

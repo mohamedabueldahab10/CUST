@@ -21,7 +21,7 @@ export interface IProgramsWebPartProps {
 }
 const bell: any = require('../../HelperRessources/img/icon-bell.svg');
 const isArabic = (localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar");
-const logo = isArabic ? require('../../HelperRessources/img/main-logo.png') : require('../../HelperRessources/img/main-logo-en.png');
+const logo = isArabic ? require('../../HelperRessources/img/main-logo.svg') : require('../../HelperRessources/img/main-logo-en.svg');
 export default class ProgramsWebPart extends BaseClientSideWebPart<IProgramsWebPartProps> {
 
   public render(): void {

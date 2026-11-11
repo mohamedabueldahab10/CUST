@@ -19,8 +19,8 @@ import * as strings from "DeletedItemsListingWebPartStrings";
 const isArabic =
   localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
 const logo = isArabic
-  ? require("../../HelperRessources/img/main-logo.png")
-  : require("../../HelperRessources/img/main-logo-en.png");
+  ? require("../../HelperRessources/img/main-logo.svg")
+  : require("../../HelperRessources/img/main-logo-en.svg");
 const bell: any = require("../../HelperRessources/img/icon-bell.svg");
 
 export interface IDeletedItemsListingWebPartProps {

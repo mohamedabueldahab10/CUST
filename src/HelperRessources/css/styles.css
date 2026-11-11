@@ -1120,7 +1120,7 @@ label.dropdown-item.main-action-filter {
 }
 
 .sidebar-sticky {
-    background: rgb(20, 65, 90);
+    background: #f3f5f8;
 }
 
 .sidebar-sticky,
@@ -1158,12 +1158,12 @@ label.dropdown-item.main-action-filter {
     width: 236px;
     left: 0;
     z-index: 100;
-    background-color: white;
+    background-color: #f3f5f8;
     /* box-shadow: 1px 0px 4px #0000002b; */
 }
 
 .sidebar a.nav-link:hover {
-    color: #f7941d;
+    color: #148282;
 }
 
 /* change heigh of sidbar-sticky to 100% to get the full height from parent */
@@ -1174,28 +1174,30 @@ position: sticky;
 top: 0; */
     /* Height of navbar */
     height: 100% !important;
-    padding-top: 2.6rem;
+    padding-top: 1.6rem;
     overflow-x: hidden;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
     /*Aicha
 padding-left: 2.8rem;*/
     /* Scrollable contents if viewport is shorter than content. */
-    box-shadow: 1px 0px 4px #0000002b;
+    box-shadow: 1px 0px 4px #00000014;
 }
 
 .sidebar .nav-link {
     font-weight: 500;
-    color: #fff;
-    padding: .5rem 0rem;
+    color: #183a66;
+    padding: .75rem .9rem;
 }
 
 .sidebar .nav-link .feather {
     margin-right: 4px;
-    color: #999;
+    color: #183a66;
 }
 
 .sidebar .nav-link.active {
-    color: #f7941d;
+    color: #148282;
 }
 
 .sidebar .nav-link:hover .feather,
@@ -1209,13 +1211,20 @@ padding-left: 2.8rem;*/
 }
 
 .sidebar .nav {
-    margin-top: 3.3rem;
+    margin-top: 1.6rem;
     margin-bottom: 0rem;
+    flex: 1 1 auto;
+    padding: 0 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .sidebar .nav .nav-icon {
     width: 22px;
     text-align: center;
+    color: #183a66;
+    flex-shrink: 0;
 }
 
 .ar .sidebar .nav .nav-icon {
@@ -1227,7 +1236,9 @@ padding-left: 2.8rem;*/
 }
 
 .sidebar .nav .nav-link-text {
-    padding-top: 3px
+    padding-top: 3px;
+    flex: 1 1 auto;
+    line-height: 1.35;
 }
 
 .sidebar .nav ul li a {
@@ -1236,12 +1247,12 @@ padding-left: 2.8rem;*/
 }
 
 .sidebar .nav ul li.active {
-    color: #148287 !important;
+    color: #148282 !important;
     background-color: transparent !important
 }
 
 .sidebar .nav ul li.active a {
-    color: #148287 !important;
+    color: #148282 !important;
 }
 
 .navbar-brand {
@@ -4576,7 +4587,7 @@ button.btn.btn-action.btn-cancel.cancel:hover {
 }
 
 li.nav-item.sub-head .nav-icon {
-    opacity: 0;
+    opacity: 1;
 }
 
 li.nav-item.sub-head * {
@@ -5741,8 +5752,8 @@ div#delegateReason {
 }
 
 .ar .sidebar-sticky .nav-link.active {
-    background-color: #59083526;
-    margin-left: 20px;
+    background-color: transparent;
+    margin-left: 0;
 }
 
 .en .new-Phase {
@@ -5750,8 +5761,8 @@ div#delegateReason {
 }
 
 .en .sidebar-sticky .nav-link.active {
-    background-color: #59083526;
-    margin-right: 20px;
+    background-color: transparent;
+    margin-right: 0;
 }
 
 
@@ -6703,26 +6714,65 @@ li.ms-core-menu-footer {
     position: sticky;
     width: 100%;
     bottom: 0;
+    margin-top: auto;
+    padding: 12px;
+    background: transparent;
 }
 
 #headingImportantLinks {
-    border-radius: 30px 30px 0px 0;
-    /* background-color: #81bb38; */
+    border-radius: 999px;
     background-color: #148282;
     color: #fff;
-    transition: background-color .3s ease;
+    border: 0;
+    padding: 0;
+    transition: none;
 }
 
 #headingImportantLinks:hover {
-    background-color: #f7941d;
+    background-color: #148282;
 }
 
 .important-links-ctx .important-links-btn {
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 600;
     text-decoration: none !important;
     background-color: transparent;
     border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 14px;
+    color: #fff !important;
+}
+
+.important-links-ctx .important-links-btn::before {
+    content: "\f0c1";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #fff;
+    color: #148282;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.important-links-ctx .important-links-btn::after {
+    content: "\f053";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 11px;
+    color: #fff;
+    margin-inline-start: auto;
+}
+
+.en .important-links-ctx .important-links-btn::after {
+    content: "\f054";
 }
 
 a.a-important-link {
@@ -6730,13 +6780,13 @@ a.a-important-link {
 }
 
 a.a-important-link>* {
-    color: #FFFFFF;
-    font-size: 1.9rem;
-    font-weight: bold;
+    color: #183a66;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 a.a-important-link:hover>* {
-    color: #f7941d !important;
+    color: #148282 !important;
 }
 
 .ul-important-links {
@@ -6744,13 +6794,18 @@ a.a-important-link:hover>* {
 }
 
 .li-important-links {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(24, 58, 102, 0.1);
 }
 
 #accordionImportantLinks {
-    /* background-color: #005c4f; */
-    background-color: #14415a;
-    /* padding-top: 13px; */
+    background-color: transparent;
+}
+
+#collapseImportantLinks .card-body {
+    background: #fff;
+    border-radius: 12px;
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(24, 58, 102, 0.06);
 }
 
 /* ghufran style */
@@ -7653,4 +7708,145 @@ span.statuscolorstat28 {
 
 .CFIELD.has-kpi-pull-btn > .api-link-result {
     width: 100%;
+}
+
+/* Soft-Rail sidebar (fixed width, no hover expand) */
+.sidebar .main-logo {
+    padding: 0 8px 8px;
+}
+
+.sidebar .main-logo a {
+    padding: 8px 12px 4px;
+}
+
+.sidebar .main-logo a img {
+    opacity: 1;
+    filter: none;
+}
+
+.sidebar .nav > .nav-leaf,
+.sidebar .nav > .nav-group {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(24, 58, 102, 0.06);
+    overflow: hidden;
+    list-style: none;
+}
+
+.sidebar .nav > .nav-group {
+    border: 1px solid transparent;
+}
+
+.sidebar .nav > .nav-group.open {
+    border-color: rgba(20, 130, 130, 0.35);
+    box-shadow: 0 2px 10px rgba(20, 130, 130, 0.08);
+}
+
+.sidebar .nav-link.nav-parent {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: inherit;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.sidebar .nav-link.nav-parent:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.sidebar .nav-group.open > .nav-item.header {
+    background: rgba(20, 130, 130, 0.1);
+}
+
+.sidebar .nav-group.open > .nav-item.header .nav-link,
+.sidebar .nav-group.open > .nav-item.header .nav-icon,
+.sidebar .nav-group.open > .nav-item.header .nav-chevron {
+    color: #183a66;
+}
+
+.sidebar .nav-children {
+    display: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #e8ecf1;
+}
+
+.sidebar .nav-group.open > .nav-children {
+    display: block;
+}
+
+.sidebar .nav-children .nav-item.sub-head {
+    border-bottom: 1px solid #eef1f5;
+}
+
+.sidebar .nav-children .nav-item.sub-head:last-child {
+    border-bottom: 0;
+}
+
+.sidebar .nav-children .nav-link {
+    border-radius: 0;
+    padding: .7rem .9rem;
+    color: #183a66;
+    position: relative;
+}
+
+.sidebar .nav-children .nav-link.active {
+    background: rgba(20, 130, 130, 0.12) !important;
+    color: #148282 !important;
+}
+
+.sidebar .nav-children .nav-link.active .nav-icon,
+.sidebar .nav-children .nav-link.active .nav-link-text,
+.sidebar .nav-children .nav-link.active .nav-icon i {
+    color: #148282 !important;
+}
+
+.ar .sidebar .nav-children .nav-link.active {
+    box-shadow: inset -3px 0 0 #148282;
+}
+
+.en .sidebar .nav-children .nav-link.active {
+    box-shadow: inset 3px 0 0 #148282;
+}
+
+.sidebar .nav-leaf > .nav-link.active {
+    background: rgba(20, 130, 130, 0.12);
+    color: #148282;
+}
+
+.sidebar .nav-leaf > .nav-link.active .nav-icon,
+.sidebar .nav-leaf > .nav-link.active .nav-chevron {
+    color: #148282;
+}
+
+.sidebar .nav-chevron {
+    margin-inline-start: auto;
+    font-size: 0.75rem;
+    color: #183a66;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.sidebar .nav-group.open .nav-chevron {
+    transform: rotate(90deg);
+}
+
+.en .sidebar .nav-group.open .nav-chevron {
+    transform: rotate(-90deg);
+}
+
+.sidebar .nav-link:hover {
+    text-decoration: none;
+}
+
+.sidebar .important-links-ctx .card-header {
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+.sidebar .important-links-ctx .card {
+    background: transparent;
 }
