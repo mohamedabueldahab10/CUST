@@ -187,6 +187,8 @@ div#s4-bodyContainer {
     position: relative;
     float: right;
     width: calc(100% - 236px);
+    min-width: 0; /* allow wide listing tables to shrink/scroll instead of crushing the sidebar */
+    flex: 1 1 auto;
     background-color: #f8f9fb;
     transition: all .5s cubic-bezier(.685, .0473, .346, 1);
 }
@@ -1156,9 +1158,13 @@ label.dropdown-item.main-action-filter {
     height:100vh;
     bottom: 0;
     width: 236px;
+    min-width: 236px;
+    max-width: 236px;
+    flex: 0 0 236px; /* never shrink when wide listing content is in the flex wrapper */
     left: 0;
     z-index: 100;
     background-color: #f3f5f8;
+    overflow-x: hidden;
     /* box-shadow: 1px 0px 4px #0000002b; */
 }
 
@@ -2512,6 +2518,16 @@ ul[disabled],
 
 .manage-indicator-listing-ctx .accordion .acc-title {
     max-width: 350px;
+}
+
+.Listing-wrapper,
+.control-ctx.project-listing-ctx {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.Listing-wrapper {
+    overflow-x: auto;
 }
 
 .Listing-wrapper a.view-more.d-block.text-center.py-2 {
@@ -7737,6 +7753,13 @@ span.statuscolorstat28 {
 }
 
 /* Soft-Rail sidebar (fixed width, no hover expand) */
+.wrapper.d-flex#navbarsParent,
+.wrapper.d-flex.project-home-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .sidebar .main-logo {
     padding: 0 8px 8px;
 }
