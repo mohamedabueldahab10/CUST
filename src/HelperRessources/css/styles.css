@@ -185,9 +185,9 @@ div#s4-bodyContainer {
 
 .main-panel {
     position: relative;
-    float: right;
-    width: calc(100% - 236px);
-    max-width: calc(100% - 236px);
+    float: none; /* flex wrapper owns the layout; float caused Soft-Rail overlap/crush bugs */
+    width: auto;
+    max-width: none;
     min-width: 0; /* allow wide listing tables to shrink/scroll instead of crushing the sidebar */
     flex: 1 1 auto;
     overflow-x: auto;
@@ -1154,8 +1154,7 @@ label.dropdown-item.main-action-filter {
 
 .sidebar,
 nav.sidebar.d-inline-block {
-    position: -webkit-sticky;
-    position: sticky;
+    position: relative; /* stay in document flow — never overlay .main-panel */
     top: 0;
     /* height: 135vh; */
     height:100vh;
@@ -1165,7 +1164,8 @@ nav.sidebar.d-inline-block {
     max-width: 236px !important;
     flex: 0 0 236px !important; /* never shrink when wide listing content is in the flex wrapper */
     display: block !important; /* override Bootstrap .d-inline-block which breaks flex sizing */
-    left: 0;
+    left: auto;
+    right: auto;
     z-index: 100;
     background-color: #f3f5f8;
     overflow-x: hidden;
@@ -7775,61 +7775,35 @@ span.statuscolorstat28 {
 
 .wrapper.d-flex#navbarsParent,
 .wrapper.d-flex.project-home-page {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
     box-sizing: border-box;
 }
 
-/* Desktop: pin Soft-Rail so wide listings cannot scroll it off-canvas.
-   Reserve the same width on .main-panel so content is not covered. */
+/* Keep Soft-Rail in normal flow beside content (no fixed overlay) */
 @media screen and (min-width: 1200px) {
     .ar nav.sidebar,
-    .ar nav.sidebar.d-inline-block {
-        position: fixed !important;
-        top: 0;
-        right: 0;
-        left: auto;
-        transform: none !important;
-    }
-
+    .ar nav.sidebar.d-inline-block,
     .en nav.sidebar,
     .en nav.sidebar.d-inline-block {
-        position: fixed !important;
-        top: 0;
-        left: 0;
-        right: auto;
+        position: relative !important;
         transform: none !important;
+        margin: 0 !important;
     }
 
-    .ar .wrapper.d-flex#navbarsParent,
-    .ar .wrapper.d-flex.project-home-page {
-        padding-right: 0;
-    }
-
-    .en .wrapper.d-flex#navbarsParent,
-    .en .wrapper.d-flex.project-home-page {
-        padding-left: 0;
-    }
-
-    .ar .main-panel {
-        float: none !important;
-        width: calc(100% - 236px) !important;
-        max-width: calc(100% - 236px) !important;
-        margin-right: 236px !important;
-        margin-left: 0 !important;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
+    .ar .main-panel,
     .en .main-panel {
         float: none !important;
-        width: calc(100% - 236px) !important;
-        max-width: calc(100% - 236px) !important;
-        margin-left: 236px !important;
-        margin-right: 0 !important;
-        min-width: 0;
-        box-sizing: border-box;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+        min-width: 0 !important;
+        flex: 1 1 auto !important;
     }
 }
 
