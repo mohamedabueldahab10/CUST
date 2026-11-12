@@ -7767,12 +7767,12 @@ span.statuscolorstat28 {
 }
 
 /* Soft-Rail sidebar (fixed width, no hover expand)
-   Wide project listings must NOT expand the page and clip the rail in RTL.
-   Desktop uses CSS Grid: 236px rail + minmax(0,1fr) content. */
+   Listing pages: content must not set the flex item's base width (use 0% / width:0),
+   so the 236px rail stays visible and tables scroll inside .main-panel. */
 #s4-workspace,
 #s4-bodyContainer {
     overflow-x: hidden !important;
-    max-width: 100vw !important;
+    max-width: 100% !important;
     width: 100% !important; /* override SharePoint inline widths that blow past the viewport */
     box-sizing: border-box !important;
 }
@@ -7783,31 +7783,30 @@ span.statuscolorstat28 {
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: stretch;
-    width: 100% !important;
+    width: 100% !important; /* prefer % over 100vw — vw includes scrollbar and can overflow */
     max-width: 100% !important;
     min-width: 0 !important;
     overflow-x: hidden;
     box-sizing: border-box;
 }
 
-/* Desktop Soft-Rail: grid locks rail width; content column can shrink/scroll */
+/* Inner listing shells must be allowed to shrink below table min-content */
+.container-ctx,
+.container-ctx .container-body,
+.control-ctx.project-listing-ctx,
+.Listing-wrapper,
+.Listing-wrapper .tab-content,
+.Listing-wrapper .tab-pane {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.Listing-wrapper,
+.control-ctx.project-listing-ctx {
+    overflow-x: auto;
+}
+
 @media screen and (min-width: 1200px) {
-    .wrapper.d-flex#navbarsParent,
-    .wrapper.d-flex.project-home-page {
-        display: grid !important;
-        /* DOM: sidebar then main-panel. RTL puts col1 on the right (Arabic Soft-Rail). */
-        grid-template-columns: 236px minmax(0, 1fr);
-        grid-template-rows: minmax(100vh, auto);
-        align-items: stretch;
-    }
-
-    /* navbarsParent is forced rtl in base CSS — restore LTR for English Soft-Rail */
-    .en .wrapper.d-flex#navbarsParent,
-    .en .wrapper.d-flex.project-home-page {
-        direction: ltr !important;
-        grid-template-columns: 236px minmax(0, 1fr);
-    }
-
     .ar nav.sidebar,
     .ar nav.sidebar.d-inline-block,
     .en nav.sidebar,
@@ -7815,33 +7814,28 @@ span.statuscolorstat28 {
         position: relative !important;
         transform: none !important;
         margin: 0 !important;
+        flex: 0 0 236px !important;
         width: 236px !important;
         min-width: 236px !important;
         max-width: 236px !important;
-        grid-column: 1;
-        grid-row: 1;
-        justify-self: stretch;
     }
 
+    /* Content does not dictate width — grows into leftover space beside Soft-Rail */
     .ar .main-panel,
     .en .main-panel {
         float: none !important;
-        width: auto !important;
+        flex: 1 1 0% !important;
+        width: 0 !important;
+        min-width: 0 !important;
         max-width: 100% !important;
         margin: 0 !important;
-        min-width: 0 !important;
-        flex: unset !important;
-        grid-column: 2;
-        grid-row: 1;
         overflow-x: auto !important;
     }
 
-    /* Listing tables scroll inside the content column — never expand the Soft-Rail grid */
-    .Listing-wrapper,
-    .control-ctx.project-listing-ctx {
-        max-width: 100% !important;
-        min-width: 0 !important;
-        overflow-x: auto !important;
+    /* English Soft-Rail stays on the left (base CSS forces rtl on #navbarsParent) */
+    .en .wrapper.d-flex#navbarsParent,
+    .en .wrapper.d-flex.project-home-page {
+        direction: ltr !important;
     }
 }
 
