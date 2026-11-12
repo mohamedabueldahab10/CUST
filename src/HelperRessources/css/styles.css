@@ -7654,3 +7654,59 @@ span.statuscolorstat28 {
 .CFIELD.has-kpi-pull-btn > .api-link-result {
     width: 100%;
 }
+
+/* Sidebar menu scrolls on its own so the last items stay fully visible
+   above the important-links bar instead of sliding underneath it. */
+nav.sidebar {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 100vh;
+}
+
+nav.sidebar > .sidebar-sticky {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+nav.sidebar .main-logo {
+    flex: 0 0 auto;
+}
+
+nav.sidebar .nav.sidelinkscontainer {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-bottom: 0;
+    padding-bottom: 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #e9ecf3;
+}
+
+nav.sidebar .nav.sidelinkscontainer::-webkit-scrollbar {
+    width: 12px;
+}
+
+nav.sidebar .nav.sidelinkscontainer::-webkit-scrollbar-track {
+    background: #e9ecf3;
+}
+
+nav.sidebar .nav.sidelinkscontainer::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 0;
+    border: 3px solid #e9ecf3;
+}
+
+nav.sidebar .important-links-ctx {
+    position: relative;
+    bottom: auto;
+    flex: 0 1 auto;
+    max-height: 42%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
