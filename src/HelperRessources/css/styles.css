@@ -7781,7 +7781,8 @@ span.statuscolorstat28 {
     box-sizing: border-box;
 }
 
-/* Desktop: pin Soft-Rail so wide listings cannot scroll it off-canvas */
+/* Desktop: pin Soft-Rail so wide listings cannot scroll it off-canvas.
+   Reserve the same width on .main-panel so content is not covered. */
 @media screen and (min-width: 1200px) {
     .ar nav.sidebar,
     .ar nav.sidebar.d-inline-block {
@@ -7803,20 +7804,32 @@ span.statuscolorstat28 {
 
     .ar .wrapper.d-flex#navbarsParent,
     .ar .wrapper.d-flex.project-home-page {
-        padding-right: 236px;
+        padding-right: 0;
     }
 
     .en .wrapper.d-flex#navbarsParent,
     .en .wrapper.d-flex.project-home-page {
-        padding-left: 236px;
+        padding-left: 0;
     }
 
-    .ar .main-panel,
-    .en .main-panel {
-        width: 100% !important;
-        max-width: 100%;
-        float: none;
+    .ar .main-panel {
+        float: none !important;
+        width: calc(100% - 236px) !important;
+        max-width: calc(100% - 236px) !important;
+        margin-right: 236px !important;
+        margin-left: 0 !important;
         min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .en .main-panel {
+        float: none !important;
+        width: calc(100% - 236px) !important;
+        max-width: calc(100% - 236px) !important;
+        margin-left: 236px !important;
+        margin-right: 0 !important;
+        min-width: 0;
+        box-sizing: border-box;
     }
 }
 
