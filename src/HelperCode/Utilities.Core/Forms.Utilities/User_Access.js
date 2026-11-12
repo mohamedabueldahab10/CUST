@@ -1806,7 +1806,8 @@ window.userCalls = {
           "contracts",
           "sos",
           "mainkpi",
-          "monthlyreport"
+          "monthlyreport",
+          "initiativesanalysis",
         ];
         CreateChangeRequest_Access = [
           "initiatives",
@@ -2333,7 +2334,8 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "changerequests"  ,
-          "delegations"
+          "delegations",
+          "initiativesanalysis",
         ];
         CreateChangeRequest_Access = ["initiatives", "projects"];
         Read_Access = [
@@ -2378,6 +2380,7 @@ window.userCalls = {
           "projecthome.aspx",
           "delegations",
           "Targets.aspx",
+          "initiativesanalysis",
         ];
         Edit_Access = [
           "initiatives",
@@ -2408,7 +2411,8 @@ window.userCalls = {
           "exchangeschema",
           "communicationplans",
           "contracts",
-          "delegations"
+          "delegations",
+          "initiativesanalysis",
           //"changerequest",
         ];
         Delete_Access = [
@@ -2651,6 +2655,7 @@ window.userCalls = {
           "mainkpianalysis",
           "mainkpiissues",
           "sosanalysis",
+          "initiativesanalysis",
           "sos",
           "tasks",
           "initiatives",
@@ -2753,6 +2758,7 @@ window.userCalls = {
           "mainkpianalysis",
           "mainkpiissues",
           "sosanalysis",
+          "initiativesanalysis",
           "sos",
           "tasks",
           "initiatives",
@@ -2852,6 +2858,7 @@ window.userCalls = {
           "goalstrategy",
           "sos",
           "sosanalysis",
+          "initiativesanalysis",
           "tasks",
           "mainkpi",
           "mainkpianalysis",
@@ -4819,6 +4826,7 @@ window.userCalls = {
           "mainkpianalysis",
           "mainkpiissues",
           "sosanalysis",
+          "initiativesanalysis",
           "sos",
           "goalstrategy",
           "tasks",

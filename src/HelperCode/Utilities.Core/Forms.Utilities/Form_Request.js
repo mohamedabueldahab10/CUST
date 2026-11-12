@@ -4657,6 +4657,40 @@ window.View_Data_Request = {
       }
     }
 
+    if (listkey == "initiatives") {
+      if (!USERisWF) {
+        // Initiatives list has Title as code; filter analysis listing by ICODE
+        var initiativeCodeForLinks = oListItem.get_item("Title")
+          ? String(oListItem.get_item("Title")).trim()
+          : "";
+        if (!initiativeCodeForLinks && typeof ICODE !== "undefined" && ICODE) {
+          initiativeCodeForLinks = String(ICODE).trim();
+        }
+        if (initiativeCodeForLinks) {
+          // Same row as Export PDF (.exportPdfBtnContainer): analysis on the right, PDF on the left
+          var initiativeAnalysisLinkHtml =
+            '<style>.initiative-link-item:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1);}</style>' +
+            '<a class="linkmsg alert initiative-link-item" href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/Listing.aspx?ListKey=initiativesanalysis&ICODE=" +
+              encodeURIComponent(initiativeCodeForLinks) +
+              '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(20,130,130,0.18);color:#148282;border:1px solid rgba(20,130,130,0.4);">' +
+              '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-initiativesanalysislinktext class="Resources"></span></a>';
+
+          var $pdfRow = $(".FormContainer .exportPdfBtnContainer");
+          if (!$pdfRow.length) {
+            $(".FormContainer").prepend('<div class="exportPdfBtnContainer"></div>');
+            $pdfRow = $(".FormContainer .exportPdfBtnContainer");
+          }
+          $pdfRow.find(".initiative-link-item").remove();
+          $pdfRow.addClass("has-initiative-analysis");
+          // First child in RTL flex + space-between => right side; PDF stays on the left
+          $pdfRow.prepend(initiativeAnalysisLinkHtml);
+          changeResources();
+        }
+      }
+    }
+
     if (listkey == "benefitmetrics") {
       benefitCode = oListItem.get_item("Title");
       benefitYear = oListItem.get_item("Year");

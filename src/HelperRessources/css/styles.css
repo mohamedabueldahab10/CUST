@@ -6125,6 +6125,21 @@ div#MainKPIsList {
     justify-content: flex-start;
 }
 
+/* Initiative view: analysis + PDF on one row (analysis right, PDF left in RTL) */
+.exportPdfBtnContainer.has-initiative-analysis {
+    align-items: center;
+    gap: 10px;
+}
+
+.ar .exportPdfBtnContainer.has-initiative-analysis,
+.en .exportPdfBtnContainer.has-initiative-analysis {
+    justify-content: space-between;
+}
+
+.exportPdfBtnContainer.has-initiative-analysis .initiative-link-item {
+    margin: 0;
+}
+
 .exportPdfBtn {
     background-color: #f2f2f2 !important;
     color: #666666 !important;
