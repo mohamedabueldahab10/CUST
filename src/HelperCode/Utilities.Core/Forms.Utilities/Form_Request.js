@@ -345,16 +345,15 @@ window.Edit_Data_Request = {
 
     if (typeof listkey !== "undefined" && listkey == "benefits" && typeof oListItem !== "undefined" && oListItem) {
       try {
-        window.benefitItemWfStage = window.benefitWeightReadValue(
-          oListItem.get_item("WFStage")
-        );
-        window.benefitItemWfModule = window.benefitWeightReadValue(
-          oListItem.get_item("WFModuleCode")
-        );
-        window.benefitWfFieldsRead = true;
+        var itemStage = oListItem.get_item("WFStage");
+        if (itemStage && typeof itemStage.get_lookupValue === "function") {
+          itemStage = itemStage.get_lookupValue();
+        }
+        window.benefitItemWfStage = itemStage ? String(itemStage) : "";
+        var itemModule = oListItem.get_item("WFModuleCode");
+        window.benefitItemWfModule = itemModule ? String(itemModule) : "";
       } catch (e) {
         window.benefitItemWfStage = window.benefitItemWfStage || "";
-        window.benefitItemWfModule = window.benefitItemWfModule || "";
       }
     }
 
@@ -1174,26 +1173,10 @@ window.Edit_Data_Request = {
     }
     if (listkey == "benefits") {
       benefitCodeResult = equationBenefitKPI.getField(oListItem, "Title", "");
-      if (window.benefitWeightReadValue && !window.benefitWfFieldsRead) {
-        try {
-          window.benefitItemWfStage = window.benefitWeightReadValue(
-            oListItem.get_item("WFStage")
-          );
-          window.benefitItemWfModule = window.benefitWeightReadValue(
-            oListItem.get_item("WFModuleCode")
-          );
-          window.benefitWfFieldsRead = true;
-        } catch (e) {}
-      }
-      var benefitStage = String(window.benefitItemWfStage || "")
+      var benefitStage = String(oListItem.get_item("WFStage") || "")
         .trim()
         .toLowerCase();
-      if (
-        window.BenefitsWeightGuard &&
-        BenefitsWeightGuard.canCurrentUserEditWeight() &&
-        !USERisWF &&
-        (!benefitStage || benefitStage === "approved")
-      ) {
+      if (isEPMO && !USERisWF && (!benefitStage || benefitStage === "approved")) {
         var $weight = $("#Weight");
         var currentWeight = parseFloat($weight.val());
         if (isNaN(currentWeight)) currentWeight = 0;
@@ -2245,7 +2228,12 @@ window.Edit_Data_Request = {
           BenefitsWeightGuard.applyWeightEditAccess();
           BenefitsWeightGuard.applyRemainingMax();
           BenefitsWeightGuard.bindClamp();
-          BenefitsWeightGuard.scheduleWeightUnlock();
+          setTimeout(function () {
+            BenefitsWeightGuard.applyWeightEditAccess();
+          }, 300);
+          setTimeout(function () {
+            BenefitsWeightGuard.applyWeightEditAccess();
+          }, 1500);
         }
       }
       if (listkey == "strategicpartnershipsachievements" && (isEdit || isView)) {
@@ -14260,31 +14248,6 @@ window.AfterMasterDetailsRequest = {
   }
 }
 
-window.benefitWeightReadValue = function (raw) {
-  if (raw == null) return "";
-  if (typeof raw === "object") {
-    if (typeof raw.get_lookupValue === "function") {
-      raw = raw.get_lookupValue();
-    } else if (raw.lookupValue != null) {
-      raw = raw.lookupValue;
-    } else if (raw.Label != null) {
-      raw = raw.Label;
-    } else {
-      return "";
-    }
-  }
-  var text = String(raw == null ? "" : raw).trim();
-  if (
-    !text ||
-    text === "[object Object]" ||
-    text.toLowerCase() === "null" ||
-    text.toLowerCase() === "undefined"
-  ) {
-    return "";
-  }
-  return text;
-};
-
 // Block adding a new Benefit when initiative benefits Weight sum >= 100
 window.BenefitsWeightGuard = {
   applied: false,
@@ -14419,27 +14382,6 @@ window.BenefitsWeightGuard = {
   },
   canCurrentUserEditWeight: function () {
     if (typeof isAdmin !== "undefined" && isAdmin) return true;
-    var isEpmoOffice =
-      (typeof currentUserRole !== "undefined" && currentUserRole == "EPMO") ||
-      window.epmoCanEditApprovedBenefitWeight === true;
-    if (
-      isEpmoOffice &&
-      !(typeof USERisWF !== "undefined" && USERisWF) &&
-      window.benefitWfFieldsRead
-    ) {
-      var approvedStage = window
-        .benefitWeightReadValue(window.benefitItemWfStage)
-        .toLowerCase();
-      var approvedModule = window.benefitWeightReadValue(
-        window.benefitItemWfModule
-      );
-      if (
-        approvedStage === "approved" ||
-        (!approvedStage && !approvedModule)
-      ) {
-        return true;
-      }
-    }
     if (
       typeof End_Workflow !== "undefined" &&
       End_Workflow.canEditBenefitWeight
@@ -14455,9 +14397,9 @@ window.BenefitsWeightGuard = {
     var wfStageVal = String(
       (typeof window.benefitItemWfStage !== "undefined" &&
         window.benefitItemWfStage) ||
-        ($("#WFStage").length && $("#WFStage").val()) ||
-        ($("#WFStage").length && $("#WFStage").attr("value")) ||
-        ($("#WFStage").length && $("#WFStage").attr("data-lookup-value")) ||
+        ($("#WFStage").val && $("#WFStage").val()) ||
+        $("#WFStage").attr("value") ||
+        $("#WFStage").attr("data-lookup-value") ||
         ""
     ).trim();
     var epmoStages = [
@@ -14502,25 +14444,13 @@ window.BenefitsWeightGuard = {
     var canEdit = BenefitsWeightGuard.canCurrentUserEditWeight();
     if ($weight.length) {
       if (canEdit) {
-        $weight
-          .prop("disabled", false)
-          .removeAttr("disabled")
-          .prop("readonly", false);
+        $weight.prop("disabled", false).removeAttr("disabled").prop("readonly", false);
         $weight.css("pointer-events", "auto");
       } else if (typeof isEdit !== "undefined" && isEdit) {
         $weight.prop("disabled", true);
       }
     }
     BenefitsWeightGuard.applyPeriodTypeEditAccess();
-  },
-  scheduleWeightUnlock: function () {
-    [400, 1200, 2500, 5000, 8000].forEach(function (ms) {
-      setTimeout(function () {
-        if (window.BenefitsWeightGuard) {
-          BenefitsWeightGuard.applyWeightEditAccess();
-        }
-      }, ms);
-    });
   },
   applyPeriodTypeEditAccess: function () {
     if (typeof listkey === "undefined" || listkey != "benefits") return;
@@ -14624,7 +14554,6 @@ $(document).ready(function () {
         BenefitsWeightGuard.enableWeightForEpmo();
         BenefitsWeightGuard.applyRemainingMax();
         BenefitsWeightGuard.bindClamp();
-        BenefitsWeightGuard.scheduleWeightUnlock();
       }
     }, 1000);
   }

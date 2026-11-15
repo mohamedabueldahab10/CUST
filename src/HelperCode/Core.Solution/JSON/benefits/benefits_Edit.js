@@ -63,14 +63,6 @@ var Information_Form = [
         descPhraseAn: "The total weight of benefits must be 100%",
         siblingslistname: "Benefits",
         siblingstargetcode: "InitiativeCode",
-        security: {
-          groups: [
-            "EPMO",
-            "System Admin Group",
-            "Development Unit",
-            "Initiative Manager",
-          ],
-        },
       },
 
       {
