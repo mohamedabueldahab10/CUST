@@ -941,6 +941,30 @@ window.Edit_Data_Request = {
     }
     if (listkey == "benefits") {
       benefitCodeResult = oListItem.get_item("Title");
+      var benefitStage = String(oListItem.get_item("WFStage") || "")
+        .trim()
+        .toLowerCase();
+      if (isEPMO && !USERisWF && (!benefitStage || benefitStage === "approved")) {
+        var $weight = $("#Weight");
+        var currentWeight = parseFloat($weight.val());
+        if (isNaN(currentWeight)) currentWeight = 0;
+        var remainingWeight = parseFloat($weight.attr("max"));
+        if (isNaN(remainingWeight)) remainingWeight = 0;
+        var allowedWeight =
+          Math.round((remainingWeight + currentWeight) * 10) / 10;
+        if (allowedWeight < 0) allowedWeight = 0;
+        if (allowedWeight > 100) allowedWeight = 100;
+        $weight
+          .prop("disabled", false)
+          .removeAttr("disabled")
+          .attr("max", allowedWeight)
+          .attr(
+            "oninput",
+            "this.value = (this.value !== '' && Math.abs(this.value) >= 0 && Math.abs(this.value) <= " +
+              allowedWeight +
+              ") ? Math.abs(this.value) : ''"
+          );
+      }
     }
 
     if (listkey == "benefitmetrics") {
