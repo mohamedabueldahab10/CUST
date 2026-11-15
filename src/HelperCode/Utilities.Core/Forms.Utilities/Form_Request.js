@@ -35,7 +35,6 @@ var isLoadMore = false;
 var benefitsEquationID,
   benefitsEquation,
   benefitCode = "",
-  parentBenefitCode = "",
   benefitFromYear = "",
   benefitToYear = "",
   benefitYear = "",
@@ -44,48 +43,7 @@ var benefitsEquationID,
   benefitMid = "",
   benefitYearHandler = "",
   currentItemCode = "";
-window.currentBenefitWfStage = "";
 // benefitMetricsYear="";
-
-function benefitStageAllowsMaintenance(stage) {
-  var value = String(stage == null ? "" : stage)
-    .trim()
-    .toLowerCase();
-  if (!value || value === "approved") return true;
-  if (value.indexOf("initiativebenefits") === 0) return false;
-  return true;
-}
-
-function fieldText(value) {
-  if (value && typeof value.get_lookupValue === "function") {
-    return value.get_lookupValue() || "";
-  }
-  return value || "";
-}
-
-function camlText(value) {
-  return String(value == null ? "" : value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
-
-function keepApprovedBenefitEditable(stage) {
-  if (typeof isInManager === "undefined" || !isInManager || USERisWF) return;
-  if (!benefitStageAllowsMaintenance(stage)) return;
-  var reveal = function () {
-    $("#FromDate, #ToDate, #BenefitStatus")
-      .prop("disabled", false)
-      .css({ "pointer-events": "auto", opacity: "1" });
-    $(".btn-save").css({
-      opacity: "1",
-      "pointer-events": "auto",
-      display: "inline-block",
-    });
-  };
-  reveal();
-  setTimeout(reveal, 800);
-}
 
 window.benefitsEquationsComponents = [];
 ////////
@@ -983,15 +941,10 @@ window.Edit_Data_Request = {
     }
     if (listkey == "benefits") {
       benefitCodeResult = oListItem.get_item("Title");
-      benefitCode = benefitCodeResult;
-      window.currentBenefitWfStage = oListItem.get_item("WFStage") || "";
-      keepApprovedBenefitEditable(window.currentBenefitWfStage);
-      equationBenefit.g.appendEditButton();
     }
 
     if (listkey == "benefitmetrics") {
       benefitCode = oListItem.get_item("Title");
-      parentBenefitCode = fieldText(oListItem.get_item("RelatedBenefit"));
       benefitFromYear = oListItem.get_item("FromDate")
         ? oListItem.get_item("FromDate")
         : "";
@@ -4072,7 +4025,6 @@ window.View_Data_Request = {
 
     if (listkey == "benefitmetrics") {
       benefitCode = oListItem.get_item("Title");
-      parentBenefitCode = fieldText(oListItem.get_item("RelatedBenefit"));
       benefitYear = oListItem.get_item("Year");
       benefitMonth = oListItem.get_item("Months")
         ? oListItem.get_item("Months")
@@ -4105,9 +4057,6 @@ window.View_Data_Request = {
     }
     if (listkey == "benefits") {
       benefitCode = oListItem.get_item("Title");
-      window.currentBenefitWfStage = oListItem.get_item("WFStage") || "";
-      keepApprovedBenefitEditable(window.currentBenefitWfStage);
-      equationBenefit.g.appendEditButton();
 
       if (!USERisWF) {
         $("#printableArea").prepend(
@@ -4119,6 +4068,7 @@ window.View_Data_Request = {
             "</span></a>"
         );
       }
+      // equationBenefit.init();
     }
 
     // if (listkey == "goalstrategy") {
@@ -9307,13 +9257,22 @@ var equationBenefit = {
       }
     }
 
-    equationBenefit.g.appendEditButton();
+    if ((isAdmin || isSPMAdmin || isEPMO) && !USERisWF) {
+      // remove attr disabled for this roles in equation
+      $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
+        '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
+      );
+    }
     if (isAdmin) {
       // $("input#KPIEquation, input#Equation ,input#B, input#A, input#CC , input#D ,input#E,input#F,input#G").removeAttr('disabled');
       $(
         "input#B, input#A, input#CC , input#D ,input#E,input#F,input#G"
       ).removeAttr("disabled");
     }
+
+    $(".btn-edit-equation").on("click", () => {
+      equationBenefit.g.editEquation();
+    });
 
     Update_Benefits_Results.init(benefitsEquation);
 
@@ -9346,200 +9305,39 @@ var equationBenefit = {
     );
   },
   g: {
-    appendEditButton: function () {
-      if (USERisWF || $(".btn-edit-equation").length) return;
-      var finish = function () {
-        if ($(".btn-edit-equation").length) return;
-        $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
-          '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
-        );
-        $(".btn-edit-equation").on("click", function () {
-          equationBenefit.g.editEquation();
-        });
-        changeResources();
-      };
-      if (isAdmin || isSPMAdmin) {
-        finish();
-        return;
-      }
-      if (!isEPMO) return;
-      if (listkey == "benefits") {
-        if (benefitStageAllowsMaintenance(window.currentBenefitWfStage)) finish();
-        return;
-      }
-      equationBenefit.g.whenParentBenefitApproved(finish);
-    },
-    whenParentBenefitApproved: function (done) {
-      if (!parentBenefitCode) {
-        done();
-        return;
-      }
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext.get_web().get_lists().getByTitle("Benefits");
-      var camlQuery = new SP.CamlQuery();
-      camlQuery.set_viewXml(
-        "<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
-          camlText(parentBenefitCode) +
-          "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
-      );
-      var items = oList.getItems(camlQuery);
-      clientContext.load(items);
-      clientContext.executeQueryAsync(
-        function () {
-          var stage = "";
-          var enumerator = items.getEnumerator();
-          if (enumerator.moveNext()) {
-            stage = enumerator.get_current().get_item("WFStage") || "";
-          }
-          if (benefitStageAllowsMaintenance(stage)) done();
-        },
-        function () {
-          done();
-        }
-      );
-    },
     editEquation: function () {
+      var open = function (id) {
+        window.location =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/Edit.aspx?ListKey=benefitsequations&IID=" +
+          id +
+          PCODE_STRING;
+      };
       if (benefitsEquationID) {
-        equationBenefit.g.openEquation(benefitsEquationID);
+        open(benefitsEquationID);
         return;
       }
-      if (listkey == "benefits") {
-        equationBenefit.g.openEquationForBenefit(benefitCode);
-        return;
-      }
-      equationBenefit.g.createEquation(benefitCode, IID);
-    },
-    openEquation: function (id) {
-      window.location =
-        _spPageContextInfo.webAbsoluteUrl +
-        "/SitePages/Edit.aspx?ListKey=benefitsequations&IID=" +
-        id +
-        PCODE_STRING;
-    },
-    openEquationForBenefit: function (code) {
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext.get_web().get_lists().getByTitle("BenefitMetrics");
-      var camlQuery = new SP.CamlQuery();
-      camlQuery.set_viewXml(
-        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefit'/><Value Type='Text'>" +
-          camlText(code) +
-          "</Value></Eq></And></Where></Query></View>"
-      );
-      var items = oList.getItems(camlQuery);
-      clientContext.load(items);
-      clientContext.executeQueryAsync(
-        function () {
-          if (!items.get_count()) {
-            var isAr =
-              localStorage.getItem("lng") == null ||
-              localStorage.getItem("lng") == "ar";
-            alert(
-              isAr
-                ? "أضف مقياس المنفعة أولاً لإضافة المعادلة."
-                : "Add a benefit metric before adding the equation."
-            );
-            return;
-          }
-          if (items.get_count() > 1) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/sitepages/Targets.aspx?BenefitCode=" +
-              encodeURIComponent(code);
-            return;
-          }
-          var metric = items.getItemAtIndex(0);
-          equationBenefit.g.openOrCreateForMetric(
-            metric.get_item("Title"),
-            metric.get_id()
-          );
-        },
-        function (sender, args) {
-          console.log(
-            "Request failed. " +
-              args.get_message() +
-              "\n" +
-              args.get_stackTrace()
-          );
-        }
-      );
-    },
-    openOrCreateForMetric: function (metricCode, metricId) {
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext
-        .get_web()
-        .get_lists()
-        .getByTitle("BenefitsEquations");
-      var camlQuery = new SP.CamlQuery();
-      camlQuery.set_viewXml(
-        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='RelatedBenefit'/><Value Type='Text'>" +
-          camlText(metricCode) +
-          "</Value></Eq></And></Where></Query><RowLimit>1</RowLimit></View>"
-      );
-      var items = oList.getItems(camlQuery);
-      clientContext.load(items);
-      clientContext.executeQueryAsync(
-        function () {
-          var enumerator = items.getEnumerator();
-          if (enumerator.moveNext()) {
-            equationBenefit.g.openEquation(enumerator.get_current().get_id());
-            return;
-          }
-          equationBenefit.g.createEquation(metricCode, metricId);
-        },
-        function () {
-          equationBenefit.g.createEquation(metricCode, metricId);
-        }
-      );
-    },
-    createEquation: function (relatedCode, itemId) {
       var clientContext = new SP.ClientContext.get_current();
       var oList = clientContext
         .get_web()
         .get_lists()
         .getByTitle("BenefitsEquations");
       var item = oList.addItem(new SP.ListItemCreationInformation());
-      var year = String(new Date().getFullYear()).slice(-2);
-      var seq = String(itemId || "0").padStart(4, "0");
-      var code = relatedCode || "BE-" + year + "-" + seq;
+      var code = benefitCode;
+      if (!code) {
+        code =
+          "BE-" +
+          String(new Date().getFullYear()).slice(-2) +
+          "-" +
+          String(IID || "0").padStart(4, "0");
+      }
       item.set_item("Title", code);
-      item.set_item("RelatedBenefit", relatedCode || code);
+      item.set_item("RelatedBenefit", code);
       item.update();
       clientContext.load(item);
       clientContext.executeQueryAsync(
         function () {
-          benefitsEquationID = item.get_id();
-          equationBenefit.g.openEquation(benefitsEquationID);
-        },
-        function () {
-          equationBenefit.g.openExistingEquation(relatedCode || code);
-        }
-      );
-    },
-    openExistingEquation: function (relatedCode) {
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext
-        .get_web()
-        .get_lists()
-        .getByTitle("BenefitsEquations");
-      var camlQuery = new SP.CamlQuery();
-      camlQuery.set_viewXml(
-        "<View><Query><Where><Eq><FieldRef Name='RelatedBenefit'/><Value Type='Text'>" +
-          camlText(relatedCode) +
-          "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
-      );
-      var items = oList.getItems(camlQuery);
-      clientContext.load(items);
-      clientContext.executeQueryAsync(
-        function () {
-          var enumerator = items.getEnumerator();
-          if (enumerator.moveNext()) {
-            equationBenefit.g.openEquation(enumerator.get_current().get_id());
-            return;
-          }
-          window.location =
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/New.aspx?ListKey=benefitsequations" +
-            PCODE_STRING;
+          open(item.get_id());
         },
         function () {
           window.location =
