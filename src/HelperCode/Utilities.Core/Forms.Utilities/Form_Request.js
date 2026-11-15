@@ -154,14 +154,6 @@ window.CheckActiveCalendarQuarterForAnalysis = function (callback) {
   });
 };
 
-function epmoMayEditBenefitWeight(moduleCode, stage) {
-  var moduleValue = String(moduleCode == null ? "" : moduleCode).trim();
-  var stageValue = String(stage == null ? "" : stage).trim().toLowerCase();
-  if (!moduleValue && !stageValue) return true;
-  if (stageValue === "approved") return true;
-  return false;
-}
-
 window.Edit_Data_Request = {
   onSuccess: async function (sender, args) {
     // Reset retry count
@@ -949,47 +941,13 @@ window.Edit_Data_Request = {
     }
     if (listkey == "benefits") {
       benefitCodeResult = oListItem.get_item("Title");
-      if (
-        isEPMO &&
-        !USERisWF &&
-        epmoMayEditBenefitWeight(
-          oListItem.get_item("WFModuleCode"),
-          oListItem.get_item("WFStage")
-        )
-      ) {
-        var currentWeight = parseFloat(oListItem.get_item("Weight"));
-        if (isNaN(currentWeight)) currentWeight = 0;
-        var applyBenefitWeightEdit = function () {
-          var $weight = $("#Weight");
-          if (!$weight.length) return false;
-          var remainingWeight = parseFloat($weight.attr("max"));
-          if (isNaN(remainingWeight)) remainingWeight = 0;
-          var allowedWeight =
-            Math.round((remainingWeight + currentWeight) * 10) / 10;
-          if (allowedWeight < currentWeight) allowedWeight = currentWeight;
-          if (allowedWeight > 100) allowedWeight = 100;
-          $weight
-            .prop("disabled", false)
-            .removeAttr("disabled")
-            .css({ "pointer-events": "auto", opacity: "1" })
-            .attr("max", allowedWeight)
-            .attr(
-              "oninput",
-              "this.value = (this.value !== '' && Math.abs(this.value) >= 0 && Math.abs(this.value) <= " +
-                allowedWeight +
-                ") ? Math.abs(this.value) : ''"
-            );
-          return true;
-        };
-        if (!applyBenefitWeightEdit()) {
-          var weightTries = 0;
-          var weightTimer = setInterval(function () {
-            weightTries += 1;
-            if (applyBenefitWeightEdit() || weightTries > 20) {
-              clearInterval(weightTimer);
-            }
-          }, 300);
-        }
+      window.benefitWeightAccess = {
+        module: oListItem.get_item("WFModuleCode"),
+        stage: oListItem.get_item("WFStage"),
+        weight: oListItem.get_item("Weight"),
+      };
+      if (window.userCalls && userCalls.g.enableEpmoBenefitWeight) {
+        userCalls.g.enableEpmoBenefitWeight();
       }
     }
 

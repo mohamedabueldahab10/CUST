@@ -518,6 +518,15 @@ if (
 }
 
 window.userAddedToGroup = true;
+
+function epmoMayEditBenefitWeight(moduleCode, stage) {
+  var moduleValue = String(moduleCode == null ? "" : moduleCode).trim();
+  var stageValue = String(stage == null ? "" : stage).trim().toLowerCase();
+  if (!moduleValue && !stageValue) return true;
+  if (stageValue === "approved") return true;
+  return false;
+}
+
 //Get User Groups
 window.userCalls = {
   get_CurrentUser: function () {
@@ -1489,6 +1498,19 @@ window.userCalls = {
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
         isEPMO = true;
+        if (USERlistkey == "benefits" && USERisEdit && !USERisWF) {
+          var epmoWeightTries = 0;
+          var epmoWeightTimer = setInterval(function () {
+            epmoWeightTries += 1;
+            if (
+              (userCalls.g.enableEpmoBenefitWeight &&
+                userCalls.g.enableEpmoBenefitWeight()) ||
+              epmoWeightTries > 25
+            ) {
+              clearInterval(epmoWeightTimer);
+            }
+          }, 300);
+        }
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
@@ -8920,7 +8942,39 @@ window.userCalls = {
           //     $(this).find('*').attr('disabled', true);
           // };
         });
+        userCalls.g.enableEpmoBenefitWeight();
       }
+    },
+    enableEpmoBenefitWeight: function () {
+      if (!isEPMO || USERisWF || USERlistkey != "benefits" || !USERisEdit) {
+        return true;
+      }
+      var access = window.benefitWeightAccess;
+      if (!access) return false;
+      if (!epmoMayEditBenefitWeight(access.module, access.stage)) return true;
+      var $weight = $("#Weight");
+      if (!$weight.length) return false;
+      var currentWeight = parseFloat(access.weight);
+      if (isNaN(currentWeight)) currentWeight = 0;
+      var remainingWeight = parseFloat($weight.attr("max"));
+      if (isNaN(remainingWeight)) remainingWeight = 0;
+      var allowedWeight =
+        Math.round((remainingWeight + currentWeight) * 10) / 10;
+      if (allowedWeight < currentWeight) allowedWeight = currentWeight;
+      if (allowedWeight > 100) allowedWeight = 100;
+      $weight
+        .prop("disabled", false)
+        .removeAttr("disabled")
+        .css({ "pointer-events": "auto", opacity: "1" })
+        .attr("max", allowedWeight)
+        .attr(
+          "oninput",
+          "this.value = (this.value !== '' && Math.abs(this.value) >= 0 && Math.abs(this.value) <= " +
+            allowedWeight +
+            ") ? Math.abs(this.value) : ''"
+        );
+      access.applied = true;
+      return true;
     },
   },
 };
