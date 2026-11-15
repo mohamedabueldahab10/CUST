@@ -14492,6 +14492,38 @@ window.BenefitsWeightGuard = {
     }
     return inEpmoGroup && (!role || role === "EPMO");
   },
+  fieldGroupsAllowEdit: function ($weight) {
+    if (!$weight || !$weight.length) return false;
+    var dataGroups = String($weight.closest(".CFIELD").attr("data-groups") || "")
+      .split(",")
+      .map(function (groupName) {
+        return groupName.trim();
+      })
+      .filter(Boolean);
+    if (!dataGroups.length) return false;
+    var userGroups = [];
+    if (typeof Groups !== "undefined" && Groups && Groups.length) {
+      userGroups = userGroups.concat(Groups);
+    }
+    if (
+      typeof GroupItem !== "undefined" &&
+      GroupItem[0] &&
+      GroupItem[0].groupsName
+    ) {
+      userGroups = userGroups.concat(GroupItem[0].groupsName);
+    }
+    try {
+      var stored = localStorage.getItem("userGroup") || "";
+      if (stored) userGroups = userGroups.concat(stored.split(","));
+    } catch (e) {}
+    userGroups = userGroups.map(function (groupName) {
+      return String(groupName).trim();
+    });
+    for (var i = 0; i < dataGroups.length; i++) {
+      if (userGroups.indexOf(dataGroups[i]) > -1) return true;
+    }
+    return false;
+  },
   roleIsKnown: function () {
     if (typeof currentUserRole !== "undefined" && currentUserRole) return true;
     if (typeof isAdmin !== "undefined" && isAdmin) return true;
@@ -14558,26 +14590,21 @@ window.BenefitsWeightGuard = {
       return;
     }
     var $weight = $("input#Weight");
-    var canEdit = BenefitsWeightGuard.canCurrentUserEditWeight();
-    if ($weight.length) {
-      if (canEdit) {
-        $weight
-          .prop("disabled", false)
-          .removeAttr("disabled")
-          .prop("readonly", false);
-        $weight.css({
-          "pointer-events": "auto",
-          opacity: "",
-          "background-color": "",
-          color: "",
-        });
-      } else if (
-        typeof isEdit !== "undefined" &&
-        isEdit &&
-        BenefitsWeightGuard.roleIsKnown()
-      ) {
-        $weight.prop("disabled", true);
-      }
+    var canEdit =
+      BenefitsWeightGuard.canCurrentUserEditWeight() ||
+      BenefitsWeightGuard.fieldGroupsAllowEdit($weight) ||
+      (typeof isAdmin !== "undefined" && isAdmin);
+    if ($weight.length && canEdit) {
+      $weight
+        .prop("disabled", false)
+        .removeAttr("disabled")
+        .prop("readonly", false);
+      $weight.css({
+        "pointer-events": "auto",
+        opacity: "",
+        "background-color": "",
+        color: "",
+      });
     }
     BenefitsWeightGuard.applyPeriodTypeEditAccess();
   },
