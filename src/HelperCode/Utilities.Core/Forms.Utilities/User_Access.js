@@ -1514,6 +1514,7 @@ window.userCalls = {
           "initiativelessonslearned",
           "benefits",
           "benefitmetrics",
+          "benefitsequations",
           "BenefitMetrics.aspx",
           "closureinitiative",
           "projects",
@@ -1562,6 +1563,7 @@ window.userCalls = {
           "initiativelessonslearned",
           "benefits",
           "benefitmetrics",
+          "benefitsequations",
           "BenefitMetrics.aspx",
           "closureinitiative",
           "projects",
@@ -11487,6 +11489,8 @@ var Tasks_Info_Request_User = {
             keyNameParams = "strategicpartnerships";
           } else if (wfname == "Achievements") {
             keyNameParams = "achievements";
+          } else if (wfname == "InitiativeBenefits") {
+            keyNameParams = "benefits";
           } else if (
             wfname == "VROBenefitActual" ||
             wfname == "EPMOBenefitActual" ||
