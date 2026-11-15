@@ -14285,52 +14285,6 @@ window.benefitWeightReadValue = function (raw) {
   return text;
 };
 
-window.benefitWeightAccessDecision = function (input) {
-  input = input || {};
-  if (input.isAdmin) return true;
-  var stage = String(input.stage || "").trim();
-  var moduleCode = String(input.moduleCode || "").trim();
-  var sid = String(input.stageId || "").trim();
-  var cstage = String(input.currentStage || "").trim();
-  var stageNorm = stage.toLowerCase();
-  var sidNorm = sid.toLowerCase();
-  var cstageNorm = cstage.toLowerCase();
-  var epmoStages = [
-    "InitiativeBenefits01",
-    "InitiativeBenefits02",
-    "InitiativeBenefits03",
-  ];
-  if (input.isEpmoOffice) {
-    if (
-      stageNorm === "approved" ||
-      sidNorm === "approved" ||
-      cstageNorm === "approved"
-    ) {
-      return true;
-    }
-    if (!moduleCode && !stage) return true;
-  }
-  if (input.isEpmo) {
-    if (
-      epmoStages.indexOf(sid) > -1 ||
-      epmoStages.indexOf(cstage) > -1 ||
-      epmoStages.indexOf(stage) > -1
-    ) {
-      return true;
-    }
-  }
-  if (
-    input.isInitiativeManager &&
-    (sid === "InitiativeBenefits00" ||
-      cstage === "InitiativeBenefits00" ||
-      stage === "InitiativeBenefits00")
-  ) {
-    return true;
-  }
-  return false;
-};
-// end benefitWeightAccessDecision
-
 // Block adding a new Benefit when initiative benefits Weight sum >= 100
 window.BenefitsWeightGuard = {
   applied: false,
@@ -14463,119 +14417,74 @@ window.BenefitsWeightGuard = {
     var isAdminUser = typeof isAdmin !== "undefined" && isAdmin;
     return !!isEpmoUser || !!isAdminUser;
   },
-  isEpmoOfficeUser: function () {
-    var role = "";
-    if (typeof currentUserRole !== "undefined" && currentUserRole) {
-      role = String(currentUserRole);
-    } else {
-      try {
-        role = localStorage.getItem("userRole") || "";
-      } catch (e) {
-        role = "";
-      }
-    }
-    if (role === "EPMO") return true;
-    if (window.epmoCanEditApprovedBenefitWeight && (!role || role === "EPMO")) {
-      return true;
-    }
-    var inEpmoGroup = false;
-    if (typeof Groups !== "undefined" && Groups && typeof Groups.indexOf === "function") {
-      inEpmoGroup = Groups.indexOf("EPMO") > -1;
-    }
-    if (!inEpmoGroup) {
-      try {
-        var storedGroups = localStorage.getItem("userGroup") || "";
-        inEpmoGroup = storedGroups.split(",").indexOf("EPMO") > -1;
-      } catch (e2) {
-        inEpmoGroup = false;
-      }
-    }
-    return inEpmoGroup && (!role || role === "EPMO");
-  },
-  fieldGroupsAllowEdit: function ($weight) {
-    if (!$weight || !$weight.length) return false;
-    var dataGroups = String($weight.closest(".CFIELD").attr("data-groups") || "")
-      .split(",")
-      .map(function (groupName) {
-        return groupName.trim();
-      })
-      .filter(Boolean);
-    if (!dataGroups.length) return false;
-    var userGroups = [];
-    if (typeof Groups !== "undefined" && Groups && Groups.length) {
-      userGroups = userGroups.concat(Groups);
-    }
-    if (
-      typeof GroupItem !== "undefined" &&
-      GroupItem[0] &&
-      GroupItem[0].groupsName
-    ) {
-      userGroups = userGroups.concat(GroupItem[0].groupsName);
-    }
-    try {
-      var stored = localStorage.getItem("userGroup") || "";
-      if (stored) userGroups = userGroups.concat(stored.split(","));
-    } catch (e) {}
-    userGroups = userGroups.map(function (groupName) {
-      return String(groupName).trim();
-    });
-    for (var i = 0; i < dataGroups.length; i++) {
-      if (userGroups.indexOf(dataGroups[i]) > -1) return true;
-    }
-    return false;
-  },
-  roleIsKnown: function () {
-    if (typeof currentUserRole !== "undefined" && currentUserRole) return true;
-    if (typeof isAdmin !== "undefined" && isAdmin) return true;
-    if (typeof isEPMO !== "undefined" && isEPMO) return true;
-    if (window.epmoCanEditApprovedBenefitWeight) return true;
-    if (typeof Groups !== "undefined" && Groups && Groups.length) return true;
-    return false;
-  },
   canCurrentUserEditWeight: function () {
-    var role = "";
-    if (typeof currentUserRole !== "undefined" && currentUserRole) {
-      role = String(currentUserRole);
-    } else {
-      try {
-        role = localStorage.getItem("userRole") || "";
-      } catch (e) {
-        role = "";
+    if (typeof isAdmin !== "undefined" && isAdmin) return true;
+    var isEpmoOffice =
+      (typeof currentUserRole !== "undefined" && currentUserRole == "EPMO") ||
+      window.epmoCanEditApprovedBenefitWeight === true;
+    if (
+      isEpmoOffice &&
+      !(typeof USERisWF !== "undefined" && USERisWF) &&
+      window.benefitWfFieldsRead
+    ) {
+      var approvedStage = window
+        .benefitWeightReadValue(window.benefitItemWfStage)
+        .toLowerCase();
+      var approvedModule = window.benefitWeightReadValue(
+        window.benefitItemWfModule
+      );
+      if (
+        approvedStage === "approved" ||
+        (!approvedStage && !approvedModule)
+      ) {
+        return true;
       }
     }
-    var stage = window.benefitWeightReadValue(window.benefitItemWfStage);
-    if (!stage && $("#WFStage").length) {
-      stage = window.benefitWeightReadValue(
-        $("#WFStage").val() ||
-          $("#WFStage").attr("value") ||
-          $("#WFStage").attr("data-lookup-value")
-      );
-    }
-    var moduleCode = window.benefitWeightReadValue(window.benefitItemWfModule);
-    if (!moduleCode && $("#WFModuleCode").length) {
-      moduleCode = window.benefitWeightReadValue(
-        $("#WFModuleCode").val() || $("#WFModuleCode").attr("value")
-      );
-    }
-    var allowed = window.benefitWeightAccessDecision({
-      isAdmin: typeof isAdmin !== "undefined" && isAdmin,
-      isEpmoOffice: BenefitsWeightGuard.isEpmoOfficeUser(),
-      isEpmo:
-        (typeof isEPMO !== "undefined" && isEPMO) ||
-        BenefitsWeightGuard.isEpmoOfficeUser(),
-      isInitiativeManager:
-        (typeof isInManager !== "undefined" && isInManager) ||
-        role === "InitiativeManager",
-      stage: stage,
-      moduleCode: moduleCode,
-      stageId: typeof stageid !== "undefined" ? stageid : "",
-      currentStage: typeof currentstage !== "undefined" ? currentstage : "",
-    });
-    if (allowed) return true;
     if (
       typeof End_Workflow !== "undefined" &&
-      End_Workflow.canEditBenefitWeight &&
-      End_Workflow.canEditBenefitWeight() === true
+      End_Workflow.canEditBenefitWeight
+    ) {
+      return End_Workflow.canEditBenefitWeight();
+    }
+    var sid =
+      typeof stageid !== "undefined" ? String(stageid || "").trim() : "";
+    var cstage =
+      typeof currentstage !== "undefined"
+        ? String(currentstage || "").trim()
+        : "";
+    var wfStageVal = String(
+      (typeof window.benefitItemWfStage !== "undefined" &&
+        window.benefitItemWfStage) ||
+        ($("#WFStage").length && $("#WFStage").val()) ||
+        ($("#WFStage").length && $("#WFStage").attr("value")) ||
+        ($("#WFStage").length && $("#WFStage").attr("data-lookup-value")) ||
+        ""
+    ).trim();
+    var epmoStages = [
+      "InitiativeBenefits01",
+      "InitiativeBenefits02",
+      "InitiativeBenefits03",
+    ];
+    var isEpmoUser =
+      (typeof isEPMO !== "undefined" && isEPMO) ||
+      (typeof currentUserRole !== "undefined" && currentUserRole == "EPMO");
+    var isInitiativeMgr =
+      (typeof isInManager !== "undefined" && isInManager) ||
+      (typeof currentUserRole !== "undefined" &&
+        currentUserRole == "InitiativeManager");
+    if (
+      isEpmoUser &&
+      (epmoStages.indexOf(sid) > -1 ||
+        epmoStages.indexOf(cstage) > -1 ||
+        epmoStages.indexOf(wfStageVal) > -1)
+    ) {
+      return true;
+    }
+    if (
+      isInitiativeMgr &&
+      (sid === "InitiativeBenefits00" ||
+        cstage === "InitiativeBenefits00" ||
+        wfStageVal === "InitiativeBenefits00")
     ) {
       return true;
     }
@@ -14590,21 +14499,17 @@ window.BenefitsWeightGuard = {
       return;
     }
     var $weight = $("input#Weight");
-    var canEdit =
-      BenefitsWeightGuard.canCurrentUserEditWeight() ||
-      BenefitsWeightGuard.fieldGroupsAllowEdit($weight) ||
-      (typeof isAdmin !== "undefined" && isAdmin);
-    if ($weight.length && canEdit) {
-      $weight
-        .prop("disabled", false)
-        .removeAttr("disabled")
-        .prop("readonly", false);
-      $weight.css({
-        "pointer-events": "auto",
-        opacity: "",
-        "background-color": "",
-        color: "",
-      });
+    var canEdit = BenefitsWeightGuard.canCurrentUserEditWeight();
+    if ($weight.length) {
+      if (canEdit) {
+        $weight
+          .prop("disabled", false)
+          .removeAttr("disabled")
+          .prop("readonly", false);
+        $weight.css("pointer-events", "auto");
+      } else if (typeof isEdit !== "undefined" && isEdit) {
+        $weight.prop("disabled", true);
+      }
     }
     BenefitsWeightGuard.applyPeriodTypeEditAccess();
   },
