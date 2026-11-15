@@ -1489,6 +1489,7 @@ window.userCalls = {
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
         isEPMO = true;
+        window.epmoCanEditApprovedBenefitWeight = true;
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
