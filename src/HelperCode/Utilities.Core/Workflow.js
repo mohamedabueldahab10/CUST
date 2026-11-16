@@ -2080,6 +2080,89 @@ var DeleteDelegate_Data_Submit = {
   },
 };
 //*****3 */
+// Benefits (المنافع): the إنهاء سير العمل button, in creation and in approval.
+function isBenefitsWorkflowContext(workflowName, listKey) {
+  var wf = (workflowName || "").toString();
+  var key = (listKey || "").toString().toLowerCase();
+  var href = "";
+  try {
+    href = (window.location.href || "").toLowerCase();
+  } catch (e) {}
+  if (key === "benefits") return true;
+  if (
+    href.indexOf("listkey=benefits") > -1 &&
+    href.indexOf("listkey=benefitmetrics") === -1
+  ) {
+    return true;
+  }
+  if (href.indexOf("benefits&") > -1 && href.indexOf("benefitmetrics") === -1) {
+    return true;
+  }
+  return (
+    wf === "InitiativeBenefits" ||
+    wf === "Benefits" ||
+    wf === "MSActualBenefit" ||
+    wf === "LMSActualBenefit" ||
+    wf === "EPMOActualBenefit" ||
+    wf === "SODActualBenefit" ||
+    wf === "VROActualBenefit"
+  );
+}
+
+function isEndWorkflowButtonTitle(title) {
+  var normalized = (title || "")
+    .toString()
+    .replace(/[\u200f\u200e]/g, "")
+    .replace(/[أإآ]/g, "ا")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+  if (!normalized) return false;
+  return (
+    normalized.indexOf("انهاء سير العمل") !== -1 ||
+    normalized.indexOf("end workflow") !== -1
+  );
+}
+
+function isBenefitsEndWorkflowAction(workflowName, listKey, state, version) {
+  if (!isBenefitsWorkflowContext(workflowName, listKey)) return false;
+  // Approval screen: إنهاء سير العمل is the third button (not الموافقة / طلب معلومات).
+  if (state == 3 && version === "Approval") return true;
+  // Creation screen: the submit button is labeled إنهاء سير العمل.
+  if (
+    state === true &&
+    (version === "Submit" || version === "New" || version === "SubmitField")
+  ) {
+    var title = typeof actionbuttonTitle !== "undefined" ? actionbuttonTitle : "";
+    return isEndWorkflowButtonTitle(title);
+  }
+  return false;
+}
+
+function confirmBenefitsEndWorkflow(onConfirm) {
+  var isAr =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+  var pack = isAr ? Resources.ar : Resources.en;
+  var locale = {
+    OK: pack["yes"],
+    CONFIRM: pack["yes"],
+    CANCEL: pack["cancelbutton"],
+  };
+  var message = pack["endworkflowconfirmation"];
+  if (typeof bootbox === "undefined" || !bootbox.confirm) {
+    if (window.confirm(message)) onConfirm();
+    return;
+  }
+  bootbox.addLocale("custom", locale);
+  bootbox.confirm({
+    message: message,
+    locale: "custom",
+    callback: function (result) {
+      if (result == true) onConfirm();
+    },
+  });
+}
+
 var Task_PCODE_Data_Request_WFs = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
   preinit: function () {
@@ -2337,7 +2420,36 @@ var Task_PCODE_Data_Request_WFs = {
           break;
         case "Approval":
 {
-        if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "SODCreateProject")
+        if (
+          isBenefitsWorkflowContext(
+            workflowname,
+            typeof listkey !== "undefined" ? listkey : ""
+          )
+        ) {
+          $(".navbar.page-nav.px-5").after(
+            '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+              taskid +
+              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
+              actionbuttonTitle +
+              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources" type="button"></button></div></div>'
+          );
+          $(".btnactionrow > h2.approvalHeader").append(
+            '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+              taskid +
+              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+          );
+          $(".btnactionrow .form-btns-wrapper").append(
+            '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
+              actionbuttonTitle +
+              '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources" type="button"></button></div></div>'
+          );
+          $("div.Container").fadeIn();
+          $("div.cust-loader").fadeOut();
+          forFormSubmitHTMLStatus = setInterval(function () {
+            Task_PCODE_Data_Request_WFs.g.hidefields();
+          }, 100);
+        }
+        else if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "SODCreateProject")
         {
           // console.log('aaaaaaaaaaaaaa');
           $(".navbar.page-nav.px-5").after(
@@ -2768,7 +2880,23 @@ var Task_PCODE_Data_Request_WFs = {
         Task_PCODE_Data_Request_WFs.g.Handle_Take_Action();
       }
     },
-    addcomments: function (state, version, withNote = false) {
+    addcomments: function (state, version, withNote, confirmed) {
+      if (withNote === undefined) withNote = false;
+      var currentListKey = typeof listkey !== "undefined" ? listkey : "";
+      if (
+        !confirmed &&
+        isBenefitsEndWorkflowAction(workflowname, currentListKey, state, version)
+      ) {
+        confirmBenefitsEndWorkflow(function () {
+          Task_PCODE_Data_Request_WFs.g.addcomments(
+            state,
+            version,
+            withNote,
+            true
+          );
+        });
+        return;
+      }
       stageState = state; // added to handle WF Notes
       console.log("[WF][addcomments] open popup", {
         state: state,
