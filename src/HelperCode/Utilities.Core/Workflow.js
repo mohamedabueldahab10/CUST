@@ -2080,6 +2080,44 @@ var DeleteDelegate_Data_Submit = {
   },
 };
 //*****3 */
+// Benefits (المنافع): confirm before the completing action in creation and approval.
+function isBenefitsEndWorkflowAction(workflowName, listKey, state, version) {
+  if (state !== true) return false;
+  var completingVersion =
+    version === "Approval" ||
+    version === "Submit" ||
+    version === "New" ||
+    version === "SubmitField";
+  if (!completingVersion) return false;
+  var wf = (workflowName || "").toString();
+  var key = (listKey || "").toString().toLowerCase();
+  return wf === "InitiativeBenefits" || wf === "Benefits" || key === "benefits";
+}
+
+function confirmBenefitsEndWorkflow(onConfirm) {
+  var isAr =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+  var pack = isAr ? Resources.ar : Resources.en;
+  var locale = {
+    OK: pack["yes"],
+    CONFIRM: pack["yes"],
+    CANCEL: pack["cancelbutton"],
+  };
+  var message = pack["endworkflowconfirmation"];
+  if (typeof bootbox === "undefined" || !bootbox.confirm) {
+    if (window.confirm(message)) onConfirm();
+    return;
+  }
+  bootbox.addLocale("custom", locale);
+  bootbox.confirm({
+    message: message,
+    locale: "custom",
+    callback: function (result) {
+      if (result == true) onConfirm();
+    },
+  });
+}
+
 var Task_PCODE_Data_Request_WFs = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
   preinit: function () {
@@ -2768,7 +2806,23 @@ var Task_PCODE_Data_Request_WFs = {
         Task_PCODE_Data_Request_WFs.g.Handle_Take_Action();
       }
     },
-    addcomments: function (state, version, withNote = false) {
+    addcomments: function (state, version, withNote, confirmed) {
+      if (withNote === undefined) withNote = false;
+      var currentListKey = typeof listkey !== "undefined" ? listkey : "";
+      if (
+        !confirmed &&
+        isBenefitsEndWorkflowAction(workflowname, currentListKey, state, version)
+      ) {
+        confirmBenefitsEndWorkflow(function () {
+          Task_PCODE_Data_Request_WFs.g.addcomments(
+            state,
+            version,
+            withNote,
+            true
+          );
+        });
+        return;
+      }
       stageState = state; // added to handle WF Notes
       console.log("[WF][addcomments] open popup", {
         state: state,
