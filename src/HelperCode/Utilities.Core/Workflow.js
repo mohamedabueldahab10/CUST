@@ -2455,36 +2455,7 @@ var Task_PCODE_Data_Request_WFs = {
           break;
         case "Approval":
           {
-            if (
-              isBenefitsWorkflowContext(
-                workflowname,
-                typeof listkey !== "undefined" ? listkey : ""
-              )
-            ) {
-              $(".navbar.page-nav.px-5").after(
-                '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-                taskid +
-                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
-                actionbuttonTitle +
-                '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources" type="button"></button></div></div>'
-              );
-              $(".btnactionrow > h2.approvalHeader").append(
-                '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-                taskid +
-                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
-              );
-              $(".btnactionrow .form-btns-wrapper").append(
-                '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
-                actionbuttonTitle +
-                '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources" type="button"></button></div></div>'
-              );
-              $("div.Container").fadeIn();
-              $("div.cust-loader").fadeOut();
-              forFormSubmitHTMLStatus = setInterval(function () {
-                Task_PCODE_Data_Request_WFs.g.hidefields();
-              }, 100);
-            }
-            else if (workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "SODCreateProject") {                  // console.log('aaaaaaaaaaaaaa');
+            if (workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "SODCreateProject") {                  // console.log('aaaaaaaaaaaaaa');
               $(".navbar.page-nav.px-5").after(
                 '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
                 taskid +
@@ -7468,6 +7439,19 @@ var End_Workflow = {
   },
   init: function (options) {
     options = options || {};
+    if (!options.confirmed) {
+      var confirmedOptions = {
+        listTitle: options.listTitle,
+        listingKey: options.listingKey,
+        btnId: options.btnId,
+        deleteItem: options.deleteItem,
+        confirmed: true,
+      };
+      confirmBenefitsEndWorkflow(function () {
+        End_Workflow.init(confirmedOptions);
+      });
+      return;
+    }
     var listTitle = options.listTitle || "Benefits";
     var listingKey = options.listingKey || "benefits";
     var btnId = options.btnId || "btnEndWorkflow";
