@@ -2177,24 +2177,28 @@ function confirmBenefitsEndWorkflow(onConfirm) {
   var isAr =
     localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
   var pack = isAr ? Resources.ar : Resources.en;
-  var locale = {
-    OK: pack["yes"],
-    CONFIRM: pack["yes"],
-    CANCEL: pack["cancelbutton"],
-  };
   var message = pack["endworkflowconfirmation"];
-  if (typeof bootbox === "undefined" || !bootbox.confirm) {
+  var yesText = pack["yes"];
+  var cancelText = pack["cancelbutton"];
+  if (typeof $ === "undefined") {
     if (window.confirm(message)) onConfirm();
     return;
   }
-  bootbox.addLocale("custom", locale);
-  bootbox.confirm({
-    message: message,
-    locale: "custom",
-    callback: function (result) {
-      if (result == true) onConfirm();
-    },
+  $(".end-workflow-confirm").remove();
+  var popup = $(
+    '<div class="popupComment end-workflow-confirm"><div class="wrapcomments"><label class="end-workflow-confirm-msg"></label><div><button type="button" class="commentsub btn btn-action btn-save end-workflow-confirm-yes"></button><button type="button" class="commentsub end-workflow-confirm-no"></button></div></div></div>'
+  );
+  popup.find(".end-workflow-confirm-msg").text(message);
+  popup.find(".end-workflow-confirm-yes").text(yesText);
+  popup.find(".end-workflow-confirm-no").text(cancelText);
+  popup.find(".end-workflow-confirm-yes").on("click", function () {
+    popup.remove();
+    onConfirm();
   });
+  popup.find(".end-workflow-confirm-no").on("click", function () {
+    popup.remove();
+  });
+  $("body").append(popup);
 };
 
 //*****3 */
