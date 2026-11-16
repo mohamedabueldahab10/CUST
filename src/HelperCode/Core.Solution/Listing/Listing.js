@@ -1,4 +1,4 @@
-var PQuery = '',
+﻿var PQuery = '',
   PQueryFilteration = '',
   PCODE_STRING = '',
   originalstate = true,
@@ -17,7 +17,7 @@ var PQuery = '',
   isOnload = true,
   isEmptyFilter = true, SPHTTPitemsEnumerable,
   AllRecordsWithID = [];
-  window.IsZeroBudgetInitiative = false;
+  window.IsZeroBudgetInitiative = false;   
   window.IsZeroBudgetProject = false;
 //
 
@@ -27,7 +27,7 @@ if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar
   var No_Data = 'لا يوجد'
 } else {
   var No_Data = 'No Data';
-  var search = "Search ...";
+  var search = "Search ...";   
 }
 if ((localStorage.getItem("lng") == null) || (localStorage.getItem("lng") == "ar")) {
   var enternameemail = Resources.ar["enternameemail"]
@@ -118,6 +118,9 @@ var excelListingQuery = "", excelListingName = "", excelInternalFieldsNames = ""
 var isWFs = window.location.href.indexOf('&WFs') > -1 ? '&WFs' : '',
   listkey = window.location.href.split('ListKey=')[1].split('&')[0],
   isTasks = listkey == 'tasks' ? true : false;
+listkey = String(listkey || '').toLowerCase() === 'initiativesanalysis'
+? 'initiativesanalysis'
+: String(listkey || '').toLowerCase();
 if (window.location.href.includes("PCODE")) {
   PCODE = window.location.href.split('PCODE=')[1].split('&')[0];
   PCODE_STRING = '&PCODE=' + PCODE;
@@ -141,7 +144,7 @@ if (window.location.href.includes("sosCode")) {
 for (var i = 0; i < ListArray.length; i++) {
   var obj = ListArray[i];
   for (var key in obj) {
-	if (key == window.location.href.split('ListKey=')[1].split('&')[0]) {
+	if (key == listkey) {
 	  SP_ListName = obj[key];
 	  PageTitle = obj['ListingTitle'];
 	}
@@ -149,7 +152,7 @@ for (var i = 0; i < ListArray.length; i++) {
 }
 
 //create query depend on PCODE
-JSON_File_Name = window.location.href.split('ListKey=')[1].split('&')[0] + '_Listing.js';
+JSON_File_Name = listkey + '_Listing.js';
 
 if (listkey == 'projects' && PCODE != null && PCODE != '') {
   // PCODE_STRING = '&PCODE='+PCODE;
@@ -167,6 +170,10 @@ else if ((listkey == 'mainkpianalysis' || listkey == 'mainkpiissues') && KpiCode
 else if (listkey == 'sosanalysis' && sosCode != null && sosCode != '') {
   PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
   PQueryFilteration = '<Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq>';
+}
+else if (listkey == 'initiativesanalysis' && ICODE != null && ICODE != '') {
+	PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + String(ICODE).replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+	PQueryFilteration = '<Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + String(ICODE).replace(/'/g, "''") + '</Value></Eq>';
 }
 else if (UserICode != null && UserICode != '') {
   if(listkey=="projects"){
@@ -854,6 +861,10 @@ window.ListingData = {
 		  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
 		  PQueryFilteration = '<Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq>';
 		}
+		else if (listkey == 'initiativesanalysis' && ICODE != null && ICODE != '') {
+			PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + String(ICODE).replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+			PQueryFilteration = '<Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + String(ICODE).replace(/'/g, "''") + '</Value></Eq>';
+		}
 		else if (UserICode != null && UserICode != '') {
 		  if (listkey == 'initiativemilestones') { // to arrange the card depends on planned completed Date
 			PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><In><FieldRef Name="InitiativeCode" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In></And></Where><OrderBy><FieldRef Name=\'PlannedCompletedDate\' Ascending=\'False\' /></OrderBy></Query></View>';
@@ -880,13 +891,16 @@ window.ListingData = {
 	}
 
 	// Apply KpiCode/sosCode filter last so it is never overridden (KpiCode and sosCode are strings)
-	if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis") {
+	if (listkey == "mainkpiissues" || listkey == "mainkpianalysis" || listkey == "sosanalysis" || listkey == "initiativesanalysis") {
 	  if ((listkey == "mainkpianalysis" || listkey == "mainkpiissues") && KpiCode != null && KpiCode !== "") {
 		PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
 		PQueryFilteration = '<Eq><FieldRef Name="KPICode" /><Value Type="Text">' + KpiCode + '</Value></Eq>';
 	  } else if (listkey == "sosanalysis" && sosCode != null && sosCode !== "") {
 		PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
 		PQueryFilteration = '<Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq>';
+	  } else if (listkey == "initiativesanalysis" && ICODE != null && ICODE !== "") {
+		PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + String(ICODE).replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name=\'Modified\' Ascending=\'False\' /></OrderBy></Query></View>';
+		PQueryFilteration = '<Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + String(ICODE).replace(/'/g, "''") + '</Value></Eq>';
 	  }
 	}
 
@@ -1501,7 +1515,7 @@ window.ListingData = {
 			  $('.content-list-head > .listing-new-at').html(HtmlStart);
 			  
 			  // Active calendar quarter check for sosanalysis / mainkpianalysis
-			  if (listkey === "sosanalysis" || listkey === "mainkpianalysis") {
+			  if (listkey === "sosanalysis" || listkey === "mainkpianalysis" || listkey === "initiativesanalysis") {
 			    if (!$("#analysis-calendar-msg-styles").length) {
 			      $("head").append(
 			        '<style id="analysis-calendar-msg-styles">' +
@@ -1892,6 +1906,9 @@ window.ListingData = {
 	  else if (listkey == 'sosanalysis' && sosCode != null && sosCode != '') {
 		PQueryFilteration = '<Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq>';
 	  }
+	  else if (listkey == 'initiativesanalysis' && ICODE != null && ICODE != '') {
+		PQueryFilteration = '<Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + String(ICODE).replace(/'/g, "''") + '</Value></Eq>';
+	  }
 	  else if (ICODE != null && ICODE != '') {
 		if (listkey == 'projects') {
 		  PQueryFilteration = '<In><FieldRef Name="RelatedInitiative" /><Values><Value Type="Text">' + UserICode + '</Value></Values></In>';
@@ -1970,6 +1987,9 @@ window.ListingData = {
 		}
 		else if (listkey == 'sosanalysis' && sosCode != null && sosCode != '') {
 		  PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="SOCode" /><Value Type="Text">' + sosCode.replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
+		}
+		else if (listkey == 'initiativesanalysis' && ICODE != null && ICODE != '') {
+			PQuery = '<View><Query><Where><And><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>Deleted</Value></Neq><Eq><FieldRef Name="InitiativeCode" /><Value Type="Text">' + String(ICODE).replace(/'/g, "''") + '</Value></Eq></And></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
 		}
 		else if (PCODE != null && PCODE != '') {
 		  PQuery = '<View><Query><Where><In><FieldRef Name="ProjectCode" /><Values><Value Type="Text">' + PCODE + '</Value></Values></In></Where><OrderBy><FieldRef Name="Created" Ascending="False" /></OrderBy></Query></View>';
@@ -2403,6 +2423,8 @@ window.ListingData = {
 			keyNameParams = 'strategicpartnerships'
 		  } else if (wfname == 'Achievements') {
 			keyNameParams = 'achievements'
+		  } else if (wfname == 'InitiativeBenefits') {
+			keyNameParams = 'benefits'
 		  } else if (wfname == 'VROBenefitActual' || wfname == 'EPMOBenefitActual' || wfname == 'LMSBenefitActual') {
 			keyNameParams = 'benefitmetrics'
 		  } else if (wfname == 'VROInitiativeMilestone' || wfname == 'EPMOInitiativeMilestone' || wfname == 'LMSInitiativeMilestone' || wfname == 'SODInitiativeMilestone') {

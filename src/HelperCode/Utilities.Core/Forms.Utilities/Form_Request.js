@@ -930,7 +930,7 @@ window.Edit_Data_Request = {
 
       var sector = oListItem.get_item("Sector")
         ? oListItem.get_item("Sector")
-        : "";
+        : ""
       if (sector) {
         Department_Sector_Info.init(sector); // to get the departments related to sector
       }
@@ -1173,6 +1173,30 @@ window.Edit_Data_Request = {
     }
     if (listkey == "benefits") {
       benefitCodeResult = equationBenefitKPI.getField(oListItem, "Title", "");
+      var benefitStage = String(oListItem.get_item("WFStage") || "")
+        .trim()
+        .toLowerCase();
+      if (isEPMO && !USERisWF && (!benefitStage || benefitStage === "approved")) {
+        var $weight = $("#Weight");
+        var currentWeight = parseFloat($weight.val());
+        if (isNaN(currentWeight)) currentWeight = 0;
+        var remainingWeight = parseFloat($weight.attr("max"));
+        if (isNaN(remainingWeight)) remainingWeight = 0;
+        var allowedWeight =
+          Math.round((remainingWeight + currentWeight) * 10) / 10;
+        if (allowedWeight < 0) allowedWeight = 0;
+        if (allowedWeight > 100) allowedWeight = 100;
+        $weight
+          .prop("disabled", false)
+          .removeAttr("disabled")
+          .attr("max", allowedWeight)
+          .attr(
+            "oninput",
+            "this.value = (this.value !== '' && Math.abs(this.value) >= 0 && Math.abs(this.value) <= " +
+              allowedWeight +
+              ") ? Math.abs(this.value) : ''"
+          );
+      }
       benefitCode = benefitCodeResult;
       equationBenefitKPI.init();
       equationBenefitKPI.loadBenefitPeriodFields(oListItem);
@@ -2285,7 +2309,7 @@ window.Edit_Data_Request = {
       }
     }
 
-    if (listkey === "mainkpianalysis" || listkey === "sosanalysis") {
+    if (listkey === "mainkpianalysis" || listkey === "sosanalysis" || listkey === "initiativesanalysis") {
       window.CheckActiveCalendarQuarterForAnalysis && window.CheckActiveCalendarQuarterForAnalysis(function (data) {
         if (!data.result || !data.result.isActive) {
           $("body").append(
@@ -4653,6 +4677,42 @@ window.View_Data_Request = {
                 '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-sosanalysislinktext class="Resources"></span></a>' +
             "</div>"
           );
+        }
+      }
+    }
+
+    if (listkey == "initiatives") {
+      if (!USERisWF && !$(".initiative-analysis-links-wrapper").length) {
+        var initiativeCodeForLinks = "";
+        if (typeof ICODE !== "undefined" && ICODE) {
+          initiativeCodeForLinks = decodeURIComponent(String(ICODE).split("&")[0]);
+        } else if (window.location.href.indexOf("ICODE=") > -1) {
+          initiativeCodeForLinks = decodeURIComponent(
+            window.location.href.split("ICODE=")[1].split("&")[0]
+          );
+        }
+        if (!initiativeCodeForLinks && oListItem.get_item("Title")) {
+          initiativeCodeForLinks = String(oListItem.get_item("Title")).trim();
+        }
+        if (initiativeCodeForLinks) {
+          var initiativesAnalysisLink =
+            '<style>.sos-link-item:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.1);}</style>' +
+            '<div class="sos-links-wrapper initiative-analysis-links-wrapper" style="display:flex;flex-wrap:wrap;justify-content:start;gap:10px;margin-bottom:12px;">' +
+              '<a class="linkmsg alert sos-link-item" href="' +
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=initiativesanalysis&ICODE=" +
+                encodeURIComponent(initiativeCodeForLinks) +
+                '" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:13px;transition:all 0.2s;background:rgba(20,130,130,0.18);color:#148282;border:1px solid rgba(20,130,130,0.4);">' +
+                '<i class="fas fa-chart-line iconfontawesome"></i><span data-trans-initiativeanalysislinktext class="Resources"></span></a>' +
+            "</div>";
+          if ($("#printableArea").length) {
+            $("#printableArea").prepend(initiativesAnalysisLink);
+          } else {
+            $(".container-body").prepend(initiativesAnalysisLink);
+          }
+          if (typeof changeResources === "function") {
+            changeResources();
+          }
         }
       }
     }
@@ -11155,7 +11215,7 @@ var equationBenefit = {
       }
     }
 
-    if ((isAdmin || isSPMAdmin) && !USERisWF) {
+    if ((isAdmin || isSPMAdmin || isEPMO) && !USERisWF) {
       // remove attr disabled for this roles in equation
       $(".savecancelBtns > div, .btnactionrow > .rightBtns").append(
         '<button data-trans-editequation class="btn btn-action Resources btn-edit-equation bg-warning" type="button"></button>'
@@ -11204,11 +11264,46 @@ var equationBenefit = {
   },
   g: {
     editEquation: function () {
-      window.location =
-        _spPageContextInfo.webAbsoluteUrl +
-        "/SitePages/Edit.aspx?ListKey=benefitsequations&IID=" +
-        benefitsEquationID +
-        PCODE_STRING;
+      var open = function (id) {
+        window.location =
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/Edit.aspx?ListKey=benefitsequations&IID=" +
+          id +
+          PCODE_STRING;
+      };
+      if (benefitsEquationID) {
+        open(benefitsEquationID);
+        return;
+      }
+      var clientContext = new SP.ClientContext.get_current();
+      var oList = clientContext
+        .get_web()
+        .get_lists()
+        .getByTitle("BenefitsEquations");
+      var item = oList.addItem(new SP.ListItemCreationInformation());
+      var code = benefitCode;
+      if (!code) {
+        code =
+          "BE-" +
+          String(new Date().getFullYear()).slice(-2) +
+          "-" +
+          String(IID || "0").padStart(4, "0");
+      }
+      item.set_item("Title", code);
+      item.set_item("RelatedBenefit", code);
+      item.update();
+      clientContext.load(item);
+      clientContext.executeQueryAsync(
+        function () {
+          open(item.get_id());
+        },
+        function () {
+          window.location =
+            _spPageContextInfo.webAbsoluteUrl +
+            "/SitePages/New.aspx?ListKey=benefitsequations" +
+            PCODE_STRING;
+        }
+      );
     },
     array: [],
   },
@@ -14287,6 +14382,23 @@ window.BenefitsWeightGuard = {
   },
   canCurrentUserEditWeight: function () {
     if (typeof isAdmin !== "undefined" && isAdmin) return true;
+    var _epmoStage = String(
+      (typeof window.benefitItemWfStage !== "undefined" &&
+        window.benefitItemWfStage) ||
+        ""
+    )
+      .trim()
+      .toLowerCase();
+    var _epmoUser =
+      (typeof isEPMO !== "undefined" && isEPMO) ||
+      (typeof currentUserRole !== "undefined" && currentUserRole == "EPMO");
+    if (
+      _epmoUser &&
+      !(typeof USERisWF !== "undefined" && USERisWF) &&
+      (!_epmoStage || _epmoStage === "approved")
+    ) {
+      return true;
+    }
     if (
       typeof End_Workflow !== "undefined" &&
       End_Workflow.canEditBenefitWeight
@@ -14333,6 +14445,25 @@ window.BenefitsWeightGuard = {
         cstage === "InitiativeBenefits00" ||
         wfStageVal === "InitiativeBenefits00")
     ) {
+      return true;
+    }
+    var moduleVal = String(
+      (typeof window.benefitItemWfModule !== "undefined" &&
+        window.benefitItemWfModule) ||
+        ""
+    ).trim();
+    var stageNorm = wfStageVal.toLowerCase();
+    var sidNorm = sid.toLowerCase();
+    var cstageNorm = cstage.toLowerCase();
+    if (
+      isEpmoUser &&
+      (stageNorm === "approved" ||
+        sidNorm === "approved" ||
+        cstageNorm === "approved")
+    ) {
+      return true;
+    }
+    if (isEpmoUser && !moduleVal && !wfStageVal && !sid && !cstage) {
       return true;
     }
     return false;

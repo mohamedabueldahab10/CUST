@@ -478,3 +478,242 @@
     margin: 0;
     margin-inline-end: 7px !important;
 }
+
+
+/* Child Item MultiSelect */
+
+#ChildItemCodeDiv .cr-child-ms {
+    position: relative;
+    width: 100%;
+}
+
+.cr-child-ms-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 12px;
+    background: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    color: #163d60;
+    cursor: pointer;
+    text-align: start;
+}
+
+.cr-child-ms-trigger:hover {
+    border-color: #80a6ca;
+}
+
+.cr-child-ms-trigger:disabled {
+    background: #e9ecef;
+    cursor: not-allowed;
+}
+
+.cr-child-ms-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% - 2px);
+    inset-inline-start: 0;
+    width: 100%;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #dce2e8;
+    border-radius: 7px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.12);
+    z-index: 1060;
+    box-sizing: border-box;
+}
+
+.cr-child-ms.is-open .cr-child-ms-panel {
+    display: block;
+}
+
+.cr-child-ms-search {
+    width: 100%;
+    padding: 9px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.cr-child-ms-options {
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.cr-child-ms-option {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px;
+    margin-bottom: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.cr-child-ms-option:hover {
+    background: #f1f5f9;
+}
+
+.cr-child-ms-option input {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #1769aa;
+}
+
+.cr-child-ms-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.cr-child-ms-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 9px;
+    background: #eaf3ff;
+    border: 1px solid #cfe3fa;
+    border-radius: 5px;
+    color: #175a9e;
+    font-size: 12px;
+}
+
+.cr-child-ms-remove {
+    border: 0;
+    background: transparent;
+    color: #175a9e;
+    cursor: pointer;
+    font-size: 17px;
+    padding: 0;
+}
+
+.cr-child-ms-empty {
+    padding: 15px;
+    text-align: center;
+    color: #777;
+}
+
+[dir="rtl"] .cr-child-ms {
+    direction: rtl;
+}
+
+[dir="ltr"] .cr-child-ms {
+    direction: ltr;
+}
+
+
+/* Parent Item - Single Select Search */
+
+.cr-parent-search-native {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    clip-path: inset(50%);
+}
+
+.cr-parent-search {
+    position: relative;
+    width: 100%;
+}
+
+.cr-parent-search-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 47px;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    color: #163d60;
+    text-align: start;
+    cursor: pointer;
+}
+
+.cr-parent-search-trigger:disabled {
+    background: #e9ecef;
+    cursor: not-allowed;
+}
+
+.cr-parent-search-trigger:hover:not(:disabled) {
+    border-color: #80a6ca;
+}
+
+.cr-parent-search-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% + 3px);
+    inset-inline-start: 0;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #dce2e8;
+    border-radius: 7px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.12);
+    z-index: 1060;
+}
+
+.cr-parent-search.is-open .cr-parent-search-panel {
+    display: block;
+}
+
+.cr-parent-search-input {
+    display: block;
+    width: 100%;
+    padding: 9px 12px;
+    margin-bottom: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background: #f8fafc;
+    outline: none;
+}
+
+.cr-parent-search-input:focus {
+    border-color: #80bdff;
+}
+
+.cr-parent-search-options {
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.cr-parent-search-option {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 10px 12px;
+    border-radius: 4px;
+    text-align: start;
+    cursor: pointer;
+    color: #163d60;
+}
+
+.cr-parent-search-option:hover {
+    background: #f1f5f9;
+}
+
+.cr-parent-search-option.selected {
+    background: #eaf3ff;
+    color: #175a9e;
+    font-weight: bold;
+}
+
+.cr-parent-search-empty {
+    padding: 15px;
+    text-align: center;
+    color: #777;
+}

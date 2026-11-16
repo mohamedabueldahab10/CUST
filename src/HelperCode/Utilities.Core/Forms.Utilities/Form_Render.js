@@ -2457,7 +2457,7 @@ window.ListInfo = {
               ListInfo.g.requiredSpillarsName();
             }
 
-            if (isNew && (listkey === "mainkpianalysis" || listkey === "sosanalysis")) {
+            if (isNew && (listkey === "mainkpianalysis" || listkey === "sosanalysis" || listkey === "initiativesanalysis")) {
               if (window.CheckActiveCalendarQuarterForAnalysis) {
                 window.CheckActiveCalendarQuarterForAnalysis(function (data) {
                   if (data.isSuccess && data.result && data.result.isActive) {

@@ -1635,7 +1635,15 @@ var Set_Code_Submit = {
         Set_Code_Submit.g.oListItem.set_item("Title", Code);
         var sosCodeFromUrl = window.location.href.indexOf("sosCode=") > -1 ? decodeURIComponent(window.location.href.split("sosCode=")[1].split("&")[0]) : "";
         if (sosCodeFromUrl) Set_Code_Submit.g.oListItem.set_item("SOCode", sosCodeFromUrl);
-      } else if (listkey == "measurementcyclesupport") {
+      } else if (listkey == "initiativesanalysis") {
+        var prt1 = 'INA',
+        prt2 = String(new Date().getFullYear()).slice(4 - 2),
+        prt3 = IID.toString().padStart(4, "0");
+        Code = prt1 + "-" + prt2 + "-" + prt3;
+        Set_Code_Submit.g.oListItem.set_item("Title", Code);
+        if (typeof ICODE !== "undefined" && ICODE) Set_Code_Submit.g.oListItem.set_item("InitiativeCode", ICODE);
+      } 
+      else if (listkey == "measurementcyclesupport") {
         var prt1 = 'MC',
         prt2 = String(new Date().getFullYear()).slice(4 - 2),
         prt3 = IID.toString().padStart(4, "0");

@@ -347,6 +347,7 @@ var Information_Form = [
           groups: [
             'System Admin Group',
             'EPMO',
+            "Initiative Manager",
           ],
         },
       },
@@ -366,6 +367,7 @@ var Information_Form = [
           groups: [
             'System Admin Group',
             'EPMO',
+            "Initiative Manager",
           ],
         },
       },

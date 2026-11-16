@@ -1,4 +1,4 @@
-/*
+﻿/*
   هذا الملف هو المكان اللي بنعرّف فيه "كيف الحذف يشتغل" لكل ListKey.
 : أي عملية حذف تمر على API موحدة، و الـ API تعتمد على البيانات الموجودة هون.
 
@@ -11,7 +11,7 @@
   If a new list key is introduced, add a manual entry here.
 
   API Contract
-  Endpoint: POST ${APIURL}/general/deleteitemandrelatedtasks
+  Endpoint: POST ${APIURL}/general/deleteitemandrelatedtasks   
 
   Payload example:
   {
@@ -265,6 +265,11 @@ window.FormsConfigurationsForDeletionsRestoring = {
         },
         sosanalysis: {
             DisplayListName: "SOsAnalysis",
+            WorkflowNames: "",
+            RelatedListNames: [],
+        },
+        initiativesanalysis: {
+            DisplayListName: "InitiativesAnalysis",
             WorkflowNames: "",
             RelatedListNames: [],
         },

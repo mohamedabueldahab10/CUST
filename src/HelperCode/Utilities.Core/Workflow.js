@@ -156,11 +156,11 @@ var workflowname,
   WFisNew =
     window.location.href.toLowerCase().indexOf("new.aspx") > -1 &&
     (window.location.href.indexOf("WF") > -1 ||
-    window.location.href.toLowerCase().indexOf("&wfs") > -1),
+      window.location.href.toLowerCase().indexOf("&wfs") > -1),
   WFisEdit =
     window.location.href.toLowerCase().indexOf("edit.aspx") > -1 &&
     (window.location.href.indexOf("WF") > -1 ||
-    window.location.href.toLowerCase().indexOf("&wfs") > -1),
+      window.location.href.toLowerCase().indexOf("&wfs") > -1),
   WFisForm =
     window.location.href.toLowerCase().indexOf("new.aspx") > -1 ||
     window.location.href.toLowerCase().indexOf("view.aspx") > -1 ||
@@ -292,7 +292,7 @@ var workflowname,
     window.location.href.indexOf("deliverables&SODProjDeliverable") > -1,
   isLMSProjDeliverable =
     window.location.href.indexOf("deliverables&LMSProjDeliverable") > -1,
-    isReferenceCosts =
+  isReferenceCosts =
     window.location.href.toLowerCase().indexOf("listkey=referencecosts") > -1 &&
     (window.location.href.indexOf("WF") > -1 ||
       window.location.href.toLowerCase().indexOf("&wfs") > -1),
@@ -343,9 +343,9 @@ var workflowname,
   isIssuePage = window.location.href.indexOf("issues") > -1,
   isMomPage = window.location.href.indexOf("mom") > -1,
   // isMainKPIPage = window.location.href.indexOf("mainkpi") > -1,
-  
+
   isProjectPage = window.location.href.indexOf("projects") > -1,
-  isEngineeringProjectPage = window.location.href.indexOf("engineeringprojects") > -1 ,
+  isEngineeringProjectPage = window.location.href.indexOf("engineeringprojects") > -1,
 
   isVROProjNDeliverable =
     window.location.href.indexOf("nesteddeliverables&VROProjNDeliverable") > -1,
@@ -355,18 +355,18 @@ var workflowname,
     window.location.href.indexOf("nesteddeliverables&LMSProjNDeliverable") > -1,
 
   isProjectComplianceUpdate =
-  window.location.href.indexOf("ProjectCompliance.aspx") > -1,
+    window.location.href.indexOf("ProjectCompliance.aspx") > -1,
   isInitiativeComplianceUpdate =
-  window.location.href.indexOf("InitiativeCompliance.aspx") > -1,
+    window.location.href.indexOf("InitiativeCompliance.aspx") > -1,
   isStrategicCR =
-  window.location.href.indexOf("ChangeRequests.aspx") > -1 &&
-  window.location.href.indexOf("StrategicCR") > -1,
+    window.location.href.indexOf("ChangeRequests.aspx") > -1 &&
+    window.location.href.indexOf("StrategicCR") > -1,
   isExecutionCR =
-  window.location.href.indexOf("ChangeRequests.aspx") > -1 &&
-  window.location.href.indexOf("ExecutionCR") > -1,
+    window.location.href.indexOf("ChangeRequests.aspx") > -1 &&
+    window.location.href.indexOf("ExecutionCR") > -1,
   isOperationCR =
-  window.location.href.indexOf("ChangeRequests.aspx") > -1 &&
-  window.location.href.indexOf("OperationCR") > -1;  
+    window.location.href.indexOf("ChangeRequests.aspx") > -1 &&
+    window.location.href.indexOf("OperationCR") > -1;
 
 var fieldtoedit,
   bulkeditlist,
@@ -726,8 +726,8 @@ else if (isSOsWf) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} 
- else if (isSODCreateInitiative) {
+}
+else if (isSODCreateInitiative) {
   workflowname = "SODCreateInitiative";
   bulkeditlist = "Initiatives";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -890,7 +890,7 @@ else if (isSODCreateProject) {
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
- else if (isSODBenefitActual) {
+else if (isSODBenefitActual) {
   workflowname = "SODBenefitActual";
   bulkeditlist = "BenefitMetrics";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -961,7 +961,7 @@ else if (isSODCreateProject) {
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
- else if (isSODInitiativeMilestone) {
+else if (isSODInitiativeMilestone) {
   workflowname = "SODInitiativeMilestone";
   bulkeditlist = "InitiativeMilestones";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -989,7 +989,7 @@ else if (isSODCreateProject) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} 
+}
 else if (isSODInitiativeDeliverable) {
   workflowname = "SODInitiativeDeliverable";
   bulkeditlist = "InitiativeDeliverables";
@@ -1131,8 +1131,8 @@ else if (isSODProjMilestone) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} 
- else if (isSODCOC) {
+}
+else if (isSODCOC) {
   workflowname = "SODCOC";
   bulkeditlist = "Certifications";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -1189,7 +1189,7 @@ else if (isSODProjMilestone) {
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 }
- else if (isSODProjDeliverable) {
+else if (isSODProjDeliverable) {
   workflowname = "SODProjDeliverable";
   bulkeditlist = "Deliverables";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -1219,47 +1219,47 @@ else if (isSODProjMilestone) {
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 
 } else if (isVROProjNDeliverable) {
-    workflowname = "VROProjNDeliverable";
-    bulkeditlist = "NestedDeliverables";
-    IID2 = window.location.href.split("IID=")[1].split("&")[0];
-    bulkeditquery =
-      '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
-      IID2 +
-      "</Value> </Eq></Where></Query></View>";
-    taskquery =
-      '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
-      taskID +
-      '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
-      workflowname +
-      "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+  workflowname = "VROProjNDeliverable";
+  bulkeditlist = "NestedDeliverables";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isEPMOProjNDeliverable) {
-    workflowname = "EPMOProjNDeliverable";
-    bulkeditlist = "NestedDeliverables";
-    IID2 = window.location.href.split("IID=")[1].split("&")[0];
-    bulkeditquery =
-      '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
-      IID2 +
-      "</Value> </Eq></Where></Query></View>";
-    taskquery =
-      '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
-      taskID +
-      '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
-      workflowname +
-      "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+  workflowname = "EPMOProjNDeliverable";
+  bulkeditlist = "NestedDeliverables";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isLMSProjNDeliverable) {
-    workflowname = "LMSProjNDeliverable";
-    bulkeditlist = "NestedDeliverables";
-    IID2 = window.location.href.split("IID=")[1].split("&")[0];
-    bulkeditquery =
-      '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
-      IID2 +
-      "</Value> </Eq></Where></Query></View>";
-    taskquery =
-      '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
-      taskID +
-      '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
-      workflowname +
-      "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
+  workflowname = "LMSProjNDeliverable";
+  bulkeditlist = "NestedDeliverables";
+  IID2 = window.location.href.split("IID=")[1].split("&")[0];
+  bulkeditquery =
+    '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Integer">' +
+    IID2 +
+    "</Value> </Eq></Where></Query></View>";
+  taskquery =
+    '<View> <Query> <Where> <And> <Or> <Eq> <FieldRef Name="AssignedTo" LookupId="TRUE" /> <Value Type="Integer"> <UserID /> </Value> </Eq> <Membership Type="CurrentUserGroups"> <FieldRef Name="AssignedTo" /> </Membership> </Or> <And> <Eq> <FieldRef Name="ID" /> <Value Type="Integer">' +
+    taskID +
+    '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
+    workflowname +
+    "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
 } else if (isVROCRObjective) {
   workflowname = "VROCRObjective";
   bulkeditlist = "Change Request";
@@ -1387,7 +1387,7 @@ else if (isSODProjMilestone) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-}else if (isDevelopmentRequirements) {
+} else if (isDevelopmentRequirements) {
   workflowname = "DevelopmentRequirements";
   bulkeditlist = "DevelopmentRequirements";
   IID2 = window.location.href.split("IID=")[1].split("&")[0];
@@ -1784,7 +1784,7 @@ else if (isSODActualKPI) {
     '</Value> </Eq> <And> <Eq> <FieldRef Name="Status" /> <Value Type="Choice">Open</Value> </Eq> <Eq> <FieldRef Name="WorkflowName" /> <Value Type="Text">' +
     workflowname +
     "</Value> </Eq> </And> </And> </And> </Where> </Query> <RowLimit>1</RowLimit></View>";
-} 
+}
 
 // else if (isInitiativeComplianceUpdate) {
 //   workflowname = "ComplianceUpdate";
@@ -1825,7 +1825,7 @@ if (
   !isSODProjDeliverable &&
   !isReferenceCosts &&
   // !isSODProjNDeliverable &&
-  !isSODProjMilestone 
+  !isSODProjMilestone
 ) {
   // console.log('123');
   peojectC = window.location.href.split("PCODE=")[1].split("&")[0];
@@ -1855,11 +1855,11 @@ var Delegatepopup = {
   init: function (TID) {
     $("body").append(
       '<div class="popupComment"><div class="wrapcomments">' +
-        '<label><span data-trans-Commissioner class="Resources"></span></label>' +
-        '<div class="PPField SPIField form-control" type="picker" id="AssignedTo" value="" INppicker=""></div>' +
-        '<label><span data-trans-notes class="Resources"></span></label><textarea required class="SPIField form-control" id="DelegationReason" rows="4" cols="50"></textarea><div class="btn-cont"><button class=" btn btn-action sendButton" onclick="Delegate_Data_Submit.init(\'' +
-        TID +
-        '\')"><span data-trans-send class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+      '<label><span data-trans-Commissioner class="Resources"></span></label>' +
+      '<div class="PPField SPIField form-control" type="picker" id="AssignedTo" value="" INppicker=""></div>' +
+      '<label><span data-trans-notes class="Resources"></span></label><textarea required class="SPIField form-control" id="DelegationReason" rows="4" cols="50"></textarea><div class="btn-cont"><button class=" btn btn-action sendButton" onclick="Delegate_Data_Submit.init(\'' +
+      TID +
+      '\')"><span data-trans-send class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
     ); //commentsub
     changeResources();
     $("body").append(
@@ -1949,13 +1949,13 @@ var Delegate_Data_Submit = {
         var id = $("#AssignedTo").attr("id");
         ppp =
           $("#AssignedTo").find("span.sp-peoplepicker-userSpan").attr("sid") ==
-          undefined
+            undefined
             ? ""
             : SP.FieldUserValue.fromUser(
-                $("#AssignedTo")
-                  .find("span.sp-peoplepicker-userSpan")
-                  .attr("sid")
-              ); //.split('|').slice(-1)[0]
+              $("#AssignedTo")
+                .find("span.sp-peoplepicker-userSpan")
+                .attr("sid")
+            ); //.split('|').slice(-1)[0]
         taskOwner = ppp;
         userName = encodeURIComponent(ppp.get_lookupValue());
       }
@@ -1988,8 +1988,8 @@ var Delegate_Data_Submit = {
     taskId = parseInt(TID);
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Text">' +
-        taskId +
-        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+      taskId +
+      "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
     );
     Delegate_Data_Submit.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Delegate_Data_Submit.g.collListItem);
@@ -2063,8 +2063,8 @@ var DeleteDelegate_Data_Submit = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Text">' +
-        taskId +
-        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+      taskId +
+      "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
     );
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
@@ -2116,6 +2116,87 @@ var DeleteDelegate_Data_Submit = {
     return dfd.promise();
   },
 };
+
+function isBenefitsWorkflowContext(workflowName, listKey) {
+  var wf = (workflowName || "").toString();
+  var key = (listKey || "").toString().toLowerCase();
+  var href = "";
+  try {
+    href = (window.location.href || "").toLowerCase();
+  } catch (e) { }
+  if (key === "benefits") return true;
+  if (
+    href.indexOf("listkey=benefits") > -1 &&
+    href.indexOf("listkey=benefitmetrics") === -1
+  ) {
+    return true;
+  }
+  if (href.indexOf("benefits&") > -1 && href.indexOf("benefitmetrics") === -1) {
+    return true;
+  }
+  return (
+    wf === "InitiativeBenefits" ||
+    wf === "Benefits" ||
+    wf === "MSActualBenefit" ||
+    wf === "LMSActualBenefit" ||
+    wf === "EPMOActualBenefit" ||
+    wf === "SODActualBenefit" ||
+    wf === "VROActualBenefit"
+  );
+}
+function isEndWorkflowButtonTitle(title) {
+  var normalized = (title || "")
+    .toString()
+    .replace(/[\u200f\u200e]/g, "")
+    .replace(/[أإآ]/g, "ا")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+  if (!normalized) return false;
+  return (
+    normalized.indexOf("انهاء سير العمل") !== -1 ||
+    normalized.indexOf("end workflow") !== -1
+  );
+}
+function isBenefitsEndWorkflowAction(workflowName, listKey, state, version) {
+  if (!isBenefitsWorkflowContext(workflowName, listKey)) return false;
+  // Approval screen: إنهاء سير العمل is the third button (not الموافقة / طلب معلومات).
+  if (state == 3 && version === "Approval") return true;
+  // Creation screen: the submit button is labeled إنهاء سير العمل.
+  if (
+    state === true &&
+    (version === "Submit" || version === "New" || version === "SubmitField")
+  ) {
+    var title = typeof actionbuttonTitle !== "undefined" ? actionbuttonTitle : "";
+    return isEndWorkflowButtonTitle(title);
+  }
+  return false;
+}
+
+function confirmBenefitsEndWorkflow(onConfirm) {
+  var isAr =
+    localStorage.getItem("lng") == null || localStorage.getItem("lng") == "ar";
+  var pack = isAr ? Resources.ar : Resources.en;
+  var locale = {
+    OK: pack["yes"],
+    CONFIRM: pack["yes"],
+    CANCEL: pack["cancelbutton"],
+  };
+  var message = pack["endworkflowconfirmation"];
+  if (typeof bootbox === "undefined" || !bootbox.confirm) {
+    if (window.confirm(message)) onConfirm();
+    return;
+  }
+  bootbox.addLocale("custom", locale);
+  bootbox.confirm({
+    message: message,
+    locale: "custom",
+    callback: function (result) {
+      if (result == true) onConfirm();
+    },
+  });
+};
+
 //*****3 */
 var Task_PCODE_Data_Request_WFs = {
   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
@@ -2329,24 +2410,24 @@ var Task_PCODE_Data_Request_WFs = {
         case "ProjectTask":
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div><button data-trans-task onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" > "' +
-              stagename +
-              '"</button><button data-trans-projectlbl onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources" type="button"> "' +
-              stagename +
-              '"</button></div></div>'
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div><button data-trans-task onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" > "' +
+            stagename +
+            '"</button><button data-trans-projectlbl onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources" type="button"> "' +
+            stagename +
+            '"</button></div></div>'
           );
           $(".btnactionrow > h2.approvalHeader").append(
             '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
           );
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><button data-trans-task onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" > "' +
-              stagename +
-              '"</button><button data-trans-projectlbl onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources" type="button"> "' +
-              stagename +
-              '"</button></div></div>'
+            stagename +
+            '"</button><button data-trans-projectlbl onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources" type="button"> "' +
+            stagename +
+            '"</button></div></div>'
           );
           $("div.Container").fadeIn();
           $("div.cust-loader").fadeOut();
@@ -2354,17 +2435,17 @@ var Task_PCODE_Data_Request_WFs = {
         case "TriApproval":
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
-              actionbuttonTitle +
-              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelbutton  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(2,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
+            actionbuttonTitle +
+            '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelbutton  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(2,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
           );
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
-              actionbuttonTitle +
-              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelbutton  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(2,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
+            actionbuttonTitle +
+            '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelbutton  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(2,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
           );
           $("div.Container").fadeIn();
           $("div.cust-loader").fadeOut();
@@ -2373,90 +2454,116 @@ var Task_PCODE_Data_Request_WFs = {
           }, 100);
           break;
         case "Approval":
-{
-        if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "SODCreateProject")
-        {
-          // console.log('aaaaaaaaaaaaaa');
-          $(".navbar.page-nav.px-5").after(
-            '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
-              actionbuttonTitle +
-              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelrequest  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
-          );
-          //delegation btn
-          $(".btnactionrow > h2.approvalHeader").append(
-            '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
-          );
-          //main action
-          $(".btnactionrow .form-btns-wrapper").append(
-            '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
-              actionbuttonTitle +
-              '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelrequest  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
-          );
-          $("div.Container").fadeIn();
-          $("div.cust-loader").fadeOut();
-          forFormSubmitHTMLStatus = setInterval(function () {
-            Task_PCODE_Data_Request_WFs.g.hidefields();
-          }, 100);
-        }
-        else
-        {
-           // console.log('aaaaaaaaaaaaaa');
-           $(".navbar.page-nav.px-5").after(
-            '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
-              actionbuttonTitle +
-              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
-          );
-          //delegation btn
-          $(".btnactionrow > h2.approvalHeader").append(
-            '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
-          );
-          //main action
-          $(".btnactionrow .form-btns-wrapper").append(
-            '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
-              actionbuttonTitle +
-              '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
-          );
-          $("div.Container").fadeIn();
-          $("div.cust-loader").fadeOut();
-          forFormSubmitHTMLStatus = setInterval(function () {
-            Task_PCODE_Data_Request_WFs.g.hidefields();
-          }, 100);
-        }
-      }
-          break;
-          case "ApprovalSaveEdit":
-            $(".navbar.page-nav.px-5").after(
-              '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+          {
+            if (
+              isBenefitsWorkflowContext(
+                workflowname,
+                typeof listkey !== "undefined" ? listkey : ""
+              )
+            ) {
+              $(".navbar.page-nav.px-5").after(
+                '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
                 taskid +
                 '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
                 actionbuttonTitle +
-                '</span><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovalSaveEdit\')" class="btn pop-green" type="button"><span  class="beencompletedpadd Resources" data-trans-wfsubmitfield>' +
-                actionbuttonTitle +
-                '</span></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'ApprovalSaveEdit\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
-            );
-            $(".btnactionrow > h2.approvalHeader").append(
-              '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+                '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources" type="button"></button></div></div>'
+              );
+              $(".btnactionrow > h2.approvalHeader").append(
+                '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
                 taskid +
                 '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
-            );
-            $(".btnactionrow .form-btns-wrapper").append(
-              '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
+              );
+              $(".btnactionrow .form-btns-wrapper").append(
+                '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
                 actionbuttonTitle +
-                '</span><div class="wf-btn-wrapper-new d-flex"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovalSaveEdit\')" class="btn pop-green" type="button"><span  class="beencompletedpadd Resources" data-trans-wfsubmitfield>' +
+                '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources" type="button"></button></div></div>'
+              );
+              $("div.Container").fadeIn();
+              $("div.cust-loader").fadeOut();
+              forFormSubmitHTMLStatus = setInterval(function () {
+                Task_PCODE_Data_Request_WFs.g.hidefields();
+              }, 100);
+            }
+            else if (workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "SODCreateProject") {                  // console.log('aaaaaaaaaaaaaa');
+              $(".navbar.page-nav.px-5").after(
+                '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+                taskid +
+                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
                 actionbuttonTitle +
-                '</span></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'ApprovalSaveEdit\')" class="btn pop-green rejection Resources"  type="button"></button></div></div></div>'
-            );
-            $("div.Container").fadeIn();
-            $("div.cust-loader").fadeOut();
-            break;
+                '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelrequest  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
+              );
+              //delegation btn
+              $(".btnactionrow > h2.approvalHeader").append(
+                '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+                taskid +
+                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+              );
+              //main action
+              $(".btnactionrow .form-btns-wrapper").append(
+                '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
+                actionbuttonTitle +
+                '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-cancelrequest  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
+              );
+              $("div.Container").fadeIn();
+              $("div.cust-loader").fadeOut();
+              forFormSubmitHTMLStatus = setInterval(function () {
+                Task_PCODE_Data_Request_WFs.g.hidefields();
+              }, 100);
+            }
+            else {
+              // console.log('aaaaaaaaaaaaaa');
+              $(".navbar.page-nav.px-5").after(
+                '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+                taskid +
+                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
+                actionbuttonTitle +
+                '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
+              );
+              //delegation btn
+              $(".btnactionrow > h2.approvalHeader").append(
+                '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+                taskid +
+                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+              );
+              //main action
+              $(".btnactionrow .form-btns-wrapper").append(
+                '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
+                actionbuttonTitle +
+                '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
+              );
+              $("div.Container").fadeIn();
+              $("div.cust-loader").fadeOut();
+              forFormSubmitHTMLStatus = setInterval(function () {
+                Task_PCODE_Data_Request_WFs.g.hidefields();
+              }, 100);
+            }
+          }
+          break;
+        case "ApprovalSaveEdit":
+          $(".navbar.page-nav.px-5").after(
+            '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
+            actionbuttonTitle +
+            '</span><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovalSaveEdit\')" class="btn pop-green" type="button"><span  class="beencompletedpadd Resources" data-trans-wfsubmitfield>' +
+            actionbuttonTitle +
+            '</span></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'ApprovalSaveEdit\')" class="btn pop-green rejection Resources"  type="button"></button></div></div>'
+          );
+          $(".btnactionrow > h2.approvalHeader").append(
+            '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+          );
+          $(".btnactionrow .form-btns-wrapper").append(
+            '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
+            actionbuttonTitle +
+            '</span><div class="wf-btn-wrapper-new d-flex"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovalSaveEdit\')" class="btn pop-green" type="button"><span  class="beencompletedpadd Resources" data-trans-wfsubmitfield>' +
+            actionbuttonTitle +
+            '</span></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'ApprovalSaveEdit\')" class="btn pop-green rejection Resources"  type="button"></button></div></div></div>'
+          );
+          $("div.Container").fadeIn();
+          $("div.cust-loader").fadeOut();
+          break;
         case "ApprovedWithAssigned":
           if (
             localStorage.getItem("lng") == null ||
@@ -2476,25 +2583,25 @@ var Task_PCODE_Data_Request_WFs = {
           }
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
-              actionbuttonTitle +
-              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovedWithAssigned\')" class="btn pop-green Resources" type="button" ><span class="Resources">' +
-              thiredActionName +
-              "</span></button></div></div>"
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
+            actionbuttonTitle +
+            '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovedWithAssigned\')" class="btn pop-green Resources" type="button" ><span class="Resources">' +
+            thiredActionName +
+            "</span></button></div></div>"
           );
           //delegation btn
           $(".btnactionrow > h2.approvalHeader").append(
             '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
           );
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
-              actionbuttonTitle +
-              '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovedWithAssigned\')" class="btn pop-green Resources" type="button" ><span class="Resources">' +
-              thiredActionName +
-              "</span></button></div></div>"
+            actionbuttonTitle +
+            '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-rejection  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'ApprovedWithAssigned\')" class="btn pop-green Resources" type="button" ><span class="Resources">' +
+            thiredActionName +
+            "</span></button></div></div>"
           );
           $("div.Container").fadeIn();
           $("div.cust-loader").fadeOut();
@@ -2506,23 +2613,23 @@ var Task_PCODE_Data_Request_WFs = {
           // $('.DahsFormTitle > button').hide();
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div></div></div>"
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
+            actionbuttonTitle +
+            "</span></button></div></div></div>"
           );
           //delegation btn
           $(".btnactionrow > h2.approvalHeader").append(
             '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
           );
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
-              actionbuttonTitle +
-              '</span><div class="wf-btn-wrapper-new d-flex"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd Resources" data-trans-wfsubmit>' +
-              actionbuttonTitle +
-              "</span></button></div></div></div>"
+            actionbuttonTitle +
+            '</span><div class="wf-btn-wrapper-new d-flex"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd Resources" data-trans-wfsubmit>' +
+            actionbuttonTitle +
+            "</span></button></div></div></div>"
           ); //style="float: left;font-size: 17px;"
           $("div.Container").fadeIn();
           $("div.cust-loader").fadeOut();
@@ -2534,17 +2641,17 @@ var Task_PCODE_Data_Request_WFs = {
           // console.log("SubmitProject")
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="NewProjectTask_Edit_Data.init();"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button</div>div></div>"
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="NewProjectTask_Edit_Data.init();"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
+            actionbuttonTitle +
+            "</span></button</div>div></div>"
           ); //
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="NewProjectTask_Edit_Data.init();"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button</div>div></div>"
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="NewProjectTask_Edit_Data.init();"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
+            actionbuttonTitle +
+            "</span></button</div>div></div>"
           ); //
           $("div.Container").fadeIn();
           $("div.cust-loader").fadeOut();
@@ -2556,17 +2663,17 @@ var Task_PCODE_Data_Request_WFs = {
           // $('.DahsFormTitle > button').hide();
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'New\')" " class="btn pop-green" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div></div>"
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'New\')" " class="btn pop-green" type="button"><span  class=" beencompletedpadd">' +
+            actionbuttonTitle +
+            "</span></button></div></div>"
           ); //style="float: left;font-size: 17px;
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'New\')" " class="btn pop-green" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div></div>"
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'New\')" " class="btn pop-green" type="button"><span  class=" beencompletedpadd">' +
+            actionbuttonTitle +
+            "</span></button></div></div>"
           ); //style="float: left;font-size: 17px;
           $("div.Container").fadeIn();
           $("div.cust-loader").fadeOut();
@@ -2578,13 +2685,13 @@ var Task_PCODE_Data_Request_WFs = {
           // $('.DahsFormTitle > button').hide();
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button data-trans-resend onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')" class="btn pop-green Resources" type="button"></button></div></div></div>'
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button data-trans-resend onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')" class="btn pop-green Resources" type="button"></button></div></div></div>'
           );
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button data-trans-resend onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')" class="btn pop-green Resources" type="button"></button></div></div></div>'
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button data-trans-resend onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')" class="btn pop-green Resources" type="button"></button></div></div></div>'
           );
           $("div.Container").fadeIn();
           $("div.cust-loader").fadeOut();
@@ -2596,21 +2703,21 @@ var Task_PCODE_Data_Request_WFs = {
         case "SubmitField":
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'SubmitField\')" class="btn pop-green" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div>"
+            actionbuttonTitle +
+            "</span></button></div>"
           );
           //delegation btn
           $(".btnactionrow > h2.approvalHeader").append(
             '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
           );
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
-              actionbuttonTitle +
-              '</span><div class="wf-btn-wrapper-new d-flex"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'SubmitField\')" class="btn pop-green" type="button"><span  class="beencompletedpadd Resources" data-trans-wfsubmitfield>' +
-              actionbuttonTitle +
-              "</span></button></div></div></div>"
+            actionbuttonTitle +
+            '</span><div class="wf-btn-wrapper-new d-flex"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'SubmitField\')" class="btn pop-green" type="button"><span  class="beencompletedpadd Resources" data-trans-wfsubmitfield>' +
+            actionbuttonTitle +
+            "</span></button></div></div></div>"
           );
           if (currentstage != "S02" && workflowname == "Project") {
             // $(
@@ -2637,13 +2744,13 @@ var Task_PCODE_Data_Request_WFs = {
         case "Attach":
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Attach\')" class="btn pop-green" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div>"
+            actionbuttonTitle +
+            "</span></button></div>"
           );
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Attach\')" class="btn pop-green" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div>"
+            actionbuttonTitle +
+            "</span></button></div>"
           );
           if (currentstage != "S02" && workflowname == "Project") {
             // $(
@@ -2670,13 +2777,13 @@ var Task_PCODE_Data_Request_WFs = {
         case "CheckList":
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'CheckList\')" class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div>"
+            actionbuttonTitle +
+            "</span></button></div>"
           );
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'CheckList\')" class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div>"
+            actionbuttonTitle +
+            "</span></button></div>"
           );
           forFormSubmitHTMLStatus = setInterval(function () {
             Task_PCODE_Data_Request_WFs.g.hidefields();
@@ -2687,17 +2794,17 @@ var Task_PCODE_Data_Request_WFs = {
           // $('.DahsFormTitle > button').hide();
           $(".navbar.page-nav.px-5").after(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div></div></div>"
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
+            actionbuttonTitle +
+            "</span></button></div></div></div>"
           ); //style="float: left;font-size: 17px;"
           $(".btnactionrow .form-btns-wrapper").append(
             '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-              taskid +
-              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
-              actionbuttonTitle +
-              "</span></button></div></div></div>"
+            taskid +
+            '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button><button onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Submit\')"  class="btn pop-green Resources" type="button"><span  class=" beencompletedpadd">' +
+            actionbuttonTitle +
+            "</span></button></div></div></div>"
           ); //style="float: left;font-size: 17px;"
           $("div.Container").fadeIn();
           $("div.cust-loader").fadeOut();
@@ -2808,30 +2915,30 @@ var Task_PCODE_Data_Request_WFs = {
           $("#getFile").parent().hide();
           $(".container-body").append(
             '<div class="py-5 border-bottom section-container WF-Attach" data-groups="">' +
-              '<div class="form-row">' +
-              '<div class="col-md-4 mb-4"><h3>"' +
-              stagename +
-              '" Attachments</h3><span class="font-14"></span></div>' +
-              '<div class="col-md-8 white-box p-4 fieldset-container">' +
-              '<div class="col-md-6 CFIELD" data-groups="" >' + //style="display: flex;align-items: center;"
-              '<label required for="getFile"  undefined="">Attachments</label>' + //class="custom-file-upload"
-              '<input required type="file" multiple="multiple" placeholder="Attachment" class="form-control SPIField" id="getFile" style="display:block">' +
-              "</div>" +
-              '<div class="col-md-6 CFIELD rfpoptions" data-groups="" >' +
-              '<label required for="forattach">Attachment</label>' +
-              "</div>" +
-              '<div class="add-New-Detail-wrapper"><a class="add-New-Attach" href="javascript:"><i class="fas fa-plus"></i></a></div>' +
-              "</div></div></div>"
+            '<div class="form-row">' +
+            '<div class="col-md-4 mb-4"><h3>"' +
+            stagename +
+            '" Attachments</h3><span class="font-14"></span></div>' +
+            '<div class="col-md-8 white-box p-4 fieldset-container">' +
+            '<div class="col-md-6 CFIELD" data-groups="" >' + //style="display: flex;align-items: center;"
+            '<label required for="getFile"  undefined="">Attachments</label>' + //class="custom-file-upload"
+            '<input required type="file" multiple="multiple" placeholder="Attachment" class="form-control SPIField" id="getFile" style="display:block">' +
+            "</div>" +
+            '<div class="col-md-6 CFIELD rfpoptions" data-groups="" >' +
+            '<label required for="forattach">Attachment</label>' +
+            "</div>" +
+            '<div class="add-New-Detail-wrapper"><a class="add-New-Attach" href="javascript:"><i class="fas fa-plus"></i></a></div>' +
+            "</div></div></div>"
           );
           $(".add-New-Attach").click(function () {
             $(
               '<div class="col-md-6 CFIELD" data-groups="" >' + //style="display: flex;align-items: center;"
-                '<label required for="getFile"  undefined="">Attachments</label>' + //class="custom-file-upload"
-                '<input required type="file" multiple="multiple" placeholder="Attachments" class="form-control SPIField" id="getFile" style="display:block">' +
-                "</div>" +
-                '<div class="col-md-6 CFIELD rfpoptions" data-groups="" style="display:undefined">' +
-                '<label required for="forattach">Attachments</label>' +
-                "</div>"
+              '<label required for="getFile"  undefined="">Attachments</label>' + //class="custom-file-upload"
+              '<input required type="file" multiple="multiple" placeholder="Attachments" class="form-control SPIField" id="getFile" style="display:block">' +
+              "</div>" +
+              '<div class="col-md-6 CFIELD rfpoptions" data-groups="" style="display:undefined">' +
+              '<label required for="forattach">Attachments</label>' +
+              "</div>"
             ).insertBefore($(this).parent());
           });
         }
@@ -2857,7 +2964,23 @@ var Task_PCODE_Data_Request_WFs = {
         Task_PCODE_Data_Request_WFs.g.Handle_Take_Action();
       }
     },
-    addcomments: function (state, version, withNote = false) {
+    addcomments: function (state, version, withNote, confirmed) {
+      if (withNote === undefined) withNote = false;
+      var currentListKey = typeof listkey !== "undefined" ? listkey : "";
+      if (
+        !confirmed &&
+        isBenefitsEndWorkflowAction(workflowname, currentListKey, state, version)
+      ) {
+        confirmBenefitsEndWorkflow(function () {
+          Task_PCODE_Data_Request_WFs.g.addcomments(
+            state,
+            version,
+            withNote,
+            true
+          );
+        });
+        return;
+      }
       stageState = state; // added to handle WF Notes
       console.log("[WF][addcomments] open popup", {
         state: state,
@@ -2876,26 +2999,26 @@ var Task_PCODE_Data_Request_WFs = {
           ) {
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>ملاحظات</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="if( ($(\'#commenttext\').val() && ' +
-                !state +
-                ") || " +
-                state +
-                " ){BulkEdit(" +
-                state +
-                "," +
-                withNote +
-                ')}else{$(\'.wrapcomments > .fillcomment\').html(\'<p>يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div><p class="fillcomment"></p></div></div>'
+              !state +
+              ") || " +
+              state +
+              " ){BulkEdit(" +
+              state +
+              "," +
+              withNote +
+              ')}else{$(\'.wrapcomments > .fillcomment\').html(\'<p>يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div><p class="fillcomment"></p></div></div>'
             );
           } else {
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>Notes</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="if( ($(\'#commenttext\').val() && ' +
-                !state +
-                ") || " +
-                state +
-                " ){BulkEdit(" +
-                state +
-                "," +
-                withNote +
-                ')}else{$(\'.wrapcomments > .fillcomment\').html(\'<p>Please Fill Notes</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div><p class="fillcomment"></p></div></div>'
+              !state +
+              ") || " +
+              state +
+              " ){BulkEdit(" +
+              state +
+              "," +
+              withNote +
+              ')}else{$(\'.wrapcomments > .fillcomment\').html(\'<p>Please Fill Notes</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div><p class="fillcomment"></p></div></div>'
             );
           }
         } else if (version == "SubmitField") {
@@ -2905,26 +3028,26 @@ var Task_PCODE_Data_Request_WFs = {
           ) {
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>ملاحظات</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="if( ($(\'#commenttext\').val() && ' +
-                !state +
-                ") || " +
-                state +
-                " ){SubmitField_BulkEdit.preinit(" +
-                state +
-                "," +
-                withNote +
-                ')}else{$(\'.wrapcomments\').append(\'<p >يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div></div></div>'
+              !state +
+              ") || " +
+              state +
+              " ){SubmitField_BulkEdit.preinit(" +
+              state +
+              "," +
+              withNote +
+              ')}else{$(\'.wrapcomments\').append(\'<p >يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div></div></div>'
             );
           } else {
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>Notes</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="if( ($(\'#commenttext\').val() && ' +
-                !state +
-                ") || " +
-                state +
-                " ){SubmitField_BulkEdit.preinit(" +
-                state +
-                "," +
-                withNote +
-                ')}else{$(\'.wrapcomments\').append(\'<p >Fill Comments</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Send Successfully</span></div></div></div>'
+              !state +
+              ") || " +
+              state +
+              " ){SubmitField_BulkEdit.preinit(" +
+              state +
+              "," +
+              withNote +
+              ')}else{$(\'.wrapcomments\').append(\'<p >Fill Comments</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Send Successfully</span></div></div></div>'
             );
           }
         } else if (version == "ApprovedWithAssigned") {
@@ -2936,16 +3059,16 @@ var Task_PCODE_Data_Request_WFs = {
             // '<div class="PPField SPIField form-control" type="picker" id="AssignedTo" value="" INppicker=""></div>' +
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>' +
-                thiredActionName +
-                '</label><div class="PPField SPIField form-control mb-3" type="picker" id="AssignedTo" value="" INppicker=""></div><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="ThirdActionHandler(' +
-                state +
-                ')">تعيين</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم التعيين</span></div></div></div>'
+              thiredActionName +
+              '</label><div class="PPField SPIField form-control mb-3" type="picker" id="AssignedTo" value="" INppicker=""></div><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="ThirdActionHandler(' +
+              state +
+              ')">تعيين</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم التعيين</span></div></div></div>'
             );
           } else {
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>' +
-                thiredActionName +
-                '</label><div class="PPField SPIField form-control mb-3" type="picker" id="AssignedTo" value="" INppicker=""></div><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save">Assign</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Assign Successfully</span></div></div></div>'
+              thiredActionName +
+              '</label><div class="PPField SPIField form-control mb-3" type="picker" id="AssignedTo" value="" INppicker=""></div><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save">Assign</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Assign Successfully</span></div></div></div>'
             );
           }
           $("body").append(
@@ -2989,22 +3112,22 @@ var Task_PCODE_Data_Request_WFs = {
           ) {
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>ملاحظات</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="if( ($(\'#commenttext\').val()  && ' +
-                !state +
-                ") || " +
-                state +
-                " ){WF_UploadFiles.preinit(" +
-                state +
-                ')}else{$(\'.wrapcomments\').append(\'<p >يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div></div></div>'
+              !state +
+              ") || " +
+              state +
+              " ){WF_UploadFiles.preinit(" +
+              state +
+              ')}else{$(\'.wrapcomments\').append(\'<p >يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div></div></div>'
             );
           } else {
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>Notes</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="if( ($(\'#commenttext\').val() && ' +
-                !state +
-                ") || " +
-                state +
-                " ){WF_UploadFiles.preinit(" +
-                state +
-                ')}else{$(\'.wrapcomments\').append(\'<p>Please Fill Notes</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div></div></div>'
+              !state +
+              ") || " +
+              state +
+              " ){WF_UploadFiles.preinit(" +
+              state +
+              ')}else{$(\'.wrapcomments\').append(\'<p>Please Fill Notes</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div></div></div>'
             );
           }
         } else if (version == "CheckList") {
@@ -3014,22 +3137,22 @@ var Task_PCODE_Data_Request_WFs = {
           ) {
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>ملاحظات</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="if( ($(\'#commenttext\').val() &&  && ' +
-                !state +
-                ") || " +
-                state +
-                " ){Edit_File_Details_Submit.init(" +
-                state +
-                ')}else{$(\'.wrapcomments\').append(\'<p >يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div></div></div>'
+              !state +
+              ") || " +
+              state +
+              " ){Edit_File_Details_Submit.init(" +
+              state +
+              ')}else{$(\'.wrapcomments\').append(\'<p >يرجى تعبئة الملاحظات</p>\')}">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div></div></div>'
             );
           } else {
             $("body").append(
               '<div class="popupComment"><div class="wrapcomments"><label>Notes</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="if( ($(\'#commenttext\').val() && ' +
-                !state +
-                ") || " +
-                state +
-                " ){BulkEdit(" +
-                state +
-                ')}else{$(\'.wrapcomments\').append(\'<p>Please Fill Notes</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div></div></div>'
+              !state +
+              ") || " +
+              state +
+              " ){BulkEdit(" +
+              state +
+              ')}else{$(\'.wrapcomments\').append(\'<p>Please Fill Notes</p>\')}">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div></div></div>'
             );
           }
         }
@@ -3040,18 +3163,18 @@ var Task_PCODE_Data_Request_WFs = {
         ) {
           $("body").append(
             '<div class="popupComment"><div class="wrapcomments"><label>ملاحظات</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="SubmitField_BulkEdit.preinit(' +
-              state +
-              "," +
-              withNote +
-              ')">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div></div></div>'
+            state +
+            "," +
+            withNote +
+            ')">إرسال</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">إلغاء</button><span style="display:none" class="successmsg">تم الإرسال</span></div></div></div>'
           );
         } else {
           $("body").append(
             '<div class="popupComment"><div class="wrapcomments"><label>Notes</label><textarea id="commenttext" rows="4" cols="50"></textarea><div><button class="commentsub btn btn-action btn-save" onclick="SubmitField_BulkEdit.preinit(' +
-              state +
-              "," +
-              withNote +
-              ')">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div></div></div>'
+            state +
+            "," +
+            withNote +
+            ')">Send</button><button onclick="$(\'.popupComment\').remove();" class="commentsub">Cancel</button><span style="display:none" class="successmsg">Submitted Successfully</span></div></div></div>'
           );
         }
       }
@@ -3074,7 +3197,7 @@ var Task_PCODE_Data_Request_WFs = {
             rawCommentLength: commentVal.length,
           });
         });
-    }, 
+    },
   },
 };
 //*****5 */
@@ -3103,8 +3226,8 @@ var PCODE_Stage_Data_Request_WFs = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-        peojectC +
-        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+      peojectC +
+      "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
     ); //caml query
     PCODE_Stage_Data_Request_WFs.g.collListItem = oList.getItems(camlQuery);
     clientContext.load(PCODE_Stage_Data_Request_WFs.g.collListItem);
@@ -3175,8 +3298,8 @@ var ProjectStages_Data_Request_WFs = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><Eq><FieldRef Name='ProjectCode'/><Value Type=\"Text\">" +
-        peojectC +
-        "</Value></Eq></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
+      peojectC +
+      "</Value></Eq></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
     );
     ProjectStages_Data_Request_WFs.g.collListItem = oList.getItems(camlQuery);
     clientContext.load(ProjectStages_Data_Request_WFs.g.collListItem);
@@ -3468,11 +3591,11 @@ var SubmitField_BulkEdit = {
                     var id = $(this).attr("INppicker");
                     var ppp =
                       $("span.sp-peoplepicker-userSpan").attr("sid") ==
-                      undefined
+                        undefined
                         ? ""
                         : SP.FieldUserValue.fromUser(
-                            $("span.sp-peoplepicker-userSpan").attr("sid")
-                          );
+                          $("span.sp-peoplepicker-userSpan").attr("sid")
+                        );
                     items.set_item(id, ppp);
                   }
                 } else if ($(this).attr("type") == "date") {
@@ -3521,8 +3644,8 @@ var SubmitField_BulkEdit = {
                     var ydate = !dateval
                       ? ""
                       : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                          .join("/")
-                          .replace("-", "/");
+                        .join("/")
+                        .replace("-", "/");
                     if (dateval) items.set_item($(this).attr("id"), ydate);
                   }
                 } else if ($(this).attr("type") == "datetime-local") {
@@ -3607,15 +3730,15 @@ var SubmitField_BulkEdit = {
                   items.set_item($(this).attr("myfield"), myselections);
                 } else items.set_item($(this).attr("id"), $(this).val());
               });
-             
-              if(state == 3)  { 
+
+              if (state == 3) {
                 // nothing 
               }
               else if (state) items.set_item("WFStage", nxtstageid);
               else items.set_item("WFStage", prvstageid);
 
-             /* if(state != 2)  items.set_item("WFStage", prvstageid);
-              else items.set_item("WFStage", "rejected");*/
+              /* if(state != 2)  items.set_item("WFStage", prvstageid);
+               else items.set_item("WFStage", "rejected");*/
 
             } else if (workflowname == "CR") {
               if (state) items.set_item("Stage", nxtstageid);
@@ -3629,48 +3752,41 @@ var SubmitField_BulkEdit = {
                 items.set_item("Stage", prvstageid);
                 items.set_item("Delivered", "no");
               }
-            } else if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject")
-            {
-              if(state == 3) {items.set_item("WFStage", "rejected"); items.set_item("DeletionStatus", "Deleted"); }
+            } else if (workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject") {
+              if (state == 3) { items.set_item("WFStage", "rejected"); items.set_item("DeletionStatus", "Deleted"); }
               else if (state) items.set_item("WFStage", nxtstageid);
               else items.set_item("WFStage", prvstageid);
 
             } else {
-              if(state == 3) { 
-                
-                if(workflowname == "MSActualKPI")
-                {
-                items.set_item("WFStage", "");
-                items.set_item("Equation", "0");
+              if (state == 3) {
+
+                if (workflowname == "MSActualKPI") {
+                  items.set_item("WFStage", "");
+                  items.set_item("Equation", "0");
                 }
-                else if(workflowname == "MSActualBenefit")
-                {
-                items.set_item("WFStage", "");
-                items.set_item("Equation", "0");
+                else if (workflowname == "MSActualBenefit") {
+                  items.set_item("WFStage", "");
+                  items.set_item("Equation", "0");
                 }
               }
               else if (state) items.set_item("WFStage", nxtstageid);
-              else  items.set_item("WFStage", prvstageid);
+              else items.set_item("WFStage", prvstageid);
             }
 
             // FOR Initiative Compliance changing phases
-            if(nxtstageid == "SInStage10" || nxtstageid == "VInStage12" || nxtstageid == "LInStage09" || nxtstageid == "SODInStage09")
-            {
+            if (nxtstageid == "SInStage10" || nxtstageid == "VInStage12" || nxtstageid == "LInStage09" || nxtstageid == "SODInStage09") {
               items.set_item("Phase", "P1");
             }
 
-            if(nxtstageid == "SInStage12" || nxtstageid == "VInStage14" || nxtstageid == "LInStage11" || nxtstageid == "SODInStage11")
-            {
+            if (nxtstageid == "SInStage12" || nxtstageid == "VInStage14" || nxtstageid == "LInStage11" || nxtstageid == "SODInStage11") {
               items.set_item("Phase", "P2");
             }
 
-            if(nxtstageid == "SInStage14" || nxtstageid == "VInStage16" || nxtstageid == "LInStage13" || nxtstageid == "SODInStage13")
-            {
+            if (nxtstageid == "SInStage14" || nxtstageid == "VInStage16" || nxtstageid == "LInStage13" || nxtstageid == "SODInStage13") {
               items.set_item("Phase", "P3");
             }
 
-            if(nxtstageid == "SInStage16" || nxtstageid == "VInStage18" || nxtstageid == "LInStage15" || nxtstageid == "SODInStage15")
-            {
+            if (nxtstageid == "SInStage16" || nxtstageid == "VInStage18" || nxtstageid == "LInStage15" || nxtstageid == "SODInStage15") {
               items.set_item("Phase", "P4");
             }
 
@@ -3680,22 +3796,20 @@ var SubmitField_BulkEdit = {
                 var parsingData = eval($(this).data("workflowsetvalue"));
                 parsingData.forEach((el) => {
                   if (el.stages.includes(stageid)) {
-                    if(workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject")
-                    {
-                       var projecttype = currentItem.get_item("IsStrategicProject");
-                       if(projecttype == undefined){items.set_item(el.fieldName, el.value);}
-                          else
-                             if(el.projecttype != undefined)
-                                {
-                                  if(el.projecttype.includes(projecttype))
-                                    {
-                                       items.set_item(el.fieldName, el.value);
-                                    }
-                                }
-                            else{
-                                 items.set_item(el.fieldName, el.value);}
+                    if (workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject") {
+                      var projecttype = currentItem.get_item("IsStrategicProject");
+                      if (projecttype == undefined) { items.set_item(el.fieldName, el.value); }
+                      else
+                        if (el.projecttype != undefined) {
+                          if (el.projecttype.includes(projecttype)) {
+                            items.set_item(el.fieldName, el.value);
+                          }
+                        }
+                        else {
+                          items.set_item(el.fieldName, el.value);
+                        }
                     }
-                    else {items.set_item(el.fieldName, el.value);}
+                    else { items.set_item(el.fieldName, el.value); }
                   }
                 });
               });
@@ -3728,8 +3842,8 @@ var SubmitField_BulkEdit = {
                 isEdit &&
                 listkey === "mainkpi" &&
                 isWF &&
-              ( ( currentstage === "MSActualKPI01" && currentUserRole === "SPMAdmin" ) ||
-               ( currentstage === "MSActualKPI00" && currentUserRole === "PerformanceLeader"  ))) {
+                ((currentstage === "MSActualKPI01" && currentUserRole === "SPMAdmin") ||
+                  (currentstage === "MSActualKPI00" && currentUserRole === "PerformanceLeader"))) {
                 try {
                   const periodType = $("#PeriodType").val();
                   let year = parseInt($("#Year").val() || 0);
@@ -3845,9 +3959,9 @@ var SubmitField_BulkEdit = {
                 listkey === "benefits" &&
                 isWF &&
                 workflowname === "MSActualBenefit" &&
-              ( ( (stageid === "MSActualBenefit01" || currentstage === "MSActualBenefit01") && currentUserRole === "EPMO" ) ||
-               (stageid === "MSActualBenefit00" || currentstage === "MSActualBenefit00") ||
-               (tasktype === "Submit") )) {
+                (((stageid === "MSActualBenefit01" || currentstage === "MSActualBenefit01") && currentUserRole === "EPMO") ||
+                  (stageid === "MSActualBenefit00" || currentstage === "MSActualBenefit00") ||
+                  (tasktype === "Submit"))) {
                 try {
                   const periodType = $("#PeriodType").val();
                   let year = parseInt($("#Year").val() || 0);
@@ -3957,7 +4071,7 @@ var SubmitField_BulkEdit = {
             }
 
             //Update the item
-            items.update();           
+            items.update();
             //Push item on the array
             currentItemArray.push(items);
             //Load the item Array
@@ -3970,111 +4084,110 @@ var SubmitField_BulkEdit = {
               dfd.resolve();
 
               var continueWorkflowAfterBulkEdit = function () {
-              if (workflowname == "Project") {
-                BulkEdit(state);
-              } else if (
-                isProjectCancellationRequestWF &&
-                stageid == "CL06" &&
-                state
-              ) {
-                Cancel_Project.init();
-              } else if (isProjectDeligationsWf && stageid == "TR03") {
-                Edit_Project.init();
-              } else if (isDeliverabletWF && stageid == "DV05" && state) {
-                addCOC.init();
-              } else if (isExecuteCR && crUpdateType.includes("automatic")) {
-                executeCR.init(crBody);
-              } else if (
-                (isVROCreateKPI || isEPMOCreateKPI || isLMSCreateKPI || isSODCreateKPI ) &&
-                nxtstageid == "approved"
-              ) {
-                changeOnKpiResultDraft(state);
-              } else if (
-                (isMSCRObjective ||
-                  isVROCRObjective ||
-                  isLMSCRObjective ||
-                  isVROCRProject ||
-                  isEPMOCRProject ||
-                  isLMSCRProject ||
-                  isEPMOCRInitiative ||
-                  isVROCRInitiative ||
-                  isLMSCRInitiative ||
-                  isMSCRKPI ||
-                  isVROCRKPI ||
-                  isLMSCRKPI) &&
-                state &&
-                nxtstageid == "approved" &&
-                crUpdateType.includes("delete")
-              ) {
-                // invoke delete item from cr on these workflows
+                if (workflowname == "Project") {
+                  BulkEdit(state);
+                } else if (
+                  isProjectCancellationRequestWF &&
+                  stageid == "CL06" &&
+                  state
+                ) {
+                  Cancel_Project.init();
+                } else if (isProjectDeligationsWf && stageid == "TR03") {
+                  Edit_Project.init();
+                } else if (isDeliverabletWF && stageid == "DV05" && state) {
+                  addCOC.init();
+                } else if (isExecuteCR && crUpdateType.includes("automatic")) {
+                  executeCR.init(crBody);
+                } else if (
+                  (isVROCreateKPI || isEPMOCreateKPI || isLMSCreateKPI || isSODCreateKPI) &&
+                  nxtstageid == "approved"
+                ) {
+                  changeOnKpiResultDraft(state);
+                } else if (
+                  (isMSCRObjective ||
+                    isVROCRObjective ||
+                    isLMSCRObjective ||
+                    isVROCRProject ||
+                    isEPMOCRProject ||
+                    isLMSCRProject ||
+                    isEPMOCRInitiative ||
+                    isVROCRInitiative ||
+                    isLMSCRInitiative ||
+                    isMSCRKPI ||
+                    isVROCRKPI ||
+                    isLMSCRKPI) &&
+                  state &&
+                  nxtstageid == "approved" &&
+                  crUpdateType.includes("delete")
+                ) {
+                  // invoke delete item from cr on these workflows
 
-                // Delete_Item_FromCR.init(relatedItemInCr);
-                NewLogicDelete_Item_FromCR.init(relatedItemInCr);
-              } else if (
-                (isMSCRObjective ||
-                  isVROCRObjective ||
-                  isLMSCRObjective ||
-                  isVROCRProject ||
-                  isEPMOCRProject ||
-                  isLMSCRProject ||
-                  isEPMOCRInitiative ||
-                  isVROCRInitiative ||
-                  isLMSCRInitiative ||
-                  isMSCRKPI ||
-                  isVROCRKPI ||
-                  isLMSCRKPI) &&
-                state &&
-                nxtstageid == "approved" &&
-                crUpdateType.includes("automatic")
-              ) {
-                executeCR.init(crBody, crBodyMaster);
-              } else if( (isVROInitiativeMilestone ||
-                isEPMOInitiativeMilestone ||
-                isLMSInitiativeMilestone ||
-                isSODInitiativeMilestone ||
-                isVROInitiativeDeliverable ||
-                isSODInitiativeDeliverable ||
-                isEPMOInitiativeDeliverable ||
-                isLMSInitiativeDeliverable ||
-                isVROProjMilestone ||
-                isSODProjMilestone ||
-                isEPMOProjMilestone ||
-                isLMSProjMilestone ||
-                isVROProjDeliverable ||
-                isSODProjDeliverable ||
-                isEPMOProjDeliverable ||
-                isLMSProjDeliverable ) && state &&
-                nxtstageid == "approved")
-            {
-              if (window.deferWorkflowContinueUntilEditSubmit) {
-                setTimeout(function () {
-                  window.deferWorkflowContinueUntilEditSubmit = false;
-                  update_actualcompleted_date.init();
-                  Task_Edit_Data.init();
-                }, 3000);
-              } else {
-                update_actualcompleted_date.init();
-                Task_Edit_Data.init();
-              }
-            } else {
-              // MSActualBenefit Submit: history already awaited above — close now.
-              // No extra 3s delay / no redirect until this point.
-              if (
-                listkey == "benefits" &&
-                workflowname == "MSActualBenefit" &&
-                tasktype == "Submit"
-              ) {
-                window.deferWorkflowContinueUntilEditSubmit = false;
-                Task_Edit_Data.init();
-              } else if (window.deferWorkflowContinueUntilEditSubmit) {
-                setTimeout(function () {
-                  window.deferWorkflowContinueUntilEditSubmit = false;
-                  Task_Edit_Data.init();
-                }, 3000);
-              } else {
-                Task_Edit_Data.init();
-              }
-            }
+                  // Delete_Item_FromCR.init(relatedItemInCr);
+                  NewLogicDelete_Item_FromCR.init(relatedItemInCr);
+                } else if (
+                  (isMSCRObjective ||
+                    isVROCRObjective ||
+                    isLMSCRObjective ||
+                    isVROCRProject ||
+                    isEPMOCRProject ||
+                    isLMSCRProject ||
+                    isEPMOCRInitiative ||
+                    isVROCRInitiative ||
+                    isLMSCRInitiative ||
+                    isMSCRKPI ||
+                    isVROCRKPI ||
+                    isLMSCRKPI) &&
+                  state &&
+                  nxtstageid == "approved" &&
+                  crUpdateType.includes("automatic")
+                ) {
+                  executeCR.init(crBody, crBodyMaster);
+                } else if ((isVROInitiativeMilestone ||
+                  isEPMOInitiativeMilestone ||
+                  isLMSInitiativeMilestone ||
+                  isSODInitiativeMilestone ||
+                  isVROInitiativeDeliverable ||
+                  isSODInitiativeDeliverable ||
+                  isEPMOInitiativeDeliverable ||
+                  isLMSInitiativeDeliverable ||
+                  isVROProjMilestone ||
+                  isSODProjMilestone ||
+                  isEPMOProjMilestone ||
+                  isLMSProjMilestone ||
+                  isVROProjDeliverable ||
+                  isSODProjDeliverable ||
+                  isEPMOProjDeliverable ||
+                  isLMSProjDeliverable) && state &&
+                  nxtstageid == "approved") {
+                  if (window.deferWorkflowContinueUntilEditSubmit) {
+                    setTimeout(function () {
+                      window.deferWorkflowContinueUntilEditSubmit = false;
+                      update_actualcompleted_date.init();
+                      Task_Edit_Data.init();
+                    }, 3000);
+                  } else {
+                    update_actualcompleted_date.init();
+                    Task_Edit_Data.init();
+                  }
+                } else {
+                  // MSActualBenefit Submit: history already awaited above — close now.
+                  // No extra 3s delay / no redirect until this point.
+                  if (
+                    listkey == "benefits" &&
+                    workflowname == "MSActualBenefit" &&
+                    tasktype == "Submit"
+                  ) {
+                    window.deferWorkflowContinueUntilEditSubmit = false;
+                    Task_Edit_Data.init();
+                  } else if (window.deferWorkflowContinueUntilEditSubmit) {
+                    setTimeout(function () {
+                      window.deferWorkflowContinueUntilEditSubmit = false;
+                      Task_Edit_Data.init();
+                    }, 3000);
+                  } else {
+                    Task_Edit_Data.init();
+                  }
+                }
               };
 
               if (deferredMsActualKpiHistory && msActualKpiHistorySaver) {
@@ -4384,10 +4497,10 @@ window.SubmitThiredAction = {
                 .attr("sid") == undefined
                 ? ""
                 : SP.FieldUserValue.fromUser(
-                    $("#AssignedTo")
-                      .find("span.sp-peoplepicker-userSpan")
-                      .attr("sid")
-                  );
+                  $("#AssignedTo")
+                    .find("span.sp-peoplepicker-userSpan")
+                    .attr("sid")
+                );
 
             if (stageid == "S03") {
               items.set_item("StrategicPlanningBusinessPartner", ppp);
@@ -4483,10 +4596,10 @@ window.BulkEdit = function (state, withNote = false) {
   var normalizedStageId = (stageid || "").trim();
   camlQuery.set_viewXml(
     '<View><Query><Where><And><Eq><FieldRef Name="ProjectCode" /><Value Type="Text">' +
-      peojectC +
-      '</Value></Eq><Eq><FieldRef Name="StageCode" /><Value Type="Text">' +
-      normalizedStageId +
-      "</Value></Eq></And></Where></Query><RowLimit>1</RowLimit></View>"
+    peojectC +
+    '</Value></Eq><Eq><FieldRef Name="StageCode" /><Value Type="Text">' +
+    normalizedStageId +
+    "</Value></Eq></And></Where></Query><RowLimit>1</RowLimit></View>"
   );
   console.log("[WF][BulkEdit] query Project Stages", {
     projectCode: peojectC,
@@ -4626,8 +4739,8 @@ function program_BulkEdit(state) {
   var camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
-      peojectC +
-      "</Value></Eq></Where></Query></View>"
+    peojectC +
+    "</Value></Eq></Where></Query></View>"
   );
   //Get items by Query
   var progColl = programList.getItems(camlQuery);
@@ -4685,7 +4798,7 @@ function program_BulkEdit(state) {
               // if (prjstage == "S42") {
               // 	items.set_item("Status", "completed1");
               // }
-            } else if(state == 3) items.set_item("Stage", cancelstageid) ;
+            } else if (state == 3) items.set_item("Stage", cancelstageid);
             else if (!state) {
               items.set_item("Stage", prvstageid);
             }
@@ -4858,11 +4971,11 @@ window.updateProjectStageSet = {
             var id = $(this).attr("INppicker");
             var ppp =
               $(this).find("span.sp-peoplepicker-userSpan").attr("sid") ==
-              undefined
+                undefined
                 ? ""
                 : SP.FieldUserValue.fromUser(
-                    $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
-                  ); //.split('|').slice(-1)[0]
+                  $(this).find("span.sp-peoplepicker-userSpan").attr("sid")
+                ); //.split('|').slice(-1)[0]
             updateProjectStageSet.g.oListItem.set_item(id, ppp);
           }
         } else if ($(this).attr("type") == "multipicker") {
@@ -4874,8 +4987,8 @@ window.updateProjectStageSet = {
                 $(this).attr("sid") == undefined
                   ? ""
                   : SP.FieldUserValue.fromUser(
-                      $(this).attr("sid").split("|").slice(-1)[0]
-                    );
+                    $(this).attr("sid").split("|").slice(-1)[0]
+                  );
 
               users.push(ppp);
             });
@@ -4936,8 +5049,8 @@ window.updateProjectStageSet = {
               var ydate = !dateval
                 ? ""
                 : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                    .join("/")
-                    .replace("-", "/");
+                  .join("/")
+                  .replace("-", "/");
               if (dateval)
                 updateProjectStageSet.g.oListItem.set_item(
                   $(this).attr("id"),
@@ -5230,10 +5343,10 @@ function UpdateProjectStages(prvstageid) {
   if (previousStageId.length == "1") {
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Eq><FieldRef Name='ProjectCode'/><Value Type='Text'>" +
-        peojectC +
-        "</Value></Eq><Eq><FieldRef Name='StageCode'/><Value Type='Text'>" +
-        previousStageId +
-        "</Value></Eq></And></Where></Query></View>"
+      peojectC +
+      "</Value></Eq><Eq><FieldRef Name='StageCode'/><Value Type='Text'>" +
+      previousStageId +
+      "</Value></Eq></And></Where></Query></View>"
     );
   } else {
     // Query = '<View><Query><Where><And><Eq><FieldRef Name=\'ProjectCode\'/><Value Type=\'Text\'>' + peojectC + '</Value></Eq><In><FieldRef Name=\'StageCode\' /><Values>';
@@ -5308,7 +5421,7 @@ var Task_Edit_Data = {
           window.location.href.split("TID=")[1].split("&")[0],
           10
         );
-      } catch (e) {}
+      } catch (e) { }
     }
     var taskIdToClose = Number(taskID) || Number(taskIdFromUrl) || Number(taskid);
     Task_Edit_Data.g.oListItem = oList.getItemById(taskIdToClose);
@@ -5317,7 +5430,7 @@ var Task_Edit_Data = {
       tasktype != "Approval" &&
       tasktype != "TriApproval" &&
       tasktype != "ApprovalSaveEdit"
-    ){
+    ) {
       stageAction = "submit";
     } else if (
       tasktype == "Approval" ||
@@ -5345,166 +5458,166 @@ var Task_Edit_Data = {
       Task_Edit_Data.g.oListItem.update();
       clientContext.load(Task_Edit_Data.g.oListItem);
       clientContext.executeQueryAsync(
-      Function.createDelegate(this, function () {
-        // console.log('successful');
-        $(".errormsg").hide();
-        // Keep redirect behavior immediate (no artificial delay).
-   
-        var _wfDelayRedirectTo = function (url) {
-          window.location = url;
-        };
-        /////////////////////////////////
-        //to reset Delivered to no if the task type Approvel and the user click on reject
-        if (
-          !stageState && tasktype == 'Approval' &&
-          (isVROInitiativeMilestone ||
-            isEPMOInitiativeMilestone ||
-            isLMSInitiativeMilestone ||
-            isSODInitiativeMilestone ||
-            isVROInitiativeDeliverable ||
-            isEPMOInitiativeDeliverable ||
-            isLMSInitiativeDeliverable ||
-            isSODInitiativeDeliverable ||
-            isVROProjMilestone ||
-            isEPMOProjMilestone ||
-            isLMSProjMilestone ||
-            isSODProjMilestone ||
-            isVROProjDeliverable ||
-            isSODProjDeliverable ||
-            isEPMOProjDeliverable ||
-            isLMSProjDeliverable)
-        ) {
-          // in initiative Delivered and project Delivered
-          reset_Delivered_Value.init();
-        } else {
-          if (isRiskPage) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=risks";
-          }
-          if (isIssuePage) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=issues";
-          }
-          if (isMomPage) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=mom";
-          }
-          // if (isInitiativeSample) {
-          // 	window.location =
-          // 		_spPageContextInfo.siteAbsoluteUrl +
-          // 		"/SitePages/Listing.aspx?ListKey=initiatives";
-          // }
-          if (isTasksPage) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=SMOTasks";
-          }
-          if (isideapage) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=ideas";
-          } else  if (isEngineeringProjectPage) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/Listing.aspx?ListKey=engineeringprojects";
-          } else if (isRelatedProjectPage) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/ProjectHome.aspx?PCODE=" +
-              peojectC;
-          } else if (isProjectPage) {
-            window.location =
-              _spPageContextInfo.siteAbsoluteUrl +
-              "/SitePages/ProjectHome.aspx?PCODE=" +
-              peojectC;
-          } else if (isKPIResultWf) {
-            _wfDelayRedirectTo(
-              _spPageContextInfo.siteAbsoluteUrl +
+        Function.createDelegate(this, function () {
+          // console.log('successful');
+          $(".errormsg").hide();
+          // Keep redirect behavior immediate (no artificial delay).
+
+          var _wfDelayRedirectTo = function (url) {
+            window.location = url;
+          };
+          /////////////////////////////////
+          //to reset Delivered to no if the task type Approvel and the user click on reject
+          if (
+            !stageState && tasktype == 'Approval' &&
+            (isVROInitiativeMilestone ||
+              isEPMOInitiativeMilestone ||
+              isLMSInitiativeMilestone ||
+              isSODInitiativeMilestone ||
+              isVROInitiativeDeliverable ||
+              isEPMOInitiativeDeliverable ||
+              isLMSInitiativeDeliverable ||
+              isSODInitiativeDeliverable ||
+              isVROProjMilestone ||
+              isEPMOProjMilestone ||
+              isLMSProjMilestone ||
+              isSODProjMilestone ||
+              isVROProjDeliverable ||
+              isSODProjDeliverable ||
+              isEPMOProjDeliverable ||
+              isLMSProjDeliverable)
+          ) {
+            // in initiative Delivered and project Delivered
+            reset_Delivered_Value.init();
+          } else {
+            if (isRiskPage) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=risks";
+            }
+            if (isIssuePage) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=issues";
+            }
+            if (isMomPage) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=mom";
+            }
+            // if (isInitiativeSample) {
+            // 	window.location =
+            // 		_spPageContextInfo.siteAbsoluteUrl +
+            // 		"/SitePages/Listing.aspx?ListKey=initiatives";
+            // }
+            if (isTasksPage) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=SMOTasks";
+            }
+            if (isideapage) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=ideas";
+            } else if (isEngineeringProjectPage) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/Listing.aspx?ListKey=engineeringprojects";
+            } else if (isRelatedProjectPage) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/ProjectHome.aspx?PCODE=" +
+                peojectC;
+            } else if (isProjectPage) {
+              window.location =
+                _spPageContextInfo.siteAbsoluteUrl +
+                "/SitePages/ProjectHome.aspx?PCODE=" +
+                peojectC;
+            } else if (isKPIResultWf) {
+              _wfDelayRedirectTo(
+                _spPageContextInfo.siteAbsoluteUrl +
                 "/SitePages/Listing.aspx?ListKey=" +
                 "mainkpi"
-            );
-          } else if (RelatedProjectCODE) {
-            _wfDelayRedirectTo(
-              wfBuildListingUrlWithContext(
+              );
+            } else if (RelatedProjectCODE) {
+              _wfDelayRedirectTo(
+                wfBuildListingUrlWithContext(
+                  listkey,
+                  "&PCODE=" + RelatedProjectCODE
+                )
+              );
+            } else if (
+              isVROCOC ||
+              isEPMOCOC ||
+              isLMSCOC ||
+              isSODCOC ||
+              isVROProjDeliverable ||
+              isVROProjNDeliverable ||
+              isVROProjMilestone ||
+              isSODProjMilestone ||
+              isEPMOProjDeliverable ||
+              isEPMOProjNDeliverable ||
+              isEPMOProjMilestone ||
+              isLMSProjDeliverable ||
+              isSODProjDeliverable ||
+              isLMSProjNDeliverable ||
+              isLMSProjMilestone
+            ) {
+              window.location = wfBuildListingUrlWithContext(
                 listkey,
-                "&PCODE=" + RelatedProjectCODE
-              )
-            );
-          } else if (
-            isVROCOC ||
-            isEPMOCOC ||
-            isLMSCOC ||
-            isSODCOC ||
-            isVROProjDeliverable ||
-            isVROProjNDeliverable ||
-            isVROProjMilestone ||
-            isSODProjMilestone ||
-            isEPMOProjDeliverable ||
-            isEPMOProjNDeliverable ||
-            isEPMOProjMilestone ||
-            isLMSProjDeliverable ||
-            isSODProjDeliverable ||
-            isLMSProjNDeliverable ||
-            isLMSProjMilestone
-          ) {
-            window.location = wfBuildListingUrlWithContext(
-              listkey,
-              "&PCODE=" + peojectC
-            );
-          } else if (
-            isVROBenefitActual ||
-            isEPMOBenefitActual ||
-            isLMSBenefitActual ||
-            isSODBenefitActual ||
-            isVROInitiativeDeliverable ||
-            isVROInitiativeMilestone ||
-            isEPMOInitiativeDeliverable ||
-            isEPMOInitiativeMilestone ||
-            isLMSInitiativeDeliverable ||
-            isLMSInitiativeMilestone ||
-            isSODInitiativeDeliverable ||
-            isSODInitiativeMilestone
-          ) {
-            _wfDelayRedirectTo(
-              wfBuildListingUrlWithContext(
-                listkey,
-                "&ICODE=" + peojectC
-              )
-            );
-          } else if (
-            isStrategicCR ||
-            isExecutionCR ||
-            isOperationCR
-          ) {
-            _wfDelayRedirectTo(
-              _spPageContextInfo.siteAbsoluteUrl +
+                "&PCODE=" + peojectC
+              );
+            } else if (
+              isVROBenefitActual ||
+              isEPMOBenefitActual ||
+              isLMSBenefitActual ||
+              isSODBenefitActual ||
+              isVROInitiativeDeliverable ||
+              isVROInitiativeMilestone ||
+              isEPMOInitiativeDeliverable ||
+              isEPMOInitiativeMilestone ||
+              isLMSInitiativeDeliverable ||
+              isLMSInitiativeMilestone ||
+              isSODInitiativeDeliverable ||
+              isSODInitiativeMilestone
+            ) {
+              _wfDelayRedirectTo(
+                wfBuildListingUrlWithContext(
+                  listkey,
+                  "&ICODE=" + peojectC
+                )
+              );
+            } else if (
+              isStrategicCR ||
+              isExecutionCR ||
+              isOperationCR
+            ) {
+              _wfDelayRedirectTo(
+                _spPageContextInfo.siteAbsoluteUrl +
                 "/SitePages/ChangeRequests.aspx?isview=true&critemcode=" +
                 CRITEMCODE
-            );
-          } else if (
-            isProjectClosure ||
-            isInitiativeClosure ||
-            listkey === "closureform" ||
-            listkey === "closureinitiative"
-          ) {
-            _wfDelayRedirectTo(
-              _spPageContextInfo.siteAbsoluteUrl +
+              );
+            } else if (
+              isProjectClosure ||
+              isInitiativeClosure ||
+              listkey === "closureform" ||
+              listkey === "closureinitiative"
+            ) {
+              _wfDelayRedirectTo(
+                _spPageContextInfo.siteAbsoluteUrl +
                 "/SitePages/Listing.aspx?ListKey=tasks"
-            );
-          } else {
-            _wfDelayRedirectTo(wfBuildListingUrlWithContext(listkey));
+              );
+            } else {
+              _wfDelayRedirectTo(wfBuildListingUrlWithContext(listkey));
+            }
           }
-        }
-      }),
-      Function.createDelegate(this, function (sender, args) {
-        console.log(
-          "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-        );
-      })
-    );
+        }),
+        Function.createDelegate(this, function (sender, args) {
+          console.log(
+            "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+          );
+        })
+      );
     }
 
     if (stageState == true && taskActionType == "Conditional" && taskCondition && Array.isArray(taskCondition) && taskCondition.length > 0) {
@@ -5575,7 +5688,7 @@ var Workflow_Note_Data_Request_WFs = {
       // console.log('in');
       clearInterval(forTasksHTMLStatus);
       $("div.Container").after('<div class="cust-loader"></div>');
-      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {});
+      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () { });
     }
     //*****channnnges */
     clearInterval(forTasksHTMLStatus);
@@ -5909,12 +6022,12 @@ var WF_UploadFiles = {
     var oWeb = clientContext.get_web();
     var oList = oWeb.getFolderByServerRelativeUrl(
       _spPageContextInfo.siteServerRelativeUrl +
-        "/" +
-        ListArray[2].documents +
-        "/" +
-        peojectC +
-        "/" +
-        listkey
+      "/" +
+      ListArray[2].documents +
+      "/" +
+      peojectC +
+      "/" +
+      listkey
     );
     // oWeb.get_lists().getByTitle('Projects Documents');
     //Convert the file contents into base64 data
@@ -6045,8 +6158,8 @@ function _uploadFile() {
 					  <div class="upload-progress bg-success"" style="width:0px"></div>\
 				  </div>\
 				  <p data-trans-fileuploading class="upload-name Resources"><span class="progress-file-name">"' +
-                file.name +
-                '" </span><span class="upload-percent"></span></p>\
+              file.name +
+              '" </span><span class="upload-percent"></span></p>\
 			  </div>'
             );
         }
@@ -6164,7 +6277,7 @@ function resolveTargetStageFromTaskCondition(parentFieldValue, conditionConfig) 
       });
       if (evalExpr(condAfter)) return el.targetStage;
     }
-  } catch (e) {}
+  } catch (e) { }
   return null;
 }
 
@@ -6180,8 +6293,8 @@ var Cancel_Project = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
-        peojectC +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      peojectC +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
 
     //Get items by Query
@@ -6266,9 +6379,9 @@ var End_Workflow = {
     var moduleCode = String(
       (typeof window.benefitItemWfModule !== "undefined" &&
         window.benefitItemWfModule) ||
-        ($("#WFModuleCode").val && $("#WFModuleCode").val()) ||
-        $("#WFModuleCode").attr("value") ||
-        ""
+      ($("#WFModuleCode").val && $("#WFModuleCode").val()) ||
+      $("#WFModuleCode").attr("value") ||
+      ""
     ).trim();
     return (
       wfName == "InitiativeBenefits" ||
@@ -6336,7 +6449,7 @@ var End_Workflow = {
     return End_Workflow.canEditBenefitPeriodType();
   },
   runBenefitPeriodTypeSyncIfChanged: function (onDone) {
-    onDone = onDone || function () {};
+    onDone = onDone || function () { };
     if (!End_Workflow.shouldSyncBenefitKpiResultsOnSave()) {
       onDone();
       return;
@@ -6384,8 +6497,8 @@ var End_Workflow = {
     var current = End_Workflow.getBenefitPeriodTypeFromForm();
     var original = String(
       window.benefitOriginalPeriodType ||
-        $("#PeriodType").attr("data-original-periodtype") ||
-        ""
+      $("#PeriodType").attr("data-original-periodtype") ||
+      ""
     ).trim();
     if (!current) return false;
     if (!original) return true;
@@ -6396,10 +6509,10 @@ var End_Workflow = {
     if (!$period.length) return "";
     return String(
       $period.val() ||
-        $period.attr("value") ||
-        $period.find("option:selected").val() ||
-        $period.attr("data-viewtogglevalue") ||
-        ""
+      $period.attr("value") ||
+      $period.find("option:selected").val() ||
+      $period.attr("data-viewtogglevalue") ||
+      ""
     ).trim();
   },
   getBenefitCodeFromForm: function () {
@@ -6412,14 +6525,14 @@ var End_Workflow = {
       ) {
         fromItem = Edit_Data_Submit.g.oListItem.get_item("Title") || "";
       }
-    } catch (e) {}
+    } catch (e) { }
     return String(
       $("#Title").val() ||
-        $("#Title").attr("value") ||
-        $("#Title").text() ||
-        fromItem ||
-        (typeof benefitCodeResult !== "undefined" ? benefitCodeResult : "") ||
-        ""
+      $("#Title").attr("value") ||
+      $("#Title").text() ||
+      fromItem ||
+      (typeof benefitCodeResult !== "undefined" ? benefitCodeResult : "") ||
+      ""
     ).trim();
   },
   parseBenefitYearValue: function (val) {
@@ -6462,11 +6575,11 @@ var End_Workflow = {
         // MainKPI / BenefitMetrics). Writing them here fails BulkEdit with:
         // Column 'Years' does not exist ... /Lists/Benefits
         listItem.set_item("Quarter", quarter);
-      } catch (e) {}
+      } catch (e) { }
     }
   },
   syncBenefitKpiResults: function (benefitCode, onDone) {
-    onDone = onDone || function () {};
+    onDone = onDone || function () { };
     benefitCode = String(
       benefitCode || End_Workflow.getBenefitCodeFromForm() || ""
     ).trim();
@@ -6489,8 +6602,8 @@ var End_Workflow = {
     var caml = new SP.CamlQuery();
     caml.set_viewXml(
       "<View><Query><Where><Eq><FieldRef Name='BenefitCode'/><Value Type='Text'>" +
-        End_Workflow.xmlEscape(benefitCode) +
-        "</Value></Eq></Where></Query></View>"
+      End_Workflow.xmlEscape(benefitCode) +
+      "</Value></Eq></Where></Query></View>"
     );
     var kpiItems = list.getItems(caml);
     ctx.load(kpiItems);
@@ -6514,20 +6627,20 @@ var End_Workflow = {
           var deletionStatus = "";
           try {
             deletionStatus = String(row.get_item("DeletionStatus") || "").trim();
-          } catch (e) {}
+          } catch (e) { }
           var rowPeriod = "";
           try {
             rowPeriod = String(row.get_item("PeriodType") || "").trim();
-          } catch (e2) {}
+          } catch (e2) { }
           var rowYear = null;
           try {
             rowYear = row.get_item("Year");
-          } catch (e3) {}
+          } catch (e3) { }
           var yearKey = rowYear == null ? "" : String(rowYear);
           if (!benefitName) {
             try {
               benefitName = row.get_item("Name") || benefitName;
-            } catch (e4) {}
+            } catch (e4) { }
           }
           if (deletionStatus === "Deleted") continue;
           if (rowPeriod === newPeriod) {
@@ -6564,7 +6677,7 @@ var End_Workflow = {
               fromYear = End_Workflow.parseBenefitYearValue(
                 rows[0].get_item("Year")
               );
-            } catch (e5) {}
+            } catch (e5) { }
           }
           if (fromYear) {
             if (!toYear) toYear = fromYear;
@@ -6612,7 +6725,7 @@ var End_Workflow = {
           function (sender, args) {
             console.error(
               "[InitiativeBenefits] KPIResults replace failed: " +
-                args.get_message()
+              args.get_message()
             );
             onDone();
           }
@@ -6828,7 +6941,7 @@ var End_Workflow = {
     }
     try {
       localStorage.setItem(End_Workflow.STORE_KEY, JSON.stringify(store));
-    } catch (e2) {}
+    } catch (e2) { }
   },
   getEnded: function (benefitCode) {
     try {
@@ -6857,7 +6970,7 @@ var End_Workflow = {
     if (!item) return false;
     if (String(item.DeletionStatus || "").toLowerCase() === "deleted") return false;
     if (period && period.year && item.Year != null && item.Year !== "" &&
-        !End_Workflow.yearsMatch(item.Year, period.year)) {
+      !End_Workflow.yearsMatch(item.Year, period.year)) {
       return false;
     }
     if (!period || (!period.month && !period.actualField)) return true;
@@ -6880,9 +6993,9 @@ var End_Workflow = {
       success: function (res) {
         cb(
           res &&
-            res.d &&
-            res.d.GetContextWebInformation &&
-            res.d.GetContextWebInformation.FormDigestValue
+          res.d &&
+          res.d.GetContextWebInformation &&
+          res.d.GetContextWebInformation.FormDigestValue
         );
       },
       error: function () {
@@ -6938,7 +7051,7 @@ var End_Workflow = {
     return allDrafts;
   },
   patchHistoryDeleted: function (items, onDone) {
-    onDone = onDone || function () {};
+    onDone = onDone || function () { };
     if (!items || !items.length) {
       console.warn("End_Workflow: no KPIResultsHistory rows to mark Deleted");
       onDone();
@@ -7001,7 +7114,7 @@ var End_Workflow = {
     });
   },
   clearKpiResultsByPeriods: function (benefitCode, periods, onDone) {
-    onDone = onDone || function () {};
+    onDone = onDone || function () { };
     if (!benefitCode || !periods || !periods.length) {
       onDone();
       return;
@@ -7068,7 +7181,7 @@ var End_Workflow = {
     return dirty;
   },
   reapplyEndedActuals: function (benefitCode, onDone, delayMs) {
-    onDone = onDone || function () {};
+    onDone = onDone || function () { };
     if (delayMs) {
       setTimeout(function () {
         End_Workflow.reapplyEndedActuals(benefitCode, onDone, 0);
@@ -7132,7 +7245,7 @@ var End_Workflow = {
           ctx.executeQueryAsync(onDone, function (sender, args) {
             console.error(
               "End_Workflow.reapplyEndedActuals failed: " +
-                args.get_message()
+              args.get_message()
             );
             onDone();
           });
@@ -7143,14 +7256,14 @@ var End_Workflow = {
       function (sender, args) {
         console.error(
           "End_Workflow.reapplyEndedActuals load failed: " +
-            args.get_message()
+          args.get_message()
         );
         onDone();
       }
     );
   },
   clearEndedPeriod: function (benefitCode, onDone) {
-    onDone = onDone || function () {};
+    onDone = onDone || function () { };
     if (!benefitCode) {
       onDone();
       return;
@@ -7212,7 +7325,7 @@ var End_Workflow = {
     });
   },
   closeRelatedOpenTasks: function (itemId, excludeTaskId, onDone) {
-    onDone = onDone || function () {};
+    onDone = onDone || function () { };
     if (!itemId) {
       onDone();
       return;
@@ -7222,8 +7335,8 @@ var End_Workflow = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Eq><FieldRef Name='RelatedItemID' /><Value Type='Text'>" +
-        End_Workflow.xmlEscape(itemId) +
-        "</Value></Eq><Eq><FieldRef Name='Status' /><Value Type='Choice'>Open</Value></Eq></And></Where></Query></View>"
+      End_Workflow.xmlEscape(itemId) +
+      "</Value></Eq><Eq><FieldRef Name='Status' /><Value Type='Choice'>Open</Value></Eq></And></Where></Query></View>"
     );
     var taskItems = tasksList.getItems(camlQuery);
     ctx.load(taskItems);
@@ -7254,14 +7367,14 @@ var End_Workflow = {
       function (sender, args) {
         console.error(
           "End_Workflow closeRelatedOpenTasks load failed: " +
-            args.get_message()
+          args.get_message()
         );
         onDone();
       }
     );
   },
   softDeleteRelatedByField: function (listTitle, fieldName, fieldValue, onDone) {
-    onDone = onDone || function () {};
+    onDone = onDone || function () { };
     if (!listTitle || !fieldName || !fieldValue) {
       onDone();
       return;
@@ -7277,10 +7390,10 @@ var End_Workflow = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='" +
-        fieldName +
-        "' /><Value Type='Text'>" +
-        End_Workflow.xmlEscape(fieldValue) +
-        "</Value></Eq></And></Where></Query></View>"
+      fieldName +
+      "' /><Value Type='Text'>" +
+      End_Workflow.xmlEscape(fieldValue) +
+      "</Value></Eq></And></Where></Query></View>"
     );
     var items = list.getItems(camlQuery);
     ctx.load(items);
@@ -7299,9 +7412,9 @@ var End_Workflow = {
         ctx.executeQueryAsync(onDone, function (sender, args) {
           console.error(
             "End_Workflow softDeleteRelatedByField update failed (" +
-              listTitle +
-              "): " +
-              args.get_message()
+            listTitle +
+            "): " +
+            args.get_message()
           );
           onDone();
         });
@@ -7309,16 +7422,16 @@ var End_Workflow = {
       function (sender, args) {
         console.error(
           "End_Workflow softDeleteRelatedByField load failed (" +
-            listTitle +
-            "): " +
-            args.get_message()
+          listTitle +
+          "): " +
+          args.get_message()
         );
         onDone();
       }
     );
   },
   deleteEntireBenefit: function (benefitCode, itemId, currentTaskId, onDone) {
-    onDone = onDone || function () {};
+    onDone = onDone || function () { };
     var historyItems = [];
     End_Workflow.closeRelatedOpenTasks(itemId, currentTaskId, function () {
       End_Workflow.softDeleteRelatedByField(
@@ -7471,8 +7584,8 @@ var Edit_Project = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
-        peojectC +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      peojectC +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
 
     //Get items by Query
@@ -7552,8 +7665,8 @@ var Get_Project_Info = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
-        peojectC +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      peojectC +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
 
     //Get items by Query
@@ -7643,8 +7756,8 @@ function changeOnKpiResultDraft(state) {
   var camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(
     "<View><Query><Where><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
-      relatedItemTitle +
-      "</Value></Eq></Where></Query></View>"
+    relatedItemTitle +
+    "</Value></Eq></Where></Query></View>"
   );
   //Get items by Query
   var kpiresultColl = kpiresultList.getItems(camlQuery);
@@ -7797,8 +7910,8 @@ var NewLogicDelete_Item_FromCR = {
       var camlQuery = new SP.CamlQuery();
       camlQuery.set_viewXml(
         "<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
-          relatedItemInCr +
-          "</Value></Eq></Where><RowLimit>1</RowLimit></Query></View>"
+        relatedItemInCr +
+        "</Value></Eq></Where><RowLimit>1</RowLimit></Query></View>"
       );
       var relatedItemCollection = targetList.getItems(camlQuery);
       context.load(relatedItemCollection);
@@ -7899,8 +8012,8 @@ var reset_Delivered_Value = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Text">' +
-        IID2 +
-        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+      IID2 +
+      "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
     );
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
@@ -8004,8 +8117,8 @@ var update_actualcompleted_date = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="ID" /><Value Type="Text">' +
-        IID2 +
-        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+      IID2 +
+      "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
     );
     //Get items by Query
     var progColl = programList.getItems(camlQuery);
@@ -8023,31 +8136,28 @@ var update_actualcompleted_date = {
           var items = programList.getItemById(currentId);
           items.set_item("Delivered", "yes");
           var todayDate = new Date();
-         if (isVROInitiativeMilestone ||
+          if (isVROInitiativeMilestone ||
             isEPMOInitiativeMilestone ||
             isLMSInitiativeMilestone ||
             isVROInitiativeDeliverable ||
             isEPMOInitiativeDeliverable ||
-            isLMSInitiativeDeliverable )
-            {
-          items.set_item("ActualCompletedDate", todayDate);
-            }
+            isLMSInitiativeDeliverable) {
+            items.set_item("ActualCompletedDate", todayDate);
+          }
 
-            if( isVROProjMilestone ||
-              isEPMOProjMilestone ||
-              isLMSProjMilestone ||
-              isSODProjMilestone)
-              {
-          items.set_item("ActualDate", todayDate);
-              }
+          if (isVROProjMilestone ||
+            isEPMOProjMilestone ||
+            isLMSProjMilestone ||
+            isSODProjMilestone) {
+            items.set_item("ActualDate", todayDate);
+          }
 
-              if( isVROProjDeliverable ||
-                isEPMOProjDeliverable ||
-                isLMSProjDeliverable || 
-                isSODProjDeliverable) 
-                {
-                  items.set_item("DeliveredDate", todayDate);
-                }
+          if (isVROProjDeliverable ||
+            isEPMOProjDeliverable ||
+            isLMSProjDeliverable ||
+            isSODProjDeliverable) {
+            items.set_item("DeliveredDate", todayDate);
+          }
           //Update the item
           items.update();
           //Push item on the array
