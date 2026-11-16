@@ -2365,6 +2365,31 @@ var Task_PCODE_Data_Request_WFs = {
             Task_PCODE_Data_Request_WFs.g.hidefields();
           }, 100);
         }
+        else if (workflowname == "MSActualKPI")
+        {
+          $(".navbar.page-nav.px-5").after(
+            '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+              taskid +
+              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
+              actionbuttonTitle +
+              '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
+          );
+          $(".btnactionrow > h2.approvalHeader").append(
+            '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
+              taskid +
+              '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
+          );
+          $(".btnactionrow .form-btns-wrapper").append(
+            '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
+              actionbuttonTitle +
+              '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources"  type="button"></button></div></div>'
+          );
+          $("div.Container").fadeIn();
+          $("div.cust-loader").fadeOut();
+          forFormSubmitHTMLStatus = setInterval(function () {
+            Task_PCODE_Data_Request_WFs.g.hidefields();
+          }, 100);
+        }
         else
         {
            // console.log('aaaaaaaaaaaaaa');
@@ -3147,6 +3172,299 @@ var Stages_ORG_Data_Request_WFs = {
   },
 };
 //end phases-stages
+// ACTUAL_KPI_PERIOD_ATTACHMENTS_START
+function normalizeActualKpiToken(value) {
+  if (value == null) return "";
+  return String(value).trim();
+}
+
+function periodFromActualKpiFields(fields) {
+  var periodType = normalizeActualKpiToken(fields.periodType);
+  var year = normalizeActualKpiToken(fields.year);
+  var relatedField = "";
+  var relatedValue = "";
+  if (periodType === "monthly") {
+    relatedField = "RelatedMonth";
+    relatedValue = normalizeActualKpiToken(fields.months);
+  } else if (periodType === "quarter") {
+    relatedField = "RelatedQuarter";
+    relatedValue = normalizeActualKpiToken(fields.quarter);
+  } else if (periodType === "midterm") {
+    relatedField = "RelatedMid";
+    relatedValue = normalizeActualKpiToken(fields.midterms);
+  } else if (periodType === "year") {
+    relatedField = "RelatedActualY";
+    relatedValue = year ? "ActualY" : "";
+  }
+  return {
+    periodType: periodType,
+    year: year,
+    relatedField: relatedField,
+    relatedValue: relatedValue,
+  };
+}
+
+function periodTokenFromHistory(periodType, year, month) {
+  var normalizedType = normalizeActualKpiToken(periodType);
+  var normalizedYear = normalizeActualKpiToken(year);
+  var monthNumber = parseInt(month, 10);
+  if (!normalizedType || !normalizedYear || !monthNumber) return null;
+  if (normalizedType === "monthly") {
+    if (monthNumber < 1 || monthNumber > 12) return null;
+    return {
+      periodType: normalizedType,
+      year: normalizedYear,
+      relatedField: "RelatedMonth",
+      relatedValue: "ActualM" + monthNumber,
+    };
+  }
+  if (normalizedType === "quarter") {
+    var quarterValue =
+      monthNumber === 3
+        ? "ActualQ1"
+        : monthNumber === 6
+        ? "ActualQ2"
+        : monthNumber === 9
+        ? "ActualQ3"
+        : monthNumber === 12
+        ? "ActualQ4"
+        : "";
+    if (!quarterValue) return null;
+    return {
+      periodType: normalizedType,
+      year: normalizedYear,
+      relatedField: "RelatedQuarter",
+      relatedValue: quarterValue,
+    };
+  }
+  if (normalizedType === "midterm") {
+    var midValue =
+      monthNumber === 6 ? "ActualMid1" : monthNumber === 12 ? "ActualMid2" : "";
+    if (!midValue) return null;
+    return {
+      periodType: normalizedType,
+      year: normalizedYear,
+      relatedField: "RelatedMid",
+      relatedValue: midValue,
+    };
+  }
+  if (normalizedType === "year") {
+    return {
+      periodType: normalizedType,
+      year: normalizedYear,
+      relatedField: "RelatedActualY",
+      relatedValue: "ActualY",
+    };
+  }
+  return null;
+}
+
+function historyRecordIsApproved(record) {
+  if (!record) return false;
+  var keys = ["Status", "DraftStatus", "ApprovalStatus", "WFStatus", "RecordStatus"];
+  for (var i = 0; i < keys.length; i++) {
+    if (
+      record[keys[i]] != null &&
+      String(record[keys[i]]).trim().toLowerCase() === "approved"
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function chooseEndedActualKpiPeriod(fromItem, historyItem) {
+  var fromHistory = null;
+  if (historyItem && historyItem.Year != null && historyItem.Month != null) {
+    fromHistory = periodTokenFromHistory(
+      fromItem.periodType,
+      historyItem.Year,
+      historyItem.Month
+    );
+  }
+  if (fromHistory && !historyRecordIsApproved(historyItem)) {
+    fromHistory.itemId = fromItem.itemId;
+    return fromHistory;
+  }
+  if (fromHistory && historyRecordIsApproved(historyItem)) {
+    if (
+      fromItem.relatedValue &&
+      fromItem.year &&
+      (fromItem.relatedValue !== fromHistory.relatedValue ||
+        String(fromItem.year) !== String(fromHistory.year))
+    ) {
+      return fromItem;
+    }
+    return null;
+  }
+  if (fromItem.relatedValue && fromItem.year) return fromItem;
+  return null;
+}
+
+function attachmentBelongsToEndedPeriod(file, period) {
+  if (!period || !period.relatedField || !period.relatedValue || !period.year) {
+    return false;
+  }
+  var fileYear = normalizeActualKpiToken(file.RelatedYear);
+  var fileToken = normalizeActualKpiToken(file[period.relatedField]);
+  if (!fileYear || !fileToken) return false;
+  return (
+    fileYear === normalizeActualKpiToken(period.year) &&
+    fileToken === normalizeActualKpiToken(period.relatedValue)
+  );
+}
+
+function readActualKpiField(fieldId, item) {
+  var el = document.getElementById(fieldId);
+  if (el) {
+    var fromVal = el.value;
+    if (fromVal != null && String(fromVal).trim() !== "") return String(fromVal).trim();
+    var toggle = el.getAttribute("data-viewtogglevalue");
+    if (toggle != null && String(toggle).trim() !== "") return String(toggle).trim();
+    var text = (el.textContent || "").trim();
+    if (
+      /^(Actual(Q[1-4]|M([1-9]|1[0-2])|Mid[12]|Y)|\d{4}|monthly|quarter|midterm|year)$/.test(
+        text
+      )
+    ) {
+      return text;
+    }
+  }
+  if (item && item.get_item) {
+    try {
+      var stored = item.get_item(fieldId);
+      if (stored != null && String(stored).trim() !== "") return String(stored).trim();
+    } catch (e) {}
+  }
+  return "";
+}
+
+function resolveEndedActualKpiPeriod(item, itemId) {
+  var period = periodFromActualKpiFields({
+    periodType: readActualKpiField("PeriodType", item),
+    year: readActualKpiField("Year", item),
+    quarter: readActualKpiField("Quarter", item),
+    months: readActualKpiField("Months", item),
+    midterms: readActualKpiField("Midterms", item),
+  });
+  period.itemId = itemId;
+  try {
+    period.kpiCode = item.get_item("Title") || "";
+  } catch (e) {
+    period.kpiCode = "";
+  }
+  return period;
+}
+
+function deleteEndedWorkflowPeriodAttachments(periodFromItem, done) {
+  var finish = function (period) {
+    if (!period) {
+      console.warn("[WF] skip period attachment delete, period unresolved");
+      done();
+      return;
+    }
+    deleteEndedWorkflowPeriodFiles(period, done);
+  };
+
+  var kpiCode = periodFromItem && periodFromItem.kpiCode ? String(periodFromItem.kpiCode) : "";
+  if (!kpiCode || typeof $ === "undefined" || typeof _spPageContextInfo === "undefined") {
+    finish(chooseEndedActualKpiPeriod(periodFromItem, null));
+    return;
+  }
+
+  $.ajax({
+    url:
+      _spPageContextInfo.webAbsoluteUrl +
+      "/_api/web/lists/getbytitle('KPIResultsHistory')/items?$filter=MainKPICode eq '" +
+      kpiCode.replace(/'/g, "''") +
+      "'&$top=1&$orderby=ID desc",
+    method: "GET",
+    headers: { Accept: "application/json;odata=verbose" },
+    success: function (data) {
+      var historyItem =
+        data && data.d && data.d.results && data.d.results.length
+          ? data.d.results[0]
+          : null;
+      finish(chooseEndedActualKpiPeriod(periodFromItem, historyItem));
+    },
+    error: function (err) {
+      console.error("[WF] KPIResultsHistory lookup failed", err);
+      finish(chooseEndedActualKpiPeriod(periodFromItem, null));
+    },
+  });
+}
+
+function deleteEndedWorkflowPeriodFiles(period, done) {
+  var context = new SP.ClientContext.get_current();
+  var libraryTitle =
+    (typeof listkey !== "undefined" && listkey ? listkey : "mainkpi") + " Documents";
+  var list = context.get_web().get_lists().getByTitle(libraryTitle);
+  var query = new SP.CamlQuery();
+  var itemId = String(period.itemId)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+  query.set_viewXml(
+    "<View Scope='RecursiveAll'><Query><Where><Eq><FieldRef Name='ItemID' /><Value Type='Text'>" +
+      itemId +
+      "</Value></Eq></Where></Query><RowLimit>5000</RowLimit></View>"
+  );
+  var files = list.getItems(query);
+  context.load(
+    files,
+    "Include(ID,File,ContentType,ItemID,RelatedYear,RelatedMonth,RelatedQuarter,RelatedMid,RelatedActualY)"
+  );
+  context.executeQueryAsync(
+    function () {
+      var deleteContext = new SP.ClientContext.get_current();
+      var deleteWeb = deleteContext.get_web();
+      var deleteCount = 0;
+      var enumerator = files.getEnumerator();
+      while (enumerator.moveNext()) {
+        var row = enumerator.get_current();
+        var contentType = row.get_contentType();
+        if (contentType && contentType.get_name() === "Folder") continue;
+        var file = row.get_file();
+        if (!file) continue;
+        if (String(row.get_item("ItemID")) !== String(period.itemId)) continue;
+        var meta = {
+          RelatedYear: row.get_item("RelatedYear"),
+          RelatedMonth: row.get_item("RelatedMonth"),
+          RelatedQuarter: row.get_item("RelatedQuarter"),
+          RelatedMid: row.get_item("RelatedMid"),
+          RelatedActualY: row.get_item("RelatedActualY"),
+        };
+        if (!attachmentBelongsToEndedPeriod(meta, period)) continue;
+        deleteWeb.getFileByServerRelativeUrl(file.get_serverRelativeUrl()).deleteObject();
+        deleteCount++;
+      }
+      if (!deleteCount) {
+        console.log("[WF] no attachments for ended period", period);
+        done();
+        return;
+      }
+      deleteContext.executeQueryAsync(
+        function () {
+          console.log("[WF] deleted ended-period attachments", deleteCount, period);
+          done();
+        },
+        function (sender, args) {
+          console.error(
+            "[WF] delete ended-period attachments failed",
+            args.get_message()
+          );
+          done();
+        }
+      );
+    },
+    function (sender, args) {
+      console.error("[WF] query ended-period attachments failed", args.get_message());
+      done();
+    }
+  );
+}
+// ACTUAL_KPI_PERIOD_ATTACHMENTS_END
+
 //for all workflows
 window.isWfFirst_Upload = true;
 
@@ -3301,6 +3619,7 @@ var SubmitField_BulkEdit = {
     context.executeQueryAsync(
       function () {
         var currentItemArray = [];
+        var endedActualKpiAttachmentPeriod = null;
 
         //Check itemcollection count greater than 0
         if (progColl.get_count() > 0) {
@@ -3532,6 +3851,10 @@ var SubmitField_BulkEdit = {
                 {
                 items.set_item("WFStage", "");
                 items.set_item("Equation", "0");
+                endedActualKpiAttachmentPeriod = resolveEndedActualKpiPeriod(
+                  currentItem,
+                  currentId
+                );
                 }
               }
               else if (state) items.set_item("WFStage", nxtstageid);
@@ -3716,6 +4039,7 @@ var SubmitField_BulkEdit = {
               // console.log("Items are updated Successfully");
               dfd.resolve();
 
+              var continueAfterWorkflowItemUpdate = function () {
               if (workflowname == "Project") {
                 BulkEdit(state);
               } else if (
@@ -3797,6 +4121,20 @@ var SubmitField_BulkEdit = {
              }else
               {
                 Task_Edit_Data.init();
+              }
+              };
+
+              if (
+                state == 3 &&
+                workflowname == "MSActualKPI" &&
+                endedActualKpiAttachmentPeriod
+              ) {
+                deleteEndedWorkflowPeriodAttachments(
+                  endedActualKpiAttachmentPeriod,
+                  continueAfterWorkflowItemUpdate
+                );
+              } else {
+                continueAfterWorkflowItemUpdate();
               }
             },
             function (sender, args) {
