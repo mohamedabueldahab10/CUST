@@ -518,6 +518,33 @@ if (
 }
 
 window.userAddedToGroup = true;
+
+// Project manager (the applicant) can edit the project page on these stages.
+// enableOnWfTaskStage otherwise locks ScopeOfWork/OutOfScope to S09,
+// offering and award dates to S05, and ContractWorkStartDate to S12.
+window.applicantPmEditsProjectTask = function () {
+  var codes = ["epmoproject00", "vroporoject00", "sodproject00"];
+  var values = [];
+  if (typeof stageid !== "undefined" && stageid) values.push(stageid);
+  var wfStage = document.getElementById("WFStage");
+  if (wfStage && wfStage.value) values.push(wfStage.value);
+  var i;
+  for (i = 0; i < values.length; i++) {
+    if (codes.indexOf(String(values[i]).trim().toLowerCase()) !== -1) {
+      return !!(isPManager || currentUserRole === "ProjectManager");
+    }
+  }
+  return false;
+};
+
+window.unlockProjectPageForApplicantPm = function () {
+  if (!window.applicantPmEditsProjectTask()) return;
+  $(".CFIELD")
+    .find("input, select, textarea, .PPField")
+    .prop("disabled", false)
+    .removeAttr("disabled");
+};
+
 //Get User Groups
 window.userCalls = {
   get_CurrentUser: function () {
@@ -8918,6 +8945,9 @@ window.userCalls = {
           //     $(this).find('*').attr('disabled', true);
           // };
         });
+        if (window.unlockProjectPageForApplicantPm) {
+          window.unlockProjectPageForApplicantPm();
+        }
       }
     },
   },
