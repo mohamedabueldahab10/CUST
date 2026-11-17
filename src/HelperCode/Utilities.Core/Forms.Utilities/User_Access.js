@@ -519,147 +519,21 @@ if (
 
 window.userAddedToGroup = true;
 
-// Applicant (project manager) can edit every saved field on these workflow stages.
-window.applicantPmEditStageCodes = [
-  "epmoproject00",
-  "vroporoject00",
-  "vroproject00",
-  "sodproject00",
-];
-
-window.matchesApplicantPmEditStage = function (candidates, href) {
-  var stages = window.applicantPmEditStageCodes || [];
-  var list = candidates || [];
-  var i;
-  for (i = 0; i < list.length; i++) {
-    var normalized = String(list[i] == null ? "" : list[i])
-      .trim()
-      .toLowerCase();
-    if (normalized && stages.indexOf(normalized) !== -1) return true;
-  }
-  var link = String(href || "").toLowerCase();
-  for (i = 0; i < stages.length; i++) {
-    if (link.indexOf(stages[i]) !== -1) return true;
-  }
-  return false;
-};
-
-window.isProjectsFormPage = function () {
-  var href =
-    window.location && window.location.href ? window.location.href : "";
-  if (/[?&]listkey=projects(?:&|$)/i.test(href)) return true;
-  var key = "";
-  if (typeof USERlistkey !== "undefined" && USERlistkey)
-    key = String(USERlistkey).toLowerCase();
-  else if (typeof listkey !== "undefined" && listkey)
-    key = String(listkey).toLowerCase();
-  return key === "projects";
-};
-
-window.collectApplicantPmStageCandidates = function (extraStage) {
-  var values = [];
-  if (extraStage) {
-    if (Object.prototype.toString.call(extraStage) === "[object Array]") {
-      for (var e = 0; e < extraStage.length; e++) values.push(extraStage[e]);
-    } else {
-      values.push(extraStage);
-    }
-  }
-  if (typeof stageid !== "undefined" && stageid) values.push(stageid);
-  if (typeof stagename !== "undefined" && stagename) values.push(stagename);
-  if (typeof currentstage !== "undefined" && currentstage)
-    values.push(currentstage);
-  var wfStageEl = document.getElementById("WFStage");
-  if (wfStageEl) {
-    if (wfStageEl.value) values.push(wfStageEl.value);
-    if (wfStageEl.textContent) values.push(wfStageEl.textContent);
-  }
-  return values;
-};
-
-window.currentUserIsProjectManagerField = function () {
-  if (!window.UserN || !window.UserN.Title) return false;
-  var title = String(window.UserN.Title).trim();
-  if (!title) return false;
-  var pmBox = document.getElementById("ProjectManager");
-  if (!pmBox) return false;
-  var pmText = (
-    pmBox.innerText ||
-    pmBox.textContent ||
-    pmBox.value ||
-    ""
-  ).trim();
-  return pmText.indexOf(title) > -1;
-};
-
-window.isApplicantProjectManagerForEdit = function () {
-  if (window.isPManager || window.currentUserRole === "ProjectManager")
-    return true;
-  if (window.currentUserIsProjectManagerField()) return true;
-  if (window.accessCurrentTask) return true;
-  return false;
-};
-
-window.enableApplicantProjectManagerFields = function (extraStage) {
-  if (!window.isProjectsFormPage()) return false;
-  var href =
-    window.location && window.location.href ? window.location.href : "";
+// Project manager (the applicant) can edit the project page on these stages.
+window.unlockProjectPageForApplicantPm = function () {
+  var stage = String(typeof stageid === "undefined" ? "" : stageid)
+    .trim()
+    .toLowerCase();
   if (
-    !window.matchesApplicantPmEditStage(
-      window.collectApplicantPmStageCandidates(extraStage),
-      href
-    )
+    ["epmoproject00", "vroporoject00", "sodproject00"].indexOf(stage) === -1
   ) {
-    return false;
+    return;
   }
-  if (!window.isApplicantProjectManagerForEdit()) return false;
-
-  if (
-    window.isView &&
-    href.toLowerCase().indexOf("wfs") > -1 &&
-    /view\.aspx/i.test(href)
-  ) {
-    window.location.replace(href.replace(/view\.aspx/i, "edit.aspx"));
-    return true;
-  }
-
-  $(".section-container .CFIELD:not(.dont-submit)").each(function () {
-    $(this)
-      .find("*")
-      .addBack()
-      .each(function () {
-        $(this).prop("disabled", false).removeAttr("disabled");
-      });
-    $(this)
-      .find(".disabled, .disabledWithValue, .sp-peoplepicker-topLevelDisabled")
-      .removeClass(
-        "disabled disabledWithValue sp-peoplepicker-topLevelDisabled"
-      );
-    $(this).find("[contenteditable='false']").attr("contenteditable", "true");
-  });
-
-  if (!$("#applicant-pm-edit-all").length) {
-    $("body").append(
-      '<style id="applicant-pm-edit-all">.btn-save{opacity:1!important;pointer-events:auto!important;display:inline-block!important}</style>'
-    );
-  }
-  $(".btn-save").prop("disabled", false).removeAttr("disabled").show();
-  return true;
-};
-
-window.scheduleApplicantProjectManagerFieldUnlock = function () {
-  if (window._applicantPmEditWatch) return;
-  var tries = 0;
-  window._applicantPmEditWatch = setInterval(function () {
-    tries += 1;
-    if (window.enableApplicantProjectManagerFields) {
-      window.enableApplicantProjectManagerFields();
-    }
-    if (tries >= 40) {
-      clearInterval(window._applicantPmEditWatch);
-      window._applicantPmEditWatch = null;
-    }
-  }, 400);
+  if (!(isPManager || currentUserRole === "ProjectManager")) return;
+  $(".CFIELD")
+    .find("input, select, textarea, .PPField")
+    .prop("disabled", false)
+    .removeAttr("disabled");
 };
 
 //Get User Groups
@@ -9062,11 +8936,8 @@ window.userCalls = {
           //     $(this).find('*').attr('disabled', true);
           // };
         });
-        if (window.scheduleApplicantProjectManagerFieldUnlock) {
-          window.scheduleApplicantProjectManagerFieldUnlock();
-        }
-        if (window.enableApplicantProjectManagerFields) {
-          window.enableApplicantProjectManagerFields();
+        if (window.unlockProjectPageForApplicantPm) {
+          window.unlockProjectPageForApplicantPm();
         }
       }
     },
