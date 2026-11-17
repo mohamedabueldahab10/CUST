@@ -118,16 +118,15 @@ function getSelectedChangeItemCodes() {
 
 function getPrimaryChangeItemCode() {
   var codes = getSelectedChangeItemCodes();
-  if (!codes.length) {
-    return "";
-  }
-  if (
-    window.lastSelectedChangeItemCode &&
-    codes.indexOf(window.lastSelectedChangeItemCode) !== -1
-  ) {
-    return window.lastSelectedChangeItemCode;
-  }
-  return codes[codes.length - 1];
+  return codes.length ? codes[codes.length - 1] : "";
+}
+
+function clearChangeItemOptions() {
+  $("#ChangeItem")
+    .empty()
+    .append(
+      '<option data-trans-changeitem class="Resources" value=""></option>'
+    );
 }
 
 function getChangeItemStoredValue() {
@@ -216,8 +215,7 @@ function shouldSkipCrRequiredField(selector) {
   if (!window.isWF) {
     return false;
   }
-    var $field =
-    selector === "#ChangeItem" ? $("#ChangeItemFieldWrap") : $(selector);
+    var $field = $(selector);
   if (!$field.length) {
     $field = $(selector);
   }
@@ -317,278 +315,30 @@ function fetchChangeItemWorkflowMetadataPromise(
   });
 }
 
-function isChangeItemMultiSelectDisabled() {
-  return (
-    $("#ChangeItem").prop("disabled") === true ||
-    (window.isView && !window.isEdit && !window.isNew)
-  );
-}
-
-function handleChangeItemUpdateType(title) {
-
-    const dictionary = window.changeItemsDictionary || {};
-    const $checkboxes = $("#ChangeItemFieldWrap .cr-changeitem-ms-check");
-
-    const normalize = (value) =>
-        String(value == null ? "" : value).trim().toLowerCase();
-
-    function getUpdateType(code) {
-        if (Object.prototype.hasOwnProperty.call(dictionary, code)) {
-            return normalize(dictionary[code]);
-        }
-
-        // Fallback for previously loaded options
-        const $option = $("#ChangeItem option").filter(function () {
-            return this.value === code;
-        }).first();
-
-        return normalize($option.attr("data-updatetype"));
-    }
-
-    const selectedCodes = getSelectedChangeItemCodes();
-
-    // Prefer the provided title if it is selected
-    let activeTitle = "";
-
-    if (title && selectedCodes.indexOf(title) !== -1) {
-        activeTitle = title;
-    } else if (selectedCodes.length) {
-        activeTitle = selectedCodes[0];
-    }
-
-    // No selection: enable everything
-    if (!activeTitle) {
-        $checkboxes.prop("disabled", false);
-        return;
-    }
-
-    const selectedUpdateType = getUpdateType(activeTitle);
-
-    // Missing metadata: avoid disabling options incorrectly
-    if (!selectedUpdateType) {
-        $checkboxes.prop("disabled", false);
-        return;
-    }
-
-    $checkboxes.each(function () {
-
-        const checkboxTitle = $(this).val();
-        const checkboxUpdateType = getUpdateType(checkboxTitle);
-
-        const shouldDisable =
-            checkboxUpdateType !== selectedUpdateType;
-
-        $(this).prop("disabled", shouldDisable);
-    });
-}
-
-function filterChangeItemOptions() {
-
-    const $wrap = $("#ChangeItemFieldWrap");
-
-    const searchText = String(
-        $wrap.find(".cr-changeitem-ms-search").val() || ""
-    ).trim().toLowerCase();
-
-    let visibleCount = 0;
-
-    $wrap.find(".cr-changeitem-ms-option").each(function () {
-
-        const $option = $(this);
-
-        const text = $option
-            .find(".cr-changeitem-ms-option-text")
-            .text()
-            .toLowerCase();
-
-        const code = String(
-            $option.find(".cr-changeitem-ms-check").val() || ""
-        ).toLowerCase();
-
-        const matches =
-            text.includes(searchText) ||
-            code.includes(searchText);
-
-        $option.toggle(matches);
-
-        if (matches) visibleCount++;
-    });
-
-    $wrap.find(".cr-changeitem-ms-no-results")
-        .toggle(visibleCount === 0);
-}
-
-function syncChangeItemMultiSelect() {
-  var $wrap = $("#ChangeItemFieldWrap");
-  var $dropdown = $wrap.find(".cr-changeitem-ms-dropdown");
-  var $tags = $wrap.find(".cr-changeitem-ms-tags");
-  if (!$dropdown.length) {
-    return;
-  }
-
-  $wrap.toggleClass("is-disabled", isChangeItemMultiSelectDisabled());
-
-  var html = "";
-  $("#ChangeItem option").each(function () {
-    var code = ($(this).val() || "").toString();
-    if (!code) {
-      return;
-    }
-    var text = ($(this).text() || code).toString();
-    var checked = $(this).is(":selected") ? " checked" : "";
-    var selectedClass = $(this).is(":selected") ? " selected" : "";
-    html +=
-      '<label class="cr-changeitem-ms-option' +
-      selectedClass +
-      '">' +
-      '<input type="checkbox" class="cr-changeitem-ms-check" value="' +
-      escapeHtml(code) +
-      '"' +
-      checked +
-      " />" +
-      '<span class="cr-changeitem-ms-option-text">' +
-      escapeHtml(text) +
-      "</span></label>";
-  });
-  $dropdown.html(html || '<div class="cr-changeitem-ms-empty"></div>');
-
-  $tags.empty();
-  $("#ChangeItem option:selected").each(function () {
-    var code = ($(this).val() || "").toString();
-    if (!code) {
-      return;
-    }
-    var text = ($(this).text() || code).toString();
-    var $tag = $(
-      '<span class="cr-changeitem-ms-tag" data-value="' +
-        escapeHtml(code) +
-        '"><span class="cr-changeitem-ms-tag-text">' +
-        escapeHtml(text) +
-        '</span><span class="cr-changeitem-ms-tag-remove">×</span></span>'
-    );
-    $tags.append($tag);
-    
-  });
-  // Apply UpdateType restrictions after rendering checkboxes
-handleChangeItemUpdateType(getPrimaryChangeItemCode());
-const selectedCount = getSelectedChangeItemCodes().length;
-const isArabic = localStorage.getItem("lng") !== "en";
-
-let displayText = "";
-
-if (selectedCount === 0) {
-    displayText = isArabic
-        ? "اختر بنود التغيير"
-        : "Select change items";
-} else if (selectedCount === 1) {
-    displayText = $("#ChangeItem option:selected")
-        .first().text().trim();
-} else {
-    displayText = isArabic
-        ? "تم اختيار " + selectedCount + " من البنود"
-        : selectedCount + " items selected";
-}
-
-$wrap.find(".cr-changeitem-ms-trigger-text")
-    .text(displayText);
-
-$wrap.find(".cr-changeitem-ms-trigger")
-    .prop("disabled", isChangeItemMultiSelectDisabled());
-
-if (isChangeItemMultiSelectDisabled()) {
-    $wrap.find(".cr-changeitem-ms").removeClass("is-open");
-    $wrap.find(".cr-changeitem-ms-trigger")
-        .attr("aria-expanded", "false");
-}
-
-filterChangeItemOptions();
-}
-
 function setChangeItemSelection(codes, triggerChange) {
   var unique = parseChangeItemStoredValues(codes);
-  $("#ChangeItem option").prop("selected", false);
-  for (var i = 0; i < unique.length; i++) {
-    $("#ChangeItem option").filter(function () {
-      return $(this).val() === unique[i];
-    }).prop("selected", true);
-  }
-  if (unique.length) {
-    if (
-      !window.lastSelectedChangeItemCode ||
-      unique.indexOf(window.lastSelectedChangeItemCode) === -1
-    ) {
-      window.lastSelectedChangeItemCode = unique[unique.length - 1];
+  var code = unique.length ? unique[unique.length - 1] : "";
+  var $changeItem = $("#ChangeItem");
+  if (code) {
+    var hasOption = false;
+    $changeItem.find("option").each(function () {
+      if ($(this).val() === code) {
+        hasOption = true;
+      }
+    });
+    if (!hasOption) {
+      $changeItem.append(
+        '<option value="' + escapeHtml(code) + '">' + escapeHtml(code) + "</option>"
+      );
     }
+    $changeItem.val(code);
   } else {
-    window.lastSelectedChangeItemCode = "";
+    $changeItem.val("");
   }
-  syncChangeItemMultiSelect();
   if (triggerChange) {
-    $("#ChangeItem").trigger("change");
+    $changeItem.trigger("change");
   }
 }
-
-function toggleChangeItemCode(code, shouldSelect) {
-  if (!code || isChangeItemMultiSelectDisabled()) {
-    return;
-  }
-  var $opt = $("#ChangeItem option").filter(function () {
-    return $(this).val() === code;
-  });
-  if (!$opt.length) {
-    return;
-  }
-  var selectIt =
-    typeof shouldSelect === "boolean" ? shouldSelect : !$opt.prop("selected");
-    
-if (selectIt) {
-
-    const selectedCodes = getSelectedChangeItemCodes();
-
-    if (selectedCodes.length) {
-
-        const dictionary = window.changeItemsDictionary || {};
-
-        const getType = function (itemCode) {
-            const $itemOption = $("#ChangeItem option").filter(function () {
-                return this.value === itemCode;
-            }).first();
-
-            const value = Object.prototype.hasOwnProperty.call(
-                dictionary, itemCode
-            )
-                ? dictionary[itemCode]
-                : $itemOption.attr("data-updatetype");
-
-            return String(value == null ? "" : value)
-                .trim()
-                .toLowerCase();
-        };
-
-        const currentType = getType(selectedCodes[0]);
-        const newType = getType(code);
-
-        // Prevent selecting incompatible UpdateTypes
-        if (currentType && currentType !== newType) {
-            syncChangeItemMultiSelect();
-            return;
-        }
-    }
-}
-
-  $opt.prop("selected", selectIt);
-  if (selectIt) {
-    window.lastSelectedChangeItemCode = code;
-  } else if (window.lastSelectedChangeItemCode === code) {
-    var remain = getSelectedChangeItemCodes();
-    window.lastSelectedChangeItemCode = remain.length
-      ? remain[remain.length - 1]
-      : "";
-  }
-  syncChangeItemMultiSelect();
-  $("#ChangeItem").trigger("change");
-}
-
 
 function syncParentItemSearch() {
 
@@ -848,95 +598,6 @@ function initParentItemSearch() {
     $select.addClass("cr-parent-search-native");
 
     syncParentItemSearch();
-}
-
-function initChangeItemMultiSelect() {
-
-    var $wrap = $("#ChangeItemFieldWrap");
-
-    if (!$wrap.length || $wrap.data("ms-inited")) {
-        return;
-    }
-
-    $wrap.data("ms-inited", true);
-
-    var $multiSelect = $wrap.find(".cr-changeitem-ms");
-    var $dropdown = $wrap.find(".cr-changeitem-ms-dropdown");
-    var $trigger = $wrap.find(".cr-changeitem-ms-trigger");
-    var $search = $wrap.find(".cr-changeitem-ms-search");
-
-    function closeDropdown() {
-        $multiSelect.removeClass("is-open");
-        $trigger.attr("aria-expanded", "false");
-    }
-
-    $trigger.on("click", function (e) {
-
-        e.preventDefault();
-
-        if (isChangeItemMultiSelectDisabled()) {
-            return;
-        }
-
-        const isOpen = $multiSelect.hasClass("is-open");
-
-        if (isOpen) {
-            closeDropdown();
-        } else {
-            $multiSelect.addClass("is-open");
-            $trigger.attr("aria-expanded", "true");
-            $search.trigger("focus");
-        }
-    });
-
-    $search.on("input", function () {
-        filterChangeItemOptions();
-    });
-
-    $dropdown.on("change", ".cr-changeitem-ms-check", function () {
-
-        toggleChangeItemCode(
-            $(this).val(),
-            $(this).is(":checked")
-        );
-    });
-
-    $wrap.on("click", ".cr-changeitem-ms-tag-remove", function (e) {
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (isChangeItemMultiSelectDisabled()) {
-            return;
-        }
-
-        toggleChangeItemCode(
-            $(this).closest(".cr-changeitem-ms-tag")
-                .attr("data-value"),
-            false
-        );
-    });
-
-    $(document).off("mousedown.crChangeItemDropdown");
-
-    $(document).on("mousedown.crChangeItemDropdown", function (e) {
-
-        if (!$(e.target).closest(
-            "#ChangeItemFieldWrap .cr-changeitem-ms"
-        ).length) {
-            closeDropdown();
-        }
-    });
-
-    $wrap.on("keydown", function (e) {
-
-        if (e.key === "Escape") {
-            closeDropdown();
-            $trigger.trigger("focus");
-        }
-    });
-
-    syncChangeItemMultiSelect();
 }
 
 
@@ -1614,63 +1275,16 @@ var checkchangerequestshtml = setInterval(function () {
 
         </div>
 
-       
-<div class="col-md-6 mb-3" id="ChangeItemFieldWrap">
-
-    <label data-trans-changeitem class="Resources"></label>
-
-    <!-- Native select used by JavaScript -->
-    <select
-        id="ChangeItem"
-        class="form-control cr-changeitem-native"
-        multiple="multiple">
-    </select>
-
-    <div class="cr-changeitem-ms">
-
-        <!-- Dropdown Button -->
-        <button
-            type="button"
-            class="cr-changeitem-ms-trigger"
-            aria-expanded="false">
-
-            <span class="cr-changeitem-ms-trigger-text">
-                اختر بنود التغيير
-            </span>
-
-            <span class="cr-changeitem-ms-trigger-icon">
-                &#9662;
-            </span>
-
-        </button>
-
-        <!-- Dropdown Panel -->
-        <div class="cr-changeitem-ms-panel">
-
-            <div class="cr-changeitem-ms-search-wrap">
-                <input
-                    type="text"
-                    class="cr-changeitem-ms-search"
-                    placeholder="ابحث باسم البند أو الكود..."
-                    autocomplete="off" />
-            </div>
-
-            <div class="cr-changeitem-ms-dropdown cr-changeitem-ms-checklist">
-            </div>
-
-            <div class="cr-changeitem-ms-no-results"
-                 style="display:none;">
-                لا توجد نتائج مطابقة
-            </div>
-
+        <div class="col-md-6 mb-3" id="ChangeItemFieldWrap">
+          <label data-trans-changeitem class="Resources"></label>
+          <select id="ChangeItem" class="form-control">
+            <option
+              data-trans-changeitem
+              class="Resources"
+              value=""
+            ></option>
+          </select>
         </div>
-
-        <!-- Selected Items -->
-        <div class="cr-changeitem-ms-tags"></div>
-
-    </div>
-
-</div>
 
 
         <div class="col-md-6 mb-3">
@@ -1823,7 +1437,6 @@ var checkchangerequestshtml = setInterval(function () {
     $("#Sector").prop("disabled", true);
     $("#SubSector").prop("disabled", true);
     $("#ApprovalLevel").prop("disabled", true);
-    initChangeItemMultiSelect();
     initChildItemMultiSelect();
     initParentItemSearch();
     changeResources();
@@ -1968,11 +1581,7 @@ $(document).on("change", "#ChildItemType", function () {
   }
 
   if (!parentTitle || !parentType) {
-   $("#ChangeItem").empty();
-
-    window.lastSelectedChangeItemCode = "";
-       
-    syncChangeItemMultiSelect();   
+    clearChangeItemOptions();
     return;
   }
 
@@ -2756,7 +2365,7 @@ function toggleFormEditable(isEditable) {
       setCRWorkflowRejectButtonVisible(false);
     }
   }
- syncChangeItemMultiSelect();
+
 }
 
 function toggleEditModeFields() {
@@ -2820,7 +2429,7 @@ function toggleEditModeFields() {
   if (window.isNew || window.isEdit) {
     $("#RelatedStrategy").prop("disabled", true);
   }
-syncChangeItemMultiSelect();
+
 }
 
 $(document).on("click", "#CRSubmitButton", function (e) {
@@ -2935,15 +2544,13 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   }
 
   // Validate ChangeItem
-  var changeItemVal = getChangeItemStoredValue();
-  if (!changeItemVal || changeItemVal.trim() === "") {
+  var changeItemVal = $("#ChangeItem").val();
+  if (!changeItemVal || String(changeItemVal).trim() === "") {
     $("#ChangeItem").addClass("is-invalid");
-       $(".cr-changeitem-ms-dropdown").addClass("is-invalid");
-    if (!firstInvalid) firstInvalid = $(".cr-changeitem-ms-dropdown");
+    if (!firstInvalid) firstInvalid = $("#ChangeItem");
     isValid = false;
   } else {
     $("#ChangeItem").removeClass("is-invalid");
- $(".cr-changeitem-ms-dropdown").removeClass("is-invalid");
   }
 
   // Validate ApprovalLevel (skip when actionType is add — field is hidden)
@@ -3045,10 +2652,9 @@ $(document).on(
   "input change",
   "#Sector, #SubSector, #RelatedStrategy, #ParentItemType, #ParentItemCode, #ChangeItem, #ApprovalLevel, #ChangeDescription, #ChangeJustification, #ExpectedPositiveImpact, #ImpactType, #ChildItemCode, #ChildItemType",
   function () {
- if ($(this).attr("id") === "ChangeItem") {
-      if (getChangeItemStoredValue()) {
+    if ($(this).attr("id") === "ChangeItem") {
+      if ($("#ChangeItem").val()) {
         $(this).removeClass("is-invalid");
-        $(".cr-changeitem-ms-dropdown").removeClass("is-invalid");
       }
       return;
     }
@@ -3802,12 +3408,11 @@ function loadChangeItems(listName, parentType = "", childType = "") {
   }
   
   const $changeItem = $("#ChangeItem");
-$changeItem.empty();
-window.changeItemsDictionary = {};
-  window.lastSelectedChangeItemCode = "";
+  clearChangeItemOptions();
+  window.changeItemsDictionary = {};
   $(".changeItemsRow").find(".dynamicField").remove();
  if (!listName) {
-    syncChangeItemMultiSelect();
+   
     return;
   }
 
@@ -3832,7 +3437,7 @@ window.changeItemsDictionary = {};
           `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
         );
       });
-       syncChangeItemMultiSelect();
+      
       
       // Handle Parent/Child fields visibility based on actionType after loading options
       handleParentChildFieldsVisibility();
@@ -3840,7 +3445,7 @@ window.changeItemsDictionary = {};
          
     },
      error: function (err) {
-      syncChangeItemMultiSelect();
+     
     },
   });
 }
@@ -5904,10 +5509,10 @@ function loadChildItemsOptionsOnly(listName, parentTitle, parentType) {
 function loadChangeItemsOptionsOnly(listName, parentType = "", childType = "") {
   return new Promise((resolve) => {
     const $changeItem = $("#ChangeItem");
-   $changeItem.empty();
+    clearChangeItemOptions();
     window.changeItemsDictionary = {};
     if (!listName) {
- syncChangeItemMultiSelect();
+
       resolve();
       return;
     }
@@ -5932,11 +5537,11 @@ function loadChangeItemsOptionsOnly(listName, parentType = "", childType = "") {
             `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
           );
         });
-syncChangeItemMultiSelect();
+
         resolve();
       },
       error: function (err) {
-syncChangeItemMultiSelect();
+
         resolve();
       }
     });
@@ -6202,8 +5807,8 @@ function loadChangeItemsForView(changeItemCode, newCRCode) {
     
     const $changeItem = $("#ChangeItem");
     // Don't empty if options are already loaded (during initial data load)
-   if (!window.isLoadingChangeRequestData || $changeItem.find("option").length === 0) {
-      $changeItem.empty();
+    if (!window.isLoadingChangeRequestData || $changeItem.find("option[value!='']").length === 0) {
+      clearChangeItemOptions();
     }
 
     var filterParts = [];
@@ -6502,18 +6107,8 @@ function setSelectValue(selectId, value) {
     return;
 }
 
- if (selectId === "#ChangeItem" || $sel.attr("id") === "ChangeItem") {
-    var codes = parseChangeItemStoredValues(value);
-    for (var i = 0; i < codes.length; i++) {
-      if (!$sel.find("option[value='" + codes[i].replace(/'/g, "\\'") + "']").length && codes[i]) {
-        $sel.append(
-          '<option value="' + escapeHtml(codes[i]) + '" selected>' +
-            escapeHtml(codes[i]) +
-            "</option>"
-        );
-      }
-    }
-    setChangeItemSelection(codes, false);
+  if (selectId === "#ChangeItem" || $sel.attr("id") === "ChangeItem") {
+    setChangeItemSelection(value, false);
     return;
   }
   if (!$sel.find(`option[value='${value}']`).length && value) {
@@ -7547,8 +7142,8 @@ function loadChangeItemsForEdit(
     changeItemValue || getChangeItemStoredValue() || "";
 
   const $changeItem = $("#ChangeItem");
- $changeItem.empty();
- window.changeItemsDictionary = {};
+  clearChangeItemOptions();
+  window.changeItemsDictionary = {};
   const childType = $("#ChildItemType").val();
   const listName = childType || parentType;
 
@@ -7571,7 +7166,7 @@ function loadChangeItemsForEdit(
           `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
         );
       });
-      syncChangeItemMultiSelect();
+     
       // Handle Parent/Child fields visibility based on actionType after loading options
       handleParentChildFieldsVisibility();
       
