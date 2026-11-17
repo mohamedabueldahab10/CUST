@@ -579,6 +579,12 @@ window.Edit_Data_Request = {
         $(this).addClass("disabledWithValue");
       }
     });
+    if (window.scheduleApplicantProjectManagerFieldUnlock) {
+      window.scheduleApplicantProjectManagerFieldUnlock();
+    }
+    if (window.enableApplicantProjectManagerFields) {
+      window.enableApplicantProjectManagerFields();
+    }
 
     $("input.number").each(function (event) {
       

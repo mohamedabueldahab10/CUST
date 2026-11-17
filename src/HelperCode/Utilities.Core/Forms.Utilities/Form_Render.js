@@ -16514,6 +16514,12 @@ var GetProject_Info = {
           '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
       );
     }
+    if (window.scheduleApplicantProjectManagerFieldUnlock) {
+      window.scheduleApplicantProjectManagerFieldUnlock();
+    }
+    if (window.enableApplicantProjectManagerFields) {
+      window.enableApplicantProjectManagerFields();
+    }
   },
   onError: function (sender, args) {
     console.log(
@@ -17826,6 +17832,12 @@ var GetCurrentStage_Info = {
           PID +
           '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
       );
+    }
+    if (window.scheduleApplicantProjectManagerFieldUnlock) {
+      window.scheduleApplicantProjectManagerFieldUnlock();
+    }
+    if (window.enableApplicantProjectManagerFields) {
+      window.enableApplicantProjectManagerFields(stage);
     }
   },
   onError: function (sender, args) {

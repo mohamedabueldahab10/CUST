@@ -2162,6 +2162,12 @@ var Task_PCODE_Data_Request_WFs = {
 
       assignedto = oListItem.get_item("AssignedTo"); //handle multiple people picker
       currentstage = oListItem.get_item("Title"); //added to handle WFNote Query
+      if (window.scheduleApplicantProjectManagerFieldUnlock) {
+        window.scheduleApplicantProjectManagerFieldUnlock();
+      }
+      if (window.enableApplicantProjectManagerFields) {
+        window.enableApplicantProjectManagerFields(stageid);
+      }
       // taskActionType = oListItem.get_item('TaskActionType');
       thirdActionInfo = oListItem.get_item("OtherStage")
         ? oListItem.get_item("OtherStage")
