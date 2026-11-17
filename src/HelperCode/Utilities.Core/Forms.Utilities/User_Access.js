@@ -520,16 +520,25 @@ if (
 window.userAddedToGroup = true;
 
 // Project manager (the applicant) can edit the project page on these stages.
-window.unlockProjectPageForApplicantPm = function () {
-  var stage = String(typeof stageid === "undefined" ? "" : stageid)
-    .trim()
-    .toLowerCase();
-  if (
-    ["epmoproject00", "vroporoject00", "sodproject00"].indexOf(stage) === -1
-  ) {
-    return;
+// enableOnWfTaskStage otherwise locks ScopeOfWork/OutOfScope to S09,
+// offering and award dates to S05, and ContractWorkStartDate to S12.
+window.applicantPmEditsProjectTask = function () {
+  var codes = ["epmoproject00", "vroporoject00", "sodproject00"];
+  var values = [];
+  if (typeof stageid !== "undefined" && stageid) values.push(stageid);
+  var wfStage = document.getElementById("WFStage");
+  if (wfStage && wfStage.value) values.push(wfStage.value);
+  var i;
+  for (i = 0; i < values.length; i++) {
+    if (codes.indexOf(String(values[i]).trim().toLowerCase()) !== -1) {
+      return !!(isPManager || currentUserRole === "ProjectManager");
+    }
   }
-  if (!(isPManager || currentUserRole === "ProjectManager")) return;
+  return false;
+};
+
+window.unlockProjectPageForApplicantPm = function () {
+  if (!window.applicantPmEditsProjectTask()) return;
   $(".CFIELD")
     .find("input, select, textarea, .PPField")
     .prop("disabled", false)
