@@ -3513,6 +3513,7 @@ var SubmitField_BulkEdit = {
           var deferredMsActualBenefitHistory = false;
           var msActualBenefitHistorySaver = null;
           var endedPeriodForAttachmentDelete = null;
+          var endedPeriodForAttachmentDelete = null;
           while (progEnum.moveNext()) {
             var currentItem = progEnum.get_current();
             var progTitle = currentItem.get_item("Title");
@@ -3736,8 +3737,13 @@ var SubmitField_BulkEdit = {
               if (state == 3) {
 
                 if (workflowname == "MSActualKPI" || workflowname == "MSActualBenefit") {
+                if (workflowname == "MSActualKPI" || workflowname == "MSActualBenefit") {
                   items.set_item("WFStage", "");
                   items.set_item("Equation", "0");
+                  endedPeriodForAttachmentDelete = {
+                    itemId: currentId,
+                    period: End_Workflow.currentPeriod(currentItem),
+                  };
                   endedPeriodForAttachmentDelete = {
                     itemId: currentId,
                     period: End_Workflow.currentPeriod(currentItem),
@@ -4219,6 +4225,19 @@ var SubmitField_BulkEdit = {
                 return;
               }
 
+              if (
+                state == 3 &&
+                endedPeriodForAttachmentDelete &&
+                endedPeriodForAttachmentDelete.period
+              ) {
+                End_Workflow.deleteEndedPeriodAttachments(
+                  endedPeriodForAttachmentDelete.itemId,
+                  [endedPeriodForAttachmentDelete.period],
+                  continueWorkflowAfterBulkEdit
+                );
+              } else {
+                continueWorkflowAfterBulkEdit();
+              }
               if (
                 state == 3 &&
                 endedPeriodForAttachmentDelete &&
@@ -6334,6 +6353,40 @@ var Cancel_Project = {
     return dfd.promise();
   },
 };
+
+// ENDED_PERIOD_ATTACHMENTS_START
+function attachmentSpecForEndedPeriod(period) {
+  if (!period || !period.year || !period.actualField) return null;
+  var year = parseInt(period.year, 10);
+  if (!year) return null;
+  var field = String(period.actualField);
+  var relatedField = "";
+  if (field.indexOf("ActualQ") === 0) relatedField = "RelatedQuarter";
+  else if (field.indexOf("ActualMid") === 0) relatedField = "RelatedMid";
+  else if (field.indexOf("ActualM") === 0) relatedField = "RelatedMonth";
+  else if (field === "ActualY") relatedField = "RelatedActualY";
+  else return null;
+  return { year: String(year), relatedField: relatedField, relatedValue: field };
+}
+
+function fileMatchesEndedAttachmentSpec(meta, spec) {
+  if (!meta || !spec) return false;
+  var year = meta.RelatedYear == null ? "" : String(meta.RelatedYear).trim();
+  var token = meta[spec.relatedField] == null ? "" : String(meta[spec.relatedField]).trim();
+  if (!year || !token) return false;
+  if (parseInt(year, 10) !== parseInt(spec.year, 10)) return false;
+  return token === spec.relatedValue;
+}
+
+function fileMatchesAnyEndedPeriod(meta, periods) {
+  var list = periods || [];
+  for (var i = 0; i < list.length; i++) {
+    var spec = attachmentSpecForEndedPeriod(list[i]);
+    if (spec && fileMatchesEndedAttachmentSpec(meta, spec)) return true;
+  }
+  return false;
+}
+// ENDED_PERIOD_ATTACHMENTS_END
 // ENDED_PERIOD_ATTACHMENTS_START
 function attachmentSpecForEndedPeriod(period) {
   if (!period || !period.year || !period.actualField) return null;
@@ -7466,6 +7519,21 @@ var End_Workflow = {
         period: period,
       });
       End_Workflow.patchHistoryDeleted(drafts, function () {
+        var endedItemId = "";
+        try {
+          endedItemId = End_Workflow.g.listItem.get_id();
+        } catch (e) { }
+        if (!endedItemId && typeof IID !== "undefined") endedItemId = IID;
+        End_Workflow.deleteEndedPeriodAttachments(
+          endedItemId,
+          periodsToClear,
+          function () {
+            End_Workflow.clearKpiResultsByPeriods(
+              benefitCode,
+              periodsToClear,
+              onDone
+            );
+          }
         var endedItemId = "";
         try {
           endedItemId = End_Workflow.g.listItem.get_id();
