@@ -1,6 +1,5 @@
 var hrefOriginal = window.location.href;
 var href = hrefOriginal.toLowerCase();
-window.changeItemsDictionary = {};
 window.isNew = href.indexOf("isnew=true") > -1;
 window.isView = href.indexOf("isview=true") > -1;
 window.isEdit = href.indexOf("isedit=true") > -1;
@@ -58,7 +57,7 @@ function normalizeFileName(name) {
   if (!name) return "file";
   // SharePoint sometimes shows weird replacement chars; also avoid slashes
   return String(name)
-    .replaceAll(" ", "")
+    .replaceAll("�", "")
     .replace(/[\/\\]/g, "-");
 }
 
@@ -96,7 +95,7 @@ function getCRAttachmentsFolderServerRelativeUrl() {
     }
   });
 }
-
+// Function to convert channge request itesm select to multselected 
 function parseChangeItemStoredValues(raw) {
   if (raw === null || raw === undefined || raw === "") {
     return [];
@@ -134,14 +133,20 @@ function getChangeItemStoredValue() {
   return getSelectedChangeItemCodes().join(";");
 }
 
-function getChangeItemMetaByCode(code) {
-  var $opt = code
-    ? $("#ChangeItem option")
-        .filter(function () {
-          return $(this).val() === code;
-        })
-        .first()
+
+
+
+
+// end multiselected
+function getSelectedChangeItemMeta() {
+ // var $opt = $("#ChangeItem option:selected");  mutasem
+ var primary = getPrimaryChangeItemCode();
+  var $opt = primary
+    ? $("#ChangeItem option").filter(function () {
+        return $(this).val() === primary;
+      }).first()
     : $("#ChangeItem option:selected").last();
+    // end multiselected
   return {
     actionType: (
       $opt.data("actiontype") ||
@@ -159,53 +164,7 @@ function getChangeItemMetaByCode(code) {
     )
       .toString()
       .toLowerCase(),
-   displayName: ($opt.text() || code || "").toString(),
   };
-}
-function getSelectedChangeItemMeta() {
-  return getChangeItemMetaByCode(getPrimaryChangeItemCode());
-}
-
-function getChangeItemFieldGroupSelector(code) {
-  return (
-    '.changeItemFieldsGroup[data-change-item-code="' +
-    String(code || "").replace(/"/g, '\\"') +
-    '"]'
-  );
-}
-
-function pruneUnselectedChangeItemFieldGroups() {
-  var codes = getSelectedChangeItemCodes();
-  $(".changeItemFieldsGroup").each(function () {
-    var code = $(this).attr("data-change-item-code") || "";
-    if (codes.indexOf(code) === -1) {
-      $(this).remove();
-    }
-  });
-  if (!$(".changeItemFieldsGroup").length && !codes.length) {
-    setChangeItemsVisibility(false);
-  }
-}
-
-function fetchMissingSelectedChangeItemDetails(
-  approvalLevel,
-  detailsItemCode,
-  classification
-) {
-  var codes = getSelectedChangeItemCodes();
-  for (var i = 0; i < codes.length; i++) {
-    var code = codes[i];
-    if ($(getChangeItemFieldGroupSelector(code)).length) {
-      continue;
-    }
-    fetchChangeItemDetails(
-      code,
-      approvalLevel,
-      detailsItemCode,
-      classification,
-      true
-    );
-  }
 }
 
 function isBlankCrValue(val) {
@@ -216,11 +175,13 @@ function shouldSkipCrRequiredField(selector) {
   if (!window.isWF) {
     return false;
   }
-    var $field =
-    selector === "#ChangeItem" ? $("#ChangeItemFieldWrap") : $(selector);
-  if (!$field.length) {
-    $field = $(selector);
-  }
+  //var $field = $(selector); mutsaem
+  var $field =
+  selector === "#ChangeItem" ? $("#ChangeItemFieldWrap") : $(selector);
+if (!$field.length) {
+  $field = $(selector);
+}
+// end multislected
   if (!$field.length) {
     return true;
   }
@@ -316,7 +277,7 @@ function fetchChangeItemWorkflowMetadataPromise(
     });
   });
 }
-
+// add multiselected mutasem
 function isChangeItemMultiSelectDisabled() {
   return (
     $("#ChangeItem").prop("disabled") === true ||
@@ -324,110 +285,24 @@ function isChangeItemMultiSelectDisabled() {
   );
 }
 
-function handleChangeItemUpdateType(title) {
-
-    const dictionary = window.changeItemsDictionary || {};
-    const $checkboxes = $("#ChangeItemFieldWrap .cr-changeitem-ms-check");
-
-    const normalize = (value) =>
-        String(value == null ? "" : value).trim().toLowerCase();
-
-    function getUpdateType(code) {
-        if (Object.prototype.hasOwnProperty.call(dictionary, code)) {
-            return normalize(dictionary[code]);
-        }
-
-        // Fallback for previously loaded options
-        const $option = $("#ChangeItem option").filter(function () {
-            return this.value === code;
-        }).first();
-
-        return normalize($option.attr("data-updatetype"));
-    }
-
-    const selectedCodes = getSelectedChangeItemCodes();
-
-    // Prefer the provided title if it is selected
-    let activeTitle = "";
-
-    if (title && selectedCodes.indexOf(title) !== -1) {
-        activeTitle = title;
-    } else if (selectedCodes.length) {
-        activeTitle = selectedCodes[0];
-    }
-
-    // No selection: enable everything
-    if (!activeTitle) {
-        $checkboxes.prop("disabled", false);
-        return;
-    }
-
-    const selectedUpdateType = getUpdateType(activeTitle);
-
-    // Missing metadata: avoid disabling options incorrectly
-    if (!selectedUpdateType) {
-        $checkboxes.prop("disabled", false);
-        return;
-    }
-
-    $checkboxes.each(function () {
-
-        const checkboxTitle = $(this).val();
-        const checkboxUpdateType = getUpdateType(checkboxTitle);
-
-        const shouldDisable =
-            checkboxUpdateType !== selectedUpdateType;
-
-        $(this).prop("disabled", shouldDisable);
-    });
-}
-
-function filterChangeItemOptions() {
-
-    const $wrap = $("#ChangeItemFieldWrap");
-
-    const searchText = String(
-        $wrap.find(".cr-changeitem-ms-search").val() || ""
-    ).trim().toLowerCase();
-
-    let visibleCount = 0;
-
-    $wrap.find(".cr-changeitem-ms-option").each(function () {
-
-        const $option = $(this);
-
-        const text = $option
-            .find(".cr-changeitem-ms-option-text")
-            .text()
-            .toLowerCase();
-
-        const code = String(
-            $option.find(".cr-changeitem-ms-check").val() || ""
-        ).toLowerCase();
-
-        const matches =
-            text.includes(searchText) ||
-            code.includes(searchText);
-
-        $option.toggle(matches);
-
-        if (matches) visibleCount++;
-    });
-
-    $wrap.find(".cr-changeitem-ms-no-results")
-        .toggle(visibleCount === 0);
+function getChangeItemSearchPlaceholder() {
+  return localStorage.getItem("lng") == "en" ? "Search" : "بحث";
 }
 
 function syncChangeItemMultiSelect() {
   var $wrap = $("#ChangeItemFieldWrap");
   var $dropdown = $wrap.find(".cr-changeitem-ms-dropdown");
+  var $search = $wrap.find(".cr-changeitem-ms-search");
   var $tags = $wrap.find(".cr-changeitem-ms-tags");
   if (!$dropdown.length) {
     return;
   }
 
+  $search.attr("placeholder", getChangeItemSearchPlaceholder());
   $wrap.toggleClass("is-disabled", isChangeItemMultiSelectDisabled());
+  $search.prop("disabled", isChangeItemMultiSelectDisabled());
 
+  var query = ($search.val() || "").toString().toLowerCase();
   var html = "";
   $("#ChangeItem option").each(function () {
     var code = ($(this).val() || "").toString();
@@ -435,20 +310,18 @@ function syncChangeItemMultiSelect() {
       return;
     }
     var text = ($(this).text() || code).toString();
-    var checked = $(this).is(":selected") ? " checked" : "";
-    var selectedClass = $(this).is(":selected") ? " selected" : "";
+    if (query && text.toLowerCase().indexOf(query) === -1 && code.toLowerCase().indexOf(query) === -1) {
+      return;
+    }
+    var selected = $(this).is(":selected") ? " selected" : "";
     html +=
-      '<label class="cr-changeitem-ms-option' +
-      selectedClass +
-      '">' +
-      '<input type="checkbox" class="cr-changeitem-ms-check" value="' +
+      '<div class="cr-changeitem-ms-option' +
+      selected +
+      '" data-value="' +
       escapeHtml(code) +
-      '"' +
-      checked +
-      " />" +
-      '<span class="cr-changeitem-ms-option-text">' +
+      '">' +
       escapeHtml(text) +
-      "</span></label>";
+      "</div>";
   });
   $dropdown.html(html || '<div class="cr-changeitem-ms-empty"></div>');
 
@@ -467,41 +340,7 @@ function syncChangeItemMultiSelect() {
         '</span><span class="cr-changeitem-ms-tag-remove">×</span></span>'
     );
     $tags.append($tag);
-    
   });
-  // Apply UpdateType restrictions after rendering checkboxes
-handleChangeItemUpdateType(getPrimaryChangeItemCode());
-const selectedCount = getSelectedChangeItemCodes().length;
-const isArabic = localStorage.getItem("lng") !== "en";
-
-let displayText = "";
-
-if (selectedCount === 0) {
-    displayText = isArabic
-        ? "اختر بنود التغيير"
-        : "Select change items";
-} else if (selectedCount === 1) {
-    displayText = $("#ChangeItem option:selected")
-        .first().text().trim();
-} else {
-    displayText = isArabic
-        ? "تم اختيار " + selectedCount + " من البنود"
-        : selectedCount + " items selected";
-}
-
-$wrap.find(".cr-changeitem-ms-trigger-text")
-    .text(displayText);
-
-$wrap.find(".cr-changeitem-ms-trigger")
-    .prop("disabled", isChangeItemMultiSelectDisabled());
-
-if (isChangeItemMultiSelectDisabled()) {
-    $wrap.find(".cr-changeitem-ms").removeClass("is-open");
-    $wrap.find(".cr-changeitem-ms-trigger")
-        .attr("aria-expanded", "false");
-}
-
-filterChangeItemOptions();
 }
 
 function setChangeItemSelection(codes, triggerChange) {
@@ -540,42 +379,6 @@ function toggleChangeItemCode(code, shouldSelect) {
   }
   var selectIt =
     typeof shouldSelect === "boolean" ? shouldSelect : !$opt.prop("selected");
-    
-if (selectIt) {
-
-    const selectedCodes = getSelectedChangeItemCodes();
-
-    if (selectedCodes.length) {
-
-        const dictionary = window.changeItemsDictionary || {};
-
-        const getType = function (itemCode) {
-            const $itemOption = $("#ChangeItem option").filter(function () {
-                return this.value === itemCode;
-            }).first();
-
-            const value = Object.prototype.hasOwnProperty.call(
-                dictionary, itemCode
-            )
-                ? dictionary[itemCode]
-                : $itemOption.attr("data-updatetype");
-
-            return String(value == null ? "" : value)
-                .trim()
-                .toLowerCase();
-        };
-
-        const currentType = getType(selectedCodes[0]);
-        const newType = getType(code);
-
-        // Prevent selecting incompatible UpdateTypes
-        if (currentType && currentType !== newType) {
-            syncChangeItemMultiSelect();
-            return;
-        }
-    }
-}
-
   $opt.prop("selected", selectIt);
   if (selectIt) {
     window.lastSelectedChangeItemCode = code;
@@ -589,357 +392,53 @@ if (selectIt) {
   $("#ChangeItem").trigger("change");
 }
 
-
-function syncParentItemSearch() {
-
-    var $select = $("#ParentItemCode");
-    var $wrap = $(".cr-parent-search");
-
-    if (!$select.length || !$wrap.length) {
-        return;
-    }
-
-    var isArabic = localStorage.getItem("lng") !== "en";
-
-    var selectedText = $select.find("option:selected")
-        .text().trim();
-
-    var selectedCode = $select.val() || "";
-
-    var disabled = $select.prop("disabled") === true;
-
-    $wrap.find(".cr-parent-search-text").text(
-        selectedCode
-            ? selectedText
-            : (isArabic
-                ? "اسم عنصر التغيير"
-                : "Select change item")
-    );
-
-    $wrap.find(".cr-parent-search-trigger")
-        .prop("disabled", disabled);
-
-    $wrap.find(".cr-parent-search-input").attr(
-        "placeholder",
-        isArabic
-            ? "ابحث باسم العنصر أو الكود..."
-            : "Search by name or code..."
-    );
-
-    if (disabled) {
-        $wrap.removeClass("is-open");
-
-        $wrap.find(".cr-parent-search-trigger")
-            .attr("aria-expanded", "false");
-    }
-
-    renderParentItemSearchOptions();
-}
-
-
-function renderParentItemSearchOptions() {
-
-    var $select = $("#ParentItemCode");
-    var $wrap = $(".cr-parent-search");
-
-    var $options = $wrap.find(
-        ".cr-parent-search-options"
-    );
-
-    var query = String(
-        $wrap.find(".cr-parent-search-input").val() || ""
-    ).trim().toLowerCase();
-
-    var selectedCode = $select.val() || "";
-
-    var isArabic = localStorage.getItem("lng") !== "en";
-
-    $options.empty();
-
-    var count = 0;
-
-    $select.find("option").each(function () {
-
-        var code = $(this).val();
-        var name = $(this).text().trim();
-
-        if (!code || this.disabled || this.hidden) {
-            return;
-        }
-
-        var matches =
-            name.toLowerCase().includes(query) ||
-            String(code).toLowerCase().includes(query);
-
-        if (!matches) {
-            return;
-        }
-
-        var $item = $("<button></button>")
-            .attr("type", "button")
-            .addClass("cr-parent-search-option")
-            .attr("data-code", code)
-            .text(name);
-
-        if (code === selectedCode) {
-            $item.addClass("selected");
-        }
-
-        $options.append($item);
-
-        count++;
-    });
-
-    if (!count) {
-
-        $options.append(
-            $("<div></div>")
-                .addClass("cr-parent-search-empty")
-                .text(
-                    isArabic
-                        ? "لا توجد نتائج مطابقة"
-                        : "No matching items"
-                )
-        );
-    }
-}
-
-function initParentItemSearch() {
-
-    var $select = $("#ParentItemCode");
-    var $wrap = $(".cr-parent-search");
-
-    if (!$select.length ||
-        !$wrap.length ||
-        $wrap.data("initialized")) {
-        return;
-    }
-
-    $wrap.data("initialized", true);
-
-    function closeDropdown() {
-
-        $wrap.removeClass("is-open");
-
-        $wrap.find(".cr-parent-search-trigger")
-            .attr("aria-expanded", "false");
-    }
-
-    // Open / close dropdown
-    $wrap.on(
-        "click",
-        ".cr-parent-search-trigger",
-        function (e) {
-
-            e.preventDefault();
-
-            if ($select.prop("disabled")) {
-                return;
-            }
-
-            if ($wrap.hasClass("is-open")) {
-
-                closeDropdown();
-
-            } else {
-
-                $wrap.find(".cr-parent-search-input")
-                    .val("");
-
-                syncParentItemSearch();
-
-                $wrap.addClass("is-open");
-
-                $(this).attr("aria-expanded", "true");
-
-                $wrap.find(".cr-parent-search-input")
-                    .trigger("focus");
-            }
-        }
-    );
-
-    // Search
-    $wrap.on(
-        "input",
-        ".cr-parent-search-input",
-        function () {
-
-            renderParentItemSearchOptions();
-        }
-    );
-
-    // Select one item
-    $wrap.on(
-        "click",
-        ".cr-parent-search-option",
-        function () {
-
-            if ($select.prop("disabled")) {
-                return;
-            }
-
-            var code = $(this).attr("data-code");
-
-            var previousCode = $select.val();
-
-            // Update original select
-            $select.val(code);
-
-            closeDropdown();
-
-            syncParentItemSearch();
-
-            // Preserve existing business logic
-            if (previousCode !== code) {
-                $select.trigger("change");
-            }
-        }
-    );
-
-    // Synchronize native selection changes
-    $select.on(
-        "change.crParentSearch",
-        function () {
-
-            syncParentItemSearch();
-        }
-    );
-
-    // Close when clicking outside
-    $(document)
-        .off("mousedown.crParentSearch")
-        .on("mousedown.crParentSearch", function (e) {
-
-            if (!$(e.target).closest(
-                ".cr-parent-search"
-            ).length) {
-
-                closeDropdown();
-            }
-        });
-
-    // Escape key
-    $wrap.on("keydown", function (e) {
-
-        if (e.key === "Escape") {
-
-            closeDropdown();
-
-            $wrap.find(".cr-parent-search-trigger")
-                .trigger("focus");
-        }
-    });
-
-    // Observe changes to options loaded by AJAX
-    var observer = new MutationObserver(function () {
-
-        syncParentItemSearch();
-    });
-
-    observer.observe($select[0], {
-        childList: true,
-        subtree: true,
-        attributes: true
-    });
-
-    $wrap.data("observer", observer);
-
-    // Hide native select only after initialization
-    $select.addClass("cr-parent-search-native");
-
-    syncParentItemSearch();
-}
-
 function initChangeItemMultiSelect() {
+  var $wrap = $("#ChangeItemFieldWrap");
+  if (!$wrap.length || $wrap.data("ms-inited")) {
+    return;
+  }
+  $wrap.data("ms-inited", true);
+  var $control = $wrap.find(".cr-changeitem-ms-control");
+  var $dropdown = $wrap.find(".cr-changeitem-ms-dropdown");
+  var $search = $wrap.find(".cr-changeitem-ms-search");
 
-    var $wrap = $("#ChangeItemFieldWrap");
-
-    if (!$wrap.length || $wrap.data("ms-inited")) {
-        return;
+  $control.on("click", function (e) {
+    if (isChangeItemMultiSelectDisabled()) {
+      return;
     }
-
-    $wrap.data("ms-inited", true);
-
-    var $multiSelect = $wrap.find(".cr-changeitem-ms");
-    var $dropdown = $wrap.find(".cr-changeitem-ms-dropdown");
-    var $trigger = $wrap.find(".cr-changeitem-ms-trigger");
-    var $search = $wrap.find(".cr-changeitem-ms-search");
-
-    function closeDropdown() {
-        $multiSelect.removeClass("is-open");
-        $trigger.attr("aria-expanded", "false");
+    if ($(e.target).closest(".cr-changeitem-ms-tag-remove").length) {
+      return;
     }
-
-    $trigger.on("click", function (e) {
-
-        e.preventDefault();
-
-        if (isChangeItemMultiSelectDisabled()) {
-            return;
-        }
-
-        const isOpen = $multiSelect.hasClass("is-open");
-
-        if (isOpen) {
-            closeDropdown();
-        } else {
-            $multiSelect.addClass("is-open");
-            $trigger.attr("aria-expanded", "true");
-            $search.trigger("focus");
-        }
-    });
-
-    $search.on("input", function () {
-        filterChangeItemOptions();
-    });
-
-    $dropdown.on("change", ".cr-changeitem-ms-check", function () {
-
-        toggleChangeItemCode(
-            $(this).val(),
-            $(this).is(":checked")
-        );
-    });
-
-    $wrap.on("click", ".cr-changeitem-ms-tag-remove", function (e) {
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (isChangeItemMultiSelectDisabled()) {
-            return;
-        }
-
-        toggleChangeItemCode(
-            $(this).closest(".cr-changeitem-ms-tag")
-                .attr("data-value"),
-            false
-        );
-    });
-
-    $(document).off("mousedown.crChangeItemDropdown");
-
-    $(document).on("mousedown.crChangeItemDropdown", function (e) {
-
-        if (!$(e.target).closest(
-            "#ChangeItemFieldWrap .cr-changeitem-ms"
-        ).length) {
-            closeDropdown();
-        }
-    });
-
-    $wrap.on("keydown", function (e) {
-
-        if (e.key === "Escape") {
-            closeDropdown();
-            $trigger.trigger("focus");
-        }
-    });
-
+    $dropdown.show();
+    $search.focus();
     syncChangeItemMultiSelect();
+  });
+
+  $search.on("input", function () {
+    syncChangeItemMultiSelect();
+    $dropdown.show();
+  });
+
+  $dropdown.on("mousedown", ".cr-changeitem-ms-option", function (e) {
+    e.preventDefault();
+    toggleChangeItemCode($(this).attr("data-value"));
+  });
+
+  $wrap.on("click", ".cr-changeitem-ms-tag-remove", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleChangeItemCode($(this).closest(".cr-changeitem-ms-tag").attr("data-value"), false);
+  });
+
+  $(document).on("mousedown.crChangeItemMs", function (e) {
+    if (!$(e.target).closest("#ChangeItemFieldWrap").length) {
+      $dropdown.hide();
+    }
+  });
+
+  syncChangeItemMultiSelect();
 }
-
-
+// end multiselected
 function getCRAttachmentFiles() {
   var el = document.getElementById("CRAttachments");
   if (!el || !el.files) return [];
@@ -1536,34 +1035,6 @@ var checkchangerequestshtml = setInterval(function () {
               value=""
             ></option>
           </select>
-
-<div class="cr-parent-search">
-
-    <button type="button"
-            class="cr-parent-search-trigger"
-            aria-expanded="false">
-
-        <span class="cr-parent-search-text">
-            اسم عنصر التغيير
-        </span>
-
-        <span>&#9662;</span>
-
-    </button>
-
-    <div class="cr-parent-search-panel">
-
-        <input type="text"
-               class="cr-parent-search-input"
-               placeholder="ابحث باسم العنصر أو الكود..."
-               autocomplete="off" />
-
-        <div class="cr-parent-search-options"></div>
-
-    </div>
-
-</div>
-
         </div>
 
         <div class="col-md-6 mb-3" id="ChildItemTypeDiv" style="display: none">
@@ -1573,105 +1044,24 @@ var checkchangerequestshtml = setInterval(function () {
           </select>
         </div>
 
-        <div class="col-md-6 mb-3" id="ChildItemCodeDiv" style="display: none">
-          <label data-trans-childselecteditem class="Resources"
-            >Child Selected Item</label
-          >
-          <select id="ChildItemCode" class="form-control">
-            <option data-trans-childselecteditem  class="Resources"  value="" ></option>
+        <div class="col-md-6 mb-3" id="ChangeItemFieldWrap">
+          <label data-trans-changeitem class="Resources"></label>
+          <select id="ChangeItem" class="form-control">
+            <option data-trans-changeitem class="Resources" value=""></option>
           </select>
-          
-<div class="cr-child-ms" style="display:none;">
-
-    <button type="button"
-            class="cr-child-ms-trigger"
-            aria-expanded="false">
-        <span class="cr-child-ms-trigger-text">
-            اختر العناصر الفرعية
-        </span>
-        <span>&#9662;</span>
-    </button>
-
-    <div class="cr-child-ms-panel">
-
-        <input type="text"
-               class="cr-child-ms-search"
-               placeholder="ابحث عن العنصر الفرعي..."
-               autocomplete="off" />
-
-        <div class="cr-child-ms-options"></div>
-
-        <div class="cr-child-ms-empty"
-             style="display:none;">
-            لا توجد نتائج
         </div>
+         <div class="col-md-6 mb-3" id="ChangeItemFieldWrap">
+          <label data-trans-changeitem class="Resources"></label>
 
-    </div>
-
-    <div class="cr-child-ms-tags"></div>
-
-</div>
-
+          <select id="ChangeItem" class="form-control cr-changeitem-native" multiple="multiple"></select>
+          <div class="cr-changeitem-ms">
+            <div class="cr-changeitem-ms-control">
+              <div class="cr-changeitem-ms-tags"></div>
+              <input type="text" class="cr-changeitem-ms-search" autocomplete="off" />
+            </div>
+            <div class="cr-changeitem-ms-dropdown" style="display: none;"></div>
+          </div>
         </div>
-
-       
-<div class="col-md-6 mb-3" id="ChangeItemFieldWrap">
-
-    <label data-trans-changeitem class="Resources"></label>
-
-    <!-- Native select used by JavaScript -->
-    <select
-        id="ChangeItem"
-        class="form-control cr-changeitem-native"
-        multiple="multiple">
-    </select>
-
-    <div class="cr-changeitem-ms">
-
-        <!-- Dropdown Button -->
-        <button
-            type="button"
-            class="cr-changeitem-ms-trigger"
-            aria-expanded="false">
-
-            <span class="cr-changeitem-ms-trigger-text">
-                اختر بنود التغيير
-            </span>
-
-            <span class="cr-changeitem-ms-trigger-icon">
-                &#9662;
-            </span>
-
-        </button>
-
-        <!-- Dropdown Panel -->
-        <div class="cr-changeitem-ms-panel">
-
-            <div class="cr-changeitem-ms-search-wrap">
-                <input
-                    type="text"
-                    class="cr-changeitem-ms-search"
-                    placeholder="ابحث باسم البند أو الكود..."
-                    autocomplete="off" />
-            </div>
-
-            <div class="cr-changeitem-ms-dropdown cr-changeitem-ms-checklist">
-            </div>
-
-            <div class="cr-changeitem-ms-no-results"
-                 style="display:none;">
-                لا توجد نتائج مطابقة
-            </div>
-
-        </div>
-
-        <!-- Selected Items -->
-        <div class="cr-changeitem-ms-tags"></div>
-
-    </div>
-
-</div>
-
 
         <div class="col-md-6 mb-3">
           <label data-trans-sector class="Resources">Sector</label>
@@ -1823,10 +1213,9 @@ var checkchangerequestshtml = setInterval(function () {
     $("#Sector").prop("disabled", true);
     $("#SubSector").prop("disabled", true);
     $("#ApprovalLevel").prop("disabled", true);
-    initChangeItemMultiSelect();
-    initChildItemMultiSelect();
-    initParentItemSearch();
+    
     changeResources();
+    initChangeItemMultiSelect(); //call multiselected
     initCRAttachmentsUI();
     loadCRExistingAttachments();
 
@@ -1934,7 +1323,6 @@ $(document).on("change", "#ParentItemType", function () {
   $childItemCode.removeClass("is-invalid");
   
   handleParentChange(parent);
-  configureChildItemMultiSelect(true);
 });
 $(document).on("change", "#ChildItemType", function () {
   // Don't process change event during initial data load in edit/view mode
@@ -1952,7 +1340,6 @@ $(document).on("change", "#ChildItemType", function () {
     .append(
       '<option data-trans-childselecteditem class="Resources" value=""></option>'
     );
-  configureChildItemMultiSelect(true);
 
   const parentTitle = $("#ParentItemCode").val();
   const parentType = $("#ParentItemType").val();
@@ -1968,11 +1355,14 @@ $(document).on("change", "#ChildItemType", function () {
   }
 
   if (!parentTitle || !parentType) {
-   $("#ChangeItem").empty();
-
-    window.lastSelectedChangeItemCode = "";
-       
-    syncChangeItemMultiSelect();   
+  /*   $("#ChangeItem")
+      .empty()
+      .append(
+        '<option data-trans-changeitem class="Resources" value=""></option>'
+      ); */
+      $("#ChangeItem").empty();
+      window.lastSelectedChangeItemCode = "";
+      syncChangeItemMultiSelect();
     return;
   }
 
@@ -2141,9 +1531,6 @@ function loadListOptionsPromise(listName, selectId, dispFieldKey, dispFieldKeyEn
           const val = item[valFieldKey] ? item[valFieldKey] : "";
           $select.append(`<option value="${val}">${text}</option>`);
         });
-        if (selectId === "#ChildItemCode") {
-            syncChildItemMultiSelect();
-         }
         resolve();
       },
       error: function (err) {
@@ -2156,18 +1543,14 @@ function loadListOptionsPromise(listName, selectId, dispFieldKey, dispFieldKeyEn
 // Function to call API and populate Sector, SubSector, and ApprovalLevel
 // authItemCode: parent item used for agency/IsActive (SubSector authorization)
 // detailsItemCode: selected item for getchangeitemsdetails (parent or child)
-function callGetSectorAndSubSectorAPI(changeItemCode, authItemCode, detailsItemCode, keepExisting) {
+function callGetSectorAndSubSectorAPI(changeItemCode, authItemCode, detailsItemCode) {
 if (!changeItemCode || !authItemCode) {
   return;
 }
 detailsItemCode = detailsItemCode || authItemCode;
 
 // Clear dynamic fields before calling API
-if (!keepExisting) {
-  $(".changeItemsRow")
-    .find(".dynamicField, .changeItemFieldsGroup")
-    .remove();
-}
+$(".changeItemsRow").find(".dynamicField").remove();
 
 const url = `${APIURL}/general/getsectorandsubsectorforselecteditem/${encodeURIComponent(changeItemCode)}/${encodeURIComponent(authItemCode)}`;
 
@@ -2226,11 +1609,7 @@ $.ajax({
       } else {
         $("#ApprovalLevel").val("").prop("disabled", true);
         $("#Classification").val("");
-         if (!keepExisting) {
-          $(".changeItemsRow")
-            .find(".dynamicField, .changeItemFieldsGroup")
-            .remove();
-        }
+        $(".changeItemsRow").find(".dynamicField").remove();
       }
 
       // New change request: enforce IsActive - if "no", agency is not allowed to submit
@@ -2257,15 +1636,9 @@ $.ajax({
       // After setting ApprovalLevel, call getchangeitemsdetails (for edit/view always; for new only when agency is allowed)
       if (result.approvalLevel && (!window.isNew || window.currentIsActive !== false)) {
         const classification = (parentType === "MainKpi" && result.classification) ? result.classification : null;
-      fetchMissingSelectedChangeItemDetails(
-          result.approvalLevel,
-          detailsItemCode,
-          classification
-        );
-      } else if (!result.approvalLevel && !keepExisting) {
-        $(".changeItemsRow")
-          .find(".dynamicField, .changeItemFieldsGroup")
-          .remove();
+        fetchChangeItemDetails(changeItemCode, result.approvalLevel, detailsItemCode, classification);
+      } else if (!result.approvalLevel) {
+        $(".changeItemsRow").find(".dynamicField").remove();
       }
     } else {
       console.error("API Error:", response.errorMessageEn || response.errorMessageAr || "Unknown error");
@@ -2299,6 +1672,7 @@ function () {
   }
   
   // Get current values
+  //const changeItemCode = $("#ChangeItem").val();
   const changeItemCode = getPrimaryChangeItemCode();
   const parentItemCode = $("#ParentItemCode").val();
   let detailsItemCode = parentItemCode;
@@ -2320,35 +1694,27 @@ function () {
     handleParentChildFieldsVisibility();
     changeResources();
 
-       if (!getSelectedChangeItemCodes().length || !parentItemCode) {
-      if (fieldId !== "ChildItemCode" && fieldId !== "ChangeItem") {
+    if (!changeItemCode || !parentItemCode) {
+      if (fieldId !== "ChildItemCode") {
         $("#Sector").val("");
         $("#SubSector").val("");
         $("#ApprovalLevel").val("");
         $("#Classification").val("");
       }
-       pruneUnselectedChangeItemFieldGroups();
-      if (!getSelectedChangeItemCodes().length) {
-        $(".changeItemsRow")
-          .find(".dynamicField, .changeItemFieldsGroup")
-          .remove();
-        setChangeItemsVisibility(false);
-      }
+      $(".changeItemsRow").find(".dynamicField").remove();
       return;
     }
 
     // Child has no Sector/SubSector — keep parent values; only refresh change-item details
     if (fieldId === "ChildItemCode") {
-       $(".changeItemsRow")
-        .find(".dynamicField, .changeItemFieldsGroup")
-        .remove();
+      $(".changeItemsRow").find(".dynamicField").remove();
       if (detailsItemCode && approvalLevel) {
         const parentType = $("#ParentItemType").val();
         const classification =
           parentType === "MainKpi" && $("#Classification").val()
             ? $("#Classification").val()
             : null;
-       fetchMissingSelectedChangeItemDetails(
+        fetchChangeItemDetails(
           changeItemCode,
           approvalLevel,
           detailsItemCode,
@@ -2358,37 +1724,12 @@ function () {
       return;
     }
 
-   if (fieldId === "ChangeItem") {
-      pruneUnselectedChangeItemFieldGroups();
-      if (approvalLevel) {
-        const parentType = $("#ParentItemType").val();
-        const classification =
-          parentType === "MainKpi" && $("#Classification").val()
-            ? $("#Classification").val()
-            : null;
-        fetchMissingSelectedChangeItemDetails(
-          approvalLevel,
-          detailsItemCode,
-          classification
-        );
-      } else {
-        callGetSectorAndSubSectorAPI(
-          changeItemCode,
-          parentItemCode,
-          detailsItemCode,
-          true
-        );
-      }
-      return;
-    }
-  // ParentItemCode: Sector/SubSector/ApprovalLevel/IsActive from parent only
+    // ChangeItem or ParentItemCode: Sector/SubSector/ApprovalLevel/IsActive from parent only
     $("#Sector").val("");
     $("#SubSector").val("");
     $("#ApprovalLevel").val("");
     $("#Classification").val("");
-        $(".changeItemsRow")
-      .find(".dynamicField, .changeItemFieldsGroup")
-      .remove();
+    $(".changeItemsRow").find(".dynamicField").remove();
     callGetSectorAndSubSectorAPI(changeItemCode, parentItemCode, detailsItemCode);
     return;
   }
@@ -2426,7 +1767,7 @@ function () {
 );
 
 $(document).on("change", "#ParentItemType, #ChildItemType", function () {
-$(".changeItemsRow").find(".dynamicField, .changeItemFieldsGroup").remove();
+$(".changeItemsRow").find(".dynamicField").remove();
 handleParentChildFieldsVisibility();
 changeResources();
 });
@@ -2756,7 +2097,7 @@ function toggleFormEditable(isEditable) {
       setCRWorkflowRejectButtonVisible(false);
     }
   }
- syncChangeItemMultiSelect();
+  syncChangeItemMultiSelect();
 }
 
 function toggleEditModeFields() {
@@ -2820,7 +2161,7 @@ function toggleEditModeFields() {
   if (window.isNew || window.isEdit) {
     $("#RelatedStrategy").prop("disabled", true);
   }
-syncChangeItemMultiSelect();
+  syncChangeItemMultiSelect();
 }
 
 $(document).on("click", "#CRSubmitButton", function (e) {
@@ -2935,15 +2276,17 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   }
 
   // Validate ChangeItem
-  var changeItemVal = getChangeItemStoredValue();
+ // var changeItemVal = $("#ChangeItem").val();
+ var changeItemVal = getChangeItemStoredValue();
   if (!changeItemVal || changeItemVal.trim() === "") {
     $("#ChangeItem").addClass("is-invalid");
-       $(".cr-changeitem-ms-dropdown").addClass("is-invalid");
-    if (!firstInvalid) firstInvalid = $(".cr-changeitem-ms-dropdown");
+    //if (!firstInvalid) firstInvalid = $("#ChangeItem");
+    $(".cr-changeitem-ms-control").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $(".cr-changeitem-ms-search");
     isValid = false;
   } else {
     $("#ChangeItem").removeClass("is-invalid");
- $(".cr-changeitem-ms-dropdown").removeClass("is-invalid");
+    $(".cr-changeitem-ms-control").removeClass("is-invalid");
   }
 
   // Validate ApprovalLevel (skip when actionType is add — field is hidden)
@@ -3045,10 +2388,10 @@ $(document).on(
   "input change",
   "#Sector, #SubSector, #RelatedStrategy, #ParentItemType, #ParentItemCode, #ChangeItem, #ApprovalLevel, #ChangeDescription, #ChangeJustification, #ExpectedPositiveImpact, #ImpactType, #ChildItemCode, #ChildItemType",
   function () {
- if ($(this).attr("id") === "ChangeItem") {
+    if ($(this).attr("id") === "ChangeItem") {
       if (getChangeItemStoredValue()) {
         $(this).removeClass("is-invalid");
-        $(".cr-changeitem-ms-dropdown").removeClass("is-invalid");
+        $(".cr-changeitem-ms-control").removeClass("is-invalid");
       }
       return;
     }
@@ -3117,8 +2460,8 @@ $(document).on("click", "#CREditButton", function () {
   window.isView = false;
   
   // Save current ChangeItem value before initializing edit mode
-   const currentChangeItem = getChangeItemStoredValue() || "";
-  
+  //const currentChangeItem = $("#ChangeItem").val() || "";
+  const currentChangeItem = getChangeItemStoredValue() || "";
   toggleEditModeFields();
   initializeEditMode(currentChangeItem);
   updatePageTitleLink();
@@ -3189,9 +2532,6 @@ function loadListOptions(
         setTimeout(function() {
           setSelectValue(selectId, currentValue);
         }, 50);
-      }
-      if (selectId === "#ChildItemCode") {
-          syncChildItemMultiSelect();
       }
     },
     error: function (err) { },
@@ -3468,309 +2808,6 @@ function loadParentItems(listName, selectId) {
   });
 }
 
-
-window.selectedChildItemCodes = [];
-
-function isChildItemMultiEnabled() {
-
-    var parentType = $("#ParentItemType").val();
-    var childType = $("#ChildItemType").val();
-
-    return (
-        (
-            parentType === "Initiatives" &&
-            (
-                childType === "InitiativeDeliverables" ||
-                childType === "InitiativeMilestones"
-            )
-        ) ||
-        (
-            parentType === "Projects" &&
-            (
-                childType === "Deliverables" ||
-                childType === "Milestones"
-            )
-        )
-    );
-}
-
-function getChildItemStoredValue() {
-
-    if (isChildItemMultiEnabled()) {
-        return window.selectedChildItemCodes.join(";");
-    }
-
-    return $("#ChildItemCode").val() || "";
-}
-
-function setChildItemSelection(values, triggerChange) {
-
-    var codes = parseChangeItemStoredValues(values);
-
-    var $select = $("#ChildItemCode");
-
-    if (!isChildItemMultiEnabled()) {
-        codes = codes.slice(0, 1);
-    }
-
-    window.selectedChildItemCodes = codes;
-
-    var primaryCode = codes.length ? codes[0] : "";
-
-    // Keep native select compatible with existing APIs
-    $select.val(primaryCode);
-
-    // Ensure saved legacy codes can be represented
-    if (primaryCode && $select.val() !== primaryCode) {
-        $select.append(
-            $("<option></option>")
-                .val(primaryCode)
-                .text(primaryCode)
-        );
-        $select.val(primaryCode);
-    }
-
-    syncChildItemMultiSelect();
-
-    if (triggerChange) {
-        $select.trigger("change");
-    }
-}
-
-function syncChildItemMultiSelect() {
-
-    var $select = $("#ChildItemCode");
-    var $wrap = $("#ChildItemCodeDiv .cr-child-ms");
-    var enabled = isChildItemMultiEnabled();
-
-    if (!$wrap.length) return;
-
-    if (!enabled) {
-        $wrap.hide().removeClass("is-open");
-        $select.show();
-        return;
-    }
-
-    $select.hide();
-    $wrap.show();
-
-    var $options = $wrap.find(".cr-child-ms-options");
-    var $tags = $wrap.find(".cr-child-ms-tags");
-
-    $options.empty();
-    $tags.empty();
-
-    var codes = window.selectedChildItemCodes || [];
-
-    $select.find("option").each(function () {
-
-        var code = $(this).val();
-        var name = $(this).text();
-
-        if (!code) return;
-
-        var $label = $("<label></label>")
-            .addClass("cr-child-ms-option");
-
-        var $checkbox = $("<input>")
-            .attr("type", "checkbox")
-            .addClass("cr-child-ms-check")
-            .val(code)
-            .prop("checked", codes.indexOf(code) !== -1);
-
-        var $text = $("<span></span>").text(name);
-
-        $label.append($checkbox, $text);
-        $options.append($label);
-    });
-
-    codes.forEach(function (code) {
-
-        var $option = $select.find("option").filter(function () {
-            return this.value === code;
-        }).first();
-
-        var name = $option.length ? $option.text() : code;
-
-        var $tag = $("<span></span>")
-            .addClass("cr-child-ms-tag");
-
-        var $tagText = $("<span></span>").text(name);
-
-        var $remove = $("<button></button>")
-            .attr("type", "button")
-            .addClass("cr-child-ms-remove")
-            .attr("data-code", code)
-            .text("×");
-
-        $tag.append($tagText, $remove);
-        $tags.append($tag);
-    });
-
-    var isArabic = localStorage.getItem("lng") !== "en";
-
-    var displayText = codes.length
-        ? (isArabic
-            ? "تم اختيار " + codes.length + " من العناصر"
-            : codes.length + " items selected")
-        : (isArabic
-            ? "اختر العناصر الفرعية"
-            : "Select child items");
-
-    $wrap.find(".cr-child-ms-trigger-text").text(displayText);
-
-    var disabled = $select.prop("disabled") ||
-        (window.isView && !window.isEdit && !window.isNew);
-
-    $wrap.find(".cr-child-ms-trigger").prop("disabled", disabled);
-    $wrap.find(".cr-child-ms-check").prop("disabled", disabled);
-    $wrap.find(".cr-child-ms-remove").prop("disabled", disabled);
-
-    if (disabled) {
-        $wrap.removeClass("is-open");
-    }
-
-    filterChildItemOptions();
-}
-
-function filterChildItemOptions() {
-
-    var $wrap = $("#ChildItemCodeDiv .cr-child-ms");
-
-    var query = String(
-        $wrap.find(".cr-child-ms-search").val() || ""
-    ).trim().toLowerCase();
-
-    var visibleCount = 0;
-
-    $wrap.find(".cr-child-ms-option").each(function () {
-
-        var $row = $(this);
-        var matches = $row.text().toLowerCase().includes(query) ||
-            String($row.find("input").val() || "")
-                .toLowerCase().includes(query);
-
-        $row.toggle(matches);
-
-        if (matches) visibleCount++;
-    });
-
-    $wrap.find(".cr-child-ms-empty")
-        .toggle(visibleCount === 0);
-}
-
-function configureChildItemMultiSelect(resetSelection) {
-
-    if (resetSelection) {
-        window.selectedChildItemCodes = [];
-        $("#ChildItemCode").val("");
-    }
-
-    syncChildItemMultiSelect();
-}
-
-function initChildItemMultiSelect() {
-
-    var $wrap = $("#ChildItemCodeDiv .cr-child-ms");
-
-    if (!$wrap.length || $wrap.data("initialized")) return;
-
-    $wrap.data("initialized", true);
-
-    $wrap.on("click", ".cr-child-ms-trigger", function () {
-
-        if ($(this).prop("disabled")) return;
-
-        $wrap.toggleClass("is-open");
-
-        $(this).attr(
-            "aria-expanded",
-            $wrap.hasClass("is-open") ? "true" : "false"
-        );
-
-        if ($wrap.hasClass("is-open")) {
-            $wrap.find(".cr-child-ms-search").trigger("focus");
-        }
-    });
-
-    $wrap.on("input", ".cr-child-ms-search", function () {
-        filterChildItemOptions();
-    });
-
-    $wrap.on("change", ".cr-child-ms-check", function () {
-
-        var code = $(this).val();
-        var selected = window.selectedChildItemCodes.slice();
-
-        if ($(this).is(":checked")) {
-            if (selected.indexOf(code) === -1) {
-                selected.push(code);
-            }
-        } else {
-            selected = selected.filter(function (x) {
-                return x !== code;
-            });
-        }
-
-        var oldPrimary = $("#ChildItemCode").val() || "";
-
-        setChildItemSelection(selected, false);
-
-        var newPrimary = $("#ChildItemCode").val() || "";
-
-        // Existing detail APIs use only the primary child
-        if (oldPrimary !== newPrimary) {
-            $("#ChildItemCode").trigger("change");
-        }
-    });
-
-    $wrap.on("click", ".cr-child-ms-remove", function () {
-
-        if ($(this).prop("disabled")) return;
-
-        var code = $(this).attr("data-code");
-
-        var selected = window.selectedChildItemCodes.filter(
-            function (x) {
-                return x !== code;
-            }
-        );
-
-        var oldPrimary = $("#ChildItemCode").val() || "";
-
-        setChildItemSelection(selected, false);
-
-        if (oldPrimary !== ($("#ChildItemCode").val() || "")) {
-            $("#ChildItemCode").trigger("change");
-        }
-    });
-
-    $(document)
-        .off("mousedown.crChildMultiSelect")
-        .on("mousedown.crChildMultiSelect", function (e) {
-
-            if (!$(e.target).closest(
-                "#ChildItemCodeDiv .cr-child-ms"
-            ).length) {
-                $wrap.removeClass("is-open");
-                $wrap.find(".cr-child-ms-trigger")
-                    .attr("aria-expanded", "false");
-            }
-        });
-
-    $wrap.on("keydown", function (e) {
-        if (e.key === "Escape") {
-            $wrap.removeClass("is-open");
-            $wrap.find(".cr-child-ms-trigger")
-                .attr("aria-expanded", "false")
-                .trigger("focus");
-        }
-    });
-
-    syncChildItemMultiSelect();
-}
-
-
 function loadChildItems(listName, parentTitle, parentType) {
   if (!parentTitle || !parentType) return;
   
@@ -3801,12 +2838,18 @@ function loadChangeItems(listName, parentType = "", childType = "") {
     return;
   }
   
-  const $changeItem = $("#ChangeItem");
-$changeItem.empty();
-window.changeItemsDictionary = {};
-  window.lastSelectedChangeItemCode = "";
+/*   const $changeItem = $("#ChangeItem");
+  $changeItem
+    .empty()
+    .append(
+      '<option data-trans-changeitem class="Resources" value=""></option>'
+    ); */
+    const $changeItem = $("#ChangeItem");
+    $changeItem.empty();
+    window.lastSelectedChangeItemCode = "";
   $(".changeItemsRow").find(".dynamicField").remove();
- if (!listName) {
+  //if (!listName) return;
+  if (!listName) {
     syncChangeItemMultiSelect();
     return;
   }
@@ -3826,20 +2869,16 @@ window.changeItemsDictionary = {};
     headers: { Accept: "application/json; odata=verbose" },
     success: function (data) {
       data.d.results.forEach((item) => {
-        // Save Title + UpdateType in global Dictionary
-        window.changeItemsDictionary[item.Title] = item.ActionType;
         $changeItem.append(
           `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
         );
       });
-       syncChangeItemMultiSelect();
-      
+      syncChangeItemMultiSelect();// multiselected
       // Handle Parent/Child fields visibility based on actionType after loading options
       handleParentChildFieldsVisibility();
-      
-         
     },
-     error: function (err) {
+    //error: function (err) { },
+    error: function (err) {
       syncChangeItemMultiSelect();
     },
   });
@@ -3928,33 +2967,28 @@ function buildInputHtml(fieldName, fieldType, value, readOnly) {
   return `<input type="${inputType}" id="${safeName}" class="form-control" value="${safeValue}"${disabledAttr}>`;
 }
 
-function renderDynamicChangeFields(columns, changeItemCode) {
+function renderDynamicChangeFields(columns) {
   const lang = localStorage.getItem("lng");
   const container = $(".changeItemsRow");
-  changeItemCode = changeItemCode || getPrimaryChangeItemCode();
-  if (changeItemCode) {
-    container.find(getChangeItemFieldGroupSelector(changeItemCode)).remove();
-  }
+  container.find(".dynamicField").remove();
 
   // Check actionType - if add, merge, split, or delete, hide dynamic section and don't render fields
-  var meta = getChangeItemMetaByCode(changeItemCode);
+  var meta = getSelectedChangeItemMeta();
   if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
-  if (!$(".changeItemFieldsGroup").length) {
-      setChangeItemsVisibility(false);
-    }
- return;
+    setChangeItemsVisibility(false);
+    return;
   }
 
   if (!columns || columns.length === 0) {
-  if (!$(".changeItemFieldsGroup").length) {
     setChangeItemsVisibility(false);
- }
     return;
   }
 
   setChangeItemsVisibility(true);
 
-
+  // Check if we need to fetch DisplayNames from API
+  //const changeItemCode = $("#ChangeItem").val();
+  const changeItemCode = getPrimaryChangeItemCode();
   const approvalLevel = $("#ApprovalLevel").val();
   let itemCode = $("#ParentItemCode").val();
   if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val()) {
@@ -3965,10 +2999,10 @@ function renderDynamicChangeFields(columns, changeItemCode) {
   // But skip API call if actionType is add, merge, split, or delete
   if (changeItemCode && approvalLevel && itemCode) {
     // Check actionType - if add, merge, split, or delete, don't call API
-    var meta = getChangeItemMetaByCode(changeItemCode);
+    var meta = getSelectedChangeItemMeta();
     if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
       // Don't call API, just render fields directly without API
-      renderFieldsWithDisplayNames(columns, {}, lang, container, [], changeItemCode);
+      renderFieldsWithDisplayNames(columns, {}, lang, container, []);
       return;
     }
     
@@ -4015,15 +3049,15 @@ function renderDynamicChangeFields(columns, changeItemCode) {
           }
         });
 
-         renderFieldsWithDisplayNames(apiColumns, displayNameMap, lang, container, apiColumns, changeItemCode);
+        renderFieldsWithDisplayNames(apiColumns, displayNameMap, lang, container, apiColumns);
       },
       error: function (xhr) {
-       renderFieldsWithDisplayNames(columns, {}, lang, container, [], changeItemCode);
+        renderFieldsWithDisplayNames(columns, {}, lang, container, []);
       },
     });
   } else {
     // Render fields directly (DisplayNames already available or API not available)
-    renderFieldsWithDisplayNames(columns, {}, lang, container, [], changeItemCode);
+    renderFieldsWithDisplayNames(columns, {}, lang, container, []);
   }
 }
 
@@ -4032,23 +3066,8 @@ function renderFieldsWithDisplayNames(
   displayNameMap,
   lang,
   container,
-    apiColumns = [],
-  changeItemCode
+  apiColumns = []
 ) {
- changeItemCode = changeItemCode || getPrimaryChangeItemCode();
-  var fieldRoot = container;
-  if (changeItemCode) {
-    container.find(getChangeItemFieldGroupSelector(changeItemCode)).remove();
-    var groupTitle = getChangeItemMetaByCode(changeItemCode).displayName || changeItemCode;
-    fieldRoot = $(
-      '<div class="changeItemFieldsGroup row w-100 mx-0" data-change-item-code="' +
-        escapeHtml(changeItemCode) +
-        '"><div class="col-md-12 mb-2 changeItemFieldsGroupTitle">' +
-        escapeHtml(groupTitle) +
-        "</div></div>"
-    );
-    container.append(fieldRoot);
-  }
   columns.forEach((col) => {
     let meta = {};
     try {
@@ -4083,9 +3102,6 @@ function renderFieldsWithDisplayNames(
       col.ColumnInternalName ||
       meta.InternalName ||
       "field_" + Math.random().toString(36).substr(2, 5);
-  const fieldDomId = changeItemCode
-      ? String(changeItemCode).replace(/[^A-Za-z0-9_-]/g, "_") + "_" + fieldName
-      : fieldName;
 
     // Search in displayNameMap using fieldName (InternalName)
     let displayNameInfo = displayNameMap[fieldName] || {};
@@ -4159,8 +3175,8 @@ function renderFieldsWithDisplayNames(
         oldValueId = rawValue;
         // Convert to display name for display
         getUserDisplayNameFromId(rawValue).then(function (displayName) {
-           const $oldValueSpan = fieldRoot
-            .find(`#${fieldDomId}`)
+          const $oldValueSpan = container
+            .find(`#${fieldName}`)
             .closest(".dynamicField")
             .find(".oldValue");
           if ($oldValueSpan.length) {
@@ -4202,8 +3218,8 @@ function renderFieldsWithDisplayNames(
                 ? (item[dispFieldKey] || rawValue)
                 : (item[dispFieldKeyEn] || item[dispFieldKey] || rawValue);
               
-              const $fieldDiv = fieldRoot
-                .find(`#${fieldDomId}`)
+              const $fieldDiv = container
+                .find(`#${fieldName}`)
                 .closest(".dynamicField");
               const $oldValueSpan = $fieldDiv.find(".oldValue");
               if ($oldValueSpan.length) {
@@ -4213,8 +3229,8 @@ function renderFieldsWithDisplayNames(
             }
           },
             error: function (err) {
-            const $fieldDiv = fieldRoot
-                .find(`#${fieldDomId}`)
+              const $fieldDiv = container
+                .find(`#${fieldName}`)
                 .closest(".dynamicField");
               if ($fieldDiv.length) {
                 $fieldDiv.attr("data-lookup-old-value", lookupOriginalValue);
@@ -4258,7 +3274,7 @@ function renderFieldsWithDisplayNames(
     }
 
     if (fieldType === "dropdownvalues") {
-       const selectId = fieldDomId;
+      const selectId = fieldName;
       // Use rawValue for comparison (not displayValue) to match choice.value exactly
       const currentValue = rawValue || "";
       
@@ -4315,7 +3331,7 @@ function renderFieldsWithDisplayNames(
         </div>
       `;
 
-      fieldRoot.append(fieldBlock);
+      container.append(fieldBlock);
       changeResources();
       return;
     }
@@ -4349,8 +3365,8 @@ function renderFieldsWithDisplayNames(
           const choiceDisplay = escapeHtml(choice.display || choice.value || "");
           const checkedAttr = (currentValue && choice.value === currentValue) ? " checked" : "";
           const transAttr = `data-trans-${choice.value}`;
- const radioId = fieldDomId + "_" + choice.value;
-          radioButtonsHtml += `<input class="form-control yesnolistener" type="radio" name="${escapeHtml(fieldDomId)}" id="${radioId}" value="${choiceValue}" placeholder="${escapeHtml(labelText)}" data-targetfieldrequired="undefined" data-targetfield="undefined" data-targetfieldvalue="undefined"${checkedAttr} /><label ${transAttr} for="${radioId}" class="Resources radiolabel">${choiceDisplay}</label>`;
+          const radioId = fieldName + "_" + choice.value;
+          radioButtonsHtml += `<input class="form-control yesnolistener" type="radio" name="${escapeHtml(labelText)}" id="${radioId}" value="${choiceValue}" placeholder="${escapeHtml(labelText)}" data-targetfieldrequired="undefined" data-targetfield="undefined" data-targetfieldvalue="undefined"${checkedAttr} /><label ${transAttr} for="${radioId}" class="Resources radiolabel">${choiceDisplay}</label>`;
         });
       }
       
@@ -4372,7 +3388,7 @@ function renderFieldsWithDisplayNames(
         </div>
       `;
 
-      fieldRoot.append(fieldBlock);
+      container.append(fieldBlock);
       changeResources();
       return;
     }
@@ -4384,7 +3400,7 @@ function renderFieldsWithDisplayNames(
       const valFieldKey = meta.valfieldkey || "Title";
       
       // Create dropdown HTML
-      const selectId = fieldDomId;
+      const selectId = fieldName;
       const safeValue = escapeHtml(displayValue || "");
       const selectHtml = `<select id="${selectId}" class="form-control"><option value="" disabled selected></option></select>`;
       
@@ -4402,7 +3418,7 @@ function renderFieldsWithDisplayNames(
         </div>
       `;
 
-      fieldRoot.append(fieldBlock);
+      container.append(fieldBlock);
       
       // Load options from list
       if (source) {
@@ -4424,7 +3440,7 @@ function renderFieldsWithDisplayNames(
 
     // Only create input if not lookup and not dropdownValues and not yesnoradio (all were handled above)
     if (fieldType !== "lookup" && fieldType !== "dropdownvalues" && fieldType !== "yesnoradio") {
-      const inputHtml = buildInputHtml(fieldDomId, fieldType, displayValue, false);
+      const inputHtml = buildInputHtml(fieldName, fieldType, displayValue, false);
 
       // IMPORTANT: Add data-field-id attribute so handleChangeItemsAPI can find the field
       // For picker fields, also add data-old-value-id to store the original ID
@@ -4438,7 +3454,7 @@ function renderFieldsWithDisplayNames(
         </div>
       `;
 
-          fieldRoot.append(fieldBlock);
+      container.append(fieldBlock);
     }
   });
 
@@ -4479,6 +3495,7 @@ function renderFieldsWithDisplayNames(
 // This function is kept for backward compatibility but is no longer used
 // The logic is now directly in event handlers and callGetSectorAndSubSectorAPI
 function tryFetchChangeDetails() {
+  //const changeItemCode = $("#ChangeItem").val();
   const changeItemCode = getPrimaryChangeItemCode();
   const approvalLevel = $("#ApprovalLevel").val();
   let itemCode = $("#ParentItemCode").val();
@@ -4528,45 +3545,31 @@ function handleIsActiveCheck(result) {
   }
 }
 
-function fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode, classification, keepExisting) {
+function fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode, classification) {
 if (!changeItemCode || !approvalLevel || !itemCode) {
- if (!keepExisting) {
-    $(".changeItemsRow")
-      .find(".dynamicField, .changeItemFieldsGroup")
-      .remove();
-    currentApprovalPath = "";
-    currentSecurityGroupName = "";
-  }
+  $(".changeItemsRow").find(".dynamicField").remove();
+  currentApprovalPath = "";
+  currentSecurityGroupName = "";
   return;
 }
 
 // Clear dynamic fields before fetching new ones
-if (keepExisting && $(getChangeItemFieldGroupSelector(changeItemCode)).length) {
-  return;
-}
+$(".changeItemsRow").find(".dynamicField").remove();
 
-if (!keepExisting) {
-  $(".changeItemsRow")
-    .find(".dynamicField, .changeItemFieldsGroup")
-    .remove();
-}
-
-   var meta = getChangeItemMetaByCode(changeItemCode);
+  var meta = getSelectedChangeItemMeta();
   var workflowOnly = isMergeSplitDeleteAction(meta.actionType);
 
   if (meta.actionType === "add") {
-   if (!$(".changeItemFieldsGroup").length) {
-      setChangeItemsVisibility(false);
-    }
+    setChangeItemsVisibility(false);
+    $(".changeItemsRow").find(".dynamicField").remove();
     currentApprovalPath = "";
     currentSecurityGroupName = "";
     return;
   }
 
   if (workflowOnly) {
-   if (!$(".changeItemFieldsGroup").length) {
-      setChangeItemsVisibility(false);
-    }
+    setChangeItemsVisibility(false);
+    $(".changeItemsRow").find(".dynamicField").remove();
   }
 
   $.ajax({
@@ -4582,10 +3585,8 @@ if (!keepExisting) {
       const result = res && res.result ? res.result : {};
 
       if (!applyChangeItemWorkflowMetadata(result)) {
-       if (!workflowOnly && !keepExisting) {
-          $(".changeItemsRow")
-            .find(".dynamicField, .changeItemFieldsGroup")
-            .remove();
+        if (!workflowOnly) {
+          $(".changeItemsRow").find(".dynamicField").remove();
         }
         return;
       }
@@ -4601,14 +3602,12 @@ if (!keepExisting) {
         result.columnsDetails &&
         result.columnsDetails.length
     ) {
-     renderDynamicChangeFields(result.columnsDetails, changeItemCode);
-    } else if (!keepExisting) {
-      $(".changeItemsRow")
-        .find(".dynamicField, .changeItemFieldsGroup")
-        .remove();
+      renderDynamicChangeFields(result.columnsDetails);
+    } else {
+      $(".changeItemsRow").find(".dynamicField").remove();
       currentApprovalPath = "";
       currentSecurityGroupName = "";
-      
+      // Show general alert if no fields to change
       alert(
         localStorage.getItem("lng") == "en"
           ? "There are no fields to change according to your choices. Please review the data!"
@@ -4618,19 +3617,15 @@ if (!keepExisting) {
   },
   error: function (xhr) {
     console.error("🟠 [fetchChangeItemDetails] Error:", xhr);
-if (!keepExisting) {
-      $(".changeItemsRow")
-        .find(".dynamicField, .changeItemFieldsGroup")
-        .remove();
-      currentApprovalPath = "";
-      currentSecurityGroupName = "";
-      if (!workflowOnly) {
-        alert(
-          localStorage.getItem("lng") == "en"
-            ? "There are no fields to change according to your choices. Please review the data!"
-            : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
-        );
-      }   
+    $(".changeItemsRow").find(".dynamicField").remove();
+    currentApprovalPath = "";
+    currentSecurityGroupName = "";
+    if (!workflowOnly) {
+      alert(
+        localStorage.getItem("lng") == "en"
+          ? "There are no fields to change according to your choices. Please review the data!"
+          : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
+      );
     }
   },
   });
@@ -4706,6 +3701,7 @@ function saveAllChangeRequestFields(saveOptions) {
     validationErrors.push("ChildItemCode");
   if (
     !shouldSkipCrRequiredField("#ChangeItem") &&
+  //  isBlankCrValue($("#ChangeItem").val())
     isBlankCrValue(getChangeItemStoredValue())
   )
     validationErrors.push("ChangeItem");
@@ -4787,12 +3783,11 @@ function saveAllChangeRequestFields(saveOptions) {
     }
     
     fieldsToSave.forEach((f) => {
-    var saveVal =
-    f === "ChangeItem"
-        ? getChangeItemStoredValue()
-        : f === "ChildItemCode"
-            ? getChildItemStoredValue()
-            : $("#" + f).val() || "";
+   //   oListItem.set_item(f, $("#" + f).val() || "");
+      var saveVal =
+        f === "ChangeItem"
+          ? getChangeItemStoredValue()
+          : $("#" + f).val() || "";
       oListItem.set_item(f, saveVal);
     });
 
@@ -4965,12 +3960,9 @@ function saveAllChangeRequestFields(saveOptions) {
           "ImpactType",
         ].forEach((f) => {
           var $el = $("#" + f);
-          var val =
-             f === "ChangeItem"
-        ? getChangeItemStoredValue()
-        : f === "ChildItemCode"
-            ? getChildItemStoredValue()
-            : $el.val() || "";
+        //  var val = $el.val() || "";
+        var val =
+        f === "ChangeItem" ? getChangeItemStoredValue() : $el.val() || "";
           // Workflow approvers cannot edit disabled fields; do not wipe saved values.
           if (window.isWF && $el.is(":disabled") && isBlankCrValue(val)) {
             return;
@@ -5059,6 +4051,7 @@ function saveAllChangeRequestFields(saveOptions) {
   }
 
   if (isMergeSplitDeleteAction(actionType) && !currentApprovalPath) {
+  //  var workflowChangeItemCode = $("#ChangeItem").val();
     var workflowChangeItemCode = getPrimaryChangeItemCode();
     var workflowApprovalLevel = $("#ApprovalLevel").val();
     var workflowItemCode = $("#ParentItemCode").val();
@@ -5096,34 +4089,13 @@ function saveAllChangeRequestFields(saveOptions) {
   persistChangeRequest();
 }
 function handleChangeItemsAPI(crCode) {
-  var codes = getSelectedChangeItemCodes();
-  if (!codes.length) {
-    return Promise.resolve({ success: true, message: "No change items" });
-  }
-  var seq = Promise.resolve();
-  codes.forEach(function (code) {
-    seq = seq.then(function () {
-      return handleChangeItemsAPIForCode(crCode, code);
-    });
-  });
-  return seq;
-}
-
-function handleChangeItemsAPIForCode(crCode, changeItemCode) {
   return new Promise(function (resolve, reject) {
-    changeItemCode = changeItemCode || getPrimaryChangeItemCode() || "";
+   // const changeItemCode = $("#ChangeItem").val() || "";
+   const changeItemCode = getPrimaryChangeItemCode() || "";
     const fields = [];
     const pickerPromises = [];
 
-    var $scope = $(getChangeItemFieldGroupSelector(changeItemCode));
-    if (!$scope.length) {
-      $scope = $(".changeItemsRow");
-    }
-    const $dynamicFields = $scope.find(".dynamicField");
-    if (!$dynamicFields.length) {
-      resolve({ success: true, message: "No dynamic fields to save" });
-      return;
-    }
+    const $dynamicFields = $(".changeItemsRow .dynamicField");
 
     // First, collect all fields and create promises for People Picker fields
     $dynamicFields.each(function (index) {
@@ -5849,9 +4821,6 @@ function loadOptionsOnly(listName, selectId, dispFieldKey, dispFieldKeyEn, valFi
           }
           $select.append(optionHtml);
         });
-        if (selectId === "#ChildItemCode") {
-            syncChildItemMultiSelect();
-        }
         resolve();
       },
       error: function (err) {
@@ -5904,10 +4873,10 @@ function loadChildItemsOptionsOnly(listName, parentTitle, parentType) {
 function loadChangeItemsOptionsOnly(listName, parentType = "", childType = "") {
   return new Promise((resolve) => {
     const $changeItem = $("#ChangeItem");
-   $changeItem.empty();
-    window.changeItemsDictionary = {};
+    $changeItem.empty();
+    
     if (!listName) {
- syncChangeItemMultiSelect();
+      syncChangeItemMultiSelect();
       resolve();
       return;
     }
@@ -5927,16 +4896,15 @@ function loadChangeItemsOptionsOnly(listName, parentType = "", childType = "") {
       headers: { Accept: "application/json; odata=verbose" },
       success: function (data) {
         data.d.results.forEach((item) => {
-            window.changeItemsDictionary[item.Title] = item.ActionType;
           $changeItem.append(
             `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
           );
         });
-syncChangeItemMultiSelect();
+        syncChangeItemMultiSelect();
         resolve();
       },
       error: function (err) {
-syncChangeItemMultiSelect();
+        syncChangeItemMultiSelect();
         resolve();
       }
     });
@@ -6170,6 +5138,7 @@ function fillViewFields(item, code) {
       
       // STEP 3: Load dynamic fields once after all data is loaded
       if ((window.isEdit || window.isView) && window.isLoadingChangeRequestData) {
+        //const changeItemCode = $("#ChangeItem").val();
         const changeItemCode = getPrimaryChangeItemCode();
         
         if (changeItemCode && window.pendingChangeItemColumnInternalName !== undefined) {
@@ -6194,7 +5163,8 @@ function fillViewFields(item, code) {
 
 function loadChangeItemsForView(changeItemCode, newCRCode) {
   return new Promise((resolve) => {
-     var codes = parseChangeItemStoredValues(changeItemCode);
+    //if (!changeItemCode) {
+      var codes = parseChangeItemStoredValues(changeItemCode);
     if (!codes.length) {
       resolve();
       return;
@@ -6202,80 +5172,94 @@ function loadChangeItemsForView(changeItemCode, newCRCode) {
     
     const $changeItem = $("#ChangeItem");
     // Don't empty if options are already loaded (during initial data load)
-   if (!window.isLoadingChangeRequestData || $changeItem.find("option").length === 0) {
-      $changeItem.empty();
-    }
-
-    var filterParts = [];
-    for (var i = 0; i < codes.length; i++) {
-      filterParts.push(
-        "Title eq '" + String(codes[i]).replace(/'/g, "''") + "'"
-      );
-    }
-
+   /*  if (!window.isLoadingChangeRequestData || $changeItem.find('option').length <= 1) {
+      $changeItem.empty().append('<option data-trans-changeitem class="Resources" value=""></option>');
+    } */
+      if (!window.isLoadingChangeRequestData || $changeItem.find("option").length === 0) {
+        $changeItem.empty();
+      }
+  
+      var filterParts = [];
+      for (var i = 0; i < codes.length; i++) {
+        filterParts.push(
+          "Title eq '" + String(codes[i]).replace(/'/g, "''") + "'"
+        );
+      }
     $.ajax({
       url:
         _spPageContextInfo.webAbsoluteUrl +
-         `/_api/web/lists/getbytitle('ChangeItems')/items?$filter=${filterParts.join(
+       // `/_api/web/lists/getbytitle('ChangeItems')/items?$filter=Title eq '${changeItemCode}'`,
+        `/_api/web/lists/getbytitle('ChangeItems')/items?$filter=${filterParts.join(
           " or "
         )}`,
       method: "GET",
       headers: { Accept: "application/json; odata=verbose" },
       success: function (data) {
         let changeItemColumnInternalName = null;
-               
-  var results = (data.d && data.d.results) || [];
+       
+      //  let optionExists = false;
+        
+        // Check if option already exists
+       /*  const existingOption = $changeItem.find(`option[value="${changeItemCode}"]`);
+        if (existingOption.length > 0) {
+          optionExists = true;
+        } */
+        
+        // Only append if option doesn't exist
+      //  if (!optionExists) {
+       //   data.d.results.forEach((item) => {
+        var results = (data.d && data.d.results) || [];
 
         results.forEach((item) => {
-            window.changeItemsDictionary[item.Title] = item.ActionType;
           var existingOption = $changeItem.find(
             'option[value="' + item.Title + '"]'
           );
-          if (!existingOption.length) {              
+          if (!existingOption.length) {
             $changeItem.append(
               `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
             );
-                   
- existingOption = $changeItem.find(
-              'option[value="' + item.Title + '"]'
-            );
-          } else {
+   
+              existingOption = $changeItem.find(
+                'option[value="' + item.Title + '"]'
+              );
+            } else {
             if (item.ActionType) {
               existingOption.attr("data-actiontype", item.ActionType);
-            existingOption.data(
-                "actiontype",
-                String(item.ActionType).toLowerCase()
-              );
+           //   existingOption.data("actiontype", String(item.ActionType).toLowerCase());
+           existingOption.data(
+            "actiontype",
+            String(item.ActionType).toLowerCase()
+          );
             }
             if (item.ListName) {
               existingOption.attr("data-listname", item.ListName);
-             
-existingOption.data(
-                "listname",
-                String(item.ListName).toLowerCase()
-              );
+           
+        existingOption.data(
+          "listname",
+          String(item.ListName).toLowerCase()
+        );
             }
-          }
-          if (item.ColumnInternalName) {
-            changeItemColumnInternalName = item.ColumnInternalName;
-          }
-        });
+    }
+    if (item.ColumnInternalName) {
+      changeItemColumnInternalName = item.ColumnInternalName;
+    }
+  });
 
-        setSelectValue("#ChangeItem", codes.join(";"));
-        var primary = getPrimaryChangeItemCode();
-        var loadedItem = null;
-        for (var r = 0; r < results.length; r++) {
-          if (results[r].Title === primary) {
-            loadedItem = results[r];
-            if (results[r].ColumnInternalName) {
-              changeItemColumnInternalName = results[r].ColumnInternalName;
-            }
-            break;
-          }
-        }
-        if (!loadedItem) {
-          loadedItem = results[0] || null;
-        }            
+  setSelectValue("#ChangeItem", codes.join(";"));
+  var primary = getPrimaryChangeItemCode();
+  var loadedItem = null;
+  for (var r = 0; r < results.length; r++) {
+    if (results[r].Title === primary) {
+      loadedItem = results[r];
+      if (results[r].ColumnInternalName) {
+        changeItemColumnInternalName = results[r].ColumnInternalName;
+      }
+      break;
+    }
+  }
+  if (!loadedItem) {
+    loadedItem = results[0] || null;
+  }
         if (loadedItem) {
           window.currentChangeItemActionType = (loadedItem.ActionType || "")
             .toString()
@@ -6285,7 +5269,7 @@ existingOption.data(
             .toLowerCase();
         }
         
-       
+     //   setSelectValue("#ChangeItem", changeItemCode);
 
         // In edit/view mode, don't load dynamic fields automatically during initial data load
         // They will be loaded once after all data is loaded
@@ -6322,7 +5306,8 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
   handleParentChildFieldsVisibility();
 
   // Get required values from form
-  const changeItemCode = getPrimaryChangeItemCode();
+ // const changeItemCode = $("#ChangeItem").val();
+ const changeItemCode = getPrimaryChangeItemCode();
   const approvalLevel = $("#ApprovalLevel").val();
   let itemCode = $("#ParentItemCode").val();
   if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val()) {
@@ -6497,12 +5482,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
 }
 function setSelectValue(selectId, value) {
   const $sel = $(selectId);
-  if (selectId === "#ChildItemCode") {
-    setChildItemSelection(value, false);
-    return;
-}
-
- if (selectId === "#ChangeItem" || $sel.attr("id") === "ChangeItem") {
+  if (selectId === "#ChangeItem" || $sel.attr("id") === "ChangeItem") {
     var codes = parseChangeItemStoredValues(value);
     for (var i = 0; i < codes.length; i++) {
       if (!$sel.find("option[value='" + codes[i].replace(/'/g, "\\'") + "']").length && codes[i]) {
@@ -6521,10 +5501,6 @@ function setSelectValue(selectId, value) {
   }
   // Set value - change events will be blocked by event handlers checking isLoadingChangeRequestData flag
   $sel.val(value);
-  // Synchronize ParentItemCode searchable dropdown
-if (selectId === "#ParentItemCode") {
-    syncParentItemSearch();
-}
 }
 function renderViewDynamicFields(
   columns,
@@ -6541,10 +5517,10 @@ function renderViewDynamicFields(
     return;
   }
 
- const changeItemCode = getPrimaryChangeItemCode();
+  //const changeItemCode = $("#ChangeItem").val();
+  const changeItemCode = getPrimaryChangeItemCode();
   const approvalLevel = $("#ApprovalLevel").val();
   let itemCode = $("#ParentItemCode").val();
-  
   if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val()) {
     itemCode = $("#ChildItemCode").val();
   }
@@ -7515,8 +6491,8 @@ function handleParentChange(parent) {
   if (isEdit) {
     const selectedParentCode = $("#ParentItemCode").val();
     const selectedChildCode = $("#ChildItemCode").val() || "";
-     const currentChangeItem = getChangeItemStoredValue() || "";
-
+    //const currentChangeItem = $("#ChangeItem").val() || "";
+    const currentChangeItem = getChangeItemStoredValue() || "";
     // Don't reload ChangeItem if we're still loading initial data
     if (!window.isLoadingChangeRequestData) {
       loadChangeItemsForEdit(
@@ -7543,12 +6519,16 @@ function loadChangeItemsForEdit(
   childCode,
   changeItemValue
 ) {
- const currentChangeItem =
-    changeItemValue || getChangeItemStoredValue() || "";
-
+  //const currentChangeItem = changeItemValue || $("#ChangeItem").val() || "";
+  const currentChangeItem =
+  changeItemValue || getChangeItemStoredValue() || "";
   const $changeItem = $("#ChangeItem");
- $changeItem.empty();
- window.changeItemsDictionary = {};
+  // $changeItem
+  //   .empty()
+  //   .append(
+  //     '<option value="" data-trans-changeitem class="Resources"></option>'
+  //   );
+  $changeItem.empty();
   const childType = $("#ChildItemType").val();
   const listName = childType || parentType;
 
@@ -7566,7 +6546,6 @@ function loadChangeItemsForEdit(
     headers: { Accept: "application/json; odata=verbose" },
     success: function (data) {
       data.d.results.forEach((item) => {
-        window.changeItemsDictionary[item.Title] = item.ActionType;
         $changeItem.append(
           `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
         );
@@ -7576,8 +6555,10 @@ function loadChangeItemsForEdit(
       handleParentChildFieldsVisibility();
       
           // Always restore the current ChangeItem value if it exists
-      if (currentChangeItem && String(currentChangeItem).trim() !== "") {
+   //   if (currentChangeItem && currentChangeItem.trim() !== "") {
+    if (currentChangeItem && String(currentChangeItem).trim() !== "") {
         setTimeout(function() {
+          //const previousValue = $changeItem.val();
           const previousValue = getChangeItemStoredValue();
           setSelectValue("#ChangeItem", currentChangeItem);
           
@@ -7590,7 +6571,8 @@ function loadChangeItemsForEdit(
           // Dynamic fields will be loaded after all data is loaded
           if (!window.isLoadingChangeRequestData && !shouldPreventReload) {
             // Only trigger change event if value actually changed (to avoid loops)
-           if (previousValue !== getChangeItemStoredValue()) {
+        //    if (previousValue !== currentChangeItem) {
+          if (previousValue !== getChangeItemStoredValue()) {
               $changeItem.trigger("change");
             } else {
               // Value didn't change, but we still need to load dynamic fields

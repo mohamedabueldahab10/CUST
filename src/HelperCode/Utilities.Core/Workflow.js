@@ -2280,6 +2280,9 @@ var Task_PCODE_Data_Request_WFs = {
 
       assignedto = oListItem.get_item("AssignedTo"); //handle multiple people picker
       currentstage = oListItem.get_item("Title"); //added to handle WFNote Query
+      if (window.unlockProjectPageForApplicantPm) {
+        window.unlockProjectPageForApplicantPm();
+      }
       // taskActionType = oListItem.get_item('TaskActionType');
       thirdActionInfo = oListItem.get_item("OtherStage")
         ? oListItem.get_item("OtherStage")
@@ -2455,36 +2458,7 @@ var Task_PCODE_Data_Request_WFs = {
           break;
         case "Approval":
           {
-            if (
-              isBenefitsWorkflowContext(
-                workflowname,
-                typeof listkey !== "undefined" ? listkey : ""
-              )
-            ) {
-              $(".navbar.page-nav.px-5").after(
-                '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-                taskid +
-                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div></div><div class="apprv"><span class="approveStageName">' +
-                actionbuttonTitle +
-                '</span><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources" type="button"></button></div></div>'
-              );
-              $(".btnactionrow > h2.approvalHeader").append(
-                '<div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
-                taskid +
-                '\')"><i class="fas fa-users" aria-hidden="true"></i><span data-trans-delegate class="Resources"></span></button></div>'
-              );
-              $(".btnactionrow .form-btns-wrapper").append(
-                '<div class="WF-btn"><div class="apprv"><span class="approveStageName"><p class="Resources task-name" data-trans-taskname></p>' +
-                actionbuttonTitle +
-                '</span><div class="wf-btn-wrapper-new d-flex"><button data-trans-accept onclick="Task_PCODE_Data_Request_WFs.g.addcomments(true, \'Approval\')" class="btn pop-green Resources" type="button" ></button><button data-trans-needinfo  onclick="Task_PCODE_Data_Request_WFs.g.addcomments(false, \'Approval\')" class="btn pop-green rejection Resources"  type="button"></button><button data-trans-endworkflow onclick="Task_PCODE_Data_Request_WFs.g.addcomments(3,\'Approval\')" class="btn pop-green cancelbutton Resources" type="button"></button></div></div>'
-              );
-              $("div.Container").fadeIn();
-              $("div.cust-loader").fadeOut();
-              forFormSubmitHTMLStatus = setInterval(function () {
-                Task_PCODE_Data_Request_WFs.g.hidefields();
-              }, 100);
-            }
-            else if (workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "SODCreateProject") {                  // console.log('aaaaaaaaaaaaaa');
+            if (workflowname == "VROCreateProject" || workflowname == "EPMOCreateProject" || workflowname == "LMSCreateProject" || workflowname == "DOC_CreateProject" || workflowname == "FSSBCreateProject" || workflowname == "SODCreateProject") {
               $(".navbar.page-nav.px-5").after(
                 '<div class="WF-btn"><div class="SubmitTitleRow mt-3"><div class="wfTitle"><span data-trans-workflow class="Resources">سير العمل</span></div><div class="wf-delegate-btn"><button class="btn pop-green delegate-btn "  type="button"  onclick="Delegatepopup.init(\'' +
                 taskid +
@@ -3538,6 +3512,7 @@ var SubmitField_BulkEdit = {
           var msActualKpiHistorySaver = null;
           var deferredMsActualBenefitHistory = false;
           var msActualBenefitHistorySaver = null;
+          var endedPeriodForAttachmentDelete = null;
           while (progEnum.moveNext()) {
             var currentItem = progEnum.get_current();
             var progTitle = currentItem.get_item("Title");
@@ -3760,13 +3735,13 @@ var SubmitField_BulkEdit = {
             } else {
               if (state == 3) {
 
-                if (workflowname == "MSActualKPI") {
+                if (workflowname == "MSActualKPI" || workflowname == "MSActualBenefit") {
                   items.set_item("WFStage", "");
                   items.set_item("Equation", "0");
-                }
-                else if (workflowname == "MSActualBenefit") {
-                  items.set_item("WFStage", "");
-                  items.set_item("Equation", "0");
+                  endedPeriodForAttachmentDelete = {
+                    itemId: currentId,
+                    period: End_Workflow.currentPeriod(currentItem),
+                  };
                 }
               }
               else if (state) items.set_item("WFStage", nxtstageid);
@@ -4244,7 +4219,19 @@ var SubmitField_BulkEdit = {
                 return;
               }
 
-              continueWorkflowAfterBulkEdit();
+              if (
+                state == 3 &&
+                endedPeriodForAttachmentDelete &&
+                endedPeriodForAttachmentDelete.period
+              ) {
+                End_Workflow.deleteEndedPeriodAttachments(
+                  endedPeriodForAttachmentDelete.itemId,
+                  [endedPeriodForAttachmentDelete.period],
+                  continueWorkflowAfterBulkEdit
+                );
+              } else {
+                continueWorkflowAfterBulkEdit();
+              }
             },
             function (sender, args) {
               //Item updated fail
@@ -6347,7 +6334,37 @@ var Cancel_Project = {
     return dfd.promise();
   },
 };
-
+// ENDED_PERIOD_ATTACHMENTS_START
+function attachmentSpecForEndedPeriod(period) {
+  if (!period || !period.year || !period.actualField) return null;
+  var year = parseInt(period.year, 10);
+  if (!year) return null;
+  var field = String(period.actualField);
+  var relatedField = "";
+  if (field.indexOf("ActualQ") === 0) relatedField = "RelatedQuarter";
+  else if (field.indexOf("ActualMid") === 0) relatedField = "RelatedMid";
+  else if (field.indexOf("ActualM") === 0) relatedField = "RelatedMonth";
+  else if (field === "ActualY") relatedField = "RelatedActualY";
+  else return null;
+  return { year: String(year), relatedField: relatedField, relatedValue: field };
+}
+function fileMatchesEndedAttachmentSpec(meta, spec) {
+  if (!meta || !spec) return false;
+  var year = meta.RelatedYear == null ? "" : String(meta.RelatedYear).trim();
+  var token = meta[spec.relatedField] == null ? "" : String(meta[spec.relatedField]).trim();
+  if (!year || !token) return false;
+  if (parseInt(year, 10) !== parseInt(spec.year, 10)) return false;
+  return token === spec.relatedValue;
+}
+function fileMatchesAnyEndedPeriod(meta, periods) {
+  var list = periods || [];
+  for (var i = 0; i < list.length; i++) {
+    var spec = attachmentSpecForEndedPeriod(list[i]);
+    if (spec && fileMatchesEndedAttachmentSpec(meta, spec)) return true;
+  }
+  return false;
+}
+// ENDED_PERIOD_ATTACHMENTS_END
 var End_Workflow = {
   INITIATIVE_BENEFITS_DELETE_STAGES: [
     "InitiativeBenefits01",
@@ -7262,6 +7279,139 @@ var End_Workflow = {
       }
     );
   },
+  attachmentLibraries: function () {
+    var names = [];
+    var pushName = function (name) {
+      if (name && names.indexOf(name) === -1) names.push(name);
+    };
+    var key = typeof listkey !== "undefined" ? String(listkey || "") : "";
+    if (key === "mainkpi") {
+      pushName("mainkpi Documents");
+      return names;
+    }
+    if (key === "benefits") {
+      pushName("Initiative Documents");
+      pushName("SPM General Services");
+      return names;
+    }
+    if (typeof DocumentLibraryName !== "undefined" && DocumentLibraryName) {
+      pushName(DocumentLibraryName);
+    }
+    return names;
+  },
+  deleteMatchingPeriodFiles: function (libraryTitle, itemId, periods, onDone) {
+    onDone = onDone || function () { };
+    var context = new SP.ClientContext.get_current();
+    var list;
+    try {
+      list = context.get_web().get_lists().getByTitle(libraryTitle);
+    } catch (e) {
+      onDone();
+      return;
+    }
+    var query = new SP.CamlQuery();
+    query.set_viewXml(
+      "<View Scope='RecursiveAll'><Query><Where><Eq><FieldRef Name='ItemID' /><Value Type='Text'>" +
+      End_Workflow.xmlEscape(itemId) +
+      "</Value></Eq></Where></Query><RowLimit>5000</RowLimit></View>"
+    );
+    var files = list.getItems(query);
+    context.load(
+      files,
+      "Include(ID,Title,File,ContentType,ItemID,RelatedYear,RelatedMonth,RelatedQuarter,RelatedMid,RelatedActualY)"
+    );
+    context.executeQueryAsync(
+      function () {
+        var deleteContext = new SP.ClientContext.get_current();
+        var deleteWeb = deleteContext.get_web();
+        var deleteCount = 0;
+        var key = typeof listkey !== "undefined" ? String(listkey || "") : "";
+        var rows = End_Workflow.enumToArray(files);
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          var contentType = row.get_contentType();
+          if (contentType && contentType.get_name() === "Folder") continue;
+          var file = row.get_file();
+          if (!file) continue;
+          if (String(row.get_item("ItemID")) !== String(itemId)) continue;
+          var title = "";
+          try {
+            title = String(row.get_item("Title") || "");
+          } catch (e1) {
+            title = "";
+          }
+          if (key && title && title !== key && title.indexOf(key + "-") !== 0) continue;
+          var meta = {
+            RelatedYear: row.get_item("RelatedYear"),
+            RelatedMonth: row.get_item("RelatedMonth"),
+            RelatedQuarter: row.get_item("RelatedQuarter"),
+            RelatedMid: row.get_item("RelatedMid"),
+            RelatedActualY: row.get_item("RelatedActualY"),
+          };
+          if (!fileMatchesAnyEndedPeriod(meta, periods)) continue;
+          deleteWeb.getFileByServerRelativeUrl(file.get_serverRelativeUrl()).deleteObject();
+          deleteCount++;
+        }
+        if (!deleteCount) {
+          onDone();
+          return;
+        }
+        deleteContext.executeQueryAsync(
+          function () {
+            console.log(
+              "End_Workflow: deleted period attachments",
+              deleteCount,
+              libraryTitle
+            );
+            onDone();
+          },
+          function (sender, args) {
+            console.error(
+              "End_Workflow delete period attachments failed: " + args.get_message()
+            );
+            onDone();
+          }
+        );
+      },
+      function (sender, args) {
+        console.error(
+          "End_Workflow query period attachments failed (" +
+          libraryTitle +
+          "): " +
+          args.get_message()
+        );
+        onDone();
+      }
+    );
+  },
+  deleteEndedPeriodAttachments: function (itemId, periods, onDone) {
+    onDone = onDone || function () { };
+    if (!itemId || !periods || !periods.length) {
+      onDone();
+      return;
+    }
+    var libraries = End_Workflow.attachmentLibraries();
+    if (!libraries.length) {
+      onDone();
+      return;
+    }
+    var index = 0;
+    var nextLibrary = function () {
+      if (index >= libraries.length) {
+        onDone();
+        return;
+      }
+      var libraryTitle = libraries[index];
+      index++;
+      End_Workflow.deleteMatchingPeriodFiles(
+        libraryTitle,
+        itemId,
+        periods,
+        nextLibrary
+      );
+    };
+    nextLibrary();
+  },
   clearEndedPeriod: function (benefitCode, onDone) {
     onDone = onDone || function () { };
     if (!benefitCode) {
@@ -7316,10 +7466,21 @@ var End_Workflow = {
         period: period,
       });
       End_Workflow.patchHistoryDeleted(drafts, function () {
-        End_Workflow.clearKpiResultsByPeriods(
-          benefitCode,
+        var endedItemId = "";
+        try {
+          endedItemId = End_Workflow.g.listItem.get_id();
+        } catch (e) { }
+        if (!endedItemId && typeof IID !== "undefined") endedItemId = IID;
+        End_Workflow.deleteEndedPeriodAttachments(
+          endedItemId,
           periodsToClear,
-          onDone
+          function () {
+            End_Workflow.clearKpiResultsByPeriods(
+              benefitCode,
+              periodsToClear,
+              onDone
+            );
+          }
         );
       });
     });
@@ -7468,6 +7629,19 @@ var End_Workflow = {
   },
   init: function (options) {
     options = options || {};
+    if (!options.confirmed) {
+      var confirmedOptions = {
+        listTitle: options.listTitle,
+        listingKey: options.listingKey,
+        btnId: options.btnId,
+        deleteItem: options.deleteItem,
+        confirmed: true,
+      };
+      confirmBenefitsEndWorkflow(function () {
+        End_Workflow.init(confirmedOptions);
+      });
+      return;
+    }
     var listTitle = options.listTitle || "Benefits";
     var listingKey = options.listingKey || "benefits";
     var btnId = options.btnId || "btnEndWorkflow";

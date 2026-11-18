@@ -14,8 +14,8 @@ window.projectDiscrepancyCostPercentage = 0;
 window.projectDiscrepancyInDays = 0;
 window.projectDiscrepancyPercentage = 0;
 window.initiativeDiscrepancyCost = 0;
-window.initiativeDiscrepancyCostPercentage  = 0;
-window.initiativeDiscrepancyInDays  = 0;
+window.initiativeDiscrepancyCostPercentage = 0;
+window.initiativeDiscrepancyInDays = 0;
 window.initiativeDiscrepancyPercentage = 0;
 window.initiativeActualBudget = 0;
 window.CurrentUserTasksCount = 0;
@@ -134,10 +134,10 @@ var UserRole,
   Page_UrlName =
     window.location.pathname.toLowerCase().indexOf("sitepages") > -1
       ? window.location.pathname
-          .toLowerCase()
-          .split("/sitepages/")[1]
-          .split("?")[0]
-          .replace(/\/+$/, "")
+        .toLowerCase()
+        .split("/sitepages/")[1]
+        .split("?")[0]
+        .replace(/\/+$/, "")
       : "",
   currPageArray = [],
   SP_Page_Name = [
@@ -279,7 +279,7 @@ var UserRole,
   Edit_Access = [],
   Delete_Access = [];
 
-  window.OpenAccessLists = ["referencecosts"];
+window.OpenAccessLists = ["referencecosts"];
 var RequestorTeam = "Requestor Team";
 var NIssues = 0,
   NTasks = 0,
@@ -429,7 +429,7 @@ window.WorkflowTranslate = [
   { wfName: "VROCRInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "EPMOCRInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
   { wfName: "LMSCRInitiative", nameAr: "مبادرة", nameEn: "Initiative" },
-  
+
   { wfName: "ReferenceCosts", nameAr: "بند التكلفة المرجعية", nameEn: "Reference Costs" },
 ];
 //
@@ -546,6 +546,32 @@ if (
 }
 
 window.userAddedToGroup = true;
+
+// Project manager (the applicant) can edit the project page on these stages.
+// enableOnWfTaskStage otherwise locks ScopeOfWork/OutOfScope to S09,
+// offering and award dates to S05, and ContractWorkStartDate to S12.
+window.applicantPmEditsProjectTask = function () {
+  var codes = ["epmoproject00", "vroporoject00", "sodproject00"];
+  var values = [];
+  if (typeof stageid !== "undefined" && stageid) values.push(stageid);
+  var wfStage = document.getElementById("WFStage");
+  if (wfStage && wfStage.value) values.push(wfStage.value);
+  var i;
+  for (i = 0; i < values.length; i++) {
+    if (codes.indexOf(String(values[i]).trim().toLowerCase()) !== -1) {
+      return !!(isPManager || currentUserRole === "ProjectManager");
+    }
+  }
+  return false;
+};
+window.unlockProjectPageForApplicantPm = function () {
+  if (!window.applicantPmEditsProjectTask()) return; 
+  $(".CFIELD")
+    .find("input, select, textarea, .PPField")
+    .prop("disabled", false)
+    .removeAttr("disabled");
+};
+
 //Get User Groups
 window.userCalls = {
   get_CurrentUser: function () {
@@ -564,7 +590,7 @@ window.userCalls = {
         window.UserN = data.d;
         userCalls.get_CurrentUserGroupColl(data.d.Id);
       },
-      error: function (data) {},
+      error: function (data) { },
     });
   },
   get_CurrentUserGroupColl: function (UserID) {
@@ -618,10 +644,10 @@ window.userCalls = {
             membersGroupCheckArray.length == 0 ? true : false;
           !pickerValidationDone
             ? userCalls.isMember(
-                membersGroupCheckArray[0].groupName,
-                membersGroupCheckArray[0].userLoginName,
-                membersGroupCheckArray[0].fieldID
-              )
+              membersGroupCheckArray[0].groupName,
+              membersGroupCheckArray[0].userLoginName,
+              membersGroupCheckArray[0].fieldID
+            )
             : (membersGroupCheckArray = []);
           //
           if (isNew && pickerValidationDone) {
@@ -758,14 +784,14 @@ window.userCalls = {
       ) {
         $("body").html(
           '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>عذرا، ليس لديك صلاحية لرؤية البيانات</label>' +
-            '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
-            "</div></div></div>"
+          '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
+          "</div></div></div>"
         );
       } else {
         $("body").html(
           '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>Sorry, you don\'t have permission to view the data</label>' +
-            '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
-            "</div></div></div>"
+          '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
+          "</div></div></div>"
         );
       }
     }
@@ -854,34 +880,34 @@ window.userCalls = {
         }
         break;
       case "searchdocuments.aspx":
-          if (isArabic) {
-            document.title = "البحث في المرفقات";
-          } else {
-            document.title = "Documents Search";
-          }
-          break;
+        if (isArabic) {
+          document.title = "البحث في المرفقات";
+        } else {
+          document.title = "Documents Search";
+        }
+        break;
       case "deleteditemslisting.aspx":
-          if (isArabic) {
-            document.title = "المكونات المحذوفة";
-          } else {
-            document.title = "Deleted Items";
-          }
-          break;
+        if (isArabic) {
+          document.title = "المكونات المحذوفة";
+        } else {
+          document.title = "Deleted Items";
+        }
+        break;
       case "changeRequests.aspx":
-          if (isArabic) {
-            document.title = "طلبات التغيير";
-          } else {
-            document.title = "Change Requests";
-          }
-          break;
+        if (isArabic) {
+          document.title = "طلبات التغيير";
+        } else {
+          document.title = "Change Requests";
+        }
+        break;
       case "powerbi_reports.aspx":
-          if (isArabic) {
-            document.title = "تقارير Power BI";
-          } else {
-            document.title = "Power BI Reports";
-          }
-          break;
-        
+        if (isArabic) {
+          document.title = "تقارير Power BI";
+        } else {
+          document.title = "Power BI Reports";
+        }
+        break;
+
       default:
         document.title = USERPageTitle;
     }
@@ -905,14 +931,14 @@ window.userCalls = {
     //Add permission for default chart view on home Page + User Title Role
 
     switch (
-      currentUserRole //we need first role for user
+    currentUserRole //we need first role for user
     ) {
       case "Administrator":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" +
-            "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {min-height:auto !important;}.Progress-Action {display:block!important;}" +
-            "</style>"
+          "div#s4-ribbonrow, div#O365_MainLink_Settings_container{display:block!important}html #s4-workspace {min-height:auto !important;}.Progress-Action {display:block!important;}" +
+          "</style>"
         );
         isAdmin = true;
         //***** */
@@ -947,16 +973,16 @@ window.userCalls = {
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
         isProjectExceptionUpdate = true;
-       
+
         ChartHide = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
         ChartHideForInitiatives = ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-          
+
         ar_UserRole = "صلاحيه تعديل المشاريع";
         en_UserRole = "ProjectExceptionUpdate";
         Create_Access = [
           "milestones",
-          "deliverables" ];
-        
+          "deliverables"];
+
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
         /*Read_Access = [
@@ -968,20 +994,20 @@ window.userCalls = {
           "projecthome.aspx" ];
        // Read_Access = Read_Access.concat(SP_Page_Name);*/
         Edit_Access = [
-            "projects" ,
-            "milestones",
-            "deliverables" ];
+          "projects",
+          "milestones",
+          "deliverables"];
         Delete_Access = [
           "milestones",
           "deliverables"];
-        
-          break;
-     case "PerformanceReportsQA":
+
+        break;
+      case "PerformanceReportsQA":
         USER_HomePage = "MainIndicators.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
         );
-        isPerformanceReportsQA  = true;
+        isPerformanceReportsQA = true;
         //***** */
         ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
@@ -1018,7 +1044,7 @@ window.userCalls = {
         Edit_Access = [];
         Delete_Access = [];
         break;
-    case "CQTeam":
+      case "CQTeam":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -1036,15 +1062,15 @@ window.userCalls = {
         Create_Access = [];
         Read_Access = AllListKeys;
         Read_Access = Read_Access.concat(SP_Page_Name);
-        Edit_Access = [ 
-        "InitiativeCompliance",
-        "InitiativeComplianceDetails",
-        "ProjectCompliance",
-        "ProjectComplianceDetails"
+        Edit_Access = [
+          "InitiativeCompliance",
+          "InitiativeComplianceDetails",
+          "ProjectCompliance",
+          "ProjectComplianceDetails"
         ];
         Delete_Access = [];
         break;
-    case "IPME":
+      case "IPME":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -1081,445 +1107,445 @@ window.userCalls = {
         break;
       case "DeptOrgCommiette":
         USER_HomePage = "new.aspx?ListKey=changerequest";
-         $("body").append(
-            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-          );
-          isDeptOrgCommiette = true;
-          //***** */
-          ChartHide =
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isDeptOrgCommiette = true;
+        //***** */
+        ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives =
+        ChartHideForInitiatives =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-          ar_UserRole = "اللجنة التحضيرية للتنظيم الإداري";
-          en_UserRole = "DeptOrgCommiette";
-          //CRUD
-          Create_Access = [
-            /////////
-            // "projects",
-            // "deliverables",
-            // "milestones",
-            // "initiativeupdates",
-            "projectupdates",
-            "issues",
-            "risks",
-            "mom",
-            "closureform",
-            "lessonslearned",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "contracts",
-            "documents",
-            "changerequest",
-          ];
-          CreateChangeRequest_Access = [
-            /////////
-            "projects",
-          ];
-          
-          Read_Access = [
-            "projects",
-            "projectupdates",
-            "deliverables",
-            "milestones",
-            "issues",
-            "risks",
-            "mom",
-            "closureform",
-            "lessonslearned",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "contracts",
-            "documents",
-            "changerequest",
-            "documents",
-            "tasks",
-            "TaskHistory.aspx",
-            "home.aspx",
-            "projecthome.aspx",
-          ];
-          
-          Edit_Access = [
-            "projects",
-            "deliverables",
-            "milestones",
-            "issues",
-            "risks",
-            "projectupdates",
-            "mom",
-            "closureform",
-            "lessonslearned",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "contracts",
-            "documents",
-            "projecthome.aspx",
-            //////////////////////////
-          ];
-          Delete_Access = [
-            // "projects",
-            // "deliverables",
-            // "milestones",
-            "issues",
-            "risks",
-            "mom",
-            "closureform",
-            "lessonslearned",
-            "projectupdates",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "contracts",
-          ];
-          break;
-     case "DeptOrgCommiettePH1":
-      USER_HomePage = "Listing.aspx?ListKey=tasks";
-            $("body").append(
-              "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-            );
-            isDeptOrgCommiettePH1 = true;
-             ChartHide =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-             ChartHideForInitiatives =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-  
-            ar_UserRole = "اللجنة التحضيرية للتنظيم الإداري";
-            en_UserRole = "DeptOrgCommiette PH1";
-            //CRUD
-            Create_Access = [];
-            CreateChangeRequest_Access = [ ];
-            Read_Access = [
-              "projects",
-              "projectupdates",
-              "deliverables",
-              "milestones",
-              "issues",
-              "risks",
-              "mom",
-              "closureform",
-              "lessonslearned",
-              "coc",
-              "stakeholders",
-              "exchangeschema",
-              "communicationplans",
-              "contracts",
-              "documents",
-              "changerequest",
-              "documents",
-              "tasks",
-              "TaskHistory.aspx",
-              "home.aspx",
-              "projecthome.aspx",
-            ];
-            
-            Edit_Access = [
-              "projects",
-              "deliverables",
-              "milestones",
-              "issues",
-              "risks",
-              "projectupdates",
-              "mom",
-              "closureform",
-              "lessonslearned",
-              "coc",
-              "stakeholders",
-              "exchangeschema",
-              "communicationplans",
-              "contracts",
-              "documents",
-              "projecthome.aspx",
-              //////////////////////////
-            ];
-            Delete_Access = [];
-            break;
-     case "DeptOrgCommiettePH2":
-      USER_HomePage = "Listing.aspx?ListKey=tasks";
-              $("body").append(
-                "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-              );
-              isDeptOrgCommiettePH2 = true;
-              //***** */
-              ChartHide =
-              ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-            ChartHideForInitiatives =
-              ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ar_UserRole = "اللجنة التحضيرية للتنظيم الإداري";
+        en_UserRole = "DeptOrgCommiette";
+        //CRUD
+        Create_Access = [
+          /////////
+          // "projects",
+          // "deliverables",
+          // "milestones",
+          // "initiativeupdates",
+          "projectupdates",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "changerequest",
+        ];
+        CreateChangeRequest_Access = [
+          /////////
+          "projects",
+        ];
 
-              ar_UserRole = "اللجنة التحضيرية للتنظيم الإداري";
-              en_UserRole = "DeptOrgCommiette PH2";
-              //CRUD
-              Create_Access = [];
-              CreateChangeRequest_Access = [ ];
-              Read_Access = [
-                "projects",
-                "projectupdates",
-                "deliverables",
-                "milestones",
-                "issues",
-                "risks",
-                "mom",
-                "closureform",
-                "lessonslearned",
-                "coc",
-                "stakeholders",
-                "exchangeschema",
-                "communicationplans",
-                "contracts",
-                "documents",
-                "changerequest",
-                "documents",
-                "tasks",
-                "TaskHistory.aspx",
-                "home.aspx",
-                "projecthome.aspx",
-              ];
-              
-              Edit_Access = [
-                "projects",
-                "deliverables",
-                "milestones",
-                "issues",
-                "risks",
-                "projectupdates",
-                "mom",
-                "closureform",
-                "lessonslearned",
-                "coc",
-                "stakeholders",
-                "exchangeschema",
-                "communicationplans",
-                "contracts",
-                "documents",
-                "projecthome.aspx",
-                //////////////////////////
-              ];
-              Delete_Access = [];
-              break;
-    case "FSSBCommiette":
-              USER_HomePage = "new.aspx?ListKey=changerequest";
-              $("body").append(
-                "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-              );
-              isFSSBCommiette = true;
-              //***** */
-              ChartHide =
-              ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-            ChartHideForInitiatives =
-              ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-    
-              ar_UserRole = "منظومة الدعم والإعانات الاجتماعية";
-              en_UserRole = "FSSBCommiette";
-              //CRUD
-              Create_Access = [
-                "projectupdates",
-                "issues",
-                "risks",
-                "mom",
-                "closureform",
-                "lessonslearned",
-                "coc",
-                "stakeholders",
-                "exchangeschema",
-                "communicationplans",
-                "contracts",
-                "documents",
-                "changerequest",
-              ];
-              CreateChangeRequest_Access = [
-                /////////
-                "projects",
-              ];
-              Read_Access = [
-                "projects",
-                "projectupdates",
-                "deliverables",
-                "milestones",
-                "issues",
-                "risks",
-                "mom",
-                "closureform",
-                "lessonslearned",
-                "coc",
-                "stakeholders",
-                "exchangeschema",
-                "communicationplans",
-                "contracts",
-                "documents",
-                "changerequest",
-                "documents",
-                "tasks",
-                "TaskHistory.aspx",
-                "home.aspx",
-                "projecthome.aspx",
-              ];
-              
-              Edit_Access = [
-                "projects",
-                "deliverables",
-                "milestones",
-                "issues",
-                "risks",
-                "projectupdates",
-                "mom",
-                "closureform",
-                "lessonslearned",
-                "coc",
-                "stakeholders",
-                "exchangeschema",
-                "communicationplans",
-                "contracts",
-                "documents",
-                "projecthome.aspx",
-                //////////////////////////
-              ];
-              Delete_Access = [
-                // "projects",
-                // "deliverables",
-                // "milestones",
-                "issues",
-                "risks",
-                "mom",
-                "closureform",
-                "lessonslearned",
-                "projectupdates",
-                "coc",
-                "stakeholders",
-                "exchangeschema",
-                "communicationplans",
-                "contracts",
-              ];
-              break;
-              case "FSSBCommiettePH1":
-                USER_HomePage = "Listing.aspx?ListKey=tasks";
-                $("body").append(
-                  "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-                );
-                isFSSBCommiettePH1 = true;
-                //***** */
-                ChartHide =
-                ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-                 ChartHideForInitiatives =
-                ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-               ar_UserRole = "منظومة الدعم والإعانات الاجتماعية";
-                en_UserRole = "FSSBCommiette PH1";
-                //CRUD
-                Create_Access = [];
-                CreateChangeRequest_Access = [ ];
-                Read_Access = [
-                  "projects",
-                  "projectupdates",
-                  "deliverables",
-                  "milestones",
-                  "issues",
-                  "risks",
-                  "mom",
-                  "closureform",
-                  "lessonslearned",
-                  "coc",
-                  "stakeholders",
-                  "exchangeschema",
-                  "communicationplans",
-                  "contracts",
-                  "documents",
-                  "changerequest",
-                  "documents",
-                  "tasks",
-                  "TaskHistory.aspx",
-                  "home.aspx",
-                  "projecthome.aspx",
-                ];
-                
-                Edit_Access = [
-                  "projects",
-                  "deliverables",
-                  "milestones",
-                  "issues",
-                  "risks",
-                  "projectupdates",
-                  "mom",
-                  "closureform",
-                  "lessonslearned",
-                  "coc",
-                  "stakeholders",
-                  "exchangeschema",
-                  "communicationplans",
-                  "contracts",
-                  "documents",
-                  "projecthome.aspx",
-                  //////////////////////////
-                ];
-                Delete_Access = [];
-                break;
-            case "FSSBCommiettePH2":
-                  USER_HomePage = "Listing.aspx?ListKey=tasks";
-                  $("body").append(
-                    "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-                  );
-                  isFSSBCommiettePH2 = true;
-                  //***** */
-                  ChartHide =
+        Read_Access = [
+          "projects",
+          "projectupdates",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "changerequest",
+          "documents",
+          "tasks",
+          "TaskHistory.aspx",
+          "home.aspx",
+          "projecthome.aspx",
+        ];
+
+        Edit_Access = [
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "projectupdates",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "projecthome.aspx",
+          //////////////////////////
+        ];
+        Delete_Access = [
+          // "projects",
+          // "deliverables",
+          // "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "projectupdates",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+        ];
+        break;
+      case "DeptOrgCommiettePH1":
+        USER_HomePage = "Listing.aspx?ListKey=tasks";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isDeptOrgCommiettePH1 = true;
+        ChartHide =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-                ChartHideForInitiatives =
+        ChartHideForInitiatives =
           ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
 
-                ar_UserRole = "منظومة الدعم والإعانات الاجتماعية";
-                  en_UserRole = "FSSBCommiette PH2";
-                  //CRUD
-                  Create_Access = [];
-                  CreateChangeRequest_Access = [ ];
-                  Read_Access = [
-                    "projects",
-                    "projectupdates",
-                    "deliverables",
-                    "milestones",
-                    "issues",
-                    "risks",
-                    "mom",
-                    "closureform",
-                    "lessonslearned",
-                    "coc",
-                    "stakeholders",
-                    "exchangeschema",
-                    "communicationplans",
-                    "contracts",
-                    "documents",
-                    "changerequest",
-                    "documents",
-                    "tasks",
-                    "TaskHistory.aspx",
-                    "home.aspx",
-                    "projecthome.aspx",
-                  ];
-                  
-                  Edit_Access = [
-                    "projects",
-                    "deliverables",
-                    "milestones",
-                    "issues",
-                    "risks",
-                    "projectupdates",
-                    "mom",
-                    "closureform",
-                    "lessonslearned",
-                    "coc",
-                    "stakeholders",
-                    "exchangeschema",
-                    "communicationplans",
-                    "contracts",
-                    "documents",
-                    "projecthome.aspx",
-                    //////////////////////////
-                  ];
-                  Delete_Access = [];
-                  break;           
-     case "GDST":
+        ar_UserRole = "اللجنة التحضيرية للتنظيم الإداري";
+        en_UserRole = "DeptOrgCommiette PH1";
+        //CRUD
+        Create_Access = [];
+        CreateChangeRequest_Access = [];
+        Read_Access = [
+          "projects",
+          "projectupdates",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "changerequest",
+          "documents",
+          "tasks",
+          "TaskHistory.aspx",
+          "home.aspx",
+          "projecthome.aspx",
+        ];
+
+        Edit_Access = [
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "projectupdates",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "projecthome.aspx",
+          //////////////////////////
+        ];
+        Delete_Access = [];
+        break;
+      case "DeptOrgCommiettePH2":
+        USER_HomePage = "Listing.aspx?ListKey=tasks";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isDeptOrgCommiettePH2 = true;
+        //***** */
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "اللجنة التحضيرية للتنظيم الإداري";
+        en_UserRole = "DeptOrgCommiette PH2";
+        //CRUD
+        Create_Access = [];
+        CreateChangeRequest_Access = [];
+        Read_Access = [
+          "projects",
+          "projectupdates",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "changerequest",
+          "documents",
+          "tasks",
+          "TaskHistory.aspx",
+          "home.aspx",
+          "projecthome.aspx",
+        ];
+
+        Edit_Access = [
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "projectupdates",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "projecthome.aspx",
+          //////////////////////////
+        ];
+        Delete_Access = [];
+        break;
+      case "FSSBCommiette":
+        USER_HomePage = "new.aspx?ListKey=changerequest";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isFSSBCommiette = true;
+        //***** */
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "منظومة الدعم والإعانات الاجتماعية";
+        en_UserRole = "FSSBCommiette";
+        //CRUD
+        Create_Access = [
+          "projectupdates",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "changerequest",
+        ];
+        CreateChangeRequest_Access = [
+          /////////
+          "projects",
+        ];
+        Read_Access = [
+          "projects",
+          "projectupdates",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "changerequest",
+          "documents",
+          "tasks",
+          "TaskHistory.aspx",
+          "home.aspx",
+          "projecthome.aspx",
+        ];
+
+        Edit_Access = [
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "projectupdates",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "projecthome.aspx",
+          //////////////////////////
+        ];
+        Delete_Access = [
+          // "projects",
+          // "deliverables",
+          // "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "projectupdates",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+        ];
+        break;
+      case "FSSBCommiettePH1":
+        USER_HomePage = "Listing.aspx?ListKey=tasks";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isFSSBCommiettePH1 = true;
+        //***** */
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+        ar_UserRole = "منظومة الدعم والإعانات الاجتماعية";
+        en_UserRole = "FSSBCommiette PH1";
+        //CRUD
+        Create_Access = [];
+        CreateChangeRequest_Access = [];
+        Read_Access = [
+          "projects",
+          "projectupdates",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "changerequest",
+          "documents",
+          "tasks",
+          "TaskHistory.aspx",
+          "home.aspx",
+          "projecthome.aspx",
+        ];
+
+        Edit_Access = [
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "projectupdates",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "projecthome.aspx",
+          //////////////////////////
+        ];
+        Delete_Access = [];
+        break;
+      case "FSSBCommiettePH2":
+        USER_HomePage = "Listing.aspx?ListKey=tasks";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isFSSBCommiettePH2 = true;
+        //***** */
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "منظومة الدعم والإعانات الاجتماعية";
+        en_UserRole = "FSSBCommiette PH2";
+        //CRUD
+        Create_Access = [];
+        CreateChangeRequest_Access = [];
+        Read_Access = [
+          "projects",
+          "projectupdates",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "changerequest",
+          "documents",
+          "tasks",
+          "TaskHistory.aspx",
+          "home.aspx",
+          "projecthome.aspx",
+        ];
+
+        Edit_Access = [
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "projectupdates",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "documents",
+          "projecthome.aspx",
+          //////////////////////////
+        ];
+        Delete_Access = [];
+        break;
+      case "GDST":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -1665,7 +1691,7 @@ window.userCalls = {
         ];
         break;
 
-     case "EPMO":
+      case "EPMO":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -1820,8 +1846,8 @@ window.userCalls = {
         // Delete_Access = AllListKeys;
         // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;
-        
-         case "HeadCommitte":
+
+      case "HeadCommitte":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -1974,79 +2000,79 @@ window.userCalls = {
         // Delete_Access = AllListKeys;
         // Delete_Access = Delete_Access.concat(SP_Page_Name); // to can delete everything
         break;
-        case "ProcExDept":
-          USER_HomePage = "Listing.aspx?ListKey=referencecosts";
-          $("body").append(
-            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-          );
-          isProcExDept = true;
-          ChartHide =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-          ChartHideForInitiatives =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-  
-          ar_UserRole = "فريق إدارة تميز المشتريات";
-          en_UserRole = "Procurement Excellence Department Team";
-  
-          Create_Access = ["referencecosts"];
-          Read_Access = [
-            "referencecosts",
-            "projects",
-            "deliverables",
-            "milestones",
-            "issues",
-            "risks",
-            "mom",
-            "closureform",
-            "lessonslearned",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "contracts",
-           "projecthome.aspx"
-          ] ;
-          Read_Access = Read_Access.concat(SP_Page_Name);
-          Edit_Access = ["referencecosts"];
-          Delete_Access = ["referencecosts"];
-          break;
-        case "ProcExDeptManager":
-            USER_HomePage = "Listing.aspx?ListKey=referencecosts";
-            $("body").append(
-              "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-            );
-            isProcExDeptManager = true;
-            ChartHide =
-              ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
-            ChartHideForInitiatives =
-              ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-              
-              ar_UserRole = "مدير إدارة تميز المشتريات";
-              en_UserRole = "Procurement Excellence Department Manager";
-    
-          Create_Access = ["referencecosts"];
-          Read_Access = [
-            "referencecosts",
-            "projects",
-            "deliverables",
-            "milestones",
-            "issues",
-            "risks",
-            "mom",
-            "closureform",
-            "lessonslearned",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "contracts",
-             "projecthome.aspx"
-          ];
-          Read_Access = Read_Access.concat(SP_Page_Name);
-          Edit_Access = ["referencecosts"];
-          Delete_Access = ["referencecosts"];
-            break;
-        case "Minister":
+      case "ProcExDept":
+        USER_HomePage = "Listing.aspx?ListKey=referencecosts";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isProcExDept = true;
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "فريق إدارة تميز المشتريات";
+        en_UserRole = "Procurement Excellence Department Team";
+
+        Create_Access = ["referencecosts"];
+        Read_Access = [
+          "referencecosts",
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "projecthome.aspx"
+        ];
+        Read_Access = Read_Access.concat(SP_Page_Name);
+        Edit_Access = ["referencecosts"];
+        Delete_Access = ["referencecosts"];
+        break;
+      case "ProcExDeptManager":
+        USER_HomePage = "Listing.aspx?ListKey=referencecosts";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isProcExDeptManager = true;
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(6),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "مدير إدارة تميز المشتريات";
+        en_UserRole = "Procurement Excellence Department Manager";
+
+        Create_Access = ["referencecosts"];
+        Read_Access = [
+          "referencecosts",
+          "projects",
+          "deliverables",
+          "milestones",
+          "issues",
+          "risks",
+          "mom",
+          "closureform",
+          "lessonslearned",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "projecthome.aspx"
+        ];
+        Read_Access = Read_Access.concat(SP_Page_Name);
+        Edit_Access = ["referencecosts"];
+        Delete_Access = ["referencecosts"];
+        break;
+      case "Minister":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
           "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
@@ -2083,48 +2109,48 @@ window.userCalls = {
         Read_Access = Read_Access.concat(SP_Page_Name);
         Edit_Access = ["tasks"];
         break;
-        case "EngineerPMO":
-          USER_HomePage = "Listing.aspx?ListKey=engineeringprojects";
-          $("body").append(
-            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-          );
-          isEngineerPMO = true;
-          ar_UserRole="مكتب المشاريع الهندسية";
-          en_UserRole="EngineerPMO";
-          Create_Access = ["localholidays"];
-          Edit_Access = ["engineeringprojects","localholidays"];
-          Delete_Access = ["engineeringprojects","engineeringprojectshistory","localholidays"];
-          Read_Access = ["engineeringprojects","tasks","engineeringprojectshistory","localholidays"],
+      case "EngineerPMO":
+        USER_HomePage = "Listing.aspx?ListKey=engineeringprojects";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isEngineerPMO = true;
+        ar_UserRole = "مكتب المشاريع الهندسية";
+        en_UserRole = "EngineerPMO";
+        Create_Access = ["localholidays"];
+        Edit_Access = ["engineeringprojects", "localholidays"];
+        Delete_Access = ["engineeringprojects", "engineeringprojectshistory", "localholidays"];
+        Read_Access = ["engineeringprojects", "tasks", "engineeringprojectshistory", "localholidays"],
           Read_Access = Read_Access.concat(SP_Page_Name);
-            break;
-        case "EngineerProjectManagers":
-              USER_HomePage = "Listing.aspx?ListKey=engineeringprojects";
-              $("body").append(
-                "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-              );
-              isEngineerPM = true;
-              ar_UserRole="إدارة الإشراف على التنفيذ";
-              en_UserRole="EngineerProjectManagers";
-              Create_Access = ["engineeringprojects","localholidays"];
-              Edit_Access = ["engineeringprojects","localholidays"];
-              Delete_Access = ["localholidays"];
-              Read_Access = ["engineeringprojects",,"tasks","engineeringprojectshistory","localholidays"],
-              Read_Access = Read_Access.concat(SP_Page_Name);
-          break;
-          case "EngineerDesignManagers":
-              USER_HomePage = "Listing.aspx?ListKey=engineeringprojects";
-              $("body").append(
-                "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-              );
-              isEngineerPM = true;
-              ar_UserRole="إدارة التصاميم";
-              en_UserRole="EngineerDesignManagers";
-              Create_Access = ["engineeringprojects","localholidays"];
-              Edit_Access = ["engineeringprojects","localholidays"];
-              Delete_Access = ["localholidays"];
-              Read_Access = ["engineeringprojects",,"tasks","engineeringprojectshistory","localholidays"],
-              Read_Access = Read_Access.concat(SP_Page_Name);
-          break;
+        break;
+      case "EngineerProjectManagers":
+        USER_HomePage = "Listing.aspx?ListKey=engineeringprojects";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isEngineerPM = true;
+        ar_UserRole = "إدارة الإشراف على التنفيذ";
+        en_UserRole = "EngineerProjectManagers";
+        Create_Access = ["engineeringprojects", "localholidays"];
+        Edit_Access = ["engineeringprojects", "localholidays"];
+        Delete_Access = ["localholidays"];
+        Read_Access = ["engineeringprojects", , "tasks", "engineeringprojectshistory", "localholidays"],
+          Read_Access = Read_Access.concat(SP_Page_Name);
+        break;
+      case "EngineerDesignManagers":
+        USER_HomePage = "Listing.aspx?ListKey=engineeringprojects";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        isEngineerPM = true;
+        ar_UserRole = "إدارة التصاميم";
+        en_UserRole = "EngineerDesignManagers";
+        Create_Access = ["engineeringprojects", "localholidays"];
+        Edit_Access = ["engineeringprojects", "localholidays"];
+        Delete_Access = ["localholidays"];
+        Read_Access = ["engineeringprojects", , "tasks", "engineeringprojectshistory", "localholidays"],
+          Read_Access = Read_Access.concat(SP_Page_Name);
+        break;
       case "ProjectManager":
         USER_HomePage = "home.aspx";
 
@@ -2160,7 +2186,7 @@ window.userCalls = {
           "contracts",
           "documents",
           "changerequest",
-          "changerequests" ,
+          "changerequests",
           "delegations"
 
         ];
@@ -2249,7 +2275,7 @@ window.userCalls = {
 
         ar_UserRole = "مالك المشروع";
         en_UserRole = "Project Owner";
-        Create_Access = ["projecthome.aspx","delegations"];
+        Create_Access = ["projecthome.aspx", "delegations"];
         Create_Access = ["projecthome.aspx", "delegations", "issues", "risks"];
         Read_Access = [
           "projects",
@@ -2283,7 +2309,7 @@ window.userCalls = {
           "closureinitiative",
           "benefits",
         ];
-        Edit_Access = ["projecthome.aspx","delegations"];
+        Edit_Access = ["projecthome.aspx", "delegations"];
 
         Delete_Access = [];
 
@@ -2337,7 +2363,7 @@ window.userCalls = {
           "communicationplans",
           "contracts",
           "changerequest",
-          "changerequests"  ,
+          "changerequests",
           "delegations",
           "initiativesanalysis"
         ];
@@ -2373,7 +2399,7 @@ window.userCalls = {
           "contracts",
           "changerequest",
           "changeRequests.aspx",
-          "changerequests"  ,
+          "changerequests",
           "projecthome.aspx",
           "InitiativeHome.aspx",
           "TaskHistory.aspx",
@@ -2439,7 +2465,7 @@ window.userCalls = {
           // "deliverables",
           // "milestones",
           "changeRequests.aspx",
-          "changerequests"        ];
+          "changerequests"];
         break;
 
       case "InitiativeOwner":
@@ -2737,7 +2763,7 @@ window.userCalls = {
           "benefitmatrix",
           "mainkpi",
           //"mainkpianalysis",
-//          "sosanalysis",
+          //          "sosanalysis",
           "benefits",
           "benefitmetrics",
           "BenefitMetrics.aspx",
@@ -2749,7 +2775,7 @@ window.userCalls = {
           "strategiccalendar",
           "measurementcyclesupport",
           "changeRequests.aspx",
-          "changerequests" 
+          "changerequests"
         ];
         CreateChangeRequest_Access = ["sos", "mainkpi"];
         Read_Access = [
@@ -2783,7 +2809,7 @@ window.userCalls = {
           "strategiccalendar",
           "measurementcyclesupport",
           "changeRequests.aspx",
-          "changerequests" ,
+          "changerequests",
           "DeletedItemsListing.aspx"
 
         ];
@@ -2807,13 +2833,13 @@ window.userCalls = {
           "strategiccalendar",
           "measurementcyclesupport",
           "changeRequests.aspx",
-          "changerequests" 
+          "changerequests"
 
         ];
         Delete_Access = [
           "mainkpi",
           //"mainkpianalysis",
-         // "mainkpiissues",
+          // "mainkpiissues",
           //"sosanalysis",
           "sos",
           "benefitmatrix",
@@ -2994,7 +3020,7 @@ window.userCalls = {
           "goalstrategy",
           // "sos",
           // "mainkpi",
-         // "changerequest"
+          // "changerequest"
           "benefitmatrix",
           "initiatives",
           "initiativeupdates",
@@ -3526,111 +3552,111 @@ window.userCalls = {
         ];
         break;
       case "SODVROE":
-          USER_HomePage = "InitiativesMain.aspx";
-  
-          $("body").append(
-            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-          );
-          //***** */
-          isSODVROE = true;
-  
-          ChartHide =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-  
-          ar_UserRole = "مكتب ضمان التنفيذ للتنمية الاجتماعية";
-          en_UserRole = "Execution Guarantee Office";
-          //CRUD
-          Create_Access = [
-            "benefitmatrix",
-            // "initiatives",
-            // "initiativedeliverables",
-            // "initiativemilestones",
-            "initiativeissues",
-            "initiativerisks",
-            "initiativemom",
-            "closureinitiative",
-            // "benefits",
-            "benefitmetrics",
-            "BenefitMetrics.aspx",
-            // "projects",
-            // "deliverables",
-            "mom",
-            "risks",
-            "issues",
-            // "milestones",
-            "lessonslearned",
-            "closureform",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "contracts",
-            "changerequest",
-            "documents",
-            "developmentrequirements"
-          ];
-          CreateChangeRequest_Access = ["initiatives", "projects"];
-          Read_Access = AllListKeys;
-          Read_Access = Read_Access.concat(SP_Page_Name);
-          Edit_Access = [
-            "benefitmatrix",
-            // "initiatives",
-            // "initiativedeliverables",
-            // "initiativemilestones",
-            "initiativeissues",
-            "initiativerisks",
-            "initiativemom",
-            "closureinitiative",
-            // "benefits",
-            "benefitmetrics",
-            // "benefitsequations",
-            "BenefitMetrics.aspx",
-            // "projects",
-            // "deliverables",
-            "mom",
-            "risks",
-            "issues",
-            // "milestones",
-            "lessonslearned",
-            "closureform",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "contracts",
-            //"changerequest",
-            "documents",
-            "developmentrequirements"
-          ];
-          Delete_Access = [
-            "benefitmatrix",
-            // "initiatives",
-            // "initiativedeliverables",
-            // "initiativemilestones",
-            "initiativeissues",
-            "initiativerisks",
-            "initiativemom",
-            "closureinitiative",
-            // "benefits",
-            "benefitmetrics",
-            "BenefitMetrics.aspx",
-            // "projects",
-            // "deliverables",
-            "mom",
-            "risks",
-            "issues",
-            // "milestones",
-            "lessonslearned",
-            "closureform",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "changerequest",
-          ];
-          break;
+        USER_HomePage = "InitiativesMain.aspx";
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+        //***** */
+        isSODVROE = true;
+
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "مكتب ضمان التنفيذ للتنمية الاجتماعية";
+        en_UserRole = "Execution Guarantee Office";
+        //CRUD
+        Create_Access = [
+          "benefitmatrix",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          // "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          // "projects",
+          // "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          // "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          "changerequest",
+          "documents",
+          "developmentrequirements"
+        ];
+        CreateChangeRequest_Access = ["initiatives", "projects"];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+        Edit_Access = [
+          "benefitmatrix",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          // "benefits",
+          "benefitmetrics",
+          // "benefitsequations",
+          "BenefitMetrics.aspx",
+          // "projects",
+          // "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          // "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "contracts",
+          //"changerequest",
+          "documents",
+          "developmentrequirements"
+        ];
+        Delete_Access = [
+          "benefitmatrix",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          // "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          // "projects",
+          // "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          // "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "changerequest",
+        ];
+        break;
 
       case "LMSUControl":
         USER_HomePage = "InitiativesMain.aspx";
@@ -3993,250 +4019,250 @@ window.userCalls = {
 
         break;
 
-        case "SODVROExecution":
-          USER_HomePage = "InitiativesMain.aspx";
-          $("body").append(
-            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-          );
-  
-          isSODVROExecution = true;
-  
-          ChartHide =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-  
-          ar_UserRole = "وحدة استراتيجية التنمية الاجتماعية (إدارة التنفيذ)";
-          en_UserRole = "SODVRO Execution";
-  
-          Create_Access = [
-            "goalstrategy",
-            "sos",
-            "mainkpi",
-            "benefitmatrix",
-            "initiatives",
-            "initiativedeliverables",
-            "initiativemilestones",
-            "initiativeissues",
-            "initiativerisks",
-            "initiativemom",
-            "closureinitiative",
-            "benefits",
-            "benefitmetrics",
-            "BenefitMetrics.aspx",
-            "projects",
-            "deliverables",
-            "mom",
-            "risks",
-            "issues",
-            "milestones",
-            "lessonslearned",
-            "closureform",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "changerequest",
-            "Targets.aspx",
-            "contracts",
-            "initiativeupdates",
-            "projectupdates",
-          ];
-          CreateChangeRequest_Access = [
-            "initiatives",
-            "projects",
-            "sos",
-            "mainkpi",
-          ];
-          Read_Access = AllListKeys;
-          Read_Access = Read_Access.concat(SP_Page_Name);
-  
-          Edit_Access = [
-            "goalstrategy",
-            "kpiequations",
-            "sos",
-            "mainkpi",
-            "benefitmatrix",
-            "initiatives",
-            "initiativedeliverables",
-            "initiativemilestones",
-            "initiativeissues",
-            "initiativerisks",
-            "initiativemom",
-            "closureinitiative",
-            "benefits",
-            "benefitmetrics",
-            // "benefitsequations",
-            "BenefitMetrics.aspx",
-            "projects",
-            "deliverables",
-            "mom",
-            "risks",
-            "issues",
-            "milestones",
-            "lessonslearned",
-            "closureform",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            //"changerequest",
-            "contracts",
-            "initiativeupdates",
-            "projectupdates",
-          ];
-          Delete_Access = [
-            "goalstrategy",
-            // "sos",
-            "mainkpi",
-            "benefitmatrix",
-            "initiatives",
-            "initiativedeliverables",
-            "initiativemilestones",
-            "initiativeissues",
-            "initiativerisks",
-            "initiativemom",
-            "closureinitiative",
-            "benefits",
-            "benefitmetrics",
-            "BenefitMetrics.aspx",
-            "projects",
-            "deliverables",
-            "mom",
-            "risks",
-            "issues",
-            "milestones",
-            "lessonslearned",
-            "closureform",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "changerequest",
-            "initiativeupdates",
-            "projectupdates",
-          ];
-          break;
-  
-        case "SODVROPerformance":
-          USER_HomePage = "InitiativesMain.aspx";
-  
-          $("body").append(
-            "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
-          );
-  
-          isSODVROPerformance = true;
-  
-          ChartHide =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
-          ChartHideForInitiatives =
-            ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
-  
-          ar_UserRole = " وحدة استراتيجية التنمية الاجتماعة (إدارة الآداء)";
-          en_UserRole = "SODVRO Performance";
-  
-          Create_Access = [
-            "goalstrategy",
-            // "sos",
-            // "mainkpi",
-            "benefitmatrix",
-            // "initiatives",
-            // "initiativedeliverables",
-            // "initiativemilestones",
-            "initiativeissues",
-            "initiativerisks",
-            "initiativemom",
-            "closureinitiative",
-            // "benefits",
-            "benefitmetrics",
-            "BenefitMetrics.aspx",
-            // "projects",
-            // "deliverables",
-            "mom",
-            "risks",
-            "issues",
-            // "milestones",
-            "lessonslearned",
-            "closureform",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "changerequest",
-            "contracts",
-          ];
-          CreateChangeRequest_Access = [
-            "initiatives",
-            "projects",
-            "sos",
-            "mainkpi",
-          ];
-          Read_Access = AllListKeys;
-          Read_Access = Read_Access.concat(SP_Page_Name);
-  
-          Edit_Access = [
-            "goalstrategy",
-            // "sos",
-            // "mainkpi",
-            "benefitmatrix",
-            // "initiatives",
-            // "initiativedeliverables",
-            // "initiativemilestones",
-            "initiativeissues",
-            "initiativerisks",
-            "initiativemom",
-            "closureinitiative",
-            // "benefits",
-            "benefitmetrics",
-            // "benefitsequations",
-            "BenefitMetrics.aspx",
-            // "projects",
-            // "deliverables",
-            "mom",
-            "risks",
-            "issues",
-            // "milestones",
-            "lessonslearned",
-            "closureform",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            //"changerequest",
-            "contracts",
-          ];
-          Delete_Access = [
-            "goalstrategy",
-            // "sos",
-            // "mainkpi",
-            "benefitmatrix",
-            // "initiatives",
-            // "initiativedeliverables",
-            // "initiativemilestones",
-            "initiativeissues",
-            "initiativerisks",
-            "initiativemom",
-            "closureinitiative",
-            // "benefits",
-            "benefitmetrics",
-            "BenefitMetrics.aspx",
-            // "projects",
-            // "deliverables",
-            "mom",
-            "risks",
-            "issues",
-            // "milestones",
-            "lessonslearned",
-            "closureform",
-            "coc",
-            "stakeholders",
-            "exchangeschema",
-            "communicationplans",
-            "changerequest",
-          ];
-  
-          break;
-  
+      case "SODVROExecution":
+        USER_HomePage = "InitiativesMain.aspx";
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isSODVROExecution = true;
+
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = "وحدة استراتيجية التنمية الاجتماعية (إدارة التنفيذ)";
+        en_UserRole = "SODVRO Execution";
+
+        Create_Access = [
+          "goalstrategy",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "changerequest",
+          "Targets.aspx",
+          "contracts",
+          "initiativeupdates",
+          "projectupdates",
+        ];
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi",
+        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = [
+          "goalstrategy",
+          "kpiequations",
+          "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          // "benefitsequations",
+          "BenefitMetrics.aspx",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          //"changerequest",
+          "contracts",
+          "initiativeupdates",
+          "projectupdates",
+        ];
+        Delete_Access = [
+          "goalstrategy",
+          // "sos",
+          "mainkpi",
+          "benefitmatrix",
+          "initiatives",
+          "initiativedeliverables",
+          "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          "projects",
+          "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "changerequest",
+          "initiativeupdates",
+          "projectupdates",
+        ];
+        break;
+
+      case "SODVROPerformance":
+        USER_HomePage = "InitiativesMain.aspx";
+
+        $("body").append(
+          "<style>" + ".Progress-Action {display:block!important;}" + "</style>"
+        );
+
+        isSODVROPerformance = true;
+
+        ChartHide =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(1),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5)";
+        ChartHideForInitiatives =
+          ".statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(3),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(5),.statistics-ctx .ctx-block.row.mx-n2 > div:nth-child(7)";
+
+        ar_UserRole = " وحدة استراتيجية التنمية الاجتماعة (إدارة الآداء)";
+        en_UserRole = "SODVRO Performance";
+
+        Create_Access = [
+          "goalstrategy",
+          // "sos",
+          // "mainkpi",
+          "benefitmatrix",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          // "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          // "projects",
+          // "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          // "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "changerequest",
+          "contracts",
+        ];
+        CreateChangeRequest_Access = [
+          "initiatives",
+          "projects",
+          "sos",
+          "mainkpi",
+        ];
+        Read_Access = AllListKeys;
+        Read_Access = Read_Access.concat(SP_Page_Name);
+
+        Edit_Access = [
+          "goalstrategy",
+          // "sos",
+          // "mainkpi",
+          "benefitmatrix",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          // "benefits",
+          "benefitmetrics",
+          // "benefitsequations",
+          "BenefitMetrics.aspx",
+          // "projects",
+          // "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          // "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          //"changerequest",
+          "contracts",
+        ];
+        Delete_Access = [
+          "goalstrategy",
+          // "sos",
+          // "mainkpi",
+          "benefitmatrix",
+          // "initiatives",
+          // "initiativedeliverables",
+          // "initiativemilestones",
+          "initiativeissues",
+          "initiativerisks",
+          "initiativemom",
+          "closureinitiative",
+          // "benefits",
+          "benefitmetrics",
+          "BenefitMetrics.aspx",
+          // "projects",
+          // "deliverables",
+          "mom",
+          "risks",
+          "issues",
+          // "milestones",
+          "lessonslearned",
+          "closureform",
+          "coc",
+          "stakeholders",
+          "exchangeschema",
+          "communicationplans",
+          "changerequest",
+        ];
+
+        break;
+
       case "CRCommittee":
         USER_HomePage = "InitiativesMain.aspx";
         $("body").append(
@@ -4929,9 +4955,9 @@ window.userCalls = {
           "Targets.aspx",
           "BenefitMetrics.aspx",
           "changerequest",
-          "changerequests" ,
+          "changerequests",
           "delegations"
-          
+
         ];
         Read_Access = [
           "mainkpi",
@@ -4955,8 +4981,8 @@ window.userCalls = {
           "initiativesmain.aspx",
           "changerequest",
           "changeRequests.aspx",
-          "changerequests"  ,
-          "delegations"      ];
+          "changerequests",
+          "delegations"];
         Edit_Access = [
           "Targets.aspx",
           "mainkpi",
@@ -4966,7 +4992,7 @@ window.userCalls = {
           "benefitmetrics",
           "BenefitMetrics.aspx",
           "kpiequations",
-          "MainIndicators.aspx","delegations"
+          "MainIndicators.aspx", "delegations"
           //"changerequest"
         ];
         Delete_Access = [];
@@ -5077,7 +5103,7 @@ window.userCalls = {
         ar_UserRole = "رائد الشراكة الاستراتيجية";
         en_UserRole = "Partnership Representative";
 
-          
+
         Create_Access = [];
         Read_Access = [
           "strategicpartnerships",
@@ -5121,8 +5147,8 @@ window.userCalls = {
         ar_UserRole = "مدير علاقات الشراكة الاستراتيجية";
         en_UserRole = "Relationship Manager";
 
-         //CRUD
-         Create_Access = [
+        //CRUD
+        Create_Access = [
           "strategicpartnerships",
           "StrategicPartnershipHome.aspx",
           "strategicpartnershipsdeliverables",
@@ -5134,33 +5160,33 @@ window.userCalls = {
           "strategicpartnershipsachievements",
         ];
 
-         Read_Access = [
-           "strategicpartnerships",
-           "StrategicPartnershipHome.aspx",
-           "strategicpartnershipsdeliverables",
-           "strategicpartnershipsmilestones",
-           "strategicpartnershipsissues",
-           "strategicpartnershipsrisks",
-           "strategicpartnershipsimpactmeasurement",
-           "strategicpartnershipslessonslearned",
-           "strategicpartnershipsmom",
-           "documents",
-           "strategicpartnershipsachievements",
-           "tasks",
-           "strategicpartnershipsvendors",
-         ];
-         Edit_Access = [
+        Read_Access = [
+          "strategicpartnerships",
+          "StrategicPartnershipHome.aspx",
           "strategicpartnershipsdeliverables",
-         "strategicpartnershipsmilestones",
-         "strategicpartnershipsissues",
-         "strategicpartnershipsrisks",
-         "strategicpartnershipsimpactmeasurement",
-         "strategicpartnershipslessonslearned",
-         "strategicpartnershipsmom",
-         "strategicpartnershipsachievements",
+          "strategicpartnershipsmilestones",
+          "strategicpartnershipsissues",
+          "strategicpartnershipsrisks",
+          "strategicpartnershipsimpactmeasurement",
+          "strategicpartnershipslessonslearned",
+          "strategicpartnershipsmom",
+          "documents",
+          "strategicpartnershipsachievements",
+          "tasks",
+          "strategicpartnershipsvendors",
         ];
-         Delete_Access = [];
-      
+        Edit_Access = [
+          "strategicpartnershipsdeliverables",
+          "strategicpartnershipsmilestones",
+          "strategicpartnershipsissues",
+          "strategicpartnershipsrisks",
+          "strategicpartnershipsimpactmeasurement",
+          "strategicpartnershipslessonslearned",
+          "strategicpartnershipsmom",
+          "strategicpartnershipsachievements",
+        ];
+        Delete_Access = [];
+
 
         break;
 
@@ -5310,16 +5336,16 @@ window.userCalls = {
         return name !== "mainkpiissues";
       });
     }
-    
+
     (window.OpenAccessLists || []).forEach(function (name) {
       name = String(name).toLowerCase();
       if (Create_Access.indexOf(name) === -1) Create_Access.push(name);
       if (Read_Access.indexOf(name) === -1) Read_Access.push(name);
       if (Edit_Access.indexOf(name) === -1) Edit_Access.push(name);
       if (Delete_Access.indexOf(name) === -1) Delete_Access.push(name);
-      });
-     
-      var canDeleteProjectRisksIssues =
+    });
+
+    var canDeleteProjectRisksIssues =
       currentUserRole == "EPMO" ||
       currentUserRole == "SPMO" ||
       currentUserRole == "VROHead" ||
@@ -5341,27 +5367,27 @@ window.userCalls = {
       currentUserRole == "LMSUExecution" ||
       currentUserRole == "SODVROExecution";
 
-      if (!canDeleteProjectRisksIssues) {
-        Delete_Access = Delete_Access.filter(function (name) {
-          return name !== "risks" && name !== "issues";
-        });
-      } else {
-        if (Delete_Access.indexOf("risks") === -1) Delete_Access.push("risks");
-        if (Delete_Access.indexOf("issues") === -1) Delete_Access.push("issues");
-      }
-      
-      if (!canDeleteInitiativeRisksIssues) {
-        Delete_Access = Delete_Access.filter(function (name) {
-          return name !== "initiativerisks" && name !== "initiativeissues";
-        });
-      } else {
-        if (Delete_Access.indexOf("initiativerisks") === -1)
-          Delete_Access.push("initiativerisks");
-        if (Delete_Access.indexOf("initiativeissues") === -1)
-          Delete_Access.push("initiativeissues");
-      }
+    if (!canDeleteProjectRisksIssues) {
+      Delete_Access = Delete_Access.filter(function (name) {
+        return name !== "risks" && name !== "issues";
+      });
+    } else {
+      if (Delete_Access.indexOf("risks") === -1) Delete_Access.push("risks");
+      if (Delete_Access.indexOf("issues") === -1) Delete_Access.push("issues");
+    }
+
+    if (!canDeleteInitiativeRisksIssues) {
+      Delete_Access = Delete_Access.filter(function (name) {
+        return name !== "initiativerisks" && name !== "initiativeissues";
+      });
+    } else {
+      if (Delete_Access.indexOf("initiativerisks") === -1)
+        Delete_Access.push("initiativerisks");
+      if (Delete_Access.indexOf("initiativeissues") === -1)
+        Delete_Access.push("initiativeissues");
+    }
     switch (
-      true //Create Access
+    true //Create Access
     ) {
       case (USERisNew ||
         USERisListing ||
@@ -5394,18 +5420,18 @@ window.userCalls = {
 
         $("body").append(
           "<style>" +
-            ".btn-add{opacity: .6;pointer-events: none;display:none}" +
-            "</style>"
+          ".btn-add{opacity: .6;pointer-events: none;display:none}" +
+          "</style>"
         );
 
         // reenable if has access
         Create_Access.forEach(function (o, i, a) {
           $("body").append(
             "<style>" +
-              '.btn-add[href*="ListKey=' +
-              o +
-              '"]{opacity: 1!important;pointer-events: auto!important;display:block}' +
-              "</style>"
+            '.btn-add[href*="ListKey=' +
+            o +
+            '"]{opacity: 1!important;pointer-events: auto!important;display:block}' +
+            "</style>"
           );
         });
         // mainkpiissues: show .btn-add only for Administrator or PerformanceLeader
@@ -5422,7 +5448,7 @@ window.userCalls = {
     }
 
     switch (
-      true //Read Access
+    true //Read Access
     ) {
       case Read_Access.indexOf(USERlistkey) == -1 &&
         Read_Access.indexOf(Page_UrlName) == -1 &&
@@ -5442,7 +5468,7 @@ window.userCalls = {
         break;
     }
     switch (
-      true //Edit Access
+    true //Edit Access
     ) {
       case (USERisEdit || USERisView) &&
         Edit_Access.indexOf(USERlistkey.toLowerCase()) == -1 &&
@@ -5455,8 +5481,8 @@ window.userCalls = {
           //on view pages
           $("body").append(
             "<style>" +
-              ".btn-save{opacity: .6;pointer-events: none;display:none}" +
-              "</style>"
+            ".btn-save{opacity: .6;pointer-events: none;display:none}" +
+            "</style>"
           );
         } else if (isSP_Page) {
           // on restricted  page
@@ -5474,21 +5500,21 @@ window.userCalls = {
           //on edit
           $("body").append(
             "<style>" +
-              ".btn-save{opacity: .6;pointer-events: none;display:none}" +
-              "</style>"
+            ".btn-save{opacity: .6;pointer-events: none;display:none}" +
+            "</style>"
           );
         }
         break;
     }
     switch (
-      true //Delete Access
+    true //Delete Access
     ) {
       case Delete_Access.indexOf(USERlistkey.toLowerCase()) == -1:
         //Delete btn
         $("body").append(
           "<style>" +
-            ".btn-delete{opacity: .6;pointer-events: none;display:none;}" +
-            "</style>"
+          ".btn-delete{opacity: .6;pointer-events: none;display:none;}" +
+          "</style>"
         );
         break;
     }
@@ -5515,8 +5541,8 @@ window.userCalls = {
       console.log("hide Attachment edit button for not admin user");
       $("body").append(
         "<style>" +
-          ".delete-file{opacity: .6;pointer-events: none;display:none}" +
-          "</style>"
+        ".delete-file{opacity: .6;pointer-events: none;display:none}" +
+        "</style>"
       );
     }
     // prevent project manager from deleting uploaded attachments (keep .removeAttchment for not-yet-saved files)
@@ -5524,8 +5550,8 @@ window.userCalls = {
       console.log("hide delete attachment button for project manager");
       $("body").append(
         "<style>" +
-          ".delete-file{opacity: .6;pointer-events: none;display:none}" +
-          "</style>"
+        ".delete-file{opacity: .6;pointer-events: none;display:none}" +
+        "</style>"
       );
     }
     if (isthereICODE) {
@@ -5649,7 +5675,7 @@ window.userCalls = {
         Role: "GDST",
         groupsName: ["GDST"],
       },
-       {
+      {
         Role: "HeadCommitte",
         groupsName: ["HeadCommitte"],
       },
@@ -5834,7 +5860,7 @@ window.userCalls = {
           ],
         },
       },
-       {
+      {
         Role: "ProjectExceptionUpdate",
         groupsName: ["Project Exception Update"]
       },
@@ -5870,12 +5896,12 @@ window.userCalls = {
             {
               level: 1,
               listName: "localholidays",
-            
+
             },
           ],
         },
       },
-       {
+      {
         Role: "EngineerDesignManagers",
         groupsName: ["EngineerDesignManagers"],
         dataFilter: {
@@ -5907,7 +5933,7 @@ window.userCalls = {
             {
               level: 1,
               listName: "localholidays",
-            
+
             },
           ],
         },
@@ -5920,7 +5946,7 @@ window.userCalls = {
             {
               level: 1,
               listName: "referencecosts",
-            
+
             }
           ],
         },
@@ -5933,9 +5959,9 @@ window.userCalls = {
             {
               level: 1,
               listName: "referencecosts",
-            
+
             },
-           
+
           ],
         },
       },
@@ -5947,17 +5973,17 @@ window.userCalls = {
             {
               level: 1,
               listName: "engineeringprojects",
-            
+
             },
             {
               level: 1,
               listName: "engineeringprojectshistory",
-            
+
             },
             {
               level: 1,
               listName: "localholidays",
-            
+
             },
           ],
         },
@@ -6149,7 +6175,7 @@ window.userCalls = {
                 },
               },
             },
-             {
+            {
               level: 1,
               listName: "NewChangeRequests",
               accessConditions: [
@@ -7457,7 +7483,7 @@ window.userCalls = {
                 },
               },
             },
-             {
+            {
               level: 1,
               listName: "NewChangeRequests",
               accessConditions: [
@@ -8257,7 +8283,7 @@ window.userCalls = {
                 },
               },
             },
-             {
+            {
               level: 1,
               listName: "NewChangeRequests",
               accessConditions: [
@@ -9288,7 +9314,7 @@ window.userCalls = {
                 },
               },
             },
-             {
+            {
               level: 1,
               listName: "NewChangeRequests",
               accessConditions: [
@@ -9592,14 +9618,14 @@ window.userCalls = {
             ) {
               $("body").html(
                 '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>عذرا، ليس لديك صلاحية لرؤية البيانات</label>' +
-                  '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
-                  '<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">الصفحة الرئيسية</button></div></div></div>'
+                '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
+                '<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">الصفحة الرئيسية</button></div></div></div>'
               );
             } else {
               $("body").html(
                 '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>Sorry, you don\'t have permission to view the data</label>' +
-                  '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
-                  '<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">Home Page</button></div></div></div>'
+                '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
+                '<button class="btn btn-action" type="button" style="margin:0px" onclick="window.location=_spPageContextInfo.webAbsoluteUrl+\'/sitepages/\'+USER_HomePage;">Home Page</button></div></div></div>'
               );
             }
             $("body").animate({ opacity: 1 });
@@ -9787,6 +9813,10 @@ window.userCalls = {
           //     $(this).find('*').attr('disabled', true);
           // };
         });
+        if (window.unlockProjectPageForApplicantPm) {
+          window.unlockProjectPageForApplicantPm();
+        }
+
         if (window.BenefitsWeightGuard) {
           BenefitsWeightGuard.applyWeightEditAccess();
           BenefitsWeightGuard.applyRemainingMax();
@@ -9867,8 +9897,8 @@ var Access_Project_Info_Request = {
         USERPID = oListItem.get_id();
         User_isClosureStatus =
           oListItem.get_item("ClosureStatus") == "Failed" ||
-          oListItem.get_item("ClosureStatus") == "Cancelled" ||
-          oListItem.get_item("ClosureStatus") == "closed"
+            oListItem.get_item("ClosureStatus") == "Cancelled" ||
+            oListItem.get_item("ClosureStatus") == "closed"
             ? true
             : false;
         //////////
@@ -9877,7 +9907,7 @@ var Access_Project_Info_Request = {
         User_RelatedInitiative = oListItem.get_item("RelatedInitiative")
         User_NotActiveStatus =
           oListItem.get_item("WorkingStatus") != "active" &&
-          oListItem.get_item("WorkingStatus")
+            oListItem.get_item("WorkingStatus")
             ? true
             : false;
         ProjectWorkingStatus = oListItem.get_item("WorkingStatus");
@@ -9897,14 +9927,14 @@ var Access_Project_Info_Request = {
         IsZeroBudgetProject =
           oListItem.get_item("IsZeroBudgetProject") == "yes" ? true : false;
 
-          // isZeroInitiatives = oListItem.get_item("IsZeroBudgetInitiative") == "yes" ? true : false;
+        // isZeroInitiatives = oListItem.get_item("IsZeroBudgetInitiative") == "yes" ? true : false;
 
         projectActualBudget = oListItem.get_item("ActualBudget") || 0;
         projectAssignedBudget = oListItem.get_item("Amount") || 0;
         projectInitiativeType = oListItem.get_item("InitiativeType") || 0;
         projectDiscrepancyCost = oListItem.get_item("DiscrepancyCost") || 0;
-        projectDiscrepancyCostPercentage  = oListItem.get_item("DiscrepancyCostPercentage") || 0;
-        projectDiscrepancyInDays  = oListItem.get_item("DiscrepancyInDays") || 0;
+        projectDiscrepancyCostPercentage = oListItem.get_item("DiscrepancyCostPercentage") || 0;
+        projectDiscrepancyInDays = oListItem.get_item("DiscrepancyInDays") || 0;
         projectDiscrepancyPercentage = oListItem.get_item("DiscrepancyPercentage") || 0;
         relatedProjectId = oListItem.get_id();
 
@@ -10285,13 +10315,13 @@ var Access_Project_Info_Request = {
       } else {
         $("body").append(
           "<style>" +
-            ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
-            ".form-control{color: #b1b1b1 !important;" +
-            "border-color: #e1e1e1 !important;" +
-            "background-color: #fdfdfd !important;" +
-            "background-color: #fdfdfd !important;" +
-            "opacity: .6;pointer-events: none;}" +
-            "</style>"
+          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+          ".form-control{color: #b1b1b1 !important;" +
+          "border-color: #e1e1e1 !important;" +
+          "background-color: #fdfdfd !important;" +
+          "background-color: #fdfdfd !important;" +
+          "opacity: .6;pointer-events: none;}" +
+          "</style>"
         );
       }
     }
@@ -10307,27 +10337,27 @@ var Access_Project_Info_Request = {
     ) {
       $("body").append(
         "<style>" +
-          `.btn-add, .btn-add[href*="ListKey"], .btn-save{opacity: .6!important;pointer-events: none!important;display:none!important}` +
-          "</style>"
+        `.btn-add, .btn-add[href*="ListKey"], .btn-save{opacity: .6!important;pointer-events: none!important;display:none!important}` +
+        "</style>"
       );
       if (USERisNew || USERisEdit) {
         $("body").append(
           "<style>" +
-            ".add-New-Detail-wrapper," +
-            ".form-control{color: #b1b1b1 !important;" +
-            "border-color: #e1e1e1 !important;" +
-            "background-color: #fdfdfd !important;" +
-            "background-color: #fdfdfd !important;" +
-            "opacity: .6;pointer-events: none;}" +
-            "</style>"
+          ".add-New-Detail-wrapper," +
+          ".form-control{color: #b1b1b1 !important;" +
+          "border-color: #e1e1e1 !important;" +
+          "background-color: #fdfdfd !important;" +
+          "background-color: #fdfdfd !important;" +
+          "opacity: .6;pointer-events: none;}" +
+          "</style>"
         );
       }
     }
     if (User_NotActiveStatus && USERisProjectHome) {
       $("body").append(
         "<style>" +
-          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
-          "</style>"
+        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
+        "</style>"
       );
     }
   },
@@ -10421,11 +10451,11 @@ var Access_Project_Info_Request = {
     else if (isPSponsor) {
       camlQuery.set_viewXml(
         "<View><Query><Where>" +
-          "<And>" +
-          "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
-          '<Eq><FieldRef Name="ProjectSponsor" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
-          "</And>" +
-          "</Where></Query></View>"
+        "<And>" +
+        "<Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>" +
+        '<Eq><FieldRef Name="ProjectSponsor" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>' +
+        "</And>" +
+        "</Where></Query></View>"
       );
     } else if (isRequestorTeam && !USERisIdeas && !USERisHome) {
       userCalls.g.Security_Msg();
@@ -10469,69 +10499,69 @@ var Access_Project_Info_Request = {
           if (window.location.href.indexOf("projects") > -1) {
             $(".page-title").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/ProjectHome.aspx?PCODE=" +
-                USERPCODE +
-                '">' +
-                USERPName +
-                '<span class="tooltiptext">' +
-                USERPName +
-                "</span>" + // to handle the tooltip
-                "</a>"
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/ProjectHome.aspx?PCODE=" +
+              USERPCODE +
+              '">' +
+              USERPName +
+              '<span class="tooltiptext">' +
+              USERPName +
+              "</span>" + // to handle the tooltip
+              "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/Listing.aspx?ListKey=" +
-                USERlistkey +
-                '">' +
-                USERPageTitle +
-                ""
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              '">' +
+              USERPageTitle +
+              ""
             );
           } else {
             $(".page-title").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/ProjectHome.aspx?PCODE=" +
-                USERPCODE +
-                '">' +
-                USERPName +
-                '<span class="tooltiptext">' +
-                USERPName +
-                "</span>" + // to handle the tooltip
-                "</a>"
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/ProjectHome.aspx?PCODE=" +
+              USERPCODE +
+              '">' +
+              USERPName +
+              '<span class="tooltiptext">' +
+              USERPName +
+              "</span>" + // to handle the tooltip
+              "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/Listing.aspx?ListKey=" +
-                USERlistkey +
-                "&PCODE=" +
-                USERPCODE +
-                '">' +
-                USERPageTitle +
-                ""
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              "&PCODE=" +
+              USERPCODE +
+              '">' +
+              USERPageTitle +
+              ""
             );
           }
         } else if (isthereICODE) {
           if (USERlistkey == "initiatives" || window.location.href.toLowerCase().indexOf("initiativehome.aspx") > -1 || window.location.href.toLowerCase().indexOf("initiativesmain.aspx") > -1) {
             $(".page-title").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/InitiativeHome.aspx?ICODE=" +
-                UserICode +
-                '">' +
-                InitiativeTitle +
-                "</a>"
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/InitiativeHome.aspx?ICODE=" +
+              UserICode +
+              '">' +
+              InitiativeTitle +
+              "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/Listing.aspx?ListKey=" +
-                USERlistkey +
-                '">' +
-                USERPageTitle +
-                ""
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              '">' +
+              USERPageTitle +
+              ""
             );
           } else if (USERlistkey == "documents") {
             if (
@@ -10545,97 +10575,73 @@ var Access_Project_Info_Request = {
 
             $(".page-title").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/InitiativeHome.aspx?ICODE=" +
-                UserICode +
-                '">' +
-                //
-                InitiativeTitle +
-                "</a>"
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/InitiativeHome.aspx?ICODE=" +
+              UserICode +
+              '">' +
+              //
+              InitiativeTitle +
+              "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/Listing.aspx?ListKey=" +
-                USERlistkey +
-                "&ICODE=" +
-                UserICode +
-                '">' +
-                USERPageTitle +
-                ""
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              "&ICODE=" +
+              UserICode +
+              '">' +
+              USERPageTitle +
+              ""
             );
           } else {
             //
             $(".page-title").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/InitiativeHome.aspx?ICODE=" +
-                UserICode +
-                '">' +
-                //
-                InitiativeTitle +
-                "</a>"
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/InitiativeHome.aspx?ICODE=" +
+              UserICode +
+              '">' +
+              //
+              InitiativeTitle +
+              "</a>"
             );
             $(".title-item:first-child").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/Listing.aspx?ListKey=" +
-                USERlistkey +
-                "&ICODE=" +
-                UserICode +
-                '">' +
-                USERPageTitle +
-                ""
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              "&ICODE=" +
+              UserICode +
+              '">' +
+              USERPageTitle +
+              ""
             );
           }
         } else if (isthereSTCODE) {
           if (window.location.href.indexOf("strategicpartnerships") > -1) {
             $(".page-title").html(
               '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
-                UserSTCode +
-                '">' +
-                StrategicPartnershipTitle +
-                "</a>"
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
+              UserSTCode +
+              '">' +
+              StrategicPartnershipTitle +
+              "</a>"
             );
             if (USERlistkey == "strategicpartnerships") {
               $(".title-item:first-child").html(
                 '<a href="' +
-                  _spPageContextInfo.webAbsoluteUrl +
-                  "/sitepages/Listing.aspx?ListKey=" +
-                  USERlistkey +
-                  '">' +
-                  USERPageTitle +
-                  ""
+                _spPageContextInfo.webAbsoluteUrl +
+                "/sitepages/Listing.aspx?ListKey=" +
+                USERlistkey +
+                '">' +
+                USERPageTitle +
+                ""
               );
             } else {
               $(".title-item:first-child").html(
                 '<a href="' +
-                  _spPageContextInfo.webAbsoluteUrl +
-                  "/sitepages/Listing.aspx?ListKey=" +
-                  USERlistkey +
-                  "&STCODE=" +
-                  UserSTCode +
-                  '">' +
-                  USERPageTitle +
-                  ""
-              );
-            }
-          } else {
-            //
-            $(".page-title").html(
-              '<a href="' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
-                UserSTCode +
-                '">' +
-                //
-                StrategicPartnershipTitle +
-                "</a>"
-            );
-            $(".title-item:first-child").html(
-              '<a href="' +
                 _spPageContextInfo.webAbsoluteUrl +
                 "/sitepages/Listing.aspx?ListKey=" +
                 USERlistkey +
@@ -10644,6 +10650,30 @@ var Access_Project_Info_Request = {
                 '">' +
                 USERPageTitle +
                 ""
+              );
+            }
+          } else {
+            //
+            $(".page-title").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/StrategicPartnershipHome.aspx?STCODE=" +
+              UserSTCode +
+              '">' +
+              //
+              StrategicPartnershipTitle +
+              "</a>"
+            );
+            $(".title-item:first-child").html(
+              '<a href="' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/sitepages/Listing.aspx?ListKey=" +
+              USERlistkey +
+              "&STCODE=" +
+              UserSTCode +
+              '">' +
+              USERPageTitle +
+              ""
             );
           }
         } else {
@@ -10671,8 +10701,8 @@ var Access_Project_Info_Request = {
             }
             $(".page-title").html(
               '<a href="' + listingUrl + '">' +
-                USERPageTitle +
-                ""
+              USERPageTitle +
+              ""
             );
             $(".firsttitle").hide();
           } else if (
@@ -10695,7 +10725,7 @@ var Access_Project_Info_Request = {
       }
       var $target = $("#langs");
       if (!$target.length) return;
-    
+
       var $role = $("#UserRole");
       if (!$role.length) {
         $role = $('<h2 id="UserRole" class="pageTitleUserRole"></h2>');
@@ -10719,10 +10749,10 @@ var Access_Project_Info_Request = {
       } else {
         $role.html(en_UserRole);
       }
-    
+
       // Remove from current position if it exists
       $role.detach();
-    
+
       // Insert before #langs
       $role.insertBefore($target);
     },
@@ -11099,13 +11129,13 @@ window.Get_StrategicPartnerShip_Info_Request = {
     if (strategicPartnerShipStatus == "notstandard" && isthereSTCODE) {
       $("body").append(
         "<style>" +
-          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
-          ".form-control{color: #b1b1b1 !important;" +
-          "border-color: #e1e1e1 !important;" +
-          "background-color: #fdfdfd !important;" +
-          "background-color: #fdfdfd !important;" +
-          "opacity: .6;pointer-events: none;}" +
-          "</style>"
+        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+        ".form-control{color: #b1b1b1 !important;" +
+        "border-color: #e1e1e1 !important;" +
+        "background-color: #fdfdfd !important;" +
+        "background-color: #fdfdfd !important;" +
+        "opacity: .6;pointer-events: none;}" +
+        "</style>"
       );
     }
   },
@@ -11186,20 +11216,20 @@ window.Get_Initiative_Info_Request = {
     if (initiativeDraftStatus && isthereICODE && !isWF) {
       $("body").append(
         "<style>" +
-          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
-          ".form-control{color: #b1b1b1 !important;" +
-          "border-color: #e1e1e1 !important;" +
-          "background-color: #fdfdfd !important;" +
-          "background-color: #fdfdfd !important;" +
-          "opacity: .6;pointer-events: none;}" +
-          "</style>"
+        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+        ".form-control{color: #b1b1b1 !important;" +
+        "border-color: #e1e1e1 !important;" +
+        "background-color: #fdfdfd !important;" +
+        "background-color: #fdfdfd !important;" +
+        "opacity: .6;pointer-events: none;}" +
+        "</style>"
       );
 
       if (initiativeDraftStatus && USERisInitiativeHome) {
         $("body").append(
           "<style>" +
-            ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
-            "</style>"
+          ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none!important}" +
+          "</style>"
         );
       }
     }
@@ -11342,14 +11372,14 @@ var Access_Sector_Info_Request = {
       ) {
         $("body").html(
           '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>عذرا، ليس لديك بيانات لرؤيتها</label>' +
-            '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
-            "</div></div></div>"
+          '<div style="margin-bottom:15px">الرجاء التواصل مع مسؤول النظام للمزيد من المعلومات</div>' +
+          "</div></div></div>"
         );
       } else {
         $("body").html(
           '<div class="popupComment access-denied"><div class="wrapcomments"><div class="denied-icon"><i class="fas fa-user-shield"></i></div><label>Sorry, you don\'t have any data to view</label>' +
-            '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
-            "</div></div></div>"
+          '<div style="margin-bottom:15px">Please contact the system administrator for more information</div>' +
+          "</div></div></div>"
         );
       }
     }
@@ -11613,7 +11643,7 @@ function getCrFinalApprovalLevelsMap() {
       cached = JSON.parse(
         localStorage.getItem("Dynamo_CR_FinalApprovalLevels") || "null"
       );
-    } catch (e) {}
+    } catch (e) { }
     if (cached && typeof cached === "object") {
       crFinalApprovalLevelsCache = cached;
       resolve(cached);
@@ -11645,7 +11675,7 @@ function getCrFinalApprovalLevelsMap() {
             "Dynamo_CR_FinalApprovalLevels",
             JSON.stringify(map)
           );
-        } catch (e) {}
+        } catch (e) { }
         resolve(map);
       },
       error: function () {
@@ -11865,7 +11895,7 @@ var Tasks_Info_Request_User = {
 
     while (listItemEnum.moveNext()) {
       var oListItem = listItemEnum.get_current();
-     // debugger;
+      // debugger;
       pcode = oListItem.get_item("ProjectCode");
       icode = oListItem.get_item("InitiativeCode");
       tasktype = oListItem.get_item("TaskType");
@@ -11892,8 +11922,8 @@ var Tasks_Info_Request_User = {
       } catch (e) {
         standaloneTaskName = "";
       }
-     // GetSector_Info.init();
-      
+      // GetSector_Info.init();
+
       var WfRelatedTask = "";
       if (!isStandaloneTask) {
         WorkflowTranslate.forEach((el) => {
@@ -11974,31 +12004,31 @@ var Tasks_Info_Request_User = {
         // if (mycount <= 10) {
         HPtaskshtml.push(
           '<li class="list-group-item">' +
-            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-            pcode +
-            "','" +
-            icode +
-            "','" +
-            tasksID +
-            "','" +
-            tasktype +
-            "','" +
-            stageid +
-            "','" +
-            ritemid +
-            "','" +
-            sourceitemid +
-            "','" +
-            wfname +
-            "','" +
-            puid +
-            "')\">" +
-            '<h3 class="des-14 w-0">' +
-            tasktitle +
-            '</h3><div class="des-12 text-nowrap">' +
-            taskname +
-            '</div><div class="tasksButtons"><span data-trans-forapproval class="Resources"></span></div></a>' +
-            "</li>"
+          '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+          pcode +
+          "','" +
+          icode +
+          "','" +
+          tasksID +
+          "','" +
+          tasktype +
+          "','" +
+          stageid +
+          "','" +
+          ritemid +
+          "','" +
+          sourceitemid +
+          "','" +
+          wfname +
+          "','" +
+          puid +
+          "')\">" +
+          '<h3 class="des-14 w-0">' +
+          tasktitle +
+          '</h3><div class="des-12 text-nowrap">' +
+          taskname +
+          '</div><div class="tasksButtons"><span data-trans-forapproval class="Resources"></span></div></a>' +
+          "</li>"
         );
         UserNTasks = ++UserNTasks;
         // }
@@ -12007,6 +12037,41 @@ var Tasks_Info_Request_User = {
         // if (mycount <= 10) {
         HPtaskshtml.push(
           '<li class="list-group-item">' +
+          '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+          pcode +
+          "','" +
+          icode +
+          "','" +
+          tasksID +
+          "','" +
+          tasktype +
+          "','" +
+          stageid +
+          "','" +
+          ritemid +
+          "','" +
+          sourceitemid +
+          "','" +
+          wfname +
+          "','" +
+          puid +
+          "')\">" +
+          '<h3 class="des-14 w-0">' +
+          tasktitle +
+          '</h3><div class="des-12 text-nowrap">' +
+          taskname +
+          "</div></a>" +
+          "</li>"
+        );
+        UserNTasks = ++UserNTasks;
+        // }
+      }
+      if (wfname == "Idea") {
+        if (delegateMessage) {
+          taskshtml.push(
+            '<li class="list-group-item taskitem" title="' +
+            delegateMessage +
+            '">' +
             '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
             pcode +
             "','" +
@@ -12026,168 +12091,133 @@ var Tasks_Info_Request_User = {
             "','" +
             puid +
             "')\">" +
-            '<h3 class="des-14 w-0">' +
+            '<div><i class="fas fa-user-friends"></i></div>' +
+            '<div><h3 class="title-13">' +
             tasktitle +
-            '</h3><div class="des-12 text-nowrap">' +
+            " - " +
+            RelatedItemName +
+            '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
             taskname +
-            "</div></a>" +
+            "</span></div></div></a>" +
+            '<div id="viewhistory"><a href="' +
+            historyLinkNotification +
+            '"><i title="' +
+            taskdetails +
+            '" class="fas fa-history"></i></a></div>' +
             "</li>"
-        );
-        UserNTasks = ++UserNTasks;
-        // }
-      }
-      if (wfname == "Idea") {
-        if (delegateMessage) {
-          taskshtml.push(
-            '<li class="list-group-item taskitem" title="' +
-              delegateMessage +
-              '">' +
-              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-              pcode +
-              "','" +
-              icode +
-              "','" +
-              tasksID +
-              "','" +
-              tasktype +
-              "','" +
-              stageid +
-              "','" +
-              ritemid +
-              "','" +
-              sourceitemid +
-              "','" +
-              wfname +
-              "','" +
-              puid +
-              "')\">" +
-              '<div><i class="fas fa-user-friends"></i></div>' +
-              '<div><h3 class="title-13">' +
-              tasktitle +
-              " - " +
-              RelatedItemName +
-              '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
-              taskname +
-              "</span></div></div></a>" +
-              '<div id="viewhistory"><a href="' +
-              historyLinkNotification +
-              '"><i title="' +
-              taskdetails +
-              '" class="fas fa-history"></i></a></div>' +
-              "</li>"
           );
         } else {
           taskshtml.push(
             '<li class="list-group-item taskitem">' +
-              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-              pcode +
-              "','" +
-              icode +
-              "','" +
-              tasksID +
-              "','" +
-              tasktype +
-              "','" +
-              stageid +
-              "','" +
-              ritemid +
-              "','" +
-              sourceitemid +
-              "','" +
-              wfname +
-              "','" +
-              puid +
-              "')\">" +
-              '<div><h3 class="title-13">' +
-              tasktitle +
-              " - " +
-              RelatedItemName +
-              '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
-              taskname +
-              "</span></div></div></a>" +
-              '<div id="viewhistory"><a href="' +
-              historyLinkNotification +
-              '"><i title="' +
-              taskdetails +
-              '" class="fas fa-history"></i></a></div>' +
-              "</li>"
+            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+            pcode +
+            "','" +
+            icode +
+            "','" +
+            tasksID +
+            "','" +
+            tasktype +
+            "','" +
+            stageid +
+            "','" +
+            ritemid +
+            "','" +
+            sourceitemid +
+            "','" +
+            wfname +
+            "','" +
+            puid +
+            "')\">" +
+            '<div><h3 class="title-13">' +
+            tasktitle +
+            " - " +
+            RelatedItemName +
+            '</h3><div class="des-12 text-nowrap"><span data-trans-idea class="Resources ideaLabel"></span><span>: ' +
+            taskname +
+            "</span></div></div></a>" +
+            '<div id="viewhistory"><a href="' +
+            historyLinkNotification +
+            '"><i title="' +
+            taskdetails +
+            '" class="fas fa-history"></i></a></div>' +
+            "</li>"
           );
         }
       } else if (wfname == "Project") {
         if (delegateMessage) {
           taskshtml.push(
             '<li class="list-group-item taskitem" title="' +
-              delegateMessage +
-              '">' +
-              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-              pcode +
-              "','" +
-              icode +
-              "','" +
-              tasksID +
-              "','" +
-              tasktype +
-              "','" +
-              stageid +
-              "','" +
-              ritemid +
-              "','" +
-              sourceitemid +
-              "','" +
-              wfname +
-              "','" +
-              puid +
-              "')\">" +
-              '<div><i class="fas fa-user-friends"></i></div>' +
-              '<div><h3 class="title-13">' +
-              tasktitle +
-              " - " +
-              RelatedItemName +
-              '</h3><div class="des-12 text-nowrap">' +
-              taskname +
-              "</div></div></a>" +
-              '<div id="viewhistory"><a href="' +
-              historyLinkNotification +
-              '"><i title="' +
-              taskdetails +
-              '" class="fas fa-history"></i></a></div>' +
-              "</li>"
+            delegateMessage +
+            '">' +
+            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+            pcode +
+            "','" +
+            icode +
+            "','" +
+            tasksID +
+            "','" +
+            tasktype +
+            "','" +
+            stageid +
+            "','" +
+            ritemid +
+            "','" +
+            sourceitemid +
+            "','" +
+            wfname +
+            "','" +
+            puid +
+            "')\">" +
+            '<div><i class="fas fa-user-friends"></i></div>' +
+            '<div><h3 class="title-13">' +
+            tasktitle +
+            " - " +
+            RelatedItemName +
+            '</h3><div class="des-12 text-nowrap">' +
+            taskname +
+            "</div></div></a>" +
+            '<div id="viewhistory"><a href="' +
+            historyLinkNotification +
+            '"><i title="' +
+            taskdetails +
+            '" class="fas fa-history"></i></a></div>' +
+            "</li>"
           );
         } else {
           taskshtml.push(
             '<li class="list-group-item taskitem">' +
-              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-              pcode +
-              "','" +
-              icode +
-              "','" +
-              tasksID +
-              "','" +
-              tasktype +
-              "','" +
-              stageid +
-              "','" +
-              ritemid +
-              "','" +
-              sourceitemid +
-              "','" +
-              wfname +
-              "','" +
-              puid +
-              "')\">" +
-              '<div><h3 class="title-13">' +
-              tasktitle +
-              " - " +
-              RelatedItemName +
-              '</h3><div class="des-12 text-nowrap">' +
-              taskname +
-              "</div></div></a>" +
-              '<div id="viewhistory"><a href="' +
-              historyLinkNotification +
-              '"><i title="' +
-              taskdetails +
-              '" class="fas fa-history"></i></a></div>' +
-              "</li>"
+            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+            pcode +
+            "','" +
+            icode +
+            "','" +
+            tasksID +
+            "','" +
+            tasktype +
+            "','" +
+            stageid +
+            "','" +
+            ritemid +
+            "','" +
+            sourceitemid +
+            "','" +
+            wfname +
+            "','" +
+            puid +
+            "')\">" +
+            '<div><h3 class="title-13">' +
+            tasktitle +
+            " - " +
+            RelatedItemName +
+            '</h3><div class="des-12 text-nowrap">' +
+            taskname +
+            "</div></div></a>" +
+            '<div id="viewhistory"><a href="' +
+            historyLinkNotification +
+            '"><i title="' +
+            taskdetails +
+            '" class="fas fa-history"></i></a></div>' +
+            "</li>"
           );
         }
       } else {
@@ -12219,67 +12249,67 @@ var Tasks_Info_Request_User = {
         } else if (delegateMessage) {
           taskshtml.push(
             '<li class="list-group-item taskitem" title="' +
-              delegateMessage +
-              '">' +
-              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-              pcode +
-              "','" +
-              icode +
-              "','" +
-              tasksID +
-              "','" +
-              tasktype +
-              "','" +
-              stageid +
-              "','" +
-              ritemid +
-              "','" +
-              sourceitemid +
-              "','" +
-              wfname +
-              "','" +
-              puid +
-              "')\">" +
-              '<div><i class="fas fa-user-friends"></i></div>' +
-              '<div><h3 class="title-13">' +
-              tasktitle +
-              " - " +
-              RelatedItemName +
-              '</h3><div class="des-12 text-nowrap">' +
-              taskname +
-              "</div></div></a>" +
-              "</li>"
+            delegateMessage +
+            '">' +
+            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+            pcode +
+            "','" +
+            icode +
+            "','" +
+            tasksID +
+            "','" +
+            tasktype +
+            "','" +
+            stageid +
+            "','" +
+            ritemid +
+            "','" +
+            sourceitemid +
+            "','" +
+            wfname +
+            "','" +
+            puid +
+            "')\">" +
+            '<div><i class="fas fa-user-friends"></i></div>' +
+            '<div><h3 class="title-13">' +
+            tasktitle +
+            " - " +
+            RelatedItemName +
+            '</h3><div class="des-12 text-nowrap">' +
+            taskname +
+            "</div></div></a>" +
+            "</li>"
           );
         } else {
           taskshtml.push(
             '<li class="list-group-item taskitem">' +
-              '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
-              pcode +
-              "','" +
-              icode +
-              "','" +
-              tasksID +
-              "','" +
-              tasktype +
-              "','" +
-              stageid +
-              "','" +
-              ritemid +
-              "','" +
-              sourceitemid +
-              "','" +
-              wfname +
-              "','" +
-              puid +
-              "')\">" +
-              '<div><h3 class="title-13">' +
-              tasktitle +
-              " - " +
-              RelatedItemName +
-              '</h3><div class="des-12 text-nowrap">' +
-              taskname +
-              "</div></div></a>" +
-              "</li>"
+            '<a href="javascript:"onclick="Tasks_Info_Request_User.g.handleids(\'' +
+            pcode +
+            "','" +
+            icode +
+            "','" +
+            tasksID +
+            "','" +
+            tasktype +
+            "','" +
+            stageid +
+            "','" +
+            ritemid +
+            "','" +
+            sourceitemid +
+            "','" +
+            wfname +
+            "','" +
+            puid +
+            "')\">" +
+            '<div><h3 class="title-13">' +
+            tasktitle +
+            " - " +
+            RelatedItemName +
+            '</h3><div class="des-12 text-nowrap">' +
+            taskname +
+            "</div></div></a>" +
+            "</li>"
           );
         }
       }
@@ -12377,8 +12407,8 @@ var Tasks_Info_Request_User = {
       if (!wfname || wfname === "null" || wfname === "undefined") {
         window.open(
           _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/View.aspx?ListKey=tasks&IID=" +
-            taskid,
+          "/SitePages/View.aspx?ListKey=tasks&IID=" +
+          taskid,
           "_self"
         );
         return;
@@ -12402,8 +12432,8 @@ var Tasks_Info_Request_User = {
             ) {
               return obj.stage == stageid;
             });
-          relatedURL = targerstage_org.length > 0 && targerstage_org[0].relatedURL 
-            ? targerstage_org[0].relatedURL 
+          relatedURL = targerstage_org.length > 0 && targerstage_org[0].relatedURL
+            ? targerstage_org[0].relatedURL
             : "";
         }
         // Determine if isview or isedit based on relatedURL
@@ -12415,15 +12445,15 @@ var Tasks_Info_Request_User = {
         }
         window.open(
           _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/ChangeRequests.aspx?" + viewMode + "=true&" +
-            wfname +
-            "&critemcode=" +
-            critemcode +
-            "&TID=" +
-            taskid +
-            "&IID=" +
-            ritemid +
-            "&WFs",
+          "/SitePages/ChangeRequests.aspx?" + viewMode + "=true&" +
+          wfname +
+          "&critemcode=" +
+          critemcode +
+          "&TID=" +
+          taskid +
+          "&IID=" +
+          ritemid +
+          "&WFs",
           "_self"
         );
         return;
@@ -12447,8 +12477,8 @@ var Tasks_Info_Request_User = {
           ) {
             return obj.stage == stageid;
           });
-        var rurl = targerstage_org.length > 0 && targerstage_org[0].relatedURL 
-          ? targerstage_org[0].relatedURL 
+        var rurl = targerstage_org.length > 0 && targerstage_org[0].relatedURL
+          ? targerstage_org[0].relatedURL
           : "";
       }
       Tasks_Info_Request_User.g.handlelinks(
@@ -12488,14 +12518,14 @@ var Tasks_Info_Request_User = {
 
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                  rurl +
-                  "&IID=" +
-                  ritemid +
-                  "&PCODE=" +
-                  pcode +
-                  "&TID=" +
-                  taskid +
-                  "&WFs",
+                rurl +
+                "&IID=" +
+                ritemid +
+                "&PCODE=" +
+                pcode +
+                "&TID=" +
+                taskid +
+                "&WFs",
                 "_self"
               ); //
             } else if (rurl.toLowerCase().indexOf("edit") > -1) {
@@ -12504,25 +12534,25 @@ var Tasks_Info_Request_User = {
 
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                  rurl +
-                  "&IID=" +
-                  ritemid +
-                  "&PCODE=" +
-                  pcode +
-                  "&TID=" +
-                  taskid +
-                  "&WFs",
+                rurl +
+                "&IID=" +
+                ritemid +
+                "&PCODE=" +
+                pcode +
+                "&TID=" +
+                taskid +
+                "&WFs",
                 "_self"
               ); //
             } //Listing page with pcode
             else {
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                  rurl +
-                  pcode +
-                  "&TID=" +
-                  taskid +
-                  "&WFs",
+                rurl +
+                pcode +
+                "&TID=" +
+                taskid +
+                "&WFs",
                 "_self"
               );
             }
@@ -12533,14 +12563,14 @@ var Tasks_Info_Request_User = {
             //edit page without pcode
             window.open(
               _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                "&PCODE=" +
-                pcode +
-                "&IID=" +
-                ritemid +
-                "&TID=" +
-                taskid +
-                "&WFs",
+              rurl +
+              "&PCODE=" +
+              pcode +
+              "&IID=" +
+              ritemid +
+              "&TID=" +
+              taskid +
+              "&WFs",
               "_self"
             ); //+'&TID='+taskid
           } else if (
@@ -12550,14 +12580,14 @@ var Tasks_Info_Request_User = {
             //view page without pcode
             window.open(
               _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                "&PCODE=" +
-                pcode +
-                "&IID=" +
-                ritemid +
-                "&TID=" +
-                taskid +
-                "&WFs",
+              rurl +
+              "&PCODE=" +
+              pcode +
+              "&IID=" +
+              ritemid +
+              "&TID=" +
+              taskid +
+              "&WFs",
               "_self"
             ); //+'&TID='+taskid
           } else if (
@@ -12567,25 +12597,25 @@ var Tasks_Info_Request_User = {
             rurl = rurl.replace("&PCODE=", "");
             window.open(
               _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                puid +
-                "&PCODE=" +
-                pcode +
-                "&TID=" +
-                taskid +
-                "&WFs",
+              rurl +
+              puid +
+              "&PCODE=" +
+              pcode +
+              "&TID=" +
+              taskid +
+              "&WFs",
               "_self"
             ); //+'&TID='+taskid
           } else {
             window.open(
               _spPageContextInfo.webAbsoluteUrl +
-                rurl +
-                pcode +
-                "&IID=" +
-                ritemid +
-                "&TID=" +
-                taskid +
-                "&WFs",
+              rurl +
+              pcode +
+              "&IID=" +
+              ritemid +
+              "&TID=" +
+              taskid +
+              "&WFs",
               "_self"
             );
           }
@@ -12614,7 +12644,7 @@ var Tasks_Info_Request_User = {
           ) {
             keyNameParams = "initiatives";
           } else if (
-            wfname == "EngineeringProjects" 
+            wfname == "EngineeringProjects"
           ) {
             keyNameParams = "engineeringprojects";
           } else if (
@@ -12641,7 +12671,7 @@ var Tasks_Info_Request_User = {
           } else if (
             wfname == "VROActualKPI" ||
             wfname == "MSActualKPI" ||
-            wfname == "LMSActualKPI" 
+            wfname == "LMSActualKPI"
           ) {
             keyNameParams = "mainkpi";
           } else if (wfname == "MSActualBenefit" || wfname == "InitiativeBenefits") {
@@ -12738,25 +12768,25 @@ var Tasks_Info_Request_User = {
             case "SubmitProject":
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                  "/sitepages/new.aspx?ListKey=projects&IID=" +
-                  ritemid +
-                  "&TID=" +
-                  taskid +
-                  "&IdeaId=" +
-                  pcode +
-                  "&WFs",
+                "/sitepages/new.aspx?ListKey=projects&IID=" +
+                ritemid +
+                "&TID=" +
+                taskid +
+                "&IdeaId=" +
+                pcode +
+                "&WFs",
                 "_self"
               );
               break;
             case "SubmitField":
               window.open(
                 _spPageContextInfo.webAbsoluteUrl +
-                  rurl +
-                  "&IID=" +
-                  ritemid +
-                  "&TID=" +
-                  taskid +
-                  "&WFs",
+                rurl +
+                "&IID=" +
+                ritemid +
+                "&TID=" +
+                taskid +
+                "&WFs",
                 "_self"
               );
               break;
@@ -12778,15 +12808,15 @@ var Tasks_Info_Request_User = {
                 // For Change Requests, always use ChangeRequests.aspx
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
-                    "/SitePages/ChangeRequests.aspx?" + viewMode + "=true&" +
-                    wfname +
-                    "&critemcode=" +
-                    critemcode +
-                    "&TID=" +
-                    taskid +
-                    "&IID=" +
-                    ritemid +
-                    "&WFs",
+                  "/SitePages/ChangeRequests.aspx?" + viewMode + "=true&" +
+                  wfname +
+                  "&critemcode=" +
+                  critemcode +
+                  "&TID=" +
+                  taskid +
+                  "&IID=" +
+                  ritemid +
+                  "&WFs",
                   "_self"
                 );
               } else if (rurl.toLowerCase().indexOf("icode") > -1) {
@@ -12795,13 +12825,13 @@ var Tasks_Info_Request_User = {
                   var tailI = rurl.indexOf("?") > -1 ? "&" : "?";
                   window.open(
                     _spPageContextInfo.webAbsoluteUrl +
-                      rurl +
-                      tailI +
-                      "TID=" +
-                      taskid +
-                      "&IID=" +
-                      ritemid +
-                      "&WFs",
+                    rurl +
+                    tailI +
+                    "TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&WFs",
                     "_self"
                   );
                 } else {
@@ -12815,15 +12845,15 @@ var Tasks_Info_Request_User = {
 
                   window.open(
                     _spPageContextInfo.webAbsoluteUrl +
-                      cleanRurl +
-                      joiner +
-                      "ICODE=" +
-                      icodeValue +
-                      "&TID=" +
-                      taskid +
-                      "&IID=" +
-                      ritemid +
-                      "&WFs",
+                    cleanRurl +
+                    joiner +
+                    "ICODE=" +
+                    icodeValue +
+                    "&TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&WFs",
                     "_self"
                   );
                 }
@@ -12833,13 +12863,13 @@ var Tasks_Info_Request_User = {
                   var tailP = rurl.indexOf("?") > -1 ? "&" : "?";
                   window.open(
                     _spPageContextInfo.webAbsoluteUrl +
-                      rurl +
-                      tailP +
-                      "TID=" +
-                      taskid +
-                      "&IID=" +
-                      ritemid +
-                      "&WFs",
+                    rurl +
+                    tailP +
+                    "TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&WFs",
                     "_self"
                   );
                 } else {
@@ -12852,15 +12882,15 @@ var Tasks_Info_Request_User = {
 
                   window.open(
                     _spPageContextInfo.webAbsoluteUrl +
-                      cleanRurlP +
-                      joinerP +
-                      "PCODE=" +
-                      pcodeValue +
-                      "&TID=" +
-                      taskid +
-                      "&IID=" +
-                      ritemid +
-                      "&WFs",
+                    cleanRurlP +
+                    joinerP +
+                    "PCODE=" +
+                    pcodeValue +
+                    "&TID=" +
+                    taskid +
+                    "&IID=" +
+                    ritemid +
+                    "&WFs",
                     "_self"
                   );
                 }
@@ -12869,25 +12899,25 @@ var Tasks_Info_Request_User = {
 
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
-                    rurl +
-                    "&TID=" +
-                    taskid +
-                    "&IID=" +
-                    ritemid +
-                    "&STCODE=" +
-                    pcode +
-                    "&WFs",
+                  rurl +
+                  "&TID=" +
+                  taskid +
+                  "&IID=" +
+                  ritemid +
+                  "&STCODE=" +
+                  pcode +
+                  "&WFs",
                   "_self"
                 );
               } else {
                 window.open(
                   _spPageContextInfo.webAbsoluteUrl +
-                    rurl +
-                    "&TID=" +
-                    taskid +
-                    "&IID=" +
-                    ritemid +
-                    "&WFs",
+                  rurl +
+                  "&TID=" +
+                  taskid +
+                  "&IID=" +
+                  ritemid +
+                  "&WFs",
                   "_self"
                 );
               }
@@ -13002,8 +13032,8 @@ window.PCODE_Stage_Data_Request = {
       $(".btnactionrow").hide();
       $("body").append(
         "<style>" +
-          ".btn-add{opacity: .6;pointer-events: none;display:none}" +
-          "</style>"
+        ".btn-add{opacity: .6;pointer-events: none;display:none}" +
+        "</style>"
       );
     }
   },
@@ -13019,8 +13049,8 @@ window.PCODE_Stage_Data_Request = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-        USERPCODE +
-        "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+      USERPCODE +
+      "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
     ); //caml query
     PCODE_Stage_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(PCODE_Stage_Data_Request.g.collListItem);
@@ -13187,8 +13217,8 @@ var GetInitiativeTitle_Request = {
 
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-        UserICode +
-        "</Value></Eq></Where></Query></View>"
+      UserICode +
+      "</Value></Eq></Where></Query></View>"
     );
     GetInitiativeTitle_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(GetInitiativeTitle_Request.g.collListItem);
@@ -13236,8 +13266,8 @@ var GetStrategicPartnershipTitle_Request = {
 
     camlQuery.set_viewXml(
       '<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">' +
-        UserSTCode +
-        "</Value></Eq></Where></Query></View>"
+      UserSTCode +
+      "</Value></Eq></Where></Query></View>"
     );
     GetStrategicPartnershipTitle_Request.g.collListItem =
       oList.getItems(camlQuery); //declared inside object scope only
@@ -13334,9 +13364,8 @@ function buildNestedOrLoggedInUserEqs(fieldNames) {
   if (fieldNames.length === 1) {
     return `<Eq><FieldRef Name="${fieldNames[0]}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
   }
-  var node = `<Eq><FieldRef Name="${
-    fieldNames[fieldNames.length - 1]
-  }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+  var node = `<Eq><FieldRef Name="${fieldNames[fieldNames.length - 1]
+    }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
   for (var idx = fieldNames.length - 2; idx >= 0; idx--) {
     node = `<Or><Eq><FieldRef Name="${fieldNames[idx]}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>${node}</Or>`;
   }
@@ -13445,11 +13474,9 @@ let data_Level1_Access = {
             if (el.conditionType == "Or") {
               // add condition type or for two obj in accessConditions to can get the data and related data
               //if the user is LoogedInUser in field one or LoggedInUser in field 2
-              whereBody += `<Or><Eq><FieldRef Name="${
-                el.field
-              }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="${
-                fieldsConditionConfig[i - 1].field
-              }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
+              whereBody += `<Or><Eq><FieldRef Name="${el.field
+                }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Eq><FieldRef Name="${fieldsConditionConfig[i - 1].field
+                }" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq>`;
             } else {
               whereBody += `<And><Eq><FieldRef Name="${el.field}" LookupId="TRUE" /><Value Type="Integer"><UserID /></Value></Eq><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq>`;
             }
@@ -14081,28 +14108,28 @@ var Get_Milestones = {
 
             $(".page-nav").after(
               '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-                '<label><span  style="font-size:13px">' +
-                noMsg +
-                "</span></label>" +
-                datesHtml +
-                '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/new.aspx?ListKey=milestones&PCODE=" +
-                USERPCODE +
-                '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+              '<label><span  style="font-size:13px">' +
+              noMsg +
+              "</span></label>" +
+              datesHtml +
+              '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/new.aspx?ListKey=milestones&PCODE=" +
+              USERPCODE +
+              '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
             );
           }
         }
       } else {
         $(".page-nav").after(
           '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;justify-content:flex-start;margin-top:10%">' +
-            '<label><span  style="font-size:13px">' +
-            noMsg +
-            '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/new.aspx?ListKey=milestones&PCODE=" +
-            USERPCODE +
-            '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+          '<label><span  style="font-size:13px">' +
+          noMsg +
+          '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/new.aspx?ListKey=milestones&PCODE=" +
+          USERPCODE +
+          '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
         );
       }
     } else if (UserICode) {
@@ -14199,15 +14226,15 @@ var Get_Milestones = {
 
               $(".page-nav").after(
                 '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-                  '<label><span  style="font-size:13px">' +
-                  noPopupMsg +
-                  "</span></label>" +
-                  datesHtml +
-                  '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
-                  _spPageContextInfo.webAbsoluteUrl +
-                  "/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=" +
-                  UserICode +
-                  '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+                '<label><span  style="font-size:13px">' +
+                noPopupMsg +
+                "</span></label>" +
+                datesHtml +
+                '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+                _spPageContextInfo.webAbsoluteUrl +
+                "/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=" +
+                UserICode +
+                '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
               );
             }
           } else {
@@ -14223,15 +14250,15 @@ var Get_Milestones = {
 
             $(".page-nav").after(
               '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-                '<label><span  style="font-size:13px">' +
-                noPopupMsg +
-                "</span></label>" +
-                datesHtml +
-                '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
-                _spPageContextInfo.webAbsoluteUrl +
-                "/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=" +
-                UserICode +
-                '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+              '<label><span  style="font-size:13px">' +
+              noPopupMsg +
+              "</span></label>" +
+              datesHtml +
+              '<div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+              _spPageContextInfo.webAbsoluteUrl +
+              "/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=" +
+              UserICode +
+              '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
             );
           }
         } else if (weight >= 100) {
@@ -14252,13 +14279,13 @@ var Get_Milestones = {
       } else {
         $(".page-nav").after(
           '<div class="popupComment" style="justify-content:flex-start;"><div class="wrapcomments" style="width:50%;padding:15px;margin-top:10%">' +
-            '<label><span  style="font-size:13px">' +
-            noPopupMsg +
-            '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=" +
-            UserICode +
-            '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
+          '<label><span  style="font-size:13px">' +
+          noPopupMsg +
+          '</span></label><div class="btn-cont"><button class=" btn btn-action sendButton" type="button" onclick="window.location=\'' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/new.aspx?ListKey=initiativemilestones&ICODE=" +
+          UserICode +
+          '\'"><span data-trans-milestonebutton class="Resources"></span></button><button onclick="$(\'.popupComment\').remove();" class=" btn btn-action"><span data-trans-cancelbutton class="Resources"></span></button><span style="display:none" class="successmsg"><span data-trans-submitsuccessMsg class="Resources"></span></span></div></div></div>'
         );
       }
     }
@@ -14303,8 +14330,8 @@ var Initiatives_Risks_Info = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"InitiativeCode\" /><Value Type=\"Text\">" +
-        UserICode +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      UserICode +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Initiatives_Risks_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Initiatives_Risks_Info.g.collListItem);
@@ -14317,12 +14344,12 @@ var Initiatives_Risks_Info = {
     var collListItem = Initiatives_Risks_Info.g.collListItem;
     var listItemEnum = collListItem.getEnumerator();
     var itemhtml = [
-        '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/sitepages/new.aspx?ListKey=initiativerisks&ICODE=" +
-          UserICode +
-          '"><i class="icon-plus"></i></a></li>',
-      ],
+      '<li class="list-group-item  px-0 phome-btn"><a data-trans-create class="btn-add Resources" href="' +
+      _spPageContextInfo.webAbsoluteUrl +
+      "/sitepages/new.aspx?ListKey=initiativerisks&ICODE=" +
+      UserICode +
+      '"><i class="icon-plus"></i></a></li>',
+    ],
       itemID,
       itemname,
       itemstatus,
@@ -14382,8 +14409,8 @@ var Get_Configure_Api = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">" +
-        "API_URL" +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      "API_URL" +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
     Get_Configure_Api.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Get_Configure_Api.g.collListItem);

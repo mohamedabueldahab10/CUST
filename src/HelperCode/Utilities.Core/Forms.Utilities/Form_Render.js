@@ -222,11 +222,11 @@ window.ListInfo = {
       //get form's json
       $.getScript(
         "" +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/Style%20Library/spm/JSON/" +
-          listkey +
-          "/" +
-          JSON_File_Name
+        _spPageContextInfo.webAbsoluteUrl +
+        "/Style%20Library/spm/JSON/" +
+        listkey +
+        "/" +
+        JSON_File_Name
       ).done(function (script, textStatus) {
         SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
           ListInfo.InfoLoop();
@@ -237,10 +237,10 @@ window.ListInfo = {
   InfoLoop: function () {
     var htmlBuilder = isWF
       ? '<div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
-        USERlistkey +
-        "></span>" +
-        " " +
-        '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
+      USERlistkey +
+      "></span>" +
+      " " +
+      '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
       : "";
 
     // var htmlBuilder = "";
@@ -260,7 +260,7 @@ window.ListInfo = {
 
     var basedOnParentSetValuesListiner = "";
     var notBasedOnParentSetValues = [],
-    dataNotBasedOnParentSetValues = "";
+      dataNotBasedOnParentSetValues = "";
 
     asyncFor.seqProcess(
       Information_Form,
@@ -405,10 +405,10 @@ window.ListInfo = {
           sectionType = 'data-section_type="' + item.sectiontype + '"';
         }
 
-      
-        
-        
-        
+
+
+
+
         htmlBuilder +=
           '<div style="display:' +
           item.display +
@@ -444,7 +444,7 @@ window.ListInfo = {
           ' class="col-lg-9 col-md-8 white-box p-4 fieldset-container ' +
           item.className +
           '">';
-          
+
         asyncFor.seqProcess(
           item.subFields,
           function (subitemField, indexField, resolveField) {
@@ -556,8 +556,8 @@ window.ListInfo = {
                 .find(".fieldset-container > .CFIELD")
                 .wrapAll(
                   '<div class="Details-Item NewItem" data-index="' +
-                    Masterindex +
-                    '"></div>'
+                  Masterindex +
+                  '"></div>'
                 );
               // }
               // else if(isEdit)
@@ -593,19 +593,19 @@ window.ListInfo = {
               function () {
                 // Special handling for DelegateFrom field in delegations
                 if (listkey == "delegations" && currentPickerId == "DelegateFrom") {
-                  var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner","PerformanceLeader"];
+                  var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner", "PerformanceLeader"];
                   var currentRole = window.currentUserRole || "";
-                  
+
                   if (allowedRoles.indexOf(currentRole) > -1) {
                     // In New mode: set current user and wait for resolution
                     if (isNew && UserN && UserN.LoginName) {
-                      setTimeout(function() {
+                      setTimeout(function () {
                         var peoplePicker = SPClientPeoplePicker.SPClientPeoplePickerDict[currentPickerId + "_TopSpan"];
                         if (peoplePicker) {
                           peoplePicker.AddUserKeys(UserN.LoginName);
-                          
+
                           // Wait for user to be resolved, then add missing fields
-                          setTimeout(function() {
+                          setTimeout(function () {
                             var hiddenInput = $("#" + currentPickerId + "_TopSpan_HiddenInput");
                             if (hiddenInput.length && hiddenInput.val()) {
                               try {
@@ -630,7 +630,7 @@ window.ListInfo = {
                                   hiddenInput.val(JSON.stringify(userData));
                                   $("#" + currentPickerId).find(".sp-peoplepicker-userSpan").removeAttr("aria-invalid");
                                   $("#" + currentPickerId).removeClass("picker-error").addClass("picker-valid");
-                                  
+
                                   var $groupsPicker = $("#GroupName");
                                   if ($groupsPicker.length) {
                                     var userLogin = user.Key || user.AutoFillKey || UserN.LoginName;
@@ -639,7 +639,7 @@ window.ListInfo = {
                                     }
                                   }
                                 }
-                              } catch (e) {}
+                              } catch (e) { }
                             }
                             $(".PPField.SPIField.form-control#DelegateFrom").attr('disabled', true);
                             $("#DelegateFrom_TopSpan_InitialHelpText").css('display', 'none');
@@ -651,7 +651,7 @@ window.ListInfo = {
                       }, 500);
                     } else {
                       // In Edit mode: just disable
-                      setTimeout(function() {
+                      setTimeout(function () {
                         $(".PPField.SPIField.form-control#DelegateFrom").attr('disabled', true);
                         $("#DelegateFrom_TopSpan_InitialHelpText").css('display', 'none');
                       }, 500);
@@ -673,7 +673,7 @@ window.ListInfo = {
               }
             );
           });
-          
+
           // handling dynamic fields that change data on the form
           $("select[dynamic=mainfield]").on("change", function () {
             var dyfieldname = $(this).attr("id");
@@ -689,14 +689,14 @@ window.ListInfo = {
             }
           });
           // date controlling feature
-          $("[date-controling-field]").each(function(){
+          $("[date-controling-field]").each(function () {
 
             let maxDateField = $(this).attr("date-max-field");
             // let minDateField = $(this).attr("date-min-field");
             let dateControlingInput = $(this).attr("date-controling-field");
             dateControlingInput = $(`#${dateControlingInput}`);
             let $this = $(this);
-            dateControlingInput.on("change", function (e){
+            dateControlingInput.on("change", function (e) {
               let controlingCode = $(this).val();
               // let controlingCodeForMinDate = $(this).val();
               let controlingListName = $(this).data("listname");
@@ -712,13 +712,13 @@ window.ListInfo = {
             let parentFieldName = $(this).attr("id");
             let parentFieldValue =
               typeof ListInfo !== "undefined" &&
-              ListInfo.g &&
-              ListInfo.g.getEffectiveFieldValue
+                ListInfo.g &&
+                ListInfo.g.getEffectiveFieldValue
                 ? ListInfo.g.getEffectiveFieldValue($(this))
                 : $(this).val() ||
-                  $(this).attr("value") ||
-                  $(this).attr("data-lookup-value") ||
-                  "";
+                $(this).attr("value") ||
+                $(this).attr("data-lookup-value") ||
+                "";
             let isDisabled = $(this).prop("disabled");
             let customFilterValue = $(this)
               .find("option[value=" + parentFieldValue + "]")
@@ -733,109 +733,110 @@ window.ListInfo = {
             );
             let notInvokeListiner = $(this).data("notinvokelistiner");
             let forceCascadeObjectives = $(this).data("forcecascadeobjectives");
-            if(!isDisabled){
-            $("[dynamic=" + parentFieldName + "]").each(function () {
-              let affectedFieldName = $(this).attr("id");
-              let listName = $(this).data("listname");
-              let filterField = $(this).data("filterfield");
-              let filterFieldType = $(this).data("filterfieldtype");
-              let valFieldKey = $(this).data("valfieldkey");
-              let dispFieldKey = $(this).data("dispfieldkey");
-              // let specificVal = $(this).data("queryfieldvalue");
-              let queryFieldValue = $(this).data("queryfieldvalue");
-              let queryFieldName = $(this).data("queryfield");
-              let queryFieldType = $(this).data("queryfieldtype");
+            if (!isDisabled) {
+              $("[dynamic=" + parentFieldName + "]").each(function () {
+                let affectedFieldName = $(this).attr("id");
+                let listName = $(this).data("listname");
+                let filterField = $(this).data("filterfield");
+                let filterFieldType = $(this).data("filterfieldtype");
+                let valFieldKey = $(this).data("valfieldkey");
+                let dispFieldKey = $(this).data("dispfieldkey");
+                // let specificVal = $(this).data("queryfieldvalue");
+                let queryFieldValue = $(this).data("queryfieldvalue");
+                let queryFieldName = $(this).data("queryfield");
+                let queryFieldType = $(this).data("queryfieldtype");
 
-              affectedSelectsInfo.push({
-                affectedFieldName: affectedFieldName,
-                listName: listName,
-                isCustomFilterValue: isCustomFilterValue,
-                filterField: filterField,
-                filterFieldType: filterField,
-                parentFieldValue: parentFieldValue,
-                customFilterValue: customFilterValue,
-                filterFieldType: filterFieldType,
-                valFieldKey: valFieldKey,
-                dispFieldKey: dispFieldKey,
-                queryFieldValue: queryFieldValue,
-                queryFieldName: queryFieldName,
-                queryFieldType: queryFieldType,
-                parentCustomFilterValueFromSibling:
-                  parentCustomFilterValueFromSibling,
-                additionalFilterField: $(this).data("additionalfilterfield"),
-                additionalFilterFieldType: $(this).data("additionalfiltertype"),
-                additionalFilterFromField: $(this).data("additionalfilterfrom"),
-                additionalFilterRequireWhenTypes: $(this).attr(
-                  "data-additionalfilterrequiretypes"
-                ),
-                additionalFilterTypesFormField: $(this).attr(
-                  "data-additionalfiltertypesfield"
-                ),
-                additionalFilterLookupId:
-                  $(this).attr("data-additionalfilterlookupid") === "true",
-                // dataSiblingvalue:dataSiblingvalue
+                affectedSelectsInfo.push({
+                  affectedFieldName: affectedFieldName,
+                  listName: listName,
+                  isCustomFilterValue: isCustomFilterValue,
+                  filterField: filterField,
+                  filterFieldType: filterField,
+                  parentFieldValue: parentFieldValue,
+                  customFilterValue: customFilterValue,
+                  filterFieldType: filterFieldType,
+                  valFieldKey: valFieldKey,
+                  dispFieldKey: dispFieldKey,
+                  queryFieldValue: queryFieldValue,
+                  queryFieldName: queryFieldName,
+                  queryFieldType: queryFieldType,
+                  parentCustomFilterValueFromSibling:
+                    parentCustomFilterValueFromSibling,
+                  additionalFilterField: $(this).data("additionalfilterfield"),
+                  additionalFilterFieldType: $(this).data("additionalfiltertype"),
+                  additionalFilterFromField: $(this).data("additionalfilterfrom"),
+                  additionalFilterRequireWhenTypes: $(this).attr(
+                    "data-additionalfilterrequiretypes"
+                  ),
+                  additionalFilterTypesFormField: $(this).attr(
+                    "data-additionalfiltertypesfield"
+                  ),
+                  additionalFilterLookupId:
+                    $(this).attr("data-additionalfilterlookupid") === "true",
+                  // dataSiblingvalue:dataSiblingvalue
+                });
               });
-            });
 
-            // added to handel the field to be dynamicparemnt and other (the filed can be parent and child on the same time)
-            $("[seconeddynamic*=" + parentFieldName + "]").each(function () {
-              let affectedFieldName = $(this).attr("id");
-              let listName = $(this).data("listname");
-              let filterField = $(this).data("filterfield");
-              let filterFieldType = $(this).data("filterfieldtype");
-              let valFieldKey = $(this).data("valfieldkey");
-              let dispFieldKey = $(this).data("dispfieldkey");
-              // let specificVal = $(this).data("queryfieldvalue");
-              let queryFieldValue = $(this).data("queryfieldvalue");
-              let queryFieldName = $(this).data("queryfield");
-              let queryFieldType = $(this).data("queryfieldtype");
+              // added to handel the field to be dynamicparemnt and other (the filed can be parent and child on the same time)
+              $("[seconeddynamic*=" + parentFieldName + "]").each(function () {
+                let affectedFieldName = $(this).attr("id");
+                let listName = $(this).data("listname");
+                let filterField = $(this).data("filterfield");
+                let filterFieldType = $(this).data("filterfieldtype");
+                let valFieldKey = $(this).data("valfieldkey");
+                let dispFieldKey = $(this).data("dispfieldkey");
+                // let specificVal = $(this).data("queryfieldvalue");
+                let queryFieldValue = $(this).data("queryfieldvalue");
+                let queryFieldName = $(this).data("queryfield");
+                let queryFieldType = $(this).data("queryfieldtype");
 
-              // let dataSiblingvalue = $(this).data("siblingvalue")
+                // let dataSiblingvalue = $(this).data("siblingvalue")
 
-              // console.log($(this).data("queryFieldValue"), "sssssssa")
-              affectedSelectsInfo.push({
-                affectedFieldName: affectedFieldName,
-                listName: listName,
-                isCustomFilterValue: isCustomFilterValue,
-                filterField: filterField,
-                filterFieldType: filterField,
-                parentFieldValue: parentFieldValue,
-                customFilterValue: customFilterValue,
-                filterFieldType: filterFieldType,
-                valFieldKey: valFieldKey,
-                dispFieldKey: dispFieldKey,
-                queryFieldValue: queryFieldValue,
-                queryFieldName: queryFieldName,
-                queryFieldType: queryFieldType,
-                parentCustomFilterValueFromSibling:
-                  parentCustomFilterValueFromSibling,
-                additionalFilterField: $(this).data("additionalfilterfield"),
-                additionalFilterFieldType: $(this).data("additionalfiltertype"),
-                additionalFilterFromField: $(this).data("additionalfilterfrom"),
-                additionalFilterRequireWhenTypes: $(this).attr(
-                  "data-additionalfilterrequiretypes"
-                ),
-                additionalFilterTypesFormField: $(this).attr(
-                  "data-additionalfiltertypesfield"
-                ),
-                additionalFilterLookupId:
-                  $(this).attr("data-additionalfilterlookupid") === "true",
-                // dataSiblingvalue:dataSiblingvalue
+                // console.log($(this).data("queryFieldValue"), "sssssssa")
+                affectedSelectsInfo.push({
+                  affectedFieldName: affectedFieldName,
+                  listName: listName,
+                  isCustomFilterValue: isCustomFilterValue,
+                  filterField: filterField,
+                  filterFieldType: filterField,
+                  parentFieldValue: parentFieldValue,
+                  customFilterValue: customFilterValue,
+                  filterFieldType: filterFieldType,
+                  valFieldKey: valFieldKey,
+                  dispFieldKey: dispFieldKey,
+                  queryFieldValue: queryFieldValue,
+                  queryFieldName: queryFieldName,
+                  queryFieldType: queryFieldType,
+                  parentCustomFilterValueFromSibling:
+                    parentCustomFilterValueFromSibling,
+                  additionalFilterField: $(this).data("additionalfilterfield"),
+                  additionalFilterFieldType: $(this).data("additionalfiltertype"),
+                  additionalFilterFromField: $(this).data("additionalfilterfrom"),
+                  additionalFilterRequireWhenTypes: $(this).attr(
+                    "data-additionalfilterrequiretypes"
+                  ),
+                  additionalFilterTypesFormField: $(this).attr(
+                    "data-additionalfiltertypesfield"
+                  ),
+                  additionalFilterLookupId:
+                    $(this).attr("data-additionalfilterlookupid") === "true",
+                  // dataSiblingvalue:dataSiblingvalue
+                });
               });
-            });
-            //
-            //
+              //
+              //
 
-            if (notInvokeListiner && !forceCascadeObjectives) {
-              // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
-              console.log("Inside not invoke listiner");
-            } else {
-              if (forceCascadeObjectives) {
-                $(this).removeData("forcecascadeobjectives");
+              if (notInvokeListiner && !forceCascadeObjectives) {
+                // will not invoke the function if this attr true (we use it on hrsd initiative to filter on sos when chose startegy and level)
+                console.log("Inside not invoke listiner");
+              } else {
+                if (forceCascadeObjectives) {
+                  $(this).removeData("forcecascadeobjectives");
+                }
+                dynamicAffectSelect.init(affectedSelectsInfo);
               }
-              dynamicAffectSelect.init(affectedSelectsInfo);
             }
-          }});
+          });
 
           $(document)
             .off("change.formAdditionalFilterChain", "select")
@@ -910,12 +911,12 @@ window.ListInfo = {
                 $p.trigger("change");
               });
             });
-          
+
           // Handle lookupWithDynamicQuery - update lookup when source field changes
           $(document).on("change", "select, input", function () {
             var sourceFieldName = $(this).attr("id");
             if (!sourceFieldName) return;
-            
+
             // Check if any lookupWithDynamicQuery field depends on this field
             $(".lookupWithDynamicQuery[data-queryfieldvaluefromfield='" + sourceFieldName + "']").each(function () {
               var $lookupField = $(this);
@@ -925,11 +926,11 @@ window.ListInfo = {
               var dispFieldKey = $lookupField.data("dispfieldkey");
               var queryField = $lookupField.data("queryfield");
               var queryFieldType = $lookupField.data("queryfieldtype");
-              
+
               // Clear current options except the first one
               $lookupField.find("option:not(:first)").remove();
               $lookupField.val("");
-              
+
               if (sourceFieldValue) {
                 var customQuery =
                   "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name=\"" +
@@ -939,7 +940,7 @@ window.ListInfo = {
                   '">' +
                   sourceFieldValue +
                   "</Value></Eq></And></Where><OrderBy><FieldRef Name='Name' Ascending='True' /></OrderBy></Query></View>";
-                
+
                 var itemsID = [];
                 sphttp.get(
                   _spPageContextInfo.siteServerRelativeUrl,
@@ -966,7 +967,7 @@ window.ListInfo = {
               }
             });
           });
-          
+
           //max min dates
           $("input[type=date]:not([minimumdate=undefined])").change(
             function () {
@@ -1159,124 +1160,116 @@ window.ListInfo = {
               date2 != "undefined"
             ) {
               var statusval = "";
-              if(statuschangeElement &&
-                statuschangeElement != "undefined")
-                {
-                   statusval = $(`#${statuschangeElement}`).val();
-                }
+              if (statuschangeElement &&
+                statuschangeElement != "undefined") {
+                statusval = $(`#${statuschangeElement}`).val();
+              }
 
               var value1 = $(`#${date1}`).val();
               var value2 = $(`#${date2}`).val();
-              var start_date =  new Date(value1);
-              if(date3 &&
-                date3 != "undefined")
-                {
-                 value2 =   $(`#${date3}`).val();
-                 if(value2 == "")
-                 {
+              var start_date = new Date(value1);
+              if (date3 &&
+                date3 != "undefined") {
+                value2 = $(`#${date3}`).val();
+                if (value2 == "") {
                   value2 = $(`#${date2}`).val();
-                 }
                 }
-
-              var end_date =  new Date(value2);
-
-              let todaydate = new Date();
-              todaydate  = end_date > todaydate ? todaydate : end_date;
-              let todayDiff = Math.round( (todaydate.getTime() - start_date.getTime()) / (1000 * 3600 * 24));
-              let dateDiff = Math.round( (end_date.getTime() - start_date.getTime()) / (1000 * 3600 * 24) );
-              
-
-              var total =  parseFloat((todayDiff / dateDiff) * 100).toFixed("2");
-              
-              if(statusval == "" || statusval != "finished")
-              $(`#${totalDurElement}`).val(total);
-            }
-
-            if(totalWHElement &&
-              totalWHElement != undefined &&
-              date1 &&
-              date1 != undefined)
-              {
-                  var value1 = $(`#${date1}`).val();
-                  var start_day = new Date(value1).getDate();
-                  var start_month =  new Date(value1).getMonth();
-                  var start_year =  new Date(value1).getFullYear();
-
-                  let todaydate = new Date();
-                  let day = new Date().getDate();
-                  let month = new Date().getMonth();
-                  let year = new Date().getFullYear();
-
-                  /*
-                  const minute = 1000 * 60;
-                  const hour = minute * 60;
-                  const calc_day = hour * 24;
-                  const calc_month = day * 30;
-                  const calc_year = day * 365;
-                 
-                  let dayDiff = Math.round( (todaydate.getTime() - value1.getTime()) / (1000 * 3600 * 24) );
-                  let monthDiff = Math.round( (todaydate.getTime() - value1.getTime()) / (1000 * 3600 * 24 * 30) );
-                  let yearDiff = Math.round( (todaydate.getTime() - value1.getTime()) / (1000 * 3600 * 24 * 365) );*/
-
-                 var excludedays = 0;
-                  var workdays = 0;
-                  let _month = start_month + 1;
-                  let _localmonth = month + 1;
-
-                  for(var y = start_year; y <= year ; y++){
-                    for(var m = _month; m <= _localmonth ; m++){  
-                        var monthdays = new Date(y, m, 0).getDate();
-                        let newmonth = m - 1 ;
-                        for(var i = 1; i <= monthdays; i++) {
-                          var _date  = new Date(y,newmonth,i);
-                        if(todaydate > _date){
-                         
-                          var weekday = _date.getDay();
-                           if(weekday != undefined)
-                            {
-                              if (weekday != 5)
-                                  workdays++;
-                            }
-                          
-                            HolidaysOff.forEach(oListItem =>{
-                              if(oListItem.getTime() == _date.getTime())
-                                {
-                                  excludedays++;
-                                }
-                            });
-                          }
-                      }
-                    } 
-                  }
-
-                  var total = (workdays  - excludedays) * 8;
-    
-                  $(`#${totalWHElement}`).val(total);
-                
               }
 
-              if(durationelement &&
-                durationelement != undefined &&
-                startdateelement &&
-                startdateelement != undefined &&
-                enddateelement &&
-                enddateelement != undefined)
-                {
-                //  debugger;
-                    var value1 = $(`#${startdateelement}`).val();
-                    var value2 = $(`#${enddateelement}`).val();
+              var end_date = new Date(value2);
 
-                    if(value2 != "" && value2 != undefined)
-                    {
-                      
-                    var start_date =  new Date(value1);
-                    var end_date =  new Date(value2);
+              let todaydate = new Date();
+              todaydate = end_date > todaydate ? todaydate : end_date;
+              let todayDiff = Math.round((todaydate.getTime() - start_date.getTime()) / (1000 * 3600 * 24));
+              let dateDiff = Math.round((end_date.getTime() - start_date.getTime()) / (1000 * 3600 * 24));
 
-                    let dayDiff = Math.round( (end_date.getTime() - start_date.getTime()) / (1000 * 3600 * 24) );
-                  
-                    $(`#${durationelement}`).val(dayDiff);
+
+              var total = parseFloat((todayDiff / dateDiff) * 100).toFixed("2");
+
+              if (statusval == "" || statusval != "finished")
+                $(`#${totalDurElement}`).val(total);
+            }
+
+            if (totalWHElement &&
+              totalWHElement != undefined &&
+              date1 &&
+              date1 != undefined) {
+              var value1 = $(`#${date1}`).val();
+              var start_day = new Date(value1).getDate();
+              var start_month = new Date(value1).getMonth();
+              var start_year = new Date(value1).getFullYear();
+
+              let todaydate = new Date();
+              let day = new Date().getDate();
+              let month = new Date().getMonth();
+              let year = new Date().getFullYear();
+
+              /*
+              const minute = 1000 * 60;
+              const hour = minute * 60;
+              const calc_day = hour * 24;
+              const calc_month = day * 30;
+              const calc_year = day * 365;
+             
+              let dayDiff = Math.round( (todaydate.getTime() - value1.getTime()) / (1000 * 3600 * 24) );
+              let monthDiff = Math.round( (todaydate.getTime() - value1.getTime()) / (1000 * 3600 * 24 * 30) );
+              let yearDiff = Math.round( (todaydate.getTime() - value1.getTime()) / (1000 * 3600 * 24 * 365) );*/
+
+              var excludedays = 0;
+              var workdays = 0;
+              let _month = start_month + 1;
+              let _localmonth = month + 1;
+
+              for (var y = start_year; y <= year; y++) {
+                for (var m = _month; m <= _localmonth; m++) {
+                  var monthdays = new Date(y, m, 0).getDate();
+                  let newmonth = m - 1;
+                  for (var i = 1; i <= monthdays; i++) {
+                    var _date = new Date(y, newmonth, i);
+                    if (todaydate > _date) {
+
+                      var weekday = _date.getDay();
+                      if (weekday != undefined) {
+                        if (weekday != 5)
+                          workdays++;
+                      }
+
+                      HolidaysOff.forEach(oListItem => {
+                        if (oListItem.getTime() == _date.getTime()) {
+                          excludedays++;
+                        }
+                      });
                     }
+                  }
                 }
+              }
+
+              var total = (workdays - excludedays) * 8;
+
+              $(`#${totalWHElement}`).val(total);
+
+            }
+
+            if (durationelement &&
+              durationelement != undefined &&
+              startdateelement &&
+              startdateelement != undefined &&
+              enddateelement &&
+              enddateelement != undefined) {
+              //  debugger;
+              var value1 = $(`#${startdateelement}`).val();
+              var value2 = $(`#${enddateelement}`).val();
+
+              if (value2 != "" && value2 != undefined) {
+
+                var start_date = new Date(value1);
+                var end_date = new Date(value2);
+
+                let dayDiff = Math.round((end_date.getTime() - start_date.getTime()) / (1000 * 3600 * 24));
+
+                $(`#${durationelement}`).val(dayDiff);
+              }
+            }
           });
 
           //
@@ -1614,21 +1607,21 @@ window.ListInfo = {
             console.log("mutasem 1");
             $(document).on("change", "#Exchangetype", function () {
               var selectedValue = $(this).val();
-          
+
               if (selectedValue === "delivery") {
                 // Case 1: نوع الصرف = delivery
                 $("#Delivered[value='yes']").prop("checked", true);
                 $("input#Delivered").prop("disabled", true);
-          
+
                 // Enable and make DeliveredDate required
                 $("#DeliveredDate").prop("disabled", false).prop("required", true);
                 $("label[for='DeliveredDate']").attr("required", true);
-          
+
               } else {
                 // Case 2: نوع الصرف = anything else (كلي او جزئي)
                 $("#Delivered[value='no']").prop("checked", true);
                 $("input#Delivered").prop("disabled", true);
-          
+
                 // Disable and remove required from DeliveredDate + label
                 $("#DeliveredDate").prop("disabled", true).prop("required", false).val("");
                 $("label[for='DeliveredDate']").removeAttr("required");
@@ -1785,7 +1778,7 @@ window.ListInfo = {
           });
 
           ///
-          $("input.number").keyup(function (event) { 
+          $("input.number").keyup(function (event) {
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
             // format number
@@ -1809,7 +1802,7 @@ window.ListInfo = {
             var totalSubElement = $(this).data("totalsubelement");
             var sub1 = $(this).data("sub1element");
             var sub2 = $(this).data("sub2element");
-            
+
             var totalperElement = $(this).data("totalperelement");
             var per1 = $(this).data("per1element");
             var per2 = $(this).data("per2element");
@@ -1828,13 +1821,13 @@ window.ListInfo = {
             var statuschangeElement = $(this).data("statuschangeelement");
             var status1 = $(this).data("status1element");
             var status2 = $(this).data("status2element");
-            var status3= $(this).data("status3element");
+            var status3 = $(this).data("status3element");
 
             var max = $(this).data("maxfield");
             var resetElement = $(this).data("resetelement");
             var elementVal = event.target.value;
             // set max value
-            
+
             if (max && max != "undefined") {
               var maxValue = 0;
               if (listkey == "projects") {
@@ -1880,12 +1873,12 @@ window.ListInfo = {
               // format number
               $(this).val(function (index, value) {
                 value = value.replace(/[^\d.]/g, '');
-                  // Split the value into integer and decimal parts
-                  const parts = value.split('.');
-                  // Format the integer part with commas
-                  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                  // Join the parts with a decimal point if there's a fractional part
-                  return parts.join('.');
+                // Split the value into integer and decimal parts
+                const parts = value.split('.');
+                // Format the integer part with commas
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                // Join the parts with a decimal point if there's a fractional part
+                return parts.join('.');
                 // return value
                 //   .replace(/\D/g, "")
                 //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1928,7 +1921,7 @@ window.ListInfo = {
               }
             }
 
-            
+
             if (
               totalSubElement &&
               totalSubElement != "undefined" &&
@@ -1961,9 +1954,8 @@ window.ListInfo = {
               var value2 = $(`#${per2}`).val();
               value2 = value2.replaceAll(",", "");
               value2 = parseFloat(value2);
-             
-              if(value1 >= 1)
-              { value1 = value1 / 100; }
+
+              if (value1 >= 1) { value1 = value1 / 100; }
 
               var total = value1 * value2;
 
@@ -1980,9 +1972,8 @@ window.ListInfo = {
               date1 &&
               date1 != "undefined" &&
               date2 &&
-              date2 != "undefined") 
-              {
-                
+              date2 != "undefined") {
+
               var value1 = $(`#${mb1}`).val();
               value1 = value1.replaceAll(",", "");
               value1 = parseFloat(value1);
@@ -1990,11 +1981,11 @@ window.ListInfo = {
               var value2 = $(`#${mb2}`).val();
               value2 = value2.replaceAll(",", "");
               value2 = parseFloat(value2);
-            
-              var startdt =  $(`#${date1}`).val();
-              var enddt =  $(`#${date2}`).val();
 
-             
+              var startdt = $(`#${date1}`).val();
+              var enddt = $(`#${date2}`).val();
+
+
               /*
               var value3 = $(`#${date1}`).val();
               value3 = value3.replaceAll(",", "");
@@ -2011,7 +2002,7 @@ window.ListInfo = {
 
               let todaydate = new Date(enddt);// new Date();
               let startdate = new Date(startdt);
-              
+
               /*
               let day = 1;
               let month = new Date().getMonth();
@@ -2022,7 +2013,7 @@ window.ListInfo = {
               let month = startdate.getMonth();
               let year = startdate.getFullYear();
 
-              let firstdayinmonth = new Date(year,month,day);
+              let firstdayinmonth = new Date(year, month, day);
 
               let Difference_In_Time = todaydate.getTime() - firstdayinmonth.getTime();
               let Diffdays = Math.round(Difference_In_Time / (1000 * 3600 * 24));
@@ -2030,68 +2021,62 @@ window.ListInfo = {
               var excludedays = 0;
               let finalmonth = month + 1;
               var monthdays = new Date(year, finalmonth, 0).getDate();
-              for(var i = 1; i <= monthdays; i++) {
-                      var _date = new Date(year,month,i);
-                    if(_date <= todaydate){
-                      HolidaysOff.forEach(oListItem =>{
-                        if(oListItem.getTime() == _date.getTime())
-                          {
-                            excludedays++;
-                          }
-                      });
-                      
-                     };
-              } 
-              
-              var workdays = 0;
-              for(var i=1; i<= Diffdays; i++) {
-               
-                var weekday = new Date(year, month, i).getDay();
-                  if (weekday != 5)
-                     workdays++;
+              for (var i = 1; i <= monthdays; i++) {
+                var _date = new Date(year, month, i);
+                if (_date <= todaydate) {
+                  HolidaysOff.forEach(oListItem => {
+                    if (oListItem.getTime() == _date.getTime()) {
+                      excludedays++;
+                    }
+                  });
+
+                };
               }
-              
+
+              var workdays = 0;
+              for (var i = 1; i <= Diffdays; i++) {
+
+                var weekday = new Date(year, month, i).getDay();
+                if (weekday != 5)
+                  workdays++;
+              }
+
               workdays = workdays - excludedays;
-              
+
               var total = ((value1 + value2) * 8) * workdays;
 
               $(`#${totalMBElement}`).val(total);
             }
 
-            if(fmb &&
-               fmb != "undefined")
-            {
+            if (fmb &&
+              fmb != "undefined") {
               var total = $(`#${totalMBElement}`).val();
               total = parseFloat(total);
 
               var totalwhk = 0;
-             
-              if( prog2 &&  prog2 != "undefined")
-              {
+
+              if (prog2 && prog2 != "undefined") {
                 var code = $(`#${prog2}`).val();
-               EngineeringProjectCode = code;
-              
-               var existlist = [];
-               ManHoursHistory.forEach(_project => {
-                
-                if(_project.get_item("Title") == EngineeringProjectCode)
-                    {
-                        existlist.push(_project);
-                    }
-              });
-              var lastProg = 0;
-              if(existlist.length > 0)
-              {
-                  existlist.forEach(_ManHour => {
-                  if(_ManHour.get_item("ManHours") > 0)
-                  {
-                  lastProg = _ManHour.get_item("ManHours") + lastProg;
+                EngineeringProjectCode = code;
+
+                var existlist = [];
+                ManHoursHistory.forEach(_project => {
+
+                  if (_project.get_item("Title") == EngineeringProjectCode) {
+                    existlist.push(_project);
                   }
-
                 });
-              }
+                var lastProg = 0;
+                if (existlist.length > 0) {
+                  existlist.forEach(_ManHour => {
+                    if (_ManHour.get_item("ManHours") > 0) {
+                      lastProg = _ManHour.get_item("ManHours") + lastProg;
+                    }
 
-               totalwhk =  lastProg;
+                  });
+                }
+
+                totalwhk = lastProg;
 
               }
 
@@ -2106,80 +2091,75 @@ window.ListInfo = {
               prog1 &&
               prog1 != "undefined" &&
               prog2 &&
-              prog2 != "undefined")
-              {
-                
-                var lastProg = 0;
-                var value1 = $(`#${prog1}`).val();
-                value1 = value1.replaceAll(",", "");
-                value1 = parseFloat(value1);
+              prog2 != "undefined") {
 
-                var value2 = $(`#${prog2}`).val();
+              var lastProg = 0;
+              var value1 = $(`#${prog1}`).val();
+              value1 = value1.replaceAll(",", "");
+              value1 = parseFloat(value1);
 
-                EngineeringProjectCode = value2;
-                
-                var existlist = [];
-                LastProjectHistory.forEach(_project => {
-                  
-                  if(_project.get_item("Title") == EngineeringProjectCode)
-                      {
-                          existlist.push(_project);
-                      }
-                });
+              var value2 = $(`#${prog2}`).val();
 
-                if(existlist.length > 0)
-                {
-                  if(existlist.length == 1)
-                  {
-                    lastProg = existlist[0].get_item("ActualProgress");
-                  }
+              EngineeringProjectCode = value2;
+
+              var existlist = [];
+              LastProjectHistory.forEach(_project => {
+
+                if (_project.get_item("Title") == EngineeringProjectCode) {
+                  existlist.push(_project);
                 }
+              });
 
-                var total = value1 - lastProg;
-
-                $(`#${totalProgressElement}`).val(total);
+              if (existlist.length > 0) {
+                if (existlist.length == 1) {
+                  lastProg = existlist[0].get_item("ActualProgress");
+                }
               }
-              
-              if (
-                statuschangeElement &&
-                statuschangeElement != "undefined" &&
-                status1 &&
-                status1 != "undefined" &&
-                status2 &&
-                status2 != "undefined" &&
-                status3 &&
-                status3 != "undefined")
-              {
+
+              var total = value1 - lastProg;
+
+              $(`#${totalProgressElement}`).val(total);
+            }
+
+            if (
+              statuschangeElement &&
+              statuschangeElement != "undefined" &&
+              status1 &&
+              status1 != "undefined" &&
+              status2 &&
+              status2 != "undefined" &&
+              status3 &&
+              status3 != "undefined") {
               //  debugger;
-                var value1 = $(`#${status1}`).val(); // PlanPercentge
-                value1 = value1.replaceAll(",", "");
-                value1 = parseFloat(value1);
-                var value2 = $(`#${status2}`).val(); // ActualProgress
-                value2 = value2.replaceAll(",", "");
-                value2 = parseFloat(value2);
-                var value3 = $(`#${status3}`).val(); // FinishTime
-                value3 = value3.replaceAll(",", "");
-                value3 = parseFloat(value3);
+              var value1 = $(`#${status1}`).val(); // PlanPercentge
+              value1 = value1.replaceAll(",", "");
+              value1 = parseFloat(value1);
+              var value2 = $(`#${status2}`).val(); // ActualProgress
+              value2 = value2.replaceAll(",", "");
+              value2 = parseFloat(value2);
+              var value3 = $(`#${status3}`).val(); // FinishTime
+              value3 = value3.replaceAll(",", "");
+              value3 = parseFloat(value3);
 
-                var newstatus = "epending";
+              var newstatus = "epending";
 
-                if(value1 >= 100 && value2 >= 100)
-                    newstatus = "finished";
+              if (value1 >= 100 && value2 >= 100)
+                newstatus = "finished";
+              else
+                if (value2 > value1)
+                  newstatus = "regular";
                 else
-                    if(value2 > value1)
-                    newstatus = "regular";
-                else
-                    if(value1 > value2)
+                  if (value1 > value2)
                     newstatus = "elate";
-                else
-                    if(value1 >= 100 && value3 >= 110)
-                    newstatus = "troubled";
-
-                
+                  else
+                    if (value1 >= 100 && value3 >= 110)
+                      newstatus = "troubled";
 
 
-                $(`#${statuschangeElement}`).val(newstatus);
-              }
+
+
+              $(`#${statuschangeElement}`).val(newstatus);
+            }
 
 
           });
@@ -2279,7 +2259,7 @@ window.ListInfo = {
           $(".percentbyparent[data-targetelem]").each(function () {
             let percentField = $(`#${$(this).attr("data-targetelem")}`);
             let maxValue =
-              parseFloat(percentField.attr("max"))/100 *
+              parseFloat(percentField.attr("max")) / 100 *
               parseFloat($(this).attr("data-parentval"));
             $(this).attr("max", maxValue);
           });
@@ -2348,7 +2328,7 @@ window.ListInfo = {
               GetHolidaysOFF.preinit();
               GetLastProgressFromHistory.preinit();
               GetManHoursHistory.preinit();
-              }
+            }
 
             if (listkey == "cryearlycalendar") {
               $("#Year").attr("min", 1900).attr("max", 2100);
@@ -2431,7 +2411,7 @@ window.ListInfo = {
 
             if (listkey == "engineeringprojects") {
               GetHolidaysOFF.preinit();
-              }
+            }
 
             // if (listkey == "invoices") {
             //   ListInfo.g.InvoicesTotal();
@@ -2487,12 +2467,12 @@ window.ListInfo = {
                   } else {
                     $("body").append(
                       "<style>" +
-                        ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
-                        ".form-control{color: #b1b1b1 !important;" +
-                        "border-color: #e1e1e1 !important;" +
-                        "background-color: #fdfdfd !important;" +
-                        "opacity: .6;pointer-events: none;}" +
-                        "</style>"
+                      ".btn-add,.btn-save{opacity: .6;pointer-events: none;display:none}" +
+                      ".form-control{color: #b1b1b1 !important;" +
+                      "border-color: #e1e1e1 !important;" +
+                      "background-color: #fdfdfd !important;" +
+                      "opacity: .6;pointer-events: none;}" +
+                      "</style>"
                     );
                     alert("الربع الاستراتيجي غير نشط. لا يمكن إضافة تحليل.");
                   }
@@ -3101,52 +3081,52 @@ window.ListInfo = {
               // set date to be today 
               var today = new Date();
               var yyyy = today.getFullYear();
-              var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-              var dd = String(today.getDate()).padStart(2, '0'); 
+              var mm = String(today.getMonth() + 1).padStart(2, '0');
+              var dd = String(today.getDate()).padStart(2, '0');
               var formattedDate = yyyy + '-' + mm + '-' + dd;
-          
+
               $("#ActualkpiDate").val(formattedDate);
 
-                var kpiTitle = $("#Title").val(); // Current KPI title
+              var kpiTitle = $("#Title").val(); // Current KPI title
 
-                // Get the KPI equation from list
-                $.ajax({
-                    url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('KPIEquations')/items?$filter=DeletionStatus ne 'Deleted' and KPI eq '" + kpiTitle + "'",
-                    method: "GET",
-                    headers: { "Accept": "application/json;odata=verbose" },
-                    success: function (data) {
-                        if (data.d.results.length > 0) {
-                            var kpiInput = data.d.results[0].KPIInput;
-                            var varsMap = {
-                                A: parseFloat($("#A").val()) || 0,
-                                B: parseFloat($("#B").val()) || 0,
-                                C: parseFloat($("#CC").val()) || 0, 
-                                D: parseFloat($("#D").val()) || 0,
-                                E: parseFloat($("#E").val()) || 0,
-                                F: parseFloat($("#F").val()) || 0,
-                                G: parseFloat($("#G").val()) || 0
-                            };
+              // Get the KPI equation from list
+              $.ajax({
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('KPIEquations')/items?$filter=DeletionStatus ne 'Deleted' and KPI eq '" + kpiTitle + "'",
+                method: "GET",
+                headers: { "Accept": "application/json;odata=verbose" },
+                success: function (data) {
+                  if (data.d.results.length > 0) {
+                    var kpiInput = data.d.results[0].KPIInput;
+                    var varsMap = {
+                      A: parseFloat($("#A").val()) || 0,
+                      B: parseFloat($("#B").val()) || 0,
+                      C: parseFloat($("#CC").val()) || 0,
+                      D: parseFloat($("#D").val()) || 0,
+                      E: parseFloat($("#E").val()) || 0,
+                      F: parseFloat($("#F").val()) || 0,
+                      G: parseFloat($("#G").val()) || 0
+                    };
 
-                            // Replace letters in equation with values
-                            var safeEquation = kpiInput.replace(/\b[A-G]\b/g, function(match){
-                                return varsMap[match];
-                            });
+                    // Replace letters in equation with values
+                    var safeEquation = kpiInput.replace(/\b[A-G]\b/g, function (match) {
+                      return varsMap[match];
+                    });
 
-                            try {
-                                // Calculate and set result
-                                var result = Function('"use strict";return (' + safeEquation + ')')();
-                                if (isNaN(result) || !isFinite(result)) result = 0;
-                                $("#Equation").val(result);
-                            } catch (err) {
-                                $("#Equation").val(0);
-                                console.error("Error calculating KPI equation:", err);
-                            }
-                        }
-                    },
-                    error: function (err) {
-                        console.error("Error fetching KPI equation:", err);
+                    try {
+                      // Calculate and set result
+                      var result = Function('"use strict";return (' + safeEquation + ')')();
+                      if (isNaN(result) || !isFinite(result)) result = 0;
+                      $("#Equation").val(result);
+                    } catch (err) {
+                      $("#Equation").val(0);
+                      console.error("Error calculating KPI equation:", err);
                     }
-                });
+                  }
+                },
+                error: function (err) {
+                  console.error("Error fetching KPI equation:", err);
+                }
+              });
             });
           }
           if (listkey == "benefits" && isEdit) {
@@ -3225,23 +3205,23 @@ window.ListInfo = {
           if (listkey == "initiatives") {
             function recalcBenefits(benefitsSection) {
               if (!benefitsSection || !benefitsSection.length) return;
-          
+
               var benefitItems = benefitsSection.find(".Details-Item");
               var totalWeight = 0;
-          
+
               benefitItems.each(function () {
                 var weightValue = parseFloat($(this).find("input#Weight").val());
                 if (!isNaN(weightValue)) totalWeight += weightValue;
               });
-          
+
               var remainingPercentage = 100 - totalWeight;
               if (remainingPercentage < 0) remainingPercentage = 0;
               benefitsSection.find(".remainPercentageVal").text(remainingPercentage + "%");
-          
+
               benefitItems.each(function (index) {
                 var $weightInput = $(this).find("input#Weight");
                 if (!$weightInput.length) return;
-          
+
                 if (index === 0) {
                   $weightInput.removeAttr("max").prop("disabled", false);
                 } else {
@@ -3250,12 +3230,12 @@ window.ListInfo = {
                     var prevValue = parseFloat($(this).find("input#Weight").val());
                     if (!isNaN(prevValue)) previousTotal += prevValue;
                   });
-          
+
                   var maxAllowed = 100 - previousTotal;
                   if (maxAllowed < 0) maxAllowed = 0;
-          
+
                   $weightInput.attr("max", maxAllowed).prop("disabled", false);
-          
+
                   var currentValue = parseFloat($weightInput.val());
                   if (!isNaN(currentValue) && currentValue > maxAllowed) {
                     $weightInput.val(maxAllowed);
@@ -3263,14 +3243,14 @@ window.ListInfo = {
                 }
               });
             }
-          
+
             var $benefitsSections = $('div[data-target_list="Benefits"]');
             var initialized = false;
-          
+
             function initializeRecalc($section) {
               if (initialized) return;
               initialized = true;
-          
+
               $benefitsSections.on("input change", "input#Weight", function () {
                 var $currentSection = $(this).closest('div[data-target_list="Benefits"]');
                 var maxAllowed = parseFloat($(this).attr("max"));
@@ -3280,7 +3260,7 @@ window.ListInfo = {
                 }
                 recalcBenefits($currentSection);
               });
-          
+
               $benefitsSections.on("click", ".add-New-Detail, .remove-New-Detail", function () {
                 var $currentSection = $(this).closest('div[data-target_list="Benefits"]');
                 setTimeout(function () {
@@ -3288,7 +3268,7 @@ window.ListInfo = {
                 }, 50);
               });
             }
-          
+
             if (isNew) {
               // على صفحة جديدة: نفعّل الكود فوراً
               $benefitsSections.each(function () {
@@ -3296,25 +3276,25 @@ window.ListInfo = {
               });
               initializeRecalc($benefitsSections);
             }
-          
+
             if (isEdit) {
               // على صفحة تعديل: ننتظر أول تعديل أو إضافة
               $benefitsSections.on("input", "input#Weight", function () {
                 initializeRecalc($(this).closest('div[data-target_list="Benefits"]'));
               });
-          
+
               $benefitsSections.on("click", ".add-New-Detail", function () {
                 initializeRecalc($(this).closest('div[data-target_list="Benefits"]'));
               });
             }
-          
+
             window.recalcBenefitsForBenefitsSection = function () {
               $benefitsSections.each(function () {
                 recalcBenefits($(this));
               });
             };
           }
-                  
+
           ListInfo.g.attachmentsExtensions();
 
         }
@@ -3322,8 +3302,8 @@ window.ListInfo = {
     );
   },
   RenderForm: async function (element, flag, OnSuccess) {
-   
- 
+
+
     if (listkey == "goalstrategy") {
       ListInfo.g.requiredSpillarsName();
     }
@@ -3377,12 +3357,12 @@ window.ListInfo = {
 
     renderfield = true;
     window.acceptedExtensions;
-    var datecontrolingfield="", dmaxControlingField="",dMinControlingField="", datecontrolingfieldForMinDate="";
-        // to handle date controlling field
-    if (element.hasOwnProperty("dateControlingField")){
-        datecontrolingfield = `date-controling-field="${element.dateControlingField}"`;
-      dmaxControlingField=`date-max-field="${element.maxinternalName}"`;
-      dMinControlingField=`date-min-field="${element.minInternalName}"`;
+    var datecontrolingfield = "", dmaxControlingField = "", dMinControlingField = "", datecontrolingfieldForMinDate = "";
+    // to handle date controlling field
+    if (element.hasOwnProperty("dateControlingField")) {
+      datecontrolingfield = `date-controling-field="${element.dateControlingField}"`;
+      dmaxControlingField = `date-max-field="${element.maxinternalName}"`;
+      dMinControlingField = `date-min-field="${element.minInternalName}"`;
       datecontrolingfieldForMinDate = `date-controling-field="${element.listname}"`;
 
     }
@@ -3464,11 +3444,11 @@ window.ListInfo = {
         toggleValues +=
           i == 0
             ? 'data-toggleValues="' +
-              item.value +
-              "[" +
-              item.fields.join(",") +
-              "]" +
-              seperator
+            item.value +
+            "[" +
+            item.fields.join(",") +
+            "]" +
+            seperator
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
 
@@ -3480,11 +3460,11 @@ window.ListInfo = {
         requiredValues +=
           i == 0
             ? 'data-requiredValues="' +
-              item.value +
-              "[" +
-              item.fields.join(",") +
-              "]" +
-              seperator
+            item.value +
+            "[" +
+            item.fields.join(",") +
+            "]" +
+            seperator
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
     }
@@ -3495,11 +3475,11 @@ window.ListInfo = {
         toggleDisabledValues +=
           i == 0
             ? 'data-toggleDisabledValues="' +
-              item.value +
-              "[" +
-              item.fields.join(",") +
-              "]" +
-              seperator
+            item.value +
+            "[" +
+            item.fields.join(",") +
+            "]" +
+            seperator
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
     }
@@ -3685,7 +3665,7 @@ window.ListInfo = {
 
               var letterPattern = "";
               if (element.withletters) {
-                    letterPattern = `pattern="^(?=.*[a-zA-Z\u0600-\u06FF])(?:[a-zA-Z\u0600-\u06FF]|[\\s\\d\\-\\/@+!&$\\(\\)])+"`;
+                letterPattern = `pattern="^(?=.*[a-zA-Z\u0600-\u06FF])(?:[a-zA-Z\u0600-\u06FF]|[\\s\\d\\-\\/@+!&$\\(\\)])+"`;
 
               }
 
@@ -4374,7 +4354,7 @@ window.ListInfo = {
           sum2Element = "",
           reset = "";
 
-          var totalSubElement = "",
+        var totalSubElement = "",
           sub1Element = "",
           sub2Element = "";
 
@@ -4382,18 +4362,18 @@ window.ListInfo = {
           per1Element = "",
           per2Element = "";
 
-          var totalMBElement = "",
+        var totalMBElement = "",
           mb1Element = "",
           mb2Element = "",
           totalWRElement = "",
           date1Element = "",
           date2Element = "";
 
-          var totalProgressElement = "",
+        var totalProgressElement = "",
           prog1Element = "",
           prog2Element = "";
-       
-          var statuschangeElement = "",
+
+        var statuschangeElement = "",
           status1Element = "",
           status2Element = "",
           status3Element = "";
@@ -4447,7 +4427,7 @@ window.ListInfo = {
           element.mb1Element &&
           element.mb2Element &&
           element.date1Element &&
-          element.date2Element ) {
+          element.date2Element) {
           totalMBElement = `data-totalMBElement=${element.totalMBElement}`;
           mb1Element = `data-mb1Element=${element.mb1Element}`;
           mb2Element = `data-mb2Element=${element.mb2Element}`;
@@ -4455,26 +4435,24 @@ window.ListInfo = {
           date2Element = `data-date2Element=${element.date2Element}`;
         }
 
-        if(element.totalWRElement)
-        {
+        if (element.totalWRElement) {
           totalWRElement = `data-totalWRElement=${element.totalWRElement}`;
         }
 
         if (
           element.totalProgressElement &&
-          element.prog1Element ) {
+          element.prog1Element) {
           totalProgressElement = `data-totalProgressElement=${element.totalProgressElement}`;
           prog1Element = `data-prog1Element=${element.prog1Element}`;
         }
-       
-        if(element.prog2Element)
-          {
-           prog2Element = `data-prog2Element=${element.prog2Element}`;
-          }
+
+        if (element.prog2Element) {
+          prog2Element = `data-prog2Element=${element.prog2Element}`;
+        }
 
         if (
           element.statuschangeElement &&
-          element.status1Element  &&
+          element.status1Element &&
           element.status2Element &&
           element.status3Element
         ) {
@@ -4565,13 +4543,13 @@ window.ListInfo = {
           " " +
           totalProgressElement +
           " " +
-          prog1Element + 
+          prog1Element +
           " " +
-          prog2Element + 
+          prog2Element +
           " " +
           statuschangeElement +
           " " +
-          status1Element + 
+          status1Element +
           " " +
           status2Element +
           " " +
@@ -4695,9 +4673,9 @@ window.ListInfo = {
         }
 
         var totalElement = "",
-        sum1Element = "",
-        sum2Element = "",
-        reset = "";
+          sum1Element = "",
+          sum2Element = "",
+          reset = "";
 
         if (
           element.totalElement &&
@@ -4917,137 +4895,137 @@ window.ListInfo = {
         break;
 
       case "floatpercentagemaxfromparent":
-          var code = activeCode;
-        
-          // Build the CAML query to get sibling records from the same list and same parent
-          var customQuery =
-            "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='" +
-            element.siblingstargetcode +
-            '\' /><Value Type="Text">' +
-            code +
-            "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
-        
-          sphttp.get(
-            _spPageContextInfo.siteServerRelativeUrl,
-            element.siblingslistname,
-            customQuery,
-            [element.InternalName, "ID"],
-            function (records, record, listItem, isDone) {
-              if (isDone) {
-                var totalWeight = 0;
-                var currentItemId =
-                  typeof isEdit !== "undefined" &&
+        var code = activeCode;
+
+        // Build the CAML query to get sibling records from the same list and same parent
+        var customQuery =
+          "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='" +
+          element.siblingstargetcode +
+          '\' /><Value Type="Text">' +
+          code +
+          "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>";
+
+        sphttp.get(
+          _spPageContextInfo.siteServerRelativeUrl,
+          element.siblingslistname,
+          customQuery,
+          [element.InternalName, "ID"],
+          function (records, record, listItem, isDone) {
+            if (isDone) {
+              var totalWeight = 0;
+              var currentItemId =
+                typeof isEdit !== "undefined" &&
                   isEdit &&
                   typeof listkey !== "undefined" &&
                   listkey == "benefits" &&
                   typeof IID !== "undefined" &&
                   IID
-                    ? String(IID)
-                    : "";
-        
-                // Sum sibling weights (exclude current benefit on Edit so remaining = 100 - others)
-                records.forEach(function (el) {
-                  if (currentItemId && String(el.ID) === currentItemId) return;
-                  totalWeight += el[element.InternalName] ? el[element.InternalName] : 0;
-                });
-        
-                // Calculate remaining percentage
-                var Remaining = 100 - totalWeight;
-                Remaining = Number(Remaining.toFixed(1));
-        
-                // Prevent negative or invalid remaining values
-                if (Remaining < 0) Remaining = 0;
-        
-                // Build the HTML field, similar to floatpercentage
-                htmlBody =
-                  '<div class="col-md-6 CFIELD ' +
-                  dontSubmit +
-                  " " +
-                  dontRequest +
-                  " " +
-                  dontSubmitRequired +
-                  " " +
-                  element.className +
-                  " " +
-                  hideField +
-                  ' " ' +
-                  thistip +
-                  " " +
-                  hidestagesIDs +
-                  " " +
-                  editableBy +
-                  " " +
-                  showstagesIDs +
-                  "  " +
-                  disablestagesIDs +
-                  "  " +
-                  enablestagesIDs +
-                  "   " +
-                  isWfhidestagesIDs +
-                  " " +
-                  requireOnWfTaskstagesIDs +
-                  " " +
-                  isWfshowstagesIDs +
-                  "  " +
-                  isWfdisablestagesIDs +
-                  "  " +
-                  isWfenablestagesIDs +
-                  ' data-groups="' +
-                  groups +
-                  '" ' +
-                  notAllowForGroups +
-                  ' style="display:' +
-                  element.display +
-                  '">' +
-                  '<label for="' +
-                  element.InternalName +
-                  '" ' +
-                  element.validation +
-                  ">" +
-                  displayName +
-                  '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle remainPercentageVal">' +
-                  Remaining +
-                  "]</span>" +
-                  "</label>" +
-                  "<input " +
-                  ToggleName +
-                  " " +
-                  toggleDisabledName +
-                  " " +
-                  RequiredName +
-                  ' type="number" min="0" max="' +
-                  Remaining +
-                  '" title="Please enter value between 0 and ' +
-                  Remaining +
-                  '" step="any" placeholder="' +
-                  displayName +
-                  '" ' +
-                  dynamic +
-                  ' class="form-control SPIField floatpercentagemaxfromparent" id="' +
-                  element.InternalName +
-                  '" ' +
-                  element.state +
-                  " " +
-                  element.validation +
-                  ' oninput="var m=parseFloat(this.getAttribute(\'max\'));var n=Math.abs(parseFloat(this.value));if(this.value===\'\'||isNaN(n)){this.value=\'\';return;}if(!isNaN(m)&&n>m){this.value=m;}else{this.value=n;}">' +
-                  '<span data-trans-' +
-                  Errmsgkey +
-                  ' class="errMsgField Resources"></span>' +
-                  '<div class="inputInfo ' +
-                  isexist +
-                  '">' +
-                  descPhrase +
-                  "</div>" +
-                  "</div>";
-        
-                OnSuccess(flag, htmlBody);
-              }
+                  ? String(IID)
+                  : "";
+
+              // Sum sibling weights (exclude current benefit on Edit so remaining = 100 - others)
+              records.forEach(function (el) {
+                if (currentItemId && String(el.ID) === currentItemId) return;
+                totalWeight += el[element.InternalName] ? el[element.InternalName] : 0;
+              });
+
+              // Calculate remaining percentage
+              var Remaining = 100 - totalWeight;
+              Remaining = Number(Remaining.toFixed(1));
+
+              // Prevent negative or invalid remaining values
+              if (Remaining < 0) Remaining = 0;
+
+              // Build the HTML field, similar to floatpercentage
+              htmlBody =
+                '<div class="col-md-6 CFIELD ' +
+                dontSubmit +
+                " " +
+                dontRequest +
+                " " +
+                dontSubmitRequired +
+                " " +
+                element.className +
+                " " +
+                hideField +
+                ' " ' +
+                thistip +
+                " " +
+                hidestagesIDs +
+                " " +
+                editableBy +
+                " " +
+                showstagesIDs +
+                "  " +
+                disablestagesIDs +
+                "  " +
+                enablestagesIDs +
+                "   " +
+                isWfhidestagesIDs +
+                " " +
+                requireOnWfTaskstagesIDs +
+                " " +
+                isWfshowstagesIDs +
+                "  " +
+                isWfdisablestagesIDs +
+                "  " +
+                isWfenablestagesIDs +
+                ' data-groups="' +
+                groups +
+                '" ' +
+                notAllowForGroups +
+                ' style="display:' +
+                element.display +
+                '">' +
+                '<label for="' +
+                element.InternalName +
+                '" ' +
+                element.validation +
+                ">" +
+                displayName +
+                '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle remainPercentageVal">' +
+                Remaining +
+                "]</span>" +
+                "</label>" +
+                "<input " +
+                ToggleName +
+                " " +
+                toggleDisabledName +
+                " " +
+                RequiredName +
+                ' type="number" min="0" max="' +
+                Remaining +
+                '" title="Please enter value between 0 and ' +
+                Remaining +
+                '" step="any" placeholder="' +
+                displayName +
+                '" ' +
+                dynamic +
+                ' class="form-control SPIField floatpercentagemaxfromparent" id="' +
+                element.InternalName +
+                '" ' +
+                element.state +
+                " " +
+                element.validation +
+                ' oninput="var m=parseFloat(this.getAttribute(\'max\'));var n=Math.abs(parseFloat(this.value));if(this.value===\'\'||isNaN(n)){this.value=\'\';return;}if(!isNaN(m)&&n>m){this.value=m;}else{this.value=n;}">' +
+                '<span data-trans-' +
+                Errmsgkey +
+                ' class="errMsgField Resources"></span>' +
+                '<div class="inputInfo ' +
+                isexist +
+                '">' +
+                descPhrase +
+                "</div>" +
+                "</div>";
+
+              OnSuccess(flag, htmlBody);
             }
-          );
-          break;
-        
+          }
+        );
+        break;
+
       case "floatpercentage":
-      
+
         htmlBody =
           '<div class="col-md-6 CFIELD ' +
           dontSubmit +
@@ -5124,7 +5102,7 @@ window.ListInfo = {
 
       case "percentbyrelatedparent":
 
-    
+
 
         var code = activeCode;
 
@@ -5146,7 +5124,7 @@ window.ListInfo = {
               });
 
               parentBudgetValue = parentValue;
-            
+
               htmlBody =
                 '<div class="col-md-6 CFIELD ' +
                 dontSubmit +
@@ -5227,12 +5205,12 @@ window.ListInfo = {
                 descPhrase +
                 "</div>" +
                 "</div>";
-                if ((listkey == 'initiativedeliverables' || listkey == 'milestones') && IsZeroBudgetProject == true && element.InternalName == "Amount") {
-                  OnSuccess(flag, '');
-                } else {
+              if ((listkey == 'initiativedeliverables' || listkey == 'milestones') && IsZeroBudgetProject == true && element.InternalName == "Amount") {
+                OnSuccess(flag, '');
+              } else {
 
-                  OnSuccess(flag, htmlBody);
-                }
+                OnSuccess(flag, htmlBody);
+              }
             }
           }
         );
@@ -5395,14 +5373,14 @@ window.ListInfo = {
           sourceelement = "",
           targetelement = "";
 
-          var totalDurElement = "",
+        var totalDurElement = "",
           date1Element = "",
           date2Element = "",
           date3Element = "",
-          totalWHElement="",
+          totalWHElement = "",
           statuschangeElement = "";
 
-          var durationelement = "",
+        var durationelement = "",
           startdateelement = "",
           enddateelement = "";
 
@@ -5437,9 +5415,8 @@ window.ListInfo = {
           date2Element = `data-date2Element=${element.date2Element}`;
           date3Element = `data-date3Element=${element.date3Element}`;
           totalWHElement = `data-totalWHElement=${element.totalWHElement}`;
-          if(element.statuschangeElement)
-          {
-             statuschangeElement = $(this).data("statuschangeelement");
+          if (element.statuschangeElement) {
+            statuschangeElement = $(this).data("statuschangeelement");
           }
         }
 
@@ -5451,8 +5428,8 @@ window.ListInfo = {
 
         let childrenIDs = element.childsId
           ? 'data-childsId="' +
-            JSON.stringify(element.childsId).replaceAll(`"`, `'`) +
-            '"'
+          JSON.stringify(element.childsId).replaceAll(`"`, `'`) +
+          '"'
           : "";
 
         htmlBody =
@@ -5524,13 +5501,13 @@ window.ListInfo = {
           " " +
           totalWHElement +
           " " +
-          statuschangeElement + 
+          statuschangeElement +
           " " +
           startdateelement +
           " " +
           enddateelement +
           " " +
-          durationelement+
+          durationelement +
           " " +
           sourceelement +
           " " +
@@ -5593,8 +5570,8 @@ window.ListInfo = {
 
         let childsId = element.childsId
           ? 'data-childsId="' +
-            JSON.stringify(element.childsId).replaceAll(`"`, `'`) +
-            '"'
+          JSON.stringify(element.childsId).replaceAll(`"`, `'`) +
+          '"'
           : "";
 
         htmlBody =
@@ -5721,14 +5698,14 @@ window.ListInfo = {
           var setYearToFieldName =
             element.setYearToField ||
             (listkey == "benefits" &&
-            isNew &&
-            element.InternalName == "PlannedAchievementDate"
+              isNew &&
+              element.InternalName == "PlannedAchievementDate"
               ? "ToDate"
               : "");
           var setYearToFieldAttr = setYearToFieldName
             ? ' data-setyeartofield="' +
-              setYearToFieldName +
-              '" oninput="if(window.syncYearFromDateField){window.syncYearFromDateField(this);}" onchange="if(window.syncYearFromDateField){window.syncYearFromDateField(this);}"'
+            setYearToFieldName +
+            '" oninput="if(window.syncYearFromDateField){window.syncYearFromDateField(this);}" onchange="if(window.syncYearFromDateField){window.syncYearFromDateField(this);}"'
             : "";
 
           htmlBody =
@@ -6048,7 +6025,7 @@ window.ListInfo = {
         OnSuccess(flag, htmlBody);
         break;
 
-        
+
       // case 'datewithtime':
       //     htmlBody =
       //         '<div class="col-md-6 CFIELD dateTime' + element.className + ' " ' + thistip + ' ' + hidestagesIDs + ' '+editableBy+' ' + showstagesIDs + '  ' + disablestagesIDs + '  ' + enablestagesIDs + '   ' + isWfhidestagesIDs + ' '+requireOnWfTaskstagesIDs+' ' + isWfshowstagesIDs + '  ' + isWfdisablestagesIDs + '  ' + isWfenablestagesIDs + '        data-groups="' + groups + '" style="display:' + element.display + '">' +
@@ -6234,8 +6211,8 @@ window.ListInfo = {
 
       case "dropdown":
         var statusElement = "",
-        sourceElement = "",
-        targetElement = ""; 
+          sourceElement = "",
+          targetElement = "";
 
 
         if (
@@ -6354,23 +6331,23 @@ window.ListInfo = {
 
       case "groupsOfPicker":
         // Support both 'parent' and 'parentField' properties
-        var parentFieldName = element.hasOwnProperty("parentField") 
-          ? element.parentField 
+        var parentFieldName = element.hasOwnProperty("parentField")
+          ? element.parentField
           : (element.hasOwnProperty("parent") ? element.parent : "");
-        
-        var parentFieldAttr = parentFieldName 
-          ? `data-parent-field="${parentFieldName}"` 
+
+        var parentFieldAttr = parentFieldName
+          ? `data-parent-field="${parentFieldName}"`
           : "";
-        
+
         var classNameValue = element.hasOwnProperty("className") ? element.className : "";
         var displayValue = element.hasOwnProperty("display") ? element.display : "";
 
         // Check if options and choices exist
         var choices = [];
-        if (element.hasOwnProperty("options") && 
-            element.options && 
-            element.options.hasOwnProperty("choices") && 
-            Array.isArray(element.options.choices)) {
+        if (element.hasOwnProperty("options") &&
+          element.options &&
+          element.options.hasOwnProperty("choices") &&
+          Array.isArray(element.options.choices)) {
           choices = element.options.choices;
         }
 
@@ -6470,23 +6447,23 @@ window.ListInfo = {
           descPhrase +
           "</div>" +
           "</div>";
-        
+
         // Call changeResources after DOM is ready to translate groups options
-        setTimeout(function() {
+        setTimeout(function () {
           if (typeof changeResources === 'function') {
             changeResources();
           }
         }, 100);
-        
+
         // Add event listener to load groups when parent picker changes
         if (parentFieldName) {
           var groupsOfPickerId = element.InternalName;
           var parentPickerId = parentFieldName;
-          
+
           // Use setTimeout to ensure the DOM is ready and picker is initialized
-          setTimeout(function() {
+          setTimeout(function () {
             // Listen for user:changed event from the parent picker
-            $('#' + parentPickerId).on("user:changed", function() {
+            $('#' + parentPickerId).on("user:changed", function () {
               var groupsSelect = $('#' + groupsOfPickerId);
               if (groupsSelect.length) {
                 // Get the selected user from picker
@@ -6516,9 +6493,9 @@ window.ListInfo = {
                 }
               }
             });
-            
+
             // Also trigger on initial load if picker already has a value (for edit mode or pre-filled forms)
-            setTimeout(function() {
+            setTimeout(function () {
               var hiddenInput = $('#' + parentPickerId + '_TopSpan_HiddenInput');
               if (hiddenInput.length && hiddenInput.val()) {
                 try {
@@ -6539,7 +6516,7 @@ window.ListInfo = {
             }, 1000);
           }, 500);
         }
-        
+
         OnSuccess(flag, htmlBody);
         break;
 
@@ -6593,7 +6570,7 @@ window.ListInfo = {
           childFieldIdSource = "";
         }
 
-      
+
 
         if (crListKey && isCrMode && customCr) {
           htmlBody = "";
@@ -6706,17 +6683,17 @@ window.ListInfo = {
           for (var i = 0; i < element.options.choices.length; i++) {
             let customValue = element.options.choices[i].customFilterValue
               ? 'data-customfiltervalue="' +
-                element.options.choices[i].customFilterValue +
-                '"'
+              element.options.choices[i].customFilterValue +
+              '"'
               : "";
 
             let fieldsValue = element.options.choices[i].fields
               ? 'data-fieldsvalue="' +
-                JSON.stringify(element.options.choices[i].fields).replaceAll(
-                  `"`,
-                  `'`
-                ) +
-                '"'
+              JSON.stringify(element.options.choices[i].fields).replaceAll(
+                `"`,
+                `'`
+              ) +
+              '"'
               : "";
 
             let isRenderOption = true;
@@ -6732,10 +6709,10 @@ window.ListInfo = {
 
             let otherFieldsValue = element.options.choices[i].otherFields
               ? 'data-otherfields="' +
-                JSON.stringify(
-                  element.options.choices[i].otherFields
-                ).replaceAll(`"`, `'`) +
-                '"'
+              JSON.stringify(
+                element.options.choices[i].otherFields
+              ).replaceAll(`"`, `'`) +
+              '"'
               : "";
             //
 
@@ -7539,262 +7516,262 @@ window.ListInfo = {
         break;
 
       case "lookupmultiselectfromrelatedparent":
-          var customQuery = "";
-          var parentFieldValue = "";
-      
-          if ((PCODE || ICODE) && element.parentsource && element.parentlistQueryField) {
-              // determine parent code
-              var parentCode = "";
-              if (PCODE) {
-                  parentCode = PCODE;
-              } else if (ICODE) {
-                  parentCode = ICODE;
-              }
-      
-              // get parent item to retrieve the related field value
-              sphttp.get(
-                  _spPageContextInfo.siteServerRelativeUrl,
-                  element.parentsource,
-                  `<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>${parentCode}</Value></Eq></Where></Query></View>`,
-                  [element.parentlistQueryField],
-                  function (parentRecords, parentRecord, parentItem, isDoneParent) {
-                      if (isDoneParent && parentRecords.length > 0) {
-                          parentFieldValue = parentRecords[0][element.parentlistQueryField];
-      
-                          // now build child list query using the parentFieldValue
-                          customQuery = `<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name="${element.currentlistQueryField}"/><Value Type="Text">${parentFieldValue}</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False'/></OrderBy></Query></View>`;
-      
-                          // to handle dont submit in edit
-                          var listFields = [element.valfieldkey, element.Dispfieldkey, element.grpfieldkey];
-      
-                          if (element.sourcefieldlvl1) {
-                              parentFieldKey = element.fieldsinformlvl1;
-                              listFields.push(element.sourcefieldlvl1);
-      
-                              if (element.sourcefieldlvl2) {
-                                  listFields.push(element.sourcefieldlvl2);
-                              }
-                          } else {
-                              parentFieldKey = "";
-                          }
-      
-                          var grandFieldId = element.grandFieldId ? `data-grandFieldId=${element.grandFieldId}` : "";
-                          var notInvokeListinerData = element.notInvokeListiner ? `data-notInvokeListiner=${element.notInvokeListiner}` : "";
-                          var seconedValueListiner = element.notInvokeListiner ? `data-seconedvaluelistiner=""` : "";
-                          var parentCustomFilterValue = element.notInvokeListiner ? `data-parentcustomfiltervalue=""` : "";
-      
-                          htmlBody =
-                              '<div class="col-md-6 CFIELD ' +
-                              dontSubmit +
-                              " " +
-                              dontRequest +
-                              " " +
-                              dontSubmitRequired +
-                              " " +
-                              element.className +
-                              " " +
-                              hideField +
-                              ' " ' +
-                              thistip +
-                              " " +
-                              hidestagesIDs +
-                              " " +
-                              editableBy +
-                              " " +
-                              showstagesIDs +
-                              "  " +
-                              disablestagesIDs +
-                              "  " +
-                              enablestagesIDs +
-                              "   " +
-                              isWfhidestagesIDs +
-                              " " +
-                              requireOnWfTaskstagesIDs +
-                              " " +
-                              isWfshowstagesIDs +
-                              "  " +
-                              isWfdisablestagesIDs +
-                              "  " +
-                              isWfenablestagesIDs +
-                              '        data-groups="' +
-                              groups +
-                              '" ' +
-                              notAllowForGroups +
-                              ' style="display:' +
-                              element.display +
-                              '">' +
-                              '<label for="' +
-                              element.InternalName +
-                              '" ' +
-                              element.validation +
-                              ">" +
-                              displayName +
-                              "</label>" +
-                              '<div style="display:inline-' +
-                              element.toggledisplay +
-                              '" class="showhide-trigger" title="Show/Hide ' +
-                              displayName +
-                              '"></div>' +
-                              "<ul " +
-                              ToggleName +
-                              " " +
-                              grandFieldId +
-                              " " +
-                              notInvokeListinerData +
-                              " " +
-                              parentCustomFilterValue +
-                              " " +
-                              seconedValueListiner +
-                              " " +
-                              dynamic +
-                              " " +
-                              seconeddynamic +
-                              " " +
-                              'data-listname="' +
-                              element.source +
-                              '" data-valfieldkey="' +
-                              element.valfieldkey +
-                              '" data-Dispfieldkey="' +
-                              element.Dispfieldkey +
-                              '" data-filterfield="' +
-                              element.filterField +
-                              '" data-queryfieldvalue="' +
-                              parentFieldValue +
-                              '" data-queryfield="' +
-                              element.currentlistQueryField +
-                              '" data-queryfieldtype="Text" myfield="' +
-                              element.InternalName +
-                              '" id="' +
-                              element.InternalName +
-                              '" type="multiselect" class="multiselect-container form-control">' +
-                              '<li class="dropdown ul-bullet-remove">' +
-                              '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
-                              displayName +
-                              '<b class="caret"></b></a>' +
-                              '<ul class="dropdown-menu multiselect_scroll ' +
-                              element.validation +
-                              '">';
-      
-                          sphttp.get(
-                              _spPageContextInfo.siteServerRelativeUrl,
-                              element.source,
-                              customQuery,
-                              listFields,
-                              function (records, record, listItem, isDone) {
-                                  if (isDone) {
-                                      var grpfield = element.grpfieldkey;
-                                      window.result = records.reduce(function (r, a) {
-                                          r[a[grpfield]] = r[a[grpfield]] || [];
-                                          r[a[grpfield]].push(a);
-                                          return r;
-                                      }, Object.create(null));
-      
-                                      Object.entries(result).forEach((el) => {
-                                          htmlBody += '<label class="grp-select">' + el[0] + "</label>";
-                                          el[1].forEach((dl) => {
-                                              htmlBody +=
-                                                  "<li data-parentrelatedvaluelvl1=" +
-                                                  dl[element.sourcefieldlvl1] +
-                                                  " data-parentrelatedkeylvl1= " +
-                                                  element.fieldsinformlvl1 +
-                                                  " data-parentrelatedvaluelvl2=" +
-                                                  dl[element.sourcefieldlvl2] +
-                                                  " data-parentrelatedkeylvl2=" +
-                                                  element.fieldsinformlvl2 +
-                                                  " class='limulti'>" +
-                                                  '<div class="checkbox">' +
-                                                  "<label>" +
-                                                  '<input value="' +
-                                                  dl[element.valfieldkey] +
-                                                  '" id="' +
-                                                  element.InternalName +
-                                                  '" type="checkbox">' +
-                                                  dl[element.Dispfieldkey] +
-                                                  "</label>" +
-                                                  "</div>" +
-                                                  "</li>";
-                                          });
-                                      });
-                                      htmlBody +=
-                                          "</ul>" +
-                                          "</li>" +
-                                          "</ul>" +
-                                          "<span data-trans-" +
-                                          element.Errmsgkey +
-                                          ' class="errMsgField Resources"></span>' +
-                                          '<div class="inputInfo ' +
-                                          isexist +
-                                          '">' +
-                                          descPhrase +
-                                          "</div>" +
-                                          "</div>";
-      
-                                      OnSuccess(flag, htmlBody);
-                                  }
-                              }
-                          );
-                      }
-                  }
-              );
+        var customQuery = "";
+        var parentFieldValue = "";
+
+        if ((PCODE || ICODE) && element.parentsource && element.parentlistQueryField) {
+          // determine parent code
+          var parentCode = "";
+          if (PCODE) {
+            parentCode = PCODE;
+          } else if (ICODE) {
+            parentCode = ICODE;
           }
-          break;      
+
+          // get parent item to retrieve the related field value
+          sphttp.get(
+            _spPageContextInfo.siteServerRelativeUrl,
+            element.parentsource,
+            `<View><Query><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>${parentCode}</Value></Eq></Where></Query></View>`,
+            [element.parentlistQueryField],
+            function (parentRecords, parentRecord, parentItem, isDoneParent) {
+              if (isDoneParent && parentRecords.length > 0) {
+                parentFieldValue = parentRecords[0][element.parentlistQueryField];
+
+                // now build child list query using the parentFieldValue
+                customQuery = `<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus'/><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name="${element.currentlistQueryField}"/><Value Type="Text">${parentFieldValue}</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False'/></OrderBy></Query></View>`;
+
+                // to handle dont submit in edit
+                var listFields = [element.valfieldkey, element.Dispfieldkey, element.grpfieldkey];
+
+                if (element.sourcefieldlvl1) {
+                  parentFieldKey = element.fieldsinformlvl1;
+                  listFields.push(element.sourcefieldlvl1);
+
+                  if (element.sourcefieldlvl2) {
+                    listFields.push(element.sourcefieldlvl2);
+                  }
+                } else {
+                  parentFieldKey = "";
+                }
+
+                var grandFieldId = element.grandFieldId ? `data-grandFieldId=${element.grandFieldId}` : "";
+                var notInvokeListinerData = element.notInvokeListiner ? `data-notInvokeListiner=${element.notInvokeListiner}` : "";
+                var seconedValueListiner = element.notInvokeListiner ? `data-seconedvaluelistiner=""` : "";
+                var parentCustomFilterValue = element.notInvokeListiner ? `data-parentcustomfiltervalue=""` : "";
+
+                htmlBody =
+                  '<div class="col-md-6 CFIELD ' +
+                  dontSubmit +
+                  " " +
+                  dontRequest +
+                  " " +
+                  dontSubmitRequired +
+                  " " +
+                  element.className +
+                  " " +
+                  hideField +
+                  ' " ' +
+                  thistip +
+                  " " +
+                  hidestagesIDs +
+                  " " +
+                  editableBy +
+                  " " +
+                  showstagesIDs +
+                  "  " +
+                  disablestagesIDs +
+                  "  " +
+                  enablestagesIDs +
+                  "   " +
+                  isWfhidestagesIDs +
+                  " " +
+                  requireOnWfTaskstagesIDs +
+                  " " +
+                  isWfshowstagesIDs +
+                  "  " +
+                  isWfdisablestagesIDs +
+                  "  " +
+                  isWfenablestagesIDs +
+                  '        data-groups="' +
+                  groups +
+                  '" ' +
+                  notAllowForGroups +
+                  ' style="display:' +
+                  element.display +
+                  '">' +
+                  '<label for="' +
+                  element.InternalName +
+                  '" ' +
+                  element.validation +
+                  ">" +
+                  displayName +
+                  "</label>" +
+                  '<div style="display:inline-' +
+                  element.toggledisplay +
+                  '" class="showhide-trigger" title="Show/Hide ' +
+                  displayName +
+                  '"></div>' +
+                  "<ul " +
+                  ToggleName +
+                  " " +
+                  grandFieldId +
+                  " " +
+                  notInvokeListinerData +
+                  " " +
+                  parentCustomFilterValue +
+                  " " +
+                  seconedValueListiner +
+                  " " +
+                  dynamic +
+                  " " +
+                  seconeddynamic +
+                  " " +
+                  'data-listname="' +
+                  element.source +
+                  '" data-valfieldkey="' +
+                  element.valfieldkey +
+                  '" data-Dispfieldkey="' +
+                  element.Dispfieldkey +
+                  '" data-filterfield="' +
+                  element.filterField +
+                  '" data-queryfieldvalue="' +
+                  parentFieldValue +
+                  '" data-queryfield="' +
+                  element.currentlistQueryField +
+                  '" data-queryfieldtype="Text" myfield="' +
+                  element.InternalName +
+                  '" id="' +
+                  element.InternalName +
+                  '" type="multiselect" class="multiselect-container form-control">' +
+                  '<li class="dropdown ul-bullet-remove">' +
+                  '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
+                  displayName +
+                  '<b class="caret"></b></a>' +
+                  '<ul class="dropdown-menu multiselect_scroll ' +
+                  element.validation +
+                  '">';
+
+                sphttp.get(
+                  _spPageContextInfo.siteServerRelativeUrl,
+                  element.source,
+                  customQuery,
+                  listFields,
+                  function (records, record, listItem, isDone) {
+                    if (isDone) {
+                      var grpfield = element.grpfieldkey;
+                      window.result = records.reduce(function (r, a) {
+                        r[a[grpfield]] = r[a[grpfield]] || [];
+                        r[a[grpfield]].push(a);
+                        return r;
+                      }, Object.create(null));
+
+                      Object.entries(result).forEach((el) => {
+                        htmlBody += '<label class="grp-select">' + el[0] + "</label>";
+                        el[1].forEach((dl) => {
+                          htmlBody +=
+                            "<li data-parentrelatedvaluelvl1=" +
+                            dl[element.sourcefieldlvl1] +
+                            " data-parentrelatedkeylvl1= " +
+                            element.fieldsinformlvl1 +
+                            " data-parentrelatedvaluelvl2=" +
+                            dl[element.sourcefieldlvl2] +
+                            " data-parentrelatedkeylvl2=" +
+                            element.fieldsinformlvl2 +
+                            " class='limulti'>" +
+                            '<div class="checkbox">' +
+                            "<label>" +
+                            '<input value="' +
+                            dl[element.valfieldkey] +
+                            '" id="' +
+                            element.InternalName +
+                            '" type="checkbox">' +
+                            dl[element.Dispfieldkey] +
+                            "</label>" +
+                            "</div>" +
+                            "</li>";
+                        });
+                      });
+                      htmlBody +=
+                        "</ul>" +
+                        "</li>" +
+                        "</ul>" +
+                        "<span data-trans-" +
+                        element.Errmsgkey +
+                        ' class="errMsgField Resources"></span>' +
+                        '<div class="inputInfo ' +
+                        isexist +
+                        '">' +
+                        descPhrase +
+                        "</div>" +
+                        "</div>";
+
+                      OnSuccess(flag, htmlBody);
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+        break;
 
       case "dropdownValuesMultiselect":
-          htmlBody =
-            '<div class="col-md-6 CFIELD ' +
-            dontSubmit +
-            " " +
-            dontRequest +
-            " " +
-            dontSubmitRequired +
-            " " +
-            element.className +
-            ' " style="display:' +
-            element.display +
-            '">' +
-            '<label for="' +
-            element.InternalName +
-            '">' +
-            displayName +
-            "</label>" +
-            '<div style="display:inline-' +
-            element.toggledisplay +
-            '" class="showhide-trigger" title="Show/Hide ' +
-            displayName +
-            '"></div>' +
-            '<ul myfield="' +
-            element.InternalName +
-            '" id="' +
-            element.InternalName +
-            '" type="multiselect" class="multiselect-container form-control" type="multiselect">' +
-            '<li class="dropdown ul-bullet-remove">' +
-            '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
-            displayName +
-            '<b class="caret"></b></a>' +
-            '<ul class="dropdown-menu multiselect_scroll">';
-            element.options.choices.forEach(function (choice) {
-              var dataTrans = 'data-trans-' + choice.display;
-            
-              htmlBody +=
-                '<li class="limulti">' +
-                  '<div class="checkbox">' +
-                    '<label>' +
-                      '<input type="checkbox" value="' + choice.value + '">' +
-                      '<span ' + dataTrans + ' class="Resources">' + choice.display + '</span>' +
-                    '</label>' +
-                  '</div>' +
-                '</li>';
-            });            
-      
+        htmlBody =
+          '<div class="col-md-6 CFIELD ' +
+          dontSubmit +
+          " " +
+          dontRequest +
+          " " +
+          dontSubmitRequired +
+          " " +
+          element.className +
+          ' " style="display:' +
+          element.display +
+          '">' +
+          '<label for="' +
+          element.InternalName +
+          '">' +
+          displayName +
+          "</label>" +
+          '<div style="display:inline-' +
+          element.toggledisplay +
+          '" class="showhide-trigger" title="Show/Hide ' +
+          displayName +
+          '"></div>' +
+          '<ul myfield="' +
+          element.InternalName +
+          '" id="' +
+          element.InternalName +
+          '" type="multiselect" class="multiselect-container form-control" type="multiselect">' +
+          '<li class="dropdown ul-bullet-remove">' +
+          '<a href="#" data-toggle="dropdown" class="dropdown-toggle">' +
+          displayName +
+          '<b class="caret"></b></a>' +
+          '<ul class="dropdown-menu multiselect_scroll">';
+        element.options.choices.forEach(function (choice) {
+          var dataTrans = 'data-trans-' + choice.display;
+
           htmlBody +=
-            "</ul>" + // close dropdown-menu
-            "</li>" + // close dropdown li
-            "</ul>" + // close multiselect-container
-            '<div class="inputInfo false"></div>' +
-            "</div>";
-      
-          OnSuccess(flag, htmlBody);
-          break;
+            '<li class="limulti">' +
+            '<div class="checkbox">' +
+            '<label>' +
+            '<input type="checkbox" value="' + choice.value + '">' +
+            '<span ' + dataTrans + ' class="Resources">' + choice.display + '</span>' +
+            '</label>' +
+            '</div>' +
+            '</li>';
+        });
+
+        htmlBody +=
+          "</ul>" + // close dropdown-menu
+          "</li>" + // close dropdown li
+          "</ul>" + // close multiselect-container
+          '<div class="inputInfo false"></div>' +
+          "</div>";
+
+        OnSuccess(flag, htmlBody);
+        break;
 
       case "lookupchildtoparent":
         var code = activeCode;
@@ -9046,7 +9023,7 @@ window.ListInfo = {
               if (delBtn.length) delBtn.click();
               $("#" + pickerId + "_TopSpan_HiddenInput").val("");
               $("#" + pickerId + "_TopSpan_EditorInput").val("");
-            } catch (e) {}
+            } catch (e) { }
             $("#" + pickerId).attr("data-email", enternameemail);
             $("#" + pickerId).removeAttr("user-email");
           }
@@ -9058,10 +9035,10 @@ window.ListInfo = {
               retry++;
               var pp =
                 SPClientPeoplePicker &&
-                SPClientPeoplePicker.SPClientPeoplePickerDict
+                  SPClientPeoplePicker.SPClientPeoplePickerDict
                   ? SPClientPeoplePicker.SPClientPeoplePickerDict[
-                      pickerId + "_TopSpan"
-                    ]
+                  pickerId + "_TopSpan"
+                  ]
                   : null;
               if (pp && pp.AddUserKeys) {
                 if (displayText) {
@@ -9146,7 +9123,7 @@ window.ListInfo = {
                         emailKey
                       );
                   },
-                  error: function () {},
+                  error: function () { },
                 });
               }
             );
@@ -9240,33 +9217,33 @@ window.ListInfo = {
           myRoleConfig[0] &&
           myRoleConfig[0].hasOwnProperty("dataFilter")
         ) {
-            isRoleDataLevelAccess = true;
+          isRoleDataLevelAccess = true;
 
-            await get_hierarchies.init(element.source);
+          await get_hierarchies.init(element.source);
 
-            myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
-              let accessConditions = el.accessConditions;
-              let isListConditional1 = el.listName == element.source;
-              let isListConditional2 =
-                el.subRelation.listName == element.source;
-              let isListConditional3 =
-                el.subRelation.subRelation.listName == element.source;
-              let isListConditional4 = el.subRelation.subRelation.subRelation
-                ? el.subRelation.subRelation.subRelation.listName ==
-                  element.source
-                : false;
-              if (isListConditional1) {
-                customQuery = data_Level1_Access.g.dataLevelQuery;
-              } else if (isListConditional2) {
-                customQuery = data_Level2_Access.g.dataLevelQuery;
-              } else if (isListConditional3) {
-                customQuery = data_Level3_Access.g.dataLevelQuery;
-              } else if (isListConditional4) {
-                customQuery = data_Level3_Access.g.dataLevelQuery;
-              }
-            });
+          myRoleConfig[0].dataFilter.hierarchies.forEach((el, i, a) => {
+            let accessConditions = el.accessConditions;
+            let isListConditional1 = el.listName == element.source;
+            let isListConditional2 =
+              el.subRelation.listName == element.source;
+            let isListConditional3 =
+              el.subRelation.subRelation.listName == element.source;
+            let isListConditional4 = el.subRelation.subRelation.subRelation
+              ? el.subRelation.subRelation.subRelation.listName ==
+              element.source
+              : false;
+            if (isListConditional1) {
+              customQuery = data_Level1_Access.g.dataLevelQuery;
+            } else if (isListConditional2) {
+              customQuery = data_Level2_Access.g.dataLevelQuery;
+            } else if (isListConditional3) {
+              customQuery = data_Level3_Access.g.dataLevelQuery;
+            } else if (isListConditional4) {
+              customQuery = data_Level3_Access.g.dataLevelQuery;
+            }
+          });
 
-            // }
+          // }
         }
         // filter data based on role access
         else if (
@@ -9871,7 +9848,7 @@ window.ListInfo = {
         // queryFieldValueFromField: the InternalName of the field to get the value from
         var customQuery;
         var queryFieldValueToUse = "";
-        
+
         // Get the value from the source field if queryFieldValueFromField is specified
         if (element.queryFieldValueFromField) {
           var sourceFieldElement = $("select#" + element.queryFieldValueFromField + ", input#" + element.queryFieldValueFromField);
@@ -9881,7 +9858,7 @@ window.ListInfo = {
         } else {
           queryFieldValueToUse = element.queryFieldValue || "";
         }
-        
+
         // Build query only if we have a value (or if queryFieldValueFromField is not set, use static value)
         if (queryFieldValueToUse || !element.queryFieldValueFromField) {
           customQuery =
@@ -10084,7 +10061,7 @@ window.ListInfo = {
           '" data-parentlookupfield="' +
           (element.parentLookupField ||
             (element.InternalName &&
-            element.InternalName.indexOf("dummyfield") !== -1
+              element.InternalName.indexOf("dummyfield") !== -1
               ? element.InternalName.replace("dummyfield", "")
               : "KPICode")) +
           '" id="' +
@@ -10165,7 +10142,7 @@ window.ListInfo = {
           '" data-parentlookupfield="' +
           (element.parentLookupField ||
             (element.InternalName &&
-            element.InternalName.indexOf("dummyfield") !== -1
+              element.InternalName.indexOf("dummyfield") !== -1
               ? element.InternalName.replace("dummyfield", "")
               : "KPICode")) +
           '" data-secondsource="' +
@@ -10612,38 +10589,38 @@ window.ListInfo = {
     }
     if (listkey === "projects" && (isNew || isEdit)) {
       $("#RelatedInitiative").on("change", function () {
-          var initCode = $(this).val(); // get selected initiative code
-  
-          if (initCode) {
-              $.ajax({
-                  url: `${APIURL}/job/checkunfundedinitiative/${initCode}`,
-                  type: "GET",
-                  headers: {
-                      Accept: "application/json;odata=verbose",
-                  },
-                  success: function (data) {
-                      // Check if API returned successfully
-                      if (data && data.isSuccess) {
-                          if (data.result === true) {
-                              $("#FundingStatus").val("unfunded").prop("disabled", true);
-                          } else {
-                              $("#FundingStatus").val("").prop("disabled", false);
-                          }
-                      } else {
-                          console.warn("API returned unsuccessful:", data);
-                          $("#FundingStatus").val("").prop("disabled", false);
-                      }
-                  },
-                  error: function (err) {
-                      console.error("Error checking unfunded initiative:", err);
-                      $("#FundingStatus").val("").prop("disabled", false);
-                  },
-              });
-          } else {
+        var initCode = $(this).val(); // get selected initiative code
+
+        if (initCode) {
+          $.ajax({
+            url: `${APIURL}/job/checkunfundedinitiative/${initCode}`,
+            type: "GET",
+            headers: {
+              Accept: "application/json;odata=verbose",
+            },
+            success: function (data) {
+              // Check if API returned successfully
+              if (data && data.isSuccess) {
+                if (data.result === true) {
+                  $("#FundingStatus").val("unfunded").prop("disabled", true);
+                } else {
+                  $("#FundingStatus").val("").prop("disabled", false);
+                }
+              } else {
+                console.warn("API returned unsuccessful:", data);
+                $("#FundingStatus").val("").prop("disabled", false);
+              }
+            },
+            error: function (err) {
+              console.error("Error checking unfunded initiative:", err);
               $("#FundingStatus").val("").prop("disabled", false);
-          }
+            },
+          });
+        } else {
+          $("#FundingStatus").val("").prop("disabled", false);
+        }
       });
-  }
+    }
     if ((listkey === "risks" || listkey === "initiativerisks") && (isEdit || isNew)) {
       function calculateRiskRating() {
         var impact = $("#Impact").val();
@@ -10678,8 +10655,8 @@ window.ListInfo = {
         typeof USERPCODE !== "undefined" && USERPCODE
           ? USERPCODE
           : typeof PCODE !== "undefined" && PCODE
-          ? PCODE
-          : "";
+            ? PCODE
+            : "";
       if (strategicProjectCode) {
         $.ajax({
           url: "/_api/web/lists/getbytitle('Projects')/items",
@@ -10811,13 +10788,13 @@ window.ListInfo = {
       }
     }
     function hideBudgetFields() {
-      var fields = ["#Weight", "#Amount", "#Quantity", "#AmountPrice","#InvoiceNumber" , "#InvoiceDate"];
+      var fields = ["#Weight", "#Amount", "#Quantity", "#AmountPrice", "#InvoiceNumber", "#InvoiceDate"];
       $.each(fields, function (i, f) {
         $(f).hide(); // hide the input
         $(f).closest(".CFIELD").addClass("hide-field").css("display", "none");  // add hide-field to container
       });
     }
-    
+
     // if (!isCrMode && crListKey) {
     //   //on new custom cr
     //   handleCustomeCr.init();
@@ -10858,8 +10835,8 @@ window.ListInfo = {
     //   );
     // }
     //return htmlBody;
-   
-  
+
+
   },
   g: {
     htmlText: "",
@@ -10931,7 +10908,7 @@ window.ListInfo = {
         function (records, record, listItem, isDone) {
           if (!isDone) return;
           var html =
-          '<option value="">' + placeholder + "</option>";
+            '<option value="">' + placeholder + "</option>";
           (records || []).forEach(function (el) {
             html +=
               '<option value="' + el.Title + '">' + el.Name + "</option>";
@@ -11102,13 +11079,13 @@ window.ListInfo = {
             .last()
             .hasClass("firstMasterEmpty");
 
-            if (
-              firstMasterClass &&
-              $masterSection.find(".Details-Item.EditItem").length === 0 &&
-              $masterSection.find(".Details-Item.NewItem:not(.firstMasterEmpty)")
-                .length === 0
-            ) {
-              getMasterIndex = 1;
+          if (
+            firstMasterClass &&
+            $masterSection.find(".Details-Item.EditItem").length === 0 &&
+            $masterSection.find(".Details-Item.NewItem:not(.firstMasterEmpty)")
+              .length === 0
+          ) {
+            getMasterIndex = 1;
           }
 
           if ((listkey == "projects" || listkey == "initiatives") && isNew) {
@@ -11183,10 +11160,10 @@ window.ListInfo = {
 
           $(
             '<div class="Details-Item NewItem" data-index="' +
-              getMasterIndex +
-              '">' +
-              toappend +
-              "</div>"
+            getMasterIndex +
+            '">' +
+            toappend +
+            "</div>"
           ).insertBefore($(this).parent());
           if (ListInfo.g.uniqueMasterDetailRadioNames) {
             ListInfo.g.uniqueMasterDetailRadioNames(
@@ -11301,16 +11278,16 @@ window.ListInfo = {
             .each(function () {
               $(
                 '<div class="PPField SPIField form-control" type="picker" id="' +
-                  $(this).attr("id") +
-                  "+++" +
-                  Math.floor(Math.random() * 1000000) +
-                  '" value="" placeholder="' +
-                  $(this).attr("placeholder") +
-                  '" INppicker="' +
-                  $(this).attr("id") +
-                  "+++" +
-                  Math.floor(Math.random() * 1000000) +
-                  '"></div>'
+                $(this).attr("id") +
+                "+++" +
+                Math.floor(Math.random() * 1000000) +
+                '" value="" placeholder="' +
+                $(this).attr("placeholder") +
+                '" INppicker="' +
+                $(this).attr("id") +
+                "+++" +
+                Math.floor(Math.random() * 1000000) +
+                '"></div>'
               ).insertBefore($(this));
               $(this).remove();
             });
@@ -11364,7 +11341,7 @@ window.ListInfo = {
             $(this)
               .closest("[data-target_list]")
               .find(".Details-Item.NewItem")
-              [masterLength].remove();
+            [masterLength].remove();
           }
         } else if (isNew) {
           // in new > 1 because on render the form there is a new Item so it will be  before click on +
@@ -11373,7 +11350,7 @@ window.ListInfo = {
             $(this)
               .closest("[data-target_list]")
               .find(".Details-Item.NewItem")
-              [masterLength].remove();
+            [masterLength].remove();
           }
         } else if (isEdit) {
           // in edit > 0 because on render the form there is no new Item till will click on +
@@ -11382,7 +11359,7 @@ window.ListInfo = {
             $(this)
               .closest("[data-target_list]")
               .find(".Details-Item.NewItem")
-              [masterLength].remove();
+            [masterLength].remove();
           }
         }
 
@@ -11517,7 +11494,7 @@ window.ListInfo = {
         for (var i = 0; i < files.length; i++) {
           const file = files[i];
           const fileExtension = "" + file.name.split(".").pop();
-          
+
           // Check file size first (5MB = 5 * 1024 * 1024 bytes)
           if (file.size > 5 * 1024 * 1024) {
             oversizedFiles.push(file.name);
@@ -11551,19 +11528,19 @@ window.ListInfo = {
           const fileNames = oversizedFiles.join(', ');
           const currentLang = localStorage.getItem("lng") || 'ar';
           let alertMessage = '';
-          
+
           if (currentLang === 'ar') {
             alertMessage = `تم تجاوز حجم الملف! الملفات التالية أكبر من 5 ميجابايت ولا يمكن رفعها:\n${fileNames}`;
           } else {
             alertMessage = `File size exceeded! The following files are larger than 5MB and cannot be uploaded:\n${fileNames}`;
           }
-          
+
           alert(alertMessage);
-          
+
           // Clear the input value to remove all files
           $(this).val('');
           validattachments = [];
-          
+
           // Hide the integration save button if applicable
           if (
             (listkey == "projectcharter" && PCODE) ||
@@ -11574,7 +11551,7 @@ window.ListInfo = {
               opacity: "0.6",
             });
           }
-          
+
           // Show the "no file" message
           $(this).parent().find("#nofile").show();
           fileChosen.html("");
@@ -11603,12 +11580,12 @@ window.ListInfo = {
           $(this).parent().find("#nofile").hide();
           fileChosen.html("");
         }
-        
+
         for (var i = 0; i < validattachments.length; i++) {
           fileChosen.append(
             "<span class='attachfilename'><i class='fas fa-file'></i><span>" +
-              validattachments[i].name +
-              "</span><button type='button' class='removeAttchment'><i class='fas fa-times'></i></button></span>"
+            validattachments[i].name +
+            "</span><button type='button' class='removeAttchment'><i class='fas fa-times'></i></button></span>"
           );
         }
 
@@ -11675,29 +11652,29 @@ window.ListInfo = {
 
         $(
           '<div class="col-md-12 CFIELD" data-groups="" >' + //style="display: flex;align-items: center;"
-            '<label class="attlabel" for="getFile"  undefined="">' +
-            pluseAttachTitle +
-            "</label>" + //class="custom-file-upload"
-            "<input " +
-            checkFilePurpose +
-            ' type="file" accept="' +
-            acceptedExtensions +
-            '" hidden multiple="multiple" placeholder="' +
-            pluseAttachTitle +
-            '" class="form-control SPIField" id="' +
-            fileId +
-            '" >' +
-            '<label data-trans-choosefile id="chooseFile" for="' +
-            fileId +
-            '" class="Resources"></label>' +
-            '<span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>' +
-            '<div class="AttErrorMsg attErrorMsg" style="display:none"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>' +
-            '<div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>' +
-            '<div class="attErrorMsg"><span data-trans-fileSize class="Resources">Maximum file size: 5MB</span></div>' +
-            '<div class="col-md-6 CFIELD" data-groups="" style="visibility:hidden">' +
-            '<label for="forattach">Attachments</label>' +
-            "</div>" +
-            "</div>"
+          '<label class="attlabel" for="getFile"  undefined="">' +
+          pluseAttachTitle +
+          "</label>" + //class="custom-file-upload"
+          "<input " +
+          checkFilePurpose +
+          ' type="file" accept="' +
+          acceptedExtensions +
+          '" hidden multiple="multiple" placeholder="' +
+          pluseAttachTitle +
+          '" class="form-control SPIField" id="' +
+          fileId +
+          '" >' +
+          '<label data-trans-choosefile id="chooseFile" for="' +
+          fileId +
+          '" class="Resources"></label>' +
+          '<span id="file-chosen"><span data-trans-nofile id="nofile" class="Resources"></span></span>' +
+          '<div class="AttErrorMsg attErrorMsg" style="display:none"><span data-trans-file class="Resources"></span><span class="notacceptedext"></span><span data-trans-notallowed class="Resources"></span></div>' +
+          '<div class="attErrorMsg"><span data-trans-acceptedfiles class="Resources"></span><span class="acceptedfile"></span></div>' +
+          '<div class="attErrorMsg"><span data-trans-fileSize class="Resources">Maximum file size: 5MB</span></div>' +
+          '<div class="col-md-6 CFIELD" data-groups="" style="visibility:hidden">' +
+          '<label for="forattach">Attachments</label>' +
+          "</div>" +
+          "</div>"
         ).insertBefore($(this).parent());
 
         $("#" + fileId)
@@ -11743,18 +11720,18 @@ window.ListInfo = {
                     .text()
                     .indexOf("لعام") > -1
                     ? $("#Cost" + i)
-                        .parent()
-                        .find("label")
-                        .text()
-                        .split("لعام")[0] +
-                      " لعام " +
-                      yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("لعام")[0] +
+                    " لعام " +
+                    yeartodisp
                     : $("#Cost" + i)
-                        .parent()
-                        .find("label")
-                        .text() +
-                      " لعام " +
-                      yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " لعام " +
+                    yeartodisp;
               } else {
                 var label =
                   $("#Cost" + i)
@@ -11763,18 +11740,18 @@ window.ListInfo = {
                     .text()
                     .indexOf("For Year") > -1
                     ? $("#Cost" + i)
-                        .parent()
-                        .find("label")
-                        .text()
-                        .split("For Year")[0] +
-                      " For Year " +
-                      yeartodisp
+                      .parent()
+                      .find("label")
+                      .text()
+                      .split("For Year")[0] +
+                    " For Year " +
+                    yeartodisp
                     : $("#Cost" + i)
-                        .parent()
-                        .find("label")
-                        .text() +
-                      " For Year " +
-                      yeartodisp;
+                      .parent()
+                      .find("label")
+                      .text() +
+                    " For Year " +
+                    yeartodisp;
               }
               $("#Cost" + i)
                 .parent()
@@ -11817,7 +11794,7 @@ window.ListInfo = {
     //   });
     // },
     DeliverablesDelivered: function () {
-    
+
       var Delivered = $("#Delivered:checked").val();
       if (Delivered == "yes") {
         $("#DeliveredDate").attr("required", "required");
@@ -12102,43 +12079,43 @@ window.ListInfo = {
 
           $parent.addClass("hide-field").hide();
           $cfield.addClass("hide-field").hide();
-      
+
           // .parent().prop('disabled', true);
           // .addClass("hide-field");
-      
+
           // $('[data-togglename="' + item + '"]')
           //   .parent().hide();
-      
+
           // $('[data-togglename="' + item + '"]').val("");
           $('[data-togglename="' + item + '"]')
             .parent()
             .find(">*")
             .attr("required", false);
-      
+
           // remove required for section hide
           $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(
             function () {
               // var fieldId =$(this).find()
               var isRequired = false,
                 fieldId = "";
-      
+
               isRequired = $(this).find(">*").attr("required") ? true : false;
-      
+
               if (isRequired) {
                 fieldId = $(this).find("input,textarea,select").attr("id");
                 console.log(fieldId, "fieldId");
                 requiredFieldsSections.push(fieldId);
               }
-      
+
               // requiredFieldsSections.push()
-      
+
               $(this).find(">*").attr("required", false);
             }
           );
-      
+
           $('[data-togglename="' + item + '"]').each(function () {
             var isSection = $(this).hasClass("fieldset-container");
-      
+
             if (isSection) {
               $(this).closest(".section-container").addClass("removeborder");
               $(this).find(".CFIELD").addClass("hide-field");
@@ -12151,7 +12128,7 @@ window.ListInfo = {
           }
           var isHidden = $('[data-togglename="' + item + '"]').is(":hidden");
           var myFieldParent = $('[data-togglename="' + item + '"]').parent();
-          myFieldParentofParent = $('[data-togglename="' + item + '"]');         
+          myFieldParentofParent = $('[data-togglename="' + item + '"]');
           if (isHidden) {
             myFieldParent.show().removeClass("hide-field");
             myFieldParentofParent.show().removeClass("hide-field");
@@ -12173,10 +12150,10 @@ window.ListInfo = {
                 );
               }
             }
-      
+
             if (!isView) {
               myFieldParent.find(">*").attr("required", true);
-      
+
               $('[data-togglename="' + item + '"] .Details-Item .CFIELD').each(
                 function () {
                   requiredFieldsSections.forEach((el) => {
@@ -12192,7 +12169,7 @@ window.ListInfo = {
                   $(this).closest(".CFIELD").removeClass("hide-field");
                 }
               );
-      
+
               $('[data-togglename="' + item + '"]').each(function () {
                 var isSection = $(this).hasClass("fieldset-container");
                 // to remove the border and hide field from section when toggle
@@ -12260,12 +12237,12 @@ window.ListInfo = {
             .parent()
             .removeClass("py-5")
             .removeClass("border-bottom");
-            var $el = $('[data-togglename="' + item + '"]');
-            var $parent = $el.parent();
-            var $cfield = $el.closest(".CFIELD");
-            $parent.addClass("hide-field").hide();
-            $cfield.addClass("hide-field").hide();            
-      
+          var $el = $('[data-togglename="' + item + '"]');
+          var $parent = $el.parent();
+          var $cfield = $el.closest(".CFIELD");
+          $parent.addClass("hide-field").hide();
+          $cfield.addClass("hide-field").hide();
+
           $('[data-togglename="' + item + '"]').each(function () {
             $(this).val("");
             $(this).removeAttr("value");
@@ -12282,9 +12259,9 @@ window.ListInfo = {
       var myValue = $this.val();
 
       var toggleRequiredValues =
-          $this.data("requiredvalues").indexOf(":::") > -1
-            ? $this.data("requiredvalues").split(":::")
-            : [$this.data("requiredvalues")],
+        $this.data("requiredvalues").indexOf(":::") > -1
+          ? $this.data("requiredvalues").split(":::")
+          : [$this.data("requiredvalues")],
         toggleRequiredValues = toggleRequiredValues.filter(function (t) {
           return t.indexOf(myValue + "[") > -1;
         }),
@@ -12331,9 +12308,9 @@ window.ListInfo = {
       var myValue = $this.val();
 
       var toggleDisabledValues =
-          $this.data("toggledisabledvalues").indexOf(":::") > -1
-            ? $this.data("toggledisabledvalues").split(":::")
-            : [$this.data("toggledisabledvalues")],
+        $this.data("toggledisabledvalues").indexOf(":::") > -1
+          ? $this.data("toggledisabledvalues").split(":::")
+          : [$this.data("toggledisabledvalues")],
         toggleDisabledValues = toggleDisabledValues.filter(function (t) {
           return t.indexOf(myValue + "[") > -1;
         }),
@@ -12545,29 +12522,29 @@ setTimeout(() => {
   ) {
     let htmlBuilder =
       '<div class="card mb-4 border-primary discrepancy-summary-card">' +
-        '<div class="card-header bg-discrepancy text-white font-weight-bold text-center Resources">' +
-          '<p class="Resources m-0" data-trans-discrepancysummary> </p>' +
-        '</div>' +
-        '<div class="card-body">' +
-          '<div class="row">' +
-            '<div class="col-lg-3 col-md-6 mb-3 text-center">' +
-              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyValue></p>' +
-              '<div class="text-center">' + (projectDiscrepancyCost || No_Data) + '</div>' +
-            '</div>' +
-            '<div class="col-lg-3 col-md-6 mb-3">' +
-              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyPercentage></p>' +
-              '<div class="text-center">' + (projectDiscrepancyCostPercentage || No_Data) + '</div>' +
-            '</div>' +
-            '<div class="col-lg-3 col-md-6 mb-3">' +
-              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-DiscrepancyinDays></p>' +
-              '<div class="text-center">' + (projectDiscrepancyInDays || No_Data) + '</div>' +
-            '</div>' +
-            '<div class="col-lg-3 col-md-6 mb-3">' +
-              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-TimeDiscrepancyPercentage></p>' +
-              '<div class="text-center">' + (projectDiscrepancyPercentage || No_Data) + '</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
+      '<div class="card-header bg-discrepancy text-white font-weight-bold text-center Resources">' +
+      '<p class="Resources m-0" data-trans-discrepancysummary> </p>' +
+      '</div>' +
+      '<div class="card-body">' +
+      '<div class="row">' +
+      '<div class="col-lg-3 col-md-6 mb-3 text-center">' +
+      '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyValue></p>' +
+      '<div class="text-center">' + (projectDiscrepancyCost || No_Data) + '</div>' +
+      '</div>' +
+      '<div class="col-lg-3 col-md-6 mb-3">' +
+      '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyPercentage></p>' +
+      '<div class="text-center">' + (projectDiscrepancyCostPercentage || No_Data) + '</div>' +
+      '</div>' +
+      '<div class="col-lg-3 col-md-6 mb-3">' +
+      '<p class="Resources mb-1 font-weight-bold text-center" data-trans-DiscrepancyinDays></p>' +
+      '<div class="text-center">' + (projectDiscrepancyInDays || No_Data) + '</div>' +
+      '</div>' +
+      '<div class="col-lg-3 col-md-6 mb-3">' +
+      '<p class="Resources mb-1 font-weight-bold text-center" data-trans-TimeDiscrepancyPercentage></p>' +
+      '<div class="text-center">' + (projectDiscrepancyPercentage || No_Data) + '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
       '</div>';
 
     container.insertAdjacentHTML('afterbegin', htmlBuilder);
@@ -12586,35 +12563,35 @@ setTimeout(() => {
   ) {
     let htmlBuilder =
       '<div class="card mb-4 border-primary discrepancy-summary-card">' +
-        '<div class="card-header bg-discrepancy text-white font-weight-bold text-center Resources">' +
-          '<p class="Resources m-0" data-trans-discrepancysummary> </p>' +
-        '</div>' +
-        '<div class="card-body">' +
-          '<div class="row">' +
-            '<div class="col-lg-3 col-md-6 mb-3 text-center">' +
-              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyValue></p>' +
-              '<div class="text-center">' + (initiativeDiscrepancyCost || No_Data) + '</div>' +
-            '</div>' +
-            '<div class="col-lg-3 col-md-6 mb-3">' +
-              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyPercentage></p>' +
-              '<div class="text-center">' + (initiativeDiscrepancyCostPercentage || No_Data) + '</div>' +
-            '</div>' +
-            '<div class="col-lg-3 col-md-6 mb-3">' +
-              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-DiscrepancyinDays></p>' +
-              '<div class="text-center">' + (initiativeDiscrepancyInDays || No_Data) + '</div>' +
-            '</div>' +
-            '<div class="col-lg-3 col-md-6 mb-3">' +
-              '<p class="Resources mb-1 font-weight-bold text-center" data-trans-TimeDiscrepancyPercentage></p>' +
-              '<div class="text-center">' + (initiativeDiscrepancyPercentage || No_Data) + '</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
+      '<div class="card-header bg-discrepancy text-white font-weight-bold text-center Resources">' +
+      '<p class="Resources m-0" data-trans-discrepancysummary> </p>' +
+      '</div>' +
+      '<div class="card-body">' +
+      '<div class="row">' +
+      '<div class="col-lg-3 col-md-6 mb-3 text-center">' +
+      '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyValue></p>' +
+      '<div class="text-center">' + (initiativeDiscrepancyCost || No_Data) + '</div>' +
+      '</div>' +
+      '<div class="col-lg-3 col-md-6 mb-3">' +
+      '<p class="Resources mb-1 font-weight-bold text-center" data-trans-FinancialDiscrepancyPercentage></p>' +
+      '<div class="text-center">' + (initiativeDiscrepancyCostPercentage || No_Data) + '</div>' +
+      '</div>' +
+      '<div class="col-lg-3 col-md-6 mb-3">' +
+      '<p class="Resources mb-1 font-weight-bold text-center" data-trans-DiscrepancyinDays></p>' +
+      '<div class="text-center">' + (initiativeDiscrepancyInDays || No_Data) + '</div>' +
+      '</div>' +
+      '<div class="col-lg-3 col-md-6 mb-3">' +
+      '<p class="Resources mb-1 font-weight-bold text-center" data-trans-TimeDiscrepancyPercentage></p>' +
+      '<div class="text-center">' + (initiativeDiscrepancyPercentage || No_Data) + '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
       '</div>';
 
     container.insertAdjacentHTML('afterbegin', htmlBuilder);
     changeResources()
   }
-}, 2000); 
+}, 2000);
 
 
 
@@ -12632,11 +12609,11 @@ window.View_ListInfo = {
       //get form's json
       $.getScript(
         "" +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/Style%20Library/spm/JSON/" +
-          listkey +
-          "/" +
-          JSON_File_Name
+        _spPageContextInfo.webAbsoluteUrl +
+        "/Style%20Library/spm/JSON/" +
+        listkey +
+        "/" +
+        JSON_File_Name
       ).done(function (script, textStatus) {
         isPrint = Information_Form[0].isPrint
           ? Information_Form[0].isPrint
@@ -12650,10 +12627,10 @@ window.View_ListInfo = {
   InfoLoop: function () {
     var htmlBuilder = isWF
       ? '<div class="d-flex justify-content-end mx-o mb-2"> <button data-trans-backbutton class="btn btn-action btn-cancel cancel Resources" type="button"></button> </div> <div class="section1 approvalHeader col-12"><div class="d-flex justify-content-between w-100"><div class=""><span class="bold Resources" data-trans-' +
-        USERlistkey +
-        "></span>" +
-        " " +
-        '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
+      USERlistkey +
+      "></span>" +
+      " " +
+      '<span class="mx-3 wf-project-name"></span></div><div class=""><span class="bold Resources" data-trans-taskname></span><span class="mx-3 wf-task-name"></span></div></div></div><h2 class="approvalHeader Resources"></h2>'
       : "";
 
     var Label, Description;
@@ -12776,12 +12753,10 @@ window.View_ListInfo = {
               localStorage.getItem("lng") == "ar"
             ) {
               printBody += `<div style="display:block;padding:20px 0px" class="CFIELD">
-                        <label class="col-md-2 printTitle" for=${
-                          el.InternalName
-                        }>${el.DisplayName}</label>
-                        <p class="col-md-9 viewmode-value print-field" style="border-bottom:1px solid #ccc;white-space:pre-line"  type=${
-                          el.type == "datetime" ? "date" : el.type
-                        } id="${el.InternalName}"></p>
+                        <label class="col-md-2 printTitle" for=${el.InternalName
+                }>${el.DisplayName}</label>
+                        <p class="col-md-9 viewmode-value print-field" style="border-bottom:1px solid #ccc;white-space:pre-line"  type=${el.type == "datetime" ? "date" : el.type
+                } id="${el.InternalName}"></p>
                     </div>
                     `;
             } else {
@@ -12796,11 +12771,10 @@ window.View_ListInfo = {
 
         if (item.sectiontype == "master") {
           printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printFooterContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" ${notAllowForGroups} style="display:none">
-                              <p class="printDescription">${
-                                Description
-                                  ? Label + " | " + Description
-                                  : Label
-                              }</p>
+                              <p class="printDescription">${Description
+              ? Label + " | " + Description
+              : Label
+            }</p>
                               <div class="col-md-11 p-4 fieldset-container">
                               ${printFooter}
                               </div>
@@ -12808,11 +12782,10 @@ window.View_ListInfo = {
                           `;
         } else {
           printHtml += `<div class="py-5 border-bottom section-container ViewPrint_Form printBodyContainer page-avoid" ${targetList} ' ' ${sectionType} ' data-groups="${groups}" ${notAllowForGroups} style="display:none">
-                              <p class="printDescription">${
-                                Description
-                                  ? Label + " | " + Description
-                                  : Label
-                              }</p>
+                              <p class="printDescription">${Description
+              ? Label + " | " + Description
+              : Label
+            }</p>
                               <div>
                               ${printBody}
                               </div>
@@ -13022,8 +12995,8 @@ window.View_ListInfo = {
             $(".FormContainer .exportPdfBtnContainer").remove();
             $(".FormContainer").prepend(
               '<div class="exportPdfBtnContainer">' +
-                '<button type="button" class="btn exportPdfBtn Resources" data-trans-excelpdf onclick="Export_PDF.export()"></button>' +
-                "</div>"
+              '<button type="button" class="btn exportPdfBtn Resources" data-trans-excelpdf onclick="Export_PDF.export()"></button>' +
+              "</div>"
             );
           }
           if (isPrint) {
@@ -13135,11 +13108,11 @@ window.View_ListInfo = {
         toggleValues +=
           i == 0
             ? 'data-toggleValues="' +
-              item.value +
-              "[" +
-              item.fields.join(",") +
-              "]" +
-              seperator
+            item.value +
+            "[" +
+            item.fields.join(",") +
+            "]" +
+            seperator
             : item.value + "[" + item.fields.join(",") + "]" + seperator;
       });
     }
@@ -13423,144 +13396,144 @@ window.View_ListInfo = {
 
         case "multiselectstring":
           htmlBody =
-          '<div class="col-md-6 CFIELD ' +
-          dontSubmit +
-          " " +
-          dontRequest +
-          " " +
-          dontSubmitRequired +
-          " " +
-          " " +
-          element.className +
-          ' " ' +
-          thistip +
-          " " +
-          hidestagesIDs +
-          " " +
-          showstagesIDs +
-          "  " +
-          disablestagesIDs +
-          "  " +
-          enablestagesIDs +
-          "   " +
-          isWfhidestagesIDs +
-          " " +
-          requireOnWfTaskstagesIDs +
-          " " +
-          isWfshowstagesIDs +
-          "  " +
-          isWfdisablestagesIDs +
-          "  " +
-          isWfenablestagesIDs +
-          '        data-groups="' +
-          groups +
-          '" ' +
-          notAllowForGroups +
-          ' style="display:' +
-          element.display +
-          '">' +
-          '<label for="' +
-          element.InternalName +
-          '" ' +
-          element.validation +
-          ">" +
-          displayName +
-          // " " +
-          // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
-          "</label>" +
-          '<p type="multiselect" class="viewmode-value" data-valfieldkey="' +
-          element.valfieldkey +
-          '" data-dispfieldkey="' +
-          element.Dispfieldkey +
-          '" data-listname="' +
-          element.source +
-          '" id="' +
-          element.InternalName +
-          '" ' +
-          ToggleName +
-          'data-parentrelatedkeylvl1="' +
-          element.fieldsinformlvl1 +
-          '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
-          element.sourcefieldlvl1 +
-          '" data-parentrelatedkeylvl2="' +
-          element.fieldsinformlvl2 +
-          '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' +
-          element.sourcefieldlvl2 +
-          '" data-linkedto="' +
-          element.linkedto +
-          '"></p>' +
-          "</div>";
-        OnSuccess(flag, htmlBody);
-        break;
-        
-        
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            // " " +
+            // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
+            "</label>" +
+            '<p type="multiselect" class="viewmode-value" data-valfieldkey="' +
+            element.valfieldkey +
+            '" data-dispfieldkey="' +
+            element.Dispfieldkey +
+            '" data-listname="' +
+            element.source +
+            '" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            'data-parentrelatedkeylvl1="' +
+            element.fieldsinformlvl1 +
+            '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+            element.sourcefieldlvl1 +
+            '" data-parentrelatedkeylvl2="' +
+            element.fieldsinformlvl2 +
+            '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' +
+            element.sourcefieldlvl2 +
+            '" data-linkedto="' +
+            element.linkedto +
+            '"></p>' +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
+
         case "multiselecttranslatedstring":
           htmlBody =
-          '<div class="col-md-6 CFIELD ' +
-          dontSubmit +
-          " " +
-          dontRequest +
-          " " +
-          dontSubmitRequired +
-          " " +
-          " " +
-          element.className +
-          ' " ' +
-          thistip +
-          " " +
-          hidestagesIDs +
-          " " +
-          showstagesIDs +
-          "  " +
-          disablestagesIDs +
-          "  " +
-          enablestagesIDs +
-          "   " +
-          isWfhidestagesIDs +
-          " " +
-          requireOnWfTaskstagesIDs +
-          " " +
-          isWfshowstagesIDs +
-          "  " +
-          isWfdisablestagesIDs +
-          "  " +
-          isWfenablestagesIDs +
-          '        data-groups="' +
-          groups +
-          '" ' +
-          notAllowForGroups +
-          ' style="display:' +
-          element.display +
-          '">' +
-          '<label for="' +
-          element.InternalName +
-          '" ' +
-          element.validation +
-          ">" +
-          displayName +
-          // " " +
-          // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
-          "</label>" +
-          '<p type="multiselecttranslatedstring" class="viewmode-value"  id="' +
-          element.InternalName +
-          '" ' +
-          ToggleName +
-          'data-parentrelatedkeylvl1="' +
-          element.fieldsinformlvl1 +
-          '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
-          element.sourcefieldlvl1 +
-          '" data-parentrelatedkeylvl2="' +
-          element.fieldsinformlvl2 +
-          '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' +
-          element.sourcefieldlvl2 +
-          '" data-linkedto="' +
-          element.linkedto +
-          '"></p>' +
-          "</div>";
-        OnSuccess(flag, htmlBody);
-        break;
-        
-        
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" ' +
+            notAllowForGroups +
+            ' style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            // " " +
+            // `${element.showlink ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>" : ""}` +
+            "</label>" +
+            '<p type="multiselecttranslatedstring" class="viewmode-value"  id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            'data-parentrelatedkeylvl1="' +
+            element.fieldsinformlvl1 +
+            '" data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1="' +
+            element.sourcefieldlvl1 +
+            '" data-parentrelatedkeylvl2="' +
+            element.fieldsinformlvl2 +
+            '" data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2="' +
+            element.sourcefieldlvl2 +
+            '" data-linkedto="' +
+            element.linkedto +
+            '"></p>' +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
+
         case "multiselectForFiles":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +
@@ -14056,7 +14029,7 @@ window.View_ListInfo = {
 
         case "percentbyrelatedparent":
 
-      
+
 
           var code = activeCode;
 
@@ -14133,7 +14106,7 @@ window.View_ListInfo = {
                     "></p>" +
                     "</div>";
 
-             
+
 
                   OnSuccess(flag, htmlBody);
                 }
@@ -14589,7 +14562,7 @@ window.View_ListInfo = {
           if (element.getValueFromLookup) {
             getValueFromLookupAttrs = ' data-getvaluefromlookup="true" data-getvaluefromlookup-field="' + element.getValueFromLookup.lookupField + '" data-getvaluefromlookup-list="' + element.getValueFromLookup.lookupList + '" data-getvaluefromlookup-fieldtoget="' + element.getValueFromLookup.lookupFieldToGet + '"';
           }
-          
+
           htmlBody =
             '<div class="col-md-6 CFIELD ' +
             dontSubmit +
@@ -14926,10 +14899,9 @@ window.View_ListInfo = {
             ">" +
             displayName +
             " " +
-            `${
-              element.showlink
-                ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
-                : ""
+            `${element.showlink
+              ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
+              : ""
             }` +
             "</label>" +
             '<p type="lookup" data-listname="' +
@@ -15076,97 +15048,96 @@ window.View_ListInfo = {
             "</div>";
           OnSuccess(flag, htmlBody);
           break;
-        
-        case "LookupPicker":
-            if (element.BIlanguage == true) {
-                if (
-                    localStorage.getItem("lng") == null ||
-                    localStorage.getItem("lng") == "ar"
-                ) {
-                    dispfieldkey = element.Dispfieldkey;
-                } else {
-                    dispfieldkey = element.DispfieldkeyEn;
-                }
-            }
 
-            htmlBody =
-                '<div class="col-md-6 CFIELD ' +
-                dontSubmit +
-                " " +
-                dontRequest +
-                " " +
-                dontSubmitRequired +
-                " " +
-                element.className +
-                ' " ' +
-                thistip +
-                " " +
-                hidestagesIDs +
-                " " +
-                showstagesIDs +
-                "  " +
-                disablestagesIDs +
-                "  " +
-                enablestagesIDs +
-                "   " +
-                isWfhidestagesIDs +
-                " " +
-                requireOnWfTaskstagesIDs +
-                " " +
-                isWfshowstagesIDs +
-                "  " +
-                isWfdisablestagesIDs +
-                "  " +
-                isWfenablestagesIDs +
-                '        data-groups="' +
-                groups +
-                '" ' +
-                notAllowForGroups +
-                '  style="display:' +
-                element.display +
-                '">' +
-                '<label for="' +
-                element.InternalName +
-                '" ' +
-                element.validation +
-                ">" +
-                displayName +
-                " " +
-                `${
-                    element.showlink
-                        ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
-                        : ""
-                }` +
-                "</label>" +
-                '<p type="LookupPicker" data-listname="' +
-                element.source +
-                '" data-valfieldkey="' +
-                element.valfieldkey +
-                '" data-Dispfieldkey="' +
-                dispfieldkey +
-                '" data-parentrelatedkeylvl1=' +
-                element.fieldsinformlvl1 +
-                ' data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1=' +
-                element.sourcefieldlvl1 +
-                " data-parentrelatedkeylvl2=" +
-                element.fieldsinformlvl2 +
-                ' data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2=' +
-                element.sourcefieldlvl2 +
-                " data-parentrelatedkey=" +
-                element.dynamic +
-                ' data-parentrelatedvalue="" data-parentrelatedfilterkey=' +
-                element.filterField +
-                ' class="viewmode-value" id="' +
-                element.InternalName +
-                '" ' +
-                ToggleName +
-                ' data-linkedto="' +
-                element.linkedto +
-                '" ></p>' +
-                "</div>";
-            OnSuccess(flag, htmlBody);
-            break;
-        
+        case "LookupPicker":
+          if (element.BIlanguage == true) {
+            if (
+              localStorage.getItem("lng") == null ||
+              localStorage.getItem("lng") == "ar"
+            ) {
+              dispfieldkey = element.Dispfieldkey;
+            } else {
+              dispfieldkey = element.DispfieldkeyEn;
+            }
+          }
+
+          htmlBody =
+            '<div class="col-md-6 CFIELD ' +
+            dontSubmit +
+            " " +
+            dontRequest +
+            " " +
+            dontSubmitRequired +
+            " " +
+            element.className +
+            ' " ' +
+            thistip +
+            " " +
+            hidestagesIDs +
+            " " +
+            showstagesIDs +
+            "  " +
+            disablestagesIDs +
+            "  " +
+            enablestagesIDs +
+            "   " +
+            isWfhidestagesIDs +
+            " " +
+            requireOnWfTaskstagesIDs +
+            " " +
+            isWfshowstagesIDs +
+            "  " +
+            isWfdisablestagesIDs +
+            "  " +
+            isWfenablestagesIDs +
+            '        data-groups="' +
+            groups +
+            '" ' +
+            notAllowForGroups +
+            '  style="display:' +
+            element.display +
+            '">' +
+            '<label for="' +
+            element.InternalName +
+            '" ' +
+            element.validation +
+            ">" +
+            displayName +
+            " " +
+            `${element.showlink
+              ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
+              : ""
+            }` +
+            "</label>" +
+            '<p type="LookupPicker" data-listname="' +
+            element.source +
+            '" data-valfieldkey="' +
+            element.valfieldkey +
+            '" data-Dispfieldkey="' +
+            dispfieldkey +
+            '" data-parentrelatedkeylvl1=' +
+            element.fieldsinformlvl1 +
+            ' data-parentrelatedvaluelvl1="" data-parentrelatedfilterkeylvl1=' +
+            element.sourcefieldlvl1 +
+            " data-parentrelatedkeylvl2=" +
+            element.fieldsinformlvl2 +
+            ' data-parentrelatedvaluelvl2="" data-parentrelatedfilterkeylvl2=' +
+            element.sourcefieldlvl2 +
+            " data-parentrelatedkey=" +
+            element.dynamic +
+            ' data-parentrelatedvalue="" data-parentrelatedfilterkey=' +
+            element.filterField +
+            ' class="viewmode-value" id="' +
+            element.InternalName +
+            '" ' +
+            ToggleName +
+            ' data-linkedto="' +
+            element.linkedto +
+            '" ></p>' +
+            "</div>";
+          OnSuccess(flag, htmlBody);
+          break;
+
         case "lookupWithQuery":
           htmlBody =
             '<div class="col-md-6 CFIELD" ' +
@@ -15210,10 +15181,9 @@ window.View_ListInfo = {
             ">" +
             displayName +
             " " +
-            `${
-              element.showlink
-                ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
-                : ""
+            `${element.showlink
+              ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
+              : ""
             }` +
             "</label>" +
             '<p type="lookup" data-listname="' +
@@ -15276,10 +15246,9 @@ window.View_ListInfo = {
             ">" +
             displayName +
             " " +
-            `${
-              element.showlink
-                ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
-                : ""
+            `${element.showlink
+              ? "<span><a class='elementLink' href='javascript:' target='_blank'><i class='fas fa-external-link-alt'></i></a></span>"
+              : ""
             }` +
             "</label>" +
             '<p type="lookup" data-listname="' +
@@ -15671,7 +15640,7 @@ window.View_ListInfo = {
     } else {
       OnSuccess(flag, htmlBody);
     }
-   
+
   },
   g: {
     htmlText: "",
@@ -15735,8 +15704,8 @@ var Dynamic_Data_Request = {
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? "ادخل الإسم أو البريد الإلكتروني ..."
               : oListItem
-                  .get_item("" + $(this).attr("id") + "")
-                  .get_lookupValue();
+                .get_item("" + $(this).attr("id") + "")
+                .get_lookupValue();
           $(this).attr("data-email", pemail);
           var idinternal = $(this).attr("id");
           var mp = new MyPeoplePicker();
@@ -15749,8 +15718,8 @@ var Dynamic_Data_Request = {
             oListItem.get_item("" + $(this).attr("id") + "") == null
               ? "ادخل الإسم أو البريد الإلكتروني ..."
               : oListItem
-                  .get_item("" + $(this).attr("id") + "")
-                  .get_lookupValue();
+                .get_item("" + $(this).attr("id") + "")
+                .get_lookupValue();
           $(this).attr("data-email", pemail);
           var idinternal = $(this).attr("id");
           var mp = new MyPeoplePicker();
@@ -15859,18 +15828,18 @@ var Dynamic_Data_Request = {
                 .text()
                 .indexOf("لعام") > -1
                 ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("لعام")[0] +
-                  " لعام " +
-                  yeartodisp
+                  .parent()
+                  .find("label")
+                  .text()
+                  .split("لعام")[0] +
+                " لعام " +
+                yeartodisp
                 : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " لعام " +
-                  yeartodisp;
+                  .parent()
+                  .find("label")
+                  .text() +
+                " لعام " +
+                yeartodisp;
           } else {
             var label =
               $("#Cost" + i)
@@ -15879,18 +15848,18 @@ var Dynamic_Data_Request = {
                 .text()
                 .indexOf("For Year") > -1
                 ? $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text()
-                    .split("For Year")[0] +
-                  " For Year " +
-                  yeartodisp
+                  .parent()
+                  .find("label")
+                  .text()
+                  .split("For Year")[0] +
+                " For Year " +
+                yeartodisp
                 : $("#Cost" + i)
-                    .parent()
-                    .find("label")
-                    .text() +
-                  " For Year " +
-                  yeartodisp;
+                  .parent()
+                  .find("label")
+                  .text() +
+                " For Year " +
+                yeartodisp;
           }
           $("#Cost" + i)
             .parent()
@@ -15953,8 +15922,8 @@ window.dynamicAffectSelect = {
         : "";
       queryFieldName =
         queryFieldName && queryFieldName.indexOf("--") >= 0
-        ? queryFieldName.split("--")[0]
-        : queryFieldName;
+          ? queryFieldName.split("--")[0]
+          : queryFieldName;
       var queryFieldType = affectedSelectsInfo[0].queryFieldType
         ? affectedSelectsInfo[0].queryFieldType
         : "";
@@ -16171,7 +16140,7 @@ window.dynamicAffectSelect = {
         //FieldRef Name="Created" Ascending="True"(if we want to sort to alphapetics you need to Name='Name' and  Ascending='True')
       }
 
-      console.log('current query',Query);
+      console.log('current query', Query);
       camlQuery.set_viewXml(Query);
 
       dynamicAffectSelect.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -16304,12 +16273,12 @@ window.dynamicAffectSelect = {
       }
 
       if (targetFieldType == "multiselect") {
-        optionsArray.push({id:affectedSelectsInfo.affectedFieldName,value:valfieldkey,text:dispfieldkey});
+        optionsArray.push({ id: affectedSelectsInfo.affectedFieldName, value: valfieldkey, text: dispfieldkey });
       } else {
         if (getSiblingsValues.length) {
           getSiblingsValues.forEach((el) => {
             if (el.id == oListItem.get_id()) {
-              optionsArray.push({sibling:el.arraySiblings, id:oListItem.get_id(),value:valfieldkey,text:optionText});
+              optionsArray.push({ sibling: el.arraySiblings, id: oListItem.get_id(), value: valfieldkey, text: optionText });
             }
           });
         } else {
@@ -16320,12 +16289,12 @@ window.dynamicAffectSelect = {
             !affectedSelectsInfo.fromCr
           ) {
           } else {
-              optionsArray.push({id:oListItem.get_id(),value:valfieldkey,text:optionText});
+            optionsArray.push({ id: oListItem.get_id(), value: valfieldkey, text: optionText });
           }
         }
       }
     }
-    console.log(optionsArray,'optionsArrayoptionsArray');
+    console.log(optionsArray, 'optionsArrayoptionsArray');
     // to handle the change request when dynamic change in roles
     //affectedSelectsInfo.fromCr add to not assign new option body when data request when edit
 
@@ -16350,14 +16319,14 @@ window.dynamicAffectSelect = {
         }
       });
     }
-    optionsArray.sort(function(a, b) {
+    optionsArray.sort(function (a, b) {
       var textA = a.text.toUpperCase();
       var textB = b.text.toUpperCase();
       return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
     });
-    if((targetFieldType == "multiselect")){
-        optionsArray.forEach(function(option) {
-          optionsBody += `<label class="grp-select">${option.value}</label>
+    if ((targetFieldType == "multiselect")) {
+      optionsArray.forEach(function (option) {
+        optionsBody += `<label class="grp-select">${option.value}</label>
           <li>
           <div class="checkbox">
           <label>
@@ -16370,32 +16339,32 @@ window.dynamicAffectSelect = {
       });
     }
     else
-    if(getSiblingsValues.length){
-      optionsArray.forEach(function(option) {
-        optionsBody +=
-        "<option data-arraysiblingvalues=" +
-        option.sibling +
-        ' option-id="' +
-        option.id +
-        '" value="' +
-        option.value +
-        '">' +
-        option.text +
-        "</option>";
-    });
-    }
-  else {
-    optionsArray.forEach(function(option) {
-      optionsBody +=
-          '<option option-id="' +
-          option.id +
-          '" value="' +
-          option.value +
-          '">' +
-          option.text +
-          '</option>';
-  });
-  }
+      if (getSiblingsValues.length) {
+        optionsArray.forEach(function (option) {
+          optionsBody +=
+            "<option data-arraysiblingvalues=" +
+            option.sibling +
+            ' option-id="' +
+            option.id +
+            '" value="' +
+            option.value +
+            '">' +
+            option.text +
+            "</option>";
+        });
+      }
+      else {
+        optionsArray.forEach(function (option) {
+          optionsBody +=
+            '<option option-id="' +
+            option.id +
+            '" value="' +
+            option.value +
+            '">' +
+            option.text +
+            '</option>';
+        });
+      }
     if (targetFieldType == "multiselect") {
       $(`ul#${affectedSelectsInfo.affectedFieldName} ul.dropdown-menu`).html(
         optionsBody
@@ -16422,7 +16391,7 @@ window.dynamicAffectSelect = {
             option &&
             option.value != null &&
             String(option.value).toLowerCase() ===
-              String(selectedVal).toLowerCase()
+            String(selectedVal).toLowerCase()
           );
         });
 
@@ -16493,7 +16462,7 @@ window.dynamicAffectSelect = {
 
     if (dynamicAffectSelect.g.affectedSelectsInfo.length) {
       // setTimeout(() => {
-        dynamicAffectSelect.init(dynamicAffectSelect.g.affectedSelectsInfo);
+      dynamicAffectSelect.init(dynamicAffectSelect.g.affectedSelectsInfo);
       // }, 500);
     }
     // dynamicAffectSelect.g.affectedSelectsInfo.length &&
@@ -16571,16 +16540,15 @@ window.Stages_Data_Request = {
     var oList = clientContext.get_web().get_lists().getByTitle("Stages");
     var camlQuery = new SP.CamlQuery();
 
-    if(isStrategicProject != undefined)
-    {
-    camlQuery.set_viewXml(
-      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='Enabled' /><Value Type='Integer'>1</Value></Eq><Eq><FieldRef Name='IsStrategicProject' /><Value Type='Choice'>"+isStrategicProject+"</Value></Eq></And></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
-    );
+    if (isStrategicProject != undefined) {
+      camlQuery.set_viewXml(
+        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='Enabled' /><Value Type='Integer'>1</Value></Eq><Eq><FieldRef Name='IsStrategicProject' /><Value Type='Choice'>" + isStrategicProject + "</Value></Eq></And></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
+      );
     }
-    else
-    {camlQuery.set_viewXml(
-      "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='Enabled'/><Value Type='Integer'>1</Value></Eq></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
-    );
+    else {
+      camlQuery.set_viewXml(
+        "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='Enabled'/><Value Type='Integer'>1</Value></Eq></And></Where><OrderBy><FieldRef Name='ListSort' Ascending='True' /></OrderBy></Query></View>"
+      );
     }
 
     Stages_Data_Request.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -17101,8 +17069,8 @@ var GetProject_Info = {
         if (!USERisWF) {
           $(
             '.section-container [data-hidestageID*="allstages"], .section-container [data-hidestageID*=' +
-              value +
-              "]"
+            value +
+            "]"
           ).each(function () {
             let tabId = $(this).parent().attr("id");
             $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
@@ -17145,8 +17113,8 @@ var GetProject_Info = {
         } else {
           $(
             '.section-container [data-isWfhidestageID*="allstages"], .section-container [data-isWfhidestageID*="' +
-              value +
-              '"]'
+            value +
+            '"]'
           ).each(function () {
             let tabId = $(this).parent().attr("id");
             $(`.form-tabs .nav-link[href="#${tabId}"]`).remove();
@@ -17172,11 +17140,12 @@ var GetProject_Info = {
 
           $("[data-isWfenablestageID]").each(function () {
             var stageofElement = $(this).attr("data-isWfenablestageID");
-            if (stageofElement.includes(value)) {
-              $(this).children("input").attr("disabled", false);
-              $(this).children("select").attr("disabled", false);
-              $(this).children(".PPField").attr("disabled", false);
-              $(this).children("textarea").attr("disabled", false);
+            if (
+              stageofElement.includes(stage) ||
+              (window.applicantPmEditsProjectTask &&
+                window.applicantPmEditsProjectTask())
+            ) {
+              $(this).find("input, select, textarea, .PPField").prop("disabled", false).removeAttr("disabled");
             } else {
               $(this).children("input").attr("disabled", true);
               $(this).children("select").attr("disabled", true);
@@ -17303,13 +17272,13 @@ var GetProject_Info = {
     if (PCODE) {
       $(".headtwo").append(
         '<a class="" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          '"><span class="litem">Home</span></a>' +
-          '<a class="" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/View.aspx?ListKey=projects&IID=" +
-          PID +
-          '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
+        _spPageContextInfo.webAbsoluteUrl +
+        '"><span class="litem">Home</span></a>' +
+        '<a class="" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/View.aspx?ListKey=projects&IID=" +
+        PID +
+        '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
       );
     }
   },
@@ -17366,26 +17335,26 @@ var GetProject_Info = {
       if (PCODE) {
         $("#O365_SearchBoxContainer_container").append(
           '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/Listing.aspx?ListKey=tasks&PCODE=" +
-            PCODE +
-            '">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="/sites/SPM/SitePages/Listing.aspx?ListKey=risks&PCODE=' +
-            PCODE +
-            '">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
-            _spPageContextInfo.webAbsoluteUrl +
-            "/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
-            PCODE +
-            '"">Issues</a></span></div><div class="UProfile"></div></div>'
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/Listing.aspx?ListKey=tasks&PCODE=" +
+          PCODE +
+          '">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="/sites/SPM/SitePages/Listing.aspx?ListKey=risks&PCODE=' +
+          PCODE +
+          '">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          "/SitePages/Listing.aspx?ListKey=issues&PCODE=" +
+          PCODE +
+          '"">Issues</a></span></div><div class="UProfile"></div></div>'
         );
       } else {
         $("#O365_SearchBoxContainer_container").append(
           '<div class="User-Not"><div class="SNotifications"><span class="Tasks"><i class="fas fa-tasks" data-count="0"></i><a href="' +
-            _spPageContextInfo.webAbsoluteUrl +
-            '/SitePages/Listing.aspx?ListKey=tasks">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
-            _spPageContextInfo.webAbsoluteUrl +
-            '/SitePages/Listing.aspx?ListKey=risks">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
-            _spPageContextInfo.webAbsoluteUrl +
-            '/SitePages/Listing.aspx?ListKey=issues">Issues</a></span></div><div class="UProfile"></div></div>'
+          _spPageContextInfo.webAbsoluteUrl +
+          '/SitePages/Listing.aspx?ListKey=tasks">Tasks</a></span><span class="Risks"><i class="fas fa-exclamation-triangle" data-count="0"></i><a href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          '/SitePages/Listing.aspx?ListKey=risks">Risks</a></span><span class="Issues"><i class="fas fa-calendar-times" data-count="0"></i><a href="' +
+          _spPageContextInfo.webAbsoluteUrl +
+          '/SitePages/Listing.aspx?ListKey=issues">Issues</a></span></div><div class="UProfile"></div></div>'
         );
       }
     },
@@ -17469,8 +17438,8 @@ var deliverabePercent = {
           .find(" > label")
           .append(
             '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle ">' +
-              RemainingBudget +
-              "]</span>"
+            RemainingBudget +
+            "]</span>"
           );
         changeResources();
       }
@@ -17722,8 +17691,8 @@ var benefitmetricsPercent = {
           .find(" > label")
           .append(
             '<span data-trans-remainperc class="Resources remainpercstyle"></span><span class="remainpercstyle">' +
-              RemainingBudget +
-              "]</span>"
+            RemainingBudget +
+            "]</span>"
           );
         changeResources();
       }
@@ -17977,16 +17946,16 @@ window.Idea_Info = {
       if (CreatedBy !== UserN.Title) {
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-            editablebyowneronly +
-            "</span></div>"
+          editablebyowneronly +
+          "</span></div>"
         );
       }
 
       if (IdeaStatus != "inprogress" && IdeaStatus != "ideaRejected") {
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-            notEditableItem +
-            "</span></div>"
+          notEditableItem +
+          "</span></div>"
         );
       }
     }
@@ -18003,16 +17972,16 @@ window.Idea_Info = {
       if (CreatedBy !== UserN.Title) {
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-            editablebyowneronly +
-            "</span></div>"
+          editablebyowneronly +
+          "</span></div>"
         );
       }
 
       if (IdeaStatus != "inprogress" && IdeaStatus != "ideaRejected") {
         $(".container-body").prepend(
           '<div class="errormsg alert"><span class="infoIcon"><i class="fas fa-info-circle"></i></span><span>' +
-            notEditableItem +
-            "</span></div>"
+          notEditableItem +
+          "</span></div>"
         );
       }
     }
@@ -18031,8 +18000,8 @@ window.Idea_Info = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef Name='ID'/><Value Type='Text'>" +
-        IID +
-        "</Value></Eq></And></Where></Query></View>"
+      IID +
+      "</Value></Eq></And></Where></Query></View>"
     );
     Idea_Info.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
     clientContext.load(Idea_Info.g.collListItem);
@@ -18433,7 +18402,7 @@ window.Export_PDF = {
       } else if (typeof window.crItemCode !== "undefined" && window.crItemCode) {
         code = window.crItemCode;
       }
-    } catch (e) {}
+    } catch (e) { }
 
     if (!code) {
       var $codeEl = $(
@@ -18556,7 +18525,7 @@ window.Export_PDF = {
         ) {
           return Resources[lang][key];
         }
-      } catch (e) {}
+      } catch (e) { }
       return fallback;
     };
 
@@ -18758,8 +18727,8 @@ window.Export_PDF = {
       typeof PageTitle !== "undefined" && PageTitle
         ? PageTitle
         : isAr
-        ? "تفاصيل"
-        : "Details";
+          ? "تفاصيل"
+          : "Details";
     // CR only: append item/CR name + task name (other lists already show name in the table)
     if (isChangeRequest && contextMeta.itemName) {
       concatPDFHead = concatPDFHead + " - " + contextMeta.itemName;
@@ -18773,7 +18742,7 @@ window.Export_PDF = {
       ) {
         taskNameLabel = Resources[lang].taskname;
       }
-    } catch (e) {}
+    } catch (e) { }
     var scale = finalArr.length < 25 ? 2 : 1;
     var pdfFileName = Export_PDF.getPDFFileName();
     var pdfFontSizePageTitle = 30;
@@ -18899,9 +18868,9 @@ window.Export_PDF = {
             ";" +
             (hc < colCount - 1
               ? (isAr ? "border-left" : "border-right") +
-                ":1px solid " +
-                brandBorder +
-                ";"
+              ":1px solid " +
+              brandBorder +
+              ";"
               : "") +
             '"><bdi>' +
             Export_PDF.formatPdfText(section.columns[hc] || "") +
@@ -18909,10 +18878,10 @@ window.Export_PDF = {
         }
         rowHtmlList.push(
           '<div class="pdf-row pdf-table-header" style="display:flex;width:100%;box-sizing:border-box;page-break-inside:avoid;break-inside:avoid;border-bottom:1px solid ' +
-            brandBorder +
-            ';">' +
-            headerCells +
-            "</div>"
+          brandBorder +
+          ';">' +
+          headerCells +
+          "</div>"
         );
 
         for (var tr = 0; tr < section.rows.length; tr++) {
@@ -18927,9 +18896,9 @@ window.Export_PDF = {
               "background:#ffffff;color:#222;" +
               (tc < colCount - 1
                 ? (isAr ? "border-left" : "border-right") +
-                  ":1px solid " +
-                  brandBorder +
-                  ";"
+                ":1px solid " +
+                brandBorder +
+                ";"
                 : "") +
               '"><bdi>' +
               Export_PDF.formatPdfText(cells[tc] || "-") +
@@ -18941,10 +18910,10 @@ window.Export_PDF = {
               : "border-bottom:1px solid " + brandBorder + ";";
           rowHtmlList.push(
             '<div class="pdf-row pdf-table-data" style="display:flex;width:100%;box-sizing:border-box;page-break-inside:avoid;break-inside:avoid;' +
-              rowBorder +
-              '">' +
-              bodyCells +
-              "</div>"
+            rowBorder +
+            '">' +
+            bodyCells +
+            "</div>"
           );
         }
       } else {
@@ -18958,35 +18927,35 @@ window.Export_PDF = {
 
           rowHtmlList.push(
             '<div class="pdf-row" style="display:flex;width:100%;box-sizing:border-box;page-break-inside:avoid;break-inside:avoid;' +
-              rowBorder +
-              '">' +
-              '<div style="width:35%;min-width:0;max-width:35%;box-sizing:border-box;padding:8px 10px;font-weight:700;font-size:' +
-              pdfFontSizeData +
-              "px;line-height:1.45;text-align:" +
-              textAlign +
-              ";background:" +
-              brandLabelBg +
-              ";" +
-              borderSide +
-              ":1px solid " +
-              brandBorder +
-              ";color:" +
-              brandNavy +
-              ";font-family:" +
-              pdfFont +
-              ';overflow-wrap:anywhere;word-break:break-word;overflow:hidden;white-space:normal;"><bdi>' +
-              label +
-              "</bdi></div>" +
-              '<div style="width:65%;min-width:0;max-width:65%;box-sizing:border-box;padding:8px 10px;font-size:' +
-              pdfFontSizeData +
-              "px;line-height:1.45;text-align:" +
-              textAlign +
-              ";background:#ffffff;color:#222;font-family:" +
-              pdfFont +
-              ';overflow-wrap:anywhere;word-break:break-word;overflow:hidden;white-space:normal;"><bdi>' +
-              value +
-              "</bdi></div>" +
-              "</div>"
+            rowBorder +
+            '">' +
+            '<div style="width:35%;min-width:0;max-width:35%;box-sizing:border-box;padding:8px 10px;font-weight:700;font-size:' +
+            pdfFontSizeData +
+            "px;line-height:1.45;text-align:" +
+            textAlign +
+            ";background:" +
+            brandLabelBg +
+            ";" +
+            borderSide +
+            ":1px solid " +
+            brandBorder +
+            ";color:" +
+            brandNavy +
+            ";font-family:" +
+            pdfFont +
+            ';overflow-wrap:anywhere;word-break:break-word;overflow:hidden;white-space:normal;"><bdi>' +
+            label +
+            "</bdi></div>" +
+            '<div style="width:65%;min-width:0;max-width:65%;box-sizing:border-box;padding:8px 10px;font-size:' +
+            pdfFontSizeData +
+            "px;line-height:1.45;text-align:" +
+            textAlign +
+            ";background:#ffffff;color:#222;font-family:" +
+            pdfFont +
+            ';overflow-wrap:anywhere;word-break:break-word;overflow:hidden;white-space:normal;"><bdi>' +
+            value +
+            "</bdi></div>" +
+            "</div>"
           );
         });
       }
@@ -19000,12 +18969,12 @@ window.Export_PDF = {
       }
       var keepBorderStyle = hasRest
         ? "border-top:1px solid " +
-          brandBorder +
-          ";border-left:1px solid " +
-          brandBorder +
-          ";border-right:1px solid " +
-          brandBorder +
-          ";"
+        brandBorder +
+        ";border-left:1px solid " +
+        brandBorder +
+        ";border-right:1px solid " +
+        brandBorder +
+        ";"
         : "border:1px solid " + brandBorder + ";";
 
       contentHTML +=
@@ -19319,8 +19288,8 @@ var Integration_Handler = {
               var ydate = !dateval
                 ? ""
                 : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                    .join("/")
-                    .replace("-", "/");
+                  .join("/")
+                  .replace("-", "/");
 
               if (dateval) {
                 var obj = {};
@@ -19350,8 +19319,8 @@ var Integration_Handler = {
               var ydate = !dateval
                 ? ""
                 : [dateval.slice(5, 10), dateval.slice(0, 4)]
-                    .join("/")
-                    .replace("-", "/");
+                  .join("/")
+                  .replace("-", "/");
 
               if (dateval) {
                 var obj = {};
@@ -19891,8 +19860,8 @@ function bindMainKpiComponentApiButtons() {
     if (!$existing.length) {
       var $btn = $(
         '<button type="button" class="kpi-fetch-api-btn" data-link-field="' +
-          linkId +
-          '"></button>'
+        linkId +
+        '"></button>'
       );
       $btn.text(getKPIFetchButtonLabel());
       $comp.after($btn);
@@ -20088,13 +20057,13 @@ var GetCurrentStage_Info = {
     if (PCODE) {
       $(".headtwo").append(
         '<a class="" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          '"><span class="litem">Home</span></a>' +
-          '<a class="" href="' +
-          _spPageContextInfo.webAbsoluteUrl +
-          "/SitePages/View.aspx?ListKey=projects&IID=" +
-          PID +
-          '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
+        _spPageContextInfo.webAbsoluteUrl +
+        '"><span class="litem">Home</span></a>' +
+        '<a class="" href="' +
+        _spPageContextInfo.webAbsoluteUrl +
+        "/SitePages/View.aspx?ListKey=projects&IID=" +
+        PID +
+        '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
       );
     }
   },
@@ -20154,7 +20123,7 @@ var get_hierarchies = {
       isListConditional4 = tempRoleHierarchies[0].subRelation.subRelation
         .subRelation
         ? tempRoleHierarchies[0].subRelation.subRelation.subRelation.listName ==
-          lookupList
+        lookupList
         : false;
     }
     let allGood =
@@ -20197,10 +20166,10 @@ window.get_parent_data = {
 
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" +
-        parentFieldName +
-        '" /><Value Type="Text">' +
-        code +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      parentFieldName +
+      '" /><Value Type="Text">' +
+      code +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
 
     get_parent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -20275,10 +20244,10 @@ var get_grandparent_data = {
 
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><Eq><FieldRef  Name=\"" +
-        grandParentFieldName +
-        '" /><Value Type="Text">' +
-        code +
-        "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
+      grandParentFieldName +
+      '" /><Value Type="Text">' +
+      code +
+      "</Value></Eq></And></Where><OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy></Query></View>"
     );
 
     get_grandparent_data.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -20319,269 +20288,268 @@ var get_grandparent_data = {
 
 
 let date_Controlling_Call = {
-	// The main Initialization function
-	init: function (controlingListName, controlingCode, maxDateField, dateControlingInput, $this,minDateField, minDateControlList,minDateControlingCode ) {
-		var clientContext = new SP.ClientContext.get_current();
-		var oList = clientContext.get_web().get_lists().getByTitle(controlingListName);
-		var secondMinList = clientContext.get_web().get_lists().getByTitle(minDateControlList);
-		var camlQuery = new SP.CamlQuery();
-		camlQuery.set_viewXml(
-			`<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">${controlingCode}</Value></Eq></Where><OrderBy><FieldRef Name="Created" Ascending="True" /></OrderBy></Query></View>`
-		);
+  // The main Initialization function
+  init: function (controlingListName, controlingCode, maxDateField, dateControlingInput, $this, minDateField, minDateControlList, minDateControlingCode) {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext.get_web().get_lists().getByTitle(controlingListName);
+    var secondMinList = clientContext.get_web().get_lists().getByTitle(minDateControlList);
+    var camlQuery = new SP.CamlQuery();
+    camlQuery.set_viewXml(
+      `<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">${controlingCode}</Value></Eq></Where><OrderBy><FieldRef Name="Created" Ascending="True" /></OrderBy></Query></View>`
+    );
     // var camlQueryForMinDate = new SP.CamlQuery();
-		// camlQuery.set_viewXml(
-		// 	`<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">${minDateControlingCode}</Value></Eq></Where><OrderBy><FieldRef Name="Created" Ascending="True" /></OrderBy></Query></View>`
-		// );
+    // camlQuery.set_viewXml(
+    // 	`<View><Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">${minDateControlingCode}</Value></Eq></Where><OrderBy><FieldRef Name="Created" Ascending="True" /></OrderBy></Query></View>`
+    // );
     debugger
     date_Controlling_Call.g.maxDateField = maxDateField;
     date_Controlling_Call.g.minDateField = minDateField;
     date_Controlling_Call.g.$this = $this;
-		date_Controlling_Call.g.collListItem = oList.getItems(camlQuery);
+    date_Controlling_Call.g.collListItem = oList.getItems(camlQuery);
     // if(minDateField){
 
     //   date_Controlling_Call.g.collListItem = secondMinList.getItems(camlQueryForMinDate);
     // }
-		clientContext.load(date_Controlling_Call.g.collListItem);
-		clientContext.executeQueryAsync(
-			Function.createDelegate(this, date_Controlling_Call.onSuccess),
-			Function.createDelegate(this, date_Controlling_Call.onError)
-		);
-	},
-	onSuccess: function (sender, args) {
-		var collListItem = date_Controlling_Call.g.collListItem;
+    clientContext.load(date_Controlling_Call.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, date_Controlling_Call.onSuccess),
+      Function.createDelegate(this, date_Controlling_Call.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = date_Controlling_Call.g.collListItem;
 
-		var listItemEnum = collListItem.getEnumerator();
+    var listItemEnum = collListItem.getEnumerator();
 
 
-		while (listItemEnum.moveNext()) {
-			tableRows = "";
-			var oListItem = listItemEnum.get_current();
-			let maxvalue = oListItem.get_item(date_Controlling_Call.g.maxDateField);
-			// let minDateValue = oListItem.get_item(date_Controlling_Call.g.minDateField);
+    while (listItemEnum.moveNext()) {
+      tableRows = "";
+      var oListItem = listItemEnum.get_current();
+      let maxvalue = oListItem.get_item(date_Controlling_Call.g.maxDateField);
+      // let minDateValue = oListItem.get_item(date_Controlling_Call.g.minDateField);
       // maxvalue = `${year}-${month}-${day}`;
-       maxDate = convertToWantedDateFormat.convert(maxvalue);
+      maxDate = convertToWantedDateFormat.convert(maxvalue);
       //  minDateValue = convertToWantedDateFormat.convert(minDateValue);
       // date_Controlling_Call.g.$this.attr("min",minDateValue);
-      date_Controlling_Call.g.$this.attr("max",maxDate);
-		}
-	},
-	onError: function (sender, args) {
-		console.log(
-			"Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-		);
-	},
-  g:{
+      date_Controlling_Call.g.$this.attr("max", maxDate);
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  g: {
   }
 };
 
 let convertToWantedDateFormat = {
 
-  convert(dateToBeConverted){
+  convert(dateToBeConverted) {
     let year = dateToBeConverted.getFullYear();
     let month = dateToBeConverted.getMonth() + 1; // Months are zero-indexed, so we add 1
-    month = month < 10? `0${month}`:month;
+    month = month < 10 ? `0${month}` : month;
     let day = dateToBeConverted.getDate();
-    day = day <10 ? `0${day}`:day;
+    day = day < 10 ? `0${day}` : day;
     convertedDate = `${year}-${month}-${day}`;
 
     return convertedDate;
-  }}
-
-  var GetLastProgressFromHistory = {
-    // The main Initialization function
-    preinit: function () {
-      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
-        GetLastProgressFromHistory.init();
-      });
-    },
-    init: function () {
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext
-        .get_web()
-        .get_lists()
-        .getByTitle("EngineeringProjects");
-      var camlQuery = new SP.CamlQuery();
-      //var PQuery = "<View><Query><Where><Eq><FieldRef Name = 'Title' /><Value Type='Text'>'"+EngineeringProjectCode+"'</Value></Eq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>"
-      var PQuery = "<View><Query><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>";
-   
-      camlQuery.set_viewXml(PQuery);
-      GetLastProgressFromHistory.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-      clientContext.load(GetLastProgressFromHistory.g.collListItem);
-      clientContext.executeQueryAsync(
-        Function.createDelegate(this, GetLastProgressFromHistory.onSuccess),
-        Function.createDelegate(this, GetLastProgressFromHistory.onError)
-      );
-    },
-    onSuccess: function (sender, args) {
-      var collListItem = GetLastProgressFromHistory.g.collListItem;
-      var listItemEnum = collListItem.getEnumerator();
-   
-      while(listItemEnum.moveNext()) {
-        var oListItem = listItemEnum.get_current();
-        LastProjectHistory.push(oListItem);
-      }
-
-    },
-    onError: function (sender, args) {
-      console.log(
-        "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-      );
-    },
-    // Global variables
-    g: {},
   }
+}
 
-  var GetManHoursHistory = {
-    // The main Initialization function
-    preinit: function () {
-      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
-        GetManHoursHistory.init();
-      });
-    },
-    init: function () {
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext
-        .get_web()
-        .get_lists()
-        .getByTitle("EngineeringProjectsHistory");
-      var camlQuery = new SP.CamlQuery();
-      //var PQuery = "<View><Query><Where><Eq><FieldRef Name = 'Title' /><Value Type='Text'>'"+EngineeringProjectCode+"'</Value></Eq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>"
-      var PQuery = "<View><Query><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>";
-   
-      camlQuery.set_viewXml(PQuery);
-      GetManHoursHistory.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-      clientContext.load(GetManHoursHistory.g.collListItem);
-      clientContext.executeQueryAsync(
-        Function.createDelegate(this, GetManHoursHistory.onSuccess),
-        Function.createDelegate(this, GetManHoursHistory.onError)
-      );
-    },
-    onSuccess: function (sender, args) {
-      var collListItem = GetManHoursHistory.g.collListItem;
-      var listItemEnum = collListItem.getEnumerator();
-   
-      while(listItemEnum.moveNext()) {
-        var oListItem = listItemEnum.get_current();
-        ManHoursHistory.push(oListItem);
-      }
+var GetLastProgressFromHistory = {
+  // The main Initialization function
+  preinit: function () {
+    SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+      GetLastProgressFromHistory.init();
+    });
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("EngineeringProjects");
+    var camlQuery = new SP.CamlQuery();
+    //var PQuery = "<View><Query><Where><Eq><FieldRef Name = 'Title' /><Value Type='Text'>'"+EngineeringProjectCode+"'</Value></Eq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>"
+    var PQuery = "<View><Query><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>";
 
-    },
-    onError: function (sender, args) {
-      console.log(
-        "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-      );
-    },
-    // Global variables
-    g: {},
-  }
+    camlQuery.set_viewXml(PQuery);
+    GetLastProgressFromHistory.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(GetLastProgressFromHistory.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, GetLastProgressFromHistory.onSuccess),
+      Function.createDelegate(this, GetLastProgressFromHistory.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = GetLastProgressFromHistory.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
 
-  var GetHolidaysOFF = {
-    // The main Initialization function
-    preinit: function () {
-      SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
-        GetHolidaysOFF.init();
-      });
-    },
-    init: function () {
-      var clientContext = new SP.ClientContext.get_current();
-      var oList = clientContext
-        .get_web()
-        .get_lists()
-        .getByTitle("LocalHolidays");
-      var camlQuery = new SP.CamlQuery();
-      
-      var PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>'
-   
-      camlQuery.set_viewXml(PQuery);
-      GetHolidaysOFF.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-      clientContext.load(GetHolidaysOFF.g.collListItem);
-      clientContext.executeQueryAsync(
-        Function.createDelegate(this, GetHolidaysOFF.onSuccess),
-        Function.createDelegate(this, GetHolidaysOFF.onError)
-      );
-    },
-    onSuccess: function (sender, args) {
-      var collListItem = GetHolidaysOFF.g.collListItem;
-      var listItemEnum = collListItem.getEnumerator();
-   
-      while(listItemEnum.moveNext()) {
-        
-        var oListItem = listItemEnum.get_current();
-        var date = new Date(oListItem.get_item("HolidayDate"));
-        var date2 = new Date(oListItem.get_item("HolidayEndDate"));
-        var duration = oListItem.get_item("HolidayDuration");
-       
-            var firstdate = new Date(oListItem.get_item("HolidayDate"));
-            let day = firstdate.getDate();
-            let month = firstdate.getMonth();
-            let year = firstdate.getFullYear();
-            firstdate = new Date(year,month,day);
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      LastProjectHistory.push(oListItem);
+    }
 
-            HolidaysOff.push(firstdate);
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+}
 
-          while(duration >= 1)
-          {
+var GetManHoursHistory = {
+  // The main Initialization function
+  preinit: function () {
+    SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+      GetManHoursHistory.init();
+    });
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("EngineeringProjectsHistory");
+    var camlQuery = new SP.CamlQuery();
+    //var PQuery = "<View><Query><Where><Eq><FieldRef Name = 'Title' /><Value Type='Text'>'"+EngineeringProjectCode+"'</Value></Eq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>"
+    var PQuery = "<View><Query><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>";
 
-            if(date <= date2)
-            {
-              let day = date.getDate();
-              let month = date.getMonth();
-              let year = date.getFullYear();
-              date = new Date(year,month,day);
+    camlQuery.set_viewXml(PQuery);
+    GetManHoursHistory.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(GetManHoursHistory.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, GetManHoursHistory.onSuccess),
+      Function.createDelegate(this, GetManHoursHistory.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = GetManHoursHistory.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
 
-              HolidaysOff.push(date);
-            }
+    while (listItemEnum.moveNext()) {
+      var oListItem = listItemEnum.get_current();
+      ManHoursHistory.push(oListItem);
+    }
 
-            var date = date.setDate(date.getDate() +  1);
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+}
 
-            date = new Date(date);
+var GetHolidaysOFF = {
+  // The main Initialization function
+  preinit: function () {
+    SP.SOD.executeFunc("sp.js", "SP.ClientContext", function () {
+      GetHolidaysOFF.init();
+    });
+  },
+  init: function () {
+    var clientContext = new SP.ClientContext.get_current();
+    var oList = clientContext
+      .get_web()
+      .get_lists()
+      .getByTitle("LocalHolidays");
+    var camlQuery = new SP.CamlQuery();
 
-            duration = duration - 1;
-          }
+    var PQuery = '<View><Query><Where><Neq><FieldRef Name=\'DeletionStatus\' /><Value Type=\'Text\'>deleted</Value></Neq></Where><OrderBy><FieldRef Name=\'Created\' Ascending=\'False\' /></OrderBy></Query></View>'
 
-      }
-    },
-    onError: function (sender, args) {
-      console.log(
-        "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
-      );
-    },
-    // Global variables
-    g: {},
-   /* onSuccess: function (sender, args) {
-        var collListItem = GetHolidaysOFF.g.collListItem;
-        var listItemEnum = collListItem.getEnumerator();
-      /*  listItemEnum.forEach(_item=>{
-          HolidaysOff.append(_item)
-        });
-        while (listItemEnum.moveNext()) {
-         HolidaysOff.append(listItemEnum.get_current());
+    camlQuery.set_viewXml(PQuery);
+    GetHolidaysOFF.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+    clientContext.load(GetHolidaysOFF.g.collListItem);
+    clientContext.executeQueryAsync(
+      Function.createDelegate(this, GetHolidaysOFF.onSuccess),
+      Function.createDelegate(this, GetHolidaysOFF.onError)
+    );
+  },
+  onSuccess: function (sender, args) {
+    var collListItem = GetHolidaysOFF.g.collListItem;
+    var listItemEnum = collListItem.getEnumerator();
+
+    while (listItemEnum.moveNext()) {
+
+      var oListItem = listItemEnum.get_current();
+      var date = new Date(oListItem.get_item("HolidayDate"));
+      var date2 = new Date(oListItem.get_item("HolidayEndDate"));
+      var duration = oListItem.get_item("HolidayDuration");
+
+      var firstdate = new Date(oListItem.get_item("HolidayDate"));
+      let day = firstdate.getDate();
+      let month = firstdate.getMonth();
+      let year = firstdate.getFullYear();
+      firstdate = new Date(year, month, day);
+
+      HolidaysOff.push(firstdate);
+
+      while (duration >= 1) {
+
+        if (date <= date2) {
+          let day = date.getDate();
+          let month = date.getMonth();
+          let year = date.getFullYear();
+          date = new Date(year, month, day);
+
+          HolidaysOff.push(date);
         }
-    },
-    onError: function (sender, args) {
-        console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
-    },
-    // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
-    preinit: function () {
-        
-    },
-    // The main Initialization function
-    init: function () {
-        var clientContext = new SP.ClientContext.get_current();
-        var oList = clientContext.get_web().get_lists().getByTitle("Holidays");
-        var camlQuery = new SP.CamlQuery();
-         GetHolidaysOFF.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
-        clientContext.load(GetHolidaysOFF.g.collListItem);
-        clientContext.executeQueryAsync(
-            Function.createDelegate(this, GetHolidaysOFF.onSuccess),
-            Function.createDelegate(this, GetHolidaysOFF.onError)
-        );
-    },
-    // Global variables
-    g: {
-      
-    }*/
-  };
+
+        var date = date.setDate(date.getDate() + 1);
+
+        date = new Date(date);
+
+        duration = duration - 1;
+      }
+
+    }
+  },
+  onError: function (sender, args) {
+    console.log(
+      "Request failed. " + args.get_message() + "\n" + args.get_stackTrace()
+    );
+  },
+  // Global variables
+  g: {},
+  /* onSuccess: function (sender, args) {
+       var collListItem = GetHolidaysOFF.g.collListItem;
+       var listItemEnum = collListItem.getEnumerator();
+     /*  listItemEnum.forEach(_item=>{
+         HolidaysOff.append(_item)
+       });
+       while (listItemEnum.moveNext()) {
+        HolidaysOff.append(listItemEnum.get_current());
+       }
+   },
+   onError: function (sender, args) {
+       console.log('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+   },
+   // Pre-initialization functions ensure scripts, SharePoint dependencies are loaded
+   preinit: function () {
+       
+   },
+   // The main Initialization function
+   init: function () {
+       var clientContext = new SP.ClientContext.get_current();
+       var oList = clientContext.get_web().get_lists().getByTitle("Holidays");
+       var camlQuery = new SP.CamlQuery();
+        GetHolidaysOFF.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
+       clientContext.load(GetHolidaysOFF.g.collListItem);
+       clientContext.executeQueryAsync(
+           Function.createDelegate(this, GetHolidaysOFF.onSuccess),
+           Function.createDelegate(this, GetHolidaysOFF.onError)
+       );
+   },
+   // Global variables
+   g: {
+     
+   }*/
+};
 
 window.Get_ActualAnnualTotal = {
   onSuccess: function (sender, args) {
@@ -20611,10 +20579,10 @@ window.Get_ActualAnnualTotal = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='KPI'/><Value Type='Text'>" +
-        KPICode +
-        "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
-        year +
-        "</Value></Eq></And></And></Where></Query></View>"
+      KPICode +
+      "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
+      year +
+      "</Value></Eq></And></And></Where></Query></View>"
     );
 
     Get_ActualAnnualTotal.g.collListItem = oList.getItems(camlQuery); //declared inside object scope only
@@ -20658,10 +20626,10 @@ window.Get_BenefitActualAnnualTotal = {
     var camlQuery = new SP.CamlQuery();
     camlQuery.set_viewXml(
       "<View><Query><Where><And><Neq><FieldRef Name='DeletionStatus' /><Value Type='Text'>Deleted</Value></Neq><And><Eq><FieldRef Name='BenefitCode'/><Value Type='Text'>" +
-        benefitTitle +
-        "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
-        year +
-        "</Value></Eq></And></And></Where></Query></View>"
+      benefitTitle +
+      "</Value></Eq><Eq><FieldRef Name='Year'/><Value Type='Text'>" +
+      year +
+      "</Value></Eq></And></And></Where></Query></View>"
     );
 
     Get_BenefitActualAnnualTotal.g.collListItem = oList.getItems(camlQuery);
@@ -20792,10 +20760,10 @@ $(document).ready(function () {
         clearField(uniqueField);
         alert(
           "تم تفريغ حقل " +
-            uniqueFieldLabel +
-            " لأن المستخدم '" +
-            conflictName +
-            "' موجود في أحد الحقول الأخرى."
+          uniqueFieldLabel +
+          " لأن المستخدم '" +
+          conflictName +
+          "' موجود في أحد الحقول الأخرى."
         );
         return true;
       }
@@ -20865,11 +20833,11 @@ $(document).ready(function () {
 });
 
 // Function to get Role for a group name from userCalls.g.SPGroups
-window.getRoleForGroupName = function(groupName) {
+window.getRoleForGroupName = function (groupName) {
   if (typeof userCalls === 'undefined' || !userCalls.g || !userCalls.g.SPGroups) {
     return null;
   }
-  
+
   for (var i = 0; i < userCalls.g.SPGroups.length; i++) {
     var spGroup = userCalls.g.SPGroups[i];
     if (spGroup.groupsName && Array.isArray(spGroup.groupsName)) {
@@ -20884,12 +20852,12 @@ window.getRoleForGroupName = function(groupName) {
 };
 
 // Function to translate groups options by adding data-trans and class attributes
-window.translateGroupsOptions = function(selectElement) {
+window.translateGroupsOptions = function (selectElement) {
   if (!selectElement || !selectElement.length) {
     return;
   }
-  
-  selectElement.find('option:not(:first)').each(function() {
+
+  selectElement.find('option:not(:first)').each(function () {
     var $option = $(this);
     var groupName = $option.val();
     if (groupName) {
@@ -20900,7 +20868,7 @@ window.translateGroupsOptions = function(selectElement) {
       }
     }
   });
-  
+
   // Call changeResources to apply translations
   if (typeof changeResources === 'function') {
     changeResources();
@@ -20908,25 +20876,25 @@ window.translateGroupsOptions = function(selectElement) {
 };
 
 // Function to load user groups from SharePoint
-window.loadUserGroupsFromSharePoint = function(loginName, groupsSelectId, selectedValue) {
+window.loadUserGroupsFromSharePoint = function (loginName, groupsSelectId, selectedValue) {
   var groupsSelect = $('#' + groupsSelectId);
   if (!groupsSelect.length) {
     return;
   }
-  
+
   // Clear existing options except the first one
   groupsSelect.find('option:not(:first)').remove();
   groupsSelect.prop('disabled', true);
-  
+
   // First, use ensureUser to get the User ID, then get groups by ID
   // This works better than getbyloginname for complex login formats
   var ensureUserUrl = _spPageContextInfo.webAbsoluteUrl + "/_api/web/ensureuser";
-  
+
   // Get RequestDigest - try from DOM first, then from context
-  var requestDigest = $("#__REQUESTDIGEST").val() || 
-                      (typeof _spPageContextInfo !== "undefined" && _spPageContextInfo.formDigestValue) || 
-                      "";
-  
+  var requestDigest = $("#__REQUESTDIGEST").val() ||
+    (typeof _spPageContextInfo !== "undefined" && _spPageContextInfo.formDigestValue) ||
+    "";
+
   $.ajax({
     url: ensureUserUrl,
     method: "POST",
@@ -20938,49 +20906,49 @@ window.loadUserGroupsFromSharePoint = function(loginName, groupsSelectId, select
     data: JSON.stringify({
       'logonName': loginName
     }),
-    success: function(userData) {
+    success: function (userData) {
       if (userData.d && userData.d.Id) {
         var userId = userData.d.Id;
         // Now get groups using User ID
-        var groupsUrl = _spPageContextInfo.webAbsoluteUrl + 
+        var groupsUrl = _spPageContextInfo.webAbsoluteUrl +
           "/_api/web/GetUserById(" + userId + ")/Groups";
-        
+
         $.ajax({
           url: groupsUrl,
           method: "GET",
           headers: {
             "Accept": "application/json;odata=verbose"
           },
-          success: function(data) {
+          success: function (data) {
             groupsSelect.find('option:not(:first)').remove(); // Clear again to be safe
             if (data.d && data.d.results && data.d.results.length > 0) {
               // Add groups as options
-              data.d.results.forEach(function(group) {
+              data.d.results.forEach(function (group) {
                 var groupTitle = group.Title || group.LoginName || "";
                 if (groupTitle) {
                   var role = window.getRoleForGroupName ? window.getRoleForGroupName(groupTitle) : null;
                   var $option = $('<option></option>')
                     .attr('value', groupTitle)
                     .text(groupTitle);
-                  
+
                   if (role) {
                     $option.attr('data-trans-' + role, '');
                     $option.addClass('Resources');
                   }
-                  
+
                   groupsSelect.append($option);
                 }
               });
-              
+
               // Translate groups options
               if (typeof window.translateGroupsOptions === 'function') {
                 window.translateGroupsOptions(groupsSelect);
               }
-              
+
               // Set the selected value if provided (for edit mode)
               if (selectedValue) {
                 // Use setTimeout to ensure DOM is updated
-                setTimeout(function() {
+                setTimeout(function () {
                   groupsSelect.val(selectedValue);
                   // Also set the value attribute for consistency
                   groupsSelect.attr("value", selectedValue);
@@ -20989,7 +20957,7 @@ window.loadUserGroupsFromSharePoint = function(loginName, groupsSelectId, select
                 // Auto-select group based on currentUserRole for delegations (only for allowed roles)
                 var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner", "PerformanceLeader"];
                 var currentRole = window.currentUserRole || "";
-                
+
                 // Only auto-select and disable if currentRole is in allowedRoles
                 if (allowedRoles.indexOf(currentRole) > -1 && typeof userCalls !== 'undefined' && userCalls.g && userCalls.g.SPGroups && Array.isArray(userCalls.g.SPGroups)) {
                   // Find the group name that matches currentUserRole
@@ -21008,17 +20976,17 @@ window.loadUserGroupsFromSharePoint = function(loginName, groupsSelectId, select
                       if (matchingGroupName) break;
                     }
                   }
-                  
+
                   // Auto-select the matching group
                   if (matchingGroupName) {
-                    setTimeout(function() {
+                    setTimeout(function () {
                       groupsSelect.val(matchingGroupName);
                       groupsSelect.attr("value", matchingGroupName);
                     }, 100);
                   }
-                  
+
                   // Disable the select in new and edit modes for delegations (only for allowed roles)
-                  setTimeout(function() {
+                  setTimeout(function () {
                     if (window.isNew || window.isEdit) {
                       groupsSelect.prop('disabled', true);
                     }
@@ -21028,17 +20996,17 @@ window.loadUserGroupsFromSharePoint = function(loginName, groupsSelectId, select
             } else {
               groupsSelect.append('<option value="" disabled>No groups found</option>');
             }
-            
+
             // Only enable if not delegations with allowed role or if not in new/edit mode
             var allowedRoles = ["InitiativeManager", "InitiativeOwner", "ProjectManager", "ProjectOwner", "KPIOwner", "ObjectiveOwner", "PerformanceLeader"];
             var currentRole = window.currentUserRole || "";
             var shouldDisable = window.listkey == "delegations" && groupsSelectId == "GroupName" && (window.isNew || window.isEdit) && allowedRoles.indexOf(currentRole) > -1;
-            
+
             if (!shouldDisable) {
               groupsSelect.prop('disabled', false);
             }
           },
-          error: function(xhr, status, error) {
+          error: function (xhr, status, error) {
             console.error("Error loading user groups from SharePoint:", xhr.responseText);
             groupsSelect.prop('disabled', false);
             if (groupsSelect.siblings('.inputInfo').length) {
@@ -21061,7 +21029,7 @@ window.loadUserGroupsFromSharePoint = function(loginName, groupsSelectId, select
         }
       }
     },
-    error: function(xhr, status, error) {
+    error: function (xhr, status, error) {
       console.error("Error ensuring user in SharePoint:", xhr.responseText);
       groupsSelect.prop('disabled', false);
       if (groupsSelect.siblings('.inputInfo').length) {
