@@ -17141,7 +17141,7 @@ var GetProject_Info = {
           $("[data-isWfenablestageID]").each(function () {
             var stageofElement = $(this).attr("data-isWfenablestageID");
             if (
-              stageofElement.includes(stage) ||
+              stageofElement.includes(value) ||
               (window.applicantPmEditsProjectTask &&
                 window.applicantPmEditsProjectTask())
             ) {
@@ -17240,11 +17240,12 @@ var GetProject_Info = {
 
         $("[data-isWfenablestageID]").each(function () {
           var stageofElement = $(this).attr("data-isWfenablestageID");
-          if (stageofElement.includes(stage)) {
-            $(this).children("input").attr("disabled", false);
-            $(this).children("select").attr("disabled", false);
-            $(this).children(".PPField").attr("disabled", false);
-            $(this).children("textarea").attr("disabled", false);
+          if (
+            stageofElement.includes(stage) ||
+            (window.applicantPmEditsProjectTask &&
+              window.applicantPmEditsProjectTask())
+          ) {
+            $(this).find("input, select, textarea, .PPField").prop("disabled", false).removeAttr("disabled");
           } else {
             $(this).children("input").attr("disabled", true);
             $(this).children("select").attr("disabled", true);
@@ -17280,6 +17281,9 @@ var GetProject_Info = {
         PID +
         '"><span data-trans-projectdetails class="litem Resources"></span></a>' //+
       );
+    }
+    if (window.unlockProjectPageForApplicantPm) {
+      window.unlockProjectPageForApplicantPm();
     }
   },
   onError: function (sender, args) {
