@@ -3766,6 +3766,13 @@ window.View_Data_Request = {
           "Style%20Library/spm/JSON/strategicpartnershipsachievements/strategicpartnershipsachievements_View.js"
         );
         Get_AllTaskHistoryRelatedToForm.init();
+      } else if (listkey == "benefits") {
+        Get_ItemVersionsWithColumnsAudit.init(
+          "Benefits",
+          IID,
+          "Style%20Library/spm/JSON/benefits/benefits_View.js"
+        );
+        Get_AllTaskHistoryRelatedToForm.init();
       } else if (listkey != "cryearlycalendar") {
         Get_AllTaskHistoryRelatedToForm.init();
       }

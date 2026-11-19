@@ -343,6 +343,12 @@ var Information_Form = [
         maxchar: "200",
         type: "multiline",
       },
+      {
+        InternalName: "Equation",
+        DisplayNameEn: "Actual value",
+        DisplayName: "القيمة الفعلية",
+        type: "float",
+      },
     ],
   },
   {
