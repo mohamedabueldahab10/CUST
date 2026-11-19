@@ -258,20 +258,64 @@ function fetchMergedChangeItemsDetails(approvalLevel, itemCode, classification) 
 
 // View / workflow rows: keep a saved new value, and still show a column
 // that belongs to another selected ChangeItem even when it was never stored.
+function normalizeDetailKey(name) {
+  return String(name || "").replace(/\s+/g, "").toLowerCase();
+}
+
+function detailRowChangeCode(row) {
+  var raw = row && (row.ChangeItemCode || row.ChangeItem || row.ChangeItemTitle);
+  if (raw && typeof raw === "object") {
+    raw = raw.Title || raw.LookupValue || raw.Name || "";
+  }
+  raw = String(raw == null ? "" : raw);
+  if (raw.indexOf(";#") !== -1) {
+    var parts = raw.split(";#");
+    raw = parts[parts.length - 1];
+  }
+  return raw.trim();
+}
+
 function rowsFromMergedApiColumns(savedRows, apiColumns) {
   var savedByName = {};
+  var unused = [];
   (savedRows || []).forEach(function (row) {
-    var name = row && row.ColumnInternalName;
-    if (name && !savedByName[name]) {
-      savedByName[name] = row;
+    var key = normalizeDetailKey(row && row.ColumnInternalName);
+    if (key && !savedByName[key]) {
+      savedByName[key] = row;
     }
+    unused.push(row);
   });
+
+  function takeSaved(name, owner) {
+    var key = normalizeDetailKey(name);
+    var saved = key ? savedByName[key] : null;
+    if (saved) {
+      delete savedByName[key];
+      unused = unused.filter(function (row) {
+        return row !== saved;
+      });
+      return saved;
+    }
+    if (!owner) return null;
+    var forOwner = unused.filter(function (row) {
+      return detailRowChangeCode(row) === owner;
+    });
+    if (forOwner.length !== 1) return null;
+    var only = forOwner[0];
+    unused = unused.filter(function (row) {
+      return row !== only;
+    });
+    var onlyKey = normalizeDetailKey(only.ColumnInternalName);
+    if (onlyKey) delete savedByName[onlyKey];
+    return only;
+  }
+
   var rows = [];
   var seen = {};
   (apiColumns || []).forEach(function (col) {
     var name = getFieldInternalNameFromColumnDetail(col);
-    if (!name || seen[name]) return;
-    seen[name] = true;
+    if (!name || seen[normalizeDetailKey(name)]) return;
+    seen[normalizeDetailKey(name)] = true;
     var json = {};
     try {
       json =
@@ -280,11 +324,12 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
           : col.jsonField || {};
     } catch (e) {}
     var owner = col._ci || window.crFieldChangeItemMap[name] || "";
-    var saved = savedByName[name];
+    var saved = takeSaved(name, owner);
     if (saved) {
       if (owner && !saved.ChangeItemCode) {
         saved.ChangeItemCode = owner;
       }
+      if (!saved.ColumnInternalName) saved.ColumnInternalName = name;
       rows.push(saved);
     } else {
       rows.push({
@@ -297,10 +342,11 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
       });
     }
   });
-  (savedRows || []).forEach(function (row) {
-    if (row.ColumnInternalName && !seen[row.ColumnInternalName]) {
-      rows.push(row);
-    }
+  unused.forEach(function (row) {
+    var key = normalizeDetailKey(row && row.ColumnInternalName);
+    if (key && seen[key]) return;
+    if (key) seen[key] = true;
+    rows.push(row);
   });
   return rows;
 }
@@ -5577,7 +5623,10 @@ function handleChangeItemsAPIForCode(crCode, changeItemCode) {
         };
       });
 
-      if (apiBody.length === 0) {
+      var rowsToPost = apiBody.filter(function (field) {
+        return !isBlankCrValue(field.columnNewValue);
+      });
+      if (rowsToPost.length === 0) {
         resolve({ success: true, message: "No dynamic fields to save" });
         return;
       }
@@ -5586,7 +5635,7 @@ function handleChangeItemsAPIForCode(crCode, changeItemCode) {
         url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
         method: "POST",
         contentType: "application/json",
-        data: JSON.stringify(apiBody),
+        data: JSON.stringify(rowsToPost),
         success: function (res) {
           resolve(res);
         },
@@ -5623,7 +5672,10 @@ function handleChangeItemsAPIForCode(crCode, changeItemCode) {
       });
 
       // If no dynamic fields, skip API call and resolve immediately
-      if (apiBody.length === 0) {
+      var rowsToPost = apiBody.filter(function (field) {
+        return !isBlankCrValue(field.columnNewValue);
+      });
+      if (rowsToPost.length === 0) {
         resolve({ success: true, message: "No dynamic fields to save" });
         return;
       }
@@ -5632,7 +5684,7 @@ function handleChangeItemsAPIForCode(crCode, changeItemCode) {
         url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
         method: "POST",
         contentType: "application/json",
-        data: JSON.stringify(apiBody),
+        data: JSON.stringify(rowsToPost),
         success: function (res) {
           resolve(res);
         },
@@ -7232,8 +7284,12 @@ function renderViewDynamicFields(
     }
 
     // Regular fields (non-picker, non-lookup) - original code
+    var fieldOwnerCode = resolveChangeItemCodeForDetailRow(col);
+    var fieldDomId = fieldOwnerCode
+      ? String(fieldOwnerCode).replace(/[^A-Za-z0-9_-]/g, "_") + "_" + fieldName
+      : fieldName;
     const inputHtml = buildInputHtml(
-      fieldName,
+      fieldDomId,
       dataType,
       displayValue,
       readOnly
@@ -8600,10 +8656,17 @@ window.handleWorkflowApproval = function (
                             "/SitePages/Listing.aspx?ListKey=changerequests";
                         },
                         error: function () {
+                          var finalStage =
+                            stageToSet &&
+                            String(stageToSet).toLowerCase() === "approved";
                           alert(
-                            localStorage.getItem("lng") == "en"
-                              ? "Submitted successfully, but error applying changes"
-                              : "تم الإرسال بنجاح، لكن حدث خطأ في تطبيق التغييرات"
+                            finalStage
+                              ? localStorage.getItem("lng") == "en"
+                                ? "Submitted successfully, but error applying changes"
+                                : "تم الإرسال بنجاح، لكن حدث خطأ في تطبيق التغييرات"
+                              : localStorage.getItem("lng") == "en"
+                                ? "Submitted successfully"
+                                : "تم الإرسال بنجاح"
                           );
                           window.location.href =
                             _spPageContextInfo.webAbsoluteUrl +
