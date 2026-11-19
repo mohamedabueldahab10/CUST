@@ -94,8 +94,62 @@ function getCRAttachmentsFolderServerRelativeUrl() {
   });
 }
 
-function getSelectedChangeItemMeta() {
-  var $opt = $("#ChangeItem option:selected");
+function normalizeChangeItemCodes(value) {
+  if (value == null || value === "") return [];
+  if (Array.isArray(value)) {
+    var merged = [];
+    value.forEach(function (part) {
+      normalizeChangeItemCodes(part).forEach(function (code) {
+        if (merged.indexOf(code) === -1) merged.push(code);
+      });
+    });
+    return merged;
+  }
+  var text = String(value).trim();
+  if (!text) return [];
+  if (text.indexOf(";#") > -1) {
+    var lookupParts = text.split(";#");
+    var lookupCodes = [];
+    for (var i = 0; i < lookupParts.length; i += 2) {
+      var lookupCode = (lookupParts[i] || "").trim();
+      if (lookupCode && lookupCodes.indexOf(lookupCode) === -1) lookupCodes.push(lookupCode);
+    }
+    return lookupCodes;
+  }
+  if (text.indexOf(";") > -1 || text.indexOf(",") > -1) {
+    var splitCodes = [];
+    text.split(/[;,]/).forEach(function (part) {
+      var code = part.trim();
+      if (code && splitCodes.indexOf(code) === -1) splitCodes.push(code);
+    });
+    return splitCodes;
+  }
+  return [text];
+}
+
+function getSelectedChangeItemCodes() {
+  return normalizeChangeItemCodes($("#ChangeItem").val());
+}
+
+function changeItemStoredValue() {
+  var codes = getSelectedChangeItemCodes();
+  if (!codes.length) return "";
+  if (codes.length === 1) return codes[0];
+  return codes.join(";");
+}
+
+function fieldValueText(value) {
+  if (Array.isArray(value)) return value.join(";");
+  return value == null ? "" : String(value);
+}
+
+function getChangeItemMetaByCode(code) {
+  var $opt = $("#ChangeItem option").filter(function () {
+    return this.value === code;
+  }).first();
+  if (!$opt.length) $opt = $("#ChangeItem option:selected").filter(function () {
+    return $(this).val();
+  }).first();
   return {
     actionType: ($opt.data("actiontype") || $opt.attr("data-actiontype") || "")
       .toString()
@@ -104,6 +158,67 @@ function getSelectedChangeItemMeta() {
       .toString()
       .toLowerCase(),
   };
+}
+
+function isStructuralChangeAction(actionType) {
+  return actionType === "add" || actionType === "merge" || actionType === "split" || actionType === "delete";
+}
+
+function getSelectedChangeItemMeta() {
+  var codes = getSelectedChangeItemCodes();
+  if (!codes.length) {
+    return { actionType: "", listName: "" };
+  }
+  return getChangeItemMetaByCode(codes[0]);
+}
+
+function selectedChangesAreAllStructural() {
+  var codes = getSelectedChangeItemCodes();
+  return codes.length > 0 && codes.every(function (code) {
+    return isStructuralChangeAction(getChangeItemMetaByCode(code).actionType);
+  });
+}
+
+function appendChangeItemGroupHeader(code) {
+  if (getSelectedChangeItemCodes().length < 2) return;
+  var $opt = $("#ChangeItem option").filter(function () {
+    return this.value === code;
+  }).first();
+  var label = $opt.length ? $opt.text() : code;
+  $(".changeItemsRow").append(
+    '<div class="col-12 changeItemGroup"><h4 class="change-item-group-title">' +
+    escapeHtml(label) +
+    "</h4></div>"
+  );
+}
+
+function tagRenderedChangeField(container) {
+  var code = window._crActiveChangeItemCode;
+  if (!code || !container) return;
+  container.children(".dynamicField").last().attr("data-change-item-code", code);
+}
+
+function refreshChangeItemWidget() {
+  var $sel = $("#ChangeItem");
+  if ($sel.length && $sel.data("multiselect")) {
+    $sel.multiselect("refresh");
+  }
+}
+
+function initChangeItemMultiSelect() {
+  var $sel = $("#ChangeItem");
+  if (!$sel.length || !$.fn || !$.fn.multiselect) return;
+  if ($sel.data("multiselect")) {
+    $sel.multiselect("rebuild");
+    return;
+  }
+  $sel.multiselect({
+    nonSelectedText: "بند التغيير",
+    nSelectedText: " من البنود",
+    allSelectedText: "تم اختيار كل البنود",
+    numberDisplayed: 2,
+    includeSelectAllOption: false,
+  });
 }
 
 function getCRAttachmentFiles() {
@@ -715,7 +830,7 @@ var checkchangerequestshtml = setInterval(function () {
 
         <div class="col-md-6 mb-3">
           <label data-trans-changeitem class="Resources"></label>
-          <select id="ChangeItem" class="form-control">
+          <select id="ChangeItem" class="form-control" multiple="multiple">
             <option
               data-trans-changeitem
               class="Resources"
@@ -868,6 +983,7 @@ var checkchangerequestshtml = setInterval(function () {
     $("#ApprovalLevel").prop("disabled", true);
     
     changeResources();
+    initChangeItemMultiSelect();
     initCRAttachmentsUI();
     loadCRExistingAttachments();
 
@@ -1188,15 +1304,17 @@ function loadListOptionsPromise(listName, selectId, dispFieldKey, dispFieldKeyEn
 // authItemCode: parent item used for agency/IsActive (SubSector authorization)
 // detailsItemCode: selected item for getchangeitemsdetails (parent or child)
 function callGetSectorAndSubSectorAPI(changeItemCode, authItemCode, detailsItemCode) {
-if (!changeItemCode || !authItemCode) {
+var codes = normalizeChangeItemCodes(changeItemCode);
+var primaryCode = codes[0] || "";
+if (!primaryCode || !authItemCode) {
   return;
 }
 detailsItemCode = detailsItemCode || authItemCode;
 
 // Clear dynamic fields before calling API
-$(".changeItemsRow").find(".dynamicField").remove();
+$(".changeItemsRow").find(".dynamicField, .changeItemGroup").remove();
 
-const url = `${APIURL}/general/getsectorandsubsectorforselecteditem/${encodeURIComponent(changeItemCode)}/${encodeURIComponent(authItemCode)}`;
+const url = `${APIURL}/general/getsectorandsubsectorforselecteditem/${encodeURIComponent(primaryCode)}/${encodeURIComponent(authItemCode)}`;
 
 $.ajax({
   url: url,
@@ -1280,7 +1398,7 @@ $.ajax({
       // After setting ApprovalLevel, call getchangeitemsdetails (for edit/view always; for new only when agency is allowed)
       if (result.approvalLevel && (!window.isNew || window.currentIsActive !== false)) {
         const classification = (parentType === "MainKpi" && result.classification) ? result.classification : null;
-        fetchChangeItemDetails(changeItemCode, result.approvalLevel, detailsItemCode, classification);
+        fetchChangeItemDetails(codes, result.approvalLevel, detailsItemCode, classification);
       } else if (!result.approvalLevel) {
         $(".changeItemsRow").find(".dynamicField").remove();
       }
@@ -1290,7 +1408,7 @@ $.ajax({
       $("#SubSector").val("");
       $("#ApprovalLevel").val("").prop("disabled", true);
       $("#Classification").val("");
-      $(".changeItemsRow").find(".dynamicField").remove();
+      $(".changeItemsRow").find(".dynamicField, .changeItemGroup").remove();
     }
   },
   error: function (xhr, status, error) {
@@ -1299,7 +1417,7 @@ $.ajax({
     $("#SubSector").val("");
     $("#ApprovalLevel").val("").prop("disabled", true);
     $("#Classification").val("");
-    $(".changeItemsRow").find(".dynamicField").remove();
+    $(".changeItemsRow").find(".dynamicField, .changeItemGroup").remove();
   }
 });
 }
@@ -1424,7 +1542,7 @@ function setChangeItemsVisibility(visible) {
 function handleParentChildFieldsVisibility() {
   var meta = getSelectedChangeItemMeta();
   var actionType = (meta.actionType || "").toLowerCase();
-  var shouldHideHierarchyFields = actionType === "add";
+  var shouldHideHierarchyFields = selectedChangesAreAllStructural() && actionType === "add";
   
   // Get field elements
   var $parentItemType = $("#ParentItemType");
@@ -1681,7 +1799,7 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   // Check actionType for New mode add action
   var meta = getSelectedChangeItemMeta();
   var actionType = (meta.actionType || "").toLowerCase();
-  var isNewAddAction = window.isNew && actionType === "add";
+  var isNewAddAction = window.isNew && actionType === "add" && selectedChangesAreAllStructural();
   
   // Validate actionType - must be one of: add, split, merge, delete
   if (!meta.actionType || meta.actionType.trim() === "") {
@@ -1776,7 +1894,7 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   }
 
   // Validate ChangeItem
-  var changeItemVal = $("#ChangeItem").val();
+  var changeItemVal = fieldValueText($("#ChangeItem").val());
   if (!changeItemVal || changeItemVal.trim() === "") {
     $("#ChangeItem").addClass("is-invalid");
     if (!firstInvalid) firstInvalid = $("#ChangeItem");
@@ -1884,7 +2002,7 @@ $(document).on(
   "input change",
   "#Sector, #SubSector, #RelatedStrategy, #ParentItemType, #ParentItemCode, #ChangeItem, #ApprovalLevel, #ChangeDescription, #ChangeJustification, #ExpectedPositiveImpact, #ImpactType, #ChildItemCode, #ChildItemType",
   function () {
-    if ($(this).val() && $(this).val().trim() !== "") {
+    if (fieldValueText($(this).val()).trim() !== "") {
       $(this).removeClass("is-invalid");
     }
     // If ChildItemCode changes and has value, remove invalid class
@@ -2349,6 +2467,7 @@ function loadChangeItems(listName, parentType = "", childType = "") {
           `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
         );
       });
+      initChangeItemMultiSelect();
       
       // Handle Parent/Child fields visibility based on actionType after loading options
       handleParentChildFieldsVisibility();
@@ -2440,27 +2559,38 @@ function buildInputHtml(fieldName, fieldType, value, readOnly) {
   return `<input type="${inputType}" id="${safeName}" class="form-control" value="${safeValue}"${disabledAttr}>`;
 }
 
-function renderDynamicChangeFields(columns) {
+function renderDynamicChangeFields(columns, options) {
+  options = options || {};
   const lang = localStorage.getItem("lng");
   const container = $(".changeItemsRow");
-  container.find(".dynamicField").remove();
+  window._crActiveChangeItemCode = options.changeItemCode || "";
+  if (!options.append) {
+    container.find(".dynamicField, .changeItemGroup").remove();
+  }
 
   // Check actionType - if add, merge, split, or delete, hide dynamic section and don't render fields
-  var meta = getSelectedChangeItemMeta();
-  if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
-    setChangeItemsVisibility(false);
+  var meta = options.changeItemCode
+    ? getChangeItemMetaByCode(options.changeItemCode)
+    : getSelectedChangeItemMeta();
+  if (isStructuralChangeAction(meta.actionType)) {
+    if (!options.append) setChangeItemsVisibility(false);
     return;
   }
 
   if (!columns || columns.length === 0) {
-    setChangeItemsVisibility(false);
+    if (!options.append) setChangeItemsVisibility(false);
     return;
   }
 
   setChangeItemsVisibility(true);
 
+  if (options.append) {
+    renderFieldsWithDisplayNames(columns, {}, lang, container, columns);
+    return;
+  }
+
   // Check if we need to fetch DisplayNames from API
-  const changeItemCode = $("#ChangeItem").val();
+  const changeItemCode = getSelectedChangeItemCodes()[0] || "";
   const approvalLevel = $("#ApprovalLevel").val();
   let itemCode = $("#ParentItemCode").val();
   if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val()) {
@@ -2804,6 +2934,7 @@ function renderFieldsWithDisplayNames(
       `;
 
       container.append(fieldBlock);
+      tagRenderedChangeField(container);
       changeResources();
       return;
     }
@@ -2861,6 +2992,7 @@ function renderFieldsWithDisplayNames(
       `;
 
       container.append(fieldBlock);
+      tagRenderedChangeField(container);
       changeResources();
       return;
     }
@@ -2891,6 +3023,7 @@ function renderFieldsWithDisplayNames(
       `;
 
       container.append(fieldBlock);
+      tagRenderedChangeField(container);
       
       // Load options from list
       if (source) {
@@ -2927,6 +3060,7 @@ function renderFieldsWithDisplayNames(
       `;
 
       container.append(fieldBlock);
+      tagRenderedChangeField(container);
     }
   });
 
@@ -3016,88 +3150,168 @@ function handleIsActiveCheck(result) {
   }
 }
 
-function fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode, classification) {
-if (!changeItemCode || !approvalLevel || !itemCode) {
-  $(".changeItemsRow").find(".dynamicField").remove();
-  currentApprovalPath = "";
-  currentSecurityGroupName = "";
-  return;
+function fetchOneChangeItemDetails(changeItemCode, approvalLevel, itemCode, classification) {
+  return new Promise(function (resolve) {
+    var parentType = $("#ParentItemType").val();
+    var url = APIURL + "/general/getchangeitemsdetails/" +
+      encodeURIComponent(changeItemCode) + "/" +
+      encodeURIComponent(approvalLevel) + "/" +
+      encodeURIComponent(itemCode);
+    if (parentType === "MainKpi" && classification) {
+      url += "?classification=" + encodeURIComponent(classification);
+    }
+    $.ajax({
+      url: url,
+      method: "GET",
+      headers: { Accept: "application/json" },
+      success: function (res) {
+        var result = res && res.result ? res.result : {};
+        resolve({
+          code: changeItemCode,
+          columns: result.columnsDetails || [],
+          res: res,
+          result: result
+        });
+      },
+      error: function () {
+        resolve({ code: changeItemCode, columns: [], res: null, result: null });
+      }
+    });
+  });
 }
 
-// Clear dynamic fields before fetching new ones
-$(".changeItemsRow").find(".dynamicField").remove();
+function viewRowFromApiColumn(col, savedByName) {
+  var meta = {};
+  try {
+    meta = typeof col.jsonField === "string" ? JSON.parse(col.jsonField || "{}") : (col.jsonField || {});
+  } catch (e) { }
+  var name = meta.InternalName || col.ColumnInternalName;
+  var saved = name ? savedByName[name] : null;
+  if (saved) delete savedByName[name];
+  return {
+    ColumnInternalName: name,
+    ColumnOldValue: saved && saved.ColumnOldValue != null && saved.ColumnOldValue !== ""
+      ? saved.ColumnOldValue
+      : (col.value == null ? "" : String(col.value)),
+    ColumnNewValue: saved && saved.ColumnNewValue != null ? saved.ColumnNewValue : "",
+    DataType: (saved && saved.DataType) || meta.type || "string",
+    Title: meta.DisplayName || (saved && saved.Title) || name
+  };
+}
 
-  // Check actionType - if add, merge, split, or delete, hide dynamic section and don't call API
-  var meta = getSelectedChangeItemMeta();
-  if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
-    setChangeItemsVisibility(false);
-    $(".changeItemsRow").find(".dynamicField").remove();
+function renderAllSelectedChangeFields(savedRows, codes, approvalLevel, itemCode, displayNameMap) {
+  var savedByName = {};
+  (savedRows || []).forEach(function (row) {
+    if (row.ColumnInternalName && !savedByName[row.ColumnInternalName]) {
+      savedByName[row.ColumnInternalName] = row;
+    }
+  });
+  if (!approvalLevel || !itemCode) {
+    if (!savedRows || !savedRows.length) {
+      setChangeItemsVisibility(false);
+      return;
+    }
+    renderViewDynamicFields(savedRows, null, displayNameMap, { localOnly: true });
+    return;
+  }
+  var parentType = $("#ParentItemType").val();
+  var classification = parentType === "MainKpi" ? $("#Classification").val() : "";
+  Promise.all(codes.map(function (code) {
+    return fetchOneChangeItemDetails(code, approvalLevel, itemCode, classification);
+  })).then(function (results) {
+    $(".changeItemsRow").find(".dynamicField, .changeItemGroup").remove();
+    var rendered = 0;
+    results.forEach(function (entry) {
+      var rows = [];
+      if (entry && entry.columns && entry.columns.length) {
+        entry.columns.forEach(function (col) {
+          var row = viewRowFromApiColumn(col, savedByName);
+          if (row.ColumnInternalName) rows.push(row);
+        });
+      }
+      if (!rows.length) return;
+      appendChangeItemGroupHeader(entry.code);
+      renderViewDynamicFields(rows, null, displayNameMap, {
+        append: true,
+        localOnly: true,
+        changeItemCode: entry.code
+      });
+      rendered += rows.length;
+    });
+    var leftover = [];
+    Object.keys(savedByName).forEach(function (key) {
+      leftover.push(savedByName[key]);
+    });
+    if (leftover.length) {
+      renderViewDynamicFields(leftover, null, displayNameMap, {
+        append: true,
+        localOnly: true,
+        changeItemCode: ""
+      });
+      rendered += leftover.length;
+    }
+    setChangeItemsVisibility(rendered > 0);
+    changeResources();
+  });
+}
+
+function noChangeFieldsAlert() {
+  alert(
+    localStorage.getItem("lng") == "en"
+      ? "There are no fields to change according to your choices. Please review the data!"
+      : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
+  );
+}
+
+function fetchChangeItemDetails(changeItemCode, approvalLevel, itemCode, classification) {
+  var codes = normalizeChangeItemCodes(changeItemCode).filter(function (code) {
+    return !isStructuralChangeAction(getChangeItemMetaByCode(code).actionType);
+  });
+  if (!codes.length || !approvalLevel || !itemCode) {
+    $(".changeItemsRow").find(".dynamicField, .changeItemGroup").remove();
+    if (!codes.length) setChangeItemsVisibility(false);
     currentApprovalPath = "";
     currentSecurityGroupName = "";
     return;
   }
 
-  // Build URL with classification parameter if it's MainKpi and classification is provided
-  let url = `${APIURL}/general/getchangeitemsdetails/${encodeURIComponent(
-    changeItemCode
-  )}/${encodeURIComponent(approvalLevel)}/${encodeURIComponent(itemCode)}`;
-  
-  // Add classification parameter if it's MainKpi and classification is provided
-  const parentType = $("#ParentItemType").val();
-  if (parentType === "MainKpi" && classification) {
-    url += `?classification=${encodeURIComponent(classification)}`;
-  }
+  $(".changeItemsRow").find(".dynamicField, .changeItemGroup").remove();
 
-  $.ajax({
-    url: url,
-    method: "GET",
-    headers: { Accept: "application/json" },
-    success: function (res) {
-      const result = res && res.result ? res.result : {};
-      currentApprovalPath = result.approvalPath || "";
-      currentSecurityGroupName = result.securityGroupName || "";
-
-      // Check IsActive for new forms
-      if (!handleIsActiveCheck(result)) {
-        // Item is not active, don't proceed with rendering fields
-        $(".changeItemsRow").find(".dynamicField").remove();
+  Promise.all(codes.map(function (code) {
+    return fetchOneChangeItemDetails(code, approvalLevel, itemCode, classification);
+  })).then(function (results) {
+    var rendered = 0;
+    results.forEach(function (entry) {
+      if (!entry || !entry.result) return;
+      if (!currentApprovalPath && entry.result.approvalPath) {
+        currentApprovalPath = entry.result.approvalPath || "";
+        currentSecurityGroupName = entry.result.securityGroupName || "";
+      }
+      if (rendered === 0 && !handleIsActiveCheck(entry.result)) {
+        $(".changeItemsRow").find(".dynamicField, .changeItemGroup").remove();
         currentApprovalPath = "";
         currentSecurityGroupName = "";
-        return;
+        rendered = -1;
       }
+    });
+    if (rendered === -1) return;
 
-      if (
-        res &&
-        res.isSuccess &&
-        result &&
-        result.columnsDetails &&
-        result.columnsDetails.length
-    ) {
-      renderDynamicChangeFields(result.columnsDetails);
-    } else {
-      $(".changeItemsRow").find(".dynamicField").remove();
+    results.forEach(function (entry) {
+      if (!entry || !entry.res || !entry.res.isSuccess || !entry.columns.length) return;
+      appendChangeItemGroupHeader(entry.code);
+      renderDynamicChangeFields(entry.columns, { append: true, changeItemCode: entry.code });
+      rendered += entry.columns.length;
+    });
+
+    if (!rendered) {
+      $(".changeItemsRow").find(".dynamicField, .changeItemGroup").remove();
       currentApprovalPath = "";
       currentSecurityGroupName = "";
-      // Show general alert if no fields to change
-      alert(
-        localStorage.getItem("lng") == "en"
-          ? "There are no fields to change according to your choices. Please review the data!"
-          : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
-      );
+      setChangeItemsVisibility(false);
+      noChangeFieldsAlert();
+      return;
     }
-  },
-  error: function (xhr) {
-    console.error("🟠 [fetchChangeItemDetails] Error:", xhr);
-    $(".changeItemsRow").find(".dynamicField").remove();
-    currentApprovalPath = "";
-    currentSecurityGroupName = "";
-    // Show general alert for all errors
-    alert(
-      localStorage.getItem("lng") == "en"
-        ? "There are no fields to change according to your choices. Please review the data!"
-        : "ليس هناك حقول للتغيير وفقًا لخياراتك. يرجى مراجعة البيانات !"
-    );
-  },
+    setChangeItemsVisibility(true);
   });
 }
 function saveAllChangeRequestFields() {
@@ -3105,7 +3319,7 @@ function saveAllChangeRequestFields() {
   var meta = getSelectedChangeItemMeta();
   var actionType = (meta.actionType || "").toLowerCase();
   var isAddAction = actionType === "add";
-  var isNewAddAction = window.isNew && actionType === "add";
+  var isNewAddAction = window.isNew && actionType === "add" && selectedChangesAreAllStructural();
   
   // Double-check required fields before proceeding (safety check)
   // Also check ChildItemCode if ChildItemType is selected (only if not add action)
@@ -3125,7 +3339,7 @@ function saveAllChangeRequestFields() {
   if (!isAddAction && !isNewAddAction && (!$("#ParentItemType").val() || $("#ParentItemType").val().trim() === "")) validationErrors.push("ParentItemType");
   if (!isAddAction && !isNewAddAction && (!$("#ParentItemCode").val() || $("#ParentItemCode").val().trim() === "")) validationErrors.push("ParentItemCode");
   if (childItemCodeRequired) validationErrors.push("ChildItemCode");
-  if (!$("#ChangeItem").val() || $("#ChangeItem").val().trim() === "") validationErrors.push("ChangeItem");
+  if (!fieldValueText($("#ChangeItem").val()).trim()) validationErrors.push("ChangeItem");
   if (!isNewAddAction && (!$("#ApprovalLevel").val() || $("#ApprovalLevel").val().trim() === "")) validationErrors.push("ApprovalLevel");
   if (!$("#ChangeDescription").val() || $("#ChangeDescription").val().trim() === "") validationErrors.push("ChangeDescription");
   if (!$("#ChangeJustification").val() || $("#ChangeJustification").val().trim() === "") validationErrors.push("ChangeJustification");
@@ -3169,6 +3383,10 @@ function saveAllChangeRequestFields() {
     }
     
     fieldsToSave.forEach((f) => {
+      if (f === "ChangeItem") {
+        oListItem.set_item(f, changeItemStoredValue());
+        return;
+      }
       oListItem.set_item(f, $("#" + f).val() || "");
     });
 
@@ -3340,6 +3558,10 @@ function saveAllChangeRequestFields() {
           "ExpectedPositiveImpact",
           "ImpactType",
         ].forEach((f) => {
+          if (f === "ChangeItem") {
+            oListItem.set_item(f, changeItemStoredValue());
+            return;
+          }
           oListItem.set_item(f, $("#" + f).val() || "");
         });
 
@@ -3402,7 +3624,6 @@ function saveAllChangeRequestFields() {
 }
 function handleChangeItemsAPI(crCode) {
   return new Promise(function (resolve, reject) {
-    const changeItemCode = $("#ChangeItem").val() || "";
     const fields = [];
     const pickerPromises = [];
 
@@ -3443,6 +3664,7 @@ function handleChangeItemsAPI(crCode) {
           fieldId: fieldInternalName, // Use InternalName, not input ID
           dataType: "picker",
           columnOldValue: oldValueId, // Use ID if available, otherwise Display Name
+          changeItemCode: $field.attr("data-change-item-code") || getSelectedChangeItemCodes()[0] || "",
           $field: $field
         };
 
@@ -3537,6 +3759,7 @@ function handleChangeItemsAPI(crCode) {
           } else {
             fieldData.columnNewValue = "";
           }
+          fieldData.changeItemCode = $field.attr("data-change-item-code") || getSelectedChangeItemCodes()[0] || "";
           fields.push(fieldData);
         }
       } else {
@@ -3560,6 +3783,7 @@ function handleChangeItemsAPI(crCode) {
             columnNewValue: selectValue
           };
           
+          fieldData.changeItemCode = $field.attr("data-change-item-code") || getSelectedChangeItemCodes()[0] || "";
           fields.push(fieldData);
         } else if (fieldType === "yesnoradio") {
           const $checkedRadio = $field.find('input[type="radio"]:checked');
@@ -3576,6 +3800,7 @@ function handleChangeItemsAPI(crCode) {
             columnNewValue: radioValue
           };
           
+          fieldData.changeItemCode = $field.attr("data-change-item-code") || getSelectedChangeItemCodes()[0] || "";
           fields.push(fieldData);
         } else if (fieldType === "lookup") {
           const $select = $field.find("select");
@@ -3593,6 +3818,7 @@ function handleChangeItemsAPI(crCode) {
             columnNewValue: selectValue
           };
           
+          fieldData.changeItemCode = $field.attr("data-change-item-code") || getSelectedChangeItemCodes()[0] || "";
           fields.push(fieldData);
         } else {
           // Regular input/textarea/select
@@ -3631,6 +3857,7 @@ function handleChangeItemsAPI(crCode) {
             columnNewValue: inputValue
           };
 
+          fieldData.changeItemCode = $field.attr("data-change-item-code") || getSelectedChangeItemCodes()[0] || "";
           fields.push(fieldData);
         }
       }
@@ -3638,82 +3865,60 @@ function handleChangeItemsAPI(crCode) {
 
     // If no picker promises, resolve immediately with regular fields
     if (pickerPromises.length === 0) {
-      const apiBody = fields.map(function (field) {
-        return {
-          columnInternalName: field.fieldId,
-          dataType: field.dataType,
-          columnOldValue: field.columnOldValue,
-          columnNewValue: field.columnNewValue || ""
-        };
-      });
-
-      if (apiBody.length === 0) {
+      if (!fields.length) {
         resolve({ success: true, message: "No dynamic fields to save" });
         return;
       }
-
-      $.ajax({
-        url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
-        method: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(apiBody),
-        success: function (res) {
-          resolve(res);
-        },
-        error: function (xhr) {
-          reject(xhr);
-        },
-      });
+      submitChangeDetails(crCode, fields).then(resolve).catch(reject);
       return;
     }
 
     // Wait for all People Picker promises to resolve
     Promise.all(pickerPromises).then(function (pickerFields) {
-      // Add picker fields to fields array
       fields.push.apply(fields, pickerFields);
-
-      // Build API body
-      const apiBody = fields.map(function (field) {
-        // IMPORTANT: For picker fields, ensure we send ID, not JSON object
-        if (field.dataType === "picker") {
-          return {
-            columnInternalName: field.fieldId,
-            dataType: field.dataType,
-            columnOldValue: field.columnOldValue || "",
-            columnNewValue: field.columnNewValue || ""
-          };
-        } else {
-          return {
-            columnInternalName: field.fieldId,
-            dataType: field.dataType,
-            columnOldValue: field.columnOldValue,
-            columnNewValue: field.columnNewValue || ""
-          };
-        }
-      });
-
-      // If no dynamic fields, skip API call and resolve immediately
-      if (apiBody.length === 0) {
+      if (!fields.length) {
         resolve({ success: true, message: "No dynamic fields to save" });
         return;
       }
-
-      $.ajax({
-        url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
-        method: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(apiBody),
-        success: function (res) {
-          resolve(res);
-        },
-        error: function (xhr) {
-          reject(xhr);
-        },
-      });
+      submitChangeDetails(crCode, fields).then(resolve).catch(reject);
     }).catch(function (error) {
       reject(error);
     });
   });
+}
+
+function submitChangeDetails(crCode, fields) {
+  var groups = {};
+  (fields || []).forEach(function (field) {
+    var code = field.changeItemCode || getSelectedChangeItemCodes()[0] || "";
+    if (!code) return;
+    if (!groups[code]) groups[code] = [];
+    groups[code].push({
+      columnInternalName: field.fieldId,
+      dataType: field.dataType,
+      columnOldValue: field.columnOldValue == null ? "" : field.columnOldValue,
+      columnNewValue: field.columnNewValue || ""
+    });
+  });
+  var codes = Object.keys(groups);
+  if (!codes.length) {
+    return Promise.resolve({ success: true, message: "No dynamic fields to save" });
+  }
+  return codes.reduce(function (chain, code) {
+    return chain.then(function () {
+      return new Promise(function (resolve, reject) {
+        $.ajax({
+          url: APIURL + "/general/addnewchangerequestdetails/" +
+            encodeURIComponent(crCode) + "/" + encodeURIComponent(code),
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(groups[code]),
+          success: function (res) { resolve(res); },
+          error: function (xhr) { reject(xhr); }
+        });
+      });
+    });
+  }, Promise.resolve());
 }
 
 function startChangeRequestWorkflow(crCode) {
@@ -4210,6 +4415,7 @@ function loadChangeItemsOptionsOnly(listName, parentType = "", childType = "") {
             `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
           );
         });
+        initChangeItemMultiSelect();
         resolve();
       },
       error: function (err) {
@@ -4463,10 +4669,20 @@ function fillViewFields(item, code) {
 
 function loadChangeItemsForView(changeItemCode, newCRCode) {
   return new Promise((resolve) => {
-    if (!changeItemCode) {
+    var codes = normalizeChangeItemCodes(changeItemCode);
+    if (!codes.length) {
       resolve();
       return;
     }
+    if (codes.length > 1) {
+      setSelectValue("#ChangeItem", codes);
+      if (window.pendingChangeItemColumnInternalName === undefined) {
+        window.pendingChangeItemColumnInternalName = "";
+      }
+      resolve();
+      return;
+    }
+    changeItemCode = codes[0];
     
     const $changeItem = $("#ChangeItem");
     // Don't empty if options are already loaded (during initial data load)
@@ -4612,6 +4828,20 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
     method: "GET",
     headers: { Accept: "application/json; odata=verbose" },
     success: function (data) {
+      var fieldCodes = getSelectedChangeItemCodes().filter(function (fieldCode) {
+        return !isStructuralChangeAction(getChangeItemMetaByCode(fieldCode).actionType);
+      });
+      if (fieldCodes.length) {
+        var savedRows = data.d && data.d.results ? data.d.results : [];
+        renderAllSelectedChangeFields(
+          savedRows,
+          fieldCodes,
+          approvalLevel,
+          itemCode,
+          displayNameMapFromChangeItems
+        );
+        return;
+      }
       // Check actionType - if add, merge, split, or delete, hide dynamic section and don't render fields
       var meta = getSelectedChangeItemMeta();
       if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
@@ -4721,6 +4951,20 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
 }
 function setSelectValue(selectId, value) {
   const $sel = $(selectId);
+  if (selectId === "#ChangeItem") {
+    var codes = normalizeChangeItemCodes(value);
+    codes.forEach(function (code) {
+      var exists = $sel.find("option").filter(function () {
+        return this.value === code;
+      }).length > 0;
+      if (!exists) {
+        $sel.append($("<option>").attr("value", code).text(code));
+      }
+    });
+    $sel.val(codes);
+    refreshChangeItemWidget();
+    return;
+  }
   if (!$sel.find(`option[value='${value}']`).length && value) {
     $sel.append(`<option value="${value}" selected>${value}</option>`);
   }
@@ -4730,19 +4974,26 @@ function setSelectValue(selectId, value) {
 function renderViewDynamicFields(
   columns,
   apiResponse,
-  displayNameMapFromChangeItems
+  displayNameMapFromChangeItems,
+  options
 ) {
+  options = options || {};
   const container = $(".changeItemsRow");
-  container.find(".dynamicField").remove();
+  window._crActiveChangeItemCode = options.changeItemCode || "";
+  if (!options.append) {
+    container.find(".dynamicField, .changeItemGroup").remove();
+  }
 
   // Check actionType - if add, merge, split, or delete, hide dynamic section and don't render fields
-  var meta = getSelectedChangeItemMeta();
-  if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
-    setChangeItemsVisibility(false);
+  var meta = options.changeItemCode
+    ? getChangeItemMetaByCode(options.changeItemCode)
+    : getSelectedChangeItemMeta();
+  if (isStructuralChangeAction(meta.actionType)) {
+    if (!options.append) setChangeItemsVisibility(false);
     return;
   }
 
-  const changeItemCode = $("#ChangeItem").val();
+  const changeItemCode = options.changeItemCode || getSelectedChangeItemCodes()[0] || "";
   const approvalLevel = $("#ApprovalLevel").val();
   let itemCode = $("#ParentItemCode").val();
   if ($("#ChildItemCodeDiv").is(":visible") && $("#ChildItemCode").val()) {
@@ -4861,6 +5112,7 @@ function renderViewDynamicFields(
         </div>
       `;
       container.append(fieldBlock);
+      tagRenderedChangeField(container);
 
       // Initialize People Picker for this field after a delay
       // initPeoplePicker will read the ID from data-user-id and convert it to display name
@@ -4956,6 +5208,7 @@ function renderViewDynamicFields(
         </div>
       `;
       container.append(fieldBlock);
+      tagRenderedChangeField(container);
       changeResources();
       return;
     }
@@ -5037,6 +5290,7 @@ function renderViewDynamicFields(
         </div>
       `;
       container.append(fieldBlock);
+      tagRenderedChangeField(container);
       changeResources();
       return;
     }
@@ -5143,6 +5397,7 @@ function renderViewDynamicFields(
         </div>
       `;
       container.append(fieldBlock);
+      tagRenderedChangeField(container);
       
       // Load options from list
       if (source) {
@@ -5211,6 +5466,7 @@ function renderViewDynamicFields(
       </div>
     `;
     container.append(fieldBlock);
+      tagRenderedChangeField(container);
   }
 
   // If API response is provided, use it directly
@@ -5325,9 +5581,11 @@ function renderViewDynamicFields(
 
   // Otherwise, call API if we have the required values
   // But skip API call if actionType is add, merge, split, or delete
-  if (changeItemCode && approvalLevel && itemCode) {
+  if (!options.localOnly && changeItemCode && approvalLevel && itemCode) {
     // Check actionType - if add, merge, split, or delete, don't call API
-    var meta = getSelectedChangeItemMeta();
+    var meta = options.changeItemCode
+      ? getChangeItemMetaByCode(options.changeItemCode)
+      : getSelectedChangeItemMeta();
     if (meta.actionType === "add" || meta.actionType === "merge" || meta.actionType === "split" || meta.actionType === "delete") {
       // Don't call API, just render fields directly without API
       if (columns && columns.length) {
@@ -5771,12 +6029,13 @@ function loadChangeItemsForEdit(
           `<option value="${item.Title}" data-name="${item.ItemName}" data-column="${item.ColumnInternalName}" data-actiontype="${item.ActionType}" data-listname="${item.ListName}" data-updatetype="${item.UpdateType}">${item.ItemName}</option>`
         );
       });
+      initChangeItemMultiSelect();
       
       // Handle Parent/Child fields visibility based on actionType after loading options
       handleParentChildFieldsVisibility();
       
           // Always restore the current ChangeItem value if it exists
-      if (currentChangeItem && currentChangeItem.trim() !== "") {
+      if (fieldValueText(currentChangeItem).trim() !== "") {
         setTimeout(function() {
           const previousValue = $changeItem.val();
           setSelectValue("#ChangeItem", currentChangeItem);
@@ -6235,14 +6494,11 @@ window.handleWorkflowApproval = function (
               function () {
                 $(".popupComment").remove();
 
-                // If approved and stageIDApprove == "approved", call apply API
-                // last stage 
-                if (
-                  isApproved &&
-                  stageIDApprove &&
-                  stageIDApprove.toLowerCase() === "approved" &&
-                  crItemCode
-                ) {
+                // Apply every selected change item when the approver confirms.
+                // The previous gate required the next stage id to be the literal
+                // "approved", so intermediate approvals such as مكتب المشاريع
+                // closed the task without writing the new values.
+                if (isApproved && crItemCode) {
                   $.ajax({
                     url: `${APIURL}/general/applychangerequestchanges/${crItemCode}`,
                     method: "GET",
