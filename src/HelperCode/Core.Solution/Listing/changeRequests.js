@@ -186,7 +186,8 @@ function getFieldInternalNameFromColumnDetail(col) {
         ? JSON.parse(col.jsonField || "{}")
         : col.jsonField || {};
   } catch (e) { }
-  return jf.InternalName || col.ColumnInternalName || "";
+  if (!jf || typeof jf !== "object") jf = {};
+  return jf.InternalName || (col && col.ColumnInternalName) || "";
 }
 
 // Selected ChangeItem codes that expose editable fields (primary first).
@@ -258,10 +259,11 @@ function fetchMergedChangeItemsDetails(approvalLevel, itemCode, classification) 
 
 // View / workflow rows: keep a saved new value, and still show a column
 // that belongs to another selected ChangeItem even when it was never stored.
+
 function normalizeDetailKey(name) {
   return String(name || "").replace(/\s+/g, "").toLowerCase();
 }
-
+ 
 function detailRowChangeCode(row) {
   var raw = row && (row.ChangeItemCode || row.ChangeItem || row.ChangeItemTitle);
   if (raw && typeof raw === "object") {
@@ -274,7 +276,7 @@ function detailRowChangeCode(row) {
   }
   return raw.trim();
 }
-
+ 
 function rowsFromMergedApiColumns(savedRows, apiColumns) {
   var savedByName = {};
   var unused = [];
@@ -283,9 +285,8 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
     if (key && !savedByName[key]) {
       savedByName[key] = row;
     }
-    unused.push(row);
+    unused.push(row); 
   });
-
   function takeSaved(name, owner) {
     var key = normalizeDetailKey(name);
     var saved = key ? savedByName[key] : null;
@@ -309,7 +310,6 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
     if (onlyKey) delete savedByName[onlyKey];
     return only;
   }
-
   var rows = [];
   var seen = {};
   (apiColumns || []).forEach(function (col) {
@@ -323,21 +323,21 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
           ? JSON.parse(col.jsonField || "{}")
           : col.jsonField || {};
     } catch (e) {}
-    var owner = col._ci || window.crFieldChangeItemMap[name] || "";
+    var owner = col._ci || (window.crFieldChangeItemMap || {})[name] || "";
     var saved = takeSaved(name, owner);
     if (saved) {
       if (owner && !saved.ChangeItemCode) {
         saved.ChangeItemCode = owner;
       }
-      if (!saved.ColumnInternalName) saved.ColumnInternalName = name;
+      if(!saved.ColumnInternalName) saved.ColumnInternalName = name;
       rows.push(saved);
     } else {
       rows.push({
         ColumnInternalName: name,
         ColumnOldValue: col.value == null ? "" : String(col.value),
         ColumnNewValue: "",
-        DataType: json.type || "string",
-        Title: json.DisplayName || name,
+        DataType: (json && json.type) || "string",
+        Title: (json && json.DisplayName) || name,
         ChangeItemCode: owner,
       });
     }
@@ -350,7 +350,8 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
   });
   return rows;
 }
-
+ 
+ 
 // Same contract as $.ajax(opts) for getchangeitemsdetails, but merges all selected items.
 function ajaxChangeItemsDetails(opts) {
   if (getFieldChangeItemCodes().length <= 1) {
@@ -2597,6 +2598,7 @@ function () {
             ? $("#Classification").val()
             : null;
        fetchMissingSelectedChangeItemDetails(
+          // changeItemCode,
           approvalLevel,
           detailsItemCode,
           classification
@@ -2653,6 +2655,7 @@ function () {
         isMergeSplitDeleteAction(meta.actionType) &&
         !getFieldChangeItemCodes().length
       ) {
+
         setChangeItemsVisibility(false);
       }
       $(".changeItemsRow")
@@ -6670,7 +6673,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
         // If we have changeItemCode, approvalLevel, and itemCode, call API to get DisplayNames
         // But skip API call if actionType is add, merge, split, or delete
         if (changeItemCode && approvalLevel && itemCode) {
-          // Skip the details API only when none of the selected items has fields
+          // Check actionType - if add, merge, split, or delete, don't call API
           var meta = getSelectedChangeItemMeta();
           if (
             !getFieldChangeItemCodes().length &&
@@ -6678,7 +6681,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
               meta.actionType === "merge" ||
               meta.actionType === "split" ||
               meta.actionType === "delete")
-          ) {
+          ) {    
             // Don't call API, just render fields directly without API
             renderViewDynamicFields(
               data.d.results,
@@ -6854,10 +6857,12 @@ function renderViewDynamicFields(
     apiResponse.result.columnsDetails &&
     apiResponse.result.columnsDetails.length
   ) {
-    columns = rowsFromMergedApiColumns(
-      columns,
-      apiResponse.result.columnsDetails
-    );
+    try {
+      columns = rowsFromMergedApiColumns(
+        columns,
+        apiResponse.result.columnsDetails
+      );
+    } catch (e) {}
   }
 
  const changeItemCode = getPrimaryChangeItemCode();
@@ -7167,7 +7172,6 @@ function renderViewDynamicFields(
       if (apiResponse && apiResponse.result && apiResponse.result.columnsDetails) {
         const apiColumns = apiResponse.result.columnsDetails || [];
 
-
         const matchingApiCol = apiColumns.find((apiCol) => {
           let jsonField = {};
           try {
@@ -7284,12 +7288,8 @@ function renderViewDynamicFields(
     }
 
     // Regular fields (non-picker, non-lookup) - original code
-    var fieldOwnerCode = resolveChangeItemCodeForDetailRow(col);
-    var fieldDomId = fieldOwnerCode
-      ? String(fieldOwnerCode).replace(/[^A-Za-z0-9_-]/g, "_") + "_" + fieldName
-      : fieldName;
     const inputHtml = buildInputHtml(
-      fieldDomId,
+      fieldName,
       dataType,
       displayValue,
       readOnly
@@ -9587,4 +9587,4 @@ window.Export_CR_PDF = {
         );
       });
   },
-}; 
+};
