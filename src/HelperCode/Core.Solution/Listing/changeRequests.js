@@ -455,6 +455,7 @@ function appendFieldBlockToChangeItemGroup(container, col, fieldBlock) {
   var code = resolveChangeItemCodeForDetailRow(col);
   if (!code) {
     container.append(fieldBlock);
+    stampSavedNewValue(container, col);
     return;
   }
   var $group = container.find(getChangeItemFieldGroupSelector(code)).first();
@@ -470,6 +471,14 @@ function appendFieldBlockToChangeItemGroup(container, col, fieldBlock) {
     container.append($group);
   }
   $group.append(fieldBlock);
+  stampSavedNewValue($group, col);
+}
+
+function stampSavedNewValue(container, col) {
+  var savedNew = col && col.ColumnNewValue != null ? String(col.ColumnNewValue) : "";
+  if (isBlankCrValue(savedNew) || !container || !container.find) return;
+  var $fields = container.find(".dynamicField");
+  if ($fields.length) $fields.last().attr("data-saved-new-value", savedNew);
 }
 
 function pruneUnselectedChangeItemFieldGroups() {
@@ -508,6 +517,87 @@ function fetchMissingSelectedChangeItemDetails(
 
 function isBlankCrValue(val) {
   return !val || String(val).trim() === "";
+}
+
+// The details service archives every current row of the request and inserts
+// only the body of the latest call. Keep one row per column: a live row, or
+// the newest stored value when the live row was archived.
+function pickActiveDetailRows(rows) {
+  var groups = {};
+  (rows || []).forEach(function (row) {
+    var key = normalizeDetailKey(row && row.ColumnInternalName);
+    if (!key) return;
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(row);
+  });
+  var picked = [];
+  Object.keys(groups).forEach(function (key) {
+    var list = groups[key];
+    var live = list.filter(function (row) {
+      return String(row.DeletionStatus || "") !== "Deleted" && detailRowNewValue(row);
+    });
+    var pool = live.length
+      ? live
+      : list.filter(function (row) {
+          return detailRowNewValue(row);
+        });
+    if (!pool.length) pool = list;
+    pool.sort(function (a, b) {
+      return (Number(a.Id || a.ID) || 0) - (Number(b.Id || b.ID) || 0);
+    });
+    picked.push(pool[pool.length - 1]);
+  });
+  return picked;
+}
+
+function mergeCrDetailPayload(posted, saved) {
+  var byKey = {};
+  var order = [];
+  function add(row) {
+    if (!row || isBlankCrValue(row.columnNewValue)) return;
+    var key = normalizeDetailKey(row.columnInternalName);
+    if (!key) return;
+    if (!byKey[key]) order.push(key);
+    byKey[key] = {
+      columnInternalName: row.columnInternalName,
+      dataType: row.dataType || "string",
+      columnOldValue: row.columnOldValue || "",
+      columnNewValue: String(row.columnNewValue).trim(),
+    };
+  }
+  (saved || []).forEach(function (row) {
+    add({
+      columnInternalName: row.ColumnInternalName || row.columnInternalName,
+      dataType: row.DataType || row.dataType || "string",
+      columnOldValue: row.ColumnOldValue || row.columnOldValue || "",
+      columnNewValue: detailRowNewValue(row) || row.columnNewValue,
+    });
+  });
+  (posted || []).forEach(add);
+  return order.map(function (key) {
+    return byKey[key];
+  });
+}
+
+function rowsFromCollectedFields(fields) {
+  return (fields || [])
+    .map(function (field) {
+      var value = field.columnNewValue || "";
+      if (isBlankCrValue(value) && field.fieldId) {
+        var $match = $(".dynamicField[data-field-id='" + field.fieldId + "']");
+        var saved = $match.length ? $match.last().attr("data-saved-new-value") || "" : "";
+        if (!isBlankCrValue(saved)) value = saved;
+      }
+      return {
+        columnInternalName: field.fieldId,
+        dataType: field.dataType,
+        columnOldValue: field.columnOldValue || "",
+        columnNewValue: value || "",
+      };
+    })
+    .filter(function (field) {
+      return !isBlankCrValue(field.columnNewValue);
+    });
 }
 
 function shouldSkipCrRequiredField(selector) {
@@ -5405,13 +5495,46 @@ function handleChangeItemsAPI(crCode) {
   if (!codes.length) {
     return Promise.resolve({ success: true, message: "No change items" });
   }
-  var seq = Promise.resolve();
+  var seq = Promise.resolve([]);
   codes.forEach(function (code) {
-    seq = seq.then(function () {
-      return handleChangeItemsAPIForCode(crCode, code);
+    seq = seq.then(function (acc) {
+      return handleChangeItemsAPIForCode(crCode, code).then(function (rows) {
+        return acc.concat(Array.isArray(rows) ? rows : []);
+      });
     });
   });
-  return seq;
+  return seq.then(function (rows) {
+    var payload = mergeCrDetailPayload(rows, window.crSavedDetailRows);
+    if (!payload.length) {
+      return { success: true, message: "No dynamic fields to save" };
+    }
+    // One call. Each call archives every current detail row of this request
+    // and inserts only its own body, so a call per change item keeps the last item only.
+    var code = getPrimaryChangeItemCode() || codes[codes.length - 1];
+    return postCrDetailPayload(crCode, code, payload);
+  });
+}
+
+function postCrDetailPayload(crCode, changeItemCode, rows) {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      url:
+        APIURL +
+        "/general/addnewchangerequestdetails/" +
+        crCode +
+        "/" +
+        changeItemCode,
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(rows),
+      success: function (res) {
+        resolve(res);
+      },
+      error: function (xhr) {
+        reject(xhr);
+      },
+    });
+  });
 }
 
 function handleChangeItemsAPIForCode(crCode, changeItemCode) {
@@ -5425,14 +5548,14 @@ function handleChangeItemsAPIForCode(crCode, changeItemCode) {
       // Ungrouped fields belong to a single ChangeItem only; with several items
       // a missing group means this item has no fields (do not copy other items' fields)
       if (getSelectedChangeItemCodes().length > 1) {
-        resolve({ success: true, message: "No dynamic fields for " + changeItemCode });
+        resolve([]);
         return;
       }
       $scope = $(".changeItemsRow");
     }
     const $dynamicFields = $scope.find(".dynamicField");
     if (!$dynamicFields.length) {
-      resolve({ success: true, message: "No dynamic fields to save" });
+      resolve([]);
       return;
     }
 
@@ -5664,37 +5787,9 @@ function handleChangeItemsAPIForCode(crCode, changeItemCode) {
       }
     });
 
-    // If no picker promises, resolve immediately with regular fields
+    // Collected here and posted once for the whole request.
     if (pickerPromises.length === 0) {
-      const apiBody = fields.map(function (field) {
-        return {
-          columnInternalName: field.fieldId,
-          dataType: field.dataType,
-          columnOldValue: field.columnOldValue,
-          columnNewValue: field.columnNewValue || ""
-        };
-      });
-
-      var rowsToPost = apiBody.filter(function (field) {
-        return !isBlankCrValue(field.columnNewValue);
-      });
-      if (rowsToPost.length === 0) {
-        resolve({ success: true, message: "No dynamic fields to save" });
-        return;
-      }
-
-      $.ajax({
-        url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
-        method: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(rowsToPost),
-        success: function (res) {
-          resolve(res);
-        },
-        error: function (xhr) {
-          reject(xhr);
-        },
-      });
+      resolve(rowsFromCollectedFields(fields));
       return;
     }
 
@@ -5723,27 +5818,14 @@ function handleChangeItemsAPIForCode(crCode, changeItemCode) {
         }
       });
 
-      // If no dynamic fields, skip API call and resolve immediately
-      var rowsToPost = apiBody.filter(function (field) {
-        return !isBlankCrValue(field.columnNewValue);
-      });
-      if (rowsToPost.length === 0) {
-        resolve({ success: true, message: "No dynamic fields to save" });
-        return;
-      }
-
-      $.ajax({
-        url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
-        method: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(rowsToPost),
-        success: function (res) {
-          resolve(res);
-        },
-        error: function (xhr) {
-          reject(xhr);
-        },
-      });
+      resolve(rowsFromCollectedFields(apiBody.map(function (field) {
+        return {
+          fieldId: field.columnInternalName,
+          dataType: field.dataType,
+          columnOldValue: field.columnOldValue,
+          columnNewValue: field.columnNewValue,
+        };
+      })));
     }).catch(function (error) {
       reject(error);
     });
@@ -6700,13 +6782,15 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
     _spPageContextInfo.webAbsoluteUrl +
     "/_api/web/lists/getbytitle('NewChangeRequestDetails')/items?$filter=NewChangeRequestCode eq '" +
     code +
-    "' and DeletionStatus ne 'Deleted'&$orderby=ID";
+    "'&$orderby=ID";
   function fetchCrDetailItems(requestUrl, allowFallback) {
   $.ajax({
     url: requestUrl,
     method: "GET",
     headers: { Accept: "application/json; odata=verbose" },
     success: function (data) {
+      var detailRows = pickActiveDetailRows(data.d && data.d.results);
+      window.crSavedDetailRows = detailRows;
       // Check actionType - if add, merge, split, or delete, hide dynamic section and don't render fields
       var meta = getSelectedChangeItemMeta();
       if (
@@ -6720,7 +6804,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
         return;
       }
       
-      if (data.d && data.d.results && data.d.results.length > 0) {
+      if (detailRows.length > 0) {
         // If we have changeItemCode, approvalLevel, and itemCode, call API to get DisplayNames
         // But skip API call if actionType is add, merge, split, or delete
         if (changeItemCode && approvalLevel && itemCode) {
@@ -6735,7 +6819,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
           ) {    
             // Don't call API, just render fields directly without API
             renderViewDynamicFields(
-              data.d.results,
+              detailRows,
               null,
               displayNameMapFromChangeItems
             );
@@ -6775,7 +6859,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
               }
 
               renderViewDynamicFields(
-                data.d.results,
+                detailRows,
                 apiRes,
                 displayNameMapFromChangeItems
               );
@@ -6790,7 +6874,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
             error: function (xhr) {
               // Render with ChangeItems DisplayName map (fallback)
               renderViewDynamicFields(
-                data.d.results,
+                detailRows,
                 null,
                 displayNameMapFromChangeItems
               );
@@ -6806,7 +6890,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
         } else {
           // Render with ChangeItems DisplayName map if API values are missing
           renderViewDynamicFields(
-            data.d.results,
+            detailRows,
             null,
             displayNameMapFromChangeItems
           );
@@ -6854,7 +6938,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
   }
   fetchCrDetailItems(
     detailsFilter +
-      "&$expand=ChangeItem&$select=Id,Title,ColumnInternalName,ColumnOldValue,ColumnNewValue,DataType,NewChangeRequestCode,ChangeItemId,ChangeItem/Id,ChangeItem/Title",
+      "&$expand=ChangeItem&$select=Id,Title,ColumnInternalName,ColumnOldValue,ColumnNewValue,DataType,DeletionStatus,NewChangeRequestCode,ChangeItemId,ChangeItem/Id,ChangeItem/Title",
     true
   );
 }
