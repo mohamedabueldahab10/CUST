@@ -274,41 +274,69 @@ function detailRowChangeCode(row) {
     var parts = raw.split(";#");
     raw = parts[parts.length - 1];
   }
-  return raw.trim();
+  raw = raw.trim();
+  var codeMatch = raw.match(/CI-\d+/i);
+  if (codeMatch) return codeMatch[0].toUpperCase();
+  return raw;
+}
+
+function detailRowNewValue(row) {
+  var value = row && row.ColumnNewValue;
+  if (value == null) return "";
+  return String(value).trim();
 }
  
 function rowsFromMergedApiColumns(savedRows, apiColumns) {
   var savedByName = {};
-  var unused = [];
-  (savedRows || []).forEach(function (row) {
+  var unused = (savedRows || []).slice();
+  unused.forEach(function (row) {
     var key = normalizeDetailKey(row && row.ColumnInternalName);
-    if (key && !savedByName[key]) {
-      savedByName[key] = row;
-    }
-    unused.push(row); 
+    if (!key) return;
+    if (!savedByName[key]) savedByName[key] = [];
+    savedByName[key].push(row);
   });
+
+  function dropSaved(row) {
+    unused = unused.filter(function (item) {
+      return item !== row;
+    });
+    var key = normalizeDetailKey(row && row.ColumnInternalName);
+    if (key && savedByName[key]) {
+      savedByName[key] = savedByName[key].filter(function (item) {
+        return item !== row;
+      });
+    }
+  }
+
+  function pickSaved(list) {
+    if (!list || !list.length) return null;
+    var withValue = list.filter(function (row) {
+      return detailRowNewValue(row);
+    });
+    return (withValue.length ? withValue : list)[0];
+  }
+
   function takeSaved(name, owner) {
     var key = normalizeDetailKey(name);
-    var saved = key ? savedByName[key] : null;
+    var named = key ? savedByName[key] || [] : [];
+    var namedForOwner = owner
+      ? named.filter(function (row) {
+          var code = detailRowChangeCode(row);
+          return !code || code === owner;
+        })
+      : named;
+    var saved = pickSaved(namedForOwner.length ? namedForOwner : named);
     if (saved) {
-      delete savedByName[key];
-      unused = unused.filter(function (row) {
-        return row !== saved;
-      });
+      dropSaved(saved);
       return saved;
     }
     if (!owner) return null;
     var forOwner = unused.filter(function (row) {
-      return detailRowChangeCode(row) === owner;
+      return detailRowChangeCode(row) === owner && detailRowNewValue(row);
     });
     if (forOwner.length !== 1) return null;
-    var only = forOwner[0];
-    unused = unused.filter(function (row) {
-      return row !== only;
-    });
-    var onlyKey = normalizeDetailKey(only.ColumnInternalName);
-    if (onlyKey) delete savedByName[onlyKey];
-    return only;
+    dropSaved(forOwner[0]);
+    return forOwner[0];
   }
   var rows = [];
   var seen = {};
@@ -323,13 +351,14 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
           ? JSON.parse(col.jsonField || "{}")
           : col.jsonField || {};
     } catch (e) {}
+    if (!json || typeof json !== "object") json = {};
     var owner = col._ci || (window.crFieldChangeItemMap || {})[name] || "";
     var saved = takeSaved(name, owner);
     if (saved) {
       if (owner && !saved.ChangeItemCode) {
         saved.ChangeItemCode = owner;
       }
-      if(!saved.ColumnInternalName) saved.ColumnInternalName = name;
+      saved.ColumnInternalName = name;
       rows.push(saved);
     } else {
       rows.push({
@@ -344,7 +373,27 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
   });
   unused.forEach(function (row) {
     var key = normalizeDetailKey(row && row.ColumnInternalName);
-    if (key && seen[key]) return;
+    var value = detailRowNewValue(row);
+    if (key && seen[key]) {
+      if (!value) return;
+      var emptyRow = null;
+      rows.forEach(function (existing) {
+        if (emptyRow) return;
+        if (
+          normalizeDetailKey(existing.ColumnInternalName) === key &&
+          !detailRowNewValue(existing)
+        ) {
+          emptyRow = existing;
+        }
+      });
+      if (emptyRow) {
+        emptyRow.ColumnNewValue = row.ColumnNewValue;
+        if (!emptyRow.ColumnOldValue && row.ColumnOldValue) {
+          emptyRow.ColumnOldValue = row.ColumnOldValue;
+        }
+      }
+      return;
+    }
     if (key) seen[key] = true;
     rows.push(row);
   });
@@ -6645,14 +6694,16 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
     }
   }
 
-  // First, load data from SharePoint list
-  const url =
+  // First, load data from SharePoint list.
+  // Expand ChangeItem so a stored row can be tied to CI-001 / CI-027, not only by column name.
+  var detailsFilter =
     _spPageContextInfo.webAbsoluteUrl +
     "/_api/web/lists/getbytitle('NewChangeRequestDetails')/items?$filter=NewChangeRequestCode eq '" +
     code +
     "' and DeletionStatus ne 'Deleted'&$orderby=ID";
+  function fetchCrDetailItems(requestUrl, allowFallback) {
   $.ajax({
-    url: url,
+    url: requestUrl,
     method: "GET",
     headers: { Accept: "application/json; odata=verbose" },
     success: function (data) {
@@ -6795,9 +6846,17 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
       }
     },
     error: function (err) {
-      // Silent fail
+      if (allowFallback) {
+        fetchCrDetailItems(detailsFilter, false);
+      }
     },
   });
+  }
+  fetchCrDetailItems(
+    detailsFilter +
+      "&$expand=ChangeItem&$select=Id,Title,ColumnInternalName,ColumnOldValue,ColumnNewValue,DataType,NewChangeRequestCode,ChangeItemId,ChangeItem/Id,ChangeItem/Title",
+    true
+  );
 }
 function setSelectValue(selectId, value) {
   const $sel = $(selectId);
@@ -7287,9 +7346,14 @@ function renderViewDynamicFields(
       return; // Exit early for lookup fields
     }
 
-    // Regular fields (non-picker, non-lookup) - original code
+    // Regular fields (non-picker, non-lookup).
+    // Keep the element id unique. An internal name such as Name collides with the page.
+    var fieldOwnerCode = resolveChangeItemCodeForDetailRow(col);
+    var fieldDomId =
+      (fieldOwnerCode ? String(fieldOwnerCode) + "_" : "") + String(fieldName);
+    fieldDomId = fieldDomId.replace(/[^A-Za-z0-9_]/g, "_");
     const inputHtml = buildInputHtml(
-      fieldName,
+      fieldDomId,
       dataType,
       displayValue,
       readOnly
