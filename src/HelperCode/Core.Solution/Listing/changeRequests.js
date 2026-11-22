@@ -519,9 +519,8 @@ function isBlankCrValue(val) {
   return !val || String(val).trim() === "";
 }
 
-// The details service archives every current row of the request and inserts
-// only the body of the latest call. Keep one row per column: a live row, or
-// the newest stored value when the live row was archived.
+// Keep one row per column: a live row, or the newest stored value when the
+// live row was archived. The details service handles one change item per call.
 function pickActiveDetailRows(rows) {
   var groups = {};
   (rows || []).forEach(function (row) {
@@ -576,6 +575,18 @@ function mergeCrDetailPayload(posted, saved) {
   (posted || []).forEach(add);
   return order.map(function (key) {
     return byKey[key];
+  });
+}
+
+function savedRowsForChangeItem(code, savedRows, fieldMap) {
+  var wanted = String(code || "").toUpperCase();
+  if (!wanted) return [];
+  return (savedRows || []).filter(function (row) {
+    var rowCode = detailRowChangeCode(row);
+    if (rowCode && String(rowCode).toUpperCase() === wanted) return true;
+    var name = row.ColumnInternalName || row.columnInternalName;
+    var mapped = fieldMap && fieldMap[name];
+    return !!(mapped && String(mapped).toUpperCase() === wanted);
   });
 }
 
@@ -5495,24 +5506,24 @@ function handleChangeItemsAPI(crCode) {
   if (!codes.length) {
     return Promise.resolve({ success: true, message: "No change items" });
   }
-  var seq = Promise.resolve([]);
+  // addnewchangerequestdetails handles one change item. A body with two items
+  // updates the deletion status of the first item only, so each code is posted alone.
+  var seq = Promise.resolve({ success: true, message: "No dynamic fields to save" });
   codes.forEach(function (code) {
-    seq = seq.then(function (acc) {
+    seq = seq.then(function () {
       return handleChangeItemsAPIForCode(crCode, code).then(function (rows) {
-        return acc.concat(Array.isArray(rows) ? rows : []);
+        var payload = mergeCrDetailPayload(
+          rows,
+          savedRowsForChangeItem(code, window.crSavedDetailRows, window.crFieldChangeItemMap)
+        );
+        if (!payload.length) {
+          return { success: true, message: "No dynamic fields for " + code };
+        }
+        return postCrDetailPayload(crCode, code, payload);
       });
     });
   });
-  return seq.then(function (rows) {
-    var payload = mergeCrDetailPayload(rows, window.crSavedDetailRows);
-    if (!payload.length) {
-      return { success: true, message: "No dynamic fields to save" };
-    }
-    // One call. Each call archives every current detail row of this request
-    // and inserts only its own body, so a call per change item keeps the last item only.
-    var code = getPrimaryChangeItemCode() || codes[codes.length - 1];
-    return postCrDetailPayload(crCode, code, payload);
-  });
+  return seq;
 }
 
 function postCrDetailPayload(crCode, changeItemCode, rows) {
