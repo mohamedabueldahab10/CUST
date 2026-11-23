@@ -817,11 +817,6 @@
     accent-color: #1769aa;
 }
 
-.cr-changeitem-ms-option.is-path-disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-}
-
 .cr-changeitem-ms-tags {
     display: flex;
     flex-wrap: wrap;
