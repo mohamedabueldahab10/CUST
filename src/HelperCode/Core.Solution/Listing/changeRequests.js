@@ -2367,6 +2367,134 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
+// SharePoint stores datetimes in UTC. A Riyadh midnight (UTC+3) comes back as
+// the previous day at 21:00. Keep that clock as an instant and read it in
+// Asia/Riyadh so benefit change-request dates match the audit log.
+var RIYADH_OFFSET_MS = 3 * 60 * 60 * 1000;
+
+function pad2(n) {
+  n = String(n);
+  return n.length === 1 ? "0" + n : n;
+}
+
+function parseToRiyadhParts(value) {
+  if (value == null || value === "" || value === "null" || value === "undefined") {
+    return null;
+  }
+  if (Object.prototype.toString.call(value) === "[object Date]") {
+    if (isNaN(value.getTime())) return null;
+    var shifted = new Date(value.getTime() + RIYADH_OFFSET_MS);
+    return {
+      year: shifted.getUTCFullYear(),
+      month: shifted.getUTCMonth() + 1,
+      day: shifted.getUTCDate(),
+      hour: shifted.getUTCHours(),
+      minute: shifted.getUTCMinutes(),
+      second: shifted.getUTCSeconds(),
+      hasTime: true,
+    };
+  }
+
+  var raw = String(value).trim();
+  var mdy = raw.match(
+    /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?$/
+  );
+  if (mdy) {
+    var month = parseInt(mdy[1], 10);
+    var day = parseInt(mdy[2], 10);
+    var year = parseInt(mdy[3], 10);
+    if (mdy[4] == null) {
+      return { year: year, month: month, day: day, hour: 0, minute: 0, second: 0, hasTime: false };
+    }
+    var utcMs = Date.UTC(
+      year,
+      month - 1,
+      day,
+      parseInt(mdy[4], 10),
+      parseInt(mdy[5], 10),
+      parseInt(mdy[6] || "0", 10)
+    );
+    var riyadh = new Date(utcMs + RIYADH_OFFSET_MS);
+    return {
+      year: riyadh.getUTCFullYear(),
+      month: riyadh.getUTCMonth() + 1,
+      day: riyadh.getUTCDate(),
+      hour: riyadh.getUTCHours(),
+      minute: riyadh.getUTCMinutes(),
+      second: riyadh.getUTCSeconds(),
+      hasTime: true,
+    };
+  }
+
+  var iso = raw.match(
+    /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2}))?(?:\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?$/
+  );
+  if (iso) {
+    var isoYear = parseInt(iso[1], 10);
+    var isoMonth = parseInt(iso[2], 10);
+    var isoDay = parseInt(iso[3], 10);
+    if (iso[4] == null) {
+      return {
+        year: isoYear,
+        month: isoMonth,
+        day: isoDay,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        hasTime: false,
+      };
+    }
+    var isoUtc = iso[7] ? Date.parse(raw) : Date.UTC(
+      isoYear,
+      isoMonth - 1,
+      isoDay,
+      parseInt(iso[4], 10),
+      parseInt(iso[5], 10),
+      parseInt(iso[6] || "0", 10)
+    );
+    if (isNaN(isoUtc)) return null;
+    var isoRiyadh = new Date(isoUtc + RIYADH_OFFSET_MS);
+    return {
+      year: isoRiyadh.getUTCFullYear(),
+      month: isoRiyadh.getUTCMonth() + 1,
+      day: isoRiyadh.getUTCDate(),
+      hour: isoRiyadh.getUTCHours(),
+      minute: isoRiyadh.getUTCMinutes(),
+      second: isoRiyadh.getUTCSeconds(),
+      hasTime: true,
+    };
+  }
+
+  var fallback = new Date(raw);
+  if (isNaN(fallback.getTime())) return null;
+  var fallbackRiyadh = new Date(fallback.getTime() + RIYADH_OFFSET_MS);
+  return {
+    year: fallbackRiyadh.getUTCFullYear(),
+    month: fallbackRiyadh.getUTCMonth() + 1,
+    day: fallbackRiyadh.getUTCDate(),
+    hour: fallbackRiyadh.getUTCHours(),
+    minute: fallbackRiyadh.getUTCMinutes(),
+    second: fallbackRiyadh.getUTCSeconds(),
+    hasTime: true,
+  };
+}
+
+function formatRiyadhInputDate(value) {
+  var parts = parseToRiyadhParts(value);
+  if (!parts) return "";
+  return parts.year + "-" + pad2(parts.month) + "-" + pad2(parts.day);
+}
+
+function formatRiyadhMdY(value) {
+  var parts = parseToRiyadhParts(value);
+  if (!parts) return value == null ? "" : String(value);
+  var date = pad2(parts.month) + "/" + pad2(parts.day) + "/" + parts.year;
+  if (parts.hasTime && (parts.hour || parts.minute || parts.second)) {
+    return date + " " + pad2(parts.hour) + ":" + pad2(parts.minute) + ":" + pad2(parts.second);
+  }
+  return date;
+}
+
 function buildInputHtml(fieldName, fieldType, value, readOnly) {
   const safeName = escapeHtml(fieldName || "");
   const safeValue = escapeHtml(
@@ -2402,37 +2530,16 @@ function buildInputHtml(fieldName, fieldType, value, readOnly) {
     return `<select id="${safeName}" class="form-control"${disabledAttr}><option value="" disabled selected></option></select>`;
   }
 
-  // Support for date, datetime, datetimetoparent - use type="date" 
-  // Input type="date" requires yyyy-mm-dd format, but we'll convert to mm/dd/yyyy on submit
+  // Support for date, datetime, datetimetoparent - use type="date"
+  // Input type="date" requires yyyy-mm-dd. The value is the Riyadh calendar
+  // date; submit converts it back to mm/dd/yyyy and keeps a real time of day.
   if (fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") {
-    // Convert value to yyyy-mm-dd format for input type="date"
-    // Remove time part if exists (e.g., "12/14/2023 21:00:00" -> "12/14/2023")
-    let dateValue = "";
-    if (value && value !== "" && value !== "null" && value !== "undefined") {
-      try {
-        // Remove time part if exists - handle both space and T separator
-        let dateStr = String(value).split(" ")[0].split("T")[0]; // Get date part only (before space or T)
-        
-        // Try to parse mm/dd/yyyy format first (most common)
-        const mmddyyyy = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-        let d;
-        if (mmddyyyy) {
-          // Parse mm/dd/yyyy format
-          d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
-        } else {
-          // Try to parse as Date (handles ISO format and other formats)
-          d = new Date(dateStr);
-        }
-        
-        if (!isNaN(d)) {
-          const year = d.getFullYear();
-          const month = ("0" + (d.getMonth() + 1)).slice(-2);
-          const day = ("0" + d.getDate()).slice(-2);
-          dateValue = `${year}-${month}-${day}`;
-        }
-      } catch (e) { }
-    }
-    return `<input type="date" id="${safeName}" class="form-control date-input" value="${dateValue}"${disabledAttr}>`;
+    const dateValue = formatRiyadhInputDate(value);
+    const rawAttr =
+      value == null || value === ""
+        ? ""
+        : ` data-original-value="${escapeHtml(String(value))}" data-riyadh-date="${dateValue}"`;
+    return `<input type="date" id="${safeName}" class="form-control date-input" value="${dateValue}"${rawAttr}${disabledAttr}>`;
   }
 
   const inputType =
@@ -2609,32 +2716,10 @@ function renderFieldsWithDisplayNames(
     const colClass = fieldType === "textarea" ? "col-md-12" : "col-md-6";
     let displayValue = rawValue;
 
-    // Handle date, datetime, datetimetoparent - convert to yyyy-mm-dd for input type="date"
-    // Remove time part if exists (e.g., "12/14/2023 21:00:00" -> "12/14/2023")
+    // Date inputs need the Riyadh calendar date. Passing the raw value lets
+    // buildInputHtml apply the UTC+3 conversion (21:00 UTC is the next day).
     if (fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") {
-      let dateValue = "";
-      try {
-        if (rawValue) {
-          // Remove time part if exists
-          let dateStr = String(rawValue).split(" ")[0]; // Get date part only (before space)
-          
-          let d = new Date(dateStr);
-          if (isNaN(d)) {
-            // Try to parse mm/dd/yyyy format
-            const mmddyyyy = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-            if (mmddyyyy) {
-              d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
-            }
-          }
-          if (!isNaN(d)) {
-            const year = d.getFullYear();
-            const month = ("0" + (d.getMonth() + 1)).slice(-2);
-            const day = ("0" + d.getDate()).slice(-2);
-            dateValue = `${year}-${month}-${day}`;
-          }
-        }
-      } catch (e) { }
-      displayValue = dateValue;
+      displayValue = rawValue;
     }
 
     // For picker fields: convert oldValue (ID) to display name
@@ -2714,24 +2799,12 @@ function renderFieldsWithDisplayNames(
     }
 
     // Format oldValue for display: empty/null/undefined -> "No data", 0 -> "0", otherwise -> value
-    // For date fields, convert oldValue to mm/dd/yyyy format
+    // Date fields use the Riyadh calendar date (and time, when the operation has one).
+    // The raw value is kept for submit so an unchanged operation is not rewritten.
+    let originalDateRaw = "";
     if ((fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") && oldValueDisplay && oldValueDisplay !== "" && oldValueDisplay !== "null" && oldValueDisplay !== "undefined" && oldValueDisplay !== "0" && oldValueDisplay !== 0 && oldValueDisplay !== "Loading...") {
-      try {
-        let d = new Date(oldValueDisplay);
-        if (isNaN(d)) {
-          // Try to parse mm/dd/yyyy format
-          const mmddyyyy = String(oldValueDisplay).match(/(\d{2})\/(\d{2})\/(\d{4})/);
-          if (mmddyyyy) {
-            d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
-          }
-        }
-        if (!isNaN(d)) {
-          const month = ("0" + (d.getMonth() + 1)).slice(-2);
-          const day = ("0" + d.getDate()).slice(-2);
-          const year = d.getFullYear();
-          oldValueDisplay = `${month}/${day}/${year}`;
-        }
-      } catch (e) { }
+      originalDateRaw = String(oldValueDisplay);
+      oldValueDisplay = formatRiyadhMdY(oldValueDisplay);
     }
     
     let oldValueHtml = "";
@@ -2917,8 +2990,9 @@ function renderFieldsWithDisplayNames(
       // IMPORTANT: Add data-field-id attribute so handleChangeItemsAPI can find the field
       // For picker fields, also add data-old-value-id to store the original ID
       const oldValueIdAttr = (fieldType === "picker" && oldValueId) ? ` data-old-value-id="${escapeHtml(oldValueId)}"` : "";
+      const originalDateAttr = originalDateRaw ? ` data-original-old="${escapeHtml(originalDateRaw)}"` : "";
       const fieldBlock = `
-        <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${fieldType}"${oldValueIdAttr}>
+        <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${fieldType}"${oldValueIdAttr}${originalDateAttr}>
           <label>${escapeHtml(
         labelText
       )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueHtml}</span>)</label>
@@ -3608,26 +3682,33 @@ function handleChangeItemsAPI(crCode) {
           const inputType = $firstInput.prop("type") || "text";
           const oldValue = $field.find(".oldValue").text() || "";
 
-          // Convert date input (yyyy-mm-dd) to mm/dd/yyyy format for date, datetime, datetimetoparent
+          // The date input holds the Riyadh calendar date. If the user did not
+          // change it, keep the original timestamp so the audit log stays aligned
+          // with the operation. A new date is sent as mm/dd/yyyy.
           if ((fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") && inputType === "date" && inputValue) {
             try {
-              // Input type="date" gives yyyy-mm-dd format
-              const parts = inputValue.split("-");
-              if (parts.length === 3) {
-                const year = parts[0];
-                const month = parts[1];
-                const day = parts[2];
-                inputValue = `${month}/${day}/${year}`;
+              const originalRaw = $firstInput.attr("data-original-value");
+              const originalRiyadhDate = $firstInput.attr("data-riyadh-date");
+              if (originalRaw && originalRiyadhDate && inputValue === originalRiyadhDate) {
+                inputValue = originalRaw;
+              } else {
+                const parts = inputValue.split("-");
+                if (parts.length === 3) {
+                  inputValue = `${parts[1]}/${parts[2]}/${parts[0]}`;
+                }
               }
             } catch (e) {
               // If conversion fails, use original value
             }
           }
 
+          const rawOld = $field.attr("data-original-old");
+          const columnOldValue = rawOld != null && rawOld !== "" ? rawOld : oldValue;
+
           const fieldData = {
             fieldId: fieldInternalName, // Use InternalName from data-field-id
             dataType: (fieldType === "date" || fieldType === "datetime" || fieldType === "datetimetoparent") ? fieldType : (inputType === "date" ? "date" : (inputType === "number" ? "number" : "string")),
-            columnOldValue: oldValue,
+            columnOldValue: columnOldValue,
             columnNewValue: inputValue
           };
 
@@ -4771,32 +4852,10 @@ function renderViewDynamicFields(
     const colClass = dataType === "textarea" ? "col-md-12" : "col-md-6";
     let displayValue = newValue;
 
-    // Handle date, datetime, datetimetoparent - convert to yyyy-mm-dd for input type="date"
-    // Remove time part if exists (e.g., "12/14/2023 21:00:00" -> "12/14/2023")
+    // Pass the raw datetime through. buildInputHtml converts UTC to the
+    // Riyadh calendar date so the field matches the audit log.
     if (dataType === "date" || dataType === "datetime" || dataType === "datetimetoparent") {
-      let dateValue = "";
-      try {
-        if (newValue) {
-          // Remove time part if exists
-          let dateStr = String(newValue).split(" ")[0]; // Get date part only (before space)
-          
-          let d = new Date(dateStr);
-          if (isNaN(d)) {
-            // Try to parse mm/dd/yyyy format
-            const mmddyyyy = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-            if (mmddyyyy) {
-              d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
-            }
-          }
-          if (!isNaN(d)) {
-            const year = d.getFullYear();
-            const month = ("0" + (d.getMonth() + 1)).slice(-2);
-            const day = ("0" + d.getDate()).slice(-2);
-            dateValue = `${year}-${month}-${day}`;
-          }
-        }
-      } catch (e) { }
-      displayValue = dateValue;
+      displayValue = newValue;
     }
     const readOnly = !window.isEdit;
 
@@ -5171,25 +5230,13 @@ function renderViewDynamicFields(
     );
 
     // Format oldValue for display: empty/null/undefined -> "No data", 0 -> "0", otherwise -> value
-    // For date fields, convert oldValue to mm/dd/yyyy format
+    // Date fields use the Riyadh calendar date (and time, when the operation has one).
+    // The raw value is kept for submit so an unchanged operation is not rewritten.
     let formattedOldValue = oldValueRaw;
+    let originalDateRaw = "";
     if ((dataType === "date" || dataType === "datetime" || dataType === "datetimetoparent") && oldValueRaw && oldValueRaw !== "" && oldValueRaw !== "null" && oldValueRaw !== "undefined" && oldValueRaw !== "0" && oldValueRaw !== 0) {
-      try {
-        let d = new Date(oldValueRaw);
-        if (isNaN(d)) {
-          // Try to parse mm/dd/yyyy format
-          const mmddyyyy = String(oldValueRaw).match(/(\d{2})\/(\d{2})\/(\d{4})/);
-          if (mmddyyyy) {
-            d = new Date(parseInt(mmddyyyy[3]), parseInt(mmddyyyy[1]) - 1, parseInt(mmddyyyy[2]));
-          }
-        }
-        if (!isNaN(d)) {
-          const month = ("0" + (d.getMonth() + 1)).slice(-2);
-          const day = ("0" + d.getDate()).slice(-2);
-          const year = d.getFullYear();
-          formattedOldValue = `${month}/${day}/${year}`;
-        }
-      } catch (e) { }
+      originalDateRaw = String(oldValueRaw);
+      formattedOldValue = formatRiyadhMdY(oldValueRaw);
     }
     
     let oldValueHtml = "";
@@ -5202,8 +5249,9 @@ function renderViewDynamicFields(
     }
 
     // IMPORTANT: Add data-field-id attribute so handleChangeItemsAPI can find the field
+    const originalDateAttr = originalDateRaw ? ` data-original-old="${escapeHtml(originalDateRaw)}"` : "";
     const fieldBlock = `
-      <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${dataType}">
+      <div class="${colClass} mb-3 dynamicField" data-field-id="${fieldName}" data-field-type="${dataType}"${originalDateAttr}>
           <label>${escapeHtml(
       labelText
     )} (<span data-trans-previousvalue class="Resources"></span> <span class="oldValue">${oldValueHtml}</span>)</label>
