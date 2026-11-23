@@ -578,18 +578,6 @@ function mergeCrDetailPayload(posted, saved) {
   });
 }
 
-function savedRowsForChangeItem(code, savedRows, fieldMap) {
-  var wanted = String(code || "").toUpperCase();
-  if (!wanted) return [];
-  return (savedRows || []).filter(function (row) {
-    var rowCode = detailRowChangeCode(row);
-    if (rowCode && String(rowCode).toUpperCase() === wanted) return true;
-    var name = row.ColumnInternalName || row.columnInternalName;
-    var mapped = fieldMap && fieldMap[name];
-    return !!(mapped && String(mapped).toUpperCase() === wanted);
-  });
-}
-
 function rowsFromCollectedFields(fields) {
   return (fields || [])
     .map(function (field) {
@@ -5506,24 +5494,22 @@ function handleChangeItemsAPI(crCode) {
   if (!codes.length) {
     return Promise.resolve({ success: true, message: "No change items" });
   }
-  // addnewchangerequestdetails handles one change item. A body with two items
-  // updates the deletion status of the first item only, so each code is posted alone.
-  var seq = Promise.resolve({ success: true, message: "No dynamic fields to save" });
+  var seq = Promise.resolve([]);
   codes.forEach(function (code) {
-    seq = seq.then(function () {
+    seq = seq.then(function (acc) {
       return handleChangeItemsAPIForCode(crCode, code).then(function (rows) {
-        var payload = mergeCrDetailPayload(
-          rows,
-          savedRowsForChangeItem(code, window.crSavedDetailRows, window.crFieldChangeItemMap)
-        );
-        if (!payload.length) {
-          return { success: true, message: "No dynamic fields for " + code };
-        }
-        return postCrDetailPayload(crCode, code, payload);
+        return acc.concat(Array.isArray(rows) ? rows : []);
       });
     });
   });
-  return seq;
+  return seq.then(function (rows) {
+    var payload = mergeCrDetailPayload(rows, window.crSavedDetailRows);
+    if (!payload.length) {
+      return { success: true, message: "No dynamic fields to save" };
+    }
+    // One call for every selected code, the same shape stored on the request: CI-001;CI-027
+    return postCrDetailPayload(crCode, getChangeItemStoredValue(), payload);
+  });
 }
 
 function postCrDetailPayload(crCode, changeItemCode, rows) {
@@ -5532,9 +5518,9 @@ function postCrDetailPayload(crCode, changeItemCode, rows) {
       url:
         APIURL +
         "/general/addnewchangerequestdetails/" +
-        crCode +
+        encodeURIComponent(crCode) +
         "/" +
-        changeItemCode,
+        encodeURIComponent(changeItemCode),
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify(rows),
