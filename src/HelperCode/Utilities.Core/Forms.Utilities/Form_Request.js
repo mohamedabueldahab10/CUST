@@ -3766,6 +3766,13 @@ window.View_Data_Request = {
           "Style%20Library/spm/JSON/strategicpartnershipsachievements/strategicpartnershipsachievements_View.js"
         );
         Get_AllTaskHistoryRelatedToForm.init();
+      } else if (listkey == "benefits") {
+        Get_ItemVersionsWithColumnsAudit.init(
+          "Benefits",
+          IID,
+          "Style%20Library/spm/JSON/benefits/benefits_View.js"
+        );
+        Get_AllTaskHistoryRelatedToForm.init();
       } else if (listkey != "cryearlycalendar") {
         Get_AllTaskHistoryRelatedToForm.init();
       }
@@ -10740,6 +10747,67 @@ window.Get_AllTaskHistoryRelatedToForm = {
   g: {},
 };
 
+// Audit timestamps are SharePoint UTC instants. Show them in Asia/Riyadh so
+// سجل التدقيق matches the operation date and time stored by change requests.
+function parseAuditInstant(val) {
+  if (val == null || val === "") return null;
+  if (Object.prototype.toString.call(val) === "[object Date]") {
+    return isNaN(val.getTime()) ? null : { date: val, dateOnly: false };
+  }
+  var raw = String(val).trim();
+  var mdy = raw.match(
+    /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?$/
+  );
+  if (mdy) {
+    if (mdy[4] == null) {
+      return {
+        date: new Date(Date.UTC(+mdy[3], +mdy[1] - 1, +mdy[2], 12, 0, 0)),
+        dateOnly: true,
+      };
+    }
+    return {
+      date: new Date(
+        Date.UTC(+mdy[3], +mdy[1] - 1, +mdy[2], +mdy[4], +mdy[5], +(mdy[6] || 0))
+      ),
+      dateOnly: false,
+    };
+  }
+  var isoDate = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (isoDate) {
+    return {
+      date: new Date(Date.UTC(+isoDate[1], +isoDate[2] - 1, +isoDate[3], 12, 0, 0)),
+      dateOnly: true,
+    };
+  }
+  var iso = raw.match(
+    /^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?)(Z|[+-]\d{2}:?\d{2})?$/
+  );
+  if (iso) {
+    var isoValue = iso[3] ? raw : iso[1] + "T" + iso[2] + "Z";
+    var isoDateValue = new Date(isoValue);
+    return isNaN(isoDateValue.getTime())
+      ? null
+      : { date: isoDateValue, dateOnly: false };
+  }
+  var fallback = new Date(raw);
+  return isNaN(fallback.getTime()) ? null : { date: fallback, dateOnly: false };
+}
+
+function formatAuditDateTime(val, dateOnly) {
+  if (val == null || val === "" || val === No_Data) return No_Data;
+  var parsed = parseAuditInstant(val);
+  if (!parsed) return val || No_Data;
+  var options =
+    dateOnly || parsed.dateOnly
+      ? { timeZone: "Asia/Riyadh", year: "numeric", month: "numeric", day: "numeric" }
+      : { timeZone: "Asia/Riyadh" };
+  try {
+    return parsed.date.toLocaleString("en-US", options);
+  } catch (e) {
+    return val || No_Data;
+  }
+}
+
 // Delegations: show item versions (Audit) via API instead of task history
 window.Get_ItemVersionsAudit = {
   init: function (versionsListName) {
@@ -10797,22 +10865,10 @@ window.Get_ItemVersionsAudit = {
       return No_Data;
     }
     function formatDate(val) {
-      if (!val || val === No_Data) return No_Data;
-      try {
-        var d = new Date(val);
-        return d.toLocaleDateString("en-US");
-      } catch (e) {
-        return val;
-      }
+      return formatAuditDateTime(val, true);
     }
     function formatDateTime(val) {
-      if (!val || val === No_Data) return No_Data;
-      try {
-        var d = new Date(val);
-        return d.toLocaleString("en-US");
-      } catch (e) {
-        return val;
-      }
+      return formatAuditDateTime(val, false);
     }
     // Translate GroupName same as groupsOfPicker: getRoleForGroupName -> Resources
     function translateGroupName(rawGroupName) {
@@ -11118,13 +11174,8 @@ window.Get_ItemVersionsWithColumnsAudit = {
     var trueLabel = Res.true || (isAr ? "نعم" : "Yes");
     var falseLabel = Res.false || (isAr ? "لا" : "No");
 
-    function formatDateTime(val) {
-      if (!val) return No_Data;
-      try {
-        return new Date(val).toLocaleString("en-US");
-      } catch (e) {
-        return val || No_Data;
-      }
+    function formatDateTime(val, dateOnly) {
+      return formatAuditDateTime(val, dateOnly);
     }
     function parseEditorDisplay(editorRaw) {
       if (!editorRaw) return No_Data;
@@ -11240,8 +11291,11 @@ window.Get_ItemVersionsWithColumnsAudit = {
       if (fType === "picker") {
         return parsePickerValue(rawValue);
       }
-      if (fType === "datetime" || fType === "date") {
-        return formatDateTime(rawValue);
+      if (fType === "datetime" || fType === "date" || fType === "datetimetoparent") {
+        var dateOnly =
+          fType === "date" ||
+          String((fieldMeta && fieldMeta.format) || "").toLowerCase() === "dateonly";
+        return formatDateTime(rawValue, dateOnly);
       }
       if (fType === "lookup") {
         if (String(rawValue).indexOf(":::") > -1 || String(rawValue).indexOf(";#") > -1) {
