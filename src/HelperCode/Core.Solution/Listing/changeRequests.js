@@ -113,8 +113,7 @@ function parseChangeItemStoredValues(raw) {
 }
 
 function getSelectedChangeItemCodes() {
-  var codes = parseChangeItemStoredValues($("#ChangeItem").val());
-  return codes.length ? [codes[0]] : [];
+  return parseChangeItemStoredValues($("#ChangeItem").val());
 }
 
 function getPrimaryChangeItemCode() {
@@ -132,8 +131,7 @@ function getPrimaryChangeItemCode() {
 }
 
 function getChangeItemStoredValue() {
-  var codes = getSelectedChangeItemCodes();
-  return codes.length ? codes[0] : "";
+  return getSelectedChangeItemCodes().join(";");
 }
 
 function getChangeItemMetaByCode(code) {
@@ -260,10 +258,11 @@ function fetchMergedChangeItemsDetails(approvalLevel, itemCode, classification) 
 
 // View / workflow rows: keep a saved new value, and still show a column
 // that belongs to another selected ChangeItem even when it was never stored.
+
 function normalizeDetailKey(name) {
   return String(name || "").replace(/\s+/g, "").toLowerCase();
 }
-
+ 
 function detailRowChangeCode(row) {
   var raw = row && (row.ChangeItemCode || row.ChangeItem || row.ChangeItemTitle);
   if (raw && typeof raw === "object") {
@@ -276,7 +275,7 @@ function detailRowChangeCode(row) {
   }
   return raw.trim();
 }
-
+ 
 function rowsFromMergedApiColumns(savedRows, apiColumns) {
   var savedByName = {};
   var unused = [];
@@ -285,9 +284,8 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
     if (key && !savedByName[key]) {
       savedByName[key] = row;
     }
-    unused.push(row);
+    unused. Push(row); 
   });
-
   function takeSaved(name, owner) {
     var key = normalizeDetailKey(name);
     var saved = key ? savedByName[key] : null;
@@ -311,7 +309,6 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
     if (onlyKey) delete savedByName[onlyKey];
     return only;
   }
-
   var rows = [];
   var seen = {};
   (apiColumns || []).forEach(function (col) {
@@ -331,7 +328,7 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
       if (owner && !saved.ChangeItemCode) {
         saved.ChangeItemCode = owner;
       }
-      if (!saved.ColumnInternalName) saved.ColumnInternalName = name;
+      if(!saved.ColumnInternalName) saved.ColumnInternalName = name;
       rows.push(saved);
     } else {
       rows.push({
@@ -348,11 +345,12 @@ function rowsFromMergedApiColumns(savedRows, apiColumns) {
     var key = normalizeDetailKey(row && row.ColumnInternalName);
     if (key && seen[key]) return;
     if (key) seen[key] = true;
-    rows.push(row);
+    rows. Push(row);
   });
   return rows;
 }
-
+ 
+ 
 // Same contract as $.ajax(opts) for getchangeitemsdetails, but merges all selected items.
 function ajaxChangeItemsDetails(opts) {
   if (getFieldChangeItemCodes().length <= 1) {
@@ -756,9 +754,23 @@ filterChangeItemOptions();
 
 function setChangeItemSelection(codes, triggerChange) {
   var unique = parseChangeItemStoredValues(codes);
-  var code = unique.length ? unique[0] : "";
-  $("#ChangeItem").val(code);
-  window.lastSelectedChangeItemCode = code;
+  $("#ChangeItem option").prop("selected", false);
+  for (var i = 0; i < unique.length; i++) {
+    $("#ChangeItem option").filter(function () {
+      return $(this).val() === unique[i];
+    }).prop("selected", true);
+  }
+  if (unique.length) {
+    if (
+      !window.lastSelectedChangeItemCode ||
+      unique.indexOf(window.lastSelectedChangeItemCode) === -1
+    ) {
+      window.lastSelectedChangeItemCode = unique[unique.length - 1];
+    }
+  } else {
+    window.lastSelectedChangeItemCode = "";
+  }
+  syncChangeItemMultiSelect();
   if (triggerChange) {
     $("#ChangeItem").trigger("change");
   }
@@ -1855,8 +1867,56 @@ var checkchangerequestshtml = setInterval(function () {
 
     <label data-trans-changeitem class="Resources"></label>
 
-    <select id="ChangeItem" class="form-control">
+    <!-- Native select used by JavaScript -->
+    <select
+        id="ChangeItem"
+        class="form-control cr-changeitem-native"
+        multiple="multiple">
     </select>
+
+    <div class="cr-changeitem-ms">
+
+        <!-- Dropdown Button -->
+        <button
+            type="button"
+            class="cr-changeitem-ms-trigger"
+            aria-expanded="false">
+
+            <span class="cr-changeitem-ms-trigger-text">
+                اختر بنود التغيير
+            </span>
+
+            <span class="cr-changeitem-ms-trigger-icon">
+                &#9662;
+            </span>
+
+        </button>
+
+        <!-- Dropdown Panel -->
+        <div class="cr-changeitem-ms-panel">
+
+            <div class="cr-changeitem-ms-search-wrap">
+                <input
+                    type="text"
+                    class="cr-changeitem-ms-search"
+                    placeholder="ابحث باسم البند أو الكود..."
+                    autocomplete="off" />
+            </div>
+
+            <div class="cr-changeitem-ms-dropdown cr-changeitem-ms-checklist">
+            </div>
+
+            <div class="cr-changeitem-ms-no-results"
+                 style="display:none;">
+                لا توجد نتائج مطابقة
+            </div>
+
+        </div>
+
+        <!-- Selected Items -->
+        <div class="cr-changeitem-ms-tags"></div>
+
+    </div>
 
 </div>
 
@@ -2537,6 +2597,7 @@ function () {
             ? $("#Classification").val()
             : null;
        fetchMissingSelectedChangeItemDetails(
+          // changeItemCode,
           approvalLevel,
           detailsItemCode,
           classification
@@ -2593,6 +2654,7 @@ function () {
         isMergeSplitDeleteAction(meta.actionType) &&
         !getFieldChangeItemCodes().length
       ) {
+
         setChangeItemsVisibility(false);
       }
       $(".changeItemsRow")
@@ -2604,6 +2666,7 @@ function () {
           ? $("#Classification").val()
           : null;
       fetchMissingSelectedChangeItemDetails(
+        changeItemCode,
         approvalLevel,
         detailsItemCode,
         classification
@@ -3131,10 +3194,12 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   var changeItemVal = getChangeItemStoredValue();
   if (!changeItemVal || changeItemVal.trim() === "") {
     $("#ChangeItem").addClass("is-invalid");
-    if (!firstInvalid) firstInvalid = $("#ChangeItem");
+       $(".cr-changeitem-ms-dropdown").addClass("is-invalid");
+    if (!firstInvalid) firstInvalid = $(".cr-changeitem-ms-dropdown");
     isValid = false;
   } else {
     $("#ChangeItem").removeClass("is-invalid");
+ $(".cr-changeitem-ms-dropdown").removeClass("is-invalid");
   }
 
   // Validate ApprovalLevel (skip when actionType is add — field is hidden)
@@ -3239,6 +3304,7 @@ $(document).on(
  if ($(this).attr("id") === "ChangeItem") {
       if (getChangeItemStoredValue()) {
         $(this).removeClass("is-invalid");
+        $(".cr-changeitem-ms-dropdown").removeClass("is-invalid");
       }
       return;
     }
@@ -5285,40 +5351,18 @@ function saveAllChangeRequestFields(saveOptions) {
 
   persistChangeRequest();
 }
-function postChangeItemDetails(crCode, changeItemCode, rows) {
-  return new Promise(function (resolve, reject) {
-    $.ajax({
-      url:
-        APIURL +
-        "/general/addnewchangerequestdetails/" +
-        encodeURIComponent(crCode) +
-        "/" +
-        encodeURIComponent(changeItemCode),
-      method: "POST",
-      contentType: "application/json",
-      data: JSON.stringify(rows),
-      success: function (res) {
-        resolve(res);
-      },
-      error: function (xhr) {
-        reject(xhr);
-      },
-    });
-  });
-}
-
 function handleChangeItemsAPI(crCode) {
   var codes = getSelectedChangeItemCodes();
   if (!codes.length) {
     return Promise.resolve({ success: true, message: "No change items" });
   }
-  var code = codes[0];
-  return handleChangeItemsAPIForCode(crCode, code).then(function (rows) {
-    if (!Array.isArray(rows) || !rows.length) {
-      return { success: true, message: "No dynamic fields to save" };
-    }
-    return postChangeItemDetails(crCode, code, rows);
+  var seq = Promise.resolve();
+  codes.forEach(function (code) {
+    seq = seq.then(function () {
+      return handleChangeItemsAPIForCode(crCode, code);
+    });
   });
+  return seq;
 }
 
 function handleChangeItemsAPIForCode(crCode, changeItemCode) {
@@ -5585,7 +5629,23 @@ function handleChangeItemsAPIForCode(crCode, changeItemCode) {
       var rowsToPost = apiBody.filter(function (field) {
         return !isBlankCrValue(field.columnNewValue);
       });
-      resolve(rowsToPost);
+      if (rowsToPost.length === 0) {
+        resolve({ success: true, message: "No dynamic fields to save" });
+        return;
+      }
+
+      $.ajax({
+        url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(rowsToPost),
+        success: function (res) {
+          resolve(res);
+        },
+        error: function (xhr) {
+          reject(xhr);
+        },
+      });
       return;
     }
 
@@ -5618,7 +5678,23 @@ function handleChangeItemsAPIForCode(crCode, changeItemCode) {
       var rowsToPost = apiBody.filter(function (field) {
         return !isBlankCrValue(field.columnNewValue);
       });
-      resolve(rowsToPost);
+      if (rowsToPost.length === 0) {
+        resolve({ success: true, message: "No dynamic fields to save" });
+        return;
+      }
+
+      $.ajax({
+        url: `${APIURL}/general/addnewchangerequestdetails/${crCode}/${changeItemCode}`,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(rowsToPost),
+        success: function (res) {
+          resolve(res);
+        },
+        error: function (xhr) {
+          reject(xhr);
+        },
+      });
     }).catch(function (error) {
       reject(error);
     });
@@ -6386,7 +6462,7 @@ function fillViewFields(item, code) {
 
 function loadChangeItemsForView(changeItemCode, newCRCode) {
   return new Promise((resolve) => {
-     var codes = parseChangeItemStoredValues(changeItemCode).slice(0, 1);
+     var codes = parseChangeItemStoredValues(changeItemCode);
     if (!codes.length) {
       resolve();
       return;
@@ -6597,7 +6673,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
         // If we have changeItemCode, approvalLevel, and itemCode, call API to get DisplayNames
         // But skip API call if actionType is add, merge, split, or delete
         if (changeItemCode && approvalLevel && itemCode) {
-          // Skip the details API only when none of the selected items has fields
+          // Check actionType - if add, merge, split, or delete, don't call API
           var meta = getSelectedChangeItemMeta();
           if (
             !getFieldChangeItemCodes().length &&
@@ -6605,7 +6681,7 @@ function loadNewChangeRequestDetails(code, changeItemColumnInternalName) {
               meta.actionType === "merge" ||
               meta.actionType === "split" ||
               meta.actionType === "delete")
-          ) {
+          ) {    
             // Don't call API, just render fields directly without API
             renderViewDynamicFields(
               data.d.results,
@@ -7094,7 +7170,6 @@ function renderViewDynamicFields(
       if (apiResponse && apiResponse.result && apiResponse.result.columnsDetails) {
         const apiColumns = apiResponse.result.columnsDetails || [];
 
-
         const matchingApiCol = apiColumns.find((apiCol) => {
           let jsonField = {};
           try {
@@ -7211,10 +7286,6 @@ function renderViewDynamicFields(
     }
 
     // Regular fields (non-picker, non-lookup) - original code
-    var fieldOwnerCode = resolveChangeItemCodeForDetailRow(col);
-    var fieldDomId = fieldOwnerCode
-      ? String(fieldOwnerCode).replace(/[^A-Za-z0-9_-]/g, "_") + "_" + fieldName
-      : fieldName;
     const inputHtml = buildInputHtml(
       fieldDomId,
       dataType,
@@ -8685,7 +8756,8 @@ window.handleWorkflowApproval = function (
             var changeItemCode = crItems.getItemAtIndex(0).get_item("ChangeItem") || "";
             if (!changeItemCode) { afterSaveCallback(); return; }
 
-            var changeItemCodes = parseChangeItemStoredValues(changeItemCode).slice(0, 1);
+            // ChangeItem may hold several codes ("CI-001;CI-027") -> check ALL of them
+            var changeItemCodes = parseChangeItemStoredValues(changeItemCode);
             if (!changeItemCodes.length) { afterSaveCallback(); return; }
 
             // Get UpdateType from ChangeItems
@@ -9513,4 +9585,4 @@ window.Export_CR_PDF = {
         );
       });
   },
-}; 
+};
