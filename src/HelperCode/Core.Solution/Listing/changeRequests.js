@@ -113,7 +113,8 @@ function parseChangeItemStoredValues(raw) {
 }
 
 function getSelectedChangeItemCodes() {
-  return parseChangeItemStoredValues($("#ChangeItem").val());
+  var codes = parseChangeItemStoredValues($("#ChangeItem").val());
+  return codes.length ? [codes[0]] : [];
 }
 
 function getPrimaryChangeItemCode() {
@@ -131,7 +132,8 @@ function getPrimaryChangeItemCode() {
 }
 
 function getChangeItemStoredValue() {
-  return getSelectedChangeItemCodes().join(";");
+  var codes = getSelectedChangeItemCodes();
+  return codes.length ? codes[0] : "";
 }
 
 function getChangeItemMetaByCode(code) {
@@ -754,23 +756,9 @@ filterChangeItemOptions();
 
 function setChangeItemSelection(codes, triggerChange) {
   var unique = parseChangeItemStoredValues(codes);
-  $("#ChangeItem option").prop("selected", false);
-  for (var i = 0; i < unique.length; i++) {
-    $("#ChangeItem option").filter(function () {
-      return $(this).val() === unique[i];
-    }).prop("selected", true);
-  }
-  if (unique.length) {
-    if (
-      !window.lastSelectedChangeItemCode ||
-      unique.indexOf(window.lastSelectedChangeItemCode) === -1
-    ) {
-      window.lastSelectedChangeItemCode = unique[unique.length - 1];
-    }
-  } else {
-    window.lastSelectedChangeItemCode = "";
-  }
-  syncChangeItemMultiSelect();
+  var code = unique.length ? unique[0] : "";
+  $("#ChangeItem").val(code);
+  window.lastSelectedChangeItemCode = code;
   if (triggerChange) {
     $("#ChangeItem").trigger("change");
   }
@@ -1867,56 +1855,8 @@ var checkchangerequestshtml = setInterval(function () {
 
     <label data-trans-changeitem class="Resources"></label>
 
-    <!-- Native select used by JavaScript -->
-    <select
-        id="ChangeItem"
-        class="form-control cr-changeitem-native"
-        multiple="multiple">
+    <select id="ChangeItem" class="form-control">
     </select>
-
-    <div class="cr-changeitem-ms">
-
-        <!-- Dropdown Button -->
-        <button
-            type="button"
-            class="cr-changeitem-ms-trigger"
-            aria-expanded="false">
-
-            <span class="cr-changeitem-ms-trigger-text">
-                اختر بنود التغيير
-            </span>
-
-            <span class="cr-changeitem-ms-trigger-icon">
-                &#9662;
-            </span>
-
-        </button>
-
-        <!-- Dropdown Panel -->
-        <div class="cr-changeitem-ms-panel">
-
-            <div class="cr-changeitem-ms-search-wrap">
-                <input
-                    type="text"
-                    class="cr-changeitem-ms-search"
-                    placeholder="ابحث باسم البند أو الكود..."
-                    autocomplete="off" />
-            </div>
-
-            <div class="cr-changeitem-ms-dropdown cr-changeitem-ms-checklist">
-            </div>
-
-            <div class="cr-changeitem-ms-no-results"
-                 style="display:none;">
-                لا توجد نتائج مطابقة
-            </div>
-
-        </div>
-
-        <!-- Selected Items -->
-        <div class="cr-changeitem-ms-tags"></div>
-
-    </div>
 
 </div>
 
@@ -3191,12 +3131,10 @@ $(document).on("click", "#CRSubmitButton", function (e) {
   var changeItemVal = getChangeItemStoredValue();
   if (!changeItemVal || changeItemVal.trim() === "") {
     $("#ChangeItem").addClass("is-invalid");
-       $(".cr-changeitem-ms-dropdown").addClass("is-invalid");
-    if (!firstInvalid) firstInvalid = $(".cr-changeitem-ms-dropdown");
+    if (!firstInvalid) firstInvalid = $("#ChangeItem");
     isValid = false;
   } else {
     $("#ChangeItem").removeClass("is-invalid");
- $(".cr-changeitem-ms-dropdown").removeClass("is-invalid");
   }
 
   // Validate ApprovalLevel (skip when actionType is add — field is hidden)
@@ -3301,7 +3239,6 @@ $(document).on(
  if ($(this).attr("id") === "ChangeItem") {
       if (getChangeItemStoredValue()) {
         $(this).removeClass("is-invalid");
-        $(".cr-changeitem-ms-dropdown").removeClass("is-invalid");
       }
       return;
     }
@@ -5375,20 +5312,13 @@ function handleChangeItemsAPI(crCode) {
   if (!codes.length) {
     return Promise.resolve({ success: true, message: "No change items" });
   }
-  // The details route accepts one change-item code. CI-038;CI-044 in the path
-  // comes back as 400, so each selected item is posted on its own.
-  var seq = Promise.resolve({ success: true, message: "No dynamic fields to save" });
-  codes.forEach(function (code) {
-    seq = seq.then(function () {
-      return handleChangeItemsAPIForCode(crCode, code).then(function (rows) {
-        if (!Array.isArray(rows) || !rows.length) {
-          return { success: true, message: "No dynamic fields for " + code };
-        }
-        return postChangeItemDetails(crCode, code, rows);
-      });
-    });
+  var code = codes[0];
+  return handleChangeItemsAPIForCode(crCode, code).then(function (rows) {
+    if (!Array.isArray(rows) || !rows.length) {
+      return { success: true, message: "No dynamic fields to save" };
+    }
+    return postChangeItemDetails(crCode, code, rows);
   });
-  return seq;
 }
 
 function handleChangeItemsAPIForCode(crCode, changeItemCode) {
@@ -6456,7 +6386,7 @@ function fillViewFields(item, code) {
 
 function loadChangeItemsForView(changeItemCode, newCRCode) {
   return new Promise((resolve) => {
-     var codes = parseChangeItemStoredValues(changeItemCode);
+     var codes = parseChangeItemStoredValues(changeItemCode).slice(0, 1);
     if (!codes.length) {
       resolve();
       return;
@@ -8755,8 +8685,7 @@ window.handleWorkflowApproval = function (
             var changeItemCode = crItems.getItemAtIndex(0).get_item("ChangeItem") || "";
             if (!changeItemCode) { afterSaveCallback(); return; }
 
-            // ChangeItem may hold several codes ("CI-001;CI-027") -> check ALL of them
-            var changeItemCodes = parseChangeItemStoredValues(changeItemCode);
+            var changeItemCodes = parseChangeItemStoredValues(changeItemCode).slice(0, 1);
             if (!changeItemCodes.length) { afterSaveCallback(); return; }
 
             // Get UpdateType from ChangeItems
