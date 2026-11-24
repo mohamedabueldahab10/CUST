@@ -5348,7 +5348,7 @@ function saveAllChangeRequestFields(saveOptions) {
 
   persistChangeRequest();
 }
-function postAllChangeItemDetails(crCode, rows) {
+function postChangeItemDetails(crCode, changeItemCode, rows) {
   return new Promise(function (resolve, reject) {
     $.ajax({
       url:
@@ -5356,7 +5356,7 @@ function postAllChangeItemDetails(crCode, rows) {
         "/general/addnewchangerequestdetails/" +
         encodeURIComponent(crCode) +
         "/" +
-        encodeURIComponent(getChangeItemStoredValue()),
+        encodeURIComponent(changeItemCode),
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify(rows),
@@ -5375,20 +5375,20 @@ function handleChangeItemsAPI(crCode) {
   if (!codes.length) {
     return Promise.resolve({ success: true, message: "No change items" });
   }
-  var seq = Promise.resolve([]);
+  // The details route accepts one change-item code. CI-038;CI-044 in the path
+  // comes back as 400, so each selected item is posted on its own.
+  var seq = Promise.resolve({ success: true, message: "No dynamic fields to save" });
   codes.forEach(function (code) {
-    seq = seq.then(function (acc) {
+    seq = seq.then(function () {
       return handleChangeItemsAPIForCode(crCode, code).then(function (rows) {
-        return acc.concat(Array.isArray(rows) ? rows : []);
+        if (!Array.isArray(rows) || !rows.length) {
+          return { success: true, message: "No dynamic fields for " + code };
+        }
+        return postChangeItemDetails(crCode, code, rows);
       });
     });
   });
-  return seq.then(function (rows) {
-    if (!rows.length) {
-      return { success: true, message: "No dynamic fields to save" };
-    }
-    return postAllChangeItemDetails(crCode, rows);
-  });
+  return seq;
 }
 
 function handleChangeItemsAPIForCode(crCode, changeItemCode) {
